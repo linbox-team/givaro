@@ -11,59 +11,64 @@
 
 int main(int argc, char** argv)
 {
-  IntNumTheoDom<> IP;
-  IP.seeding( BaseTimer::seed() );
+    IntNumTheoDom<> IP;
+    IP.seeding( BaseTimer::seed() );
 
-  double error;
-  IntNumTheoDom<>::element a,pr;
-  if (argc > 1) a = IntNumTheoDom<>::element(argv[1]); else std::cin >> a;
-  double epsilon = argc > 2 ? atof(argv[1]) : 0.0000000001;
+    double error;
+    IntNumTheoDom<>::element a,pr;
+    if (argc > 1) a = IntNumTheoDom<>::element(argv[1]); else std::cin >> a;
+    double epsilon = argc > 2 ? atof(argv[2]) : 0.0000001;
   
-
-  Timer tim; tim.clear(); 
-  tim.start();
-      //======================================================================
-      // Default is partial factorization up to factors of at least 12 digits.
-      // with probability of error much less than 2^{-40} 
-      // IP.probable_prim_root(pr, error, a );
-
-
-      //======================================================================
-      // Choosing L to be O(log^2(p)) 
-      // gives the best probability with O(log^4(p)) complexity
-      // Probability of error is approximately O(1/log^4(p))
-      // IP.probable_prim_root(pr, error, a, (unsigned long)power(logtwo(a),2));
-
-      //======================================================================
-      // Choosing L to be O( \sqrt(epsilon) ) 
-      // gives probability of error close to epsilon
-      // Might not be polynomial if epsilon is too big
-      IP.probable_prim_root(pr, error, a, (unsigned long)sqrt(1.0/epsilon) );
+    Timer tim; tim.clear(); 
+    tim.start();
+        //======================================================================
+        // Default is partial factorization up to factors of at least 12 digits.
+        // with probability of error much less than 2^{-40} 
+        // IP.probable_prim_root(pr, error, a );
 
 
-  tim.stop();
+        //======================================================================
+        // Choosing L to be O(log^2(p)) 
+        // gives the best probability with O(log^4(p)) complexity
+        // Probability of error is approximately O(1/log^4(p))
+        // IP.probable_prim_root(pr, error, a, (unsigned long)power(logtwo(a),2));
+
+        //======================================================================
+        // Choosing L to be O( \sqrt(epsilon) ) 
+        // gives probability of error at most epsilon
+        // Newton-Raphson iteration is used for 
+        // 1-epsilon = (1+2/(p-1))*(1-1/B)^(ln( (p-1)/2 )/ln(B))
+        // So that no factor less than B can be avoided
+        // With Pollard's rho factorization, L is chosen to be sqrt(B)
+        // Might not be polynomial if epsilon is too big
+    IP.probable_prim_root(pr, error, a, epsilon );
+    tim.stop();
   
-  IntegerDom().write( std::cout << "Prim root   : ", pr ) << ", correct with probability at least : 1-" << error << std::endl;
-  std::cerr << tim << std::endl;
-
-  std::cerr << "Now checking primitivity, this may take some time (complete factorization of n-1) ...";
-
+    IntegerDom().write( std::cout << "Prim root   : ", pr );
+    if (error > 0) {
+        std::cout << ", correct with probability at least : 1-" << error << std::endl;
+        std::cerr << tim << std::endl;
+    
+        std::cerr << "Now checking primitivity, this may take some time (complete factorization of n-1) ...";
+      
 #define GIVARO_LENSTRA
 
-  tim.start();
-  if ( IP.isorder(a-1, pr, a) ) {
-      tim.stop();
-      std::cerr << "... Pimitivity checked" << std::endl;
-      std::cerr << tim << std::endl;
-  }
-  else {
-      tim.stop();
-      std::cerr << "... WARNING : FAILURE" << std::endl;
-      std::cerr << tim << std::endl;
-  }
-     
-      
-
-  return 0;
+        Timer verif; verif.clear(); verif.start();
+        if ( IP.isorder(a-1, pr, a) ) {
+            verif.stop();
+            std::cerr << "... Pimitivity checked" << std::endl;
+            std::cerr << verif << std::endl;
+        }
+        else {
+            verif.stop();
+            std::cerr << "... WARNING : FAILURE" << std::endl;
+            std::cerr << verif << std::endl;
+        }
+    } else {
+        std::cout << ", deterministically correct" << std::endl;
+        std::cerr << tim << std::endl;
+    }
+    
+    return 0;
 }
 

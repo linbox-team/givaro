@@ -2,7 +2,7 @@
 // Givaro : Euler's phi function
 //          Primitive roots.
 //          RSA scheme.
-// Time-stamp: <29 Jun 04 17:04:39 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <30 Jun 04 10:59:26 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
 #ifndef _GIVARO_NUMTHEORY_
@@ -41,7 +41,9 @@ public:
 //  [Dubrois & Dumas, Industrial-strength primitive roots]
 //  Returns the probable primitive root and the probability of error.
     Rep& probable_prim_root(Rep&, double&, const Rep& n, const unsigned long L = 10000000) const;
-    
+
+//  Here L is computed so that the error is close to epsilon    
+    Rep& probable_prim_root(Rep&, double&, const Rep& n, const double epsilon) const;
 
     Rep& lowest_prim_root(Rep&, const Rep&) const ;
     bool is_prim_root(const Rep&, const Rep&) const ;

@@ -4,7 +4,7 @@
 // see the copyright file.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz16table1.inl,v 1.2 2004-06-18 12:44:59 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -310,13 +310,15 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r ) const
 
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r , const long a) const
-{ Power_t tmp;
-  assign(tmp,a);
-  return r= _tab_value2rep[tmp];
+{
+    Power_t tmp;
+    assign(tmp,a);
+    return r= _tab_value2rep[tmp];
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r , const unsigned long a) const
-{ Power_t tmp;
+{ 
+    Power_t tmp;
   assign(tmp,a);
   return r= _tab_value2rep[tmp];
 }
@@ -329,6 +331,13 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const int i) const {
   return init(a,(long)i); 
 }
 
+
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const double i) const {
+	  return init(a,(long)i);
+}
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const float i) const {
+	  return init(a,(double)i);
+}
 
 
 inline void ZpzDom<Log16>::dotprod 
@@ -451,11 +460,11 @@ inline std::ostream& ZpzDom<Log16>::write (std::ostream& s ) const
 inline std::istream& ZpzDom<Log16>::read (std::istream& s, Rep& a) const
 {
   s >> a;
-  assign(a, a);
+  init(a, a);
   return s;
 }
 
 inline std::ostream& ZpzDom<Log16>::write (std::ostream& s, const Rep a) const
 {
-  return s << a;
+  return s << _tab_rep2value[a];
 }

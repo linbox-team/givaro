@@ -7,7 +7,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
+// $Id: givzpz64std.h,v 1.3 2004-06-18 12:44:59 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -68,6 +68,8 @@ public:
   Rep& init( Rep& a, const unsigned long long i) const ;
   Rep& init( Rep& a, const int i) const ;
   Rep& init( Rep& a, const unsigned int i) const ;
+  Rep& init( Rep& a, const double i) const ;
+  Rep& init( Rep& a, const float i) const ;
 
   // ----- Misc methods
   int areEqual( const  Rep, const Rep) const;

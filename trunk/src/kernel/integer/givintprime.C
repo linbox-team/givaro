@@ -4,7 +4,7 @@
 //              Fermat numbers,
 //              Primality tests, Factorization one by one :
 //                      (There are parameters to fix)
-// Time-stamp: <08 Jun 04 17:33:03 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <09 Jun 04 20:33:45 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include <math.h>
 #include "givaro/givintprime.h"
@@ -231,16 +231,12 @@ static const unsigned short primes[] =
 
 unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const 
 {
-#ifndef BITS_PER_MP_LIMB
-    const unsigned int BITS_PER_MP_LIMB = sizeof(mp_limb_t)*8;
-#endif
   unsigned long int prime;
   unsigned long int n, n2;
   int i;
   unsigned long int rem;
   Integer t(u);
   int exact;
-  unsigned int uns;
   unsigned int usize = u.size();
 
   if (usize == 0)
@@ -251,22 +247,30 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
     return 0;			/* 2 divides exactly once.  */
 
   n2=0;
-  for( ; !( ((unsigned int)t) & 0x1) ; t<<=1, ++n2) {}
+  for( ; !( ((unsigned int)t) & 0x1) ; t>>=1, ++n2) {
+  }
   if (usize <0 && n2 >0 && (n2 & 1) ==0)
       return 0;
 
-  uns = GIVABS (usize) - n2 / BITS_PER_MP_LIMB;
-  Integer u2(u>>n2);
+  if (n2 >0) {
+      if (t == 1) {
+          q = 2;
+          return n2;
+      } else {
+          return 0;
+      }
+  }
   
-  if (isprime (n2))
-    goto n2prime;
-
+  
+  Integer u2;
+  
   for (i = 1; primes[i] != 0; i++)
     {
-      prime = primes[i];
-
-      rem = u2 % prime;
-      if (rem == 0)		/* divisable by this prime? */
+        u2 = u;
+        prime = primes[i];
+        
+        rem = u2 % prime;
+        if (rem == 0)		/* divisable by this prime? */
 	{
             Integer::divmod(q,rem,u2,prime * prime);
             if (rem != 0)
@@ -280,63 +284,35 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
                     break;
                 swap (q, u2);
 	    }
-
+            
             if ((n & 1) == 0 && usize < 0)
                 return 0;	/* even multiplicity with negative U, reject */
             
-            n2 = ::gcd (n2, n);
-            if (n2 == 1)
-                return 0;	/* we have multiplicity 1 of some factor */
-            
-            if ( GIVABS(u2) == 1)
-	    {
-                q = Integer(prime);
-                return n;	/* factoring completed; consistent power */
-	    }
-            
-                /* As soon as n2 becomes a prime number, stop factoring.
-                   Either we have u=x^n2 or u is not a perfect power.  */
-            if (isprime (n2))
-                goto n2prime;
+            if (n > 0) {
+                if (GIVABS(u2) == 1) {
+                    q = Integer(prime);
+                    return n;
+                } else {
+                    return 0;
+                }
+            }
 	}
     }
-
-  if (n2 == 0)
-  {
+  
       /* We found no factors above; have to check all values of n.  */
-      unsigned long int nth;
-      for (nth = usize < 0 ? 3 : 2;; nth++)
-      {
-	  if (! isprime (nth))
-              continue;
-          exact = root (q, u2, nth);
-	  if (exact)
-	      return nth;
-	  if (GIVABS(q) < SMALLEST_OMITTED_PRIME)
-	      return 0;
+  unsigned long int nth;
+  for (nth = usize < 0 ? 3 : 2;; ++nth)
+  {
+      if (! isprime (nth))
+          continue;
+      exact = root (q, u2, nth);
+      if (exact) {
+          if (isprime(q))
+              return nth;
+          else 
+              return 0;
       }
-  } else {
-      unsigned long int nth;
-          /* We found some factors above.  We just need to consider values of n
-             that divides n2.  */
-      for (nth = 2; nth <= n2; nth++)
-      {
-	  if (! isprime (nth))
-              continue;
-	  if (n2 % nth != 0)
-              continue;
-          exact = root (q, u2, nth);
-	  if (exact)
-	      return nth;
-	  if (GIVABS(q) < SMALLEST_OMITTED_PRIME)
-	      return 0;
-      }
-      return 0;
+      if (GIVABS(q) < SMALLEST_OMITTED_PRIME)
+          return 0;
   }
-
-n2prime:
-  if ( root (q, u2, n2) ) 
-      return n2;
-  else
-      return 0;
 }

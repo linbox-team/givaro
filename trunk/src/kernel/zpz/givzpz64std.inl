@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.3 2004-06-18 12:44:59 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -380,6 +380,15 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const unsigned long l
 { return r = (Rep)( a >= (uint64)_p ? a % (uint64)_p : a); 
 }
 
+inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const double a ) const
+{ return init(r, (long long)a); 
+}
+
+inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const float a ) const
+{ return init(r, (double)a); 
+}
+
+
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long long a ) const
 {
@@ -392,30 +401,22 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long long a ) c
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign ( Rep& r, const long a ) const
-{  return init(r, a);
+{  return r = (Rep)a; 
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign ( Rep& r, const int a ) const
-{ return ZpzDom<Std64>::assign( r, (long)a); }
+{ return assign( r, (long)a); }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign ( Rep& r, const unsigned long a ) const
-{ return init(r,a); }
+{ return r = (Rep)a; }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign 
   ( Rep& r, const unsigned int a ) const
-{ return init(r, (unsigned long)a); }
+{ return assign(r, (unsigned long)a); }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign 
   ( Rep& r, const Rep a ) const
-{ return assign(r, (long)a); }
-
-// inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::GIVRANDOM(Rep& a) const {
-// 	assign(a, lrand48());
-// }
-
-// inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::NONZEROGIVRANDOM(Rep& a) const {
-// 	while (iszero(assign(a, lrand48()))) {};
-// }
+{ return r = a; }
 
 template< class RandIter >
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::random(RandIter& g, Rep& a) const {

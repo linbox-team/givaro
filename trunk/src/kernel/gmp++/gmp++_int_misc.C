@@ -3,11 +3,12 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.4 2004-06-08 15:46:05 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.5 2004-06-18 12:12:05 giorgi Exp $
 // ==========================================================================
 // Description: 
 
 #include <iostream>
+#include <math.h>
 #include "gmp++_int.h"
 
 //-------------------------------------------fact (unsigned long l)

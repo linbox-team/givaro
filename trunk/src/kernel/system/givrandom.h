@@ -18,7 +18,7 @@ extern "C" {
 #define _GIVRAN_MODULO_     2147483647
 
 class GivRandom {
-    unsigned long _seed;
+    mutable unsigned long _seed;
 public:
     typedef GivRandom random_generator;
 
@@ -36,7 +36,7 @@ public:
 
     unsigned long seed() { return _seed; }
     
-    unsigned long operator() () {    
+    unsigned long operator() () const {    
         return _seed = (unsigned long) ( 
             (unsigned long long)_GIVRAN_MULTIPLYER_ 
             * (unsigned long long)(_seed) 

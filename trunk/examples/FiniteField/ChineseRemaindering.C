@@ -74,7 +74,7 @@ Integer tmain(int argc, char ** argv) {
    typename Field::Element el;
    F.init(el, generator() );
 
-   ChineseRemainder<IntPrimeDom, Field, true> CRA(ID, M, F);
+   ChineseRemainder<IntPrimeDom, Field> CRA(ID, M, F);
    CRA( res, a, el);
 
    std::cout << res << " mod " << M << " = " << a << ";"  << std::endl;

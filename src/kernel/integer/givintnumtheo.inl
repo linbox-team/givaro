@@ -197,10 +197,10 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
       mul(Temp, essai, L);
       error = 1-1.0/(double)Temp;
       error = power(error, logp(Q,Temp) );
-      error *= (1.0+1.0/power(2.0,logp(pmun,2)));
+      error *= (1.0+1.0/((double)Q-1.0));
       error = 1-error;
   } else 
-      error = 0;
+      error = 0.0;
 
   typename std::vector<Rep>::const_iterator Lqi = Lq.begin();
   typename std::vector<unsigned long>::const_iterator ei = e.begin();

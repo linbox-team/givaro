@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.3 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpzInt.h,v 1.4 2005-02-02 19:08:29 pernet Exp $
 // ==========================================================================
 //
 // Description:
@@ -60,6 +60,7 @@ public:
   Residu_t size() const {return _p;}
   Rep access( const Rep& a ) const { return a; }
   Residu_t characteristic() const { return _p; }
+  Residu_t characteristic(Residu_t p) const { return p=_p; }
   Residu_t cardinality() const { return _p; }
 
 

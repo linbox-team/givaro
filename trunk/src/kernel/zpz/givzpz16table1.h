@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.5 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.6 2005-02-02 19:08:29 pernet Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -59,6 +59,7 @@ public:
   // ----- Access to the modulus 
   Residu_t residu() const;
   Residu_t characteristic() const { return _p;}
+  Integer& characteristic( Integer& p) const { return p=_p;}
   Residu_t size() const { return _p;}
 
   // ----- Convert from element to int

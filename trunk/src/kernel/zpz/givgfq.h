@@ -99,6 +99,7 @@ public:
 
     UTT residu() const;
     UTT characteristic() const;
+    Integer& characteristic(Integer& p) const{return p=characteristic();}
     UTT cardinality() const;
     UTT exponent() const;
     UTT size() const;

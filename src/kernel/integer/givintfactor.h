@@ -104,7 +104,7 @@ public:
         // returns a factor by Lenstra's elliptic curves method
     Rep& Lenstra(RandIter&, Rep&, const Rep& n, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
         ///
-    template< template<class> class Container> Container<Rep>& divisors(Container<Rep>& L, const Container<Rep>& Lf, const Container<unsigned long>& Le)  const;
+    template< template<class> class Container, template<class> class Cont2> Container<Rep>& divisors(Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const;
     template< template<class> class Container> Container<Rep>& divisors(Container<Rep>&, const Rep& ) const ;
     
     std::ostream& write(std::ostream& o, const Rep& n) const;

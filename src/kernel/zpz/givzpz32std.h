@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.4 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.5 2005-02-02 19:08:29 pernet Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -74,6 +74,7 @@ public:
   Residu_t size() const {return _p;}
   Rep access( const Rep a ) const { return a; }
   Residu_t characteristic() const { return _p; }
+  Integer& characteristic( Integer& p) const { return p=_p; }
   Residu_t cardinality() const { return _p; }
 
 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.5 2004-06-18 12:12:05 giorgi Exp $
+// $Id: gmp++_int_misc.C,v 1.6 2004-10-11 13:54:38 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -198,7 +198,7 @@ Integer::operator long() const {
 Integer::operator unsigned long() const {
 	return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 }
-#ifdef __USE_GMPPLUSPLUS_64__
+#ifndef __GIVARO__DONOTUSE_longlong__
 Integer::operator unsigned long long() const {
 	unsigned long low = (unsigned long)(*this);
 	Integer rem;

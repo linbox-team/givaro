@@ -1,22 +1,16 @@
 #ifndef _GIVARO_ZPZ64STD_H_ 
 #define _GIVARO_ZPZ64STD_H_ 
-#include <givaro/givconfig.h>
-#ifndef __GIVARO__DONOTUSE_longlong__
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz64std.h,v $
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz64std.h,v 1.5 2004-10-11 13:54:38 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
 //   Modulo typedef is a signed long number. In case it was modified
 //   then bezout algorithm must be changed (coefficient can be negative).
-
-
-#include "givaro/givbasictype.h"
-
 #include "givaro/givinteger.h"
 #include "givaro/giverror.h"
 #include "givaro/givzpz.h"
@@ -50,7 +44,8 @@ public:
 
         // ----- Constructor 
     ZpzDom();
-    ZpzDom( Residu_t p, unsigned long e = 1 );
+    ZpzDom( Residu_t p, unsigned long e = 1);
+
     Self_t& operator= (const Self_t& D) {
         this->_p = D._p;
         return *this;
@@ -146,18 +141,13 @@ public:
 
         // -- Misc: r <- a mod p
     void assign ( const size_t sz, Array r, constArray a ) const;
-/* JGD 26.10.99
-   void assign ( Rep& r, const Rep a) const;
-   void assign ( Rep& r, const long a ) const;
-   void assign ( Rep& r, const unsigned long a ) const;
-   void assign ( Rep& r, const int a ) const;
-   void assign ( Rep& r, const unsigned int a ) const;
-*/
     Rep& assign ( Rep& r, const Rep a) const;
+/*
     Rep& assign ( Rep& r, const long a ) const;
     Rep& assign ( Rep& r, const unsigned long a ) const;
     Rep& assign ( Rep& r, const int a ) const;
     Rep& assign ( Rep& r, const unsigned int a ) const;
+*/
         // ----- random generators
 //     Rep& NONZEROGIVRANDOM(Rep&) const ;
 //     Rep& GIVRANDOM(Rep&) const ;
@@ -209,6 +199,4 @@ protected:
 
 
 #include "givaro/givzpz64std.inl"
-
-#endif
 #endif

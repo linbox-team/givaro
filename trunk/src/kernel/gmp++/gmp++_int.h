@@ -8,7 +8,7 @@
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
-#ifndef __GIVARO__DONOTUSE_longlong__
+#ifndef __DONOTUSE_Givaro_64__
 #define __USE_64_bits__
 #endif
 
@@ -53,7 +53,7 @@ public:
   Integer(unsigned char n);
   Integer(unsigned int n);
   Integer(unsigned long n);
-#ifdef __USE_GMPPLUSPLUS_64__
+#ifndef __GIVARO__DONOTUSE_longlong__
   Integer(long long n);
   Integer(unsigned long long n);
 #endif
@@ -276,7 +276,7 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   operator int() const ;
   operator unsigned long() const ;
   operator long() const ;
-#ifdef __USE_GMPPLUSPLUS_64__
+#ifndef __GIVARO__DONOTUSE_longlong__
   operator unsigned long long() const ;
   operator long long() const ;
 #endif

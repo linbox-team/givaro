@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.2 2004-10-11 13:54:38 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -45,7 +45,7 @@ inline Integer::Integer(long n) { mpz_init_set_si((mpz_ptr)&gmp_rep, n) ; }
 //-----------------------------Integer(unsigned long n)
 inline Integer::Integer(unsigned long n) { mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ; }
 
-#ifdef __USE_GMPPLUSPLUS_64__
+#ifndef __GIVARO__DONOTUSE_longlong__
 #include <stdio.h>
 //-----------------------------Integer(long long n)
 // log[10](2^8) < 2.408239966 
@@ -227,7 +227,7 @@ inline int iszero(const long a) { return a ==0; }
 inline int iszero(const unsigned short int a) { return a ==0; }
 inline int iszero(const unsigned int a) { return a ==0; }
 inline int iszero(const unsigned long a) { return a ==0UL; }
-#ifdef __USE_GMPPLUSPLUS_64__
+#ifndef __GIVARO__DONOTUSE_longlong__
 inline int iszero(const unsigned long long a) { return a ==0ULL; }
 inline int iszero(const long long a) { return a ==0LL; }
 #endif

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.3 2004-09-24 09:28:33 jgdumas Exp $
+// $Id: givconfig.h,v 1.4 2004-10-11 13:54:38 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -79,6 +79,15 @@ typedef signed 	  __GIVARO_INT32      int32;
 typedef unsigned  __GIVARO_INT8      uint8;
 typedef unsigned  __GIVARO_INT16     uint16;
 typedef unsigned  __GIVARO_INT32     uint32;
+
+#ifndef __GIVARO_INT64
+#  define __DONOTUSE_Givaro_64__
+#else
+#  define __USE_Givaro_64__
+    typedef signed __GIVARO_INT64 int64;
+    typedef unsigned __GIVARO_INT64  uint64;
+#endif
+
 
 # define GIVARO_MAXUINT8		255U 		// 2^8-1
 # define GIVARO_MAXUINT16		65535U 		// 2^16-1
@@ -293,16 +302,16 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
 
 
   #ifndef __GIVARO__DONOTUSE_longlong__
-template<> struct Signed_Trait<long long>  : public GIVARO_numeric_limits<long long> {
+  template<> struct Signed_Trait<long long>  : public GIVARO_numeric_limits<long long> {
     typedef long long signed_type;
     typedef unsigned long long unsigned_type;
-};
+  };
 
 
-template<> struct Signed_Trait<unsigned long long>  : public GIVARO_numeric_limits<unsigned long long> {
+  template<> struct Signed_Trait<unsigned long long>  : public GIVARO_numeric_limits<unsigned long long> {
     typedef long long signed_type;
     typedef unsigned long long unsigned_type;
-};
+  };
   #endif 
 
 #endif

@@ -1,0 +1,45 @@
+#include <iostream>
+#include <givaro/givpower.h>
+#include <givaro/givzpz.h>
+#include <givaro/givgfq.h>
+
+int main(int argc, char ** argv) {
+
+ {
+    ZpzDom<Std32> Z13(13);   // modulo 13 over 32 bits
+    ZpzDom<Std32>::element a, c;
+    Z13.init(a, 7);
+
+    long l = 29;
+    dom_power(c, a, l, Z13); // c = 7^29 modulo 13 by squaring    
+    
+    std::cerr << "Within "; 
+    Z13.write( std::cerr );
+    std::cerr << " : " << std::flush;
+
+     // Separate output writing
+    Z13.write( std::cout, a) << " ^ " << l << " = " << std::flush;  
+    Z13.write( std::cerr, c) << std::endl;
+ }
+
+
+ {
+    int Mod = 13; int exponent = 1;
+    GFqDom<int> GF13( Mod, exponent );  // finite field with 13 elements
+    GFqDom<int>::element a, c;
+
+    GF13.init(a, 7);    // 7 modulo   13 
+
+    long l = 29;
+    dom_power(c, a, l, GF13); // c = 7^29 modulo 13 by squaring    
+
+    // Writing all outputs in a single command line
+    GF13.write( std::cerr << "Within " ) << " : " << std::flush;
+    GF13.write( GF13.write( 
+       std::cout, a) << " ^ " << l << " = ", c) << std::endl;
+
+ }   
+
+    return 0;
+}
+

@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+#include <stdlib.h>
+#include <givaro/givintprime.h>
+#include <givaro/givtimer.h>
+#include <givaro/givinit.h>         // Givaro initialization
+
+
+
+int main(int argc, char** argv)
+{
+//  Givaro::Init(&argc, &argv);
+
+
+  IntegerDom IP;
+  IntegerDom::element CM, g,a,b, c;
+  int offset = 0;
+  if (argc > ++offset) a = Integer(argv[offset]); else cin >> a;
+  if (argc > ++offset) b = Integer(argv[offset]); else cin >> b;
+  
+        Timer tim; tim.clear(); tim.start();
+        IP.gcd(g,a,b);
+	IP.mul(CM, a, b);
+	IP.divin(CM, g);
+	for ( ; argc > ++offset; ) {
+		c = Integer(argv[offset]);
+		IP.gcd(g, CM, c);
+		IP.divin(CM, g);
+		IP.mulin(CM, c);
+	}	
+        tim.stop();
+        cout << CM << endl;
+        cerr << "gcd+mul: " << tim << endl;
+
+        tim.clear(); tim.start();
+        IP.lcm(CM,a,b);
+//	cerr << "lcm(" << a << "," << b << ") = " << CM << endl;
+	for ( offset = 2; argc > ++offset; ) {
+		c = Integer(argv[offset]);
+//	cerr << "lcm(" << c << "," << CM << ") = " ;
+		IP.lcmin(CM, c);
+//	cerr << CM << endl;
+	}	
+        tim.stop();
+        cout << CM << endl;
+        cerr << "lcm: " << tim << endl;
+
+//  Givaro::End();
+
+  return 0;
+}
+

@@ -47,7 +47,7 @@ class IntPrimeDom : public IntegerDom {
 public:
     IntPrimeDom() :  IntegerDom() {}
 
-    int isprime(const Rep& n, int r=1) const 
+    int isprime(const Rep& n, int r=5) const 
         {
 /*
   return probab_prime(n);

@@ -172,10 +172,10 @@ void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const
 
 
 template<class RandIter>
-template< template<class> class Container> Container< typename IntFactorDom<RandIter>::Rep >&  IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Container<Rep>& Lf, const Container<unsigned long>& Le)  const 
+template< template<class> class Container, template<class> class Cont2> Container< typename IntFactorDom<RandIter>::Rep >&  IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const 
 {
-    typename Container<Rep>::const_iterator li = Lf.begin();
-    typename Container<unsigned long>::const_iterator lj = Le.begin();
+    typename Cont2<Rep>::const_iterator li = Lf.begin();
+    typename Cont2<unsigned long>::const_iterator lj = Le.begin();
     Container<Rep> Res(1,Rep(1));
     Container<Rep> Res2;
     typename Container<Rep>::iterator lr;

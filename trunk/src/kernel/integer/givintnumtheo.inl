@@ -210,12 +210,12 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
           nonzerorandom(_g, alea, p);
           modin(alea, p);
           powmod(essai, alea, Temp, p);
-//std::cerr << alea << " should be of order at least " << *Lqi << "^" << *ei << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
+// std::cerr << alea << " should be of order at least " << *Lqi << "^" << *ei << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
       } while( essai == 1 ) ;
       
           // looking for alea with order Lq[i]^e[i]
 
-//      std::cerr << alea << " is of order at least " << Lq[i] << "^" << e[i] << "==" << power(Lq[i],e[i]) << " mod " << p << std::endl;
+// std::cerr << alea << " is of order at least " << Lq[i] << "^" << e[i] << "==" << power(Lq[i],e[i]) << " mod " << p << std::endl;
           
       divin(Temp, power(*Lqi,*ei-1));
       mulin(primroot, powmod(essai, alea, Temp, p));    

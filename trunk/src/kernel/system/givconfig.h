@@ -1,11 +1,11 @@
-#ifndef _GIVARO_CONFIG_H_
-#define _GIVARO_CONFIG_H_
+#ifndef _GIVARO_INTERNAL_CONFIG_H_
+#define _GIVARO_INTERNAL_CONFIG_H_ 1
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/system/givconfig.h,v $
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.4 2004-10-11 13:54:38 jgdumas Exp $
+// $Id: givconfig.h,v 1.5 2004-10-11 15:15:14 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -48,7 +48,8 @@
 
 
 // -- Currently my machine & compiler:
-#define GIVARO_HAVE_TYPENAME
+#define GIVARO_HAVE_TYPENAME 1
+#define GIVARO_USE_SIXTYFOUR 1
 
 
 // ==========================================================================
@@ -57,16 +58,16 @@
 // - xx: major version number
 // - yy: minor version number
 // - zz: revision number
-#define GIVARO_VERSION  0x020000
+#define GIVARO_VERSION  0x030103
 
-// -- Define this value both to compile the library of user program
+// -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)
 //#define GIVARO_DEBUG 1
 
 
 // ==========================================================================
-// -- Defined the basic integer arithmetics available on this machine
-#include "givaro-config.h"
+// -- Defines the basic integer arithmetics available on this machine
+#include <givaro-config.h>
 
 # define GIVARO_BITS_PER_LONGINT 	SIZEOF_LONG
 # define GIVARO_BITS_PER_INT		SIZEOF_INT
@@ -80,13 +81,15 @@ typedef unsigned  __GIVARO_INT8      uint8;
 typedef unsigned  __GIVARO_INT16     uint16;
 typedef unsigned  __GIVARO_INT32     uint32;
 
-#ifndef __GIVARO_INT64
-#  define __DONOTUSE_Givaro_64__
-#else
-#  define __USE_Givaro_64__
-    typedef signed __GIVARO_INT64 int64;
-    typedef unsigned __GIVARO_INT64  uint64;
-#endif
+# if defined(__GIVARO_INT64)
+#   undef GIVARO_DONOTUSE_SIXTYFOUR 
+typedef signed __GIVARO_INT64 int64;
+typedef unsigned __GIVARO_INT64  uint64;
+# else
+#   undef GIVARO_USE_SIXTYFOUR 1
+#   define GIVARO_DONOTUSE_SIXTYFOUR 1
+# endif
+
 
 
 # define GIVARO_MAXUINT8		255U 		// 2^8-1

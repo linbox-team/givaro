@@ -8,7 +8,7 @@
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
-#ifndef __DONOTUSE_Givaro_64__
+#ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 #define __USE_64_bits__
 #endif
 
@@ -33,11 +33,11 @@ extern "C" {
 
 
 #ifdef __USE_64_bits__
-#    define __USE_GMPPLUSPLUS_64__
+#    define __USE_GMPPLUSPLUS_SIXTYFOUR__
 #endif
 
 #ifdef __USE_ISOC99
-#    define __USE_GMPPLUSPLUS_64__
+#    define __USE_GMPPLUSPLUS_SIXTYFOUR__
 #endif
 
 

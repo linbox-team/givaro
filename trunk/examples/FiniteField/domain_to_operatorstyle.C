@@ -1,0 +1,48 @@
+#include <iostream>
+#include <givaro/givgfq.h>
+#include <givaro/StaticElement.h>
+
+// Finite Field with Domain style
+typedef GFqDom<long> Field;
+
+// Wrapper to give an operator style to the elements
+typedef StaticElement< Field > Element;
+
+// Mandatory declaration (because of static template)
+Field Element::_domain;
+
+
+int main(int argc, char ** argv) {
+    unsigned long P = 5003;
+
+        // Initialization of static member
+    Element::setDomain( Field(P) );
+
+        // Initialisations of elements
+    Element a(2),b(-29.8),c(33),d(Integer("123456789012345678901234567890"));
+
+
+        // Computations
+    a = b;  	std::cerr << a << " = " << b << " mod " << P << ";" << std::endl;
+    a = b + c;  std::cerr << a << " = " << b << " + " << c << " mod " << P << ";" << std::endl;
+    a = b - c;  std::cerr << a << " = " << b << " - " << c << " mod " << P << ";" << std::endl;
+    a = b * c;  std::cerr << a << " = " << b << " * " << c << " mod " << P << ";" << std::endl;
+    a = b / c;  std::cerr << a << " = " << b << " / " << c << " mod " << P << ";" << std::endl;
+
+        // Computations in place    
+    std::cerr << d << " + " << a << " mod " << P << " = "; d += a; std::cerr << d << ";" << std::endl;
+    std::cerr << d << " - " << a << " mod " << P << " = "; d -= a; std::cerr << d << ";" << std::endl;
+    std::cerr << d << " * " << a << " mod " << P << " = "; d *= a; std::cerr << d << ";" << std::endl;
+    std::cerr << d << " / " << a << " mod " << P << " = "; d /= a; std::cerr << d << ";" << std::endl;
+   
+        // Tests
+    std::cerr << a << " is non zero is " << (a != Element(0) ) << std::endl;
+    a = 0; std::cerr << a << " is zero is " << (a == Element(0) ) << std::endl;    
+
+
+        // Access to Field object
+    Field F = Element::getDomain();
+    F.write( std::cerr << "Test: within ") << std::endl;
+
+    return 0;
+}

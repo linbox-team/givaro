@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32uns.h,v 1.2 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz32uns.h,v 1.3 2004-10-12 14:36:46 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -87,6 +87,8 @@ public:
   double& convert(double& r, const Rep a ) const { return r = (double)a ;}
   long int& convert(long int& r, const Rep a) const { return r = (long int)a;}
   unsigned long int& convert(unsigned long int& r, const Rep a) const { return r = (unsigned long int)a;}
+  int32& convert(int32& r, const Rep a) const { return r = (int32)a;}
+  uint32& convert(uint32& r, const Rep a) const { return r = (uint32)a;}
     Integer& convert(Integer& i, const Rep a) const {
         unsigned long ur;
         return i = (Integer)convert(ur, a);

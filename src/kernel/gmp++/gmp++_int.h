@@ -4,7 +4,7 @@
 // Copyright(c)'2001 by LinBox Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// Time-stamp: <08 Jun 04 17:02:03 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <12 Oct 04 13:39:25 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -90,10 +90,14 @@ public:
   Integer  operator + (const Integer& n) const;  
   Integer  operator + (const unsigned long l) const;
   Integer  operator + (const long l) const;
+    template<class XXX> Integer& operator +=(const XXX& x) { return this->operator += ( (Integer)x ); }
+    
+            
 
   Integer& operator -= (const Integer& n);  
   Integer& operator -= (const unsigned long l);  
   Integer& operator -= (const long l);  
+    template<class XXX> Integer& operator -=(const XXX& x) { return this->operator -= ( (Integer)x ); }
   Integer  operator - (const Integer& n) const;
   Integer  operator - (const unsigned long l) const;
   Integer  operator - (const long l) const;
@@ -101,7 +105,11 @@ public:
 
   Integer& operator *= (const Integer& n);  
   Integer& operator *= (const unsigned long l);  
-  Integer& operator *= (const long l);  
+  Integer& operator *= (const long l);
+    template<class XXX> Integer& operator *=(const XXX& x) { return this->operator *= ( (Integer)x ); }
+    
+
+
   Integer  operator * (const Integer& n) const;
   Integer  operator * (const unsigned long l) const;
   Integer  operator * (const long l) const;
@@ -111,6 +119,7 @@ public:
   Integer& operator /= (const Integer& n);  
   Integer& operator /= (const unsigned long l);
   Integer& operator /= (const long l);
+    template<class XXX> Integer& operator /=(const XXX& x) { return this->operator /= ( (Integer)x ); }
   Integer  operator /  (const Integer& n) const;
   Integer  operator /  (const unsigned long l) const;
   Integer  operator /  (const long l) const;
@@ -118,6 +127,7 @@ public:
   Integer& operator %= (const Integer& n);  
   Integer& operator %= (const unsigned long l);
   Integer& operator %= (const long l);
+    template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
   Integer  operator % (const Integer& n) const;
   long  operator % (const unsigned long l) const;
   long  operator % (const long l) const;

@@ -4,7 +4,7 @@
 // see the copyright file.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz16table1.inl,v 1.5 2004-10-12 14:36:46 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -75,6 +75,42 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::inv (Rep& r, const Rep a) const
   // GivError::throw_error( GivMathDivZero("Zpz::inv"));
   return r;
 }
+
+
+template< class RandIter >
+inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a) const {
+	return init(a, g());
+}
+
+template< class RandIter >
+inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a, const Rep& b) const {
+	return init(a, g());
+}
+
+template< class RandIter >
+inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a, long b) const {
+	return init(a, g() %(uint16) b);
+}
+
+template< class RandIter >
+inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a) const {
+	while (iszero(init(a, g()))) {};
+	return a;
+}
+
+template< class RandIter >
+inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
+	while (iszero(init(a, g()))) {};
+	return a;
+}
+
+template< class RandIter >
+inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, long b) const {
+	while (iszero(init(a, g() %(uint16) b))) {};
+	return a;
+}
+
+
 
  // -- inline array operations between ZpzDom<Log16>::Rep
 inline void ZpzDom<Log16>::mul (const size_t sz, Array r, constArray a, constArray b) const

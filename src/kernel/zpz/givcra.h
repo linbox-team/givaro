@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.1 2004-12-17 14:42:59 jgdumas Exp $
+// $Id: givcra.h,v 1.2 2004-12-18 14:16:30 jgdumas Exp $
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm for 2 elements. 
@@ -15,7 +15,7 @@
 #include "givaro/giverror.h"
 
 
-template<class Ring, class Domain, bool REDUCE>
+template<class Ring, class Domain, bool REDUCE = true>
 struct ChineseRemainder;
 
 
@@ -31,8 +31,8 @@ struct ChineseRemainder<Ring, Domain, false>  {
 
         DomainElement u;
         _D.invin( _D.init(u, M) );
-        _D.convert(_C12, u);
-        _C12 *= M;
+        _D.convert(_C, u);
+        _C *= M;
     }
 
 
@@ -40,13 +40,13 @@ struct ChineseRemainder<Ring, Domain, false>  {
     RingElement & operator()( RingElement& res, const RingElement& A, const DomainElement& e) {
         _D.convert(res, e);
         res -= A;
-        res *= _C12;
+        res *= _C;
         return res += A;
     }
 
 private:
     Domain _D;
-    RingElement _C12;
+    RingElement _C;
 
 };
 
@@ -62,8 +62,8 @@ struct ChineseRemainder<Ring, Domain, true>  {
 
         DomainElement u;
         _D.invin( _D.init(u, M) );
-        _D.convert(_C12, u);
-        _C12 *= M;
+        _D.convert(_C, u);
+        _C *= M;
     }
 
 
@@ -71,14 +71,14 @@ struct ChineseRemainder<Ring, Domain, true>  {
     RingElement & operator()( RingElement& res, const RingElement& A, const DomainElement& e) {
         _D.convert(res, e);
         res -= A;
-        res *= _C12;
+        res *= _C;
         res %= _P;
         return res += A;
     }
 
 private:
     Domain _D;
-    RingElement _C12, _P;
+    RingElement _C, _P;
 
 };
 

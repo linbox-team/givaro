@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.2 2004-06-18 12:44:59 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.3 2004-07-20 12:03:46 giorgi Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -62,7 +62,8 @@ public:
   Residu_t size() const { return _p;}
 
   // ----- Convert from element to int
-  int & convert( int& x , Rep& a) { return x=_tab_rep2value[a];}
+  int & convert( int& x , Rep& a) 
+    { if (a >= _p) return x=0; else return x=_tab_rep2value[a];}
 
 
 // initialized by a degree of the generator.
@@ -83,7 +84,7 @@ public:
 
 
   // ----- Equality between two elements
-  int areEqual( const element& a, const element& b) {return a==b;}
+  int areEqual( const element& a, const element& b) const {return a==b;}
   
 
   // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
@@ -188,9 +189,11 @@ protected:
   Power_t* _tab_neg;      // table for neg
   Power_t* _tab_addone;   // table for ei+1
   Power_t* _tab_subone;   // table for -(ei+1)
+  int* numRefs;
 
   static void Init();
   static void End();
+  
 };
 
 

@@ -4,7 +4,7 @@
 // see the copyright file.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.2 2004-06-18 12:44:59 jgdumas Exp $
+// $Id: givzpz16table1.inl,v 1.3 2004-07-20 12:03:46 giorgi Exp $
 // ==========================================================================
 // Description:
 
@@ -242,7 +242,7 @@ inline void ZpzDom<Log16>::axmyin
  // ------------------------- Miscellaneous functions
 
 inline int ZpzDom<Log16>::iszero(const Rep a) const
-{ return a == ZpzDom<Log16>::zero; }
+{ return a >= _p; }
 
 inline int ZpzDom<Log16>::isone(const Rep a) const
 { return a == ZpzDom<Log16>::one; }
@@ -454,17 +454,21 @@ inline std::istream& ZpzDom<Log16>::read (std::istream& s)
 
 inline std::ostream& ZpzDom<Log16>::write (std::ostream& s ) const
 {
-  return s << "(z," << residu() << ')';
+  return s << "Log16 Givaro Z/pZ modulo " << residu();
 }
 
 inline std::istream& ZpzDom<Log16>::read (std::istream& s, Rep& a) const
 {
-  s >> a;
-  init(a, a);
+  int tmp; //dpritcha
+  s >> tmp;
+  tmp %= _p;
+  if (tmp < 0) tmp += _p;
+  a = _tab_value2rep[tmp];
   return s;
 }
 
 inline std::ostream& ZpzDom<Log16>::write (std::ostream& s, const Rep a) const
 {
-  return s << _tab_rep2value[a];
+  if (a >= _p) return s << '0';
+  return s << _tab_rep2value[a]; //dpritcha
 }

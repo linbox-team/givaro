@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz.h,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
+// $Id: givzpz.h,v 1.3 2004-10-11 13:54:38 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Family of arithmetics over Zpz
@@ -14,12 +14,8 @@
 // -- 
 // ==========================================================================
 #include <givaro/givconfig.h>
-#ifndef __GIVARO__DONOTUSE_longlong__
-#define __USE_64_bits__
-#endif
 
-template<class TAG>
-class ZpzDom {};
+template<class TAG> class ZpzDom;
 
 // -- Tag for arithmetic:
 struct Std16 { typedef int16 type;}; // -- standard arithmetic over 16bits representations.
@@ -42,14 +38,9 @@ struct Log16 { typedef int16 type;}; // -- log arithmetic over 16bits representa
 #define __USE_Givaro_64__
 #endif
 
-#ifdef __USE_Givaro_64__
+#ifndef __DONOTUSE_Givaro_64__
 #define __USE_GMPPLUSPLUS_64__
-
-typedef __GIVARO_INT64 int64;
-typedef unsigned __GIVARO_INT64  uint64;
-
 struct Std64 { typedef int64 type;}; // -- standard arithmetic over 64bits representations.
-
 #include "givaro/givzpz64std.h"
 #endif
 

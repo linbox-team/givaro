@@ -1,11 +1,10 @@
 #include <givaro/givconfig.h>
-#ifndef __GIVARO__DONOTUSE_longlong__
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz64std.inl,v $
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.5 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.6 2004-10-11 13:54:38 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -425,6 +424,7 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long long a ) c
   return r;
 }
 
+/*
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign ( Rep& r, const long a ) const
 {  return r = (Rep)a; 
 }
@@ -438,6 +438,7 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign ( Rep& r, const unsigned long
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign 
   ( Rep& r, const unsigned int a ) const
 { return assign(r, (unsigned long)a); }
+*/
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::assign 
   ( Rep& r, const Rep a ) const
@@ -520,7 +521,7 @@ inline void ZpzDom<Std64>::dotprod
         dot += a[0] * b[0]; 
         dot += a[1] * b[1];
       }
-    if (dot>(int64)_p) dot %= (uint64)_p;
+    if (dot>(uint64)_p) dot %= (uint64)_p;
     i_begin += min_sz;
   } while (i_begin <sz);
   r = (Rep)dot;
@@ -621,4 +622,3 @@ inline Integer& ZpzDom<Std64>::write (Integer& r, const Rep a) const
 {
   return r = Integer(a);
 }
-#endif

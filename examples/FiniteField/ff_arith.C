@@ -1,4 +1,5 @@
 #include <iostream>
+#include <givaro/givzpz64std.h>
 #include <givaro/givzpz.h>
 #include <givaro/givgfq.h>
 #include <givaro/givmontg32.h>
@@ -64,7 +65,7 @@ int main(int argc, char ** argv) {
 
 #ifdef __USE_Givaro_64__
         // modulo 13 over 64 bits
-    ZpzDom<Std64> LL13(13); TestField( LL13 );
+    ZpzDom<Std64> LL13(13UL); TestField( LL13 );
 #endif
 
         // modulo 13 fully tabulated

@@ -65,7 +65,7 @@ public:
     operator long() const		{ long tmp; return _domain.convert(tmp,_elem); }
     operator double() const		{ double tmp; return (double)_domain.convert(tmp,_elem); }
     operator Integer() const		{ Integer tmp; return _domain.convert(tmp,_elem); }
-#ifdef __USE_GMPPLUSPLUS_64__
+#ifndef __GIVARO__DONOTUSE_longlong__
     operator unsigned long long() const	{ Integer tmp; return (unsigned long long)_domain.convert(tmp,_elem); }
     operator long long() const		{ Integer tmp; return (long long)_domain.convert(tmp,_elem); }
 #endif

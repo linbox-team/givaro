@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.2 2004-09-15 12:07:30 jgdumas Exp $
+// $Id: givzpzInt.inl,v 1.3 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -500,7 +500,7 @@ inline std::istream& ZpzDom<Integer>::read (std::istream& s)
 
 inline std::ostream& ZpzDom<Integer>::write (std::ostream& s ) const
 {
-  return s << "(z," << residu() << ')';
+  return s << "Arbitrary length (z," << residu() << ')';
 }
 
 inline std::istream& ZpzDom<Integer>::read (std::istream& s, Rep& a) const

@@ -5,7 +5,7 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <01 Sep 00 14:03:35 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <11 Oct 04 14:15:44 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_H_
 #define _GIV_POLY1_FACTO_H_
@@ -103,7 +103,7 @@ public:
     Rep& factor(
         Rep& W
         , const Rep& P )  const {
-        factor(W,P,_domain.residu());
+        return factor(W,P,_domain.residu());
     }
     
             

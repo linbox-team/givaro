@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.3 2004-09-15 12:04:53 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -330,6 +330,29 @@ inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::init ( Rep& r, const long a ) const
   if (r && (sign ==-1)) r = _p - r;
   return r;
 }
+
+inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::init ( Rep& r, const Integer& residu ) const 
+{
+  long tr;
+  if (residu <0) {
+      // -a = b [p]
+      // a = p-b [p]
+    if ( residu <= (Integer)(-_p) ) tr = long( (-residu) % _p) ;
+    else tr = long(-residu);
+    if (tr)
+      return r = _p - (unsigned long)tr;
+    else
+      return r = zero;
+  } else {
+    if (residu >= (Integer)_p ) tr =   long(residu % _p) ;
+    else tr = long(residu);
+    return r = tr;
+  }
+}
+
+
+
+
 
 inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::init( Rep& a, const int i) const { return init(a,(long)i); }
 

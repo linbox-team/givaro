@@ -8,8 +8,10 @@ AM_CPPFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing -fre
 LDADD = -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 
-EXTRA_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation
+EXTRA_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field
 
+domain_to_operatorstyle_SOURCES=domain_to_operatorstyle.C
+all_field_SOURCES=all_field.C
 gfq_atomic_SOURCES=gfq_atomic.C
 Test_Extension_SOURCES=Test_Extension.C
 zpz_atomic_SOURCES=zpz_atomic.C

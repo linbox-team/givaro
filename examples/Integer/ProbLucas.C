@@ -4,7 +4,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // =================================================================== //
 // Jack Dubrois < Jacques.Dubrois@imag.fr> 
-// Time-stamp: <13 Sep 04 15:30:34 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <11 Oct 04 13:42:42 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
 #include <iostream>
@@ -228,7 +228,7 @@ int main (int argc, char * * argv)
 
 //    std::cerr << "P: " << P << " ; proba: " << epsilon << std::endl;
     
-    bool a1;
+    bool a1(true);
     Timer tim; tim.clear();
     for(unsigned int i = 0; i < NB; ++i) {
 	Timer tt; tt.clear(); tt.start();

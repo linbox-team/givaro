@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.2 2004-09-15 12:04:53 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.3 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -84,6 +84,7 @@ public:
   Rep& init( Rep& r , const unsigned long a) const ;
   Rep& init( Rep& a, const int i) const ;
   Rep& init( Rep& a, const unsigned int i) const ;
+  Rep& init( Rep& a, const Integer& i) const ;
 
 
   // Initialisation from double ( added for FFLAS usage) (C Pernet)
@@ -94,6 +95,10 @@ public:
   double& convert(double& r, const Rep a ) const { return r = (double)a ;}
   long int& convert(long int& r, const Rep a) const { return r = (long int)a;}
   unsigned long int& convert(unsigned long int& r, const Rep a) const { return r = (unsigned long int)a;}
+    Integer& convert(Integer& i, const Rep a) const {
+        unsigned long ur;
+        return i = (Integer)convert(ur, a);
+    }        
 
   // ----- Misc methods
   int iszero( const Rep a ) const;

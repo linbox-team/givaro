@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givrns16.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givrns16.h,v 1.2 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 //  Modular arithmetic for GIVARO. Here is defined arithmetic functions
@@ -13,6 +13,7 @@
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"
+#include "givaro/givarray0.h"
 #include "givaro/givzpz16std.h"
 #include "givaro/givinteger.h"
 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1io.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givpoly1io.inl,v 1.2 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -38,6 +38,7 @@ std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i )
     GivError::throw_error(
       GivBadFormat("Poly1Dom<Domain,Dense>::read: syntax error no ')'"));
 #endif
+  return i;
 }
 
 template<class Domain>

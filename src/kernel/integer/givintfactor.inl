@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <29 Jun 04 17:24:46 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <30 Jun 04 11:31:58 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_INL_
 #define _GIVARO_FACTORISATION_INL_
@@ -75,7 +75,6 @@ template< template<class> class Container> bool
 IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const 
 {
         // n = * Lf[i] ^ Lo[i]
-        // But Lf[i] might not be prime (cf. factor probability)
     bool factocomplete = true;
     Rep nn,g,r,u;
     if (n<0) Rep::neg(nn,n); else nn=n;

@@ -2,7 +2,7 @@
 // Givaro : Euler's phi function
 //          Primitive roots.
 // Needs list structures : stl ones for instance
-// Time-stamp: <29 Jun 04 17:39:09 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <30 Jun 04 11:33:09 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include "givintnumtheo.h"
 #include <list>
@@ -149,7 +149,6 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, const Rep& n) const { unsigned long runs; return prim_root(A, runs, n); }
 
-
 // =================================
 // Probable primitive roots
 //
@@ -160,6 +159,8 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
 //  Returns the probable primitive root and the probability of error.
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const unsigned long L) const {
+//    std::cerr << "L: " << L << std::endl;
+    
 // partial factorisation 
   std::vector<Rep> Lq; 
   std::vector<unsigned long> e;
@@ -168,6 +169,10 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
 
   bool complet = set(Lq, e, pmun, L);
 // partial factorisation done        
+
+//std::cerr << "Lq: " << Lq << std::endl;
+//std::cerr << "e: " << e << std::endl;
+  
 
   Rep Temp;
   Rep essai, alea; 
@@ -181,6 +186,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
           nonzerorandom(_g, alea, p);
           modin(alea, p);
           powmod(essai, alea, Temp, p);
+//std::cerr << alea << " should be of order " << Q << " mod " << p << std::endl;
       } while (essai == 1);
 // looking for alea, of order Q with high probability      
       
@@ -198,12 +204,13 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
 
   typename std::vector<Rep>::const_iterator Lqi = Lq.begin();
   typename std::vector<unsigned long>::const_iterator ei = e.begin();
-  for ( ; ei != e.end(); ++Lqi, ++ei) { 
+  for ( ; Lqi != Lq.end(); ++Lqi, ++ei) { 
       div(Temp, pmun, *Lqi);
       do {
           nonzerorandom(_g, alea, p);
           modin(alea, p);
           powmod(essai, alea, Temp, p);
+//std::cerr << alea << " should be of order at least " << *Lqi << "^" << *ei << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
       } while( essai == 1 ) ;
       
           // looking for alea with order Lq[i]^e[i]
@@ -219,6 +226,42 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
   return primroot; 
 // return primroot with high probability
 }
+
+#ifndef GIVABSDIFF
+#define GIVABSDIFF(a,b) ((a)<(b)?((b)-(a)):((a)-(b)))
+#endif
+#include <math.h>
+
+//  Here L is computed so that the error is close to epsilon    
+// Newton-Raphson iteration is used for 
+// 1-epsilon = (1+2/(p-1))*(1-1/B)^(ln( (p-1)/2 )/ln(B))
+// see [Dubrois & Dumas]
+template<class RandIter>
+typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const double epsilon) const {
+    unsigned long L;
+    double t1, t4, t5, t6, t7, t8, t10, t11, t17, t20, t23, t32, B;
+    B = 1.0;
+    t32= 1.0/epsilon;
+    t1 = (double)p-1.0;
+    t4 = 1.0+2.0/t1;
+    t7 = log(t1/2.0);
+    for( ; GIVABSDIFF(t32,B) > 0.5 ; ) {
+        B = t32;
+        t5 = 1/B;
+        t6 = 1.0-t5;
+        t8 = log(B);
+        t10 = t7/t8;
+        t11 = ::pow(t6,1.0*t10);
+        t17 = t8*t8;
+        t20 = log(t6);
+        t23 = B*B;
+        t32 = B-(t4*t11-1.0+epsilon)/t4/t11/(-t7/t17*t5*t20+t10/t23/t6);
+    }
+    L = (unsigned long)::sqrt(t32);
+    
+    return probable_prim_root(primroot, error, p, L);
+}
+
 
 
 // =================================

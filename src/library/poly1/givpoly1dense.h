@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.2 2005-01-06 17:10:50 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -222,7 +222,7 @@ public :
     template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const;
     
         // -- Square free decomposition
-    void sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const;
+     size_t& sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const;
 
 
 }; //  ------------------------------- End Of The Class Poly1Dom<Type_t>

@@ -5,7 +5,7 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <11 Oct 04 14:15:44 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jan 05 17:22:58 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_H_
 #define _GIV_POLY1_FACTO_H_
@@ -80,14 +80,16 @@ public:
 // ---------------------------------------------------------------
 
     template< template<class> class Container> void CZfactor( 
-        Container< Rep > & L
+        Container< Rep > & Lf
+        , Container< unsigned long > & Le
         , const Rep& f
         , typename Domain::Residu_t MOD)  const ;
 
     template< template<class> class Container> void CZfactor( 
-        Container< Rep > & L
+        Container< Rep > & Lf
+        , Container< unsigned long > & Le
         , const Rep& f )  const {
-        CZfactor(L,f,_domain.residu());
+        CZfactor(Lf, Le, f,_domain.residu());
     }
 
 // ---------------------------------------------------------------

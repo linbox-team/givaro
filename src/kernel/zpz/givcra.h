@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.2 2004-12-18 14:16:30 jgdumas Exp $
+// $Id: givcra.h,v 1.3 2005-01-06 17:10:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm for 2 elements. 
@@ -16,8 +16,35 @@
 
 
 template<class Ring, class Domain, bool REDUCE = true>
-struct ChineseRemainder;
+struct ChineseRemainder {
+    typedef typename Ring::Element   RingElement;
+    typedef typename Domain::Element DomainElement;
 
+
+    ChineseRemainder(const Ring& R, const RingElement& M, const Domain& D) 
+            : _D(D), _P( M * (RingElement)D.characteristic() ) {
+
+        DomainElement u;
+        _D.invin( _D.init(u, M) );
+        _D.convert(_C, u);
+        _C *= M;
+    }
+
+
+
+    RingElement & operator()( RingElement& res, const RingElement& A, const DomainElement& e) {
+        _D.convert(res, e);
+        res -= A;
+        res *= _C;
+        res %= _P;            // This is the reduction
+        return res += A;
+    }
+
+private:
+    Domain _D;
+    RingElement _C, _P;
+
+};
 
 template<>
 template<class Ring, class Domain>
@@ -50,36 +77,5 @@ private:
 
 };
 
-template<>
-template<class Ring, class Domain>
-struct ChineseRemainder<Ring, Domain, true>  {
-    typedef typename Ring::Element   RingElement;
-    typedef typename Domain::Element DomainElement;
-
-
-    ChineseRemainder(const Ring& R, const RingElement& M, const Domain& D) 
-            : _D(D), _P( M * (RingElement)D.characteristic() ) {
-
-        DomainElement u;
-        _D.invin( _D.init(u, M) );
-        _D.convert(_C, u);
-        _C *= M;
-    }
-
-
-
-    RingElement & operator()( RingElement& res, const RingElement& A, const DomainElement& e) {
-        _D.convert(res, e);
-        res -= A;
-        res *= _C;
-        res %= _P;
-        return res += A;
-    }
-
-private:
-    Domain _D;
-    RingElement _C, _P;
-
-};
 
 #endif

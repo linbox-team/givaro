@@ -2,7 +2,7 @@
 // Givaro : Euler's phi function
 //          Primitive roots.
 // Needs list structures : stl ones for instance
-// Time-stamp: <30 Jun 04 14:30:21 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <10 Dec 04 13:27:31 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include "givintnumtheo.h"
 #include <list>

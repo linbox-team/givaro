@@ -4,7 +4,7 @@
 //              Pollard's rho method for factorization
 //              Elliptic curves factorization by Lenstra
 // Needs Container structures : stl ones for instance
-// Time-stamp: <29 Jun 04 16:11:22 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <10 Dec 04 13:27:13 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_H_
 #define _GIVARO_FACTORISATION_H_
@@ -63,11 +63,11 @@ public:
 
         //  Factors are checked for primality
     Rep& primefactor(Rep& r, const Rep& n, unsigned long loops = 0) const {
-	if (factor(r, n, loops) != 1) {
-	   if (! isprime(r,5) ) {
+	if (factor(r, n, loops) != 1) {            
+	   if (! isprime(r,_GIVARO_ISPRIMETESTS_) ) {
 		Rep nn = r; factor(r,nn, loops);
 	   }
-	   while (! isprime(r,5) ) {
+	   while (! isprime(r,_GIVARO_ISPRIMETESTS_) ) {
 		Rep nn = r;
         	if (isone(gcd(r,nn,PROD_first_primes))) {
             	   if (isone(gcd(r,nn,PROD_second_primes))) {
@@ -83,7 +83,8 @@ public:
 			break; // In case Lenstra fails also
 		}
            }
-	}
+	} else if (! isprime(n, _GIVARO_ISPRIMETESTS_)) 
+            primefactor(r, n, loops);
 	return r;
     }
 

@@ -60,7 +60,7 @@ Integer tmain(int argc, char ** argv) {
    e = Moduli.begin();
    for( ; i != Primes.end(); ++i, ++e, ++v)
        if (! i->areEqual(*e, *v) ) {
-           std::cerr << "incoherency" << std::endl;
+           i->write( std::cerr << "incoherency within ") << std::endl;
            break;
        }        
     

@@ -5,7 +5,7 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <30 Aug 00 20:08:35 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jan 05 18:01:43 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_INL_
 #define _GIV_POLY1_FACTO_INL_
@@ -48,7 +48,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                         SplitFactor ( L, G2, d, MOD) ;
                     }
                     Rep G3; gcd(G3, G, add(tp2,tp,one) );
-                    Degree dG3 = G3.degree();
+                    Degree dG3; degree(dG3,G3);
                     if (( dG3 != dG) && (dG3 > 0 )) {
                         splitted = 1 ;
                         SplitFactor ( L, G3, d, MOD) ;
@@ -107,8 +107,9 @@ template< template<class> class Container >
 inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     Container< Rep > & L
     , const Rep& f
-    , typename Domain::Residu_t MOD )  const  {
+    , typename Domain::Residu_t MOD)  const  {
     // srand48(BaseTimer::seed());
+// write(std::cerr << "DD in: ", f) << std::endl;
     Rep W, D, P = f;
     Degree dP;
     Rep Unit, G1; init(Unit, Degree(1), _domain.one);
@@ -119,13 +120,14 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
         gcd (G1,sub(D,W,Unit), P) ;
         Degree dG1; degree(dG1,G1);
         if ( dG1 > 0 ) {
-            SplitFactor (L, G1, ld, MOD);
+            SplitFactor (L, G1, dp, MOD);
             divin(P,G1);
         }
     }
     degree(dP,P);    
     if (dP > 0)
         L.push_back(P);
+// write(std::cerr << "DD: ", P) << std::endl;
 }
 
 // ---------------------------------------------------------------
@@ -135,14 +137,28 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
 template<class Domain, class Tag, class RandIter>
 template< template<class> class Container > 
 inline void Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( 
-    Container< Rep > & L
+    Container< Rep > & Lf
+    , Container< unsigned long > & Le
     , const Rep & P
     , typename Domain::Residu_t MOD ) const  {
-    int nb; Degree dp; degree(dp,P);
-    Rep * g = new Rep[dp.value()+1];
+// write(std::cerr << "CZ in: ", P) << std::endl;
+    Degree dp; degree(dp,P);
+    size_t nb=dp.value()+1; 
+    Rep * g = new Rep[nb];
     sqrfree(nb,g,P);
-    for(;--nb;)
-        DistinctDegreeFactor(L, g[i], MOD) ;
+// std::cerr << "CZ sqrfree: " << nb << std::endl;
+    for(size_t i = 0; i<nb;++i) {
+        size_t this_multiplicity = Lf.size();
+        DistinctDegreeFactor(Lf, g[i], MOD) ;
+        Le.resize(Lf.size());
+        for( ; this_multiplicity < Lf.size(); ++this_multiplicity)
+            Le[this_multiplicity] = i+1;
+// std::cerr << "multiplicities";
+// for (typename Container< unsigned long >::const_iterator e=Le.begin(); e!=Le.end(); ++e)
+// std::cerr << " " << *e;
+// std::cerr << std::endl;
+        
+    }
     ::delete [] g;
 }
 

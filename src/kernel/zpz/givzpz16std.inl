@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.2 2004-06-18 12:44:59 jgdumas Exp $
+// $Id: givzpz16std.inl,v 1.3 2004-07-20 12:03:46 giorgi Exp $
 // ==========================================================================
 // Description:
 
@@ -552,7 +552,7 @@ inline std::istream& ZpzDom<Std16>::read (std::istream& s)
 
 inline std::ostream& ZpzDom<Std16>::write (std::ostream& s ) const
 {
-  return s << "(z," << residu() << ')';
+  return s << "Std16 Givaro Z/pZ modulo " << residu();
 }
 
 inline std::istream& ZpzDom<Std16>::read (std::istream& s, Rep& a) const

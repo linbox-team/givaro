@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz16table1.C,v 1.2 2004-07-20 12:03:46 giorgi Exp $
 // ==========================================================================
 // Description:
 
@@ -12,13 +12,13 @@
 
 
 ZpzDom<Log16>::ZpzDom ()
- : zero(0), one(1), _p(0)
+  : zero(0), one(1), _p(0)
 { }
 
 ZpzDom<Log16>::ZpzDom( Residu_t p )
- : zero(2*(p-1)), one(0), _p(p)
+  : zero(2*(p-1)), one(0), _p(p)
 {
-  int32 i,j;
+   int32 i,j;
 
   // tab value: Domain -> Rep, or something very similar
   _tab_value2rep = new Power_t[_p];
@@ -35,7 +35,7 @@ ZpzDom<Log16>::ZpzDom( Residu_t p )
   Residu_t seed =2;
 
   // -- Find a generator of the multiplicative group
-  while (not_found == 1) 
+  while (_p > 2 && not_found == 1) 
   {
     for(i=1; i<_p; i++) 
     {
@@ -45,6 +45,10 @@ ZpzDom<Log16>::ZpzDom( Residu_t p )
       if (accu == 1) break;
       _tab_value2rep[accu] = i;
     }
+    if (accu != 1){
+      std::cerr << "attempted to build Log16 field with non-prime base "<<_p<<", halting\n";
+      exit(1);
+    };
     if (i ==_p-1) not_found = 0;
     else {
       do { seed = rand() % _p; } while ((seed ==0) && (seed !=1));
@@ -118,6 +122,12 @@ for(i=0; i<_p; i++) {
   for(j=-_pmone/2; j<_pmone/2; j++)
     _tab_subone[j] = _tab_addone[j+_pmone/2];
 
+  numRefs = new int;
+  (*numRefs) = 1;
+#ifdef REFC_DEBUG
+  std::cout << *(numRefs) << " Arefs, p="<<_p<<" \n";
+#endif
+
   // -- temporary
 }
 
@@ -133,11 +143,35 @@ ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F)
   _tab_neg = F._tab_neg;
   _tab_addone = F._tab_addone;
   _tab_subone = F._tab_subone;
+  numRefs = F.numRefs;
+  (*numRefs)++;
+#ifdef REFC_DEBUG
+  std::cout << *(numRefs) << " Brefs, p="<<_p<<" \n";
+#endif
+    
 }
 
 
 ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
 {
+  if (this->numRefs) {
+    (*(this->numRefs))--;
+#ifdef REFC_DEBUG
+    std::cout << *(this->numRefs) << " Crefs, p="<<this->_p<<" \n";
+#endif
+    if ((*(this->numRefs))==0) {
+#ifdef REFC_DEBUG
+      std::cout << "Ddestroying, p="<<residu()<<"\n";
+#endif
+      delete [] _tab_value2rep;
+      delete [] _tab_rep2value;
+      delete [] _tab_mul;
+      delete [] (&_tab_addone[-2*_pmone]);
+      delete [] (&_tab_subone[-2*_pmone]);
+      delete numRefs;
+    }
+  }
+
   this->_p = F.residu();
   this->_pmone = F._pmone;
   this->_tab_value2rep = F._tab_value2rep;
@@ -147,17 +181,30 @@ ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
   this->_tab_neg = F._tab_neg;
   this->_tab_addone = F._tab_addone;
   this->_tab_subone = F._tab_subone;
+  this->numRefs = F.numRefs;
+  (*(this->numRefs))++;
+#ifdef REFC_DEBUG
+  std::cout << *(this->numRefs) << " Erefs, p = "<<this->_p<<"\n";
+#endif
+
   return *this;
 }
 
 
 ZpzDom<Log16>::~ZpzDom() 
 {
-  delete [] _tab_value2rep;
-  delete [] _tab_rep2value;
-  delete [] _tab_mul;
-  delete [] (&_tab_addone[-2*_pmone]);
-  delete [] (&_tab_subone[-2*_pmone]);
+  (*numRefs)--;
+  if (*numRefs == 0) {
+#ifdef REFC_DEBUG
+    std::cout << "Fdestroying, p="<<residu()<<"\n";
+#endif
+    delete [] _tab_value2rep;
+    delete [] _tab_rep2value;
+    delete [] _tab_mul;
+    delete [] (&_tab_addone[-2*_pmone]);
+    delete [] (&_tab_subone[-2*_pmone]);
+    delete numRefs;
+  }
 }
 
 void ZpzDom<Log16>::Init() 

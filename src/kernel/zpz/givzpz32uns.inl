@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32uns.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz32uns.inl,v 1.2 2004-07-20 12:03:46 giorgi Exp $
 // ==========================================================================
 // Description:
 
@@ -551,7 +551,7 @@ inline std::istream& ZpzDom<Unsigned32>::read (std::istream& s)
 
 inline std::ostream& ZpzDom<Unsigned32>::write (std::ostream& s ) const
 {
-  return s << "(z," << residu() << ')';
+  return s << "Uns32 Givaro Z/pZ modulo " << residu();
 }
 
 inline std::istream& ZpzDom<Unsigned32>::read (std::istream& s, Rep& a) const

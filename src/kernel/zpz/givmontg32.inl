@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.2 2004-07-20 12:03:46 giorgi Exp $
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
@@ -338,7 +338,7 @@ inline std::istream& Montgomery<Std32>::read (std::istream& s)
 
 inline std::ostream& Montgomery<Std32>::write (std::ostream& s ) const
 {
-  return s << "(z," << residu() << ')';
+  return s << "Givaro Montgomery Z/pZ, p=" << residu();
 }
 
 inline std::istream& Montgomery<Std32>::read (std::istream& s, Rep& a) const

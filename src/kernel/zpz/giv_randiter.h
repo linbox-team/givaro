@@ -133,7 +133,7 @@ template <class Field , class Type> class GIV_randIter
      * at the creation of the generator.
      * @return random field element
      */	
-    element& random(element& elt)
+    element& random(element& elt) const
       {
       // Create new random elements     
       long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));

@@ -533,7 +533,7 @@ inline std::istream& GFqDom<TT>::read (std::istream& s) {
 
 template<typename TT> 
 inline std::ostream& GFqDom<TT>::write (std::ostream& o) const {
-    return o << '(' <<  GFqDom<TT>::_characteristic << '^' << GFqDom<TT>::_exponent << ')';
+  return o << "Givaro Gfq of (" <<  GFqDom<TT>::_characteristic << '^' << GFqDom<TT>::_exponent << ')';
 }
 
   // ------------------------------------

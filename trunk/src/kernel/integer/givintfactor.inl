@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <30 Jun 04 11:31:58 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <10 Dec 04 13:27:18 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_INL_
 #define _GIVARO_FACTORISATION_INL_
@@ -247,14 +247,14 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
   // average number of iterations < 13/8*sqrt( Pi*n/2)
   // Sometimes the factor isn't prime -- TO EXPLICIT
     if (islt(n,3)) return g=n;
-    if ( isprime(n,5) ) return g=n;
+    if ( isprime(n, _GIVARO_ISPRIMETESTS_) ) return g=n;
     g=1;
     Rep m(zero), x, y, p(one), t;
     random(gen, y, n);
 
     if (threshold) {
         unsigned long c = 0;
-        while(isone(g) && (++c < threshold)) {
+        while( isone(g) && (++c < threshold)) {
             if(  areEqual(p, addin(m,one)) ) {
                 x=y;
                 mulin(p,2);
@@ -262,6 +262,8 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
             Pollard_fctin(y,n);
             gcd(g,sub(t,y,x),n);
         }
+        if ((g == n)&&(c<threshold)) // Failure with the initial value
+            Pollard(gen, g, n, threshold-c);
     } else {
         while(isone(g)) {
             if(  areEqual(p, addin(m,one)) ) {
@@ -271,6 +273,8 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
             Pollard_fctin(y,n);
             gcd(g,sub(t,y,x),n);
         }
+        if (g == n) // Failure with the initial value
+            Pollard(gen, g, n, 0);
     }
     return g;
 }

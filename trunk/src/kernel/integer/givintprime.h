@@ -9,6 +9,10 @@
 #ifndef _GIVARO_INTEGERS_PRIME_H_
 #define _GIVARO_INTEGERS_PRIME_H_
 
+#ifndef _GIVARO_ISPRIMETESTS_
+#define _GIVARO_ISPRIMETESTS_ 5
+#endif
+
 #include "givaro/givinteger.h"
 
 
@@ -47,7 +51,7 @@ class IntPrimeDom : public IntegerDom {
 public:
     IntPrimeDom() :  IntegerDom() {}
 
-    int isprime(const Rep& n, int r=5) const 
+    int isprime(const Rep& n, int r=_GIVARO_ISPRIMETESTS_) const 
         {
 /*
   return probab_prime(n);
@@ -66,25 +70,25 @@ public:
     unsigned int isprimepower(Rep&, const Rep&) const ;
 
     template<class RandIter>
-    unsigned int Miller(RandIter& g, const Rep& n) const  ;
+    unsigned int Miller(RandIter& g, const Rep& n=_GIVARO_ISPRIMETESTS_) const  ;
 
     template<class RandIter>
-    Rep& test_Lehmann(RandIter& g, Rep&, const Rep& n) const  ;
+    Rep& test_Lehmann(RandIter& g, Rep&, const Rep& n=_GIVARO_ISPRIMETESTS_) const  ;
 
     template<class RandIter>
-    int Lehmann(RandIter& g, const Rep& n)  const ;
+    int Lehmann(RandIter& g, const Rep& n=_GIVARO_ISPRIMETESTS_)  const ;
 
     int isprime_Tabule(const int n) const ;
     int isprime_Tabule2(const int n) const ;
 
-    Rep& nextprime(Rep&, const Rep&, int r=1) const ;
-    Rep& prevprime(Rep&, const Rep&, int r=1) const ;
-    Rep& nextprimein(Rep&, int r=1) const ;
-    Rep& prevprimein(Rep&, int r=1) const ;
+    Rep& nextprime(Rep&, const Rep&, int r=_GIVARO_ISPRIMETESTS_) const ;
+    Rep& prevprime(Rep&, const Rep&, int r=_GIVARO_ISPRIMETESTS_) const ;
+    Rep& nextprimein(Rep&, int r=_GIVARO_ISPRIMETESTS_) const ;
+    Rep& prevprimein(Rep&, int r=_GIVARO_ISPRIMETESTS_) const ;
 
 
 // Using Integer
-    int local_prime(const Rep& n, int r=1) const { return probab_prime(n,r); }
+    int local_prime(const Rep& n, int r=_GIVARO_ISPRIMETESTS_) const { return probab_prime(n,r); }
     int& access(int& r, const Rep& a) const { return r=Integer2long(a); }
     long& access(long& r, const Rep& a) const { return r=Integer2long(a); }
     double& access(double& r, const Rep& a) const { return r=Integer2double(a); }

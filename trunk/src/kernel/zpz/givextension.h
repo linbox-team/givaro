@@ -71,6 +71,7 @@ public:
             _exponent = eF._exponent;
             _cardinality = eF._cardinality;
         }
+        return *this;
     }
     
     Polelement& init( Polelement& e, const Integer i) const { 

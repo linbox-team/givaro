@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.4 2004-07-20 12:03:46 giorgi Exp $
+// $Id: givzpz64std.inl,v 1.5 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -57,6 +57,8 @@ inline ZpzDom<Std64>::ZpzDom<Std64>( )
 inline ZpzDom<Std64>::ZpzDom<Std64>( Residu_t p , unsigned long e)
  : zero(0), one(1), _p(p)
 {}
+
+
 
 inline ZpzDom<Std64>::Residu_t ZpzDom<Std64>::residu( ) const
 { return _p; }
@@ -364,13 +366,36 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const unsigned long a
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long a ) const
 {
-  int sign; unsigned long ua;
+  int64 sign; uint64 ua;
   if (a <0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   r = (ua >=_p) ? ua % (uint64)_p : ua;
   if (r && (sign ==-1)) r = _p - r;
   return r;
 }
+
+
+inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const Integer& residu ) const 
+{
+  int64 tr;
+  if (residu <0) {
+      // -a = b [p]
+      // a = p-b [p]
+    if ( residu <= (Integer)(-_p) ) tr = int64( (-residu) % (Integer)_p) ;
+    else tr = int64(-residu);
+    if (tr)
+      return r = (uint64)_p - (uint64)tr;
+    else
+      return r = zero;
+  } else {
+      if (residu >= (Integer)_p ) tr =   int64(residu % (Integer)_p) ;
+    else tr = int64(residu);
+    return r = tr;
+  }
+}
+
+
+
 
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::init( Rep& a, const int i) const { return init(a,(long)i); }
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::init( Rep& a, const unsigned int i) const { return init(a,(unsigned long)i); }
@@ -381,7 +406,7 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const unsigned long l
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const double a ) const
-{ return init(r, (long long)a); 
+{ return init(r, (int64)a); 
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const float a ) const
@@ -465,7 +490,7 @@ inline void ZpzDom<Std64>::dotprod
   ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
 {
   unsigned int stride = 1;
-  if ((unsigned long)bound < Signed_Trait<Rep>::max() )
+  if ((int64)bound < Signed_Trait<Rep>::max() )
    stride = GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound);
   unsigned long dot = zero;
   if ((sz <10) && (sz <stride)) {

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.4 2004-09-15 12:09:22 jgdumas Exp $
+// $Id: givzpz16std.inl,v 1.5 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -345,6 +345,28 @@ inline  ZpzDom<Std16>::Rep&  ZpzDom<Std16>::init ( Rep& r, const long a ) const
   if (r && (sign ==-1)) r = _p - r;
   return r;
 }
+
+inline ZpzDom<Std16>::Rep&  ZpzDom<Std16>::init ( Rep& r, const Integer& residu ) const 
+{
+  int16 tr;
+  if (residu <0) {
+      // -a = b [p]
+      // a = p-b [p]
+    if ( residu <= (Integer)(-_p) ) tr = int16( (-residu) % (uint16)_p) ;
+    else tr = int16(-residu);
+    if (tr)
+      return r = (uint16)_p - (uint16)tr;
+    else
+      return r = zero;
+  } else {
+    if (residu >= (Integer)_p ) tr =   int16(residu % _p) ;
+    else tr = int16(residu);
+    return r = (Rep)tr;
+  }
+}
+
+
+
 
 inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::init( Rep& a, const int i) const { return init(a,(long)i); }
 inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::init( Rep& a, const double i) const { return init(a,(long)i); }

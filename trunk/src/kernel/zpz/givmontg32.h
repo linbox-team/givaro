@@ -2,7 +2,7 @@
 #define _GIVARO_MONTG32_H_
 // ==========================================================================
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.2 2004-09-15 12:11:39 jgdumas Exp $
+// $Id: givmontg32.h,v 1.3 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 //
 #include "givbasictype.h"
@@ -76,6 +76,8 @@ public:
     Rep& init( Rep& r, const unsigned long a) const ;
     Rep& init( Rep& a, const int i) const ;
     Rep& init( Rep& a, const unsigned int i) const ;
+    Rep& init ( Rep& r, const Integer& residu ) const ;
+    
         // Initialisation from double ( added for FFLAS usage) (C Pernet)
     Rep& init( Rep& a, const double i) const;
     Rep& init( Rep& a, const float i) const;
@@ -88,6 +90,11 @@ public:
 	    unsigned long ur;
 	    return r = (long int)convert(ur, a);
     }
+
+    Integer& convert(Integer& i, const Rep a) const {
+        unsigned long ur;
+        return i = (Integer)convert(ur, a);
+    }        
 
         // Conversion to double ( added for FFLAS usage) (C Pernet)
     float& convert(float& r, const Rep a ) const { 
@@ -152,7 +159,7 @@ public:
     std::ostream& write( std::ostream& s, const Rep a ) const;
 
 protected:
-        // -- based for modular inverse, d = a*u + b*v
+        // -- based on modular inverse, d = a*u + b*v
 //   static const int32 gcdext ( int32& u, int32& v, const int32 a, const int32 b );
     int32& gcdext (int32& d, int32& u, int32& v, const int32 a, const int32 b ) const;
     int32& invext (int32& u, const int32 a, const int32 b ) const;

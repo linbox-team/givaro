@@ -4,7 +4,7 @@
 // see the copyright file.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.3 2004-07-20 12:03:46 giorgi Exp $
+// $Id: givzpz16table1.inl,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -281,56 +281,40 @@ inline void ZpzDom<Log16>::assign ( const size_t sz, Array r, constArray a ) con
     r[i] = a[i];
 }
 
+
+
+// initialized by a degree of the generator.
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r ) const
+{ return r = zero; }
+
+
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::assign ( Rep& r, const Rep a ) const
 { return r = a; }
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::assign ( Rep& r, const long a ) const
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const long a ) const
 {
   int sign; unsigned long ua;
   if (a <0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   r = (ua >_p) ? ua % _p : ua;
   if (sign ==-1) r = _p - r;
-  return r;
+  return r = _tab_value2rep[r];
 }
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::assign ( Rep& r, const int a ) const
-{ return ZpzDom<Log16>::assign( r, (long)a); }
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int a ) const
+{ return ZpzDom<Log16>::init( r, (long)a); }
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::assign ( Rep& r, const unsigned long a ) const
-{ r = (a >_p) ? a % _p : a; return r;}
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned long a ) const
+{ r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::assign ( Rep& r, const unsigned int a ) const
-{ r = (a >_p) ? a % _p : a; return r;}
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned int a ) const
+{ r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
 
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const uint16 a ) const
+{ r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
 
-
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r ) const
-{ return r = zero; }
-
-
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r , const long a) const
-{
-    Power_t tmp;
-    assign(tmp,a);
-    return r= _tab_value2rep[tmp];
-}
-
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r , const unsigned long a) const
-{ 
-    Power_t tmp;
-  assign(tmp,a);
-  return r= _tab_value2rep[tmp];
-}
-
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const unsigned int i) const {
-  return init(a,(unsigned long)i); 
-}
-
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const int i) const {
-  return init(a,(long)i); 
-}
-
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int16 a ) const
+{ return ZpzDom<Log16>::init( r, (long)a); }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const double i) const {
 	  return init(a,(long)i);
@@ -338,6 +322,26 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const double i) const {
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const float i) const {
 	  return init(a,(double)i);
 }
+
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const Integer& residu ) const
+{
+  int16 tr;
+  if (residu <0) {
+      // -a = b [p]
+      // a = p-b [p]
+    if ( residu <= (Integer)(-_p) ) tr = int16( (-residu) % _p) ;
+    else tr = int16(-residu);
+    if (tr)
+      return r = _tab_value2rep[ _p - (uint16)tr ];
+    else
+      return r = zero;
+  } else {
+    if (residu >= (Integer)_p ) tr =   int16(residu % _p) ;
+    else tr = int16(residu);
+    return r = _tab_value2rep[tr];
+  }
+}
+
 
 
 inline void ZpzDom<Log16>::dotprod 

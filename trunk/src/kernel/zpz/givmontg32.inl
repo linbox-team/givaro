@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.3 2004-09-15 12:11:39 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
@@ -247,6 +247,31 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const long a 
   if (r && (sign ==-1)) r = _p - r;
   return redc(r,r*_B2p);
 }
+
+
+inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const Integer& residu ) const 
+{
+  long tr;
+  if (residu <0) {
+      // -a = b [p]
+      // a = p-b [p]
+    if ( residu <= (Integer)(-_p) ) tr = long( (-residu) % _p) ;
+    else tr = long(-residu);
+    if (tr)
+      r = _p - (unsigned long)tr;
+    else
+      r = zero;
+  } else {
+    if (residu >= (Integer)_p ) tr =   long(residu % _p) ;
+    else tr = long(residu);
+    r = tr;
+  }
+  return redc(r,r*_B2p);
+}
+
+
+
+
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::init( Rep& a, const int i) const { return init(a,(long)i); }
 

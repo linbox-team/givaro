@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.2 2004-09-15 12:07:30 jgdumas Exp $
+// $Id: givzpzInt.h,v 1.3 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 //
 // Description:
@@ -81,6 +81,12 @@ public:
   double& convert(double& r, const Rep& a ) const { return r = (double)a ;}
   long int& convert(long int& r, const Rep& a) const { return r = (long int)a;}
   unsigned long int& convert(unsigned long int& r, const Rep& a) const { return r = (unsigned long int)a;}
+    Integer& convert(Integer& i, const Rep& a) const {
+        unsigned long ur;
+        return i = (Integer)convert(ur, a);
+    }        
+    
+
 
   // ----- Misc methods
   int iszero( const Rep& a ) const;

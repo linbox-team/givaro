@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32uns.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz32uns.C,v 1.2 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -48,7 +48,8 @@ uint32& ZpzDom<Unsigned32>::invext
 	t1 = u1 - q * v1; t3 = u3 - q * v3;
 	u1 = v1; u3 = v3; v1 = t1; v3 = t3;
     }
-    return u=(u3<0?-u1:u1);
+    v1=(u3<0?-u1:u1);
+    return u=(v1<0?b+v1:v1);
 }  
 
 

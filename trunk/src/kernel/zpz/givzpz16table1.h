@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.3 2004-07-20 12:03:46 giorgi Exp $
+// $Id: givzpz16table1.h,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -62,18 +62,44 @@ public:
   Residu_t size() const { return _p;}
 
   // ----- Convert from element to int
-  int & convert( int& x , Rep& a) 
-    { if (a >= _p) return x=0; else return x=_tab_rep2value[a];}
+    unsigned long & convert( unsigned long& x , const Rep a) const { 
+        if (a >= _p) 
+            return x=0; 
+        else 
+            return x=_tab_rep2value[a];
+    }
+    double& convert( double& x , const Rep a)  const { 
+        unsigned long ur;
+        return x = (double)convert(ur, a);
+    }
+    long& convert( long& x , const Rep a)  const { 
+        unsigned long ur;
+        return x = (long)convert(ur, a);
+    }
+    Integer& convert(Integer& i, const Rep a) const {
+        unsigned long ur;
+        return i = (Integer)convert(ur, a);
+    }        
+    
 
 
 // initialized by a degree of the generator.
   Rep& init( Rep& r ) const;
-  Rep& init( Rep& r , const long a) const;
+  Rep& init( Rep& r, const long a) const;
   Rep& init( Rep& a, const int i) const ;
-  Rep& init( Rep& r , const unsigned long a) const;
+  Rep& init( Rep& r, const unsigned long a) const;
   Rep& init( Rep& a, const unsigned int i) const ;
+  Rep& init( Rep& a, const Integer& i) const ;
   Rep& init( Rep& a, const double i) const;
   Rep& init( Rep& a, const float i) const;
+
+// Specials
+  Rep& init( Rep& a, const int16 i) const ;
+  Rep& init( Rep& r, const uint16 a) const;
+
+  // -- Assignment :  r = a 
+  Rep& assign (Rep& r, const Rep a) const;  
+  void assign ( const size_t sz, Array r, constArray a ) const;
 
   // ----- Misc methods
   int iszero( const Rep a ) const;
@@ -135,17 +161,6 @@ public:
   void axmyin 
    (const size_t sz, Array r, constArray a, constArray x) const;
 
-
-  // -- Assignment :  r = a 
-  void assign ( const size_t sz, Array r, constArray a ) const;
-  Rep& assign (Rep& r, const Rep a) const;
-  // -- Legacy code
-     // -- Here : r <- a mod p
-  Rep& assign ( Rep& r, const long a ) const;
-  Rep& assign ( Rep& r, const unsigned long a ) const;
-  Rep& assign ( Rep& r, const int a ) const;
-  Rep& assign ( Rep& r, const unsigned int a ) const;
-  
 
   // ----- Random element generator
   typedef GIV_randIter< ZpzDom<Log16> , Rep> randIter;

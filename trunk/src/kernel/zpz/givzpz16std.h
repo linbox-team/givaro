@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.3 2004-09-15 12:09:22 jgdumas Exp $
+// $Id: givzpz16std.h,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -95,7 +95,14 @@ public:
   Rep access( const Rep a ) const { return a; }
 
   // ----- Convert from element to int
-  int& convert( int& x , Rep& a) { return x=int(a);}
+    unsigned long& convert( unsigned long& x , const Rep a) const { return x=(unsigned long)(a);}
+    double& convert( double& x , const Rep a) const { return x=(double)(a);}
+    int& convert( int& x , const Rep a) const { return x=int(a);}
+    Integer& convert(Integer& i, const Rep a) const {
+        unsigned long ur;
+        return i = (Integer)convert(ur, a);
+    }        
+    
 
 
   // ----- Access to the modulus 
@@ -107,6 +114,7 @@ public:
   Rep& init( Rep& a, const unsigned int i) const ;
   Rep& init( Rep& a, const double i) const ;
   Rep& init( Rep& a, const float i) const ;
+  Rep& init( Rep& a, const Integer& i) const ;
 
   // ----- Misc methods 
   int areEqual( const  Rep, const Rep) const;

@@ -58,9 +58,11 @@ Integer tmain(int argc, char ** argv) {
    typename Elements::const_iterator v = Verifs.begin();
    i = Primes.begin();
    e = Moduli.begin();
-   for( ; i != Primes.end(); ++i, ++e, ++v) 
-       if (! i->areEqual(*e, *v) )
-           std::cerr << "ERROR" << std::endl;
+   for( ; i != Primes.end(); ++i, ++e, ++v)
+       if (! i->areEqual(*e, *v) ) {
+           std::cerr << "incoherency" << std::endl;
+           break;
+       }        
     
 
    return a;

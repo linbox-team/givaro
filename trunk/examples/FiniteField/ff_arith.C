@@ -10,7 +10,7 @@ void TestField(const Field& F) {
     F.write(std::cerr );
     std::cerr  << " : " << std::flush;
 
-    typename Field::element a, b, c, d;
+    typename Field::Element a, b, c, d;
     F.init(a, 7);
     F.init(b, -29.3);
 

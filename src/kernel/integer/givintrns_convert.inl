@@ -66,7 +66,7 @@ inline void IntRNSsystem< Container >::RnsToRing( external& I, const Container<T
 {
   // - Computation of a mixed radix representation of this
     
-  IntRNSsystem< Container >::array mixrad(_primes.size());
+  typename IntRNSsystem< Container >::array mixrad(_primes.size());
   RnsToMixedRadix( mixrad , rns );
 
   // - Convert mixrad to an integer

@@ -18,7 +18,7 @@
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Rep& n) const {
     if (isleq(n,1)) return res=n;
-    if (isleq(n,3)) return sub(res,n,one);
+    if (isleq(n,3)) return sub(res,n,this->one);
     std::list<Rep> Lf;
     set(Lf,n);
     return phi(res,Lf,n);
@@ -28,10 +28,10 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, co
 template<class RandIter>
 template< template<class> class Container> typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Container<Rep>& Lf, const Rep& n) const {
     if (isleq(n,1)) return res=n;
-    if (isleq(n,3)) return sub(res,n,one);
+    if (isleq(n,3)) return sub(res,n,this->one);
     res = n; Rep t,m;
     for(typename Container<Rep>::const_iterator f=Lf.begin(); f!=Lf.end(); ++f) 
-        mul(res, divexact(t,res,*f), sub(m, *f, one));
+        mul(res, divexact(t,res,*f), sub(m, *f, this->one));
     return res;
 }
 
@@ -71,8 +71,8 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
         // n must be in {2,4,p^m,2p^m} where p is an odd prime
         // else infinite loop
 
-    if (isleq(n,4)) return sub(A,n,one);
-    if (iszero(mod(A,n,4))) return A=Rep(zero);
+    if (isleq(n,4)) return sub(A,n,this->one);
+    if (iszero(mod(A,n,4))) return A=this->zero;
     Rep p,ismod2, q, no2, root; 
     if (iszero(mod(ismod2,n,2))) divexact(no2,n,2); else no2=n;
     p=no2;
@@ -124,7 +124,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
     }
     while (! found) {
        do {
-            random(_g, A, p);
+            random(this->_g, A, p);
             addin( modin(A,sub(tmp,p,7)) , 7);
         } while ( ! isone(gcd(tmp,A,p)) );
         found = ++runs;
@@ -183,7 +183,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
       Lq.pop_back(); 
       div(Temp, pmun, Q);
       do {
-          nonzerorandom(_g, alea, p);
+          nonzerorandom(this->_g, alea, p);
           modin(alea, p);
           powmod(essai, alea, Temp, p);
 //std::cerr << alea << " should be of order " << Q << " mod " << p << std::endl;
@@ -207,7 +207,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
   for ( ; Lqi != Lq.end(); ++Lqi, ++ei) { 
       div(Temp, pmun, *Lqi);
       do {
-          nonzerorandom(_g, alea, p);
+          nonzerorandom(this->_g, alea, p);
           modin(alea, p);
           powmod(essai, alea, Temp, p);
 // std::cerr << alea << " should be of order at least " << *Lqi << "^" << *ei << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
@@ -277,7 +277,7 @@ template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_prime(Rep& A, const Rep& n) const { 
     
     std::vector<Rep> Lf;
-    Rep phin; sub(phin,n,one);
+    Rep phin; sub(phin,n,this->one);
     set(Lf,phin);
     return prim_root_of_prime(A, Lf, phin, n);
 }
@@ -300,9 +300,9 @@ template<class Array>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_prime(Rep& A, const Array& aLf, const Rep& phin, const Rep& n) const { 
     
     Rep tmp, expo, temp;
-    A = one;
+    A = this->one;
 
-    Rep prime(2), Aorder=one;
+    Rep prime(2), Aorder=this->one;
     std::vector<Rep> Lf = aLf, newLf, oldLf; 
     newLf.reserve(Lf.size()); 
     oldLf.reserve(Lf.size()); 
@@ -381,8 +381,8 @@ template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root(Rep& A, const Rep& n) const {
         // n must be in {2,4,p^m,2p^m} where p is an odd prime
         // else returns zero
-    if (isleq(n,4)) return sub(A,n,one);
-    if (iszero(mod(A,n,4))) return A=zero;
+    if (isleq(n,4)) return sub(A,n,this->one);
+    if (iszero(mod(A,n,4))) return A=this->zero;
     Rep phin, tmp; 
     phi(phin,n);
     std::list<Rep> Lf;
@@ -401,7 +401,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root
     if (isleq(A,n))
         return subin(A,1);
     else
-        return A=zero; 
+        return A=this->zero; 
 }
 
 template<class RandIter>
@@ -436,9 +436,9 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, co
         // returns 0 if failed
     Rep A; mod(A,p,n);
     if (iszero(A))
-	return g = zero;
+	return g = this->zero;
     if (isone(A))
-	return g = one;
+	return g = this->one;
     int noprimroot=0;
     Rep phin,gg,tmp;
     phi(phin,n);
@@ -459,7 +459,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, co
         } else
             return g=phin;
     }
-    return g=zero;
+    return g=this->zero;
 }
 
 template<class RandIter>
@@ -515,7 +515,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_primpow(R
         return dom_power(z, p, e-2, *this);
     } else {
         Rep tmp;
-        return mulin( dom_power(z, p, e-1, *this), sub(tmp, p, one) );
+        return mulin( dom_power(z, p, e-1, *this), sub(tmp, p, this->one) );
     }
 }
 
@@ -528,7 +528,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv_primp
         return dom_power(z, p, e-2, *this);
     } else {
         Rep tmp;
-        return mulin( dom_power(z, p, e-1, *this), sub(tmp, p, one) );
+        return mulin( dom_power(z, p, e-1, *this), sub(tmp, p, this->one) );
     }
 }
 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_div.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: gmp++_int_div.C,v 1.2 2004-06-08 15:46:05 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++_int.h"
@@ -174,24 +174,24 @@ Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer
   return q;
 }
 
-Integer& Integer::divmod(Integer& q, Integer& r, const Integer& a, const long b)
+Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 {
 //  if (iszero(b)) {
 //    GivMathDivZero("[Integer::divide]: division by zero");
 //  }
   int sgn = GMP__SGN(b);
-  mpz_tdiv_qr_ui( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
+  r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep), 
                   (mpz_ptr)&(a.gmp_rep), GMP__ABS(b));
   if (sgn <0) return q = -q;
   return q;
 }
 
-Integer& Integer::divmod(Integer& q, Integer& r, const Integer& a, const unsigned long b)
+Integer& Integer::divmod(Integer& q, unsigned long& r, const Integer& a, const unsigned long b)
 {
 //  if (iszero(b)) {
 //    GivMathDivZero("[Integer::divide]: division by zero");
 //  }
-  mpz_tdiv_qr_ui( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
+  r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
                   (mpz_ptr)&(a.gmp_rep), b);
   return q;
 }

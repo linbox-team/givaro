@@ -4,7 +4,7 @@
 //              Fermat numbers,
 //              Primality tests, Factorization one by one :
 //                      (There are parameters to fix)
-// Time-stamp: <07 Jul 03 19:55:12 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Jun 04 17:33:03 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include <math.h>
 #include "givaro/givintprime.h"
@@ -188,3 +188,155 @@ int IntPrimeDom::isprime_Tabule(const int n)  const {
        return 0;
 }
 
+
+// JGD 08.06.2004
+// FULLY POMPED from GMP-4.1.3
+
+/*
+  We are to determine if c is a perfect power, c = a ^ b.
+  Assume c is divisible by 2^n and that codd = c/2^n is odd.
+  Assume a is divisible by 2^m and that aodd = a/2^m is odd.
+  It is always true that m divides n.
+
+  * If n is prime, either 1) a is 2*aodd and b = n
+		       or 2) a = c and b = 1.
+    So for n prime, we readily have a solution.
+  * If n is factorable into the non-trivial factors p1,p2,...
+    Since m divides n, m has a subset of n's factors and b = n / m.
+*/
+
+/* This is a naive approach to recognizing perfect powers.
+   Many things can be improved.  In particular, we should use p-adic
+   arithmetic for computing possible roots.  */
+
+static const unsigned short primes[] =
+{  2,  3,  5,  7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
+  59, 61, 67, 71, 73, 79, 83, 89, 97,101,103,107,109,113,127,131,
+ 137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,
+ 227,229,233,239,241,251,257,263,269,271,277,281,283,293,307,311,
+ 313,317,331,337,347,349,353,359,367,373,379,383,389,397,401,409,
+ 419,421,431,433,439,443,449,457,461,463,467,479,487,491,499,503,
+ 509,521,523,541,547,557,563,569,571,577,587,593,599,601,607,613,
+ 617,619,631,641,643,647,653,659,661,673,677,683,691,701,709,719,
+ 727,733,739,743,751,757,761,769,773,787,797,809,811,821,823,827,
+ 829,839,853,857,859,863,877,881,883,887,907,911,919,929,937,941,
+ 947,953,967,971,977,983,991,997,0
+};
+#define SMALLEST_OMITTED_PRIME 1009
+
+#ifndef GIVABS
+#define GIVABS(a) ((a)<0?-(a):(a))
+#endif
+
+
+unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const 
+{
+#ifndef BITS_PER_MP_LIMB
+    const unsigned int BITS_PER_MP_LIMB = sizeof(mp_limb_t)*8;
+#endif
+  unsigned long int prime;
+  unsigned long int n, n2;
+  int i;
+  unsigned long int rem;
+  Integer t(u);
+  int exact;
+  unsigned int uns;
+  unsigned int usize = u.size();
+
+  if (usize == 0)
+    return 1;			/* consider 0 a perfect power */
+
+  n2 = (unsigned int)u;
+  if ( ( n2 & 3UL) == 2UL)
+    return 0;			/* 2 divides exactly once.  */
+
+  n2=0;
+  for( ; !( ((unsigned int)t) & 0x1) ; t<<=1, ++n2) {}
+  if (usize <0 && n2 >0 && (n2 & 1) ==0)
+      return 0;
+
+  uns = GIVABS (usize) - n2 / BITS_PER_MP_LIMB;
+  Integer u2(u>>n2);
+  
+  if (isprime (n2))
+    goto n2prime;
+
+  for (i = 1; primes[i] != 0; i++)
+    {
+      prime = primes[i];
+
+      rem = u2 % prime;
+      if (rem == 0)		/* divisable by this prime? */
+	{
+            Integer::divmod(q,rem,u2,prime * prime);
+            if (rem != 0)
+                return 0;	/* prime divides exactly once, reject */
+            
+            swap (q, u2);
+            for (n = 2;;++n)
+	    {
+                Integer::divmod(q, rem, u2, prime);
+                if (rem != 0)
+                    break;
+                swap (q, u2);
+	    }
+
+            if ((n & 1) == 0 && usize < 0)
+                return 0;	/* even multiplicity with negative U, reject */
+            
+            n2 = ::gcd (n2, n);
+            if (n2 == 1)
+                return 0;	/* we have multiplicity 1 of some factor */
+            
+            if ( GIVABS(u2) == 1)
+	    {
+                q = Integer(prime);
+                return n;	/* factoring completed; consistent power */
+	    }
+            
+                /* As soon as n2 becomes a prime number, stop factoring.
+                   Either we have u=x^n2 or u is not a perfect power.  */
+            if (isprime (n2))
+                goto n2prime;
+	}
+    }
+
+  if (n2 == 0)
+  {
+      /* We found no factors above; have to check all values of n.  */
+      unsigned long int nth;
+      for (nth = usize < 0 ? 3 : 2;; nth++)
+      {
+	  if (! isprime (nth))
+              continue;
+          exact = root (q, u2, nth);
+	  if (exact)
+	      return nth;
+	  if (GIVABS(q) < SMALLEST_OMITTED_PRIME)
+	      return 0;
+      }
+  } else {
+      unsigned long int nth;
+          /* We found some factors above.  We just need to consider values of n
+             that divides n2.  */
+      for (nth = 2; nth <= n2; nth++)
+      {
+	  if (! isprime (nth))
+              continue;
+	  if (n2 % nth != 0)
+              continue;
+          exact = root (q, u2, nth);
+	  if (exact)
+	      return nth;
+	  if (GIVABS(q) < SMALLEST_OMITTED_PRIME)
+	      return 0;
+      }
+      return 0;
+  }
+
+n2prime:
+  if ( root (q, u2, n2) ) 
+      return n2;
+  else
+      return 0;
+}

@@ -6,9 +6,9 @@ AM_CPPFLAGS += -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memo
 
 LDADD = -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
-EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi zeta zeta_inv iexponentiation RSA_decipher  RSA_encipher  isperfectpow
+EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi zeta zeta_inv iexponentiation RSA_decipher  RSA_encipher  ispower
 
-isperfectpow_SOURCES=isperfectpow.C
+ispower_SOURCES=ispower.C
 ifactor_SOURCES = ifactor.C
 ifactor_lenstra_SOURCES = ifactor_lenstra.C
 igcd_SOURCES = igcd.C

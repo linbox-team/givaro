@@ -4,7 +4,7 @@
 //              Pollard's rho method for factorization
 //              Elliptic curves factorization by Lenstra
 // Needs Container structures : stl ones for instance
-// Time-stamp: <15 Apr 03 19:19:48 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Jun 04 17:28:07 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_H_
 #define _GIVARO_FACTORISATION_H_
@@ -81,8 +81,6 @@ public:
     }
 
 
-    bool isprimepower(Rep& r, unsigned long& expo, const Rep& p) const ;
-       
         ///
     template< template<class> class Container> unsigned long set
         ( Container<Rep>& setint, Container<unsigned long>& setpwd,  const Rep& a) const ;

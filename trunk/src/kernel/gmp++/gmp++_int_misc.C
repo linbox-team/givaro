@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.3 2004-06-08 08:57:52 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.4 2004-06-08 15:46:05 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -34,6 +34,20 @@ Integer sqrt(const Integer &a, Integer& r)
               (mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(a.gmp_rep)) ;
   return q;
 }
+
+bool root(Integer& q, const Integer &a, unsigned int n)
+{
+    return (bool)mpz_root ((mpz_ptr)&(q.gmp_rep),
+                           (mpz_ptr)&(a.gmp_rep), 
+                           n);
+}
+
+void swap(Integer& a, Integer& b) {
+    return mpz_swap( (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep));
+}
+
+    
+
 
 // base p logarithm of a
 long logp(const Integer& a, const Integer& p) {

@@ -2,7 +2,10 @@
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
 
-
+//----------------------------------------------------------
+// Deterministic, non-polynomial (factor b-1 for the order),
+// test for primitive roots.
+//----------------------------------------------------------
 
 int main(int argc, char** argv)
 {

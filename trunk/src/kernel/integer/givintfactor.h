@@ -4,7 +4,7 @@
 //              Pollard's rho method for factorization
 //              Elliptic curves factorization by Lenstra
 // Needs Container structures : stl ones for instance
-// Time-stamp: <08 Jun 04 17:28:07 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 04 16:11:22 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_H_
 #define _GIVARO_FACTORISATION_H_
@@ -45,13 +45,15 @@ public:
 #endif
     }
 
-    Rep& factor(Rep& r, const Rep& n) const {
+        //  loops defaulted to 0 forces Pollard's factorization to 
+        //  be complete
+    Rep& factor(Rep& r, const Rep& n, unsigned long loops = 0) const {
         if (isone(gcd(r,n,PROD_first_primes)))
             if (isone(gcd(r,n,PROD_second_primes))) {
 #ifdef GIVARO_LENSTRA
                 return Lenstra((RandIter&)_g, r, n);
 #else
-                return Pollard((RandIter&)_g, r, n);
+                return Pollard((RandIter&)_g, r, n, loops);
 #endif
             } else
                 return factor_second_primes(r,n);
@@ -59,16 +61,17 @@ public:
             return factor_first_primes(r,n);
     }
 
-    Rep& primefactor(Rep& r, const Rep& n) const {
-	factor(r, n);
+        //  Factors are checked for primality
+    Rep& primefactor(Rep& r, const Rep& n, unsigned long loops = 0) const {
+	factor(r, n, loops);
 	if (! isprime(r) ) {
-		Rep nn = r; factor(r,nn);
+		Rep nn = r; factor(r,nn, loops);
 	}
 	while (! isprime(r) ) {
 		Rep nn = r;
         	if (isone(gcd(r,nn,PROD_first_primes))) {
             	   if (isone(gcd(r,nn,PROD_second_primes))) {
-                	Pollard((RandIter&)_g, r, nn);
+                	Pollard((RandIter&)_g, r, nn, loops);
             	   } else {
                 	factor_second_primes(r,nn);
 		   }
@@ -81,12 +84,13 @@ public:
     }
 
 
-        ///
-    template< template<class> class Container> unsigned long set
-        ( Container<Rep>& setint, Container<unsigned long>& setpwd,  const Rep& a) const ;
-        ///
-    template< template<class> class Container> void set
-        ( Container<Rep>& setint, Container<long>& setpwd,  const Rep& a) const ;
+        /// Factors with primes
+        //  loops defaulted to 0 forces factorization to be complete
+        //  otherwise returns if factorization is complete or not
+        //  Factors are checked for primality
+    template< template<class> class Container> bool set
+        ( Container<Rep>& setint, Container<unsigned long>& setpwd,  const Rep& a, unsigned long loops = 0) const ;
+
         ///
     template< template<class> class Container> void set( Container<Rep>&,  const Rep&) const ;
         ///

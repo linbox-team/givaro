@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_div.C,v 1.2 2004-06-08 15:46:05 jgdumas Exp $
+// $Id: gmp++_int_div.C,v 1.3 2004-06-29 17:00:03 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++_int.h"
@@ -158,7 +158,7 @@ Integer Integer::operator / (const long l) const
   Integer res;   
   int sgn = GMP__SGN(l);
   mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
-  if (sgn <0) return -res;
+  if (sgn <0) return negin(res);
   return res;
 }
 
@@ -182,7 +182,7 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
   int sgn = GMP__SGN(b);
   r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep), 
                   (mpz_ptr)&(a.gmp_rep), GMP__ABS(b));
-  if (sgn <0) return q = -q;
+  if (sgn <0) return negin(q);
   return q;
 }
 

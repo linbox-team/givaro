@@ -2,7 +2,7 @@
 // Givaro : Euler's phi function
 //          Primitive roots.
 // Needs list structures : stl ones for instance
-// Time-stamp: <17 Apr 03 14:33:45 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 04 17:39:09 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include "givintnumtheo.h"
 #include <list>
@@ -149,6 +149,81 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, const Rep& n) const { unsigned long runs; return prim_root(A, runs, n); }
 
+
+// =================================
+// Probable primitive roots
+//
+//  Polynomial-time generation of primitive roots               
+//  L is number of loops of Pollard partial factorization of n-1
+//  10,000,000 gives at least 1-2^{-40} probability of success
+//  [Dubrois & Dumas, Industrial-strength primitive roots]
+//  Returns the probable primitive root and the probability of error.
+template<class RandIter>
+typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const unsigned long L) const {
+// partial factorisation 
+  std::vector<Rep> Lq; 
+  std::vector<unsigned long> e;
+  Rep Q, pmun(p); --pmun;
+  primroot = 1;
+
+  bool complet = set(Lq, e, pmun, L);
+// partial factorisation done        
+
+  Rep Temp;
+  Rep essai, alea; 
+  
+
+  if (!complet) {
+      Q=Lq.back();
+      Lq.pop_back(); 
+      div(Temp, pmun, Q);
+      do {
+          nonzerorandom(_g, alea, p);
+          modin(alea, p);
+          powmod(essai, alea, Temp, p);
+      } while (essai == 1);
+// looking for alea, of order Q with high probability      
+      
+      mulin(primroot, essai);
+
+//  1-(1+2/(p-1))*(1-1/L^2)^log_B(Q)  < 1-(1+2^(-log_2(p)))*(1-1/L^2)^log_B(Q);
+      essai = L;
+      mul(Temp, essai, L);
+      error = 1-1.0/(double)Temp;
+      error = power(error, logp(Q,Temp) );
+      error *= (1.0+1.0/power(2.0,logp(pmun,2)));
+      error = 1-error;
+  } else 
+      error = 0;
+
+  typename std::vector<Rep>::const_iterator Lqi = Lq.begin();
+  typename std::vector<unsigned long>::const_iterator ei = e.begin();
+  for ( ; ei != e.end(); ++Lqi, ++ei) { 
+      div(Temp, pmun, *Lqi);
+      do {
+          nonzerorandom(_g, alea, p);
+          modin(alea, p);
+          powmod(essai, alea, Temp, p);
+      } while( essai == 1 ) ;
+      
+          // looking for alea with order Lq[i]^e[i]
+
+//      std::cerr << alea << " is of order at least " << Lq[i] << "^" << e[i] << "==" << power(Lq[i],e[i]) << " mod " << p << std::endl;
+          
+      divin(Temp, power(*Lqi,*ei-1));
+      mulin(primroot, powmod(essai, alea, Temp, p));    
+  }
+
+  modin(primroot, p);
+  
+  return primroot; 
+// return primroot with high probability
+}
+
+
+// =================================
+// Specializations for prime numbers
+// =================================
 
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_prime(Rep& A, const Rep& n) const { 
@@ -305,7 +380,7 @@ template<class RandIter>
 bool IntNumTheoDom<RandIter>::isorder(const Rep& g, const Rep& p, const Rep& n) const {
         // returns 1 if p is of order g in Z/nZ
     Rep tmp;
-    return (isone( pow(tmp, p, Integer2long(g)) ) && areEqual( g, order(tmp,p,n) ) );
+    return (isone( powmod(tmp, p, g, n) ) && areEqual( g, order(tmp,p,n) ) );
 }
 
 template<class RandIter>
@@ -361,7 +436,8 @@ template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_base(Rep& A, const Rep& m) const {
         // Prerequisite : m > 4, and m != 8.
     std::vector<Rep> Lp; std::vector<unsigned long> Le;
-    unsigned long nbf = set(Lp, Le, m);
+    set(Lp, Le, m);
+    unsigned long nbf = Lp.size();
     std::vector<Rep> Pe(nbf); 
     std::vector<Rep> Ra(nbf);
     
@@ -384,7 +460,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_base(Rep& A
 
 
 template<class RandIter>
-typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta_primpow(Rep & z, const Rep& p, const unsigned long e) const {
+typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_primpow(Rep & z, const Rep& p, const unsigned long e) const {
         // Prerequisite : p prime.
     if (areEqual(p, 2)) {
         if (e<=3) return init(z,e);
@@ -396,7 +472,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta_primpow(Rep
 }
 
 template<class RandIter>
-typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta_inv_primpow(Rep & z, const Rep& p, const unsigned long e) const {
+typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv_primpow(Rep & z, const Rep& p, const unsigned long e) const {
         // Prerequisite : p prime.
     if (areEqual(p, 2)) {
         if (e<=2) return init(z,e);
@@ -412,28 +488,29 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta_inv_primpow
 
     
 template<class RandIter>
-typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta_inv(Rep & z, const Rep& m) const {
+typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv(Rep & z, const Rep& m) const {
         if (areEqual(m,2)) return init(z,1);
         if (areEqual(m,3) || areEqual(m,4) || areEqual(m,8) ) return init(z,2);
-        return zeta_base(z, m);
+        return lambda_base(z, m);
 }
 
 template<class RandIter>
-typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta(Rep & z, const Rep& m) const {
+typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda(Rep & z, const Rep& m) const {
         if (areEqual(m,2)) return init(z,1);
         if (areEqual(m,3) || areEqual(m,4)) return init(z,2);
         if (areEqual(m,8) ) return init(z,3);
-        return zeta_base(z, m);
+        return lambda_base(z, m);
 }
 
 
 template<class RandIter>
-typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta_base(Rep & z, const Rep& m) const {
+typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_base(Rep & z, const Rep& m) const {
         // Prerequisite: m > 4, and m != 8.
         std::vector<Rep> Lp; std::vector<unsigned long> Le;
-        unsigned long nbf = set(Lp, Le, m);
+        set(Lp, Le, m);
+        unsigned long nbf = Lp.size();
 
-        zeta_inv_primpow(z, Lp.front(), Le.front() );
+        lambda_inv_primpow(z, Lp.front(), Le.front() );
 
         if (nbf == 1) return z;
 
@@ -441,7 +518,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::zeta_base(Rep & 
         typename std::vector<unsigned long>::const_iterator e=Le.begin() ;
         for( ++p, ++e; p != Lp.end(); ++p, ++e) {
             Rep tmp;
-            zeta_inv_primpow(tmp, *p, *e);
+            lambda_inv_primpow(tmp, *p, *e);
             Rep g;
             gcd(g, z, tmp);
             mulin(z, divin(tmp, g));

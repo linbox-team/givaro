@@ -1,6 +1,7 @@
 // =================================================================== //
 // Givaro : Prime numbers
 //              RSA public-key cipher codes
+//              ECB mode (UNSECURE !!!)
 // Time-stamp: <16 Sep 03 19:10:58 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
@@ -81,11 +82,12 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
 
     if (_fast_impl) {
         element p, q, pr, k, phi, t, delt ;
-        pr = _k*_u-1;
+        pr = _k*_u;
+	--pr;
         k = pr/_m;
         ++k;
         phi = pr/ k;
-        t = _m-phi+1;
+        t = _m-phi; ++t;
         t >>= 1;
         sqrt(delt, t*t-_m);
         p = t-delt;

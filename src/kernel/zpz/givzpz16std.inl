@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.3 2004-07-20 12:03:46 giorgi Exp $
+// $Id: givzpz16std.inl,v 1.4 2004-09-15 12:09:22 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -49,18 +49,6 @@
 #define __GIVARO_ZPZ16_N_NEG(r,p,a) { r = (a == 0 ? 0 : p-a); }
 #define __GIVARO_ZPZ16_N_NEGIN(r,p) { r = (r == 0 ? 0 : p-r); }
 
-
-inline ZpzDom<Std16>::ZpzDom<Std16>( )
- : zero(0), one(1), _p(0)
-{}
-
-inline ZpzDom<Std16>::ZpzDom<Std16>( Residu_t p )
- : zero(0), one(1), _p(p)
-{}
-
-inline ZpzDom<Std16>::ZpzDom<Std16>( const ZpzDom<Std16>& F)
- : zero(0), one(1), _p(F._p)
-{}
 
 inline ZpzDom<Std16>::Residu_t ZpzDom<Std16>::residu( ) const
 { return _p; }

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.2 2004-06-18 12:44:59 jgdumas Exp $
+// $Id: givzpz16std.h,v 1.3 2004-09-15 12:09:22 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -79,9 +79,10 @@ public:
   const Rep one;
 
   // ----- Constructor 
-  ZpzDom();
-  ZpzDom( Residu_t p );
-  ZpzDom( const ZpzDom<Std16>& F);
+  ZpzDom() : zero(0), one(1), _p(0) {}
+  ZpzDom( Residu_t p ) : zero(0), one(1), _p(p) {}
+  ZpzDom( const ZpzDom<Std16>& F) : zero(0), one(1), _p(F._p) {}
+
 
   int operator==( const ZpzDom<Std16>& BC) const { return _p == BC._p;}
   int operator!=( const ZpzDom<Std16>& BC) const { return _p != BC._p;}

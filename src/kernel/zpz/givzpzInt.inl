@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpzInt.inl,v 1.2 2004-09-15 12:07:30 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -50,24 +50,8 @@
 #define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( iszero(r) ? zero : p-r); }
 
 
-inline ZpzDom<Integer>::ZpzDom<Integer>( )
- : zero(0), one(1), _p(0)
-{}
-
-inline ZpzDom<Integer>::ZpzDom<Integer>( Residu_t p )
- : zero(0), one(1), _p(p)
-
-{}
-
-
-
-
 inline ZpzDom<Integer>::Residu_t ZpzDom<Integer>::residu( ) const
 { return _p; }
-
-inline ZpzDom<Integer>::ZpzDom<Integer>(const ZpzDom<Integer>& F)
-        : zero(0), one(1), _p(F._p)
- { }
 
 
 

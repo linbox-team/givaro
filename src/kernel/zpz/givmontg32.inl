@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.2 2004-07-20 12:03:46 giorgi Exp $
+// $Id: givmontg32.inl,v 1.3 2004-09-15 12:11:39 jgdumas Exp $
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
@@ -81,19 +81,8 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const 
 #define __GIVARO_MONTG32_NEGIN(r,p) (r = (r == 0 ? 0 : p-r))
 
 
-inline Montgomery<Std32>::Montgomery<Std32>( )
-        : _p(0UL), _dp(0.0), zero(0UL), one(1UL) 
-{}
-
-inline Montgomery<Std32>::Montgomery<Std32>( Residu_t p, int expo )
-        : _p(p), _Bp(B32%p), _B2p( (_Bp<<HALF_BITS32) % p), _B3p( (_B2p<<HALF_BITS32) % p), _nim( -Montgomery<Std32>::invext(_p,B32) ), _dp((double)p), _invdp(1.0/(double)p), zero(0UL), one( redcsal(_B2p) ) {}
-
 inline Montgomery<Std32>::Residu_t Montgomery<Std32>::residu( ) const
 { return _p; }
-
-inline Montgomery<Std32>::Montgomery<Std32>(const Montgomery<Std32>& F)
-        : _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim),_dp(F._dp), _invdp(F._invdp), zero(0UL), one(F.one) 
- { }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::mul (Rep& r, const Rep a, const Rep b) const
 { 

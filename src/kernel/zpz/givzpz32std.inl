@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.2 2004-07-20 12:03:46 giorgi Exp $
+// $Id: givzpz32std.inl,v 1.3 2004-09-15 12:04:53 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -44,21 +44,8 @@
 #define __GIVARO_ZPZ32_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
 
 
-inline ZpzDom<Std32>::ZpzDom<Std32>( )
- : zero(0), one(1), _p(0), _dp(0.0), _invdp(0.0) // _invdp est infini en fait
-{}
-
-inline ZpzDom<Std32>::ZpzDom<Std32>( Residu_t p )
- : zero(0), one(1), _p(p), _dp((double)p), _invdp(1.0/(double)p)
-
-{}
-
 inline ZpzDom<Std32>::Residu_t ZpzDom<Std32>::residu( ) const
 { return _p; }
-
-inline ZpzDom<Std32>::ZpzDom<Std32>(const ZpzDom<Std32>& F)
-        : zero(0), one(1), _p(F._p), _dp(F._dp), _invdp(F._invdp)
- { }
 
 inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::mul (Rep& r, const Rep a, const Rep b) const
 { 

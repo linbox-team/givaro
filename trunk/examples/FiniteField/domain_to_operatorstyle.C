@@ -13,7 +13,7 @@ Field Element::_domain;
 
 
 int main(int argc, char ** argv) {
-    unsigned long P = 5003;
+    unsigned long P = 5009;
 
         // Initialization of static member
     Element::setDomain( Field(P) );

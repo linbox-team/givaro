@@ -1,20 +1,4 @@
 /* config.h.in.  Generated from configure.in by autoheader.  */
-/* acconfig.h
- *
- * Symbols for package configuration
- */
-
-#undef PACKAGE
-#undef VERSION
-
-#undef HAVE_GMP
-
-#undef GMP_VERSION_3
-
-#undef __GIVARO_INT8
-#undef __GIVARO_INT16
-#undef __GIVARO_INT32
-#undef __GIVARO_INT64
 
 /* Define if GMP has no <gmpxx.h> */
 #undef GMP_NO_CXX

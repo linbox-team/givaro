@@ -2,7 +2,7 @@
 // Givaro : Euler's phi function
 //          Primitive roots.
 // Needs list structures : stl ones for instance
-// Time-stamp: <30 Jun 04 11:33:09 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <30 Jun 04 14:30:21 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include "givintnumtheo.h"
 #include <list>
@@ -239,25 +239,30 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const double epsilon) const {
     unsigned long L;
-    double t1, t4, t5, t6, t7, t8, t10, t11, t17, t20, t23, t32, B;
-    B = 1.0;
-    t32= 1.0/epsilon;
-    t1 = (double)p-1.0;
-    t4 = 1.0+2.0/t1;
-    t7 = log(t1/2.0);
-    for( ; GIVABSDIFF(t32,B) > 0.5 ; ) {
+    double t1, t4, t5, t6, t7, t8, t10, t11, t17, t20, t23, t32(1.0/epsilon), B(1.0);
+
+    t1 = (double)p-1.0;          // p-1
+    t4 = 1.0+2.0/t1;             // 1+2/(p-1)
+    t7 = log(t1/2.0);            // log( (p-1)/2 )
+    do {
         B = t32;
-        t5 = 1/B;
-        t6 = 1.0-t5;
-        t8 = log(B);
-        t10 = t7/t8;
-        t11 = ::pow(t6,1.0*t10);
-        t17 = t8*t8;
-        t20 = log(t6);
-        t23 = B*B;
+        t5 = 1/B;                // 1/B
+        t6 = 1.0-t5;             // 1-1/B
+        t8 = log(B);             // log(B)
+        t10 = t7/t8;             // log_B( (p-1)/2 )
+        t11 = ::pow(t6,t10);     // (1-1/B)^log_B( (p-1)/2 )
+        t17 = t8*t8;             // log^2(B) 
+        t20 = log(t6);           // log(1-1/B)
+        t23 = B*B;               // B^2
+            //  B-F(B)/diff(F(B),B)
         t32 = B-(t4*t11-1.0+epsilon)/t4/t11/(-t7/t17*t5*t20+t10/t23/t6);
-    }
-    L = (unsigned long)::sqrt(t32);
+    } while( (GIVABSDIFF(t32,B) > 0.5) && (B<1.8e+19) && ((1.0-t4*t11) > epsilon ) );
+//         std::cerr << "t32: " << t32 << std::endl;
+        if (B<1.8e+19)
+            L = (unsigned long)::sqrt(t32);
+        else
+            L = 0; // TOO small a precision, turning to deterministic process
+        
     
     return probable_prim_root(primroot, error, p, L);
 }

@@ -47,11 +47,13 @@ Integer tmain(int argc, char ** argv) {
     tim.stop();
     Field().write( std::cerr << tim << " using ") << std::endl;
     
-   i = Primes.begin();
-   e = Moduli.begin();
-   for( ; i != Primes.end(); ++i, ++e)
-       i->write(std::cout << a << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;   
-
+    if (Primes.size() < 50) {
+        i = Primes.begin();
+        e = Moduli.begin();
+        for( ; i != Primes.end(); ++i, ++e)
+            i->write(std::cout << a << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;   
+    }
+    
 
    Elements Verifs( Primes.size() );    
    CRT.RingToRns( Verifs, a );

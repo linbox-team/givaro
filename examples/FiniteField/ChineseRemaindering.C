@@ -3,7 +3,8 @@
 #include <givaro/givmontg32.h>
 #include <givaro/givzpz.h>
 #include <givaro/givgfq.h>
-#include <givaro/givrns.h>
+#include <givaro/givcra.h>    // Chinese Remainder of two elements
+#include <givaro/givrns.h>    // Chinese Remainder of an array of elements
 #include <givaro/givrandom.h>
 
 
@@ -14,8 +15,7 @@ typedef ZpzDom<Std32>  		Field4;
 typedef ZpzDom<Std64>  		Field5;
 typedef ZpzDom<Unsigned32>	Field6; 
 typedef Montgomery<Std32>       Field7; 
-typedef ZpzDom<Integer>         Field8; 
-
+typedef ZpzDom<Integer>         Field8;
 
 template <typename Field> 
 Integer tmain(int argc, char ** argv) {
@@ -26,7 +26,7 @@ Integer tmain(int argc, char ** argv) {
     
     IntPrimeDom ID; 
     GivRandom generator( argc>3 ? atoi(argv[3]):1234 );
-    Integer a( generator() >>(argc>2?atoi(argv[2]):17) );
+    Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1);
 
     Domains Primes( argc>1 ? atoi(argv[1]):15);   
     Elements Moduli( Primes.size() );
@@ -37,6 +37,7 @@ Integer tmain(int argc, char ** argv) {
         *i = Field( ID.nextprimein( a ) );
 //         i->random( generator, *e );
         i->init(*e,  generator() );
+        M *= a;
     }
     
 
@@ -65,10 +66,25 @@ Integer tmain(int argc, char ** argv) {
            i->write( std::cerr << "incoherency within ") << std::endl;
            break;
        }        
-    
+  
 
-   return a;
+   
+   Integer p( generator() >>(argc>2?atoi(argv[2]):17) ), res;
+   Field F( ID.nextprimein(p) );
+   typename Field::Element el;
+   F.init(el, generator() );
+
+   ChineseRemainder<IntPrimeDom, Field, true> CRA(ID, M, F);
+   CRA( res, a, el);
+
+   std::cout << res << " mod " << M << " = " << a << ";"  << std::endl;
+   std::cout << res << " mod " << F.characteristic() << " = " << F.convert(a, el) << ";"  << std::endl;
+   
+
+   return  res;
 }
+
+
 
 int main(int argc, char ** argv) {
         // argv[1] : number of primes
@@ -92,6 +108,11 @@ int main(int argc, char ** argv) {
     if (a1 != a3) std::cerr << "ERROR a1 != a3" << std::endl;
     if (a5 != a7) std::cerr << "ERROR a5 != a7" << std::endl;
     if (a1 != a5) std::cerr << "ERROR a1 != a5" << std::endl;
+
+
+
+    
+
 
     return 0;
 }

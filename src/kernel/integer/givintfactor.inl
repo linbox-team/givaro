@@ -209,7 +209,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
   // average number of iterations < 13/8*sqrt( Pi*n/2)
   // Sometimes the factor isn't prime -- TO EXPLICIT
     if (islt(n,3)) return g=n;
-    if ( isprime(n) ) return g=n;
+    if ( isprime(n,5) ) return g=n;
     g=1;
     Rep m(zero), x, y, p(one), t;
     random(gen, y, n);
@@ -404,7 +404,7 @@ template<class RandIter>
 typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const 
 {
     if (n<3) return g=n;
-    if ( isprime(n) ) return g=n;
+    if ( isprime(n,5) ) return g=n;
     if (iszero(n % 2)) return g=2;
     if (iszero(n % 3)) return g=3;
 

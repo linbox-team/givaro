@@ -567,9 +567,10 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_base(Rep 
         for( ++p, ++e; p != Lp.end(); ++p, ++e) {
             Rep tmp;
             lambda_inv_primpow(tmp, *p, *e);
-            Rep g;
-            gcd(g, z, tmp);
-            mulin(z, divin(tmp, g));
+//            Rep g;
+//            gcd(g, z, tmp);
+//            mulin(z, divin(tmp, g));
+	    lcmin(z,tmp);
         }
         
         return z;

@@ -64,10 +64,10 @@ public:
         //  Factors are checked for primality
     Rep& primefactor(Rep& r, const Rep& n, unsigned long loops = 0) const {
 	factor(r, n, loops);
-	if (! isprime(r) ) {
+	if (! isprime(r,5) ) {
 		Rep nn = r; factor(r,nn, loops);
 	}
-	while (! isprime(r) ) {
+	while (! isprime(r,5) ) {
 		Rep nn = r;
         	if (isone(gcd(r,nn,PROD_first_primes))) {
             	   if (isone(gcd(r,nn,PROD_second_primes))) {
@@ -78,7 +78,7 @@ public:
 		} else {
             	   factor_first_primes(r,nn);
 		}
-	    	if (r == nn) break; // Failure, factor will not be prime
+	    	if (r == nn) Lenstra((RandIter&)_g, r, nn) ;
         }
 	return r;
     }
@@ -115,7 +115,9 @@ private:
 // Those are parameters for Pollard's algorithms
 // Pollard_fctin : must be somewhat a "random" function in Z/nZ
 // Pollard_cst can be a slight alternative for the Pfct x^2+1
+#ifndef Pollard_cst
 #define Pollard_cst 1
+#endif
     
     Rep& Pollard_fctin(Rep & x, const Rep& n) const {
         mulin(x,x);

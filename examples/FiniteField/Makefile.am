@@ -3,9 +3,9 @@ check: $(EXTRA_PROGRAMS)
 INCLUDES=-I$(top_srcdir)
 
 OPTFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
-OPTFLAGS+= -frerun-loop-opt -floop-optimize -fexpensive-optimizations
+OPTFLAGS+= -frerun-loop-opt -fexpensive-optimizations
 OPTFLAGS+= -fomit-frame-pointer
-#OPTFLAGS+= -fprefetch-loop-arrays
+#OPTFLAGS+= -fprefetch-loop-arrays -floop-optimize
 #OPTFLAGS+= -malign-double
 OPTFLAGS+= -falign-loops -falign-jumps -falign-functions -falign-labels
 OPTFLAGS+= -fschedule-insns2

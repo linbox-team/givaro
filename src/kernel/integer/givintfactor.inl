@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <08 Jun 04 17:25:46 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 04 17:24:46 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_INL_
 #define _GIVARO_FACTORISATION_INL_
@@ -71,57 +71,36 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
 // Set or Container of divisors, factors.
 // =================================================================== //
 template<class RandIter>
-template< template<class> class Container> unsigned long 
-IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n)  const 
+template< template<class> class Container> bool
+IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const 
 {
         // n = * Lf[i] ^ Lo[i]
         // But Lf[i] might not be prime (cf. factor probability)
-    
+    bool factocomplete = true;
     Rep nn,g,r,u;
     if (n<0) Rep::neg(nn,n); else nn=n;
-    unsigned long c,nb=0;
+    unsigned long c;
     while(nn > 1) {        
-        factor(g,nn);
+        primefactor(g,nn,loops);
+        if (g == 1) {
+            factocomplete = false;
+            g = nn;
+        }
         Lf.push_back(g);
         c=0;r=zero;
-	Rep::divexact(u, nn,g);
+        Rep::divexact(u, nn,g);
         while(r == 0) {
-        //	nn = nn / g;
-        //	r = nn % g;
-		nn.copy(u); 
-		Rep::divmod( u, r, nn,g );
-            	c++;
-        }
-        Lo.push_back( c );
-        nb++;
-    }
-    return nb;
-}
-
-template<class RandIter>
-template< template<class> class Container> 
-void IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<long>& Lo, const Rep& n)  const 
-{
-        // n = * Lf[i] ^ Lo[i]
-        // But Lf[i] might not be prime (cf. Pollard probability)
-    Rep nn,g,r,u;
-    nn = n;
-    long c;
-    while(nn > 1) {        
-        factor(g,nn);
-        Lf.push_back(g);
-        c=0;r=0;
-	Rep::divexact(u, nn,g);
-        while(r == 0) {
-        //	nn = nn / g;
-        //	r = nn % g;
-		nn.copy(u); 
-		Rep::divmod( u, r, nn,g ); // divide(nn,g,u,r);
+                //	nn = nn / g;
+                //	r = nn % g;
+            nn.copy(u); 
+            Rep::divmod( u, r, nn,g );
             c++;
         }
         Lo.push_back( c );
     }
-}           
+    return factocomplete;
+}
+
 
 template<class RandIter>
 template< template<class> class Container> 
@@ -178,7 +157,7 @@ void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const
     Rep nn,g,r,u;
     nn = n;
     while(nn > 1) {
-        factor(g,nn);
+        primefactor(g,nn);
         r=0;
 	Rep::divexact(u, nn,g);
         while(r == 0) {

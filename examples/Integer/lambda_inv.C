@@ -2,9 +2,10 @@
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
 
-// Zeta function : order of a primitive element
-//                 (element of maximal orbit size)
+// Lambda function : order of a primitive invertible
+//                (invertible element of maximal orbit size)
 //
+
 
 int main(int argc, char** argv)
 {
@@ -13,7 +14,7 @@ int main(int argc, char** argv)
   if (argc > 1) a = IntNumTheoDom<>::element(argv[1]); else std::cin >> a;
   
         Timer tim; tim.clear(); tim.start();
-	IP.zeta(pr, a);
+	IP.lambda_inv(pr, a);
         tim.stop();
 	IntegerDom().write( std::cout, pr ) << std::endl;
 	std::cerr << tim << std::endl;

@@ -15,8 +15,9 @@ int main(int argc, char** argv)
     IP.seeding( BaseTimer::seed() );
 
     double error;
-    IntNumTheoDom<>::element a,pr;
+    IntNumTheoDom<>::element a,pr,g;
     if (argc > 1) a = IntNumTheoDom<>::element(argv[1]); else std::cin >> a;
+    bool comp ; if ( comp = (! IP.isprime(a)) ) std::cerr << a << " is not prime, primitive root will have no sense and may loop forever ..." << std::endl;
     double epsilon = argc > 2 ? atof(argv[2]) : 0.0000001;
   
     Timer tim; tim.clear(); 
@@ -44,6 +45,7 @@ int main(int argc, char** argv)
     IP.probable_prim_root(pr, error, a, epsilon );
     tim.stop();
   
+    if (comp) std::cerr << IP.gcd(g,a,pr) << " is a factor of " << a << std::endl;
     IntegerDom().write( std::cout << "Prim root   : ", pr );
     if (error > 0) {
         std::cout << ", correct with probability at least : 1-" << error << std::endl;

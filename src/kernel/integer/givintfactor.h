@@ -63,11 +63,11 @@ public:
 
         //  Factors are checked for primality
     Rep& primefactor(Rep& r, const Rep& n, unsigned long loops = 0) const {
-	factor(r, n, loops);
-	if (! isprime(r,5) ) {
+	if (factor(r, n, loops) != 1) {
+	   if (! isprime(r,5) ) {
 		Rep nn = r; factor(r,nn, loops);
-	}
-	while (! isprime(r,5) ) {
+	   }
+	   while (! isprime(r,5) ) {
 		Rep nn = r;
         	if (isone(gcd(r,nn,PROD_first_primes))) {
             	   if (isone(gcd(r,nn,PROD_second_primes))) {
@@ -78,8 +78,12 @@ public:
 		} else {
             	   factor_first_primes(r,nn);
 		}
-	    	if (r == nn) Lenstra((RandIter&)_g, r, nn) ;
-        }
+	    	if (r == nn) {
+			Lenstra((RandIter&)_g, r, nn) ;
+			break; // In case Lenstra fails also
+		}
+           }
+	}
 	return r;
     }
 

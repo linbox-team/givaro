@@ -100,6 +100,7 @@ int main(int argc, char ** argv) {
     tim.clear();tim.start();
     for (k=0; k<NB; ++k) for(i=0; i<TAILLE; ++i)
         GFq.neg(z3, z1);
+    tim.stop();
     std::cout << NB << " * " << TAILLE << " Neg: " << coef / tim.usertime() 
          << "Mop/s\n" << tim << std::endl << std::flush;
 

@@ -2,8 +2,11 @@ check: $(EXTRA_PROGRAMS)
 
 INCLUDES=-I$(top_srcdir)
 
+OPTFLAGS=
+OPTLINKS=
+
 # for gcc ...
-#OPTFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
+#OPTFLAGS+= -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
 #OPTFLAGS+= -frerun-loop-opt -fexpensive-optimizations
 #OPTFLAGS+= -fomit-frame-pointer
 #OPTFLAGS+= -fprefetch-loop-arrays -floop-optimize
@@ -14,8 +17,9 @@ INCLUDES=-I$(top_srcdir)
 #OPTFLAGS+= -ffast-math
 
 # for icc ...
-#OPTFLAGS = -fast -Ob2  -ipo_obj -unroll
+#OPTFLAGS+= -fast -Ob2  -ipo_obj -unroll
 #OPTFLAGS+= -parallel -par_report1
+#OPTLINKS+= -parallel
 # icc for itanium2
 #OPTFLAGS+= -tpp2 -mcpu=itanium2 
 

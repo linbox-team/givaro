@@ -220,7 +220,7 @@ static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const unsig
   friend inline int sign   (const Integer& a);
   friend inline int iszero (const Integer& a);
   friend inline int isone  (const Integer& a);
-  friend inline int isperfectpower  (const Integer& );
+  friend int isperfectpower  (const Integer& );
 
   friend Integer abs(const Integer& n);
 

@@ -13,10 +13,10 @@ GMP_CFLAGS = @GMP_CFLAGS@
 GMP_LIBS   = @GMP_LIBS@
 
 GIVARO_CXXFLAGS = -I${includedir}
-GIVARO_LDFLAGS  = -L${libdir} -lgivaro 
+GIVARO_LIBS  = -L${libdir} -lgivaro 
 
 CXXFLAGS += ${OPTFLAGS} ${GIVARO_CXXFLAGS} ${GMP_CFLAGS}
-LDFLAGS += ${GIVARO_LDFLAGS} ${GMP_LIBS}
+LOADLIBES += ${GIVARO_LIBS} ${GMP_LIBS}
 
 .SUFFIXES: .o .C
 
@@ -24,4 +24,4 @@ LDFLAGS += ${GIVARO_LDFLAGS} ${GMP_LIBS}
 	${CXX}  -o $@ -c $<  ${CXXFLAGS} 
  
 .C:
-	${CXX}  -o $@ $<  ${CXXFLAGS}  ${LDFLAGS} 
+	${CXX}  -o $@ $<  ${CXXFLAGS}  ${LOADLIBES} 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.2 2004-06-01 18:07:35 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.3 2004-06-08 08:57:52 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -57,7 +57,7 @@ long logp(const Integer& a, const Integer& p) {
 
 // approximation of the base 2 logarithm of a
 // 1/log(2) being close to 1.44269504088896341
-double log2(const Integer& a) {
+double logtwo(const Integer& a) {
   signed long int exp;
   double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) ); 
   return (double)exp+log(d)*1.44269504088896341; 

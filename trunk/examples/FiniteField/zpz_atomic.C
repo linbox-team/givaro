@@ -21,7 +21,7 @@ typedef Domain::element Modulo;
 int main(int argc, char ** argv) {
 
     GivRandom generator;
-    long P (65521);     // argv[1] : Modulus
+    long P (32749);     // argv[1] : Modulus
     // int TAILLE (256);   // argv[2] : Vector size 
     // long NB (500000);    // argv[3] : Number of iterations
     int offset = 0;

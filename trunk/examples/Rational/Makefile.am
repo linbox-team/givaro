@@ -1,4 +1,4 @@
-all: $(EXTRA_PROGRAMS)
+check: $(EXTRA_PROGRAMS)
 INCLUDES=-I$(top_srcdir)
 
 AM_CPPFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing -frerun-loop-opt -fexpensive-optimizations -fforce-addr -fforce-mem -fstrength-reduce -ffast-math $(GMP_CFLAGS) 
@@ -8,8 +8,6 @@ AM_CPPFLAGS += -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memo
 
 LDADD = -L${top_srcdir}/src -lgivaro $(GMP_LIBS)
 
-noinst_PROGRAMS=iratrecon
-
-
+EXTRA_PROGRAMS=iratrecon
 
 iratrecon_SOURCES = iratrecon.C

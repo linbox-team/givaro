@@ -93,6 +93,12 @@ AC_DEFINE_UNQUOTED(INT16, $GIVARO_INT16, Canonical 16-bit data type)
 AC_DEFINE_UNQUOTED(INT32, $GIVARO_INT32, Canonical 32-bit data type)
 AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 
+case $ac_cv_sizeof_long in
+  $ac_cv_sizeof_long_long)
+    AC_DEFINE_UNQUOTED(_DONOTUSE_longlong__,1, long long is equal to long)
+    ;;
+esac
+
 # Feature checks
 AC_LANG_CPLUSPLUS
 

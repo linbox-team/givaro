@@ -1,4 +1,5 @@
-all: $(EXTRA_PROGRAMS)
+check: $(EXTRA_PROGRAMS)
+
 INCLUDES=-I$(top_srcdir)
 
 
@@ -6,7 +7,7 @@ AM_CPPFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing -fre
 
 LDADD = -L${top_srcdir}/src -lgivaro $(GMP_LIBS)
 
-noinst_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation
+EXTRA_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation
 
 gfq_atomic_SOURCES=gfq_atomic.C
 Test_Extension_SOURCES=Test_Extension.C

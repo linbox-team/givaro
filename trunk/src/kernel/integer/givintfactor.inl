@@ -195,13 +195,12 @@ void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const
 	Rep::divexact(u, nn,g);
         while(r == 0) {
 		nn.copy(u); 
-//		nn = u; 
 		Rep::divmod( u, r, nn,g ); 
         }
-//         if (isprime(g))
-            Lf.push_back(g);
-//         else
-//             IntFactorDom::set(Lf, g);
+	// gcc 3.3.3 (Debian 20040422) : internal compiler error !!!
+        Lf.push_back(g);
+	//Lf.resize(Lf.size()+1);
+	//Lf.back() = g;
     }
 }
 

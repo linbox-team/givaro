@@ -265,7 +265,6 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root
     std::list<Rep> Lf;
     set(Lf,phin);
     typename std::list<Rep>::iterator f;
-//             *f = phin / (*f);
     for(f=Lf.begin();f!=Lf.end();++f)
             div(*f,phin,*f);
     int found=0;
@@ -274,7 +273,6 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root
             found = 1;
             for(f=Lf.begin();(f!=Lf.end() && found);f++)
                 found = (! isone( powmod(tmp,A,*f,n)) );
-//                 found = ( powmod(A,*f,n) != 1);
         }
     }
     if (isleq(A,n))

@@ -1,7 +1,13 @@
   // -- Computation of a mixed-radix representation of the residu.
+#ifndef __ECC
 template<template<class> class Container> template<class TT>
 inline void IntRNSsystem< Container >::RnsToMixedRadix
   (IntRNSsystem< Container >::array& mixrad, const Container<TT>& residu) const
+#else
+template<class Container> template<class ContTT>
+inline void IntRNSsystem< Container >::RnsToMixedRadix
+  (IntRNSsystem< Container >::array& mixrad, const ContTT& residu) const
+#endif
 {
   size_t size = _primes.size();
   if (mixrad.size() < size) mixrad.resize( size );
@@ -33,7 +39,11 @@ inline void IntRNSsystem< Container >::RnsToMixedRadix
   
 
   // -- Convert a mixed radix representation to an Integer
+#ifndef __ECC
 template<template<class> class Container>
+#else
+template<class Container>
+#endif
 inline void IntRNSsystem< Container >::MixedRadixToRing( element& res, const IntRNSsystem< Container >::array& mixrad ) const 
 {
   size_t size = _primes.size();
@@ -48,7 +58,11 @@ inline void IntRNSsystem< Container >::MixedRadixToRing( element& res, const Int
 
 
   // Convert an integer to a RNS representation (which is given by this)
+#ifndef __ECC
 template<template<class> class Container>
+#else
+template<class Container>
+#endif
 inline void IntRNSsystem< Container >::RingToRns( IntRNSsystem< Container >::array& rns , const external& a) const
 {
   size_t size = _primes.size();
@@ -61,8 +75,13 @@ inline void IntRNSsystem< Container >::RingToRns( IntRNSsystem< Container >::arr
 }
 
   // Convert to an Integer:
+#ifndef __ECC
 template<template<class> class Container> template<class TT>
 inline void IntRNSsystem< Container >::RnsToRing( external& I, const Container<TT>& rns) const 
+#else
+template<class Container> template<class ContTT>
+inline void IntRNSsystem< Container >::RnsToRing( external& I, const ContTT& rns) const 
+#endif
 {
   // - Computation of a mixed radix representation of this
     

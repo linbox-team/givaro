@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.5 2004-10-11 15:15:14 jgdumas Exp $
+// $Id: givconfig.h,v 1.6 2004-10-25 11:36:55 givaro Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -86,7 +86,7 @@ typedef unsigned  __GIVARO_INT32     uint32;
 typedef signed __GIVARO_INT64 int64;
 typedef unsigned __GIVARO_INT64  uint64;
 # else
-#   undef GIVARO_USE_SIXTYFOUR 1
+#   undef GIVARO_USE_SIXTYFOUR
 #   define GIVARO_DONOTUSE_SIXTYFOUR 1
 # endif
 

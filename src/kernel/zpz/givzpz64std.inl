@@ -4,7 +4,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.6 2004-10-11 13:54:38 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.7 2004-10-25 11:35:16 givaro Exp $
 // ==========================================================================
 // Description:
 
@@ -47,16 +47,6 @@
 
 #define __GIVARO_ZPZ64_N_NEG(r,p,a) { r = (a == 0 ? 0 : p-a); }
 #define __GIVARO_ZPZ64_N_NEGIN(r,p) { r = (r == 0 ? 0 : p-r); }
-
-
-inline ZpzDom<Std64>::ZpzDom<Std64>( )
- : zero(0), one(1), _p(0)
-{}
-
-inline ZpzDom<Std64>::ZpzDom<Std64>( Residu_t p , unsigned long e)
- : zero(0), one(1), _p(p)
-{}
-
 
 
 inline ZpzDom<Std64>::Residu_t ZpzDom<Std64>::residu( ) const

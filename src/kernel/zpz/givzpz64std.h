@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.6 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givzpz64std.h,v 1.7 2004-10-25 11:35:16 givaro Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -43,8 +43,9 @@ public:
     const Rep one;
 
         // ----- Constructor 
-    ZpzDom();
-    ZpzDom( Residu_t p, unsigned long e = 1);
+    ZpzDom() : zero(0), one(1), _p(0) {}
+    ZpzDom( Residu_t p, unsigned long e = 1) : zero(0), one(1), _p(p) {}
+
 
     Self_t& operator= (const Self_t& D) {
         this->_p = D._p;

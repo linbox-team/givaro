@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.2 2005-01-06 17:10:50 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.3 2005-02-02 19:07:25 pernet Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -58,7 +58,7 @@ public :
 
         // -- Exported types
     typedef          Domain		       Domain_t;
-    typedef typename Domain::element               Type_t;
+    typedef typename Domain::Element               Type_t;
 
         // -- Self_t
     typedef          Poly1Dom<Domain,Dense>    Self_t;
@@ -113,6 +113,7 @@ public :
 
         // -- Comparaison operator
     int iszero  ( const Rep& P ) const;
+    int isZero  ( const Rep& P ) const{return iszero(P);}
     int isone   ( const Rep& P ) const;
     int areEqual ( const Rep& P, const Rep& Q ) const;
     int areNEqual( const Rep& P, const Rep& Q ) const;

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givpoly1muldiv.inl,v 1.2 2005-02-02 19:07:25 pernet Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
@@ -42,7 +42,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mulin( Rep&
 //     size_t i,j;
 //     for (i=0; i<sR; ++i) _domain.init(R[i], _domain.zero);
 //     for (i=0; i<sP; ++i) 
-//         if (! _domain.iszero(P[i]))
+//         if (! _domain.isZero(P[i]))
 //             for (j=0; j<sQ; ++j) 
 //                 _domain.axpy(R[i+j], P[i], Q[j], R[i+j]);
 //     return setdegree(R);
@@ -51,6 +51,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mulin( Rep&
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, const Rep& Q ) const
 {
+	Type_t _zero;
+	_domain.init( _zero, 0.0);
     size_t sR = R.size(); 
     size_t sP = P.size(); 
     size_t sQ = Q.size(); 
@@ -59,17 +61,17 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
     
     typename Rep::const_iterator ai=P.begin(),bi=Q.begin();
     typename Rep::iterator ri=R.begin(), rig=R.begin();
-    if (_domain.iszero(*ai))
+    if (_domain.isZero(*ai))
         for(;bi!=Q.end();++bi,++ri)
-            *ri = _domain.zero;
+            *ri = _zero;
     else
         for(;bi!=Q.end();++bi,++ri)
-            if (_domain.iszero(*bi))
-                *ri = _domain.zero;
+            if (_domain.isZero(*bi))
+                *ri = _zero;
             else
                 _domain.mul(*ri,*ai,*bi);
     for(;ri!=R.end();++ri)
-        *ri = _domain.zero;
+        *ri = _zero;
     for(++ai,++rig;ai!=P.end();++ai,++rig)
         if (! _domain.isZero(*ai))
             for(ri=rig,bi=Q.begin();bi!=Q.end();++bi,++ri)
@@ -97,7 +99,7 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& R, const Type_t& u) const
 {
 #ifdef GIVARO_DEBUG
-  if (_domain.iszero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::divin]"));
+  if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::divin]"));
 #endif
   size_t sz =R.size();
   for (unsigned int i=0; i<sz; ++i)
@@ -110,7 +112,7 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::div(Rep& R, const Rep& P, const Type_t& u) const
 {
 #ifdef GIVARO_DEBUG
-  if (_domain.iszero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
+  if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
   size_t sP =P.size();
   R.reallocate(sP);
@@ -124,9 +126,9 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::div(Rep& R, const Type_t& u, const Rep& P) const
 {
 #ifdef GIVARO_DEBUG
-  if (iszero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::divin]"));
+  if (isZero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::divin]"));
 #endif
-  if (_domain.iszero(u)) { return assign(R,zero);}
+  if (_domain.isZero(u)) { return assign(R,zero);}
   size_t sP =P.size();
   if (sP >1) { R.reallocate(0); return R; }
   size_t sR =R.size();
@@ -154,7 +156,7 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& R, const Type_t& u) const
 {
 #ifdef GIVARO_DEBUG
-  if (_domain.iszero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::modin]"));
+  if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::modin]"));
 #endif
   R.reallocate(0);
   return R;
@@ -165,7 +167,7 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R, const Rep& P, const Type_t& u) const
 {
 #ifdef GIVARO_DEBUG
-  if (_domain.iszero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::mod]"));
+  if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::mod]"));
 #endif
   R.reallocate(0);
   return R;
@@ -176,9 +178,9 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R, const Type_t& u, const Rep& P) const
 {
 #ifdef GIVARO_DEBUG
-  if (iszero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::mod]"));
+  if (isZero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::mod]"));
 #endif
-  if (_domain.iszero(u)) { return assign(P,R); }
+  if (_domain.isZero(u)) { return assign(P,R); }
   size_t sP =P.size();
   if (sP >1) { 
     R.reallocate(1); 
@@ -205,6 +207,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& 
         // Last step is erasing of the first values.
 //     write(cerr << "Rem(", A) << " ,";
 //     write(cerr, B) << ", X) mod " << _domain.size();
+	Type_t _zero;
+	_domain.init( _zero, 0.0);
     long i = A.size()-B.size();
     if (i >= 0) {
         typedef typename Rep::value_type TT;
@@ -225,7 +229,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& 
                     _domain.amxy(*aai,l,*bi,*ai);
             for(;ai!=A.rend();++ai,++aai)
                 *aai = *ai;
-            *aai = _domain.zero;
+            *aai = _zero;
         }
 //         write(cerr << " = ", A) << ";" << endl;
         A.erase(A.begin(), A.begin()+(A.size()-B.size()-i));
@@ -251,7 +255,9 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep& Q, Rep& R, const Rep& A, const Rep& B) const
 // returns Q such that A = B Q + R
 {
-  Degree degB; degree(degB, B); 
+  Degree degB; degree(degB, B);
+	Type_t _zero;
+	_domain.init( _zero, 0.0); 
 #ifdef GIVARO_DEBUG
   if (degB == Degree::deginfty) 
     GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
@@ -293,7 +299,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep
     for (j=0; degB>j; j++) { // rem <- rem - ld*x^(degRem-degB)*B
       _domain.axpyin(R[j+degQuo], tmp, B[j]);
     }
-    _domain.assign(R[degRem],_domain.zero) ; degQuo--; degRem--;
+    _domain.assign(R[degRem],_zero) ; degQuo--; degRem--;
   }
   R.reallocate(degRem+1);
   setdegree(R);
@@ -306,6 +312,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pdivmod
  ( Rep& Q, Rep& R, Type_t& m, const Rep& A, const Rep& B) const
 // returns Q ...
 {
+	Type_t _zero, _one;
+	_domain.init( _one, 1.0);
+	_domain.init( _zero, 0.0);
   Degree degB; degree(degB, B); 
 #ifdef GIVARO_DEBUG
   if (degB == Degree::deginfty) 
@@ -357,7 +366,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pdivmod
       _domain.mulin(R[j+degQuo], lB);
       _domain.axmyin(R[j+degQuo], Q[degQuo], B[j]);
     }
-    _domain.assign(R[degRem],_domain.zero); degQuo--; degRem--;
+    _domain.assign(R[degRem],_zero); degQuo--; degRem--;
     _domain.mulin(m, lB);
   }
   R.reallocate(degRem+1);

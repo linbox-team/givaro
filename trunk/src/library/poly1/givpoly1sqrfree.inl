@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1sqrfree.inl,v 1.2 2005-01-06 17:10:50 jgdumas Exp $
+// $Id: givpoly1sqrfree.inl,v 1.3 2005-02-02 19:07:25 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -50,7 +50,7 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
     diff(Z, W);
 // write(cout << "W':", Z) << endl;
     sub(Z, Y, Z);
-    while (!iszero(Z)) 
+    while (!isZero(Z)) 
     {
       gcd(Fact[count], W, Z);
 // write(cout << "L" << count << ":", Fact[count]) << endl;

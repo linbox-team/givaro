@@ -4,7 +4,6 @@
 #include <givaro/givrandom.h>
 #include <givaro/givzpz.h>
 
-
 #ifndef GIVMIN
 #define GIVMIN(a,b) (((a)<(b))?(a):(b))
 #endif

@@ -13,7 +13,6 @@ pkginclude_HEADERS=\
 	givzpz64std.h		\
 	givprimes16.h		\
 	givrns.h		\
-	givrns16.h		\
 	givzpz16table1.h	\
 	givmontg32.h		\
 	giv_randiter.h		\
@@ -41,5 +40,3 @@ libgivzpz_la_SOURCES=\
 	givzpz64std.C		\
 	givprimes16.C		\
 	givzpz16table1.C	\
-	givrns16cstor.C		\
-	givrns16convert.C

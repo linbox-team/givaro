@@ -1,74 +1,86 @@
 #include <iostream>
 #include <givaro/givzpz.h>
 #include <givaro/givgfq.h>
+#include <givaro/givmontg32.h>
+
+
+template<class Field>
+void TestField(const Field& F) {
+    std::cerr << "Within " ; 
+    F.write(std::cerr );
+    std::cerr  << " : " << std::flush;
+
+    typename Field::element a, b, c, d;
+    F.init(a, 7);
+    F.init(b, -29.3);
+
+    F.init(c);            // empty constructor
+    F.init(d);            // empty constructor
+    
+    F.add(c, a, b);       // c = a+b
+    
+     // Separate output writing
+    F.write( std::cout, a) << " + " << std::flush;  
+    F.write( std::cout, b) << " = " << std::flush; 
+    F.write( std::cerr, c) << std::endl;
+    
+
+    F.mul(c, a, b);     // c = a*b
+    F.axpy(d, a, b, c); // d = a*b + c;
+
+    // Writing all outputs in a single command line
+    F.write( std::cerr << "Within " ) << " : " << std::flush;
+    F.write( F.write( F.write( F.write(
+        std::cout, c) << " + ", a) << " * ", b) << " = ", d) << std::endl;
+
+
+        // Four operations
+    F.write( F.write( F.write( std::cout, a) << " += ",  b) << " is ", 
+             F.addin(a, b)
+	     ) << "   ;   ";
+    F.write( F.write( F.write( std::cout, a) << " -= ",  b) << " is ", 
+             F.subin(a, b)
+	     ) << "   ;   ";
+    F.write( F.write( F.write( std::cout, a) << " *= ",  b) << " is ", 
+             F.mulin(a, b)
+	     ) << "   ;   ";
+    F.write( F.write( F.write( std::cout, a) << " /= ",  b) << " is ", 
+             F.divin(a, b)
+	     ) << std::endl;
+}
+
+
 
 int main(int argc, char ** argv) {
 
- {
-    ZpzDom<Std32> Z13(13);   // modulo 13 over 32 bits
-    ZpzDom<Std32>::element a, b, c;
-    Z13.init(a, 7);
-    Z13.init(b, -29.0);
+        // modulo 13 over 16 bits
+    ZpzDom<Std16> C13(13); TestField( C13 );
     
-    Z13.add(c, a, b); // c = a+b
+        // modulo 13 over 32 bits
+    ZpzDom<Std32> Z13(13); TestField( Z13 );
 
-    std::cerr << "Within "; 
-    Z13.write( std::cerr );
-    std::cerr << " : " << std::flush;
+        // modulo 13 over unsigned 32 bits
+    ZpzDom<Unsigned32> U13(13); TestField( U13 );
 
-     // Separate output writing
-    Z13.write( std::cout, a) << " + " << std::flush;  
-    Z13.write( std::cout, b) << " = " << std::flush; 
-    Z13.write( std::cerr, c) << std::endl;
- }
+        // modulo 13 over 64 bits
+    ZpzDom<Std64> LL13(13); TestField( LL13 );
 
+        // modulo 13 fully tabulated
+    ZpzDom<Log16> L13(13); TestField( L13 );
 
- {
-    int Mod = 3; int exponent = 4;
-    GFqDom<int> GF81( Mod, exponent );  // finite field with 3^4 elements
-    GFqDom<int>::element a, b, c;
-
-    GF81.init(a, 7);    // 7 modulo   3 
-    GF81.init(b, -28);  // -28 modulo 3
-
-    GF81.mul(c, a, b);  // c = a*b
-
-    GFqDom<int>::element d; 
-
-    GF81.axpy(d, c, a, b); // d = c + a*b;
-
-    GF81.write( std::cerr << "Within " ) << " : " << std::flush;
-
-    // Writing all outputs in a single command line
-    GF81.write( GF81.write( GF81.write( GF81.write(
-       std::cout, c) << " + ", a) << " * ", b) << " = ", d) << std::endl;
-
- }   
-
- {
-    ZpzDom<Integer> Z13(13);   // modulo 13 over arbitrary size
-    ZpzDom<Integer>::element a, b, c;
-    Z13.init(a, 7);
-    Z13.init(b, -29);
+        // modulo 13 over 32 bits with Montgomery reduction
+    Montgomery<Std32> M13(13); TestField( M13 );
     
+        // modulo 13 with primitive root representation
+    GFqDom<int> GF13( 13 ); TestField( GF13 );
+    
+        // finite field with 5^4 elements
+    GFqDom<int> GF81( 5, 4 ); TestField( GF81 );
+    
+        // modulo 13 over arbitrary size
+    ZpzDom<Integer> IntZ13(13); TestField( IntZ13 );
 
-    std::cerr << "Within "; 
-    Z13.write( std::cerr );
-    std::cerr << " : " << std::flush;
-
-    Z13.write( Z13.write( Z13.write( std::cout, a) << " + ",  b) << " = ", 
-    	Z13.add(c, a, b)
-	     ) << std::endl;
-    Z13.write( Z13.write( Z13.write( std::cout, a) << " - ",  b) << " = ", 
-    	Z13.sub(c, a, b)
-	     ) << std::endl;
-    Z13.write( Z13.write( Z13.write( std::cout, a) << " * ",  b) << " = ", 
-    	Z13.mul(c, a, b)
-	     ) << std::endl;
-    Z13.write( Z13.write( Z13.write( std::cout, a) << " / ",  b) << " = ", 
-    	Z13.div(c, a, b)
-	     ) << std::endl;
- }
+    
 
     return 0;
 }

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.2 2004-06-18 12:44:59 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -62,7 +62,7 @@ public:
   Residu_t size() const { return _p;}
 
   // ----- Convert from element to int
-  int & convert( int& x , Rep& a) { return x=int(a);}
+  int & convert( int& x , Rep& a) { return x=_tab_rep2value[a];}
 
 
 // initialized by a degree of the generator.
@@ -71,6 +71,8 @@ public:
   Rep& init( Rep& a, const int i) const ;
   Rep& init( Rep& r , const unsigned long a) const;
   Rep& init( Rep& a, const unsigned int i) const ;
+  Rep& init( Rep& a, const double i) const;
+  Rep& init( Rep& a, const float i) const;
 
   // ----- Misc methods
   int iszero( const Rep a ) const;

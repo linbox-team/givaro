@@ -255,18 +255,23 @@ inline void Add_Curve( const Integer& n, const Integer A, const Integer& ax, con
     cx = t1*t2;
     cx %= n; 
     t1 -= t2;
-    cz = ((A*t1+t2) % n);
+    cz = A;
+    cz *= t1;
+    cz += t2;
+    cz %= n;
+//    cz = ((A*t1+t2) % n);
     cz *= t1;
     cz %= n;
 }
 
 
 inline void one_Mul_Curve( const Integer& n, const Integer A, const Integer& mm, const Integer& nn, const Integer& px, const Integer& pz, Integer& ax, Integer& az) {
-    Integer bx, bz, cx, cz, tmpx, tmpz, d, e, t1, t2,t3;
+    Integer bx, bz, cx, cz, tmpx, tmpz, d, e, t2;
     cx = px;
     cz = pz;
     e = mm;
-    d = nn - mm;
+    d = nn;
+    d -= mm;
     if (e<d) {
         Add_Curve(n,A,px,pz,bx,bz);ax = px;az = pz;d -= e;
     } else {
@@ -275,60 +280,58 @@ inline void one_Mul_Curve( const Integer& n, const Integer A, const Integer& mm,
     while (! iszero(e)) {
         if (e<d) {
             tmpx = bx; tmpz = bz; 
-//             t1 = ((ax-az)*(bx+bz))%n; 
-//             t2 = ((ax+az)*(bx-bz))%n; 
-            t1 = ax-az;  
-            t2 = bx+bz;
-            t1 *= t2;
-            t1 %= n;
+            bz = ax;
+	    bz -= az;  
+            t2 = tmpx;
+	    t2 += tmpz;
+            bz *= t2;
+            bz %= n;
             
-            t2 = ax+az;
-            bx -= bz;
+            t2 = ax;
+	    t2 += az;
+            bx -= tmpz;
             t2 *= bx;
             t2 %= n;
             
-
-//             bx = (cz*(((t1+t2)*(t1+t2))%n))%n;
-//             bz = (cx*(((t1-t2)*(t1-t2))%n))%n;
-            t3 = t1+t2;
-//             bx = (cz*(((t3)*(t3))%n))%n;
-            powmod(bx, t3,2U,n);
+            bx = bz;
+	    bx += t2;
+	    bx *= bx;
+	    bx %= n;
             bx *= cz;
             bx %= n;
             
-
-            t1 -= t2;
-//             bz = (cx * powmod(t3,2,n)) % n;
-            powmod(bz, t1,2U,n);
+	    bz -= t2;
+	    bz *= bz;
+	    bz %= n;
             bz *= cx;
             bz %= n;
 
             d -= e;
         } else {
             tmpx = ax; tmpz = az; 
-//             t1 = ((ax-az)*(bx+bz))%n; 
-            t1 = ax - az;
-            t2 = bx + bz;
-            t1 *= t2;
-            t1 %= n;
+            az = tmpx;
+	    az -= tmpz;
+            t2 = bx;
+	    t2 += bz;
+            az *= t2;
+            az %= n;
             
-//             t2 = ((ax+az)*(bx-bz))%n;
-            t2 = bx - bz;
-            ax += az;
+            t2 = bx;
+	    t2 -= bz;
+            ax += tmpz;
             t2 *= ax;
             t2 %= n;
 
-//             ax = (cz*(((t1+t2)*(t1+t2))%n))%n;
-//             az = (cx*(((t1-t2)*(t1-t2))%n))%n;
-            t3 = t1+t2;
-//             ax = (cz * powmod(t3,2,n)) % n;
-            powmod(ax, t3,2U,n);
+            ax = az;
+	    ax += t2;
+	    ax *= ax;
+	    ax %= n;
             ax *= cz;
             ax %= n;
             
-            t1 -= t2;
-//             az = (cx * powmod(t3,2,n)) % n;
-            powmod(az, t1,2U,n);
+	    az -= t2;
+	    az *= az;
+	    az %= n;
             az *= cx;
             az %= n;
             
@@ -387,8 +390,8 @@ inline void one_Mul_Curve2( const Integer& n, const Integer A, const Integer& mm
 
 inline void Mul_Curve( const Integer& n, Integer& Ai, const Integer& mm, const Integer& nn, const Integer& B1, Integer& Xi, Integer& Zi) {
     Integer pow = nn, tXi, tZi;
-    tXi = Xi;
-    tZi = Zi;
+    tXi = Xi; // Temporaries mandatory -- JGD 24.09.2004
+    tZi = Zi; // Temporaries mandatory -- JGD 24.09.2004
     while (pow <= B1) {
         one_Mul_Curve(n,Ai,mm,nn,Xi,Zi,tXi,tZi);
         pow *= nn;
@@ -466,7 +469,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
 // Begins search with curves on primes up to B1
     Rep prime = 2, sp, f;
     while (prime <= B1) {
-//        cerr << "p: " << prime << endl;
+//std::cerr << "p: " << prime << std::endl;
         sp = (prime*s)/si;
         Mul_Curve(n,A[0],sp,prime,B1,X[0],Z[0]);
         f = Z[0];

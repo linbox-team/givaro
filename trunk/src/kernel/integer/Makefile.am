@@ -10,6 +10,7 @@ pkginclude_HEADERS=\
 	givintrsa.h		\
 	givintrns.h		\
 	givinteger.inl		\
+	givintprime.inl		\
 	givintnumtheo.inl	\
 	givintrsa.inl		\
 	givintfactor.inl 	\

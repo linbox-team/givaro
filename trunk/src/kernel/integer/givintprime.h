@@ -66,11 +66,14 @@ public:
     unsigned int isprimepower(Rep&, const Rep&) const ;
 
     template<class RandIter>
-    int Miller(RandIter& g, const Rep& n) const  ;
+    unsigned int Miller(RandIter& g, const Rep& n) const  ;
+
     template<class RandIter>
     Rep& test_Lehmann(RandIter& g, Rep&, const Rep& n) const  ;
+
     template<class RandIter>
     int Lehmann(RandIter& g, const Rep& n)  const ;
+
     int isprime_Tabule(const int n) const ;
     int isprime_Tabule2(const int n) const ;
 
@@ -101,4 +104,5 @@ private:
 */
 };
 
+#include "givaro/givintprime.inl"
 #endif

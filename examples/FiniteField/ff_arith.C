@@ -62,8 +62,10 @@ int main(int argc, char ** argv) {
         // modulo 13 over unsigned 32 bits
     ZpzDom<Unsigned32> U13(13); TestField( U13 );
 
+#ifdef __USE_Givaro_64__
         // modulo 13 over 64 bits
     ZpzDom<Std64> LL13(13); TestField( LL13 );
+#endif
 
         // modulo 13 fully tabulated
     ZpzDom<Log16> L13(13); TestField( L13 );

@@ -13,7 +13,7 @@ typedef ZpzDom<Integer>		Field4;	typedef StaticElement< Field4 > Element4;	Field
 typedef ZpzDom<Std32>		Field5;	typedef StaticElement< Field5 > Element5; 	Field5 Element5::_domain;
 typedef ZpzDom<Std16>		Field6;	typedef StaticElement< Field6 > Element6; 	Field6 Element6::_domain;
 typedef ZpzDom<Log16>		Field7;	typedef StaticElement< Field7 > Element7; 	Field7 Element7::_domain;
-#ifdef __USE_Givaro_64__
+#ifdef GIVARO_USE_SIXTYFOUR
 typedef ZpzDom<Std64>		Field8;	typedef StaticElement< Field8 > Element8; 	Field8 Element8::_domain;
 #endif
 
@@ -60,7 +60,7 @@ int main(int argc, char ** argv) {
     TestField<Field5, Element5>();
     TestField<Field6, Element6>();
     TestField<Field7, Element7>();
-#ifdef __USE_Givaro_64__
+#ifdef GIVARO_USE_SIXTYFOUR
     TestField<Field8, Element8>();  
 #endif
 

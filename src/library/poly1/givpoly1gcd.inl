@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givpoly1gcd.inl,v 1.2 2005-02-02 19:07:25 pernet Exp $
 // ==========================================================================
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
@@ -95,7 +95,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   
   while ( ! iszero(G) ) {
       divmod(Q,R1,F,G);
- leadcoef(r1, R1); if (_domain.iszero(r1)) _domain.assign(r1,_domain.one);
+ leadcoef(r1, R1); if (_domain.isZero(r1)) _domain.assign(r1,_domain.one);
       assign(F,G);
       div(G,R1,r1);
       mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); div(S1,TMP2,r1);
@@ -138,9 +138,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& 
   assign(T0,zero);
   init(T1, 0, _domain.inv(tt,r1) );
   
-  while ( ! iszero(G) ) {
+  while ( ! isZero(G) ) {
       divmod(Q,R1,F,G);
- leadcoef(r1, R1); if (_domain.iszero(r1)) _domain.assign(r1,_domain.one);
+ leadcoef(r1, R1); if (_domain.isZero(r1)) _domain.assign(r1,_domain.one);
       assign(F,G);
       div(G,R1,r1);
       mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); div(S1,TMP2,r1);
@@ -244,9 +244,9 @@ void Poly1Dom<Domain,Dense>::gcd
     permuter = 0; 
   }
 
-  if (iszero(B) {
+  if (isZero(B) {
     Type_t inv_lcoeff_A;
-    if (iszero(A)) { 
+    if (isZero(A)) { 
       _domain.assign(inv_lcoeff_A, _domain.one); 
     }
     else { 
@@ -272,7 +272,7 @@ void Poly1Dom<Domain,Dense>::gcd
     do {
       Poly1<T>::divide(quot, rem, A, B);
       A = B;
-      cont = !iszero(rem);
+      cont = !isZero(rem);
       if (cont) { 
         inv_lcoeff_B = csteT1/rem[rem.degree()]; 
         B = rem*inv_lcoeff_B;
@@ -294,7 +294,7 @@ void Poly1Dom<Domain,Dense>::gcd
   }
 
 #ifdef GIVARO_ASSERT
-  if (!iszero(u*P+v*Q-d)) {
+  if (!isZero(u*P+v*Q-d)) {
     cout << "Erreur dans la verif de bezout. " << endl
          << "   P  =" << P << endl
          << "   Q  =" << Q << endl
@@ -320,14 +320,14 @@ Poly1<T>& Poly1<T>::gcd1 (Poly1<T>& G, const Poly1<T> &P, const Poly1<T> &Q)
   if (P.degree() < Q.degree()) { A = Q; B = P; }
   else { A = P; B = Q; }
 
-  if (iszero(B)) {
-    if (iszero(A)) { return G.logcopy(A); }
+  if (isZero(B)) {
+    if (isZero(A)) { return G.logcopy(A); }
     else { return G.logcopy(A/A[A.degree()]); }
   }
 
   B = B/B[B.degree()]; // B is made unitary
   Poly1<T> rem = A % B;
-  while (!iszero(rem = A % B)) {
+  while (!isZero(rem = A % B)) {
     A = B;
     B = rem / rem.leadcoef();
   }

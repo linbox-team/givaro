@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.2 2005-02-02 19:07:25 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -15,7 +15,7 @@ template<class Domain>
 inline int Poly1Dom<Domain,Dense>::iszero (const Rep& P) const
 { 
   if (P.size() ==0) return 1;
-  if (P.size() ==1) return _domain.iszero(P[0]);
+  if (P.size() ==1) return _domain.isZero(P[0]);
   else return 0;
 }
 
@@ -24,7 +24,7 @@ inline int Poly1Dom<Domain,Dense>::isone (const Rep& P) const
 { 
 // JGD 15.12.1999
 //   if (P.size() ==0) return 1;
-  if (P.size() ==1) return _domain.isone(P[0]);
+  if (P.size() ==1) return _domain.isOne(P[0]);
   else return 0;
 }
 
@@ -65,11 +65,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::setdegree (
 {
   int sz = P.size() - 1;
   if (P.size() <= 0) return P.reallocate(0);
-  if (_domain.iszero(P[sz]) ==0) {
+  if (_domain.isZero(P[sz]) ==0) {
     return P;
   }
   for (int j=sz-1; j>=0; --j)
-    if (_domain.iszero(P[j]) ==0) { 
+    if (_domain.isZero(P[j]) ==0) { 
         P.reallocate(j+1); 
         return P;
     }
@@ -81,7 +81,7 @@ inline Degree& Poly1Dom<Domain,Dense>::degree(Degree& deg, const Rep& P) const
 { 
   size_t sz = P.size();
   if (sz ==0) { return deg = Degree::deginfty; }
-  if (_domain.iszero(P[sz-1])) {
+  if (_domain.isZero(P[sz-1])) {
     setdegree((Rep&)P);
     sz = P.size();
   }
@@ -104,10 +104,10 @@ inline Degree& Poly1Dom<Domain,Dense>::val(Degree& d, const Rep& P) const
 {
   size_t sz = P.size();
   if (sz ==0) {  return d = Degree::deginfty;}
-  if (!_domain.iszero(P[0])) { return d = 0;}
+  if (!_domain.isZero(P[0])) { return d = 0;}
   for (int i=1; i<sz; ++i) 
   {
-    if (!_domain.iszero(P[i])) {  return d = i; }
+    if (!_domain.isZero(P[i])) {  return d = i; }
   }
 }
 
@@ -148,7 +148,7 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pow( Rep& W, const Rep& P, long n) const
 {
   Rep puiss2;
-  init(puiss2, P); // -- P**(2^k)
+  assign(puiss2, P); // -- P**(2^k)
   Rep tmp;
   assign(W,one);
   unsigned int p;
@@ -187,7 +187,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::powmod( Rep
     while (n > 0) {
         ID.divmod(q,r,n,deux);
         n.copy(q);
-        if (! ID.iszero(r)) { 
+        if (! ID.isZero(r)) { 
             mulin(W,puiss);
             mod(tmp, W, U);
             assign(W,tmp);

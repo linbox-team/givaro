@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1io.inl,v 1.2 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givpoly1io.inl,v 1.3 2005-02-02 19:07:25 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -56,23 +56,23 @@ std::ostream& Poly1Dom<Domain,Dense>::write( std::ostream& o, const Rep& R) cons
         Rep P; assign(P, R);
         setdegree(P);
         if (P.size()) {
-            if (! _domain.iszero(P[0])) 
-                if (_domain.isone(P[0]))
+            if (! _domain.isZero(P[0])) 
+                if (_domain.isOne(P[0]))
                     _domain.write(o,P[0]);
                 else
                     _domain.write(o << "(",P[0]) << ")";
             if (P.size() > 1) {
-                if (! _domain.iszero(P[0])) o << " + ";
-                if (! _domain.iszero(P[1])) {
-                    if (! _domain.isone(P[1])) {
+                if (! _domain.isZero(P[0])) o << " + ";
+                if (! _domain.isZero(P[1])) {
+                    if (! _domain.isOne(P[1])) {
                         _domain.write(o << "(",P[1]) << ")*";
                     }
                     o << _x;
                 }
                 for(unsigned long l=2;l<P.size();++l) {
-                    if (! _domain.iszero(P[l-1])) o << " + ";
-                    if (! _domain.iszero(P[l])) {
-                        if (! _domain.isone(P[l])) {
+                    if (! _domain.isZero(P[l-1])) o << " + ";
+                    if (! _domain.isZero(P[l])) {
+                        if (! _domain.isOne(P[l])) {
                             _domain.write(o << "(",P[l]) << ")*";
                         }
                         o << _x << "^" << l; 

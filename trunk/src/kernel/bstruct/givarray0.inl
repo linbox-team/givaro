@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: T. Gautier
-// $Id: givarray0.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givarray0.inl,v 1.2 2004-10-12 14:36:46 jgdumas Exp $
 // ======================================================================= //
 // Description:
 // implementation of operators of Array0<T>
@@ -11,17 +11,27 @@
 
   // -- Default cstor : ctsor of s size array
 template<class T>
-inline Array0<T>::Array0 ( size_t s) 
-{
+inline void Array0<T>::build( size_t s, const T& t) {
   GIVARO_ASSERT( s>=0, "[Array<T>::cstor(size_t)] must takes a >=0 parameter");
   _psz = _size = s;
   if (s !=0) {
     _d = GivaroMM<T>::allocate(s); 
-    GivaroMM<T>::initialize(_d, s);
+    GivaroMM<T>::initialize(_d, s, t);
     _cnt = GivaroMM<int>::allocate(1); 
     *_cnt = 1;
   } else { _d =0; _cnt =0; }  
 }
+
+template<class T>
+inline Array0<T>::Array0 ( size_t s ) {
+    build(s, T());
+}
+
+template<class T>
+inline Array0<T>::Array0 ( size_t s, const T& t) {
+    build(s, t);
+}
+
 
   //-- Recopy cstor : logical copy
 template<class T>

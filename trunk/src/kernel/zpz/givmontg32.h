@@ -2,7 +2,7 @@
 #define _GIVARO_MONTG32_H_
 // ==========================================================================
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.3 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givmontg32.h,v 1.4 2004-10-12 14:36:46 jgdumas Exp $
 // ==========================================================================
 //
 #include "givbasictype.h"
@@ -86,7 +86,17 @@ public:
 	    uint32 ur;
 	    return r = (unsigned long)redc(ur,a);}
 
-    long int& convert(long int& r, const Rep a) const { 
+    uint32& convert(uint32& r, const Rep a) const { 
+	    unsigned long ur;
+	    return r = (uint32)convert(ur, a);
+    }
+
+     int32& convert(int32& r, const Rep a) const { 
+	    unsigned long ur;
+	    return r = (int32)convert(ur, a);
+    }
+
+   long int& convert(long int& r, const Rep a) const { 
 	    unsigned long ur;
 	    return r = (long int)convert(ur, a);
     }

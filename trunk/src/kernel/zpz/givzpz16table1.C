@@ -3,17 +3,13 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.C,v 1.2 2004-07-20 12:03:46 giorgi Exp $
+// $Id: givzpz16table1.C,v 1.3 2004-10-12 14:36:46 jgdumas Exp $
 // ==========================================================================
 // Description:
 
 #include <iostream>
 #include "givaro/givzpz16table1.h"
 
-
-ZpzDom<Log16>::ZpzDom ()
-  : zero(0), one(1), _p(0)
-{ }
 
 ZpzDom<Log16>::ZpzDom( Residu_t p )
   : zero(2*(p-1)), one(0), _p(p)
@@ -132,9 +128,9 @@ for(i=0; i<_p; i++) {
 }
 
 ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F)
-  : zero(2*F.residu() -1), one(0)
+  : zero(F.zero), one(F.one)
 {
-  _p = F.residu();
+  _p = F._p;
   _pmone = F._pmone;
   _tab_value2rep = F._tab_value2rep;
   _tab_rep2value = F._tab_rep2value;
@@ -148,7 +144,6 @@ ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F)
 #ifdef REFC_DEBUG
   std::cout << *(numRefs) << " Brefs, p="<<_p<<" \n";
 #endif
-    
 }
 
 

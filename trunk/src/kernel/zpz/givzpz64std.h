@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.5 2004-10-11 13:54:38 jgdumas Exp $
+// $Id: givzpz64std.h,v 1.6 2004-10-12 14:36:46 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -60,6 +60,7 @@ public:
         // ----- Access to the modulus 
     Residu_t residu() const;
     Residu_t size() const { return _p; }
+    Residu_t characteristic() const { return _p; }
     Residu_t cardinality() const { return _p; }
     Rep access( const Rep a ) const { return a; }
 

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: T. Gautier
-// $Id: givarray0.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givarray0.h,v 1.2 2004-10-12 14:36:46 jgdumas Exp $
 // ========================================================================== 
 // Description:
 // Array of type T with reference mecanism.
@@ -21,7 +21,7 @@ template <class T>
 class Array0 GIVARO_PERF_INEHERIT(Array0,T) {
   //-- Recopy cstor : private: don't use it
   Array0 (const Array0<T>& p);
-
+  void build( size_t s, const T& t) ;
 public :
   typedef int  		Indice_t;
   typedef T    		Type_t;
@@ -29,8 +29,15 @@ public :
   typedef Type_t	*Iterator_t;
   typedef const Type_t	*constIterator_t;
 
+      // STL compliance
+  typedef Type_t value_type;
+  typedef Type_t *iterator;
+  typedef const Type_t *const_iterator;
+
+
   //-- Default cstor : ctsor of s size array
   Array0 (size_t  s = 0);
+  Array0 (size_t  s, const T& t);
 
   //-- Recopy cstor : logical copy
   Array0 (const Self_t& p, givNoCopy);

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.5 2004-10-12 14:36:46 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -47,8 +47,7 @@ public:
   const Rep one;
 
   // ----- Constructor /destor
-  ZpzDom();
-  ZpzDom( Residu_t p );
+  ZpzDom( Residu_t p = 2);
   ZpzDom( const ZpzDom<Log16>& F);
   ~ZpzDom();
 
@@ -59,26 +58,28 @@ public:
 
   // ----- Access to the modulus 
   Residu_t residu() const;
+  Residu_t characteristic() const { return _p;}
   Residu_t size() const { return _p;}
 
   // ----- Convert from element to int
-    unsigned long & convert( unsigned long& x , const Rep a) const { 
-        if (a >= _p) 
-            return x=0; 
-        else 
-            return x=_tab_rep2value[a];
+    int16& convert( int16& x , const Rep a) const { 
+        return x = ((a >= _p)?0:_tab_rep2value[a]);
     }
+    uint16& convert( uint16& x , const Rep a) const { 
+        return x = ((a >= _p)?0:_tab_rep2value[a]);
+    }
+    unsigned long & convert( unsigned long& x , const Rep a) const { 
+        return x = ((a >= _p)?0:_tab_rep2value[a]);
+    }
+        
     double& convert( double& x , const Rep a)  const { 
-        unsigned long ur;
-        return x = (double)convert(ur, a);
+        return x = (double)((a >= _p)?0:_tab_rep2value[a]);
     }
     long& convert( long& x , const Rep a)  const { 
-        unsigned long ur;
-        return x = (long)convert(ur, a);
+        return x = (long)((a >= _p)?0:_tab_rep2value[a]);
     }
     Integer& convert(Integer& i, const Rep a) const {
-        unsigned long ur;
-        return i = (Integer)convert(ur, a);
+        return i = (Integer)((a >= _p)?0:_tab_rep2value[a]);
     }        
     
 
@@ -162,10 +163,6 @@ public:
    (const size_t sz, Array r, constArray a, constArray x) const;
 
 
-  // ----- Random element generator
-  typedef GIV_randIter< ZpzDom<Log16> , Rep> randIter;
-
-
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
   void reduceadd ( Rep& r, const size_t sz, constArray a ) const; 
@@ -182,6 +179,17 @@ public:
 
   // ----- a -> r % p: double to uint16 % p
   void d2i ( const size_t sz, Array r, const double* a ) const; 
+
+   // ----- random generators
+    template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
+    template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
+    template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;
+    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
+    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
+    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
+
+    typedef GIV_randIter< ZpzDom<Std16>, Rep > randIter;
+
 
   // --- IO methods
   std::istream& read ( std::istream& s );

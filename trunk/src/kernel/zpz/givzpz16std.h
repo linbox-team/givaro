@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz16std.h,v 1.5 2004-10-12 14:36:46 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -92,9 +92,12 @@ public:
   // ----- Access to the modulus 
   Residu_t residu() const;
   Residu_t size() const { return _p; }
+  Residu_t characteristic() const { return _p; }
   Rep access( const Rep a ) const { return a; }
 
   // ----- Convert from element to int
+    int16& convert( int16& x , const Rep a) const { return x=(int16)(a);}
+    uint16& convert( uint16& x , const Rep a) const { return x=(uint16)(a);}
     unsigned long& convert( unsigned long& x , const Rep a) const { return x=(unsigned long)(a);}
     double& convert( double& x , const Rep a) const { return x=(double)(a);}
     int& convert( int& x , const Rep a) const { return x=int(a);}
@@ -193,8 +196,6 @@ public:
   Rep& assign ( Rep& r, const int a ) const;
   Rep& assign ( Rep& r, const unsigned int a ) const;
    // ----- random generators
-//     Rep& NONZEROGIVRANDOM(Rep&) const ;
-//     Rep& GIVRANDOM(Rep&) const ;
     template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
     template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;

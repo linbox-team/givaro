@@ -108,3 +108,6 @@
 
 /* Version number of package */
 #undef VERSION
+
+/* long long is equal to long */
+#undef _DONOTUSE_longlong__

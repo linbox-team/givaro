@@ -1,9 +1,11 @@
+#include <givaro/givconfig.h>
+#ifndef __GIVARO__DONOTUSE_longlong__
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz64std.inl,v $
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -593,3 +595,4 @@ inline Integer& ZpzDom<Std64>::write (Integer& r, const Rep a) const
 {
   return r = Integer(a);
 }
+#endif

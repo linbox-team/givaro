@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givconfig.h,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -214,7 +214,7 @@ template<> inline int GIVARO_numeric_limits<int>::max() { return INT_MAX; }
 template<> inline unsigned int GIVARO_numeric_limits<unsigned int>::max() { return UINT_MAX; }
 template<> inline long GIVARO_numeric_limits<long>::max() { return LONG_MAX; }
 template<> inline unsigned long GIVARO_numeric_limits<unsigned long>::max() { return ULONG_MAX; }
-  #ifndef __DONOTUSE_longlong__
+  #ifndef __GIVARO__DONOTUSE_longlong__
 template<> inline long long GIVARO_numeric_limits<long long>::max() { return LLONG_MAX; }
 template<> inline unsigned long long GIVARO_numeric_limits<unsigned long long>::max() { return ULLONG_MAX; }
   #endif
@@ -277,7 +277,7 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
 };
 
 
-  #ifndef __DONOTUSE_longlong__
+  #ifndef __GIVARO__DONOTUSE_longlong__
 template<> struct Signed_Trait<long long>  : public GIVARO_numeric_limits<long long> {
     typedef long long signed_type;
     typedef unsigned long long unsigned_type;

@@ -8,24 +8,22 @@
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
-
-#ifndef __DONOTUSE_64__
+#ifndef __GIVARO__DONOTUSE_longlong__
 #define __USE_64_bits__
 #endif
 
-//#ifndef GMP_VERSION_3
-#if !defined(GMP_VERSION_3) && !defined(GMP_NO_CXX)
+#if !defined(GMP_NO_CXX) && !defined(__GIVARO_GMP_VERSION_3) && !defined(__GIVARO_GMP_NO_CXX)
 #include <gmpxx.h>
 #endif
 
 // If GMP is at least version 4, do not need extern
-#ifdef GMP_VERSION_3
+#ifdef __GIVARO_GMP_VERSION_3
 extern "C" {
 #endif
 
 #include "gmp.h"
 
-#ifdef GMP_VERSION_3
+#ifdef __GIVARO_GMP_VERSION_3
 }
 #endif
 

@@ -11,7 +11,7 @@
 int main(int argc, char** argv)
 {
   IntNumTheoDom<> IP;
-#ifdef __GMP_PLUSPLUS__
+#ifndef __GIVARO_GMP_NO_CXX
   IP.seeding();
 #endif
   IntNumTheoDom<>::element a,pr;

@@ -1,9 +1,11 @@
+#include <givaro/givconfig.h>
+#ifndef __GIVARO__DONOTUSE_longlong__
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz64std.C,v $
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz64std.C,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -58,4 +60,4 @@ void ZpzDom<Std64>::Init()
 void ZpzDom<Std64>::End()
 {
 }
-
+#endif

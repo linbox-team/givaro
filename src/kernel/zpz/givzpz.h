@@ -1,15 +1,11 @@
 #ifndef _GIVARO_ZPZ_H_ 
 #define _GIVARO_ZPZ_H_ 
-
-#ifndef __DONOTUSE_longlong__
-#define __USE_64_bits__
-#endif
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz.h,v $
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpz.h,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Family of arithmetics over Zpz
@@ -18,6 +14,9 @@
 // -- 
 // ==========================================================================
 #include <givaro/givconfig.h>
+#ifndef __GIVARO__DONOTUSE_longlong__
+#define __USE_64_bits__
+#endif
 
 template<class TAG>
 class ZpzDom {};

@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char** argv)
 {
     IntFactorDom<> IP;
-#ifdef __GMP_PLUSPLUS__
+#ifndef __GIVARO_GMP_NO_CXX
       IP.seeding();
       // std::cerr << "Seeding..." << std::endl;
 #endif

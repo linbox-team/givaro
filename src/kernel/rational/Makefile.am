@@ -1,4 +1,4 @@
-INCLUDES=-I$(top_srcdir)
+INCLUDES=-I$(top_srcdir)  ${GMP_VERSION}
 
 AM_CPPFLAGS= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory
 

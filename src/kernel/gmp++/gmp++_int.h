@@ -216,6 +216,7 @@ static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const unsig
   friend Integer sqrt(const Integer& p);
   friend Integer sqrt(const Integer& p, Integer& r);
   friend long logp(const Integer& a, const Integer& p) ;
+  friend double log2(const Integer& a) ;
 
   //-----------------------------------------Miscellaneous
   friend inline int sign   (const Integer& a);

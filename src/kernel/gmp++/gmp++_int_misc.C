@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.2 2004-06-01 18:07:35 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -54,7 +54,14 @@ long logp(const Integer& a, const Integer& p) {
     }
     return res;
 }
-    
+
+// approximation of the base 2 logarithm of a
+// 1/log(2) being close to 1.44269504088896341
+double log2(const Integer& a) {
+  signed long int exp;
+  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) ); 
+  return (double)exp+log(d)*1.44269504088896341; 
+}
 
 //------------------------------------------GMP isprime
 //     If this function returns 0, OP is definitely not prime.  If it

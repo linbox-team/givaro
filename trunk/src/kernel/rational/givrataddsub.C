@@ -1,0 +1,141 @@
+// ==========================================================================
+// $Source: /var/lib/cvs/Givaro/src/kernel/rational/givrataddsub.C,v $
+// Copyright(c)'94-97 by Givaro Team
+// see the copyright file.
+// Authors: M. Samama
+// $Id: givrataddsub.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// ==========================================================================
+// Description:
+#include "givaro/givrational.h"
+
+
+// ----------------------------------------- Rational::operator +
+Rational Rational::operator + (const Rational& r)  const 
+{
+  if (iszero(r)) return *this ;
+  if (iszero(*this)) return r ;
+  if (isinteger(*this) && isinteger(r)) 
+    return Rational(num+r.num) ;
+
+  if (Rational::flags == Rational::NoReduce)
+     return Rational( num*r.den + r.num*den, den*r.den, 0) ;
+
+  Integer d1 = gcd(den, r.den);
+  if (d1 == 1)
+    return Rational(num * r.den + r.num * den, den * r.den, 0);
+  Integer t = num * (r.den / d1) + r.num * (den / d1);
+  Integer d2 = gcd(t, d1);
+  return Rational( t / d2, (den / d1) * (r.den / d2), 0 );
+}
+
+ 
+
+Rational& Rational::operator += (const Rational& r) 
+{
+    if (iszero(r)) return *this ;
+    if (iszero(*this)) {
+        num = r.num;
+        den = r.den;
+        return *this;
+    }
+    if (isinteger(*this) && isinteger(r)) {
+        num += r.num;
+        return *this;
+    }
+    if (Rational::flags == Rational::NoReduce) {
+        num *= r.den;
+        num += r.num * den;
+        den *= r.den;
+        return *this;
+    }
+    
+    Integer d1 = gcd(den, r.den);
+    if (d1 == 1) {
+        num *= r.den;
+        num += r.num * den;
+        den *= r.den;
+        return *this;
+    }
+        
+    num *= (r.den / d1);
+    num += ( r.num * (den / d1) );
+    Integer d2 = gcd(num, d1);
+
+    num /= d2;
+    
+    den /= d1;
+    den *= r.den;
+    den /= d2;
+
+    return *this;
+}
+
+        
+
+// ----------------------------------------- Rational::operator -
+Rational Rational::operator - (const Rational& r)  const 
+{
+  if (iszero(r)) return *this ;
+  if (iszero(*this)) return Rational(-r.num,r.den, 0) ;
+  if (isinteger(*this) && isinteger(r)) 
+    return Rational(num-r.num) ;
+
+  if (Rational::flags == Rational::NoReduce)
+     return Rational( num*r.den - r.num*den, den*r.den, 0) ;
+
+  Integer d1 = gcd(den, r.den);
+  if (d1 == 1)
+    return Rational(num * r.den - r.num * den, den * r.den, 0);
+  Integer t = num * (r.den / d1) - r.num * (den / d1);
+  Integer d2 = gcd(t, d1);
+  return Rational( t / d2, (den / d1) * (r.den / d2), 0 );
+}
+
+ 
+
+Rational& Rational::operator -= (const Rational& r) 
+{
+    if (iszero(r)) return *this ;
+    if (iszero(*this)) {
+        num = -r.num;
+        den = -r.den;
+        return *this;
+    }
+    if (isinteger(*this) && isinteger(r)) {
+        num -= r.num;
+        return *this;
+    }
+    if (Rational::flags == Rational::NoReduce) {
+        num *= r.den;
+        num -= r.num * den;
+        den *= r.den;
+        return *this;
+    }
+    
+    Integer d1 = gcd(den, r.den);
+    if (d1 == 1) {
+        num *= r.den;
+        num -= r.num * den;
+        den *= r.den;
+        return *this;
+    }
+        
+    num *= (r.den / d1);
+    num -= ( r.num * (den / d1) );
+    Integer d2 = gcd(num, d1);
+
+    num /= d2;
+    
+    den /= d1;
+    den *= r.den;
+    den /= d2;
+
+    return *this;
+}
+
+        
+
+
+// ----------------------------------------- Rational::operator -
+Rational Rational::operator - ()  const 
+{ return Rational (-num, den, 0) ; }

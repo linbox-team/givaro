@@ -1,0 +1,27 @@
+#! /bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+includedir=@includedir@
+libdir=@libdir@
+
+CXX = @CXX@
+AR  = ar
+
+CXXFLAGS = @CXXFLAGS@
+GMP_CFLAGS = @GMP_CFLAGS@
+GMP_LIBS   = @GMP_LIBS@
+
+GIVARO_CXXFLAGS = -I${includedir}
+GIVARO_LDFLAGS  = -L${libdir} -lgivaro 
+
+CXXFLAGS += ${GIVARO_CXXFLAGS} ${GMP_CFLAGS}
+LDFLAGS += ${GIVARO_LDFLAGS} ${GMP_LIBS}
+
+.SUFFIXES: .o .C
+
+.C.o:
+	${CXX}  -o $@ -c $<  ${CXXFLAGS} 
+ 
+.C:
+	${CXX}  -o $@ $<  ${CXXFLAGS}  ${LDFLAGS} 

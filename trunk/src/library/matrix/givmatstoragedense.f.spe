@@ -1,0 +1,77 @@
+// ==========================================================================
+// $Source: /var/lib/cvs/Givaro/src/library/matrix/givmatstoragedense.f.spe,v $
+// Copyright(c)'94-97 by Givaro Team
+// see the copyright file.
+// Authors: T. Gautier
+// $Id: givmatstoragedense.f.spe,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// ==========================================================================
+// Description: specialization for floating point dense matrix
+
+
+// ==========================================================================
+// --
+// -- Specialization for dense representation of floating point
+// -- matrix: use column (fortran) storage)
+// --
+// ==========================================================================
+template<> 
+struct RetMatrixStorage<float,Dense> {
+  typedef float		Type_t; 
+  typedef int 		Indice_t;
+
+  // --
+  // -- Iterators on the storage object: linearization
+  // --
+  typedef float* 	Iterator_t;
+  typedef const float* 	constIterator_t;
+
+  // --
+  // -- Storage: column storage organisation
+  // --
+  struct Storage_t {
+    Indice_t _nrow;
+    Indice_t _ncol;
+    Type_t*  _data;
+
+    Storage_t() : _nrow(0), _ncol(0), _data(0) {}
+    void allocate  ( Indice_t nrow, Indice_t ncol) 
+    { _nrow = nrow; _ncol = ncol;
+      _data = GivaroMM<Type_t>::allocate(_nrow*_ncol);
+    }
+    void copy ( const Storage_t& r ) 
+    { 
+      if (_data == r._data) return;
+      size_t sz = r._nrow*r._ncol;
+      if ((_nrow!=r._nrow)||(_ncol!=r._ncol)) {
+        if (_data !=0) GivaroMM<Type_t>::desallocate(_data, _nrow*_ncol);
+        _data = GivaroMM<Type_t>::allocate(sz);
+      }
+      for (long i=sz; --i>=0; ) _data[i] = r._data[i]; 
+    }
+    Type_t& operator[] (Indice_t i) 
+    { return _data[i]; } 
+    const Type_t& operator[] (Indice_t i) const
+    { return _data[i]; } 
+    Type_t& operator() (Indice_t i, Indice_t j) 
+    { return _data[i+j*_nrow]; } 
+    const Type_t& operator() (Indice_t i, Indice_t j) const 
+    { return _data[i*_ncol+j]; } 
+    void reallocate( Indice_t nrow, Indice_t ncol)
+    { 
+      Storage_t tmp; tmp.allocate(nrow, ncol);
+      Indice_t i, mrow = (nrow < _nrow ? nrow : _nrow);
+      Indice_t j, mcol = (ncol < _ncol ? ncol : _ncol);
+      for (i=0; i<mrow; ++i)
+        for (j=0; j<mrow; ++j)
+          tmp(i,j) = (*this)(i,j);
+      GivaroMM<Type_t>::desallocate(_data, _nrow*_ncol);
+      *this = tmp;
+    };
+    
+    Indice_t nrow() const { return _nrow; }
+    Indice_t ncol() const { return _ncol; }
+  private:
+    Storage_t(const Storage_t& ) {}
+  };
+};
+

@@ -39,4 +39,4 @@ libgivzpz_la_SOURCES=\
 	givzpzInt.C		\
 	givzpz64std.C		\
 	givprimes16.C		\
-	givzpz16table1.C	\
+	givzpz16table1.C

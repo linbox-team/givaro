@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givzpzInt.h,v 1.2 2004-09-15 12:07:30 jgdumas Exp $
 // ==========================================================================
 //
 // Description:
@@ -42,9 +42,9 @@ public:
   const Rep one;
 
   // ----- Constructor 
-  ZpzDom();
-  ZpzDom( Residu_t p );
-  ZpzDom( const ZpzDom<Integer>& F);
+  ZpzDom() : zero(0), one(1), _p(0) {}
+  ZpzDom( Residu_t p ) : zero(0), one(1), _p(p) {}
+  ZpzDom( const ZpzDom<Integer>& F) : zero(0), one(1), _p(F._p) { }
 
 
   int operator==( const ZpzDom<Integer>& BC) const { return _p == BC._p;}

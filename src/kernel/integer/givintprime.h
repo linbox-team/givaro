@@ -4,7 +4,7 @@
 //              Fermat numbers,
 //              Primality tests, Factorization :
 //                      (There are parameters to fix)
-// Time-stamp: <07 Feb 02 20:56:36 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Jun 04 17:32:35 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_INTEGERS_PRIME_H_
 #define _GIVARO_INTEGERS_PRIME_H_
@@ -61,6 +61,10 @@ public:
                     local_prime(n,r));
         }
 
+        // if p is a prime power, p = r^return
+        // else return is 0 and r is undefined
+    unsigned int isprimepower(Rep&, const Rep&) const ;
+
     template<class RandIter>
     int Miller(RandIter& g, const Rep& n) const  ;
     template<class RandIter>
@@ -69,8 +73,6 @@ public:
     int Lehmann(RandIter& g, const Rep& n)  const ;
     int isprime_Tabule(const int n) const ;
     int isprime_Tabule2(const int n) const ;
-    
-
 
     Rep& nextprime(Rep&, const Rep&, int r=1) const ;
     Rep& prevprime(Rep&, const Rep&, int r=1) const ;

@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <28 May 03 13:39:17 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Jun 04 17:25:46 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_INL_
 #define _GIVARO_FACTORISATION_INL_
@@ -65,18 +65,6 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
     }
     return o;
 }    
-
-template<class RandIter>
-bool IntFactorDom<RandIter>::isprimepower(Rep& r, unsigned long& expo, const Rep& p) const {
-	std::vector<Rep> Lf; std::vector<unsigned long> Lo;
-	unsigned long nb = set(Lf, Lo, p);
-	r = Lf.front();
-	expo = Lo.front();
-	if (nb == 1)
-	      return 1;
-	else
-	      return 0;
-}
 
 
 // =================================================================== //

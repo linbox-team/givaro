@@ -4,7 +4,7 @@
 // Copyright(c)'2001 by LinBox Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// Time-stamp: <18 Apr 03 13:22:39 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Jun 04 17:02:03 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -168,8 +168,8 @@ static Integer& mod   (Integer& r, const Integer& n1, const unsigned long n2);
 
   // -- return q, the quotient
 static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const Integer& n2);  
-static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const long n2);  
-static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const unsigned long n2);  
+static Integer& divmod   (Integer& q, long& r, const Integer& n1, const long n2);  
+static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const unsigned long n2);  
 
   
   //------------------------------------- Arithmetic functions
@@ -212,11 +212,14 @@ static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const unsig
   friend Integer fact ( unsigned long l);
   
   friend Integer sqrt(const Integer& p);
-  friend Integer sqrt(const Integer& p, Integer& r);
+    friend Integer sqrt(const Integer& p, Integer& r);
+    friend bool root(Integer& q, const Integer&, unsigned int n);
   friend long logp(const Integer& a, const Integer& p) ;
   friend double logtwo(const Integer& a) ;
 
   //-----------------------------------------Miscellaneous
+    friend void swap(Integer& , Integer&);
+
   friend inline int sign   (const Integer& a);
   friend inline int iszero (const Integer& a);
   friend inline int isone  (const Integer& a);

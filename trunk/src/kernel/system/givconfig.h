@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.2 2004-06-04 14:42:29 jgdumas Exp $
+// $Id: givconfig.h,v 1.3 2004-09-24 09:28:33 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -203,6 +203,21 @@ template<class XXX> struct GIVARO_numeric_limits {
 #ifndef FLT_MAX
 #define FLT_MAX 1e+37
 #endif
+
+#ifndef __GIVARO__DONOTUSE_longlong__
+#  ifndef LLONG_MAX
+#    ifdef LONG_LONG_MAX
+#	define LLONG_MAX	LONG_LONG_MAX
+#	define LLONG_MIN	LONG_LONG_MIN
+#	define ULLONG_MAX	ULONG_LONG_MAX
+#    else
+#	define LLONG_MAX	9223372036854775807LL
+#	define LLONG_MIN	(-LLONG_MAX - 1LL)
+#	define ULLONG_MAX	18446744073709551615ULL
+#    endif
+#  endif
+#endif
+
 
 template<> inline float GIVARO_numeric_limits<float>::max() { return FLT_MAX; }
 template<> inline double GIVARO_numeric_limits<double>::max() { return DBL_MAX; }

@@ -34,7 +34,7 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
     Rep nn,g,r,u;
     nn = n;
     long c;
-    int flag = 0;
+    bool flag = 0;
     Integer tmp;
 
     if (islt(nn,zero)) {
@@ -386,10 +386,14 @@ inline void one_Mul_Curve2( const Integer& n, const Integer A, const Integer& mm
     
 
 inline void Mul_Curve( const Integer& n, Integer& Ai, const Integer& mm, const Integer& nn, const Integer& B1, Integer& Xi, Integer& Zi) {
-    Integer pow = nn;
+    Integer pow = nn, tXi, tZi;
+    tXi = Xi;
+    tZi = Zi;
     while (pow <= B1) {
-        one_Mul_Curve(n,Ai,mm,nn,Xi,Zi,Xi,Zi);
+        one_Mul_Curve(n,Ai,mm,nn,Xi,Zi,tXi,tZi);
         pow *= nn;
+    	Xi = tXi;
+    	Zi = tZi;
     }
 }
 
@@ -462,7 +466,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
 // Begins search with curves on primes up to B1
     Rep prime = 2, sp, f;
     while (prime <= B1) {
-//         cerr << "p: " << prime << endl;
+//        cerr << "p: " << prime << endl;
         sp = (prime*s)/si;
         Mul_Curve(n,A[0],sp,prime,B1,X[0],Z[0]);
         f = Z[0];

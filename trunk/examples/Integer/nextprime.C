@@ -17,7 +17,7 @@ int main(int argc, char** argv)
   if (argc > 1) m = Integer(argv[1]);
   
         Timer tim; tim.clear(); tim.start();
-        IP.nextprimein(m);
+        IP.nextprimein(m,1);
         tim.stop();
         cout << m << endl;
         cerr << tim << endl;

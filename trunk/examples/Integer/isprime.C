@@ -13,12 +13,12 @@ int main(int argc, char** argv)
 
 
   IntPrimeDom IP; 
-  IntPrimeDom::element m, ff(5);
+  IntPrimeDom::element m;
   if (argc > 1) m = Integer(argv[1]);
-  if (argc > 2) ff = Integer(argv[2]);
+  unsigned int r = argc > 2 ? atoi(argv[2]) : 5;
   
         Timer tim; tim.clear(); tim.start();
-        bool a = IP.isprime(m,ff);
+        bool a = IP.isprime(m,r);
         tim.stop();
         cout << (a?"true":"false") << endl;
         cerr << tim << endl;

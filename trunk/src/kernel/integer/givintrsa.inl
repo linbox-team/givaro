@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              RSA public-key cipher codes
 //              ECB mode (UNSECURE !!!)
-// Time-stamp: <16 Sep 03 19:10:58 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <24 Mar 05 14:21:42 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
 #ifndef _GIVARO_RSA_Public_KEY_
@@ -33,15 +33,39 @@ template<class RandIter>
 std::ostream& IntRSADom<RandIter>::ecriture_str(std::ostream& o, const element& n) const {
 
     element p = n, a, b;
-    for(long i = _lm; --i>=0; ) {
-//	    std::cerr << "pi: " << p << std::endl;
+    long i = _lm-1;
+        // First char is ignored as it is zero or random enabling CBC
+    a = p >> (i<<3);
+    p -= a << (i<<3);
+    for(--i; i>=0; --i) {
 	a = p >> (i<<3);
-//	    std::cerr << "a: " << a << std::endl;
     	o << char( int(a) );
 	p -= a << (i<<3);
-//	    std::cerr << "pf: " << p << std::endl;
     }
     return o;
+}
+
+template<class RandIter>
+std::ostream& IntRSADom<RandIter>::ecriture_str_last(std::ostream& o, const element& n) const {
+    element p = n, a, b;
+    long i = _lm-1, nbzeroes(0);
+        // First char is ignored as it is zero or random enabling CBC
+    a = p >> (i<<3);
+    p -= a << (i<<3);
+    for(--i; i>=1; --i) {
+	a = p >> (i<<3);
+            // Treatment of trailing zeroes
+        if ( char(int(a)) ) {
+            for(int j =0; j <nbzeroes; ++j)
+                o << char(0);
+            o << char( int(a) );
+            nbzeroes = 0;
+            p -= a << (i<<3);
+        } else {
+            ++nbzeroes;
+        }
+    }
+    return o << char(int(p));
 }
 
 
@@ -53,27 +77,41 @@ std::ostream& IntRSADom<RandIter>::ecriture_Int(std::ostream& o, const element& 
 
 
     
-
+// CBC mode enciphering
 template<class RandIter>
 std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) const {
+    srand48(1);
     unsigned char x;
     element res,r;
-    
+    element ancien(0);
+    int imax = (_lm-1)<<3;
     do { 
         res = 0;
-        for(int i=0; i<_lm; ++i) {
+        for(int i=0; i<_lm-1; ++i) {
             x = in.get();
-            if (in.eof())
+            if (in.eof()) {
+                    // Adding zeroes at end of file
+                res <<= ( 8*(_lm-1-i) );
                 break;
+            }
             res <<= 8;
             res += x;
         }
-        ecriture_Int(o, powmod(r, res,_k,_m) );
+
+            // Padding randomly to enable CBC
+            // indeed, decryption will return (res^ancien) % _m
+        while ( (res^ancien) > _m) {
+            res += ((Integer)((unsigned char)lrand48()) << imax);
+        }
+
+        powmod(r, res^ancien,_k,_m);
+        ecriture_Int(o, r );
+        ancien = r;
     } while (! in.eof());
-    
     return o;
 }           
 
+// CBC mode deciphering
 template<class RandIter>
 std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
     double length = _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
@@ -92,35 +130,49 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
         sqrt(delt, t*t-_m);
         p = t-delt;
         q = t+delt;
-//         std::cerr << "p: " << p << ", q: " << q << std::endl;
         element gd, a, b, c, r1, r2;
         gcd(gd, a, b, q, p);
-        a *= q;
-        a %= _m;
+
         b *= p;
         b %= _m;
 
+        element ancien(0);
+        
+        in >> tmp; 
         do {
-            in >> tmp;
-            if (in.eof()) break;
             powmod(r, Integer(tmp)%p, _u, p);
             powmod(r2, Integer(tmp)%q, _u, q);
-            r *= a;
-            r %= _m ;
+	    // Chinese reconstruction
+	    r2 -= r;
             r2 *= b;
             r2 %= _m;
-            r += r2;
-            if (r > _m) r -= _m;
-            else if (r < zero) r+=_m;
-//             powmod(r, Integer(tmp),_u,_m);
-            ecriture_str(o, r);
-        } while (! in.eof());
-        
-    } else {
-        do {
+            r2 += r;
+	    // Must be positive
+	    if (r2 > _m) r2 -= _m;
+	    else if (r2 < zero) r2+=_m;
+            r2 ^= ancien;
+            ancien = Integer(tmp);
             in >> tmp;
-            if (in.eof()) break;
-            ecriture_str(o,powmod(r, Integer(tmp),_u,_m));
+            if (in.eof()) {
+                    // Treatment of trailing zeroes
+                ecriture_str_last(o, r2);
+                break;
+            } else
+                ecriture_str(o, r2);
+        } while (! in.eof());
+    } else {      
+        element ancien(0);
+        in >> tmp;
+        do {
+            powmod(r, Integer(tmp),_u,_m);
+            r ^= ancien;
+            ancien = Integer(tmp);
+            in >> tmp;
+            if (in.eof()) {
+                ecriture_str_last(o, r);
+                break;
+            } else
+                ecriture_str(o, r^ancien);
         } while (! in.eof());
     }
     

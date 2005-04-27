@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_cstor.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: gmp++_int_cstor.C,v 1.2 2005-04-27 14:53:00 jgdumas Exp $
 // ==========================================================================
 #include <iostream>
 #include "gmp++_int.h"
@@ -26,14 +26,7 @@ Integer::Integer(const char *s)
 Integer& Integer::copy(const Integer &n)
 {
   if (this == &n) return *this;
-  /* I don't understand what cpt is.  Suppose we just do the else clause?
-  if (cpt->decr() ==0) { 
-      mpz_clear((mpz_ptr)&gmp_rep) ; 
-      delete cpt ;
-      mpz_init_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
-  } else
-  -bds */
-      mpz_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
+  mpz_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
   return *this ;
 }
 

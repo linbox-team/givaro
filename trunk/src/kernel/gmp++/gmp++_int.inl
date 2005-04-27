@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.2 2004-10-11 13:54:38 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.3 2005-04-27 14:53:00 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -95,6 +95,12 @@ inline int operator == (int l, const Integer& n)
 
 inline int operator == (long l, const Integer& n)
   { return (! (n.operator != (l))); }
+ 
+inline int operator == (unsigned long l, const Integer& n)
+  { return (! (n.operator != (l))); }
+ 
+inline int operator == (const Integer& n, unsigned long l)
+  { return (! (n.operator != (l))); }
 
 inline int operator == (const Integer& n, int l)
   { return (! (n.operator != (l))); }
@@ -111,8 +117,26 @@ inline int operator < (const int l, const Integer& n)
 inline int operator < (const long l, const Integer& n)
   { return n > l; }
 
+inline int operator < (const unsigned long l, const Integer& n)
+  { return n > l; }
+
+inline int operator > (unsigned long l, const Integer& n)
+  { return n < l; }
+
 inline int operator >  (const Integer& a , const Integer& b)
   { return compare(a,b) > 0; }
+
+inline int operator <= (const Integer& n, unsigned long l)
+  {  return (! (n > l) ); }
+
+inline int operator <= (unsigned long l, const Integer& n)
+  {  return (! (n < l) );}
+
+inline int operator >= (unsigned long l, const Integer& n)
+  {  return (! (n > l) );}
+
+inline int operator >= (const Integer& n, unsigned long l)
+  {  return (! (n < l) );}
 
 inline int operator > (int l, const Integer& n)
   { return n < l; }
@@ -240,6 +264,10 @@ inline Integer abs(const Integer &n) { if (sign(n) >= 0) return n; return -n; }
 
 inline size_t Integer::size() const { return  mpz_size( (mpz_ptr)&gmp_rep ) ; }
 
+inline size_t Integer::size_in_base(int BASE) const { return  mpz_sizeinbase ((mpz_ptr)&gmp_rep, BASE);}
+ 
+inline size_t Integer::bitsize() const { return  mpz_sizeinbase ((mpz_ptr)&gmp_rep, 2);}
+
 inline unsigned long Integer::operator[](size_t i) const
 { if ( mpz_size( (mpz_ptr)&gmp_rep ) > i)
     return mpz_getlimbn( (mpz_ptr)&gmp_rep, i);
@@ -253,8 +281,8 @@ inline std::ostream& operator<< (std::ostream& o, const Integer& a) { return a.p
 //----------------------- Random integers ----------
 
 #ifdef __GMP_PLUSPLUS__
-inline gmp_randclass& Integer::randstate() {
-	static gmp_randclass randstate(gmp_randinit_default);
+inline gmp_randclass& Integer::randstate(long unsigned int seed) {
+	static gmp_randclass randstate(GMP_RAND_ALG_DEFAULT,seed);
 	return static_cast<gmp_randclass&>(randstate);
 }
 
@@ -267,10 +295,6 @@ inline Integer Integer::random(int sz)
 {
   Integer res;
   return Integer::random(res, sz);
-/*
- *    mpz_random((mpz_ptr) &(res.gmp_rep), sz);
- *    return res;
-*/
 }
 
 inline Integer Integer::nonzerorandom(int sz) {

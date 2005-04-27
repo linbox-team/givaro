@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_compare.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: gmp++_int_compare.C,v 1.2 2005-04-27 14:53:00 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++_int.h"
@@ -27,6 +27,16 @@ int Integer::operator != (const int l) const
 
 int Integer::operator != (const long l) const 
 { return mpz_cmp_si ( (mpz_ptr)&gmp_rep, l ) != 0; }
+
+//unsigned long ops added by Dan Roche, 6-26-04
+int Integer::operator != (const unsigned long l) const
+{ return mpz_cmp_ui ( (mpz_ptr)&gmp_rep, l ) != 0; }
+
+int Integer::operator > (const unsigned long l) const
+{ return mpz_cmp_ui((mpz_ptr)&gmp_rep, l) > 0; }
+ 
+int Integer::operator < (const unsigned long l) const
+{ return mpz_cmp_ui((mpz_ptr)&gmp_rep, 1) < 0; }
 
 int Integer::operator > (const int l) const 
 { return mpz_cmp_si((mpz_ptr)&gmp_rep, l) > 0; }

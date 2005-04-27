@@ -4,6 +4,8 @@
 #include "givaro/givrandom.h"
 #include "givaro/givtimer.h"
 
+// RSA, in CBC mode, enciphering of files
+
 
 int main(int argc, char** argv)
 {

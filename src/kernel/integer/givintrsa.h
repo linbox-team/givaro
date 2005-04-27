@@ -1,6 +1,6 @@
 // =================================================================== //
 // Givaro : RSA scheme.
-// Time-stamp: <16 Sep 03 17:58:09 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <24 Mar 05 13:52:12 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
 #ifndef _GIVARO_RSA_
@@ -91,6 +91,7 @@ protected:
 // Text conversions
 // =================================================================== // 
     std::ostream& ecriture_str(std::ostream&, const element&) const ;
+    std::ostream& ecriture_str_last(std::ostream&, const element&) const ;
     std::ostream& ecriture_Int(std::ostream&, const element&) const ;
 
 public:

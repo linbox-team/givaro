@@ -4,7 +4,7 @@
 // Copyright(c)'2001 by LinBox Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// Time-stamp: <12 Oct 04 13:39:25 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <23 Mar 05 17:30:37 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -74,14 +74,44 @@ public:
   //------------------Equalities and inequalities between integers and longs
   int operator != (const int l) const;
   int operator != (const long l) const;
+  int operator != (const unsigned long l) const;
   
   friend int compare(const Integer& a, const Integer& b);
   friend int absCompare(const Integer& a, const Integer& b);
 
   int operator > (const int l) const;
   int operator > (const long l) const;
+  int operator > (const unsigned long l) const;
   int operator < (const int l) const;
   int operator < (const long l) const;
+  int operator < (const unsigned long l) const;
+
+  //------------------ Bit logic
+    Integer operator^ (const Integer&);   // XOR
+    Integer operator| (const Integer&);   // OR
+    Integer operator& (const Integer&);   // AND
+    Integer operator ~ () const;   // 1 complement
+    Integer& operator^= (const Integer&);   // XOR
+    Integer& operator|= (const Integer&);   // OR
+    Integer& operator&= (const Integer&);   // AND
+    Integer operator<< (int l) const; // lshift
+    Integer operator>> (int l) const; // rshift
+    Integer operator<< (long l) const; // lshift
+    Integer operator>> (long l) const; // rshift
+    Integer operator<< (unsigned int l) const; // lshift
+    Integer operator>> (unsigned int l) const; // rshift
+    Integer operator<< (unsigned long l) const; // lshift
+    Integer operator>> (unsigned long l) const; // rshift
+    Integer& operator<<= (int l) ; // lshift
+    Integer& operator>>= (int l) ; // rshift
+    Integer& operator<<= (long l) ; // lshift
+    Integer& operator>>= (long l) ; // rshift
+    Integer& operator<<= (unsigned int l) ; // lshift
+    Integer& operator>>= (unsigned int l) ; // rshift
+    Integer& operator<<= (unsigned long l) ; // lshift
+    Integer& operator>>= (unsigned long l) ; // rshift
+    
+
 
   //----------------Elementary arithmetic between Integers & longs
   Integer& operator += (const Integer& n);  
@@ -237,6 +267,7 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
 
   friend Integer abs(const Integer& n);
 
+  friend Integer& prevprime(Integer&, const Integer& p);
   friend Integer& nextprime(Integer&, const Integer& p);
   friend int probab_prime(const Integer& p);
   friend int probab_prime(const Integer& p, int r);
@@ -246,27 +277,14 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   Integer& operator++() { return *this+=1UL; } // prefix
   Integer& operator--() { return *this-=1UL; } // prefix
 
-  Integer operator<< (int l) const; // lshift
-  Integer operator>> (int l) const; // rshift
-  Integer operator<< (long l) const; // lshift
-  Integer operator>> (long l) const; // rshift
-  Integer operator<< (unsigned int l) const; // lshift
-  Integer operator>> (unsigned int l) const; // rshift
-  Integer operator<< (unsigned long l) const; // lshift
-  Integer operator>> (unsigned long l) const; // rshift
-  Integer& operator<<= (int l) ; // lshift
-  Integer& operator>>= (int l) ; // rshift
-  Integer& operator<<= (long l) ; // lshift
-  Integer& operator>>= (long l) ; // rshift
-  Integer& operator<<= (unsigned int l) ; // lshift
-  Integer& operator>>= (unsigned int l) ; // rshift
-  Integer& operator<<= (unsigned long l) ; // lshift
-  Integer& operator>>= (unsigned long l) ; // rshift
-
   // - return the size in byte
   friend inline unsigned long length (const Integer& a); 
   // - return the size in word.
   size_t size() const;
+  // - return the size in base B (result is always exact if B is a power of two)
+  size_t size_in_base(int B) const;
+  // - return the size in bit.
+  size_t bitsize() const;
   // - return the i-th word of the integer. Word 0 is lowest word.
   unsigned long operator[](size_t i) const; 
 
@@ -276,14 +294,12 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   friend vect_t& Integer2vector  (vect_t& v, const Integer& n);
   friend double Integer2double( const Integer& n);
   friend std::string& Integer2string(std::string&, const Integer&, int base = 10);
-  operator short() const 
-	  { return (int) *this; }
-  operator unsigned short() const 
-	  { return (unsigned int) *this; }
-  operator unsigned char() const 
-  	  { return (unsigned int) *this; }
+  operator short() const { return (int) *this; }
+  operator unsigned short() const { return (unsigned int) *this; }
+  operator unsigned char() const { return (unsigned int) *this; }
   operator unsigned int() const ;
   operator int() const ;
+  operator signed char() const { return (int) *this; }
   operator unsigned long() const ;
   operator long() const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
@@ -300,7 +316,7 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   // -- To be improved.
 #ifdef __GMP_PLUSPLUS__
     static void seeding(unsigned long int s=0);
-    static gmp_randclass& randstate();
+    static gmp_randclass& randstate(unsigned long int s=0);
 #endif
     static Integer  random(int sz=1 );
     static Integer  nonzerorandom(int sz=1 );
@@ -323,6 +339,8 @@ protected:
     Rep gmp_rep;
 
     int priv_sign() const;
+    mpz_ptr get_mpz() {return (mpz_ptr)&gmp_rep;}
+    const Rep* get_rep() const { return &gmp_rep; }
 
     // -- Creates a new Integer from a size sz and a array of unsigned long d 
     Integer(unsigned long* d, long size);

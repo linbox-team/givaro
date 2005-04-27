@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.6 2004-10-11 13:54:38 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.7 2005-04-27 14:53:00 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -88,6 +88,16 @@ Integer& nextprime(Integer& r, const Integer &p)
   mpz_nextprime ((mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(p.gmp_rep)) ;
   return r;
 }
+
+// Copied and adapted from mpz/nextprime.c
+Integer& prevprime(Integer& r, const Integer &p)
+{
+   mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(p.gmp_rep), 1L );
+   while( !mpz_probab_prime_p ( (mpz_ptr)&(p.gmp_rep), 5 ) )
+   mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(p.gmp_rep), 1L );
+   return r;
+}
+
 int probab_prime(const Integer &p)
 {
   return mpz_probab_prime_p ((mpz_ptr)&(p.gmp_rep),1) ;
@@ -174,6 +184,38 @@ Integer& Integer::operator >>= (unsigned long l)
 	mpz_tdiv_q_2exp( (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
 	return *this; 
 }
+
+//------------------------------------------- Bit logic
+    Integer Integer::operator^ (const Integer& a) {   // XOR
+        Integer res(*this);
+        return res ^= a;
+    }
+    Integer Integer::operator| (const Integer& a) {   // OR
+        Integer res(*this);
+        return res |= a;
+    }
+    Integer Integer::operator& (const Integer& a) {   // AND
+        Integer res(*this);
+        return res &= a;
+    }
+    Integer Integer::operator~ () const {   // 1 complement
+        Integer res;
+        mpz_com( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&(gmp_rep));
+        return res;
+    }
+    Integer& Integer::operator^= (const Integer& a) {   // XOR
+        mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator|= (const Integer& a) {   // OR
+        mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator&= (const Integer& a) {   // AND
+        mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
+        return *this;
+    }
+
 
 //------------------------------------------- convert method
 //------------------------------------------- casting method

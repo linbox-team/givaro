@@ -40,9 +40,9 @@ public:
 // =================================================================== //
 // Constructors
 // =================================================================== //
-    IntRSADom(bool fi = false, RandIter& g = *(new RandIter()) ) : IntFactorDom<RandIter>(g), _fast_impl(fi) { keys_gen(_g, 257, 255, _m, _k, _u); _lm = log(m,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const long s, bool fi = false, RandIter& g = *(new RandIter()) ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(_g, (s>>1)-1, (s>>1)+1, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const long p, const long q, bool fi = false, RandIter& g = *(new RandIter()) ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(_g, p, q, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
+    IntRSADom(bool fi = false, RandIter& g = *(new RandIter()) ) : IntFactorDom<RandIter>(g), _fast_impl(fi) { keys_gen(IntFactorDom<RandIter>::_g, 257, 255, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
+    IntRSADom(const long s, bool fi = false, RandIter& g = *(new RandIter()) ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, (s>>1)-1, (s>>1)+1, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
+    IntRSADom(const long p, const long q, bool fi = false, RandIter& g = *(new RandIter()) ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, p, q, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
     IntRSADom(const element& m, const element& k, const element& u) : _m(m), _k(k), _u(u), _lm(log(m,1<<(8*sizeof(unsigned char)))), _fast_impl( k == SIMPLE_EXPONENT )  {}
     IntRSADom(const element& m, const element& k) : _m(m), _k(k), _u(0), _lm(log(m,1<<(8*sizeof(unsigned char)))), _fast_impl( k == SIMPLE_EXPONENT )  {}
         

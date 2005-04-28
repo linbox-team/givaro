@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.3 2005-04-27 14:53:00 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.4 2005-04-28 11:24:21 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -312,7 +312,7 @@ inline Integer& Integer::random (Integer& r, const Integer& similar)
     mpz_random((mpz_ptr) &(r.gmp_rep), mpz_size( (mpz_ptr)&(similar.gmp_rep) ) );
 #endif
      return r;
-};
+}
 
 inline Integer& Integer::nonzerorandom (Integer& r, const Integer& size) {
     while (iszero(Integer::random(r,size))) {};
@@ -328,7 +328,7 @@ inline Integer& Integer::random (Integer& r, long size)
     mpz_random((mpz_ptr) &(r.gmp_rep), size);
 #endif
     return r;
-};
+}
 
 
 inline Integer& Integer::nonzerorandom (Integer& r, long size)

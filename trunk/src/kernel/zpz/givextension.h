@@ -104,7 +104,7 @@ public:
     }
   
     Polelement& inv (Polelement& r, const Polelement& a) const {
-         Polelement d , v;
+         Polelement g, d, v;
          _pD.gcd( g, r, v, a, _irred);
          return  r;
      }
@@ -134,7 +134,7 @@ public:
     }
   
     Polelement& invin(Polelement& r) const {
-         Polelement d , v, a(r);
+         Polelement g, d, v, a(r);
          _pD.gcd( g, r, v, a, _irred);
          return  r;
      }
@@ -187,7 +187,7 @@ public:
 
 
     std::istream&  read( std::istream& o ) const {
-        cerr << "READ Extension, NOT YET IMPLEMENTED" << end;
+	std::cerr << "READ Extension, NOT YET IMPLEMENTED" << std::endl;
         return o;
     }
 // read(istream)

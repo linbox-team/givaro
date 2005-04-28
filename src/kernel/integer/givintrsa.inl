@@ -149,7 +149,7 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
             r2 += r;
 	    // Must be positive
 	    if (r2 > _m) r2 -= _m;
-	    else if (r2 < zero) r2+=_m;
+	    else if (r2 < IntFactorDom<RandIter>::zero) r2+=_m;
             r2 ^= ancien;
             ancien = Integer(tmp);
             in >> tmp;
@@ -246,7 +246,7 @@ void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, 
     do  strong_prime(g, qsize, q); while (q == p);
     
 
-    element phim; mul(phim, sub(d,p,one), sub(l,q,one));
+    element phim; mul(phim, sub(d,p,IntFactorDom<RandIter>::one), sub(l,q,IntFactorDom<RandIter>::one));
     mul(m, p, q);
 
     element v, gd;
@@ -260,7 +260,7 @@ void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, 
         } while (gcd(gd,u,v,k,phim) != 1);
     }
     modin(u,phim);
-    if ( islt(u,zero) ) addin(u,phim);
+    if ( islt(u,IntFactorDom<RandIter>::zero) ) addin(u,phim);
 }
 
 // =================================================================== //
@@ -271,9 +271,9 @@ typename IntRSADom<RandIter>::element& IntRSADom<RandIter>::point_break(element&
     if ( iszero(_u) ) {
         element p,v,d, pm;
         factor(p, _m);
-        mul(pm, sub(v,p,one), subin( div(d,_m,p), one ) );
+        mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( div(d,_m,p), IntFactorDom<RandIter>::one ) );
         gcd(d,_u,v,_k,pm);
-        if (islt(_u,zero)) addin(_u, pm);
+        if (islt(_u,IntFactorDom<RandIter>::zero)) addin(_u, pm);
     }
     return u = _u;
 }

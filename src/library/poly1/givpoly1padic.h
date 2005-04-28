@@ -16,6 +16,7 @@ template<class Domain, class Tag> class Poly1PadicDom;
 
 template<class Domain>
 class Poly1PadicDom<Domain,Dense> : public Poly1Dom<Domain,Dense>, public IntegerDom {
+    using Poly1Dom<Domain,Dense>::_domain;
     typedef Poly1Dom<Domain,Dense> Poly_t;
     
     typedef typename Poly_t::Rep      Rep;
@@ -120,7 +121,7 @@ public:
         double iq, ir;
         vect Q; 
             long t = (n+1)/2;
-            double q = std::pow(double(_domain.size()), double(t));
+            double q = pow(double(_domain.size()), double(t));
             iq = floor( E / q );
             ir = E - iq*q;
             radixdirect(Q, iq, n-t);

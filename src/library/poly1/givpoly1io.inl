@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1io.inl,v 1.3 2005-02-02 19:07:25 pernet Exp $
+// $Id: givpoly1io.inl,v 1.4 2005-04-28 11:24:21 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -11,7 +11,7 @@
 
   // --
 template<class Domain>
-std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i )
+std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& sin )
 {
   char ch;
   sin >> std::ws >> ch;
@@ -21,7 +21,7 @@ std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i )
       GivBadFormat("Poly1Dom<Domain,Dense>::read: syntax error no '('"));
 #endif
 
-  _domain.read(i);
+  _domain.read(sin);
 
   sin >> std::ws >> ch;
 #ifdef GIVARO_DEBUG
@@ -30,7 +30,7 @@ std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i )
       GivBadFormat("Poly1Dom<Domain,Dense>::read: syntax error no ','"));
 #endif
 
-  i >> _x;
+  sin >> _x;
 
   sin >> std::ws >> ch;
 #ifdef GIVARO_DEBUG
@@ -38,7 +38,7 @@ std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i )
     GivError::throw_error(
       GivBadFormat("Poly1Dom<Domain,Dense>::read: syntax error no ')'"));
 #endif
-  return i;
+  return sin;
 }
 
 template<class Domain>

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.3 2005-02-02 19:07:25 pernet Exp $
+// $Id: givpoly1dense.h,v 1.4 2005-04-28 11:24:21 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -26,7 +26,7 @@ public:
     givvector(size_t s) : std::vector<T>(s) { }
     givvector(const Self_t& p, givNoCopy xxx) : std::vector<T>(p) {}
     givvector(const Self_t& p, givWithCopy xxx) : std::vector<T>(p) {}
-    Self_t& reallocate (size_t s) { resize(s); return *this; }
+    Self_t& reallocate (size_t s) { this->resize(s); return *this; }
     Self_t& logcopy(const Self_t& src) { return *this = src; }
     Self_t& copy(const Self_t& src) { return *this = src; }
     int areEqual(const Self_t& p) const { 

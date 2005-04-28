@@ -17,6 +17,9 @@
 template<class Domain, class Tag, class RandIter = GivRandom>
 class Poly1FactorDom : public Poly1Dom<Domain,Tag> {
 protected:
+    using Poly1Dom<Domain,Tag>::_domain;
+    using Poly1Dom<Domain,Tag>::one;
+    using Poly1Dom<Domain,Tag>::zero;
     typedef typename Poly1Dom<Domain,Tag>::Rep Rep;
     mutable RandIter _g;
 public:

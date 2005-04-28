@@ -11,7 +11,6 @@ typedef StaticElement< Field > Element;
 // Mandatory declaration (because of static template)
 Field Element::_domain;
 
-
 int main(int argc, char ** argv) {
     unsigned long P = 5009;
 

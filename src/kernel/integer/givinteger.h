@@ -134,8 +134,8 @@ public:
 #endif
     template< class RandIter > Rep& random(RandIter& g, Rep& r, long s = 1) const { return Integer::random(r,s); }
     template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const { return Integer::random(r,b); }
-    template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, long s = 1) const { return Integer::nonzerorandom(r,s); };
-    template< class RandIter > Rep& nonzerorandom (RandIter& g,Rep& r, const Rep& b) const { return Integer::nonzerorandom(r,b); };
+    template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, long s = 1) const { return Integer::nonzerorandom(r,s); }
+    template< class RandIter > Rep& nonzerorandom (RandIter& g,Rep& r, const Rep& b) const { return Integer::nonzerorandom(r,b); }
 
   // -- IO
   std::istream& read ( std::istream& i ) 

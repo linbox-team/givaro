@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givops.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givops.h,v 1.2 2005-04-28 11:24:21 jgdumas Exp $
 // ==========================================================================
 // Description:
 // Class version of operations on a group F. By default use arithmetic operator
@@ -27,7 +27,7 @@ struct CopyOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   CopyOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator() (Type_t& v1, const Type_t& v2) const {  
-    _domain.assign(v1, v2); 
+    BaseOP<Domain>::_domain.assign(v1, v2); 
   }
 };
 
@@ -39,9 +39,9 @@ struct MulOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   MulOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator() (Type_t& res, const Type_t& v1, const Type_t& v2) const 
-  { _domain.mul( res, v1, v2); }
+  { BaseOP<Domain>::_domain.mul( res, v1, v2); }
   void operator() (Type_t& res, const Type_t& v1 ) const 
-  { _domain.mulin( res, v1 ); }
+  { BaseOP<Domain>::_domain.mulin( res, v1 ); }
 };
 
 template<class Domain>
@@ -50,9 +50,9 @@ struct DivOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   DivOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator() (Type_t& res, const Type_t& v1, const Type_t& v2) const 
-  { _domain.div( res, v1, v2); }
+  { BaseOP<Domain>::_domain.div( res, v1, v2); }
   void operator() (Type_t& res, const Type_t& v1) const 
-  { _domain.divin( res, v1 ); }
+  { BaseOP<Domain>::_domain.divin( res, v1 ); }
 };
 
 template<class Domain>
@@ -61,9 +61,9 @@ struct ModOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   ModOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator() (Type_t& res, const Type_t& v1, const Type_t& v2) const 
-  { _domain.mod( res, v1, v2); }
+  {  BaseOP<Domain>::_domain.mod( res, v1, v2); }
   void operator() (Type_t& res, const Type_t& v1) const 
-  { _domain.modin( res, v1 ); }
+  {  BaseOP<Domain>::_domain.modin( res, v1 ); }
 };
 
 template<class Domain>
@@ -72,9 +72,9 @@ struct AddOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   AddOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator() (Type_t& res, const Type_t& v1, const Type_t& v2) const 
-  { _domain.add( res, v1, v2 ); }
+  {  BaseOP<Domain>::_domain.add( res, v1, v2 ); }
   void operator() (Type_t& res, const Type_t& v1) const 
-  { _domain.addin( res, v1 ); }
+  {  BaseOP<Domain>::_domain.addin( res, v1 ); }
 };
 
 template<class Domain>
@@ -83,9 +83,9 @@ struct SubOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   SubOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator() (Type_t& res, const Type_t& v1, const Type_t& v2) const 
-  { _domain.sub( res, v1, v2 ); }
+  { BaseOP<Domain>::_domain.sub( res, v1, v2 ); }
   void operator() (Type_t& res, const Type_t& v1) const 
-  { _domain.subin( res, v1 ); }
+  { BaseOP<Domain>::_domain.subin( res, v1 ); }
 };
 
 template<class Domain>
@@ -94,9 +94,9 @@ struct NegOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   NegOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator() (Type_t& res, const Type_t& v1) const 
-  { _domain.neg( res, v1 ); }
+  { BaseOP<Domain>::_domain.neg( res, v1 ); }
   void operator() (Type_t& res ) const 
-  { _domain.negin( res, res ); }
+  { BaseOP<Domain>::_domain.negin( res, res ); }
 };
 
 template<class Domain>
@@ -105,9 +105,9 @@ struct MulAddOp : public BaseOP<Domain> {
   typedef 		Domain 			Domain_t;
   MulAddOp( const Domain& D ) : BaseOP<Domain>(D) {}
   void operator()(Type_t& res, const Type_t& v1, const Type_t& v2, const Type_t& v3) const
-  { _domain.axpy( res, v1, v2, v3 ); }
+  { BaseOP<Domain>::_domain.axpy( res, v1, v2, v3 ); }
   void operator() (Type_t& res, const Type_t& v1, const Type_t& v2 ) const 
-  { _domain.axpy( res, v1, v2, res ); }
+  { BaseOP<Domain>::_domain.axpyin( res, v1, v2 ); }
 };
 
 

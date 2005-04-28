@@ -10,8 +10,8 @@ void FaireEssai(const FField & F) {
 
   typename FField::element a, b, r;
 
-  F.read( std::cin , a ); 
-//  F.init( a, "1+3*X+5*X^2" );
+// std::cout << "Enter an element of this field: ";  F.read( std::cin , a ); 
+  F.init( a, "1+3*X+5*X^2" );
   F.init( b, (unsigned long)23 );
 
   F.add(r, a, b);

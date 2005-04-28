@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givrnsconvert.inl,v 1.2 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givrnsconvert.inl,v 1.3 2005-04-28 16:38:14 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -82,7 +82,7 @@ template<class RING, class Domain>
 void RNSsystem<RING,Domain>::RnsToRing( RING& I, const RNSsystem<RING,Domain>::array& rns) const 
 {
   // - Computation of a mixed radix representation of this
-  RNSsystem<RING,Domain>::array mixrad(_primes.size());
+  typename RNSsystem<RING,Domain>::array mixrad(_primes.size());
   RnsToMixedRadix( mixrad , rns );
 
   // - Convert mixrad to an integer

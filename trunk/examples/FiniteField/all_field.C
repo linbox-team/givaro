@@ -6,15 +6,15 @@
 #include "StaticElement.h"
 
 // Domain kind
-typedef ZpzDom<Unsigned32>	Field1;	typedef StaticElement< Field1 > Element1; 	Field1 Element1::_domain;
-typedef GFqDom<long>		Field2;	typedef StaticElement< Field2 > Element2;	Field2 Element2::_domain;
-typedef Montgomery<Std32>	Field3;	typedef StaticElement< Field3 > Element3;	Field3 Element3::_domain;
-typedef ZpzDom<Integer>		Field4;	typedef StaticElement< Field4 > Element4;	Field4 Element4::_domain;
-typedef ZpzDom<Std32>		Field5;	typedef StaticElement< Field5 > Element5; 	Field5 Element5::_domain;
-typedef ZpzDom<Std16>		Field6;	typedef StaticElement< Field6 > Element6; 	Field6 Element6::_domain;
-typedef ZpzDom<Log16>		Field7;	typedef StaticElement< Field7 > Element7; 	Field7 Element7::_domain;
+typedef ZpzDom<Unsigned32>	Field1;	typedef StaticElement< Field1 > Element1; 	template<> Field1 Element1::_domain(2);
+typedef GFqDom<long>		Field2;	typedef StaticElement< Field2 > Element2;	template<> Field2 Element2::_domain(2);
+typedef Montgomery<Std32>	Field3;	typedef StaticElement< Field3 > Element3;	template<> Field3 Element3::_domain(2);
+typedef ZpzDom<Integer>		Field4;	typedef StaticElement< Field4 > Element4;	template<> Field4 Element4::_domain(2);
+typedef ZpzDom<Std32>		Field5;	typedef StaticElement< Field5 > Element5; 	template<> Field5 Element5::_domain(2);
+typedef ZpzDom<Std16>		Field6;	typedef StaticElement< Field6 > Element6; 	template<> Field6 Element6::_domain(2);
+typedef ZpzDom<Log16>		Field7;	typedef StaticElement< Field7 > Element7; 	template<> Field7 Element7::_domain(2);
 #ifdef GIVARO_USE_SIXTYFOUR
-typedef ZpzDom<Std64>		Field8;	typedef StaticElement< Field8 > Element8; 	Field8 Element8::_domain;
+typedef ZpzDom<Std64>		Field8;	typedef StaticElement< Field8 > Element8; 	template<> Field8 Element8::_domain(2);
 #endif
 
 

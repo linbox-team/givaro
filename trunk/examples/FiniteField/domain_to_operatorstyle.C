@@ -9,7 +9,8 @@ typedef GFqDom<long> Field;
 typedef StaticElement< Field > Element;
 
 // Mandatory declaration (because of static template)
-Field Element::_domain;
+// and an actual constructed field is mandatory (the "(2)") for g++ 3.4
+template<> Field Element::_domain(2);
 
 int main(int argc, char ** argv) {
     unsigned long P = 5009;

@@ -4,7 +4,6 @@
 #include <givaro/givgfq.h>
 #include <givaro/givmontg32.h>
 
-
 template<class Field>
 void TestField(const Field& F) {
     std::cerr << "Within " ; 
@@ -12,7 +11,7 @@ void TestField(const Field& F) {
     std::cerr  << " : " << std::flush;
 
     typename Field::Element a, b, c, d;
-    F.init(a, 7);
+    F.init(a, 7UL);
     F.init(b, -29.3);
 
     F.init(c);            // empty constructor
@@ -50,6 +49,10 @@ void TestField(const Field& F) {
 	     ) << std::endl;
 }
 
+extern "C" {
+# include <sys/time.h>
+# include <sys/resource.h>
+}
 
 
 int main(int argc, char ** argv) {
@@ -77,13 +80,36 @@ int main(int argc, char ** argv) {
         // modulo 13 with primitive root representation
     GFqDom<int> GF13( 13 ); TestField( GF13 );
     
-        // finite field with 5^4 elements
-    GFqDom<int> GF81( 5, 4 ); TestField( GF81 );
-    
         // modulo 13 over arbitrary size
     ZpzDom<Integer> IntZ13(13); TestField( IntZ13 );
 
+        // Zech log finite field with 5^4 elements
+    GFqDom<int> GF81( 5, 4 ); TestField( GF81 );
     
+    	// Zech log finite field with 2Mb tables
+    struct rusage  tmp1 ; 
+    getrusage (RUSAGE_SELF, &tmp1) ;
+          // user time
+    double tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ ( 1000000.0 ) ; 
+		    ;
+    GFqDom<long long> GF2M( 2, (argc > 1 ? atoi(argv[1]) : 20) );
+    getrusage (RUSAGE_SELF, &tmp1) ;
+    tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ (1000000.0) - tim;
+
+    std::cerr << "Initialization took " << tim << " cpu seconds and : " << std::endl;
+    std::cerr
+        << tmp1.ru_maxrss << " maximum resident set size"<< std::endl
+        << tmp1.ru_ixrss << " integral shared memory size"<< std::endl
+        << tmp1.ru_idrss << " integral unshared data size"<< std::endl
+        << tmp1.ru_isrss << " integral unshared stack size"<< std::endl
+        << tmp1.ru_minflt << " page reclaims"<< std::endl
+        << tmp1.ru_majflt << " page faults"<< std::endl
+        << tmp1.ru_nswap << " swaps"<< std::endl
+        << tmp1.ru_inblock << " block input operations"<< std::endl
+        << tmp1.ru_oublock << " block output operations"<< std::endl;
+
+    TestField( GF2M );
+
 
     return 0;
 }

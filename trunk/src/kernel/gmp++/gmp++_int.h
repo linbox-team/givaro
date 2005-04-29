@@ -149,7 +149,7 @@ public:
   Integer& operator /= (const Integer& n);  
   Integer& operator /= (const unsigned long l);
   Integer& operator /= (const long l);
-    template<class XXX> Integer& operator /=(const XXX& x) { return this->operator /= ( (Integer)x ); }
+  template<class XXX> Integer& operator /=(const XXX& x) { return this->operator /= ( (Integer)x ); }
   Integer  operator /  (const Integer& n) const;
   Integer  operator /  (const unsigned long l) const;
   Integer  operator /  (const long l) const;
@@ -157,10 +157,12 @@ public:
   Integer& operator %= (const Integer& n);  
   Integer& operator %= (const unsigned long l);
   Integer& operator %= (const long l);
-    template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
+  template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
   Integer  operator % (const Integer& n) const;
   long  operator % (const unsigned long l) const;
   long  operator % (const long l) const;
+  unsigned short  operator % (const unsigned short l) const { return (unsigned short) ( this->operator % ( (unsigned long)l ) ); }
+  template<class XXX> XXX operator %(const XXX& x) const { return (XXX)this->operator % ( Integer(x) ); }
 
   // - Methods
 static Integer& addin (Integer& res, const Integer& n);  

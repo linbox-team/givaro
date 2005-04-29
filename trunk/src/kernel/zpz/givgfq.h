@@ -106,8 +106,14 @@ public:
 
         // Initialization of elements
     Rep& init( Rep& ) const;
-    Rep& init( Rep&, const TT ) const;
-    Rep& init( Rep&, const UTT ) const;
+    Rep& init( Rep& a, const int i) const { return read(a,i); }
+    Rep& init( Rep& a, const unsigned int i) const { return read(a,i); }
+    Rep& init( Rep& a, const long i) const { return read(a,i); }
+    Rep& init( Rep& a, const unsigned long i) const { return read(a,i); }
+#ifndef __GIVARO__DONOTUSE_longlong__
+    Rep& init( Rep& a, const long long i) const { return read(a,i); }
+    Rep& init( Rep& a, const unsigned long long i) const { return read(a,i); }
+#endif
     Rep& init( Rep&, const Integer ) const;
     Rep& init( Rep&, const double ) const ;
 //    Rep& init( Rep&, const Rep ) const;
@@ -129,6 +135,10 @@ public:
     Rep& read (Rep&, const int ) const;
     Rep& read (Rep&, const unsigned int ) const;
     Rep& read (Rep&, const Integer ) const;
+#ifndef __GIVARO__DONOTUSE_longlong__
+    Rep& read (Rep&, const long long) const;
+    Rep& read (Rep&, const unsigned long long ) const;
+#endif
     
     std::ostream& write( std::ostream& s, const Rep a ) const;
     TT write(const Rep a ) const;
@@ -137,7 +147,10 @@ public:
     int& write(int&, const Rep a ) const;
     unsigned int& write(unsigned int&, const Rep a ) const;
     Integer& write(Integer&, const Rep a ) const;
-
+#ifndef __GIVARO__DONOTUSE_longlong__
+    long long& write(long long&, const Rep a ) const;
+    unsigned long long& write(unsigned long long&, const Rep a ) const;
+#endif
     std::ostream& convert( std::ostream& s, const Rep a ) const { return write(s,a); }
     TT convert(const Rep a ) const {return write(a);};
     long& convert(long& i, const Rep a ) const {return write(i,a);};
@@ -147,6 +160,10 @@ public:
     unsigned int& convert(unsigned int& i, const Rep a ) const {return write(i,a);};
     Integer& convert(Integer& i, const Rep a ) const {return write(i,a);};
 
+#ifndef __GIVARO__DONOTUSE_longlong__
+    long long& convert(long long& i, const Rep a) const { return write(i,a); }
+    unsigned long long& convert(unsigned long long& i, const Rep a) const { return write(i,a); }
+#endif
 
         // Test operators
     inline int operator== (const GFqDom<TT>& a) const;

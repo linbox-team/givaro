@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <02 Apr 03 15:45:41 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Apr 05 18:30:02 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 
@@ -653,6 +653,49 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned int re
     return r = _pol2log[ tr ];
 }
 
+#ifndef __GIVARO__DONOTUSE_longlong__
+template<typename TT> 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned long long residu ) const 
+{
+    unsigned long long tr = residu ;
+    if (tr >= _characteristic ) tr = tr % _characteristic ;
+    return r = _pol2log[ tr ];
+}
+
+template<typename TT> 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const long long residu ) const {
+  long long tr = residu ;
+  if (tr <0) {
+      // -a = b [p]
+      // a = p-b [p]
+    tr = -tr;
+    if (tr >= (long long)_characteristic ) tr = (unsigned long long)tr % _characteristic ;
+    if (tr)
+      return r = _pol2log[ _characteristic - (unsigned long long)tr ];
+    else
+      return r = zero;
+  } else {
+    if (tr >= (long long)_characteristic ) tr = (unsigned long long)tr % _characteristic ;
+    return r = _pol2log[ tr ];
+  }
+}
+
+
+template<typename TT>
+inline unsigned long long& GFqDom<TT>::write (unsigned long long& r, const Rep a) const
+{
+	  return r = (unsigned long long)_log2pol[ (unsigned long)a] ;
+}
+template<typename TT> 
+inline long long& GFqDom<TT>::write (long long& r, const Rep a) const 
+{
+  return r = (long long)_log2pol[ (unsigned long)a] ;
+}
+
+#endif
+
+
+
 template<typename TT> 
 inline std::ostream& GFqDom<TT>::write (std::ostream& o, const Rep a) const {
   return o << _log2pol[ (UTT)a] ;
@@ -707,11 +750,14 @@ inline Integer& GFqDom<TT>::write (Integer& r, const Rep a) const
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r) const { return r = zero; }
 
+/*
+ * Replaced by calls to read in the .h
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const TT a) const { return read (r, a); }
 
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const UTT a) const { return read (r, a); }
+*/
 
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Integer a) const { return read (r, a); }

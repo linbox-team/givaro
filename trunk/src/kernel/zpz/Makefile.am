@@ -13,6 +13,7 @@ pkginclude_HEADERS=\
 	givzpz64std.h		\
 	givprimes16.h		\
 	givrns.h		\
+	givcra.h		\
 	givzpz16table1.h	\
 	givmontg32.h		\
 	giv_randiter.h		\

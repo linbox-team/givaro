@@ -3,10 +3,11 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1sqrfree.inl,v 1.5 2005-05-03 13:42:39 jgdumas Exp $
+// $Id: givpoly1sqrfree.inl,v 1.6 2005-05-03 15:04:09 jgdumas Exp $
 // ==========================================================================
 // Description:
 
+using namespace std;
 
 /** Sqrfree decomposition.
 Decompose P such that: P = Fact[0]^0 * Fact[1]^1 * ... * Fact[P.degree()]^(P.degree()), 
@@ -26,19 +27,24 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
   GIVARO_ASSERT( (Fact !=0), "nul pointer");
 
   unsigned long count = 0;
-  Rep A,B,C,W,Z,Y;
+  Rep A,B,C,D,W,Z,Y;
   Type_t lc;
   leadcoef(lc, P);
   init(Fact[count], 0, lc);
 // write(cout << "P:", P) << endl;
-// _domain.write(cout << "lc:", lc) << endl;
+// _domain.write(cout << "lc(P):", lc) << endl;
   assign(A, P);
   diff(B, A);
 // write(cout << "P':", B) << endl;
-  gcd(C, A, B);
-// write(cout << "Gcd(P,P'):", C) << endl;
+  gcd(D, A, B);
+// write(cout << "Gcd(P,P'):", D) << endl;
   div(A, P, lc);
 // write(cout << "A/lc:", A) << endl;
+  leadcoef(lc, D);
+// _domain.write(cout << "lc(Gcd):", lc) << endl;
+  div(C, D, lc);
+// write(cout << "Gcd/lc:", C) << endl;
+
   if (areEqual(C, one)) {
     assign(W, A);
   }
@@ -63,7 +69,6 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
     } 
   }
   assign(Fact[count], W);
-// write(cout << "L" << count << ":", Fact[count]) << endl;
+write(cout << "L" << count << ":", Fact[count]) << endl;
   return Nfact = ++count;
 } 
-

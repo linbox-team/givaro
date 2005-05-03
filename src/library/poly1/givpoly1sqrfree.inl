@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1sqrfree.inl,v 1.3 2005-02-02 19:07:25 pernet Exp $
+// $Id: givpoly1sqrfree.inl,v 1.4 2005-05-03 13:21:22 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -20,16 +20,16 @@ For more readeable version of the algorithm, see Geddes, p342.
 @param Fact  [out] contains at most Nfact factors of the decomposition.
 */
 template <class Domain>
-size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const
+void Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const
 {
-  if (Nfact ==0) return Nfact;
+  if (Nfact ==0) return;
   GIVARO_ASSERT( (Fact !=0), "nul pointer");
 
-  unsigned long count = 0;
+  long count = 1;
   Rep A,B,C,W,Z,Y;
   Type_t lc;
   leadcoef(lc, P);
-  init(Fact[count], 0, lc);
+  init(Fact[0], 0, lc);
 // write(cout << "P:", P) << endl;
 // _domain.write(cout << "lc:", lc) << endl;
   assign(A, P);
@@ -44,26 +44,22 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
   }
   else {
     div(W, A, C);
-// write(cout << "W:", W) << endl;
     div(Y, B, C);
-// write(cout << "Y:", Y) << endl;
     diff(Z, W);
-// write(cout << "W':", Z) << endl;
     sub(Z, Y, Z);
     while (!isZero(Z)) 
     {
       gcd(Fact[count], W, Z);
-// write(cout << "L" << count << ":", Fact[count]) << endl;
-
       div(C, W, Fact[count]); assign(W, C);
       div(Y, Z, Fact[count]);
       diff(Z, W);
       sub(Z, Y, Z); 
-      if (++count > Nfact) return Nfact;
+      count++;
+      if (count >= Nfact) return;
     } 
   }
   assign(Fact[count], W);
-// write(cout << "L" << count << ":", Fact[count]) << endl;
-  return Nfact = ++count;
+  Nfact = 1+ count;
+  return;
 } 
 

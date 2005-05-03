@@ -23,9 +23,8 @@ AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(to
 LDADD = -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 
-EXTRA_PROGRAMS=isirred pol_arith pol_eval pol_factor
+EXTRA_PROGRAMS=isirred pol_arith pol_eval
 
 isirred_SOURCES = isirred.C
 pol_arith_SOURCES = pol_arith.C
 pol_eval_SOURCES = pol_eval.C
-pol_factor_SOURCES = pol_factor.C

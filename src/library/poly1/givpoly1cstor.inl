@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.2 2005-02-02 19:07:25 pernet Exp $
+// $Id: givpoly1cstor.inl,v 1.3 2005-06-13 11:56:59 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
@@ -63,21 +63,36 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign( Rep
 }
 
 
-template<class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const Integer& val ) const
+template<class Domain> template<class XXX>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const XXX& val ) const
 { 
-  if (_domain.isZero(val)) { P.reallocate(0); }
-  else { P.reallocate(1); _domain.init(P[0], val); }
-  return P;
+    P.reallocate(1); 
+    _domain.init(P[0], val);
+    return P;
 }
 
-template<class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign( Rep& P, const Type_t& val ) const
+
+template<class Domain> template<class XXX>
+inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const Poly1Dom<Domain,Dense>::Rep& P ) const
 { 
-  if (_domain.isZero(val)) { P.reallocate(0); }
-  else { P.reallocate(1); _domain.assign(P[0], val); }
-  return P;
+    if (P.size())
+        return _domain.convert(val, P[0]);
+    else
+        return _domain.convert(val, 0UL);
 }
+
+template<class Domain> template<class UU, template<class XX> class Vect>
+inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& val, const Poly1Dom<Domain,Dense>::Rep& P ) const
+{ 
+    val.resize( P.size() );
+    typename Vect<UU>::iterator vit = val.begin();
+    typename Rep::const_iterator        pit = P.begin();
+    for ( ; pit != P.end(); ++pit, ++vit)
+        _domain.convert(*vit, *pit);
+    return val;
+}
+
+
 
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const Degree deg ) const
@@ -94,20 +109,38 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& 
 	return P;
 }
 
+template<class Domain> template<class XXX>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
+ ( Rep& P, const Degree d, const XXX& val ) const
+{
+    Type_t _zero;
+    _domain.init( _zero, 0.0);
+    long deg = value(d);
+    Type_t lcoeff; _domain.init(lcoeff, val);
+    if (_domain.isZero(lcoeff)) { 
+        P.reallocate(0);
+    } else {
+        P.reallocate(deg+1);
+        for (int i=0; i<deg; ++i)
+            _domain.assign(P[i], _zero);
+        _domain.assign(P[deg], lcoeff);
+    }
+    return P;
+}
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
- ( Rep& P, const Degree d, const Integer& lcoeff ) const
+ ( Rep& P, const Degree d, const Type_t& lcoeff ) const
 {
-	Type_t _zero;
-	_domain.init( _zero, 0.0);
-  long deg = value(d);
-  if (_domain.isZero(lcoeff)) { 
-    P.reallocate(0);
-  } else {
-    P.reallocate(deg+1);
-    for (int i=0; i<deg; ++i)
-      _domain.assign(P[i], _zero);
-    _domain.init(P[deg], lcoeff);
+    Type_t _zero;
+    _domain.init( _zero, 0.0);
+    long deg = value(d);
+    if (_domain.isZero(lcoeff)) { 
+        P.reallocate(0);
+    } else {
+        P.reallocate(deg+1);
+        for (int i=0; i<deg; ++i)
+            _domain.assign(P[i], _zero);
+        _domain.assign(P[deg], lcoeff);
   }
   return P;
 }
@@ -115,17 +148,17 @@ template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign
  ( Rep& P, const Degree d, const Type_t& lcoeff ) const
 {
-	Type_t _zero;
-	_domain.init( _zero, 0.0);
-  long deg = value(d);
-  if (_domain.isZero(lcoeff)) { 
-    P.reallocate(0);
-  } else {
-    P.reallocate(deg+1);
-    for (int i=0; i<deg; ++i)
-      _domain.assign(P[i], _zero);
-    _domain.assign(P[deg], lcoeff);
-  }
-  return P;
+    Type_t _zero;
+    _domain.init( _zero, 0.0);
+    long deg = value(d);
+    if (_domain.isZero(lcoeff)) { 
+        P.reallocate(0);
+    } else {
+        P.reallocate(deg+1);
+        for (int i=0; i<deg; ++i)
+            _domain.assign(P[i], _zero);
+        _domain.assign(P[deg], lcoeff);
+    }
+    return P;
 }
 

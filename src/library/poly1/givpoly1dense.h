@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.4 2005-04-28 11:24:21 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.5 2005-06-13 11:56:59 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -92,7 +92,9 @@ public :
 	
         // -- Init polynomial 
     Rep& init(Rep& a) const;
-    Rep& init(Rep& p, const Integer &cste ) const;
+        // -- Init polynomial with value : F.init(p[0],cste)
+    template<class XXX>
+    Rep& init(Rep& p, const XXX &cste ) const;
         // -- Init polynomial with field value : F.assign(p[0],cste)
     Rep& assign(Rep& p, const Type_t &cste ) const;
 
@@ -101,12 +103,23 @@ public :
     Rep& init (Rep& r, const Degree deg) const;
 
         // -- For polynomial = lcoeff X^deg 
-    Rep& init (Rep& p, const Degree deg , const Integer& lcoeff) const;
+    template<class XXX>
+    Rep& init (Rep& p, const Degree deg , const XXX& lcoeff) const;
+
+        // -- WARNING : F.assign(P[deg], lcoeff); 
+    Rep& init (Rep& p, const Degree deg , const Type_t& lcoeff) const;
         //    F.assign(P[deg], lcoeff); 
     Rep& assign (Rep& p, const Degree deg , const Type_t& lcoeff) const;
 
         // -- Assignment p = q
     Rep& assign( Rep& p, const Rep& q) const;
+
+        // -- Convert polynomials : F.convert(cste, p[0])
+    template<class XXX>
+    XXX& convert(XXX& p, const Rep &) const;
+
+    template<class UU, template<class XX> class Vect>
+    Vect<UU>& convert( Vect<UU>&, const Rep& P ) const ;
 
         // -- Dstor
     ~Poly1Dom ();
@@ -189,6 +202,8 @@ public :
     Rep& gcd ( Rep& D, const Rep& P, const Rep& Q) const;  
     Rep& gcd ( Rep& D, Rep& U, Rep& V, const Rep& P, const Rep& Q) const;  
     Rep& lcm ( Rep& D, const Rep& P, const Rep& Q) const;  
+        // -- modular inverse of P : U P = 1 + V Q
+    Rep& invmod ( Rep& U, const Rep& P, const Rep& Q) const;  
 
         // -- misc
         // -- W <-- P^n

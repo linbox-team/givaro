@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <29 Apr 05 18:30:02 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <07 Jun 05 18:58:22 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 
@@ -577,7 +577,6 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
           if (tr >= (TT)_characteristic ) 
               tr = (UTT)tr % _characteristic ;
       }
-      
       return r = _pol2log[ (UTT)tr ];
   }
 }

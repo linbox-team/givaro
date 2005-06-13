@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_compare.C,v 1.2 2005-04-27 14:53:00 jgdumas Exp $
+// $Id: gmp++_int_compare.C,v 1.3 2005-06-13 11:56:59 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++_int.h"
@@ -11,15 +11,12 @@
 // returns 1 if a > b, 0 if a == b and -1 otherwise.  
 int compare(const Integer &a, const Integer& b) 
 {
-  if (&a == &b) return 0 ;
-  int cmp = mpz_cmp ( (mpz_ptr)&a.gmp_rep, (mpz_ptr)&b.gmp_rep );
-  return (cmp <0 ? -1 : (cmp >0 ? 1 : 0));
+   return mpz_cmp ( (mpz_ptr)&a.gmp_rep, (mpz_ptr)&b.gmp_rep );
 }
 
 int absCompare(const Integer &a, const Integer &b) 
 {
-  Integer c = ((a<0)?-a:a), d = ((b<0)?-b:b);
-  return mpz_cmp( (mpz_ptr)&(c.gmp_rep), (mpz_ptr)&(d.gmp_rep));
+   return mpz_cmpabs( (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep));
 }
 
 int Integer::operator != (const int l) const 

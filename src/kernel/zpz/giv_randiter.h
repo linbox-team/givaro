@@ -64,11 +64,8 @@ template <class Field , class Type> class GIV_randIter
     GIV_randIter(const  Field& F,
 		 const Type& size = 0, 
 		 const Type& seed = 0)
-      : _size(size)  
+            : _size(size), _givrand( GivRandom(seed) ), _field(F)
       {	
-	_field=F;
-	GivRandom tmp(seed);
-	_givrand=tmp;
 
 	Type cardinality    = Type( F.size() );
 	if ((_size > cardinality) || (_size == 0) )

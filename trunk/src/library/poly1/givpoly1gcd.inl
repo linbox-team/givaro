@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.2 2005-02-02 19:07:25 pernet Exp $
+// $Id: givpoly1gcd.inl,v 1.3 2005-06-13 11:56:59 jgdumas Exp $
 // ==========================================================================
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
@@ -64,11 +64,23 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
 template <class Domain> 
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& F, Rep& S0, Rep& T0, const Rep& A, const Rep& B) const
 {
+  Type_t r0, r1, tt;
   Rep G; 
   Degree degF, degG;
   degree(degF,A); degree(degG,B);
-  if ((degF < 0) || (degG == 0)) return assign(G, B);
-  if ((degG < 0) || (degF == 0)) return assign(G, A);
+  if ((degF < 0) || (degG == 0)) {
+      init(T0, Degree(0), _domain.inv( tt, leadcoef(r0,B)));
+      init(S0, 0);
+      assign(F, B);
+      return mulin(F,tt);
+  }
+  if ((degG < 0) || (degF == 0)) {
+      init(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
+      init(T0, 0);
+      assign(F, A);
+      return mulin(F,tt);
+  }
+  
   
 //   if (degF >= degG) {
     assign(F, A);
@@ -79,7 +91,6 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
 //     assign(G, A);
 //   }
 
-  Type_t r0, r1, tt;
   leadcoef(r0,  F);
   leadcoef(r1, G);
 
@@ -103,6 +114,49 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   }
   
   return F;
+}
+
+
+template <class Domain> 
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Rep& S0, const Rep& A, const Rep& B) const
+{
+  Type_t r0, r1, tt;
+  Rep F, G; 
+  Degree degF, degG;
+  degree(degF,A); degree(degG,B);
+  if ((degF <= 0) || (degG <= 0) ) {
+      return init(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
+  }
+  
+//   if (degF >= degG) {
+    assign(F, A);
+    assign(G, B);
+//   }
+//   else {
+//     assign(F, B);
+//     assign(G, A);
+//   }
+
+  leadcoef(r0, F);
+  leadcoef(r1, G);
+
+  divin(F,r0);
+  divin(G,r1);
+
+  Rep S1,R1,Q,TMP, TMP2;
+
+  init(S0, 0, _domain.inv(tt,r0) );
+  assign(S1,zero);
+  
+  while ( ! iszero(G) ) {
+      divmod(Q,R1,F,G);
+      leadcoef(r1, R1); if (_domain.isZero(r1)) _domain.assign(r1,_domain.one);
+      assign(F,G);
+      div(G,R1,r1);
+      mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); div(S1,TMP2,r1);
+  }
+  
+  return S0;
 }
 
 

@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.5 2005-06-13 11:56:59 jgdumas Exp $
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
@@ -110,8 +110,8 @@ inline Montgomery<Std32>::Rep& Montgomery<Std32>::inv (Rep& r, const Rep a) cons
 	// invext(aB) --> 1/a*1/B
 	// % * B^3    --> B²/a
 	// redc       --> B/a
-	int32 t;
-	return redc(r, uint32( invext( t,int32(a),int32(_p)) ) * _B3p) ;
+    int32 t;
+    return redc(r, uint32( invext( t,int32(a),int32(_p)) ) * _B3p) ;
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::div (Rep& r, const Rep a, const Rep b) const

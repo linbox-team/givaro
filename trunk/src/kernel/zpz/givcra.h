@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.5 2005-02-02 19:08:29 pernet Exp $
+// $Id: givcra.h,v 1.6 2005-06-13 11:56:59 jgdumas Exp $
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm for 2 elements. 
@@ -35,10 +35,16 @@ struct ChineseRemainder {
 
 
     RingElement & operator()( RingElement& res, const RingElement& A, const DomainElement& e) {
-        _D.convert(res, e);
-        res -= A;
+//         _D.convert(res, e);
+//         res -= A;
+//         res *= C_12;
+//         res %= P_12;            // This is the reduction
+        DomainElement smallA, smallM;
+        _D.init(smallA, A);        // This is NOW the reduction
+        _D.init(smallM);
+        _D.sub(smallM, e, smallA);
+        _D.convert(res, smallM);
         res *= C_12;
-        res %= P_12;            // This is the reduction
         return res += A;
     }
 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givmontg32.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givmontg32.C,v 1.2 2005-06-13 11:56:59 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -48,7 +48,10 @@ int32& Montgomery<Std32>::invext
 	t1 = u1 - q * v1; t3 = u3 - q * v3;
 	u1 = v1; u3 = v3; v1 = t1; v3 = t3;
    }
-   return u = u1;
+   if (u1 < 0) 
+       return u = u1+b;
+   else
+       return u = u1;
 }  
 
 int32 Montgomery<Std32>::invext

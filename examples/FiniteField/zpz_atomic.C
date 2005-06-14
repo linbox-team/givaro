@@ -9,7 +9,7 @@
 #endif
 
 typedef ZpzDom<Std32> Domain;
-typedef Domain::element Modulo;
+typedef Domain::Element Modulo;
 
 #ifndef NB
 #define NB 500000

@@ -24,14 +24,14 @@ public:
     typedef typename BFT::Residu_t Residu_t;
     typedef Poly1FactorDom< BFT, Dense > Pol_t;
 
-    typedef typename BFT::element BFelement; 
-    typedef typename Pol_t::element Polelement;
+    typedef typename BFT::Element BFElement; 
+    typedef typename Pol_t::Element PolElement;
 
 protected:
 
     BaseField_t _bF;
     Pol_t _pD;
-    Polelement _irred;
+    PolElement _irred;
     const Residu_t _characteristic; 
     const Residu_t _exponent;
     const Residu_t _extension_order;
@@ -41,8 +41,8 @@ public:
 
     bool extension_type () const { return true; }
 
-    typedef Polelement Element;
-    typedef Polelement element;
+    typedef PolElement Element;
+    typedef PolElement Element;
 
 
     Extension ( const Residu_t p, const Residu_t e = 1)
@@ -77,90 +77,90 @@ public:
     }
     
     template<class XXX>
-    Polelement& init( Polelement& e, const XXX& i) const { 
+    PolElement& init( PolElement& e, const XXX& i) const { 
         return _pD.modin( _pD.init(e, i), _irred) ; 
     }
     
-    Polelement& assign( Polelement& e, const Polelement& a) const { 
+    PolElement& assign( PolElement& e, const PolElement& a) const { 
         return _pD.assign(e, a) ; 
     }
 
     template<class XXX>
-    XXX& convert( XXX& i, const Polelement& e) const { 
+    XXX& convert( XXX& i, const PolElement& e) const { 
         return _pD.convert( i, e) ; 
     }
 
-    Polelement& add (Polelement& r, const Polelement& a, const Polelement& b) const {
+    PolElement& add (PolElement& r, const PolElement& a, const PolElement& b) const {
         return _pD.add( r, a, b);
     }
   
-    Polelement& sub (Polelement& r, const Polelement& a, const Polelement& b) const {
+    PolElement& sub (PolElement& r, const PolElement& a, const PolElement& b) const {
         return _pD.sub( r, a, b);
     }
   
-    Polelement& neg (Polelement& r, const Polelement& a) const {
+    PolElement& neg (PolElement& r, const PolElement& a) const {
         return _pD.neg( r, a );
     }
   
-    Polelement& mul (Polelement& r, const Polelement& a, const Polelement& b) const {
+    PolElement& mul (PolElement& r, const PolElement& a, const PolElement& b) const {
         return _pD.modin( _pD.mul( r, a, b), _irred );
     }
   
-    Polelement& inv (Polelement& r, const Polelement& a) const {
+    PolElement& inv (PolElement& r, const PolElement& a) const {
 //          _pD.write(_pD.write(_pD.write( std::cerr << "(", _pD.invmod( r, a, _irred)) << ") * (", a) << ")   == 1 + V * (", _irred) << std::endl;
          return  _pD.invmod( r, a, _irred);
      }
   
-    Polelement& div (Polelement& r, const Polelement& a, const Polelement& b) const {
+    PolElement& div (PolElement& r, const PolElement& a, const PolElement& b) const {
         return _pD.modin( _pD.mulin( inv(r, b), a), _irred );
     }
     
-    Polelement& axpy (Polelement& r, const Polelement& a, const Polelement& b, const Polelement& c) const {
+    PolElement& axpy (PolElement& r, const PolElement& a, const PolElement& b, const PolElement& c) const {
         return _pD.modin( _pD.addin(_pD.mul( r, a, b), c), _irred );
     }
   
-    Polelement& addin(Polelement& r, const Polelement& b) const {
+    PolElement& addin(PolElement& r, const PolElement& b) const {
         return _pD.addin( r, b);
     }
   
-    Polelement& subin(Polelement& r, const Polelement& b) const {
+    PolElement& subin(PolElement& r, const PolElement& b) const {
         return _pD.subin( r, b);
     }
   
-    Polelement& negin(Polelement& r) const {
+    PolElement& negin(PolElement& r) const {
         return _pD.negin( r );
     }
   
-    Polelement& mulin(Polelement& r, const Polelement& b) const {
+    PolElement& mulin(PolElement& r, const PolElement& b) const {
         return _pD.modin( _pD.mulin( r, b), _irred );
     }
   
-    Polelement& invin(Polelement& r) const {
-         Polelement a(r);
+    PolElement& invin(PolElement& r) const {
+         PolElement a(r);
          return _pD.invmod( r, a, _irred);
      }
   
-    Polelement& divin(Polelement& r, const Polelement& b) const {
-        Polelement tmp;
+    PolElement& divin(PolElement& r, const PolElement& b) const {
+        PolElement tmp;
         inv(tmp,b);
         return _pD.modin( _pD.mulin( r, tmp), _irred );
     }
     
-    Polelement& axpyin(Polelement& r, const Polelement& b, const Polelement& c) const {
-        Polelement tmp; _pD.mul(tmp,b,c);
+    PolElement& axpyin(PolElement& r, const PolElement& b, const PolElement& c) const {
+        PolElement tmp; _pD.mul(tmp,b,c);
         return _pD.modin( _pD.addin( r, tmp), _irred );
     }
   
-    bool areEqual (const Polelement& b, const Polelement& c) const {
+    bool areEqual (const PolElement& b, const PolElement& c) const {
         return _pD.areEqual( b, c) ;
     }
             
-    bool isZero (const Polelement& b) const {
+    bool isZero (const PolElement& b) const {
         return _pD.isZero(b) ;
     }
             
-    bool isOne (const Polelement& b) const {
-        return _pD.isone(b) ;
+    bool isOne (const PolElement& b) const {
+        return _pD.isOne(b) ;
     }
             
     
@@ -199,13 +199,13 @@ public:
     }
     
 
-    std::istream& read ( std::istream& s, Polelement& a ) const { 
+    std::istream& read ( std::istream& s, PolElement& a ) const { 
         _pD.read( s, a); 
         _pD.modin( a, _irred); 
         return s; 
     }
 
-    std::ostream& write( std::ostream& o, const Polelement& R) const {
+    std::ostream& write( std::ostream& o, const PolElement& R) const {
         return _pD.write( o, R );
     }
 
@@ -225,19 +225,19 @@ class GIV_ExtensionrandIter
   public:
     
     /** @name Common Object Interface.
-     * These methods are required of all LinBox random field element generators.
+     * These methods are required of all LinBox random field Element generators.
      */
     //@{
    
-    /** Field element type.
-     * The field element must contain a default constructor, 
+    /** Field Element type.
+     * The field Element must contain a default constructor, 
      * a copy constructor, a destructor, and an assignment operator.
      */
-    typedef typename ExtensionField::Polelement element;    
+    typedef typename ExtensionField::PolElement Element;    
 
     /** Constructor from field, sampling size, and seed.
-     * The random field element iterator works in the field F, is seeded
-     * by seed, and it returns any one element with probability no more
+     * The random field Element iterator works in the field F, is seeded
+     * by seed, and it returns any one Element with probability no more
      * than 1/min(size, F.cardinality()).
      * A sampling size of zero means to sample from the entire field.
      * A seed of zero means to use some arbitrary seed for the generator.
@@ -261,10 +261,10 @@ class GIV_ExtensionrandIter
 
     /** Copy constructor.
      * Constructs ALP_randIter object by copying the random field
-     * element generator.
+     * Element generator.
      * This is required to allow generator objects to be passed by value
      * into functions.
-     * In this implementation, this means copying the random field element
+     * In this implementation, this means copying the random field Element
      * generator to which R._randIter_ptr points.
      * @param  R ALP_randIter object.
      */
@@ -272,7 +272,7 @@ class GIV_ExtensionrandIter
       : _size(R._size), _givrand(R._givrand) , _field(R._field) {}
 
     /** Destructor.
-     * This destructs the random field element generator object.
+     * This destructs the random field Element generator object.
      * In this implementation, this destroys the generator by deleting 
      * the random generator object to which _randIter_ptr points.
      */
@@ -296,43 +296,43 @@ class GIV_ExtensionrandIter
       return *this;
     }
  
-    /** Random field element creator with assignement.
-     * This returns a random field element from the information supplied
+    /** Random field Element creator with assignement.
+     * This returns a random field Element from the information supplied
      * at the creation of the generator.
-     * @return random field element
+     * @return random field Element
      */	
-    element& random(element& elt) const
+    Element& random(Element& elt) const
       {
-      // Create new random elements     
+      // Create new random Elements     
           elt.resize(_field.order());
-          for(typename element::iterator it = elt.begin(); it != elt.end() ; ++ it) {
+          for(typename Element::iterator it = elt.begin(); it != elt.end() ; ++ it) {
               long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
               (_field.base_field()).init(*it , tmp);
           }
           return elt;
-      } // element& random(element& )
+      } // Element& random(Element& )
       
-    /** Random field element creator with assignement.
-     * This returns a random field element from the information supplied
+    /** Random field Element creator with assignement.
+     * This returns a random field Element from the information supplied
      * at the creation of the generator.
-     * @return random field element
+     * @return random field Element
      */	
-    element& operator()(element& elt) const 
+    Element& operator()(Element& elt) const 
         {
             return this->random(elt);
         }
 
-    /** Random field element creator.
-     * This returns a random field element from the information supplied
+    /** Random field Element creator.
+     * This returns a random field Element from the information supplied
      * at the creation of the generator.
-     * @return random field element
+     * @return random field Element
      */
-    element& operator() (void)
+    Element& operator() (void)
     {
-      element* x=new element;
+      Element* x=new Element;
       return this->random(*x);
 
-    } // element& operator() (void)
+    } // Element& operator() (void)
 	
     
 
@@ -340,7 +340,7 @@ class GIV_ExtensionrandIter
    
     /** @name Implementation-Specific Methods.
      * These methods are not required of all 
-     * \Ref{LinBox Random field element generators}
+     * \Ref{LinBox Random field Element generators}
      * and are included only for this implementation of the archetype.
      */
     //@{

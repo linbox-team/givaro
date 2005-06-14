@@ -4,7 +4,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.7 2004-10-25 11:35:16 givaro Exp $
+// $Id: givzpz64std.inl,v 1.8 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -312,17 +312,15 @@ inline int ZpzDom<Std64>::areEqual(const Rep a, const Rep b) const
 inline int ZpzDom<Std64>::areNEqual(const Rep a, const Rep b) const
 { return a != b; }
 
-inline int ZpzDom<Std64>::iszero(const Rep a) const
+inline int ZpzDom<Std64>::isZero(const Rep a) const
 { return a == ZpzDom<Std64>::zero; }
 
 inline int ZpzDom<Std64>::isnzero(const Rep a) const
 { return a != ZpzDom<Std64>::zero; }
 
-inline int ZpzDom<Std64>::isone(const Rep a) const
+inline int ZpzDom<Std64>::isOne(const Rep a) const
 { return a == ZpzDom<Std64>::one; }
 
-inline bool ZpzDom<Std64>::isZero( const Rep a ) const { return iszero(a); }
-inline bool ZpzDom<Std64>::isOne ( const Rep a ) const { return isone(a); }
 
 inline size_t ZpzDom<Std64>::length(const Rep a) const
 { return ZpzDom<Std64>::size_rep;}
@@ -451,19 +449,19 @@ inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::random(RandIter& g, Rep& a, long b) c
 
 template< class RandIter >
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a) const {
-	while (iszero(init(a, g()))) {};
+	while (isZero(init(a, g()))) {};
 	return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
-	while (iszero(init(a, g()))) {};
+	while (isZero(init(a, g()))) {};
 	return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	while (iszero(init(a, g() %(uint64) b))) {};
+	while (isZero(init(a, g() %(uint64) b))) {};
 	return a;
 }
 

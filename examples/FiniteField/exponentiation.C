@@ -7,7 +7,7 @@ int main(int argc, char ** argv) {
 
  {
     ZpzDom<Std32> Z13(13);   // modulo 13 over 32 bits
-    ZpzDom<Std32>::element a, c;
+    ZpzDom<Std32>::Element a, c;
     Z13.init(a, 7);
 
     long l = 29;
@@ -26,7 +26,7 @@ int main(int argc, char ** argv) {
  {
     int Mod = 13; int exponent = 1;
     GFqDom<int> GF13( Mod, exponent );  // finite field with 13 elements
-    GFqDom<int>::element a, c;
+    GFqDom<int>::Element a, c;
 
     GF13.init(a, 7);    // 7 modulo   13 
 

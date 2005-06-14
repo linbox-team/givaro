@@ -14,8 +14,8 @@ int main(int argc, char** argv)
 #ifndef __GIVARO_GMP_NO_CXX
   IP.seeding();
 #endif
-  IntNumTheoDom<>::element a,pr;
-  if (argc > 1) a = IntNumTheoDom<>::element(argv[1]); else std::cin >> a;
+  IntNumTheoDom<>::Element a,pr;
+  if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
   
         unsigned long runs;
         Timer tim; tim.clear(); 

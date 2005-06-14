@@ -228,7 +228,7 @@ inline bool GFqDom<TT>::areNEqual(const Rep a, const Rep b) const
   { return a != b ; }
 
 template<typename TT> 
-inline bool GFqDom<TT>::iszero(const Rep a) const
+inline bool GFqDom<TT>::isZero(const Rep a) const
   { return a == GFqDom<TT>::zero ; }
 
 template<typename TT> 
@@ -236,7 +236,7 @@ inline bool GFqDom<TT>::isnzero(const Rep a) const
   { return a != GFqDom<TT>::zero ; }
 
 template<typename TT> 
-inline bool GFqDom<TT>::isone(const Rep a) const
+inline bool GFqDom<TT>::isOne(const Rep a) const
   { return a == GFqDom<TT>::one ; }
 
 template<typename TT> 
@@ -537,7 +537,7 @@ inline std::ostream& GFqDom<TT>::write (std::ostream& o) const {
 }
 
   // ------------------------------------
-  // Input - Output  of the elements
+  // Input - Output  of the Elements
   // 
 template<typename TT> 
 inline std::istream& GFqDom<TT>::read (std::istream& i, Rep& a) const {
@@ -820,7 +820,7 @@ inline typename  GFqDom<TT>::Rep& GFqDom<TT>::dotprod
 template<typename TT> template<typename RandIter> inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& a) const {
 //     do 
 //         a = Rep( (UTT)(lrand48()) % _q);
-//     while (iszero(a));
+//     while (isZero(a));
 //     a = (a<0?a+_q:a);
 //     return a;
     a = Rep( ((UTT)(g()) % (_q-1)) + 1);
@@ -908,7 +908,7 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
 //         typedef CyclotomicTable<  GFqDom<TT>, Dense > PolDom;
 //         PolDom Pdom( Zp, e );
         PolDom Pdom( Zp );
-        typename PolDom::element F, G, H;
+        typename PolDom::Element F, G, H;
 
             // F is irreducible of degree e over Zp
             // G is a primitive polynomial for F

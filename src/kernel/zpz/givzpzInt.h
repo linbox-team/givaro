@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.4 2005-02-02 19:08:29 pernet Exp $
+// $Id: givzpzInt.h,v 1.5 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 //
 // Description:
@@ -18,7 +18,7 @@
 
 
 // ==========================================================================
-// -- This class implement the standard arithmetic with Modulo elements:
+// -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
 // ==========================================================================
 
@@ -28,12 +28,12 @@ public:
   // ----- Exported Types and constantes
   typedef Integer Residu_t;                    // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-  // ----- Representation of element of the domain ZpzDom
+  // ----- Representation of Element of the domain ZpzDom
   typedef Integer Rep;
-  typedef Integer element;
-  typedef element Element;
+  typedef Integer Element;
+  typedef Element Element;
 
-  // ----- Representation of vector of the element
+  // ----- Representation of vector of the Element
   typedef Rep* Array;
   typedef const Rep* constArray;
 
@@ -90,13 +90,11 @@ public:
 
 
   // ----- Misc methods
-  int iszero( const Rep& a ) const;
-  int isone ( const Rep& a ) const;
   int isZero( const Rep& a ) const;
   int isOne ( const Rep& a ) const;
   size_t length ( const Rep& a ) const;
 
-  // ----- Equality between two elements
+  // ----- Equality between two Elements
   int areEqual(const  Rep& a, const Rep& b) const { return a==b;}
 
   // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p

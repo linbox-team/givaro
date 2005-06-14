@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.6 2005-02-02 19:08:29 pernet Exp $
+// $Id: givzpz16table1.h,v 1.7 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -21,7 +21,7 @@
 
 
 // ==========================================================================
-// -- This class implement the standard arithmetic with Modulo elements:
+// -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
 // ==========================================================================
 
@@ -32,13 +32,13 @@ public:
   typedef uint16 Residu_t;                    // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
 
-  // ----- Representation of element of the domain ZpzDom:
+  // ----- Representation of Element of the domain ZpzDom:
   typedef int16 Power_t;
   typedef Power_t Rep;
-  typedef int16 element;
-  typedef element Element;
+  typedef int16 Element;
+  typedef Element Element;
 
-  // ----- Representation of vector of the element
+  // ----- Representation of vector of the Element
   typedef Residu_t* Array;
   typedef const Residu_t* constArray;
 
@@ -62,7 +62,7 @@ public:
   Integer& characteristic( Integer& p) const { return p=_p;}
   Residu_t size() const { return _p;}
 
-  // ----- Convert from element to int
+  // ----- Convert from Element to int
     int16& convert( int16& x , const Rep a) const { 
         return x = ((a >= _p)?0:_tab_rep2value[a]);
     }
@@ -111,8 +111,8 @@ public:
   size_t length ( const Rep a ) const;
 
 
-  // ----- Equality between two elements
-  int areEqual( const element& a, const element& b) const {return a==b;}
+  // ----- Equality between two Elements
+  int areEqual( const Element& a, const Element& b) const {return a==b;}
   
 
   // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p

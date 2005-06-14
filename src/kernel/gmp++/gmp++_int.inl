@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.4 2005-04-28 11:24:21 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.5 2005-06-14 14:53:14 pernet Exp $
 // ========================================================================
 // Description: 
 
@@ -241,19 +241,19 @@ inline Integer& operator %= (Integer& n, const unsigned int l) { return n %= (un
 
 inline int Integer::priv_sign() const { return mpz_sgn( (mpz_ptr)&gmp_rep ); }
 
-inline int isone(const Integer& a) { return ! mpz_cmp_ui((mpz_ptr)&(a.gmp_rep), 1UL); }
+inline int isOne(const Integer& a) { return ! mpz_cmp_ui((mpz_ptr)&(a.gmp_rep), 1UL); }
 
-inline int iszero(const Integer& a) { return ! mpz_cmp_ui((mpz_ptr)&(a.gmp_rep), 0UL); }
+inline int isZero(const Integer& a) { return ! mpz_cmp_ui((mpz_ptr)&(a.gmp_rep), 0UL); }
 
-inline int iszero(const short int a) { return a ==0; }
-inline int iszero(const int a) { return a ==0; }
-inline int iszero(const long a) { return a ==0; }
-inline int iszero(const unsigned short int a) { return a ==0; }
-inline int iszero(const unsigned int a) { return a ==0; }
-inline int iszero(const unsigned long a) { return a ==0UL; }
+inline int isZero(const short int a) { return a ==0; }
+inline int isZero(const int a) { return a ==0; }
+inline int isZero(const long a) { return a ==0; }
+inline int isZero(const unsigned short int a) { return a ==0; }
+inline int isZero(const unsigned int a) { return a ==0; }
+inline int isZero(const unsigned long a) { return a ==0UL; }
 #ifndef __GIVARO__DONOTUSE_longlong__
-inline int iszero(const unsigned long long a) { return a ==0ULL; }
-inline int iszero(const long long a) { return a ==0LL; }
+inline int isZero(const unsigned long long a) { return a ==0ULL; }
+inline int isZero(const long long a) { return a ==0LL; }
 #endif
 
 inline int sign(const Integer& a) { return a.priv_sign(); }
@@ -299,7 +299,7 @@ inline Integer Integer::random(int sz)
 
 inline Integer Integer::nonzerorandom(int sz) {
     Integer r;
-    while(iszero(Integer::random(r, sz) )) {};
+    while(isZero(Integer::random(r, sz) )) {};
     return r;
 }
 
@@ -315,7 +315,7 @@ inline Integer& Integer::random (Integer& r, const Integer& similar)
 }
 
 inline Integer& Integer::nonzerorandom (Integer& r, const Integer& size) {
-    while (iszero(Integer::random(r,size))) {};
+    while (isZero(Integer::random(r,size))) {};
     return r;
 }
 
@@ -332,6 +332,6 @@ inline Integer& Integer::random (Integer& r, long size)
 
 
 inline Integer& Integer::nonzerorandom (Integer& r, long size)
-{    while (iszero(Integer::random(r,size))) {};
+{    while (isZero(Integer::random(r,size))) {};
     return r;
 }

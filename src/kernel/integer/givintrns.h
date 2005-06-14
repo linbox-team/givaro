@@ -20,10 +20,10 @@
 template< template<class> class Container>
 class IntRNSsystem : public IntegerDom {
 public:
-//     typedef element    Ring;
-//     typedef element   Modulo;
-    typedef element   external;
-    typedef Container< element > array;
+//     typedef Element    Ring;
+//     typedef Element   Modulo;
+    typedef Element   external;
+    typedef Container< Element > array;
     
 
         // Default Cstor, Dstor/Cstor of recopy: 
@@ -46,14 +46,14 @@ public:
         // -- Convert a mixed radix representation to an external
     void MixedRadixToRing( external& res,  const array& mixrad ) const;
 
-        // -- Convert an Ring element to a its representation
+        // -- Convert an Ring Element to a its representation
         // with the "this" rns system.
     void RingToRns( array& residu, const external& a ) const;
 
         // -- Fast conversion: requires pre-computation (first time it was called)
     void fastRingToRns( array& residu, const external& a ) const;
 
-        // -- Convert a representation to an external element
+        // -- Convert a representation to an external Element
     template<class TT>
     void RnsToRing( external& a, const Container<TT>& residu ) const;
 
@@ -68,12 +68,12 @@ public:
         // -- Returns a array to the begin of the array of primes
     const array& Primes() const;
         // -- Returns the ith primes of the rns system
-    const element ith(const size_t i) const;
+    const Element ith(const size_t i) const;
 
         // -- Returns a array of the reciprocal ck = (\prod_{j=0..k-1)p_j)^(-1) [pk]
     const array& Reciprocals() const;
-    const element reciprocal(const size_t i) const;
-    const element product() const;
+    const Element reciprocal(const size_t i) const;
+    const Element product() const;
 
 protected:
         // -- Compute some fields of the structure :
@@ -86,7 +86,7 @@ protected:
     void ComputeQk();
 
     array  _primes; 	// - array of the relatively primes numbers
-    element _prod;      // - product of primes
+    Element _prod;      // - product of primes
     array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes 
 
         // -- for fast conversion
@@ -99,9 +99,9 @@ protected:
 template<class Container>
 class IntRNSsystem : public IntegerDom {
 public:
-//     typedef element    Ring;
-//     typedef element   Modulo;
-    typedef element   external;
+//     typedef Element    Ring;
+//     typedef Element   Modulo;
+    typedef Element   external;
     typedef Container array;
     
 
@@ -125,14 +125,14 @@ public:
         // -- Convert a mixed radix representation to an external
     void MixedRadixToRing( external& res,  const array& mixrad ) const;
 
-        // -- Convert an Ring element to a its representation
+        // -- Convert an Ring Element to a its representation
         // with the "this" rns system.
     void RingToRns( array& residu, const external& a ) const;
 
         // -- Fast conversion: requires pre-computation (first time it was called)
     void fastRingToRns( array& residu, const external& a ) const;
 
-        // -- Convert a representation to an external element
+        // -- Convert a representation to an external Element
     template<class ContTT>
     void RnsToRing( external& a, const ContTT& residu ) const;
 
@@ -147,12 +147,12 @@ public:
         // -- Returns a array to the begin of the array of primes
     const array& Primes() const;
         // -- Returns the ith primes of the rns system
-    const element ith(const size_t i) const;
+    const Element ith(const size_t i) const;
 
         // -- Returns a array of the reciprocal ck = (\prod_{j=0..k-1)p_j)^(-1) [pk]
     const array& Reciprocals() const;
-    const element reciprocal(const size_t i) const;
-    const element product() const;
+    const Element reciprocal(const size_t i) const;
+    const Element product() const;
 
 protected:
         // -- Compute some fields of the structure :
@@ -165,7 +165,7 @@ protected:
     void ComputeQk();
 
     array  _primes; 	// - array of the relatively primes numbers
-    element _prod;      // - product of primes
+    Element _prod;      // - product of primes
     array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes 
 
         // -- for fast conversion

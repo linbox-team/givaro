@@ -5,12 +5,12 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givvector.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givvector.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 // Description of dense vector over T with classic arithmetic operations
 // over T (vector x vector, vector x T, scalar product, shift)
-// Vector handle computation over sub part of continuous elements of
+// Vector handle computation over sub part of continuous Elements of
 // a vector as well as stride.
 
 #include "givaro/giverror.h"

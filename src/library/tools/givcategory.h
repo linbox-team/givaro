@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givcategory.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givcategory.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 // - Definition of traits.
@@ -40,7 +40,7 @@ struct IsNotEqual { enum {val = !IsEqual<A,B>::val }; };
 // --
 // -- Characteristic for representation of vector and matrix
 // --
-// Sporadic is a Dense but may have quite a few zero elements
+// Sporadic is a Dense but may have quite a few zero Elements
 // Therefore some algorithms might be specialized and might 
 // take advantage of this.
 class Sporadic{}; 

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: T. Gautier
-// $Id: givarrayfixed.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givarrayfixed.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ========================================================================== 
 // Description:
 // ArrayFixed of type T with fixed dimension
@@ -33,7 +33,7 @@ public :
   //-- Destructor: implicit
 
   //-- Physical copy operator: reallocate dest of the same SIZE
-  // as src (if necessary) and apply GivaroCopyItem<Array<T>,T> on each element.
+  // as src (if necessary) and apply GivaroCopyItem<Array<T>,T> on each Element.
   // This class can be specialized. Return dest (i.e, *this).
   Self_t& copy(const Self_t& src);
 
@@ -47,7 +47,7 @@ public :
   Type_t* baseptr() { return _data; }
   Type_t* const baseptr() const { return _data; }
 
-  //-- Access to the ith element:
+  //-- Access to the ith Element:
   const T& operator[] (Indice_t i)  const { 
     GIVARO_ASSERT((i >=0)&&(i<SIZE), "[Array<T>::[]]: index out of bounds.");
     return _data[i]; 
@@ -76,7 +76,7 @@ private:
   Self_t& operator= (const Self_t& p) {};
 };
 
-// -- Map opcode on all elements less or requal that ith
+// -- Map opcode on all Elements less or requal that ith
 // -- Terminal recursion, specialization
 template<class T, class UNARYOP, size_t ith>
 struct __giv_map_less_ith;

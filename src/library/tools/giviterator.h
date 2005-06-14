@@ -9,7 +9,7 @@
 // - Definition of traits for iterators.
 // - The purpose of this trait class is for specialization of some algorithms
 //   depending on the iteration mechanism provides by container.
-// $Id: giviterator.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: giviterator.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // It's a beta-beta version.
 //
@@ -56,14 +56,14 @@ struct IteratorTraits {
 // - * [ForwardIteratorTrait, BidirectionalIteratorTrait]:
 // -   - OO::Iterator OO::end(): 
 // - * [RandomIteratorTrait]:
-// -   - size_t OO::bound(): return the number of elements in the sequence
+// -   - size_t OO::bound(): return the number of Elements in the sequence
 // --
 template<class Container>
 struct IteratorInterface {
   typedef isUndefinedIterator 			Category_t;	// - category of iterator
   typedef typename Container::Iterator_t 	Iterator_t;	// - type of iterator
   typedef typename Container::constIterator_t	constIterator_t;// - type of constiterator
-  typedef typename Container::Type_t 		Type_t; 	// - type of element 
+  typedef typename Container::Type_t 		Type_t; 	// - type of Element 
   typedef typename Container::Indice_t 		Indice_t;	// - type of indice for RndIter
 
   // -- other operations that should be defined in specialized trait classes:

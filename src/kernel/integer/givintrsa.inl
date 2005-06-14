@@ -17,9 +17,9 @@
 // =================================================================== //
 
 template<class RandIter>
-long IntRSADom<RandIter>::log(const element& n, const long b = 10) const {
+long IntRSADom<RandIter>::log(const Element& n, const long b = 10) const {
     long res = 0;
-    for(element p = n; p>=b; ++res, divin(p,b) ) {}
+    for(Element p = n; p>=b; ++res, divin(p,b) ) {}
     return res;
 }   
     
@@ -30,9 +30,9 @@ long IntRSADom<RandIter>::log(const element& n, const long b = 10) const {
 
                 
 template<class RandIter>
-std::ostream& IntRSADom<RandIter>::ecriture_str(std::ostream& o, const element& n) const {
+std::ostream& IntRSADom<RandIter>::ecriture_str(std::ostream& o, const Element& n) const {
 
-    element p = n, a, b;
+    Element p = n, a, b;
     long i = _lm-1;
         // First char is ignored as it is zero or random enabling CBC
     a = p >> (i<<3);
@@ -46,8 +46,8 @@ std::ostream& IntRSADom<RandIter>::ecriture_str(std::ostream& o, const element& 
 }
 
 template<class RandIter>
-std::ostream& IntRSADom<RandIter>::ecriture_str_last(std::ostream& o, const element& n) const {
-    element p = n, a, b;
+std::ostream& IntRSADom<RandIter>::ecriture_str_last(std::ostream& o, const Element& n) const {
+    Element p = n, a, b;
     long i = _lm-1, nbzeroes(0);
         // First char is ignored as it is zero or random enabling CBC
     a = p >> (i<<3);
@@ -70,7 +70,7 @@ std::ostream& IntRSADom<RandIter>::ecriture_str_last(std::ostream& o, const elem
 
 
 template<class RandIter>
-std::ostream& IntRSADom<RandIter>::ecriture_Int(std::ostream& o, const element& p) const {
+std::ostream& IntRSADom<RandIter>::ecriture_Int(std::ostream& o, const Element& p) const {
     return o << p << std::endl;
 }
 
@@ -82,8 +82,8 @@ template<class RandIter>
 std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) const {
     srand48(1);
     unsigned char x;
-    element res,r;
-    element ancien(0);
+    Element res,r;
+    Element ancien(0);
     int imax = (_lm-1)<<3;
     do { 
         res = 0;
@@ -116,10 +116,10 @@ template<class RandIter>
 std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
     double length = _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
     char * tmp = new char[(long)length+2];
-    element r;
+    Element r;
 
     if (_fast_impl) {
-        element p, q, pr, k, phi, t, delt ;
+        Element p, q, pr, k, phi, t, delt ;
         pr = _k*_u;
 	--pr;
         k = pr/_m;
@@ -130,13 +130,13 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
         sqrt(delt, t*t-_m);
         p = t-delt;
         q = t+delt;
-        element gd, a, b, c, r1, r2;
+        Element gd, a, b, c, r1, r2;
         gcd(gd, a, b, q, p);
 
         b *= p;
         b %= _m;
 
-        element ancien(0);
+        Element ancien(0);
         
         in >> tmp; 
         do {
@@ -161,7 +161,7 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
                 ecriture_str(o, r2);
         } while (! in.eof());
     } else {      
-        element ancien(0);
+        Element ancien(0);
         in >> tmp;
         do {
             powmod(r, Integer(tmp),_u,_m);
@@ -183,8 +183,8 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
 
 
 template<class RandIter>
-typename IntRSADom<RandIter>::element& IntRSADom<RandIter>::strong_prime(random_generator& g, long psize, element& p) const {
-    element q,t,r,s;
+typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_generator& g, long psize, Element& p) const {
+    Element q,t,r,s;
 
     if (psize > 9) {
         random(g,t,(psize>>1)-2);
@@ -239,17 +239,17 @@ typename IntRSADom<RandIter>::element& IntRSADom<RandIter>::strong_prime(random_
 // since for any x, x^(k.u) = x mod m
 // =================================================================== //
 template<class RandIter>
-void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, element& m, element& k, element& u) const {
-    element p,q, d, l;
+void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, Element& m, Element& k, Element& u) const {
+    Element p,q, d, l;
 
     strong_prime(g, psize, p);
     do  strong_prime(g, qsize, q); while (q == p);
     
 
-    element phim; mul(phim, sub(d,p,IntFactorDom<RandIter>::one), sub(l,q,IntFactorDom<RandIter>::one));
+    Element phim; mul(phim, sub(d,p,IntFactorDom<RandIter>::one), sub(l,q,IntFactorDom<RandIter>::one));
     mul(m, p, q);
 
-    element v, gd;
+    Element v, gd;
 
     if (_fast_impl) {
         mod(k,SIMPLE_EXPONENT, phim);
@@ -267,9 +267,9 @@ void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, 
 // Breaking codes
 // =================================================================== //
 template<class RandIter>
-typename IntRSADom<RandIter>::element& IntRSADom<RandIter>::point_break(element& u) {
-    if ( iszero(_u) ) {
-        element p,v,d, pm;
+typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::point_break(Element& u) {
+    if ( isZero(_u) ) {
+        Element p,v,d, pm;
         factor(p, _m);
         mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( div(d,_m,p), IntFactorDom<RandIter>::one ) );
         gcd(d,_u,v,_k,pm);

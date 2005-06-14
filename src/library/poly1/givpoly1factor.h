@@ -23,7 +23,7 @@ protected:
     typedef typename Poly1Dom<Domain,Tag>::Rep Rep;
     mutable RandIter _g;
 public:
-    typedef typename Poly1Dom<Domain,Tag>::element element;
+    typedef typename Poly1Dom<Domain,Tag>::Element Element;
     typedef RandIter random_generator;
 
         // Warning : there is a copy of the random Iterator ...
@@ -137,20 +137,20 @@ public:
 // Irreducible polynomials
 // ---------------------------------------------------------------
         /// random irreducible polynomial
-    element& random_irreducible (element& P, Degree n) const ;
+    Element& random_irreducible (Element& P, Degree n) const ;
         /// random irreducible polynomial tries to be sparse
-    element& creux_random_irreducible (element& P, Degree n) const ;
+    Element& creux_random_irreducible (Element& P, Degree n) const ;
 
         /// random irreducible polynomial with X as primitive root
-    element& ixe_irreducible (element& R, Degree n) const ;
+    Element& ixe_irreducible (Element& R, Degree n) const ;
         /// random irreducible polynomial with X as primitive root
-    element& ixe_irreducible2 (element& R, Degree n) const ;
+    Element& ixe_irreducible2 (Element& R, Degree n) const ;
 
 // ---------------------------------------------------------------
 // Primitive polynomials
 // ---------------------------------------------------------------
 
-    IntegerDom::element order(const Rep& P, const Rep& F) const ;
+    IntegerDom::Element order(const Rep& P, const Rep& F) const ;
     
 
     bool is_prim_root( const Rep& P, const Rep& F) const ;

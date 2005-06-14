@@ -56,12 +56,12 @@ public:
 // =================================================================== //
 // Generalization of primitive roots for any modulus                     
 // Primitive means maximal order                                         
-//    Primitive element, Primitive invertible                            
+//    Primitive Element, Primitive invertible                            
 //    Both functions coïncides except for m=8                            
 //                                                                       
 // Lambda Function : maximal orbit size                                  
-//    lambda : Order of a primitive element                              
-//    lambda_inv : Order of an invertible element                        
+//    lambda : Order of a primitive Element                              
+//    lambda_inv : Order of an invertible Element                        
 //    Both functions coïncides except for m=8                            
 // =================================================================== //
     Rep& prim_inv(Rep & , const Rep&) const ;

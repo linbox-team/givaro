@@ -392,7 +392,7 @@ ostream& VectorDom<Domain, Dense>::write(ostream& o, const Rep& V) const
 //   list_of_elt --->   elt
 //                    | list_of_elt ',' elt
 // The contraints are :
-//   All lines are the same number of elements.
+//   All lines are the same number of Elements.
 //   The separators a those of the C lexical-convention, i.e.
 //    ' ', '\n', '\t', '\f' .
 

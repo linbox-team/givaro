@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: T. Gautier
-// $Id: givarray0.h,v 1.2 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givarray0.h,v 1.3 2005-06-14 14:53:14 pernet Exp $
 // ========================================================================== 
 // Description:
 // Array of type T with reference mecanism.
@@ -50,16 +50,16 @@ public :
   //-- Destroy of the array
   void destroy ();
 
-  //-- Allocation of an array of s elements: if refcount>1
+  //-- Allocation of an array of s Elements: if refcount>1
   // then it is always a creation of new array
   void allocate (size_t s);
 
-  //-- Reallocation of an array of s elements: if refcount>1
+  //-- Reallocation of an array of s Elements: if refcount>1
   // then it is always a creation of new array + recopy 
   void reallocate (size_t s);
 
   //-- Physical copy operator: reallocate dest of the same size
-  // as src (if necessary) and apply GivaroCopyItem<Array<T>,T> on each element.
+  // as src (if necessary) and apply GivaroCopyItem<Array<T>,T> on each Element.
   // This class can be specialized. Return dest (i.e, *this).
   Self_t& copy(const Self_t& src);
 
@@ -76,7 +76,7 @@ public :
   Type_t* baseptr();
   Type_t* const baseptr() const;
 
-  //-- Access to the ith element:
+  //-- Access to the ith Element:
   const T& operator[] (Indice_t i)  const; //  { return _d[i]; }
   T& operator[] (Indice_t i); //  { return _d[i]; } ;
   void write(Indice_t i, const Type_t& val);

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givrational.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -71,8 +71,8 @@ inline friend const Rational abs  (const Rational &r) ;
   const Integer deno() const ;
 inline friend unsigned long length (const Rational& r) ;
 inline friend int sign   (const Rational& r) ;
-inline friend int iszero (const Rational& r) ;
-inline friend int isone  (const Rational& r) ;
+inline friend int isZero (const Rational& r) ;
+inline friend int isOne  (const Rational& r) ;
 inline friend int isinteger(const Rational& r);  
 
   std::ostream& print ( std::ostream& o ) const ;

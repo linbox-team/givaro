@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.3 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpzInt.inl,v 1.4 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -46,8 +46,8 @@
 //#define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % p : r); } }
 #define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; if (r<0 ) r %= p ; } }
 
-#define __GIVARO_ZPZInteger_N_NEG(r,p,a) { r = ( iszero(a) ? zero : p-a); }
-#define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( iszero(r) ? zero : p-r); }
+#define __GIVARO_ZPZInteger_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
+#define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
 
 
 inline ZpzDom<Integer>::Residu_t ZpzDom<Integer>::residu( ) const
@@ -57,19 +57,12 @@ inline ZpzDom<Integer>::Residu_t ZpzDom<Integer>::residu( ) const
 
  // ------------------------- Miscellaneous functions
 
-inline int ZpzDom<Integer>::iszero(const Rep& a) const
-{ return ::iszero(a); }
+inline int ZpzDom<Integer>::isZero(const Rep& a) const
+{ return ::isZero(a); }
 
-inline int ZpzDom<Integer>::isone(const Rep& a) const
-{ return ::isone(a); }
+inline int ZpzDom<Integer>::isOne(const Rep& a) const
+{ return ::isOne(a); }
 
-inline int ZpzDom<Integer>::isZero( const Rep& a ) const {
-  return ZpzDom<Integer>::iszero(a);
-}
-
-inline int ZpzDom<Integer>::isOne ( const Rep& a ) const {
-  return ZpzDom<Integer>::isone(a);
-}
 
 
 inline size_t ZpzDom<Integer>::length(const Rep& a) const
@@ -312,7 +305,7 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const double a ) 
   else { ua = a; sign =1; }
   r = Integer(ua);
   if (r >=_p) r %= _p;
-  if (!iszero(r) && (sign == -1)) r = _p - r;
+  if (!isZero(r) && (sign == -1)) r = _p - r;
   return r;
 }
 
@@ -335,7 +328,7 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const long a ) co
   if (a <0) { sign =-1; r = Integer(-a);}
   else { r = Integer(a); sign =1; }
   if (r >=_p) r %= _p;
-  if (!iszero(r) && (sign ==-1)) r = _p - r;
+  if (!isZero(r) && (sign ==-1)) r = _p - r;
   return r;
 }
 
@@ -345,7 +338,7 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const Integer& a 
   if (a <0) { sign =-1; r = Integer(-a);}
   else { r = Integer(a); sign =1; }
   if (r >=_p) r %= _p;
-  if (!iszero(r) && (sign ==-1)) r = _p - r;
+  if (!isZero(r) && (sign ==-1)) r = _p - r;
   return r;
 }
 
@@ -420,19 +413,19 @@ inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& g, Rep& a, long 
 
 template< class RandIter >
 inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::nonzerorandom(RandIter& g, Rep& a) const {
-	        while (iszero( random(g,a) )) {};
+	        while (isZero( random(g,a) )) {};
 		return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
-	        while (iszero( random(g,a,b))) {};
+	        while (isZero( random(g,a,b))) {};
 		return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	        while (iszero( random(g,a,b))) {};
+	        while (isZero( random(g,a,b))) {};
 		return a;
 }
 

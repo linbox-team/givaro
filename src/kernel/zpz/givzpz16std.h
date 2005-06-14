@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.6 2005-02-02 19:08:29 pernet Exp $
+// $Id: givzpz16std.h,v 1.7 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -55,7 +55,7 @@ typedef unsigned int    uint32;
 #include "givaro/giv_randiter.h"
 
 // ==========================================================================
-// -- This class implement the standard arithmetic with Modulo elements:
+// -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
 // ==========================================================================
 
@@ -65,12 +65,12 @@ public:
   // ----- Exported Types and constantes
   typedef uint16 Residu_t;                    // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-  // ----- Representation of element of the domain ZpzDom
+  // ----- Representation of Element of the domain ZpzDom
   typedef int16 Rep;
-  typedef int16 element;
-  typedef element Element;
+  typedef int16 Element;
+  typedef Element Element;
 
-  // ----- Representation of vector of the element
+  // ----- Representation of vector of the Element
   typedef Rep* Array;
   typedef const Rep* constArray;
 
@@ -96,7 +96,7 @@ public:
   Integer& characteristic( Integer& p) const { return p=_p; }
   Rep access( const Rep a ) const { return a; }
 
-  // ----- Convert from element to int
+  // ----- Convert from Element to int
     int16& convert( int16& x , const Rep a) const { return x=(int16)(a);}
     uint16& convert( uint16& x , const Rep a) const { return x=(uint16)(a);}
     unsigned long& convert( unsigned long& x , const Rep a) const { return x=(unsigned long)(a);}
@@ -123,12 +123,10 @@ public:
   // ----- Misc methods 
   int areEqual( const  Rep, const Rep) const;
   int areNEqual( const Rep, const Rep) const;
-  int iszero( const Rep a ) const;
+  int isZero( const Rep a ) const;
   int isnzero( const Rep a ) const;
-  int isone ( const Rep a ) const;
+  int isOne ( const Rep a ) const;
   size_t length ( const Rep a ) const;
-  int isZero( const Rep a ) const ;
-  int isOne( const Rep a ) const ;
 
   // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
   Rep& mul (Rep& r, const Rep a, const Rep b) const;

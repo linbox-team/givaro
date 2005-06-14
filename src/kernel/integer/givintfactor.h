@@ -17,9 +17,9 @@
 
 // #define BOUNDARY_factor TABMAX2
 
-#define factor_first_primes(tmp,n) (tmp = iszero(mod(tmp,n,23))?23:( iszero(mod(tmp,n,19))?19:( iszero(mod(tmp,n,17))?17:  (iszero(mod(tmp,n,2))?2:( iszero(mod(tmp,n,3))?3:( iszero(mod(tmp,n,5))?5:( iszero(mod(tmp,n,7))?7: ( iszero(mod(tmp,n,11))?11:13 ))))))))
+#define factor_first_primes(tmp,n) (tmp = isZero(mod(tmp,n,23))?23:( isZero(mod(tmp,n,19))?19:( isZero(mod(tmp,n,17))?17:  (isZero(mod(tmp,n,2))?2:( isZero(mod(tmp,n,3))?3:( isZero(mod(tmp,n,5))?5:( isZero(mod(tmp,n,7))?7: ( isZero(mod(tmp,n,11))?11:13 ))))))))
 
-#define factor_second_primes(tmp,n) (tmp = iszero(mod(tmp,n,31))?31:( iszero(mod(tmp,n,29))?29: ( iszero(mod(tmp,n,37))?37: ( iszero(mod(tmp,n,41))?41:( iszero(mod(tmp,n,43))?43:  ( iszero(mod(tmp,n,71))?71:( iszero(mod(tmp,n,67))?67:( iszero(mod(tmp,n,61))?61:( iszero(mod(tmp,n,59))?59: ( iszero(mod(tmp,n,53))?53:( iszero(mod(tmp,n,47))?47: ( iszero(mod(tmp,n,97))?97: ( iszero(mod(tmp,n,89))?89:( iszero(mod(tmp,n,83))?83:( iszero(mod(tmp,n,79))?79:73)))))))))))))))
+#define factor_second_primes(tmp,n) (tmp = isZero(mod(tmp,n,31))?31:( isZero(mod(tmp,n,29))?29: ( isZero(mod(tmp,n,37))?37: ( isZero(mod(tmp,n,41))?41:( isZero(mod(tmp,n,43))?43:  ( isZero(mod(tmp,n,71))?71:( isZero(mod(tmp,n,67))?67:( isZero(mod(tmp,n,61))?61:( isZero(mod(tmp,n,59))?59: ( isZero(mod(tmp,n,53))?53:( isZero(mod(tmp,n,47))?47: ( isZero(mod(tmp,n,97))?97: ( isZero(mod(tmp,n,89))?89:( isZero(mod(tmp,n,83))?83:( isZero(mod(tmp,n,79))?79:73)))))))))))))))
 
 
 // =================================================================== //
@@ -48,8 +48,8 @@ public:
         //  loops defaulted to 0 forces Pollard's factorization to 
         //  be complete
     Rep& factor(Rep& r, const Rep& n, unsigned long loops = 0) const {
-        if (isone(gcd(r,n,PROD_first_primes)))
-            if (isone(gcd(r,n,PROD_second_primes))) {
+        if (isOne(gcd(r,n,PROD_first_primes)))
+            if (isOne(gcd(r,n,PROD_second_primes))) {
 #ifdef GIVARO_LENSTRA
                 return Lenstra((RandIter&)_g, r, n);
 #else
@@ -69,8 +69,8 @@ public:
 	   }
 	   while (! isprime(r,_GIVARO_ISPRIMETESTS_) ) {
 		Rep nn = r;
-        	if (isone(gcd(r,nn,PROD_first_primes))) {
-            	   if (isone(gcd(r,nn,PROD_second_primes))) {
+        	if (isOne(gcd(r,nn,PROD_first_primes))) {
+            	   if (isOne(gcd(r,nn,PROD_second_primes))) {
                 	Pollard((RandIter&)_g, r, nn, loops);
             	   } else {
                 	factor_second_primes(r,nn);

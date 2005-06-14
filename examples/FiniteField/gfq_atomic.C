@@ -9,7 +9,7 @@
 #endif
 
 typedef GFqDom<long> Domain;
-typedef GFqDom<long>::element Modulo;
+typedef GFqDom<long>::Element Modulo;
 
 // NB: number of iterations, TAILLE: vector size
 #ifndef NB
@@ -31,7 +31,7 @@ int main(int argc, char ** argv) {
     Timer inver;
     inver.clear();
     inver.start();
-    Domain GFq(P, expo);  // Buiding of finite field with P^expo elements
+    Domain GFq(P, expo);  // Buiding of finite field with P^expo Elements
 							    
     int i;
     std::cout << "."<< std::flush;

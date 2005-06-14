@@ -10,7 +10,7 @@
 int main(int argc, char** argv)
 {
   IntNumTheoDom<> IP;
-  IntNumTheoDom<>::element a,b;
+  IntNumTheoDom<>::Element a,b;
   if (argc > 1) a = Integer(argv[1]); else std::cin >> a;
   if (argc > 2) b = Integer(argv[2]); else std::cin >> b;
   

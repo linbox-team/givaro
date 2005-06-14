@@ -10,7 +10,7 @@
 int main(int argc, char ** argv) {
 
  {
-    ZpzDom<Integer>::element a, b, p(argv[3]);
+    ZpzDom<Integer>::Element a, b, p(argv[3]);
     ZpzDom<Integer> Zp( p );   
     unsigned long e = atoi(argv[2]) ;
     Zp.init(a, Integer(argv[1]));

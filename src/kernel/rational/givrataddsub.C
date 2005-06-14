@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givrataddsub.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givrataddsub.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 #include "givaro/givrational.h"
@@ -12,8 +12,8 @@
 // ----------------------------------------- Rational::operator +
 Rational Rational::operator + (const Rational& r)  const 
 {
-  if (iszero(r)) return *this ;
-  if (iszero(*this)) return r ;
+  if (isZero(r)) return *this ;
+  if (isZero(*this)) return r ;
   if (isinteger(*this) && isinteger(r)) 
     return Rational(num+r.num) ;
 
@@ -32,8 +32,8 @@ Rational Rational::operator + (const Rational& r)  const
 
 Rational& Rational::operator += (const Rational& r) 
 {
-    if (iszero(r)) return *this ;
-    if (iszero(*this)) {
+    if (isZero(r)) return *this ;
+    if (isZero(*this)) {
         num = r.num;
         den = r.den;
         return *this;
@@ -75,8 +75,8 @@ Rational& Rational::operator += (const Rational& r)
 // ----------------------------------------- Rational::operator -
 Rational Rational::operator - (const Rational& r)  const 
 {
-  if (iszero(r)) return *this ;
-  if (iszero(*this)) return Rational(-r.num,r.den, 0) ;
+  if (isZero(r)) return *this ;
+  if (isZero(*this)) return Rational(-r.num,r.den, 0) ;
   if (isinteger(*this) && isinteger(r)) 
     return Rational(num-r.num) ;
 
@@ -95,8 +95,8 @@ Rational Rational::operator - (const Rational& r)  const
 
 Rational& Rational::operator -= (const Rational& r) 
 {
-    if (iszero(r)) return *this ;
-    if (iszero(*this)) {
+    if (isZero(r)) return *this ;
+    if (isZero(*this)) {
         num = -r.num;
         den = -r.den;
         return *this;

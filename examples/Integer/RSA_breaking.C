@@ -11,13 +11,13 @@ int main(int argc, char** argv)
     Timer tim;
     tim.clear();
     
-    IntRSADom<>::element m,k,u;
+    IntRSADom<>::Element m,k,u;
     if (argc > 1)
-        m = IntRSADom<>::element( argv[1] );
+        m = IntRSADom<>::Element( argv[1] );
     else 
         cin >> m;
     if (argc > 2)
-        k = IntRSADom<>::element( argv[2] );
+        k = IntRSADom<>::Element( argv[2] );
     else 
         cin >> k;
     

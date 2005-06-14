@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givmatdense.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givmatdense.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 // of matrix by blocks.
@@ -28,7 +28,7 @@ public:
   typedef 	   Dense 					StorageTag_t;
   typedef typename RetMatrixStorage<Type_t,Dense>::Storage_t    Storage_t;
 
-  // -- Representation of element of the domain
+  // -- Representation of Element of the domain
   typedef 	   Storage_t    				Rep;
 
   // -- Self_t

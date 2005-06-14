@@ -89,9 +89,9 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
         // else infinite loop
 
     if (isleq(n,4)) return sub(A,n,this->one);
-    if (iszero(mod(A,n,4))) return A=this->zero;
+    if (isZero(mod(A,n,4))) return A=this->zero;
     Rep p,ismod2, q, no2, root; 
-    if (iszero(mod(ismod2,n,2))) divexact(no2,n,2); else no2=n;
+    if (isZero(mod(ismod2,n,2))) divexact(no2,n,2); else no2=n;
     p=no2;
     int k = 1; 
     while (! isprime(p) ) {
@@ -107,7 +107,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
             if (q < p) p = q;
         }
     }
-    if (iszero(ismod2)) mul(q,p,2); else q=p;
+    if (isZero(ismod2)) mul(q,p,2); else q=p;
     for(;q != n;++k,q*=p);
     Rep phin, tmp; 
     phi(phin,p);
@@ -120,43 +120,43 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
     A=2;
     found = ++runs;
     for(f=Lf.begin();(f!=Lf.end() && found);f++)
-        found = (! isone( powmod(tmp,A,*f,p)) );
+        found = (! isOne( powmod(tmp,A,*f,p)) );
     if (! found) {
         A=3;
         found = ++runs;
         for(f=Lf.begin();(f!=Lf.end() && found);f++)
-            found = (! isone( powmod(tmp,A,*f,p)) );
+            found = (! isOne( powmod(tmp,A,*f,p)) );
     }
     if (! found) {
         A=5;
         found = ++runs;
         for(f=Lf.begin();(f!=Lf.end() && found);f++)
-            found = (! isone( powmod(tmp,A,*f,p)) );
+            found = (! isOne( powmod(tmp,A,*f,p)) );
     }
     if (! found) {
         A=6;
         found = ++runs;
         for(f=Lf.begin();(f!=Lf.end() && found);f++)
-            found = (! isone( powmod(tmp,A,*f,p)) );
+            found = (! isOne( powmod(tmp,A,*f,p)) );
     }
     while (! found) {
        do {
             random(this->_g, A, p);
             addin( modin(A,sub(tmp,p,7)) , 7);
-        } while ( ! isone(gcd(tmp,A,p)) );
+        } while ( ! isOne(gcd(tmp,A,p)) );
         found = ++runs;
         for(f=Lf.begin();(f!=Lf.end() && found);f++)
-            found = (! isone( powmod(tmp,A,*f,p)) );
+            found = (! isOne( powmod(tmp,A,*f,p)) );
     }
     if (k == 1) {
-        if (iszero(ismod2) && iszero(mod(ismod2, A, 2)))
+        if (isZero(ismod2) && isZero(mod(ismod2, A, 2)))
             return A+=p;
         else
             return A;
     } else {
         if (! is_prim_root(A,no2))
             A+=p;
-        if (iszero(ismod2) && iszero(mod(ismod2, A, 2)))
+        if (isZero(ismod2) && isZero(mod(ismod2, A, 2)))
             return A+=no2;
         else
             return A;
@@ -303,7 +303,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_pri
 inline Integer& ppin(Integer& res, const Integer& prime) {
     IntegerDom I;
     Integer tmp;
-    while( I.iszero(I.mod(tmp, res, prime)) ) {
+    while( I.isZero(I.mod(tmp, res, prime)) ) {
         I.divexact(res, tmp = res, prime);
     }
     return res;
@@ -331,9 +331,9 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_pri
         primeorder = phin;
         for(typename Array::const_iterator f = Lf.begin(); f != Lf.end(); ++f) {
             powmod(tmp, prime, div(expo, primeorder, *f), n);
-            if (isone(tmp)) {
+            if (isOne(tmp)) {
                 newLf.push_back(*f);
-                while (iszero(mod(tmp,expo,*f)) && isone( powmod(tmp, prime, div(temp, expo, *f), n) ) ) { expo = temp; }
+                while (isZero(mod(tmp,expo,*f)) && isOne( powmod(tmp, prime, div(temp, expo, *f), n) ) ) { expo = temp; }
                 primeorder = expo;
 //                 std::cerr << "2 Order (Div): " << primeorder << std::endl;
             } else {
@@ -358,7 +358,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_pri
 
         for(typename Array::const_iterator f = Lf.begin(); f != Lf.end(); ++f) {
             powmod(tmp, prime, div(expo, phin, *f), n);
-            if (isone(tmp)) {
+            if (isOne(tmp)) {
                 newLf.push_back(*f);
             } else {
                 oldLf.push_back(*f);
@@ -399,7 +399,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root
         // n must be in {2,4,p^m,2p^m} where p is an odd prime
         // else returns zero
     if (isleq(n,4)) return sub(A,n,this->one);
-    if (iszero(mod(A,n,4))) return A=this->zero;
+    if (isZero(mod(A,n,4))) return A=this->zero;
     Rep phin, tmp; 
     phi(phin,n);
     std::list<Rep> Lf;
@@ -409,10 +409,10 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root
             div(*f,phin,*f);
     int found=0;
     for(A = 2;(isleq(A,n) && (! found));addin(A,1)) {
-        if (isone(gcd(tmp,A,n))) {
+        if (isOne(gcd(tmp,A,n))) {
             found = 1;
             for(f=Lf.begin();(f!=Lf.end() && found);f++)
-                found = (! isone( powmod(tmp,A,*f,n)) );
+                found = (! isOne( powmod(tmp,A,*f,n)) );
         }
     }
     if (isleq(A,n))
@@ -431,11 +431,11 @@ bool IntNumTheoDom<RandIter>::is_prim_root(const Rep& p, const Rep& n) const {
     set(Lf,phin);
     typename std::list<Rep>::iterator f=Lf.begin();
     Rep A; mod(A,p,n);
-    if (isone(gcd(tmp,A,n))) {
+    if (isOne(gcd(tmp,A,n))) {
         found = true;
         for(;(f!=Lf.end() && found);f++) {
 //             found = ( powmod(A,phin / (*f),n) != 1);
-            found = (! isone( powmod(tmp,A, div(tmp,phin,*f),n)) );
+            found = (! isOne( powmod(tmp,A, div(tmp,phin,*f),n)) );
         }
     }
     return found;
@@ -445,16 +445,16 @@ template<class RandIter>
 bool IntNumTheoDom<RandIter>::isorder(const Rep& g, const Rep& p, const Rep& n) const {
         // returns 1 if p is of order g in Z/nZ
     Rep tmp;
-    return (isone( powmod(tmp, p, g, n) ) && areEqual( g, order(tmp,p,n) ) );
+    return (isOne( powmod(tmp, p, g, n) ) && areEqual( g, order(tmp,p,n) ) );
 }
 
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, const Rep& p, const Rep& n) const {
         // returns 0 if failed
     Rep A; mod(A,p,n);
-    if (iszero(A))
+    if (isZero(A))
 	return g = this->zero;
-    if (isone(A))
+    if (isOne(A))
 	return g = this->one;
     int noprimroot=0;
     Rep phin,gg,tmp;
@@ -463,14 +463,14 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, co
     set(Lf,phin);
     Lf.sort();
     typename std::list<Rep>::iterator f=Lf.begin();
-    if (isone(gcd(tmp,A,n))) {
+    if (isOne(gcd(tmp,A,n))) {
         noprimroot = 0;
         for(;f!=Lf.end();++f)
-            if ( noprimroot = isone(powmod(tmp,A, div(g,phin,*f),n)) )
+            if ( noprimroot = isOne(powmod(tmp,A, div(g,phin,*f),n)) )
                 break;
         if (noprimroot) {
             for(;f!=Lf.end();++f)
-                while (iszero(mod(tmp,g,*f)) && isone( powmod(tmp,A, div(gg,g,*f),n) ) )
+                while (isZero(mod(tmp,g,*f)) && isOne( powmod(tmp,A, div(gg,g,*f),n) ) )
                     g = gg;
             return g;
         } else

@@ -16,7 +16,7 @@ inline void IntRNSsystem< Container >::RnsToMixedRadix
   if (_ck.size()==0) ((IntRNSsystem*)this)->ComputeCk();
 
   // -- size-1 steps
-  element tmp;
+  Element tmp;
   mixrad[0] = residu[0];
   for (unsigned long i=1; i < size; i++)
   {  // - computes pp_i = r_0 + r_1*p_0 + ... + r_{i-1} \prod_{j<i-2} p_j [p_i]
@@ -44,7 +44,7 @@ template<template<class> class Container>
 #else
 template<class Container>
 #endif
-inline void IntRNSsystem< Container >::MixedRadixToRing( element& res, const IntRNSsystem< Container >::array& mixrad ) const 
+inline void IntRNSsystem< Container >::MixedRadixToRing( Element& res, const IntRNSsystem< Container >::array& mixrad ) const 
 {
   size_t size = _primes.size();
 //  if (size != mixrad.size()) throw GivError("[IntRNSsystem::MixedRadixToRing]: bad size of input array");

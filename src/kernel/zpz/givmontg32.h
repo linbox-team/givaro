@@ -2,7 +2,7 @@
 #define _GIVARO_MONTG32_H_
 // ==========================================================================
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.5 2005-02-02 19:08:29 pernet Exp $
+// $Id: givmontg32.h,v 1.6 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 //
 #include "givbasictype.h"
@@ -12,7 +12,7 @@
 
 
 // ==========================================================================
-// -- This class implement the standard arithmetic with Modulo elements:
+// -- This class implement the standard arithmetic with Modulo Elements:
 //    Reduction is made through Montgomery's reduction
 //    Representation of a is by storing (aB).
 //
@@ -33,10 +33,10 @@ public:
         // ----- Exported Types and constantes
     typedef uint32 Residu_t;                    // - type to store residue
     enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-        // ----- Representation of element of the domain Montgomery
+        // ----- Representation of Element of the domain Montgomery
     typedef uint32 Rep;
-    typedef uint32 element;
-    typedef element Element;
+    typedef uint32 Element;
+    typedef Element Element;
 
         // ----- Constructor 
     Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}
@@ -116,13 +116,11 @@ public:
 	    return r = (double)convert(ur, a); }
     
         // ----- Misc methods
-    int iszero( const Rep a ) const;
-    int isone ( const Rep a ) const;
     int isZero( const Rep a ) const;
     int isOne ( const Rep a ) const;
     size_t length ( const Rep a ) const;
 
-        // ----- Equality between two elements
+        // ----- Equality between two Elements
     int areEqual(const  Rep& a, const Rep& b) const { 
 	    return a==b;
     }

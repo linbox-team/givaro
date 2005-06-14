@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.4 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.5 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -274,19 +274,12 @@ inline void ZpzDom<Std32>::axmyin
 
  // ------------------------- Miscellaneous functions
 
-inline int ZpzDom<Std32>::iszero(const Rep a) const
+inline int ZpzDom<Std32>::isZero(const Rep a) const
 { return a == ZpzDom<Std32>::zero; }
 
-inline int ZpzDom<Std32>::isone(const Rep a) const
+inline int ZpzDom<Std32>::isOne(const Rep a) const
 { return a == ZpzDom<Std32>::one; }
 
-inline int ZpzDom<Std32>::isZero( const Rep a ) const {
-  return iszero(a);
-}
-
-inline int ZpzDom<Std32>::isOne ( const Rep a ) const {
-  return isone(a);
-}
 
 
 inline size_t ZpzDom<Std32>::length(const Rep a) const
@@ -466,19 +459,19 @@ inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::random(RandIter& g, Rep& a, long b) c
 
 template< class RandIter >
 inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::nonzerorandom(RandIter& g, Rep& a) const {
-	        while (iszero(init(a, g()))) {};
+	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
-	        while (iszero(init(a, g()))) {};
+	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	        while (iszero(init(a, g() %(uint32) b))) {};
+	        while (isZero(init(a, g() %(uint32) b))) {};
 		return a;
 }
 

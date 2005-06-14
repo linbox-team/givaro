@@ -31,9 +31,9 @@ IntFactorDom<> IP;
 #ifndef GIVMIN
 #define GIVMIN(a,b) ((a)<(b)?(a):(b))
 #endif
-#define ProbLucas_factor_first_primes(tmp,n) (tmp = IP.iszero(IP.mod(tmp,n,23))?23:( IP.iszero(IP.mod(tmp,n,19))?19:( IP.iszero(IP.mod(tmp,n,17))?17:  (IP.iszero(IP.mod(tmp,n,2))?2:( IP.iszero(IP.mod(tmp,n,3))?3:( IP.iszero(IP.mod(tmp,n,5))?5:( IP.iszero(IP.mod(tmp,n,7))?7: ( IP.iszero(IP.mod(tmp,n,11))?11:13 ))))))))
+#define ProbLucas_factor_first_primes(tmp,n) (tmp = IP.isZero(IP.mod(tmp,n,23))?23:( IP.isZero(IP.mod(tmp,n,19))?19:( IP.isZero(IP.mod(tmp,n,17))?17:  (IP.isZero(IP.mod(tmp,n,2))?2:( IP.isZero(IP.mod(tmp,n,3))?3:( IP.isZero(IP.mod(tmp,n,5))?5:( IP.isZero(IP.mod(tmp,n,7))?7: ( IP.isZero(IP.mod(tmp,n,11))?11:13 ))))))))
 
-#define ProbLucas_factor_second_primes(tmp,n) (tmp = IP.iszero(IP.mod(tmp,n,31))?31:( IP.iszero(IP.mod(tmp,n,29))?29: ( IP.iszero(IP.mod(tmp,n,37))?37: ( IP.iszero(IP.mod(tmp,n,41))?41:( IP.iszero(IP.mod(tmp,n,43))?43:  ( IP.iszero(IP.mod(tmp,n,71))?71:( IP.iszero(IP.mod(tmp,n,67))?67:( IP.iszero(IP.mod(tmp,n,61))?61:( IP.iszero(IP.mod(tmp,n,59))?59: ( IP.iszero(IP.mod(tmp,n,53))?53:( IP.iszero(IP.mod(tmp,n,47))?47: ( IP.iszero(IP.mod(tmp,n,97))?97: ( IP.iszero(IP.mod(tmp,n,89))?89:( IP.iszero(IP.mod(tmp,n,83))?83:( IP.iszero(IP.mod(tmp,n,79))?79:73)))))))))))))))
+#define ProbLucas_factor_second_primes(tmp,n) (tmp = IP.isZero(IP.mod(tmp,n,31))?31:( IP.isZero(IP.mod(tmp,n,29))?29: ( IP.isZero(IP.mod(tmp,n,37))?37: ( IP.isZero(IP.mod(tmp,n,41))?41:( IP.isZero(IP.mod(tmp,n,43))?43:  ( IP.isZero(IP.mod(tmp,n,71))?71:( IP.isZero(IP.mod(tmp,n,67))?67:( IP.isZero(IP.mod(tmp,n,61))?61:( IP.isZero(IP.mod(tmp,n,59))?59: ( IP.isZero(IP.mod(tmp,n,53))?53:( IP.isZero(IP.mod(tmp,n,47))?47: ( IP.isZero(IP.mod(tmp,n,97))?97: ( IP.isZero(IP.mod(tmp,n,89))?89:( IP.isZero(IP.mod(tmp,n,83))?83:( IP.isZero(IP.mod(tmp,n,79))?79:73)))))))))))))))
 
 
 
@@ -43,12 +43,12 @@ Integer& MyPollard(GivRandom& gen, Integer& g, const Integer& n, const unsigned 
     Integer m(0UL), x, y, t;
 static Integer PROD_first_primes(223092870);
 static Integer PROD_second_primes("10334565887047481278774629361");
-if (isone(gcd(y,n,PROD_first_primes))) {
-   if (isone(gcd(y,n,PROD_second_primes))) {
+if (isOne(gcd(y,n,PROD_first_primes))) {
+   if (isOne(gcd(y,n,PROD_second_primes))) {
 
     IP.random(gen, y, n);
     unsigned long p(1);
-    for(unsigned long c = 0; isone(g) && (++c < threshold); ) {
+    for(unsigned long c = 0; isOne(g) && (++c < threshold); ) {
         if(  p == c ) {
             x=y;
             p <<= 1;
@@ -162,7 +162,7 @@ bool ProbLucas(const Integer n, const double orig_epsilon)
         expo = nmu; expo /= q;
         r=0;
         Integer::divexact(b, Q, q);
-        while( iszero(r) ) {
+        while( isZero(r) ) {
             Q.copy(b); 
             Integer::divmod( b, r, Q, q );
         }
@@ -202,7 +202,7 @@ bool ProbLucas(const Integer n, const double orig_epsilon)
                 expo = nmu; expo /= q;
                 r=0;
                 Integer::divexact(b, Q, q);
-                while( iszero(r) ) {
+                while( isZero(r) ) {
                     Q.copy(b); 
                     Integer::divmod( b, r, Q, q );
                 }

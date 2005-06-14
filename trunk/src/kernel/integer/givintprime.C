@@ -35,7 +35,7 @@ int FermatDom::pepin (const long n) const
     assign(t,3);
     powmod(y,t,z,fn);
     subin(fn,y);
-    return isone(fn);
+    return isOne(fn);
 }
 
 
@@ -46,7 +46,7 @@ IntPrimeDom::Rep& IntPrimeDom::nextprimein(Rep& n, int r)  const {
     if (isleq( n,1)) return n=2;
     Rep tmp;
     mod( tmp, n, 2UL);
-    if ( iszero(tmp) )
+    if ( isZero(tmp) )
         addin(n,1);
     else
         addin(n,2);
@@ -58,7 +58,7 @@ IntPrimeDom::Rep& IntPrimeDom::nextprimein(Rep& n, int r)  const {
 IntPrimeDom::Rep& IntPrimeDom::nextprime(Rep& n, const Rep& p, int r)  const {
     if (isleq( p,1)) return n=2;
     if (&n == &p) return nextprimein(n,r);
-    if (iszero( mod(n,p,2)))
+    if (isZero( mod(n,p,2)))
         add(n,p,1);
     else
         add(n,p,2);
@@ -72,7 +72,7 @@ IntPrimeDom::Rep& IntPrimeDom::prevprimein(Rep& n, int r)  const {
     if (isleq( n,2)) return n=2;
     Rep tmp; 
     mod(tmp, n, 2UL);
-    if (iszero(tmp) )
+    if (isZero(tmp) )
         subin(n,1);
     else
         subin(n,2);
@@ -84,7 +84,7 @@ IntPrimeDom::Rep& IntPrimeDom::prevprimein(Rep& n, int r)  const {
 IntPrimeDom::Rep& IntPrimeDom::prevprime(Rep& n, const Rep& p, int r)  const {
     if (isleq( p,2)) return n=2;
     if (&n == &p) return prevprimein(n,r);
-    if (iszero( mod(n,p,2)) )
+    if (isZero( mod(n,p,2)) )
         sub(n,p,1);
     else
         sub(n,p,2);

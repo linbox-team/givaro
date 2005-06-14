@@ -5,13 +5,13 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givvectordense.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givvectordense.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 // Domain of dense vector over K with classic arithmetic operations
 // over T (vector x vector, vector x T, scalar product, shift).
-// A element of this domain is a vector of K^n for any n.
-// Vector handle computation over sub part of continuous elements of
+// A Element of this domain is a vector of K^n for any n.
+// Vector handle computation over sub part of continuous Elements of
 // a vector as well as stride.
 
 #include "givaro/givvector.h"
@@ -135,7 +135,7 @@ public:
   void axmyin( Rep& res, const Type_t& a, const Rep& x ) const;
 
 
-  // Vector (+/-/*) Value ==  element wise operation 
+  // Vector (+/-/*) Value ==  Element wise operation 
   void mulin( Rep& res, const Type_t& u ) const;
   void mul  ( Rep& res, const Rep& u, const Type_t& val ) const;
   void mul  ( Rep& res, const Type_t& val, const Rep& v ) const;
@@ -147,7 +147,7 @@ public:
   void sub  ( Rep& res, const Type_t& val, const Rep& v ) const;
 
 
-  // - axpy like operations, element wise:
+  // - axpy like operations, Element wise:
   // r <- a*x+y
   void axpy  ( Rep& res, const Rep& a, const Rep& x, const Rep& y ) const;
   // r <- r+a*x

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givvector.spe,v 1.2 2005-05-03 13:21:22 jgdumas Exp $
+// $Id: givvector.spe,v 1.3 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description: specialization of for vector over Zpz
 
@@ -46,7 +46,7 @@ public :
   Vector(const Array0<Zpz::Modulo_t>& A, Zpz::Modulo_t m, givNoCopy );
 
   // -- Cstor with view: physical copy of the corresponding
-  // elements into the new vector. 
+  // Elements into the new vector. 
   template<class View1>
   Vector(const Vector<Zpz>& V, View1 s);
   template<class View1>

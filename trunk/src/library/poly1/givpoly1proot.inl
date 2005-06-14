@@ -27,7 +27,7 @@
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter >
-inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Domain,Tag, RandIter>::creux_random_irreducible (element& R, Degree n) const {
+inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::creux_random_irreducible (Element& R, Degree n) const {
     init(R, n, _domain.one);
     typedef typename Domain::Residu_t MT;
     MT MOD = _domain.residu();
@@ -60,7 +60,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Do
     }
 
         // Search for a monic irreducible Polynomial
-        // with random elements
+        // with random Elements
     do {
         random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
@@ -73,9 +73,9 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Do
 }
 
 template<class Domain, class Tag, class RandIter >
-inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Domain,Tag, RandIter>::random_irreducible (element& R, Degree n) const {
+inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::random_irreducible (Element& R, Degree n) const {
         // Search for a monic irreducible Polynomial
-        // with random elements
+        // with random Elements
     init(R, n, _domain.one);
     typedef typename Domain::Residu_t MT;
     MT MOD = _domain.residu();
@@ -98,9 +98,9 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Do
 // with X as a primitive root.
 // ---------------------------------------------------------------
 template<class Domain, class Tag, class RandIter >
-inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible (element& R, Degree n) const {
+inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible (Element& R, Degree n) const {
     init(R, n, _domain.one);
-    element IXE;
+    Element IXE;
     init(IXE,Degree(1),_domain.one);
     typedef typename Domain::Residu_t MT;
     MT MOD = _domain.residu();
@@ -133,7 +133,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Do
     }
 
         // Search for a monic irreducible Polynomial
-        // with random elements
+        // with random Elements
     do {
         random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
@@ -146,9 +146,9 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Do
 }
 
 template<class Domain, class Tag, class RandIter >
-inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible2 (element& R, Degree n) const {
+inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible2 (Element& R, Degree n) const {
     init(R, n, _domain.one);
-    element IXE;
+    Element IXE;
     init(IXE,Degree(1),_domain.one);
     typedef typename Domain::Residu_t MT;
     MT MOD = _domain.residu();
@@ -177,7 +177,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::element& Poly1FactorDom<Do
     }
 
         // Search for a monic irreducible Polynomial
-        // with random elements
+        // with random Elements
     do {
         random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
@@ -238,24 +238,24 @@ bool Poly1FactorDom<Domain,Tag, RandIter>::is_prim_root( const Rep& P, const Rep
         typedef typename Domain::Residu_t MT;
         MT MOD = _domain.residu();
         IntFactorDom<> FD;
-        IntFactorDom<>::element IMOD( MOD ), q, qp;
+        IntFactorDom<>::Element IMOD( MOD ), q, qp;
         degree(d,F);
 //         FD.pow(q ,IMOD, d.value());
 //         FD.sub(qp, q, FD.one);
         FD.subin( FD.pow(qp ,IMOD, d.value()) , FD.one);
-        std::list< IntFactorDom<>::element > L;
+        std::list< IntFactorDom<>::Element > L;
         FD.set(L, qp);
         L.sort();
-        std::list< IntFactorDom<>::element >::iterator li = L.begin();
+        std::list< IntFactorDom<>::Element >::iterator li = L.begin();
         isproot = 1;
         for(;(li != L.end()) && isproot; ++li)
-            isproot = ( ! isone(powmod(G, A, FD.div(q, qp , *li), F) ) );
+            isproot = ( ! isOne(powmod(G, A, FD.div(q, qp , *li), F) ) );
     }
     return isproot;
 }
 
 template<class Domain, class Tag, class RandIter>
-inline typename IntegerDom::element Poly1FactorDom<Domain,Tag, RandIter>::order( const Rep& P, const Rep& F)  const {
+inline typename IntegerDom::Element Poly1FactorDom<Domain,Tag, RandIter>::order( const Rep& P, const Rep& F)  const {
     bool isproot = 0;
     Rep A, G; mod(A,P,F);
     Degree d;
@@ -263,24 +263,24 @@ inline typename IntegerDom::element Poly1FactorDom<Domain,Tag, RandIter>::order(
         typedef typename Domain::Residu_t MT;
         MT MOD = _domain.residu();
         IntFactorDom<> FD;
-        IntFactorDom<>::element IMOD( MOD ), g, gg, tt, qp;
+        IntFactorDom<>::Element IMOD( MOD ), g, gg, tt, qp;
         degree(d,F);
 //         FD.pow(q ,IMOD, d.value());
 //         FD.sub(qp, q, FD.one);
         FD.subin( FD.pow(qp ,IMOD, d.value()) , FD.one);
-        std::list< IntFactorDom<>::element > L;
+        std::list< IntFactorDom<>::Element > L;
         FD.set(L, qp);
         L.sort();
-        std::list< IntFactorDom<>::element >::iterator li = L.begin();
+        std::list< IntFactorDom<>::Element >::iterator li = L.begin();
         isproot = 1;
         for(;(li != L.end()) && isproot; ++li)
-            isproot = ( ! isone(powmod(G, A, FD.div(g, qp , *li), F) ) );
+            isproot = ( ! isOne(powmod(G, A, FD.div(g, qp , *li), F) ) );
         
         if (isproot)
             return qp;
         else {
             for(--li;li!=L.end();++li)
-                while ( FD.iszero(FD.mod(tt,g,*li)) && (isone(powmod(G, A, FD.div(gg,g,*li), F))))
+                while ( FD.isZero(FD.mod(tt,g,*li)) && (isOne(powmod(G, A, FD.div(gg,g,*li), F))))
                     g.copy(gg);
             return g;
         }
@@ -322,7 +322,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     }
 
         // Search for a primitive Polynomial
-        // with random elements
+        // with random Elements
     do {
         random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
@@ -342,7 +342,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     MT MOD = _domain.residu();
     
         // Search for a primitive Polynomial
-        // with random elements
+        // with random Elements
     do {
         random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);

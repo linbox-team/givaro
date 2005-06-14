@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_div.C,v 1.3 2004-06-29 17:00:03 jgdumas Exp $
+// $Id: gmp++_int_div.C,v 1.4 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 
 #include "gmp++_int.h"
@@ -12,10 +12,10 @@
 //-------------------------------------------------- operator /
 Integer& Integer::divin(Integer& res, const Integer& n) 
 {
-//  if (iszero(n)) {
+//  if (isZero(n)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(res)) return res;
+  if (isZero(res)) return res;
   mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
   return res;
 }
@@ -24,7 +24,7 @@ Integer& Integer::divin(Integer& res, const long n)
 //  if (n ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(res)) return res;
+  if (isZero(res)) return res;
   int sgn = GMP__SGN(n); 
   mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
   if (sgn <0) return res = -res;
@@ -35,15 +35,15 @@ Integer& Integer::divin(Integer& res, const unsigned long n)
 //  if (n ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(res)) return res;
+  if (isZero(res)) return res;
   mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
   return res;
 }
 
 Integer& Integer::div(Integer& res, const Integer& n1, const Integer& n2)
 {
-  if (iszero(n1)) return res = Integer::zero;
-//  if (iszero(n2)) {
+  if (isZero(n1)) return res = Integer::zero;
+//  if (isZero(n2)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
@@ -51,8 +51,8 @@ Integer& Integer::div(Integer& res, const Integer& n1, const Integer& n2)
 }
 Integer& Integer::div(Integer& res, const Integer& n1, const long n2)
 {
-  if (iszero(n1)) return res = Integer::zero;
-//  if (iszero(n2)) {
+  if (isZero(n1)) return res = Integer::zero;
+//  if (isZero(n2)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   int sgn = GMP__SGN(n2); 
@@ -62,8 +62,8 @@ Integer& Integer::div(Integer& res, const Integer& n1, const long n2)
 }
 Integer& Integer::div(Integer& res, const Integer& n1, const unsigned long n2)
 {
-  if (iszero(n1)) return res = Integer::zero;
-//  if (iszero(n2)) {
+  if (isZero(n1)) return res = Integer::zero;
+//  if (isZero(n2)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
@@ -72,8 +72,8 @@ Integer& Integer::div(Integer& res, const Integer& n1, const unsigned long n2)
 
 Integer& Integer::divexact  (Integer& q, const Integer& n1, const Integer& n2)
 {
-  if (iszero(n1)) return q = Integer::zero;
-//  if (iszero(n2)) {
+  if (isZero(n1)) return q = Integer::zero;
+//  if (isZero(n2)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   mpz_divexact( (mpz_ptr)&(q.gmp_rep),
@@ -83,8 +83,8 @@ Integer& Integer::divexact  (Integer& q, const Integer& n1, const Integer& n2)
 
 Integer  Integer::divexact  (const Integer& n1, const Integer& n2)
 {
-  if (iszero(n1)) return Integer::zero;
-//  if (iszero(n2)) {
+  if (isZero(n1)) return Integer::zero;
+//  if (isZero(n2)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   Integer q;
@@ -96,10 +96,10 @@ Integer  Integer::divexact  (const Integer& n1, const Integer& n2)
 
 Integer& Integer::operator /= (const Integer& n)
 {
-//  if (iszero(n)) {
+//  if (isZero(n)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(*this)) return *this;
+  if (isZero(*this)) return *this;
   mpz_tdiv_q( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
   return *this;
 }
@@ -109,7 +109,7 @@ Integer& Integer::operator /= (const unsigned long l)
 //  if (l ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(*this)) return *this;
+  if (isZero(*this)) return *this;
   mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
   return *this;
 }
@@ -119,7 +119,7 @@ Integer& Integer::operator /= (const long l)
 //  if (l ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(*this)) return *this;
+  if (isZero(*this)) return *this;
   int sgn = GMP__SGN(l);
   mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
   if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep));
@@ -129,10 +129,10 @@ Integer& Integer::operator /= (const long l)
 
 Integer Integer::operator / (const Integer& n) const
 {
-//  if (iszero(n)) {
+//  if (isZero(n)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(*this)) return Integer::zero;
+  if (isZero(*this)) return Integer::zero;
   Integer res;   
   mpz_tdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
   return res;
@@ -143,7 +143,7 @@ Integer Integer::operator / (const unsigned long l) const
 //  if (l ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(*this)) return Integer::zero;
+  if (isZero(*this)) return Integer::zero;
   Integer res;   
   mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
   return res;
@@ -154,7 +154,7 @@ Integer Integer::operator / (const long l) const
 //  if (l ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (iszero(*this)) return Integer::zero;
+  if (isZero(*this)) return Integer::zero;
   Integer res;   
   int sgn = GMP__SGN(l);
   mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
@@ -165,7 +165,7 @@ Integer Integer::operator / (const long l) const
 // -- Euclidian division
 Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer &b)
 {
-//  if (iszero(b)) {
+//  if (isZero(b)) {
 //    GivMathDivZero("[Integer::divide]: division by zero");
 //  }
 
@@ -176,7 +176,7 @@ Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer
 
 Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 {
-//  if (iszero(b)) {
+//  if (isZero(b)) {
 //    GivMathDivZero("[Integer::divide]: division by zero");
 //  }
   int sgn = GMP__SGN(b);
@@ -188,7 +188,7 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 
 Integer& Integer::divmod(Integer& q, unsigned long& r, const Integer& a, const unsigned long b)
 {
-//  if (iszero(b)) {
+//  if (isZero(b)) {
 //    GivMathDivZero("[Integer::divide]: division by zero");
 //  }
   r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),

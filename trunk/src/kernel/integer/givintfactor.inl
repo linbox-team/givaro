@@ -57,7 +57,7 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
         c=0;r=0;
 
 	Rep::divexact(u, nn,g);
-        for(;iszero(r); ++c) {
+        for(;isZero(r); ++c) {
 		nn.copy(u); 
 		Rep::divmod( u, r, nn,g );
         }
@@ -254,7 +254,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
 
     if (threshold) {
         unsigned long c = 0;
-        while( isone(g) && (++c < threshold)) {
+        while( isOne(g) && (++c < threshold)) {
             if(  areEqual(p, addin(m,one)) ) {
                 x=y;
                 mulin(p,2);
@@ -265,7 +265,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
         if ((g == n)&&(c<threshold)) // Failure with the initial value
             Pollard(gen, g, n, threshold-c);
     } else {
-        while(isone(g)) {
+        while(isOne(g)) {
             if(  areEqual(p, addin(m,one)) ) {
                 x=y;
                 mulin(p,2);
@@ -319,7 +319,7 @@ inline void one_Mul_Curve( const Integer& n, const Integer A, const Integer& mm,
     } else {
         Add_Curve(n,A,px,pz,ax,az);bx = px;bz = pz;e -= d;
     }
-    while (! iszero(e)) {
+    while (! isZero(e)) {
         if (e<d) {
             tmpx = bx; tmpz = bz; 
             bz = ax;
@@ -398,7 +398,7 @@ inline void one_Mul_Curve2( const Integer& n, const Integer A, const Integer& mm
     } else {
         Add_Curve(n,A,px,pz,ax,az);bx = px;bz = pz;e = e - d;
     }
-    while (! iszero(e)) {
+    while (! isZero(e)) {
         if (e<d) {
             tmpx = bx; tmpz = bz; 
             t1 = ((ax-az)*(bx+bz))%n; 
@@ -454,8 +454,8 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
 {
     if (n<3) return g=n;
     if ( isprime(n,5) ) return g=n;
-    if (iszero(n % 2)) return g=2;
-    if (iszero(n % 3)) return g=3;
+    if (isZero(n % 2)) return g=2;
+    if (isZero(n % 3)) return g=3;
 
     Rep * A = new Rep[curves]
         , * X = new Rep[curves]
@@ -485,16 +485,16 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
             mul(kg,r,r); addin(kg,6UL);
 //             kgg = gcd(kg,n);
             gcd(kgg,kg,n);
-            if (isone(kgg)) {
-//                 g = gcd(kg,n,u,v); if (! isone(g)) { delete [] A, X, Z; return g; }
-                gcd(g,u,v,kg,n); if (! isone(g)) { delete [] A; delete [] X; delete [] Z; return g; }
+            if (isOne(kgg)) {
+//                 g = gcd(kg,n,u,v); if (! isOne(g)) { delete [] A, X, Z; return g; }
+                gcd(g,u,v,kg,n); if (! isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
                 a = (6UL*r*u)% n;
                 asq = (a * a) % n ;
             } else
                 return g=kgg;
         }
-//         g = gcd(a,n,u,v); if (! isone(g)) { delete [] A; delete [] X; delete [] Z; return g; }
-        gcd(g,u,v,a,n); if (! isone(g)) { delete [] A; delete [] X; delete [] Z; return g; }
+//         g = gcd(a,n,u,v); if (! isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
+        gcd(g,u,v,a,n); if (! isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
 //         A[i] = ( (8-3*a + (1-6*a*a)*u*u*u )*inv16 ) % n;
         A[i] = ( inv2 + ( (1-3*asq*asq-6*asq) %n )* (u*u*u*inv16 % n) ) % n ;
         X[i] = (3*a*inv4)%n;
@@ -523,7 +523,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
         Rep ftm;
         gcd(ftm,f,n);
         f = ftm;
-        if (isone(f)) {
+        if (isOne(f)) {
             nextprime(ftm,prime);
             prime = ftm;
 //             prime = nextprime(prime);

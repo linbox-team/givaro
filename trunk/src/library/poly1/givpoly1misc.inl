@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.2 2005-02-02 19:07:25 pernet Exp $
+// $Id: givpoly1misc.inl,v 1.3 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -12,7 +12,7 @@
 #define __GIV_POLY_MISC_INL__
 
 template<class Domain>
-inline int Poly1Dom<Domain,Dense>::iszero (const Rep& P) const
+inline int Poly1Dom<Domain,Dense>::isZero (const Rep& P) const
 { 
   if (P.size() ==0) return 1;
   if (P.size() ==1) return _domain.isZero(P[0]);
@@ -20,7 +20,7 @@ inline int Poly1Dom<Domain,Dense>::iszero (const Rep& P) const
 }
 
 template<class Domain>
-inline int Poly1Dom<Domain,Dense>::isone (const Rep& P) const
+inline int Poly1Dom<Domain,Dense>::isOne (const Rep& P) const
 { 
 // JGD 15.12.1999
 //   if (P.size() ==0) return 1;
@@ -35,7 +35,7 @@ inline int Poly1Dom<Domain,Dense>::areEqual (const Rep& P, const Rep& Q) const
 //   return P.areEqual(Q);  
 // JGD 25.09.2001
     if (P.size() != Q.size()) return 0;
-    for( typename element::const_iterator pit = P.begin(), qit = Q.begin();
+    for( typename Element::const_iterator pit = P.begin(), qit = Q.begin();
          pit != P.end(); 
          ++pit, ++qit)
         if ( _domain.areNEqual(*pit, *qit) ) return 0;
@@ -51,7 +51,7 @@ inline int Poly1Dom<Domain,Dense>::areNEqual (const Rep& P, const Rep& Q) const
 //  return P.areNEqual(Q);    
 // JGD 25.09.2001
     if (P.size() != Q.size()) return 1;
-    for( typename element::const_iterator pit = P.begin(), qit = Q.begin();
+    for( typename Element::const_iterator pit = P.begin(), qit = Q.begin();
          pit != P.end(); 
          ++pit, ++qit)
         if ( _domain.areNEqual(*pit, *qit) ) return 1;
@@ -168,7 +168,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pow( Rep& W
 
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::powmod( Rep& W, const Rep& P, IntegerDom::element pwr, const Rep& U) const
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::powmod( Rep& W, const Rep& P, IntegerDom::Element pwr, const Rep& U) const
 {
     IntegerDom ID;
 // ID.write(cerr << "\n----------- POWMOD -----------\n pwr: ", pwr) << endl;
@@ -177,7 +177,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::powmod( Rep
     Rep puiss, tmp;
     mod(puiss, P, U);
     assign(W,one);
-    IntegerDom::element n,q,r,deux;
+    IntegerDom::Element n,q,r,deux;
     ID.init(deux,2);
     if (ID.islt(pwr,ID.zero) ) 
         ID.neg(n,pwr);

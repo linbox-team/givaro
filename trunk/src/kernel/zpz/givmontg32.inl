@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.5 2005-06-13 11:56:59 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.6 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
@@ -188,20 +188,12 @@ inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axmyin
 
  // ------------------------- Miscellaneous functions
 
-inline int Montgomery<Std32>::iszero(const Rep a) const
+inline int Montgomery<Std32>::isZero(const Rep a) const
 { return a == Montgomery<Std32>::zero; }
 
-inline int Montgomery<Std32>::isone(const Rep a) const
+inline int Montgomery<Std32>::isOne(const Rep a) const
 { return a == Montgomery<Std32>::one; }
 
-inline int Montgomery<Std32>::isZero( const Rep a ) const {
-  return iszero(a);
-}
-
-inline int Montgomery<Std32>::isOne ( const Rep a ) const {
-//	std::cerr << "one: " << one << ", a: " << a << std::endl;
-  return isone(a);
-}
 
 
 inline size_t Montgomery<Std32>::length(const Rep a) const
@@ -304,19 +296,19 @@ inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a, l
 
 template< class RandIter >
 inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a) const {
-	        while (iszero(init(a, g()))) {};
+	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
 template< class RandIter >
 inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
-	        while (iszero(init(a, g()))) {};
+	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
 template< class RandIter >
 inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	        while (iszero(init(a, g() %(uint32) b))) {};
+	        while (isZero(init(a, g() %(uint32) b))) {};
 		return a;
 }
 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: T. Gautier
-// $Id: givarray0.inl,v 1.2 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givarray0.inl,v 1.3 2005-06-14 14:53:14 pernet Exp $
 // ======================================================================= //
 // Description:
 // implementation of operators of Array0<T>
@@ -76,7 +76,7 @@ inline void Array0<T>::destroy( )
   _size = _psz = 0; _cnt = 0; _d = 0;
 }
 
-  // -- Allocation of an array of s elements
+  // -- Allocation of an array of s Elements
 template<class T>
 inline void Array0<T>::allocate( size_t s ) 
 {
@@ -95,8 +95,8 @@ inline void Array0<T>::allocate( size_t s )
   _psz = _size = s;
 }
 
-  // Reallocation of an array of s elements
-  // and recopy the min(_size,s) first elements
+  // Reallocation of an array of s Elements
+  // and recopy the min(_size,s) first Elements
 template<class T>
 inline void Array0<T>::reallocate( size_t s ) 
 {
@@ -131,7 +131,7 @@ inline Array0<T>::~Array0 ()
 }
 
 
-// Physical copy : recopy and assignement on each element
+// Physical copy : recopy and assignement on each Element
 template <class T>
 inline Array0<T>& Array0<T>::copy (const Array0<T>& src)
 { 
@@ -145,7 +145,7 @@ inline Array0<T>& Array0<T>::copy (const Array0<T>& src)
   return *this;
 }
 
-// Physical copy : recopy and assignement on each element
+// Physical copy : recopy and assignement on each Element
 template <class T>
 inline Array0<T>& Array0<T>::logcopy (const Array0<T>& src)
 {
@@ -182,7 +182,7 @@ inline T* const Array0<T>::baseptr() const { return _d; }
 template <class T>
 inline const T& Array0<T>::operator[] (Indice_t i) const
 {
-  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an element of null size Array0.");
+  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
   GIVARO_ASSERT((i >=0)&&(i<(Indice_t)_size), "[Array<T>::[]]: index out of bounds.");
   return _d[i];
 }
@@ -191,14 +191,14 @@ inline const T& Array0<T>::operator[] (Indice_t i) const
 template <class T>
 inline T& Array0<T>::operator[] (Indice_t i)
 {
-  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an element of null size Array0.");
+  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
   GIVARO_ASSERT((i >=0)&&(i<(Indice_t)_size), "[Array<T>]: index out of bounds.");
   return _d[i];
 }
 template <class T>
 inline void Array0<T>::write( Indice_t i, const T& val)
 {
-  GIVARO_ASSERT(_size >0, "[Array<T>::write]: try to access to an element of null size Array0.");
+  GIVARO_ASSERT(_size >0, "[Array<T>::write]: try to access to an Element of null size Array0.");
   GIVARO_ASSERT((i >=0)&&(i<(Indice_t)_size), "[Array<T>::write]: index out of bounds.");
   _d[i] = val;
 }
@@ -206,7 +206,7 @@ inline void Array0<T>::write( Indice_t i, const T& val)
 template <class T>
 inline void Array0<T>::read ( Indice_t i, T& val ) const
 {
-  GIVARO_ASSERT(_size >0, "[Array<T>::read]: try to access to an element of null size Array0");
+  GIVARO_ASSERT(_size >0, "[Array<T>::read]: try to access to an Element of null size Array0");
   GIVARO_ASSERT((i >=0)&&(i<(Indice_t)_size), "[Array<T>::read]: index out of bounds.");
   val = _d[i];
 }

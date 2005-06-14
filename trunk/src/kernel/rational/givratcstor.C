@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givratcstor.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -185,7 +185,7 @@ Rational::Rational(const char* s )
 //   ------------------------------ Rational(const Integer &n)
 Rational::Rational(const Integer &n) : den(Integer::one)
 {
-  if (iszero(n))
+  if (isZero(n))
     {
       num = Integer::zero;
     }
@@ -199,12 +199,12 @@ Rational::Rational(const Integer &n) : den(Integer::one)
 // If red == 1 then the rational is reduce (gcd computation!)
 Rational::Rational(const Integer &n, const Integer &d, int red)
 {
-  if (iszero(d))
+  if (isZero(d))
     {
       throw GivMathDivZero( "[Rational::Rational]: null denominator of the rational.") ;
     }
   
-  if (iszero(n))
+  if (isZero(n))
     {
       num = Integer::zero;
       den = Integer::one;

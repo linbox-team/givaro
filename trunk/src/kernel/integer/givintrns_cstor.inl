@@ -21,7 +21,7 @@ inline IntRNSsystem< Container >::IntRNSsystem( const Container<TT>& inprimes)
    _primes.resize(inprimes.size());
    typename Container<TT>::const_iterator np = inprimes.begin();
    for(typename array::iterator pi = _primes.begin(); pi != _primes.end(); ++pi, ++np)
-       *pi = element( *np );
+       *pi = Element( *np );
 }
 #else
 template<class Container> template <class ContTT>
@@ -32,7 +32,7 @@ inline IntRNSsystem< Container >::IntRNSsystem( const ContTT& inprimes)
    _primes.resize(inprimes.size());
    typename ContTT::const_iterator np = inprimes.begin();
    for(typename array::iterator pi = _primes.begin(); pi != _primes.end(); ++pi, ++np)
-       *pi = element( *np );
+       *pi = Element( *np );
 }
 #endif
 
@@ -44,7 +44,7 @@ template<class Container>
 #endif
 inline void IntRNSsystem< Container >::ComputeProd()
 {
-    if (isone(_prod))
+    if (isOne(_prod))
         for (typename array::const_iterator pi = _primes.begin();pi != _primes.end(); ++pi)
             mulin(_prod, *pi);
 }
@@ -63,15 +63,15 @@ inline void IntRNSsystem< Container >::ComputeCk()
   // - reallocation of a new array :
   size_t size = _primes.size();
   _ck.resize(size);
-  _ck[0] = element::zero; // -- undefined and never used
+  _ck[0] = Element::zero; // -- undefined and never used
 
   for (size_t k=1; k < size; ++k)
   {
-    element prod = _primes[0];
+    Element prod = _primes[0];
     for (size_t i= 1; i < k; ++i)
         modin( mulin( prod, _primes[i]), _primes[k]);
     
-    element g,u;
+    Element g,u;
     gcd(g,u, _ck[k],_primes[k],prod); // _ck[k] * prod = g mod _primes[k]
   }
 }
@@ -93,7 +93,7 @@ template<template<class> class Container>
 #else
 template<class Container>
 #endif
-inline const typename IntRNSsystem< Container >::element IntRNSsystem< Container >::ith(const size_t i) const
+inline const typename IntRNSsystem< Container >::Element IntRNSsystem< Container >::ith(const size_t i) const
 {
   return _primes[i];
 }
@@ -104,7 +104,7 @@ template<template<class> class Container>
 #else
 template<class Container>
 #endif
-inline const typename IntRNSsystem< Container >::element IntRNSsystem< Container >::product() const
+inline const typename IntRNSsystem< Container >::Element IntRNSsystem< Container >::product() const
 {
     ((IntRNSsystem< Container >*)this)->ComputeProd();
     return _prod;
@@ -127,7 +127,7 @@ template<template<class> class Container>
 #else
 template<class Container>
 #endif
-inline const typename IntRNSsystem< Container >::element IntRNSsystem< Container >::reciprocal(const size_t i) const
+inline const typename IntRNSsystem< Container >::Element IntRNSsystem< Container >::reciprocal(const size_t i) const
 {
   if (_ck.size() ==0) ((IntRNSsystem< Container >*)this)->ComputeCk();
   return _ck[i];

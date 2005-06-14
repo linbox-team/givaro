@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givvectorsparse.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givvectorsparse.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 // Description of sparse vector over T with classic arithmetic operations
@@ -32,7 +32,7 @@ public :
   typedef 	   Sparse	 			 	StorageTag_t;
   typedef typename RetVectorStorage<Type_t,Sparse>::Storage_t 	Storage_t;
 
-  // -- Representation of element of VectorDom<D, Sparse>
+  // -- Representation of Element of VectorDom<D, Sparse>
   typedef 	   Storage_t 	 				Rep;
 
   // -- Self_t
@@ -41,7 +41,7 @@ public :
   // -- Dstor 
   ~VectorDom() {}
 
-  // -- Cstor of a new vector of size s elements 
+  // -- Cstor of a new vector of size s Elements 
   VectorDom( const Domain& D = Domain() ) : _domain(D) {}
 
   // -- Cstor of recopy
@@ -78,7 +78,7 @@ public :
   // -- dot product: operands could be aliased
   void dot ( Type_t& res, const Rep& u, const Rep& v ) const;
 
-  // -- Syntaxic sugar: (Value) op (Vector): element wise ops.
+  // -- Syntaxic sugar: (Value) op (Vector): Element wise ops.
   void addin( Rep& res, const Rep& u ) const;
   void add  ( Rep& res, const Rep& u, const Type_t& val ) const;
   void add  ( Rep& res, const Type_t& val, const Rep& v ) const;
@@ -106,7 +106,7 @@ public :
   ostream& write( ostream& o ) const;
   istream& read ( istream& i );
 
-  // -- IO: domain element
+  // -- IO: domain Element
   ostream& write( ostream& o, const Rep& r ) const;
   istream& read ( istream& i, Rep& r ) const;
 

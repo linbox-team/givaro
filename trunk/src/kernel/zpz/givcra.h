@@ -5,10 +5,10 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.6 2005-06-13 11:56:59 jgdumas Exp $
+// $Id: givcra.h,v 1.7 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
-//  Chinese Remainder Algorithm for 2 elements. 
+//  Chinese Remainder Algorithm for 2 Elements. 
 //  For any number of moduli see givrns.h
 
 #include "givaro/givconfig.h"

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givratcompare.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givratcompare.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 #include "givaro/givrational.h"
@@ -12,11 +12,11 @@
 // returns 1 if a > b, 0 if a == b and -1 otherwise.
 int compare (const Rational& a, const Rational &b) 
 { 
-  if (iszero(a.num) && iszero(b.num)) 
+  if (isZero(a.num) && isZero(b.num)) 
       return 0 ;
-  if (iszero(a.num)) 
+  if (isZero(a.num)) 
       return -sign(b.num);
-  if (iszero(b.num))
+  if (isZero(b.num))
       return sign(a.num);
   if (sign(a.num) != sign(b.num)) 
       return (sign(a.num) == -1 ? -1 : 1 )  ;

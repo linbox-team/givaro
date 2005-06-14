@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givgenarith.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givgenarith.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 // Domain definition for basic type of the language.
@@ -42,8 +42,8 @@ public:
   void assign( Rep& r, const Rep a ) const { r = a; };
 
   // -- Comparizon of Rep
-  int iszero( const Rep r ) const { return r ==zero; };
-  int isone ( const Rep r ) const { return r ==one; };
+  int isZero( const Rep r ) const { return r ==zero; };
+  int isOne ( const Rep r ) const { return r ==one; };
   int areEqual ( const Rep r, const Rep a ) const { r == a; };
   int areNEqual( const Rep r, const Rep a ) const { r != a; };
 

@@ -307,7 +307,7 @@ istream& VectorDom<Domain, Sparse>::read( istream& sin )
 
 // ==========================================================================
 //
-// Write an element of the domain, not the domain itself.
+// Write an Element of the domain, not the domain itself.
 // grammar: list of pairs:
 //   s  --->  '[' size, '[' list_of_elt ']]'
 //   list_of_elt --->   (index, value)
@@ -330,13 +330,13 @@ ostream& VectorDom<Domain,Sparse>::write (ostream& o, const Rep& V) const
 }
 
 //
-// Read an element of the domain, not the domain itself.
+// Read an Element of the domain, not the domain itself.
 // Read a sparse vector given by the grammar:
 //   s  --->  '[' size, '[' list_of_elt ']]'
 //   list_of_elt --->   (index, value)
 //                    | list_of_elt ',' (index, value)
 // The contraints are :
-//   All lines are the same number of elements.
+//   All lines are the same number of Elements.
 //   The separators a those of the C lexical-convention, i.e.
 //    ' ', '\n', '\t', '\f' .
 template<class Domain>
@@ -350,7 +350,7 @@ istream&  VectorDom<Domain,Sparse>::read (istream& fin, Rep& V) const
     GivError::throw_error(
       GivBadFormat("VectorDom<Domain,Sparse>::read: syntax error no '['"));
 
-  // -- Read the size of != 0 element of the rep
+  // -- Read the size of != 0 Element of the rep
   size_t size; 
   fin >> std::ws >> size;
 

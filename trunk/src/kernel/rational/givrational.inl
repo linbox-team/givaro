@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givrational.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givrational.inl,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -52,13 +52,13 @@ inline Rational Rational::operator + ()  const
 
 //----------------------------------miscellaneous inline functions
 inline int isinteger(const Rational& r)
-  { return isone(r.den) ; }
+  { return isOne(r.den) ; }
 
-inline int isone(const Rational& a)
-  { return (isone(a.num) && isone(a.den)) ; }
+inline int isOne(const Rational& a)
+  { return (isOne(a.num) && isOne(a.den)) ; }
 
-inline int iszero(const Rational& a)
-  { return iszero(a.num) ; }
+inline int isZero(const Rational& a)
+  { return isZero(a.num) ; }
 
 inline int sign(const Rational& a)
   { return sign(a.num) ; }

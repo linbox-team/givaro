@@ -28,18 +28,18 @@ public:
     typedef GFqDom<TT> Self_t;
     
     
-    typedef Rep element;
-    typedef element Element;
-//     class element {
+    typedef Rep Element;
+    typedef Element Element;
+//     class Element {
 //     public:
 //         mutable Rep _value;
 
-//         element() {}
+//         Element() {}
 //     };    
 
     typedef UTT Residu_t;
 
-        // ----- Representation of vector of the element
+        // ----- Representation of vector of the Element
     typedef Rep* Array;
     typedef const Rep* constArray;
 
@@ -104,7 +104,7 @@ public:
     UTT exponent() const;
     UTT size() const;
 
-        // Initialization of elements
+        // Initialization of Elements
     Rep& init( Rep& ) const;
     Rep& init( Rep& a, const int i) const { return read(a,i); }
     Rep& init( Rep& a, const unsigned int i) const { return read(a,i); }
@@ -128,7 +128,7 @@ public:
         // --- IO methods for the Domain
     std::istream& read ( std::istream& s );
     std::ostream& write( std::ostream& s ) const;
-        // --- IO methods for the elements
+        // --- IO methods for the Elements
     std::istream& read ( std::istream& s, Rep& a ) const;
     Rep& read (Rep&, const long ) const;
     Rep& read (Rep&, const unsigned long ) const;
@@ -172,14 +172,12 @@ public:
         // Miscellaneous functions
     bool areEqual( const Rep&, const Rep&  ) const;
     bool areNEqual ( const Rep , const Rep ) const;
-    bool iszero( const Rep ) const;
+    bool isZero( const Rep ) const;
     bool isnzero( const Rep ) const;
-    bool isone ( const Rep ) const;
+    bool isOne ( const Rep ) const;
     bool isunit ( const Rep ) const; // Element belongs to prime subfield
     size_t length ( const Rep ) const;
 
-    bool isZero( const Rep a ) const { return iszero(a); }
-    bool isOne ( const Rep a ) const { return isone(a); }
 
 
         // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p

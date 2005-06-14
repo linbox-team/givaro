@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.5 2005-06-13 11:56:59 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.6 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -71,7 +71,7 @@ public :
 //     typedef          Array0<Type_t>            Storage_t;
     typedef          givvector<Type_t>            Storage_t;
     typedef          Storage_t                 Rep;
-    typedef          Storage_t                 element;
+    typedef          Storage_t                 Element;
 
     Poly1Dom (Domain& d, const Indeter& X = Indeter() );
     Poly1Dom (const Self_t&);
@@ -125,9 +125,9 @@ public :
     ~Poly1Dom ();
 
         // -- Comparaison operator
-    int iszero  ( const Rep& P ) const;
-    int isZero  ( const Rep& P ) const{return iszero(P);}
-    int isone   ( const Rep& P ) const;
+    int isZero  ( const Rep& P ) const;
+    //    int isZero  ( const Rep& P ) const{return iszero(P);}
+    int isOne   ( const Rep& P ) const;
     int areEqual ( const Rep& P, const Rep& Q ) const;
     int areNEqual( const Rep& P, const Rep& Q ) const;
 
@@ -209,10 +209,10 @@ public :
         // -- W <-- P^n
     Rep& pow( Rep& W, const Rep& P, long n) const;
         // -- W <-- P^n [ U ]
-    Rep& powmod( Rep& W, const Rep& P, IntegerDom::element pwr, const Rep& U) const;
+    Rep& powmod( Rep& W, const Rep& P, IntegerDom::Element pwr, const Rep& U) const;
     template < class MyInt >
     Rep& powmod( Rep& W, const Rep& P, MyInt pwr, const Rep& U) const {
-        return powmod(W, P, (IntegerDom::element)pwr, U);
+        return powmod(W, P, (IntegerDom::Element)pwr, U);
     }
 
         // -- W <-- P(X^b)

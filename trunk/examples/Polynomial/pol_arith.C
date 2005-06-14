@@ -9,8 +9,8 @@ int main(int argc, char ** argv) {
 
     // Polynomials over Z13, with X as indeterminate
     Poly1Dom< GFqDom<int>, Dense > DP13( Z13, "X" );
-    Poly1Dom< GFqDom<int>, Dense>::element P, Q, R, monomial;
-    GFqDom<int>::element tmp;
+    Poly1Dom< GFqDom<int>, Dense>::Element P, Q, R, monomial;
+    GFqDom<int>::Element tmp;
 
     DP13.assign( P, Z13.init(tmp,5) ); // P is degree 0 polynomial : 5 modulo 13
     DP13.init( monomial, Degree(1), -33) ; // -33 X

@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 
 
   IntPrimeDom IP;
-  IntPrimeDom::element m, ff;
+  IntPrimeDom::Element m, ff;
   if (argc > 1) m = Integer(argv[1]);
   
         Timer tim; tim.clear(); tim.start();

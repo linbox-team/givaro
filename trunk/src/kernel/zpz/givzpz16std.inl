@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.5 2004-10-11 12:29:50 jgdumas Exp $
+// $Id: givzpz16std.inl,v 1.6 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -313,17 +313,15 @@ inline int ZpzDom<Std16>::areEqual(const Rep a, const Rep b) const
 inline int ZpzDom<Std16>::areNEqual(const Rep a, const Rep b) const
 { return a != b; }
 
-inline int ZpzDom<Std16>::iszero(const Rep a) const
+inline int ZpzDom<Std16>::isZero(const Rep a) const
 { return a == ZpzDom<Std16>::zero; }
 
 inline int ZpzDom<Std16>::isnzero(const Rep a) const
 { return a != ZpzDom<Std16>::zero; }
 
-inline int ZpzDom<Std16>::isone(const Rep a) const
+inline int ZpzDom<Std16>::isOne(const Rep a) const
 { return a == ZpzDom<Std16>::one; }
 
-inline int ZpzDom<Std16>::isZero( const Rep a ) const { return iszero(a);}
-inline int ZpzDom<Std16>::isOne( const Rep a ) const {return isone(a);}
 
 
 inline size_t ZpzDom<Std16>::length(const Rep a) const
@@ -426,19 +424,19 @@ inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::random(RandIter& g, Rep& a, long b) c
 
 template< class RandIter >
 inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::nonzerorandom(RandIter& g, Rep& a) const {
-	while (iszero(init(a, g()))) {};
+	while (isZero(init(a, g()))) {};
 	return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
-	while (iszero(init(a, g()))) {};
+	while (isZero(init(a, g()))) {};
 	return a;
 }
 
 template< class RandIter >
 inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	while (iszero(init(a, g() %(uint16) b))) {};
+	while (isZero(init(a, g() %(uint16) b))) {};
 	return a;
 }
 

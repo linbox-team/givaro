@@ -21,9 +21,9 @@ class Poly1PadicDom<Domain,Dense> : public Poly1Dom<Domain,Dense>, public Intege
     
     typedef typename Poly_t::Rep      Rep;
 public:
-    typedef typename Poly_t::element  element;
-    typedef typename Poly_t::element  pol_element;
-    typedef typename IntegerDom::element              int_element;
+    typedef typename Poly_t::Element  Element;
+    typedef typename Poly_t::Element  pol_Element;
+    typedef typename IntegerDom::Element              int_Element;
 
     Poly1PadicDom (Domain& d, const Indeter& X) : Poly_t (d,X), IntegerDom() {}
     Poly1PadicDom (const Poly_t& P) : Poly_t (P), IntegerDom() {}
@@ -31,7 +31,7 @@ public:
 
 
 
-    std::ostream& write( std::ostream& o, const pol_element& p) { 
+    std::ostream& write( std::ostream& o, const pol_Element& p) { 
         return Poly_t::write(o, p); 
     }
     
@@ -40,7 +40,7 @@ public:
 
         // Horner like evaluation of the polynomial for p = _domain.size()
     template<class vect>
-    IntegerDom::element& eval( IntegerDom::element& E, const vect& P) {
+    IntegerDom::Element& eval( IntegerDom::Element& E, const vect& P) {
         typename vect::const_reverse_iterator pi = P.rbegin();
         IntegerDom::init(E, _domain.convert(*pi) );
         for (++pi;pi != P.rend();++pi) {
@@ -88,16 +88,16 @@ public:
         // Reconstruction of the radix decomposition mod _domain.size()
         // E into a polynomial P of degree n-1 or of lowest degree if n==0.
     template<class vect>
-    vect& radix(vect& P, const IntegerDom::element& E, long n = 0) {
+    vect& radix(vect& P, const IntegerDom::Element& E, long n = 0) {
         if (n < 1) n = logp(E,_domain.size()) + 1;
         if (n == 1) {
-            typename Domain::element e;
+            typename Domain::Element e;
             return Poly_t::init(P, Degree(0), _domain.init(e, E) );
         }
-        IntegerDom::element iq, ir;
+        IntegerDom::Element iq, ir;
         vect Q; 
             long t = (n+1)/2;
-            IntegerDom::element q;
+            IntegerDom::Element q;
             IntegerDom::pow(q, _domain.size(), t);
             IntegerDom::divmod(iq, ir, E, q);
             radix(Q, iq, n-t);

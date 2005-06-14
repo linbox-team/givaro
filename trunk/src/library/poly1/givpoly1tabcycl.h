@@ -16,15 +16,15 @@
 
 template<class Domain, class Tag>
 class CyclotomicTable : public Poly1FactorDom<Domain,Tag> {
-    typedef typename Poly1FactorDom<Domain,Tag>::element element;
-    element _Irreductible;
+    typedef typename Poly1FactorDom<Domain,Tag>::Element Element;
+    Element _Irreductible;
 public:
     CyclotomicTable(Domain& _d, const long expo, const Indeter& X = Indeter() ) : Poly1FactorDom<Domain,Tag>(_d, X), _Irreductible(zero) {
         typename Domain::Residu_t mod = _d.residu();
         table_0(mod, expo);
     }
     
-    element& getcyclo(element& res) const { return res = _Irreductible; }
+    Element& getcyclo(Element& res) const { return res = _Irreductible; }
     void set_random_irreducible(const Domain& _d, const long expo) {
         random_irreducible( _Irreductible, expo);
     }

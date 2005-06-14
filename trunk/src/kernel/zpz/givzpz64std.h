@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.8 2005-02-02 19:08:29 pernet Exp $
+// $Id: givzpz64std.h,v 1.9 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -16,7 +16,7 @@
 #include "givaro/givzpz.h"
 
 // ==========================================================================
-// -- This class implement the standard arithmetic with Modulo elements:
+// -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
 // ==========================================================================
 
@@ -28,13 +28,13 @@ public:
         // ----- Exported Types and constantes
     typedef uint64 Residu_t;                    // - type to store residue
     enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-        // ----- Representation of element of the domain ZpzDom
+        // ----- Representation of Element of the domain ZpzDom
     typedef int64 Rep;
-    typedef int64 element;
+    typedef int64 Element;
     typedef int64 Element;
 
 
-        // ----- Representation of vector of the element
+        // ----- Representation of vector of the Element
     typedef Rep* Array;
     typedef const Rep* constArray;
 
@@ -83,12 +83,10 @@ public:
         // ----- Misc methods
     int areEqual( const  Rep, const Rep) const;
     int areNEqual( const Rep, const Rep) const;
-    int iszero( const Rep a ) const;
+    int isZero( const Rep a ) const;
     int isnzero( const Rep a ) const;
-    int isone ( const Rep a ) const;
+    int isOne ( const Rep a ) const;
     size_t length ( const Rep a ) const;
-    bool isZero( const Rep a ) const ;
-    bool isOne ( const Rep a ) const ;
 
         // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
     Rep& mul (Rep& r, const Rep a, const Rep b) const;

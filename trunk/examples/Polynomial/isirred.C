@@ -20,7 +20,7 @@ int main(int argc, char** argv)
   GFqDom<long> F(MOD, expo);
   
   Poly1FactorDom<GFqDom<long>, Dense> FD(F,"X");
-  Poly1FactorDom<GFqDom<long>, Dense>::element P;
+  Poly1FactorDom<GFqDom<long>, Dense>::Element P;
   FD.read( cin, P );
 
         Timer tim; tim.clear(); tim.start();

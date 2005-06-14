@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givrns.h,v 1.2 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givrns.h,v 1.3 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 //  Modular arithmetic for GIVARO. Here is defined arithmetic functions
@@ -48,11 +48,11 @@ public:
         // -- Convert a mixed radix representation to an Integer
     void MixedRadixToRing( RING& res,  const array& mixrad ) const;
     
-        // -- Convert a Ring element to a its RNS representation
+        // -- Convert a Ring Element to a its RNS representation
         // with the "this" rns system.
     void RingToRns( array& rns, const RING& a ) const;
     
-        // -- Convert a RNS representation to a RING element
+        // -- Convert a RNS representation to a RING Element
     void RnsToRing( RING& a, const array& rns ) const;
 
         // ------------- Access methods

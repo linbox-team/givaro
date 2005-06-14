@@ -20,9 +20,9 @@ int main(int argc, char** argv)
   GFqDom<long> F(MOD, expo);
   
   Poly1FactorDom<GFqDom<long>, Dense> FD(F,"X");
-  Poly1FactorDom<GFqDom<long>, Dense>::element P;
+  Poly1FactorDom<GFqDom<long>, Dense>::Element P;
   FD.read( cin, P );
-  GFqDom<long>::element res, val;
+  GFqDom<long>::Element res, val;
   F.read( cin, val );
 
         Timer tim; tim.clear(); tim.start();
@@ -48,12 +48,12 @@ int main(int argc, char** argv)
 
 //         bool f;
 
-//     Poly1FactorDom<GFqDom<long>, Dense>::element W,D; 
+//     Poly1FactorDom<GFqDom<long>, Dense>::Element W,D; 
 //     FD.gcd(W,FD.diff(D,P),P);
 //     Degree d, dP;
 //     if (FD.degree(d,W) > 0) return 0;
 //         // Distinct degree free ?
-//     Poly1FactorDom<GFqDom<long>, Dense>::element  Unit, G1; 
+//     Poly1FactorDom<GFqDom<long>, Dense>::Element  Unit, G1; 
 //     FD.init(Unit, Degree(1), F.one);
 //     W.copy(Unit);
 //     FD.degree(dP,P); Degree dPo = (dP/2);

@@ -11,7 +11,7 @@ using namespace std;
 int main(int argc, char ** argv)
 {
     IntNumTheoDom<> IP;
-    IntNumTheoDom<>::element a,q,o;
+    IntNumTheoDom<>::Element a,q,o;
     if (argc > 1) a = Integer(argv[1]); else cin >> a;
     if (argc > 2) q = Integer(argv[2]); else cin >> q;
 

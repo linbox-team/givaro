@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 
 
   IntegerDom IP;
-  IntegerDom::element g,a,b,u,v;
+  IntegerDom::Element g,a,b,u,v;
   if (argc > 1) a = Integer(argv[1]); else cin >> a;
   if (argc > 2) b = Integer(argv[2]); else cin >> b;
   

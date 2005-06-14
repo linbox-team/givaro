@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givratmuldiv.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givratmuldiv.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -14,10 +14,10 @@
 Rational Rational::operator * (const Rational& r) const
 {
 
-  if (iszero(r)) return Rational(0L) ;
-  if (iszero(*this)) return Rational(0L) ;
-  if (isone(r)) return *this ;
-  if (isone(*this)) return r ;
+  if (isZero(r)) return Rational(0L) ;
+  if (isZero(*this)) return Rational(0L) ;
+  if (isOne(r)) return *this ;
+  if (isOne(*this)) return r ;
   if (isinteger(*this) && isinteger(r))
     return Rational(num*r.num) ;
 
@@ -39,10 +39,10 @@ Rational Rational::operator * (const Rational& r) const
 Rational& Rational::operator *= (const Rational& r)
 {
 
-  if (iszero(r)) return *this=Rational(0L) ;
-  if (iszero(*this)) return *this ;
-  if (isone(r)) return *this ;
-  if (isone(*this)) return *this=r ;
+  if (isZero(r)) return *this=Rational(0L) ;
+  if (isZero(*this)) return *this ;
+  if (isOne(r)) return *this ;
+  if (isOne(*this)) return *this=r ;
   if (isinteger(*this) && isinteger(r)) {
       num *= r.num;
       return *this;
@@ -69,12 +69,12 @@ Rational& Rational::operator *= (const Rational& r)
 // --------------------------------------- operator / 
 Rational Rational::operator / (const Rational& r) const 
 {
-  if ( iszero(r) ) {
+  if ( isZero(r) ) {
      throw GivMathDivZero("*** division by zero, in operator / (const Rational&)") ;
   }
-  if (iszero(*this)) return Rational(0L) ;
-  if (isone(r)) return *this ;
-  if (isone(*this))  {
+  if (isZero(*this)) return Rational(0L) ;
+  if (isOne(r)) return *this ;
+  if (isOne(*this))  {
     if (sign(r) < 0)
       return Rational(r.den, r.num, 0) ;
     else 
@@ -102,12 +102,12 @@ Rational Rational::operator / (const Rational& r) const
 // --------------------------------------- operator /= 
 Rational& Rational::operator /= (const Rational& r)
 {
-  if ( iszero(r) ) {
+  if ( isZero(r) ) {
      throw GivMathDivZero("*** division by zero, in operator / (const Rational&)") ;
   }
-  if (iszero(*this)) return *this ;
-  if (isone(r)) return *this ;
-  if (isone(*this))  {
+  if (isZero(*this)) return *this ;
+  if (isOne(r)) return *this ;
+  if (isOne(*this))  {
       if (sign(r) < 0) {
           num = r.den;
           den = r.num;

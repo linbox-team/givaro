@@ -7,8 +7,8 @@
 int main(int argc, char** argv)
 {
   IntNumTheoDom<> IP;
-  IntNumTheoDom<>::element a,pr;
-  if (argc > 1) a = IntNumTheoDom<>::element(argv[1]); else std::cin >> a;
+  IntNumTheoDom<>::Element a,pr;
+  if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
   
         Timer tim; tim.clear(); tim.start();
 	IP.prim_elem(pr, a);

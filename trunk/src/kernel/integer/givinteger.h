@@ -19,7 +19,6 @@
 class IntegerDom : public Integer {
 public:
     typedef Integer Rep;
-    typedef Rep element;
     typedef Rep Element;
 
 
@@ -110,9 +109,8 @@ public:
   // - Misc
   unsigned long length (const Rep& a) const { return ::length(a); }
   int sign   (const Rep& a) const { return ::sign(a); }
-  bool iszero (const Rep& a) const { return ::iszero(a); }
-  bool isZero (const Rep& a) const { return ::iszero(a); }
-  bool isone  (const Rep& a) const { return ::isone(a); }
+  bool isZero (const Rep& a) const { return ::isZero(a); }
+  bool isOne  (const Rep& a) const { return ::isOne(a); }
   bool areEqual (const Rep& a, const Rep& b) const { return compare(a,b) ==0;}
   bool areNEqual(const Rep& a, const Rep& b) const { return compare(a,b) !=0;}
     bool isgeq(const Rep& a, const Rep& b) const { return compare(a,b) >= 0;}

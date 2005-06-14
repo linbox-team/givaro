@@ -8,9 +8,9 @@ void FaireEssai(const FField & F) {
 
   F.write( cout << "Working in : " ) << endl;
 
-  typename FField::element a, b, r;
+  typename FField::Element a, b, r;
 
-  std::cout << "Enter an element of this field: ";  F.read( std::cin , a ); 
+  std::cout << "Enter an Element of this field: ";  F.read( std::cin , a ); 
 //   F.init( a, "1+3*X+5*X^2" );
   F.init( b, (Integer)23 );
 

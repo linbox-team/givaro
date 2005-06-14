@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 
 
   IntPrimeDom IP; 
-  IntPrimeDom::element m;
+  IntPrimeDom::Element m;
   if (argc > 1) m = Integer(argv[1]);
   unsigned int r = argc > 2 ? atoi(argv[2]) : 5;
   

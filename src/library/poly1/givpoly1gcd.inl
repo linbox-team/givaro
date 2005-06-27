@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.4 2005-06-14 14:53:14 pernet Exp $
+// $Id: givpoly1gcd.inl,v 1.5 2005-06-27 09:07:21 jgdumas Exp $
 // ==========================================================================
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
@@ -69,13 +69,13 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   Degree degF, degG;
   degree(degF,A); degree(degG,B);
   if ((degF < 0) || (degG == 0)) {
-      init(T0, Degree(0), _domain.inv( tt, leadcoef(r0,B)));
+      assign(T0, Degree(0), _domain.inv( tt, leadcoef(r0,B)));
       init(S0, 0);
       assign(F, B);
       return mulin(F,tt);
   }
   if ((degG < 0) || (degF == 0)) {
-      init(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
+      assign(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
       init(T0, 0);
       assign(F, A);
       return mulin(F,tt);
@@ -99,10 +99,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
 
   Rep S1,R1,T1,Q,TMP, TMP2;
 
-  init(S0, 0, _domain.inv(tt,r0) );
+  assign(S0, 0, _domain.inv(tt,r0) );
   assign(S1,zero);
   assign(T0,zero);
-  init(T1, 0, _domain.inv(tt,r1) );
+  assign(T1, 0, _domain.inv(tt,r1) );
   
   while ( ! isZero(G) ) {
       divmod(Q,R1,F,G);
@@ -125,7 +125,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Re
   Degree degF, degG;
   degree(degF,A); degree(degG,B);
   if ((degF <= 0) || (degG <= 0) ) {
-      return init(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
+      return assign(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
   }
   
 //   if (degF >= degG) {
@@ -145,7 +145,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Re
 
   Rep S1,R1,Q,TMP, TMP2;
 
-  init(S0, 0, _domain.inv(tt,r0) );
+  assign(S0, 0, _domain.inv(tt,r0) );
   assign(S1,zero);
   
   while ( ! isZero(G) ) {
@@ -187,10 +187,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& 
 
   Rep S1,R1,T1,Q,TMP, TMP2;
 
-  init(S0, 0, _domain.inv(tt,r0) );
+  assign(S0, 0, _domain.inv(tt,r0) );
   assign(S1,zero);
   assign(T0,zero);
-  init(T1, 0, _domain.inv(tt,r1) );
+  assign(T1, 0, _domain.inv(tt,r1) );
   
   while ( ! isZero(G) ) {
       divmod(Q,R1,F,G);

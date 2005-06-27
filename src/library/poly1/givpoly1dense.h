@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.7 2005-06-20 12:16:26 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.8 2005-06-27 09:07:21 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -104,8 +104,6 @@ public :
     template<class XXX>
     Rep& init (Rep& p, const Degree deg , const XXX& lcoeff) const;
 
-        // -- WARNING : F.assign(P[deg], lcoeff); 
-    Rep& init (Rep& p, const Degree deg , const Type_t& lcoeff) const;
         //    F.assign(P[deg], lcoeff); 
     Rep& assign (Rep& p, const Degree deg , const Type_t& lcoeff) const;
         // -- Assign polynomial with field value : F.assign(p[0],cste)
@@ -134,6 +132,9 @@ public :
 
         // -- Returns the leading coefficients
     Type_t& leadcoef(Type_t& c, const Rep& P) const;
+
+        // -- Returns the i-th coefficients
+    Type_t& getEntry(Type_t& c, const Degree& i, const Rep& P) const;
 
         // -- Returns the degree of polynomial
     Degree& degree(Degree& d, const Rep& P) const;

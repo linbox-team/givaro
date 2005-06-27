@@ -5,7 +5,7 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <06 Jan 05 17:22:58 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <27 Jun 05 11:35:32 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_H_
 #define _GIV_POLY1_FACTO_H_
@@ -26,6 +26,9 @@ public:
     typedef typename Poly1Dom<Domain,Tag>::Element Element;
     typedef RandIter random_generator;
 
+        // typedef typename Domain::Residu_t Residu_t;
+    typedef typename Signed_Trait<typename Domain::Element>::unsigned_type Residu_t;
+
         // Warning : there is a copy of the random Iterator ...
     Poly1FactorDom (Domain& d, const Indeter& X = Indeter(), const RandIter& g = RandIter() ) : Poly1Dom<Domain,Tag> (d,X), _g(g) {}
     Poly1FactorDom (const Poly1Dom<Domain,Tag>& P, const RandIter& g = RandIter()) : Poly1Dom<Domain,Tag> (P), _g(g) {}
@@ -38,7 +41,7 @@ public:
         Container< Rep > & L
         , const Rep& G
         , Degree d
-        , typename Domain::Residu_t MOD)  const ;
+        , Residu_t MOD)  const ;
     
     template< template<class> class Container> void SplitFactor( 
         Container< Rep > & L
@@ -52,7 +55,7 @@ public:
         Rep& R
         , const Rep& G
         , Degree d
-        , typename Domain::Residu_t MOD) const  ;
+        , Residu_t MOD) const  ;
     
     Rep& SplitFactor(
         Rep& R
@@ -70,7 +73,7 @@ public:
     template< template<class> class Container> void DistinctDegreeFactor(
         Container< Rep > & L
         , const Rep& f
-        , typename Domain::Residu_t MOD)  const ;
+        , Residu_t MOD)  const ;
 
     template< template<class> class Container> void DistinctDegreeFactor(
         Container< Rep > & L
@@ -86,7 +89,7 @@ public:
         Container< Rep > & Lf
         , Container< unsigned long > & Le
         , const Rep& f
-        , typename Domain::Residu_t MOD)  const ;
+        , Residu_t MOD)  const ;
 
     template< template<class> class Container> void CZfactor( 
         Container< Rep > & Lf
@@ -103,7 +106,7 @@ public:
     Rep& factor(
         Rep& W
         , const Rep& P
-        , typename Domain::Residu_t MOD )  const ;
+        , Residu_t MOD )  const ;
  
     Rep& factor(
         Rep& W
@@ -118,7 +121,7 @@ public:
 
     bool is_irreducible(
         const Rep& P
-        , typename Domain::Residu_t MOD )  const ;
+        , Residu_t MOD )  const ;
     
     bool is_irreducible(const Rep& P )  const {
         return is_irreducible(P,_domain.residu());
@@ -126,7 +129,7 @@ public:
     
     bool is_irreducible2(
         const Rep& P
-        , typename Domain::Residu_t MOD )  const ;
+        , Residu_t MOD )  const ;
     
     bool is_irreducible2(const Rep& P )  const {
         return is_irreducible2(P,_domain.residu());

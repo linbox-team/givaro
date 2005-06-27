@@ -21,10 +21,10 @@ class Extension {
 public:
     typedef Extension<BFT> Self_t;
     typedef BFT BaseField_t;
-    typedef typename BFT::Residu_t Residu_t;
-    typedef Poly1FactorDom< BFT, Dense > Pol_t;
-
     typedef typename BFT::Element BFElement; 
+    typedef typename Signed_Trait<BFElement>::unsigned_type Residu_t;
+
+    typedef Poly1FactorDom< BFT, Dense > Pol_t;
     typedef typename Pol_t::Element PolElement;
 
 protected:

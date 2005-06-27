@@ -5,7 +5,7 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <06 Jan 05 18:01:43 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <27 Jun 05 11:36:19 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_INL_
 #define _GIV_POLY1_FACTO_INL_
@@ -22,7 +22,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
     Container< Rep > & L
     , const Rep& G
     , Degree d
-    , typename Domain::Residu_t MOD) const {
+    , Residu_t MOD) const {
     Degree dG;degree(dG,G);
     if (dG == d)
         L.push_back(G);
@@ -38,7 +38,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                     SplitFactor ( L, G1, d, MOD) ;
                 }
 
-                typename Domain::Residu_t pp = (power(MOD, d.value()) - 1)/2;
+                typename Domain::Element pp = (power(MOD, d.value()) - 1)/2;
                 Rep tp, tp2, G2;
                 gcd(G2,G, sub(tp2, powmod(tp, tmp, pp, G) , one) );
                 Degree dG2; degree(dG2,G2);
@@ -65,7 +65,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     Rep& G1
     , const Rep& G
     , Degree d
-    , typename Domain::Residu_t MOD)  const  {
+    , Residu_t MOD)  const  {
     Degree dG;degree(dG,G);
     if (dG == d)
         return G1.copy(G) ;
@@ -78,7 +78,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
                 if (dG1 > 0 ) {
                     return G1;
                 }
-                typename Domain::Residu_t pp = (power(MOD, d.value()) - 1)/2;
+                typename Domain::Element pp = (power(MOD, d.value()) - 1)/2;
                 Rep tp, tp2, G2;
                 gcd(G2,G, sub(tp2, powmod(tp, tmp, pp, G) , one) );
                 Degree dG2; degree(dG2,G2);
@@ -107,7 +107,7 @@ template< template<class> class Container >
 inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     Container< Rep > & L
     , const Rep& f
-    , typename Domain::Residu_t MOD)  const  {
+    , Residu_t MOD)  const  {
     // srand48(BaseTimer::seed());
 // write(std::cerr << "DD in: ", f) << std::endl;
     Rep W, D, P = f;
@@ -140,7 +140,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::CZfactor(
     Container< Rep > & Lf
     , Container< unsigned long > & Le
     , const Rep & P
-    , typename Domain::Residu_t MOD ) const  {
+    , Residu_t MOD ) const  {
 // write(std::cerr << "CZ in: ", P) << std::endl;
     Degree dp; degree(dp,P);
     size_t nb=dp.value()+1; 
@@ -171,7 +171,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::CZfactor(
 template<class Domain, class Tag, class RandIter>
 inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible(
     const Rep& P
-    , typename Domain::Residu_t MOD ) const  {
+    , Residu_t MOD ) const  {
         // Square free ?
     Rep W,D; gcd(W,diff(D,P),P);
     Degree d, dP;
@@ -198,7 +198,7 @@ template<class Domain, class Tag, class RandIter>
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::factor(
     Rep& W
     , const Rep& P
-    , typename Domain::Residu_t MOD)  const {
+    , Residu_t MOD)  const {
 // write(cerr << "In factor P:", P) << endl;
         // Square free ?
     Rep D; gcd(W,diff(D,P),P);

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.3 2005-06-14 14:53:14 pernet Exp $
+// $Id: givpoly1misc.inl,v 1.4 2005-06-27 09:07:21 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -94,10 +94,23 @@ inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::leadcoef
 {
   Degree dP;
   degree(dP, P);
-  if (dP == Degree::deginfty) _domain.assign(c, _domain.zero);
-  else _domain.assign(c, P[dP.value()]);
-  return c;
+  if (dP == Degree::deginfty) return _domain.assign(c, _domain.zero);
+  else return _domain.assign(c, P[dP.value()]);
 }
+
+
+        // -- Returns the i-th coefficients
+template<class Domain>
+inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::getEntry (Type_t& c, const Degree& i, const Rep& P) const 
+{
+    Degree dP;
+    degree(dP, P);
+    if (dP < i) return _domain.assign(c, _domain.zero);
+    else return _domain.assign(c, P[i.value()]);
+}
+    
+
+
 
 template <class Domain>
 inline Degree& Poly1Dom<Domain,Dense>::val(Degree& d, const Rep& P) const

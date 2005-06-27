@@ -81,6 +81,10 @@ public:
         return _pD.modin( _pD.init(e, i), _irred) ; 
     }
     
+    PolElement& assign( PolElement& e, const BFElement& a) const { 
+        return _pD.assign(e, a) ; 
+    }
+
     PolElement& assign( PolElement& e, const PolElement& a) const { 
         return _pD.assign(e, a) ; 
     }

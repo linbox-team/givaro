@@ -2,13 +2,12 @@
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <10 Dec 04 13:27:18 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 05 14:12:55 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_INL_
 #define _GIVARO_FACTORISATION_INL_
 
 
-#include "givtimer.h"
 #include "givinteger.h"
 #include "givintprime.h"
 #include "givintfactor.h"

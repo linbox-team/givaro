@@ -5,12 +5,11 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <27 Jun 05 11:36:19 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 05 14:16:04 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_INL_
 #define _GIV_POLY1_FACTO_INL_
 #include <givaro/givpower.h>
-#include <givaro/givtimer.h>
 
 // ---------------------------------------------------------------
 // Splits a polynomial into prime factors of same degree

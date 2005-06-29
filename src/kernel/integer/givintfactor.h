@@ -4,13 +4,12 @@
 //              Pollard's rho method for factorization
 //              Elliptic curves factorization by Lenstra
 // Needs Container structures : stl ones for instance
-// Time-stamp: <10 Dec 04 13:27:13 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 05 14:12:09 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_H_
 #define _GIVARO_FACTORISATION_H_
 
 #include <iostream>
-#include "givaro/givtimer.h"
 #include "givaro/givinteger.h"
 #include "givaro/givintprime.h"
 #include "givaro/givrandom.h"

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givcategory.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givcategory.h,v 1.3 2005-06-29 12:17:52 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - Definition of traits.
@@ -46,9 +46,9 @@ struct IsNotEqual { enum {val = !IsEqual<A,B>::val }; };
 class Sporadic{}; 
 class Dense : public Sporadic {}; 
 class Sparse{}; 
-class Diagonal{}; typedef Diagonal Diag; 
-class Toeplitz{}; 
-class Hensel{}; 
+// class Diagonal{}; typedef Diagonal Diag; 
+// class Toeplitz{}; 
+// class Hensel{}; 
 
 template<class CLASS>
 struct Sparsity_Trait {

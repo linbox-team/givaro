@@ -5,13 +5,13 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givtimer.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givtimer.h,v 1.2 2005-06-29 12:17:52 jgdumas Exp $
 // ==========================================================================
 // Description:
 
 #include <iostream>
 
-// class RealTimer; class SysTimer; class UserTimer;
+class BaseTimer; class RealTimer; class SysTimer; class UserTimer;
 
 class BaseTimer { 
 public:
@@ -39,12 +39,13 @@ static long seed();
   const BaseTimer operator += (const BaseTimer & T) { return *this = *this + T; };
   const BaseTimer operator -= (const BaseTimer & T) { return *this = *this - T; };
 
+  friend std::ostream& operator<< (std::ostream& o, const BaseTimer& BT)
+        { return BT.print(o);}
+
+
 public:
    double _t;  // time  
 };
-inline std::ostream& operator<< (std::ostream& o, const BaseTimer& BT)
-{ return BT.print(o);}
-
 
 class RealTimer : public BaseTimer {
 public:

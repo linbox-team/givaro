@@ -3,11 +3,10 @@
 // =================================================================== //
 // Givaro : Prime numbers
 //              Primality tests
-// Time-stamp: <09 Jun 04 20:33:45 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 05 14:11:07 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include <math.h>
 #include "givaro/givintprime.h"
-#include "givaro/givtimer.h"
 
 // =================================================================== //
 // Primality tests and factorization algorithms

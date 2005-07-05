@@ -5,6 +5,7 @@
 #include <givaro/givgfq.h>
 #include <givaro/givcra.h>    // Chinese Remainder of two elements
 #include <givaro/givrns.h>    // Chinese Remainder of an array of elements
+#include <givaro/givtimer.h>
 #include <givaro/givrandom.h>
 
 

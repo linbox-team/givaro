@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.5 2005-06-27 09:07:21 jgdumas Exp $
+// $Id: givpoly1gcd.inl,v 1.6 2005-07-05 08:51:34 pernet Exp $
 // ==========================================================================
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
@@ -21,6 +21,10 @@
 template <class Domain> 
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& G, const Rep& P, const Rep& Q) const
 {
+
+  typename Domain::Element one;
+  _domain.init(one,1UL);
+
   Rep U,V; 
   Degree degU, degV;
   degree(degU,P); degree(degV,Q);
@@ -37,7 +41,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   }
   // -- PRS (U,V) using pmod:
   Type_t g;
-  _domain.assign(g, _domain.one);
+  _domain.assign(g, one);
   Degree degR;
   Rep R;
   do {

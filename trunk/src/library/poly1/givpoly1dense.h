@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.8 2005-06-27 09:07:21 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.9 2005-07-05 08:51:34 pernet Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -52,7 +52,7 @@ public:
 template <class Domain>
 class Poly1Dom<Domain,Dense> {
 protected:  //  -- Representation 
-    Domain& 		_domain;  // -- subdomain
+  const Domain& 		_domain;  // -- subdomain
     Indeter		_x;	  // -- for I/O, if any
 public :
 
@@ -73,7 +73,7 @@ public :
     typedef          Storage_t                 Rep;
     typedef          Storage_t                 Element;
 
-    Poly1Dom (Domain& d, const Indeter& X = Indeter() );
+    Poly1Dom (const Domain& d, const Indeter& X = Indeter() );
     Poly1Dom (const Self_t&);
 
     int operator==( const Poly1Dom<Domain,Dense>& BC) const 

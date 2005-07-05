@@ -3,11 +3,11 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.4 2005-06-27 09:07:21 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.5 2005-07-05 08:51:34 pernet Exp $
 // ==========================================================================
 
 template<class Domain>
-inline Poly1Dom<Domain,Dense>::Poly1Dom(Domain& d, const Indeter& X )
+inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X )
   : _domain(d), _x(X) ,zero(0), one(1)
 { 
 	Type_t _one;

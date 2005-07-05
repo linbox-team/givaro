@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.3 2005-04-28 11:24:21 jgdumas Exp $
+// $Id: givpoly1muldiv.inl,v 1.4 2005-07-05 08:51:34 pernet Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
@@ -205,8 +205,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& 
         // A is written with next remainder in 
         // the division algorithm written at the end.
         // Last step is erasing of the first values.
-//     write(cerr << "Rem(", A) << " ,";
-//     write(cerr, B) << ", X) mod " << _domain.size();
+//     write(std::cerr << "Rem(", A) << " ,";
+//     write(std::cerr, B) << ", X) mod " << _domain.size();
 	Type_t _zero;
 	_domain.init( _zero, 0.0);
     long i = A.size()-B.size();
@@ -231,10 +231,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& 
                 *aai = *ai;
             *aai = _zero;
         }
-//         write(cerr << " = ", A) << ";" << endl;
+//         write(std::cerr << " = ", A) << ";" << std::endl;
         A.erase(A.begin(), A.begin()+(A.size()-B.size()-i));
     }
-//     write(cerr << " = ", setdegree(A)) << ";" << endl;
+//     write(std::cerr << " = ", setdegree(A)) << ";" << std::endl;
     return setdegree(A);
 }
 
@@ -242,11 +242,11 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R, const Rep& A, const Rep& B) const
 {
   Rep Q;
-//   write(cerr, A) << " = (";
-//   write(cerr, B) << ") * (";
+//   write(std::cerr, A) << " = (";
+//   write(std::cerr, B) << ") * (";
   divmod(Q,R,A,B);
-//   write(cerr, Q) << ") + (";
-//   write(cerr, R) << ");" << endl;
+//   write(std::cerr, Q) << ") + (";
+//   write(std::cerr, R) << ");" << std::endl;
   return R;
 }
 
@@ -286,6 +286,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep
   long degQuo = value(degA-degB);
   long degRem = value(degA);
   Q.reallocate(degQuo+1);
+
   assign(R,A);
 
   Type_t tmp;
@@ -375,9 +376,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pdivmod
 //  Poly1Dom<Domain,Dense>::Rep U,V;
 //  assign(U,A);
 //  mulin(U,m);
-//  write(cout << "m*A:", U) << endl;
+//  write(std::cout << "m*A:", U) << std::endl;
 //  mul(U,Q,B);
-//  write(cout << "Q*B:", U) << endl;
+//  write(std::cout << "Q*B:", U) << std::endl;
 }
 
 
@@ -417,11 +418,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pmod
   Type_t tmp, lB;
   _domain.assign(lB, B[degB.value()]);
   long i,j;
-//write(cout << "B:", B) << endl;
-//_domain.write(cout << "lB:", lB) << "^" << degA-degB+1 << endl;
+//write(std::cout << "B:", B) << std::endl;
+//_domain.write(std::cout << "lB:", lB) << "^" << degA-degB+1 << std::endl;
 //   _domain.pow(m, lB, degA.value()-degB.value()+1);
   dom_power(m, lB, degA.value()-degB.value()+1,_domain);
-//_domain.write(cout << "m:", m) << endl;
+//_domain.write(std::cout << "m:", m) << std::endl;
   for (; degB<= degR; )
   {
     long d = degR.value()-degB.value();

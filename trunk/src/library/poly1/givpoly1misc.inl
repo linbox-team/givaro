@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.4 2005-06-27 09:07:21 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.5 2005-07-05 08:51:34 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -38,7 +38,7 @@ inline int Poly1Dom<Domain,Dense>::areEqual (const Rep& P, const Rep& Q) const
     for( typename Element::const_iterator pit = P.begin(), qit = Q.begin();
          pit != P.end(); 
          ++pit, ++qit)
-        if ( _domain.areNEqual(*pit, *qit) ) return 0;
+        if ( !_domain.areEqual(*pit, *qit) ) return 0;
     return 1;
 }
 
@@ -47,14 +47,14 @@ template<class Domain>
 inline int Poly1Dom<Domain,Dense>::areNEqual (const Rep& P, const Rep& Q) const
 {
 // JGD 07.02.1999
-//   return _supportdomain.areNEqual(P,Q);    
-//  return P.areNEqual(Q);    
+//   return !_supportdomain.areEqual(P,Q);    
+//  return !P.areEqual(Q);    
 // JGD 25.09.2001
     if (P.size() != Q.size()) return 1;
     for( typename Element::const_iterator pit = P.begin(), qit = Q.begin();
          pit != P.end(); 
          ++pit, ++qit)
-        if ( _domain.areNEqual(*pit, *qit) ) return 1;
+        if ( !_domain.areEqual(*pit, *qit) ) return 1;
     return 0;
 }
 
@@ -92,9 +92,11 @@ inline Degree& Poly1Dom<Domain,Dense>::degree(Degree& deg, const Rep& P) const
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::leadcoef (Type_t& c, const Rep& P) const
 {
+typename Domain::Element zero;
+_domain.init(zero,0UL);
   Degree dP;
   degree(dP, P);
-  if (dP == Degree::deginfty) return _domain.assign(c, _domain.zero);
+  if (dP == Degree::deginfty) return _domain.assign(c, zero);
   else return _domain.assign(c, P[dP.value()]);
 }
 
@@ -103,9 +105,11 @@ inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::leadcoef
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::getEntry (Type_t& c, const Degree& i, const Rep& P) const 
 {
+    typename Domain::Element zero;
+    _domain.init(zero,0UL);
     Degree dP;
     degree(dP, P);
-    if (dP < i) return _domain.assign(c, _domain.zero);
+    if (dP < i) return _domain.assign(c, zero);
     else return _domain.assign(c, P[i.value()]);
 }
     
@@ -129,8 +133,10 @@ inline Degree& Poly1Dom<Domain,Dense>::val(Degree& d, const Rep& P) const
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Type_t& res, const Rep& P, const Type_t& val) const
 {
+typename Domain::Element zero;
+_domain.init(zero,0UL);
   Degree dP ; degree(dP, P);
-  if (dP == Degree::deginfty) _domain.assign(res, _domain.zero);
+  if (dP == Degree::deginfty) _domain.assign(res, zero);
   else {
     _domain.assign(res, P[dP.value()]);
     for (int i = dP.value(); i>0; --i)
@@ -142,6 +148,10 @@ inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Ty
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::diff(Rep& P, const Rep& Q) const 
 {
+typename Domain::Element zero, one;
+_domain.init(zero,0UL);
+_domain.init(one,1UL);
+
   Degree dQ;
   degree(dQ, Q);
   if ((dQ == Degree::deginfty) || (dQ == 0)) {
@@ -149,9 +159,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::diff(Rep& P
     return P;
   }
   P.reallocate(dQ.value());
-  Type_t cste; _domain.init(cste, _domain.zero);
+  Type_t cste; _domain.init(cste, zero);
   for (int i=0; dQ>i; ++i) {
-    _domain.add(cste, cste, _domain.one);
+    _domain.add(cste, cste, one);
     _domain.mul(P[i], Q[i+1], cste);
   }
   return P;
@@ -190,9 +200,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::powmod( Rep
     Rep puiss, tmp;
     mod(puiss, P, U);
     assign(W,one);
-    IntegerDom::Element n,q,r,deux;
+    IntegerDom::Element n,q,r,deux,zero;
     ID.init(deux,2);
-    if (ID.islt(pwr,ID.zero) ) 
+    ID.init(zero,0UL);
+    if (ID.islt(pwr,zero) ) 
         ID.neg(n,pwr);
     else
         ID.init(n,pwr);

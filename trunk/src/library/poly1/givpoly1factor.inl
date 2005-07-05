@@ -22,6 +22,8 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
     , const Rep& G
     , Degree d
     , Residu_t MOD) const {
+	typename Domain::Element one;
+	_domain.init(one, 1UL);
     Degree dG;degree(dG,G);
     if (dG == d)
         L.push_back(G);
@@ -65,6 +67,8 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     , const Rep& G
     , Degree d
     , Residu_t MOD)  const  {
+	typename Domain::Element one;
+	_domain.init(one, 1UL);
     Degree dG;degree(dG,G);
     if (dG == d)
         return G1.copy(G) ;
@@ -107,11 +111,14 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     Container< Rep > & L
     , const Rep& f
     , Residu_t MOD)  const  {
+
+	typename Domain::Element one;
+	_domain.init(one, 1UL);
     // srand48(BaseTimer::seed());
 // write(std::cerr << "DD in: ", f) << std::endl;
     Rep W, D, P = f;
     Degree dP;
-    Rep Unit, G1; init(Unit, Degree(1), _domain.one);
+    Rep Unit, G1; init(Unit, Degree(1), one);
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
@@ -176,7 +183,7 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible(
     Degree d, dP;
     if (degree(d,W) > 0) return 0;
         // Distinct degree free ?
-    Rep Unit, G1; init(Unit, Degree(1), _domain.one);
+    Rep Unit, G1; init(Unit, Degree(1), one);
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
@@ -207,7 +214,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
  
     if (degree(d,W) > 0) return W;
         // Distinct degree free ?
-    Rep Unit, G1; init(Unit, Degree(1), _domain.one);
+    Rep Unit, G1; init(Unit, Degree(1), one);
 // write(cerr << "In factor U:", Unit) << endl;
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);

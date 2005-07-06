@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.6 2005-06-14 14:53:14 pernet Exp $
+// $Id: givzpz16std.inl,v 1.7 2005-07-06 12:23:37 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -19,7 +19,7 @@
 
 // r = a - b
 //#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
-#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = a>b? a-b: (p-b)+a )
+#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = a>=b? a-b: (p-b)+a )
 
 // r -= a
 #define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r -= a; r= (r < 0 ? r+p : r);}

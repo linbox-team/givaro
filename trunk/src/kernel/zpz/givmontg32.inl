@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.6 2005-06-14 14:53:14 pernet Exp $
+// $Id: givmontg32.inl,v 1.7 2005-07-06 12:23:37 jgdumas Exp $
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
@@ -55,7 +55,7 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const 
 #define __GIVARO_MONTG32_MULIN(r,p,a) (redcin(r*=a))
 
 // r = a - b
-#define __GIVARO_MONTG32_SUB(r,p,a,b) ( r = (a>b)? a-b: (p-b)+a )
+#define __GIVARO_MONTG32_SUB(r,p,a,b) ( r = (a>=b)? a-b: (p-b)+a )
 // r -= a
 //#define __GIVARO_MONTG32_SUBIN(r,p,a) { r -= a; r= (r < 0 ? r+p : r); }
 #define __GIVARO_MONTG32_SUBIN(r,p,a) { if (r<a) r+=(p-a); else r-=a; }

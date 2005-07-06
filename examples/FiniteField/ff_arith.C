@@ -54,10 +54,21 @@ void TestField(const Field& F) {
     F.write( F.write( std::cout << "1/", a) << " is ", b) << std::endl;
     F.mul(c,b,a);
     F.write( std::cout << "1 is ", c) << std::endl;
-    
-
     F.init(a,22995);
     F.init(b,22995);
+    F.write( std::cout << "1/", a) << " is ";
+    F.invin(a);
+    F.write( std::cout, a) << std::endl;
+    F.mulin(a,b);
+    F.write( std::cout << "1 is ", a) << std::endl;
+
+    F.init(a,37404);
+    F.inv(b,a);
+    F.write( F.write( std::cout << "1/", a) << " is ", b) << std::endl;
+    F.mul(c,b,a);
+    F.write( std::cout << "1 is ", c) << std::endl;
+    F.init(a,37404);
+    F.init(b,37404);
     F.write( std::cout << "1/", a) << " is ";
     F.invin(a);
     F.write( std::cout, a) << std::endl;

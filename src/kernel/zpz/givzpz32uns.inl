@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32uns.inl,v 1.4 2005-06-14 14:53:14 pernet Exp $
+// $Id: givzpz32uns.inl,v 1.5 2005-07-06 12:26:41 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -18,7 +18,7 @@
 #define __GIVARO_ZPZ32_Uns_MULIN(r,p,a) ( r = (r*a) % p )
 
 // r = a - b
-#define __GIVARO_ZPZ32_Uns_SUB(r,p,a,b) ( r = (a>b) ? a-b: (p-b)+a )
+#define __GIVARO_ZPZ32_Uns_SUB(r,p,a,b) ( r = (a>=b) ? a-b: (p-b)+a )
 
 // r -= a
 #define __GIVARO_ZPZ32_Uns_SUBIN(r,p,a) { if (r<a) r+=(p-a); else r-=a; }

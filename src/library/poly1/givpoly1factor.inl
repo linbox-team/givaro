@@ -178,6 +178,8 @@ template<class Domain, class Tag, class RandIter>
 inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible(
     const Rep& P
     , Residu_t MOD ) const  {
+	typename Domain::Element one;
+	_domain.init(one, 1UL);
         // Square free ?
     Rep W,D; gcd(W,diff(D,P),P);
     Degree d, dP;

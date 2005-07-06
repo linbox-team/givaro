@@ -47,6 +47,23 @@ void TestField(const Field& F) {
     F.write( F.write( F.write( std::cout, a) << " /= ",  b) << " is ", 
              F.divin(a, b)
 	     ) << std::endl;
+
+
+    F.init(a,22995);
+    F.inv(b,a);
+    F.write( F.write( std::cout << "1/", a) << " is ", b) << std::endl;
+    F.mul(c,b,a);
+    F.write( std::cout << "1 is ", c) << std::endl;
+    
+
+    F.init(a,22995);
+    F.init(b,22995);
+    F.write( std::cout << "1/", a) << " is ";
+    F.invin(a);
+    F.write( std::cout, a) << std::endl;
+    F.mulin(a,b);
+    F.write( std::cout << "1 is ", a) << std::endl;
+    
 }
 
 extern "C" {
@@ -76,6 +93,7 @@ int main(int argc, char ** argv) {
 
         // modulo 13 over 32 bits with Montgomery reduction
     Montgomery<Std32> M13(13); TestField( M13 );
+    Montgomery<Std32> M3(39989); TestField( M3 );
     
         // modulo 13 with primitive root representation
     GFqDom<int> GF13( 13 ); TestField( GF13 );

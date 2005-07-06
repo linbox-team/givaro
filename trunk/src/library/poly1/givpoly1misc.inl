@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.5 2005-07-05 08:51:34 pernet Exp $
+// $Id: givpoly1misc.inl,v 1.6 2005-07-06 10:10:20 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -13,7 +13,8 @@
 
 template<class Domain>
 inline int Poly1Dom<Domain,Dense>::isZero (const Rep& P) const
-{ 
+{
+  setdegree((Rep&)P);
   if (P.size() ==0) return 1;
   if (P.size() ==1) return _domain.isZero(P[0]);
   else return 0;
@@ -22,8 +23,7 @@ inline int Poly1Dom<Domain,Dense>::isZero (const Rep& P) const
 template<class Domain>
 inline int Poly1Dom<Domain,Dense>::isOne (const Rep& P) const
 { 
-// JGD 15.12.1999
-//   if (P.size() ==0) return 1;
+  setdegree((Rep&)P); 
   if (P.size() ==1) return _domain.isOne(P[0]);
   else return 0;
 }
@@ -31,9 +31,8 @@ inline int Poly1Dom<Domain,Dense>::isOne (const Rep& P) const
 template<class Domain>
 inline int Poly1Dom<Domain,Dense>::areEqual (const Rep& P, const Rep& Q) const
 {
-// JGD 07.02.1999
-//   return P.areEqual(Q);  
-// JGD 25.09.2001
+    setdegree((Rep&)P); 
+    setdegree((Rep&)Q); 
     if (P.size() != Q.size()) return 0;
     for( typename Element::const_iterator pit = P.begin(), qit = Q.begin();
          pit != P.end(); 
@@ -46,10 +45,8 @@ inline int Poly1Dom<Domain,Dense>::areEqual (const Rep& P, const Rep& Q) const
 template<class Domain>
 inline int Poly1Dom<Domain,Dense>::areNEqual (const Rep& P, const Rep& Q) const
 {
-// JGD 07.02.1999
-//   return !_supportdomain.areEqual(P,Q);    
-//  return !P.areEqual(Q);    
-// JGD 25.09.2001
+    setdegree((Rep&)P); 
+    setdegree((Rep&)Q); 
     if (P.size() != Q.size()) return 1;
     for( typename Element::const_iterator pit = P.begin(), qit = Q.begin();
          pit != P.end(); 

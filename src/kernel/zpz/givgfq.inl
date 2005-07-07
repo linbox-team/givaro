@@ -321,7 +321,7 @@ inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axpyin
  (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b) const 
 { 
   Rep tmp = r; 
-  _GIVARO_GFQ_MULADD(r,a,b,tmp, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; 
+  _GIVARO_GFQ_MULADD((r),a,b,tmp, (GFqDom<TT>::_qm1), (GFqDom<TT>::_plus1)) ; 
 return r; }
 
 template<typename TT> 

@@ -42,7 +42,6 @@ public:
     bool extension_type () const { return true; }
 
     typedef PolElement Element;
-    typedef PolElement Element;
 
 
     Extension ( const Residu_t p, const Residu_t e = 1)

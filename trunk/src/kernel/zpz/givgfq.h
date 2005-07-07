@@ -29,7 +29,6 @@ public:
     
     
     typedef Rep Element;
-    typedef Element Element;
 //     class Element {
 //     public:
 //         mutable Rep _value;

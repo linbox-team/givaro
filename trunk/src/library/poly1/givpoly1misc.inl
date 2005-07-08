@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.6 2005-07-06 10:10:20 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.7 2005-07-08 08:52:37 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -229,14 +229,26 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(Rand
 // -- Random dense polynomial of size s
 template <class Domain> template<class RandIter>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, long s) const { return random(g, r,Degree(s-1)); }
+
     
 // -- Random dense polynomial of degree d
+// template <class Domain> template<class RandIter>
+// inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, Degree d) const {
+//     r.reallocate(d.value()+1);
+//     _domain.nonzerorandom(g,r[d.value()]);
+//     for (int i=d.value(); i--;)
+//         _domain.random(g,r[i]);
+//     return r;       
+// }
+    
+// -- Random dense polynomial of degree d
+// TEMPORARY VERSION SATISFYING LINBOX
 template <class Domain> template<class RandIter>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, Degree d) const {
     r.reallocate(d.value()+1);
-    _domain.nonzerorandom(g, r[d.value()]);
+    while (_domain.isZero(_domain.init(r[d.value()], g()))) {};
     for (int i=d.value(); i--;)
-        _domain.random(g, r[i]);
+        _domain.init(r[i],g());
     return r;       
 }
 

@@ -181,11 +181,13 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible(
 	typename Domain::Element one;
 	_domain.init(one, 1UL);
         // Square free ?
-    Rep W,D; gcd(W,diff(D,P),P);
+   typename Domain::Element _one;
+   _domain.init(_one,1UL); 
+   Rep W,D; gcd(W,diff(D,P),P);
     Degree d, dP;
     if (degree(d,W) > 0) return 0;
         // Distinct degree free ?
-    Rep Unit, G1; init(Unit, Degree(1), one);
+    Rep Unit, G1; init(Unit, Degree(1), _one);
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {

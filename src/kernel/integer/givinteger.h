@@ -95,8 +95,8 @@ public:
   Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r = ::pow(n, l); }
 
   // - return square root of n  
-  Rep& sqrt(Rep& s, const Rep& n) const { return s = ::sqrt(n); }
-  Rep& sqrt(Rep& s, Rep& r, const Rep& n) const { return s = ::sqrt(n, r); }
+  Rep& sqrt(Rep& s, const Rep& n) const { return ::sqrt(s,n); }
+  Rep& sqrt(Rep& s, Rep& r, const Rep& n) const { return ::sqrtrem(s,n, r); }
   // - base p logarithm of a
   long logp(const Rep& a, const Rep& p) const { return ::logp(a,p); }
 

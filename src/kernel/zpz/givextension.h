@@ -56,7 +56,7 @@ public:
 
     Extension ( const BaseField_t& bF, const Residu_t ex = 1)
             : _bF( bF ), _pD( _bF, "ý"  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ) {
-        _pD.creux_random_irreducible( _irred, ex);
+        _pD.creux_random_irreducible( _irred, (unsigned long)(ex));
     }
 
     Extension ( const Self_t& eF)
@@ -307,7 +307,7 @@ class GIV_ExtensionrandIter
     Element& random(Element& elt) const
       {
       // Create new random Elements     
-          elt.resize(_field.order());
+          elt.resize( (size_t)(_field.order()));
           for(typename Element::iterator it = elt.begin(); it != elt.end() ; ++ it) {
               long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
               (_field.base_field()).init(*it , tmp);

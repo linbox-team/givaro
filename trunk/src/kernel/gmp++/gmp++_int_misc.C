@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.7 2005-04-27 14:53:00 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.8 2005-07-08 12:54:59 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -20,20 +20,30 @@ Integer fact ( unsigned long l)
 }
 
 //-------------------------------------------square root
-Integer sqrt(const Integer &a)
+Integer& sqrt(Integer& q, const Integer &a)
 {
-  Integer q;
   mpz_sqrt( (mpz_ptr)&(q.gmp_rep),
               (mpz_ptr)&(a.gmp_rep)) ;
   return q;
 }
 
-Integer sqrt(const Integer &a, Integer& r)
+Integer& sqrtrem(Integer& q, const Integer &a, Integer& r)
 {
-  Integer q;
   mpz_sqrtrem( (mpz_ptr)&(q.gmp_rep),
               (mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(a.gmp_rep)) ;
   return q;
+}
+
+Integer sqrt(const Integer &a)
+{
+  Integer q;
+  return sqrt(q,a);
+}
+
+Integer sqrtrem(const Integer &a, Integer& r)
+{
+  Integer q;
+  return sqrtrem(q,a,r);
 }
 
 bool root(Integer& q, const Integer &a, unsigned int n)

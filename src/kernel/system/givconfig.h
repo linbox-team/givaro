@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.6 2004-10-25 11:36:55 givaro Exp $
+// $Id: givconfig.h,v 1.7 2005-07-08 06:53:20 pernet Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -259,7 +259,8 @@ template<> struct Signed_Trait<float>  : public GIVARO_numeric_limits<float> {
 
 template<> struct Signed_Trait<double>  : public GIVARO_numeric_limits<double> {
     typedef double signed_type;
-    typedef unsigned long unsigned_type;
+    typedef double unsigned_type;
+  //    typedef unsigned long unsigned_type;
 };
 
 

@@ -2,7 +2,7 @@
 #define _GIVARO_MONTG32_H_
 // ==========================================================================
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.6 2005-06-14 14:53:14 pernet Exp $
+// $Id: givmontg32.h,v 1.7 2005-07-12 12:54:37 jgdumas Exp $
 // ==========================================================================
 //
 #include "givbasictype.h"
@@ -36,7 +36,6 @@ public:
         // ----- Representation of Element of the domain Montgomery
     typedef uint32 Rep;
     typedef uint32 Element;
-    typedef Element Element;
 
         // ----- Constructor 
     Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}

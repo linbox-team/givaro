@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.9 2005-06-14 14:53:14 pernet Exp $
+// $Id: givzpz64std.h,v 1.10 2005-07-12 12:54:37 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -30,7 +30,6 @@ public:
     enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
         // ----- Representation of Element of the domain ZpzDom
     typedef int64 Rep;
-    typedef int64 Element;
     typedef int64 Element;
 
 

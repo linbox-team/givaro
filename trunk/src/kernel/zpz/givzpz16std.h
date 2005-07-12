@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.7 2005-06-14 14:53:14 pernet Exp $
+// $Id: givzpz16std.h,v 1.8 2005-07-12 12:54:37 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -68,7 +68,6 @@ public:
   // ----- Representation of Element of the domain ZpzDom
   typedef int16 Rep;
   typedef int16 Element;
-  typedef Element Element;
 
   // ----- Representation of vector of the Element
   typedef Rep* Array;

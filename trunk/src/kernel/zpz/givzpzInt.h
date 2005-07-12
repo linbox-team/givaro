@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.5 2005-06-14 14:53:14 pernet Exp $
+// $Id: givzpzInt.h,v 1.6 2005-07-12 12:54:37 jgdumas Exp $
 // ==========================================================================
 //
 // Description:
@@ -31,7 +31,6 @@ public:
   // ----- Representation of Element of the domain ZpzDom
   typedef Integer Rep;
   typedef Integer Element;
-  typedef Element Element;
 
   // ----- Representation of vector of the Element
   typedef Rep* Array;

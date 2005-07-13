@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givmodule.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givmodule.C,v 1.2 2005-07-13 09:59:37 pernet Exp $
 // ==========================================================================
 // Description:
 // Definition of initialization module. Each predefined
@@ -66,6 +66,7 @@ ObjectInit::ObjectInit( )
 #endif
 }
 
+ObjectInit::~ObjectInit(){}
 
 GivModule::GivModule ( ptFuncInit init, ptFuncEnd end, const int p, const char* n)
  : priority(UndefPriority), which(p), f_init(init), f_end(end), name(n)

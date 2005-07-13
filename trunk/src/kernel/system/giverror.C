@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: giverror.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: giverror.C,v 1.2 2005-07-13 09:59:37 pernet Exp $
 // ==========================================================================
 // Description:
 // - error exception 
@@ -14,6 +14,14 @@
 std::ostream& GivError::print( std::ostream& o ) const
 { return o << strg ; }
 
+
+GivError::~GivError(){}
+
+GivMathError::~GivMathError(){}
+
+GivBadFormat::~GivBadFormat(){}
+
+GivMathDivZero::~GivMathDivZero(){}
 
 void GivError::throw_error( const GivError& err ) 
 {

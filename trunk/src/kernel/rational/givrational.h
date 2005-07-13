@@ -5,12 +5,12 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givrational.h,v 1.3 2005-07-13 10:21:10 pernet Exp $
 // ==========================================================================
 // Description:
 
 #include "givaro/givinteger.h"
-
+#include "givaro/givmodule.h"
 // ----------------------------------- Class Rational
 
 class Rational {

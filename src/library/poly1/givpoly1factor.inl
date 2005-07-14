@@ -5,7 +5,7 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <29 Jun 05 14:16:04 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <14 Jul 05 11:21:40 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_INL_
 #define _GIV_POLY1_FACTO_INL_
@@ -31,29 +31,37 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
         int splitted = 0;
         while (! splitted) {
             Rep tmp, G1;
-            gcd(G1, G, random(_g, tmp, d));
+            gcd(G1, G, random(_g, tmp, dG-1));
             Degree dG1; degree(dG1,G1);
+// write(std::cerr << "SF rd: ", tmp) << std::endl;
+// write(std::cerr << "SF G1: ", G1) << std::endl;
             if ( dG1 != dG) {
                 if (dG1 > 0 ) {
                     splitted = 1;
                     SplitFactor ( L, G1, d, MOD) ;
                 }
 
-                typename Domain::Element pp = (power(MOD, d.value()) - 1)/2;
+                Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
+// std::cerr << "pp: " << pp << std::endl;
                 Rep tp, tp2, G2;
                 gcd(G2,G, sub(tp2, powmod(tp, tmp, pp, G) , one) );
                 Degree dG2; degree(dG2,G2);
+// write(std::cerr << "SF t2: ", tp2) << std::endl;
+// write(std::cerr << "SF G2: ", G2) << std::endl;
                 if ( dG2 != dG) {
                     if ( dG2 > 0 ) {
                         splitted = 1 ;
                         SplitFactor ( L, G2, d, MOD) ;
                     }
-                    Rep G3; gcd(G3, G, add(tp2,tp,one) );
-                    Degree dG3; degree(dG3,G3);
-                    if (( dG3 != dG) && (dG3 > 0 )) {
-                        splitted = 1 ;
-                        SplitFactor ( L, G3, d, MOD) ;
-                    }
+// UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
+//                     Rep G3; gcd(G3, G, add(tp2,tp,one) );
+//                     Degree dG3; degree(dG3,G3);
+// write(std::cerr << "SF t3: ", tp2) << std::endl;
+// write(std::cerr << "SF G3: ", G3) << std::endl;
+//                     if (( dG3 != dG) && (dG3 > 0 )) {
+//                         splitted = 1 ;
+//                         SplitFactor ( L, G3, d, MOD) ;
+//                     }
                 }
             }
         }
@@ -76,24 +84,31 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
         while (1) {
             Rep tmp;
             gcd(G1, G, random(_g, tmp, d));
+// write(std::cerr << "SF rd: ", tmp) << std::endl;
+// write(std::cerr << "SF G1: ", G1) << std::endl;
             Degree dG1; degree(dG1,G1);
             if ( dG1 != dG) {
                 if (dG1 > 0 ) {
                     return G1;
                 }
-                typename Domain::Element pp = (power(MOD, d.value()) - 1)/2;
+                Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
                 Rep tp, tp2, G2;
                 gcd(G2,G, sub(tp2, powmod(tp, tmp, pp, G) , one) );
                 Degree dG2; degree(dG2,G2);
+// write(std::cerr << "SF t2: ", tp2) << std::endl;
+// write(std::cerr << "SF G2: ", G2) << std::endl;
                 if ( dG2 != dG) {
                    if ( dG2 > 0 ) {
                         return G1.copy(G2);
                     }
-                    Rep G3; gcd(G3, G, add(tp2,tp,one) );
-                    Degree dG3; degree(dG3,G3);
-                    if (( dG3 != dG) && (dG3 > 0 )) {
-                        return G1.copy(G3);
-                    }
+// UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
+//                     Rep G3; gcd(G3, G, add(tp2,tp,one) );
+//                     Degree dG3; degree(dG3,G3);
+// write(std::cerr << "SF t3: ", tp2) << std::endl;
+// write(std::cerr << "SF G3: ", G3) << std::endl;
+//                     if (( dG3 != dG) && (dG3 > 0 )) {
+//                         return G1.copy(G3);
+//                     }
                 }
             }
         }
@@ -122,9 +137,11 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
+// std::cerr << "DD degree: " << dp << std::endl;
         powmod(W, D.copy(W), MOD, P);
         gcd (G1,sub(D,W,Unit), P) ;
         Degree dG1; degree(dG1,G1);
+// write(std::cerr << "DD found: ", G1) << ", of degree " << dG1 << std::endl;
         if ( dG1 > 0 ) {
             SplitFactor (L, G1, dp, MOD);
             divin(P,G1);

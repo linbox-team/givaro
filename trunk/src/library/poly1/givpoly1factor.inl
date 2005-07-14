@@ -54,14 +54,14 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                         SplitFactor ( L, G2, d, MOD) ;
                     }
 // UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
-//                     Rep G3; gcd(G3, G, add(tp2,tp,one) );
-//                     Degree dG3; degree(dG3,G3);
+                     Rep G3; gcd(G3, G, add(tp2,tp,one) );
+                     Degree dG3; degree(dG3,G3);
 // write(std::cerr << "SF t3: ", tp2) << std::endl;
 // write(std::cerr << "SF G3: ", G3) << std::endl;
-//                     if (( dG3 != dG) && (dG3 > 0 )) {
-//                         splitted = 1 ;
-//                         SplitFactor ( L, G3, d, MOD) ;
-//                     }
+                     if (( dG3 != dG) && (dG3 > 0 )) {
+                         splitted = 1 ;
+                         SplitFactor ( L, G3, d, MOD) ;
+                     }
                 }
             }
         }

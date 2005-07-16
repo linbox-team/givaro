@@ -3,7 +3,7 @@
 // Copyright(c)'2003 by Givaro Team
 // see the copyright file.
 // Authors: Jean-Guillaume Dumas
-// $Id: givratreconstruct.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givratreconstruct.C,v 1.2 2005-07-16 11:33:43 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -30,12 +30,12 @@ bool Rational::ratrecon(const Integer& f, const Integer& m, const Integer& k, bo
 
 // 	std::cerr << "RatRecon : " << f << " " << m << " " << k << std::endl;
 
-    Integer x = m, y = (f<0?-f:f) % m, r0, t0;
 
-    Integer r1, t1, q, u;
-    r0=x;
+    Integer r0, t0, r1, t1, q, u;
+    r0=m;
     t0=0;
-    r1=y;
+    r1=f;
+    if (f<0) r1+= m;
     t1=1;
     while(r1>=k)
     {

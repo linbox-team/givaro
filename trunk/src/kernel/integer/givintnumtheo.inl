@@ -456,7 +456,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, co
 	return g = this->zero;
     if (isOne(A))
 	return g = this->one;
-    int noprimroot=0;
+    bool noprimroot=false;
     Rep phin,gg,tmp;
     phi(phin,n);
     std::list<Rep> Lf;
@@ -464,7 +464,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, co
     Lf.sort();
     typename std::list<Rep>::iterator f=Lf.begin();
     if (isOne(gcd(tmp,A,n))) {
-        noprimroot = 0;
+        noprimroot = false;
         for(;f!=Lf.end();++f)
             if ( noprimroot = isOne(powmod(tmp,A, div(g,phin,*f),n)) )
                 break;

@@ -29,11 +29,10 @@ int main (int argc, char * * argv) {
 
     GFqDom<long> Toto(q,1);
     Toto.write( cout << "This is ") << endl ;
-    
-    cerr << "Exponent max for zech logs " << q << " : " << FF_EXPONENT_MAX(q) << endl;
-    cerr << "NEED polynomial representation : " << NEED_POLYNOMIAL_REPRESENTATION(q,expo) << endl;
-
     FaireEssai( Toto );
+
+    cerr << "Exponent max for zech logs " << q << "^" << expo << " : " << FF_EXPONENT_MAX(q,expo) << endl;
+    cerr << "NEED polynomial representation : " << NEED_POLYNOMIAL_REPRESENTATION(q,expo) << endl;
     if ( NEED_POLYNOMIAL_REPRESENTATION(q,expo) )
         FaireEssai( Extension<>(q, expo) );
     else

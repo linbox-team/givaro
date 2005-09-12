@@ -9,6 +9,8 @@ template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt e = 1) {
     Rt f = 0;
     for(Rt i = p; (i < (Rt)FF_TABLE_MAX) && (f < e); ++f, i*=p) 
         ;
+    for( ; f > 1; --f)
+        if (! (e % f)) break;
     return f;
 }
 
@@ -45,7 +47,7 @@ public:
 
 
     Extension ( const Residu_t p, const Residu_t e = 1)
-            : _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, "ý"  ), _characteristic( p ), _exponent ( e ) , _extension_order( e-FF_EXPONENT_MAX(p,e)+1 ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ) {
+            : _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, "ý"  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ) {
 /*     cerr << "Pol Cstor" << endl; */
         unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
         if (basedegree >= e) 

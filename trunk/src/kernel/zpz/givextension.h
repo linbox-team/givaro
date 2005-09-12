@@ -10,7 +10,7 @@ template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt e = 1) {
     for(Rt i = p; (i < (Rt)FF_TABLE_MAX) && (f < e); ++f, i*=p) 
         ;
     for( ; f > 1; --f)
-        if (! (e % f)) break;
+        if ((e % f) == 0) break;
     return f;
 }
 

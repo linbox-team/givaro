@@ -108,7 +108,9 @@ unsigned long Revert(const Integer p, const double epsilon) {
 
 bool ProbLucas(const Integer n, const double orig_epsilon)
 {	
+#ifdef __GMP_PLUSPLUS__
     Integer::seeding( BaseTimer::seed() );
+#endif
     GivRandom generator;
 
     Integer Q=n-1,a,q,tmp(1);

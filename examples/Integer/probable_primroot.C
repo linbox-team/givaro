@@ -12,7 +12,9 @@
 int main(int argc, char** argv)
 {
     IntNumTheoDom<> IP;
+#ifdef __GMP_PLUSPLUS__
     IP.seeding( BaseTimer::seed() );
+#endif
 
     double error;
     IntNumTheoDom<>::Element a,pr,g;

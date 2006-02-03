@@ -61,7 +61,7 @@ public:
     }
 
         //  Factors are checked for primality
-    Rep& primefactor(Rep& r, const Rep& n, unsigned long loops = 0) const {
+    Rep& iffactorprime (Rep& r, const Rep& n, unsigned long loops = 0) const {
 	if (factor(r, n, loops) != 1) {            
 	   if (! isprime(r,_GIVARO_ISPRIMETESTS_) ) {
 		Rep nn = r; factor(r,nn, loops);
@@ -82,8 +82,12 @@ public:
 			break; // In case Lenstra fails also
 		}
            }
-	} else if (! isprime(n, _GIVARO_ISPRIMETESTS_)) 
-            primefactor(r, n, loops);
+	} 
+	return r;
+    }
+
+    Rep& primefactor(Rep& r, const Rep& n) const {
+	while ((iffactorprime(r,n,0) == 1) && (! isprime(n, _GIVARO_ISPRIMETESTS_)) ) {}
 	return r;
     }
 

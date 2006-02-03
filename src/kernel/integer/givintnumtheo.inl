@@ -166,6 +166,16 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, const Rep& n) const { unsigned long runs; return prim_root(A, runs, n); }
 
+template<class T, template <class T> class Container>
+std::ostream& operator<< (std::ostream& o, const Container<T>& C) {
+	          for(typename Container<T>::const_iterator refs =  C.begin();
+				                                  refs != C.end() ;
+								                                        ++refs )
+			                            o << (*refs) << " " ;
+		              return o << std::endl;
+}
+
+
 // =================================
 // Probable primitive roots
 //
@@ -176,7 +186,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
 //  Returns the probable primitive root and the probability of error.
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const unsigned long L) const {
-//    std::cerr << "L: " << L << std::endl;
+  // std::cerr << "L: " << L << std::endl;
     
 // partial factorisation 
   std::vector<Rep> Lq; 
@@ -227,12 +237,12 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
           nonzerorandom(this->_g, alea, p);
           modin(alea, p);
           powmod(essai, alea, Temp, p);
-// std::cerr << alea << " should be of order at least " << *Lqi << "^" << *ei << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
+//std::cerr << alea << " should be of order at least " << *Lqi << "^" << *ei << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
       } while( essai == 1 ) ;
       
           // looking for alea with order Lq[i]^e[i]
 
-// std::cerr << alea << " is of order at least " << Lq[i] << "^" << e[i] << "==" << power(Lq[i],e[i]) << " mod " << p << std::endl;
+//std::cerr << alea << " is of order at least " << (*Lqi) << "^" << (*ei) << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
           
       divin(Temp, power(*Lqi,*ei-1));
       mulin(primroot, powmod(essai, alea, Temp, p));    

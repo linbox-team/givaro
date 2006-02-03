@@ -44,6 +44,7 @@ int main(int argc, char** argv)
         // So that no factor less than B can be avoided
         // With Pollard's rho factorization, L is chosen to be sqrt(B)
         // Might not be polynomial if epsilon is too big
+#define GIVARO_POLLARD
     IP.probable_prim_root(pr, error, a, epsilon );
     tim.stop();
   

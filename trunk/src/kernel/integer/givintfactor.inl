@@ -85,7 +85,7 @@ IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsign
     if (n<0) Rep::neg(nn,n); else nn=n;
     unsigned long c;
     while(nn > 1) {        
-        primefactor(g,nn,loops);
+        iffactorprime(g,nn,loops);
         if (g == 1) {
             factocomplete = false;
             g = nn;

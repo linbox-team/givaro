@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <06 Jun 06 14:33:14 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 15:03:59 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_INL_
 #define _GIVARO_FACTORISATION_INL_
@@ -253,24 +253,24 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
 
     if (threshold) {
         unsigned long c = 0;
-        while( isOne(g) && (++c < threshold)) {
+        while( this->isOne(g) && (++c < threshold)) {
             if(  areEqual(p, addin(m,one)) ) {
                 x=y;
                 mulin(p,2);
             }
             Pollard_fctin(y,n);
-            gcd(g,sub(t,y,x),n);
+            this->gcd(g,sub(t,y,x),n);
         }
         if ((g == n)&&(c<threshold)) // Failure with the initial value
             Pollard(gen, g, n, threshold-c);
     } else {
-        while(isOne(g)) {
+        while(this->isOne(g)) {
             if(  areEqual(p, addin(m,one)) ) {
                 x=y;
                 mulin(p,2);
             }
             Pollard_fctin(y,n);
-            gcd(g,sub(t,y,x),n);
+            this->gcd(g,sub(t,y,x),n);
         }
         if (g == n) // Failure with the initial value
             Pollard(gen, g, n, 0);
@@ -466,13 +466,13 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
     
     Rep u,v, four, two;
     assign(two,2UL);
-    gcd(g,u,v,two,n);
+    this->gcd(g,u,v,two,n);
     Rep inv2 = u;
     assign(four,4UL);
-    gcd(g,u,v,four,n);
+    this->gcd(g,u,v,four,n);
     Rep inv4 = u, sixt;
     assign(sixt,16UL);
-    gcd(g,u,v,sixt,n);
+    this->gcd(g,u,v,sixt,n);
     Rep inv16 = u,inva;
 
 // Initialize # curves
@@ -482,18 +482,18 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
             this->random(gen,r,n);
 //             kg = r*r + 6;
             mul(kg,r,r); addin(kg,6UL);
-//             kgg = gcd(kg,n);
-            gcd(kgg,kg,n);
-            if (isOne(kgg)) {
-//                 g = gcd(kg,n,u,v); if (! isOne(g)) { delete [] A, X, Z; return g; }
-                gcd(g,u,v,kg,n); if (! isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
+//             kgg = this->gcd(kg,n);
+            this->gcd(kgg,kg,n);
+            if (this->isOne(kgg)) {
+//                 g = this->gcd(kg,n,u,v); if (! this->isOne(g)) { delete [] A, X, Z; return g; }
+                this->gcd(g,u,v,kg,n); if (! this->isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
                 a = (6UL*r*u)% n;
                 asq = (a * a) % n ;
             } else
                 return g=kgg;
         }
-//         g = gcd(a,n,u,v); if (! isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
-        gcd(g,u,v,a,n); if (! isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
+//         g = this->gcd(a,n,u,v); if (! this->isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
+        this->gcd(g,u,v,a,n); if (! this->isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
 //         A[i] = ( (8-3*a + (1-6*a*a)*u*u*u )*inv16 ) % n;
         A[i] = ( inv2 + ( (1-3*asq*asq-6*asq) %n )* (u*u*u*inv16 % n) ) % n ;
         X[i] = (3*a*inv4)%n;
@@ -518,11 +518,11 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
             Mul_Curve(n,A[i],sp,prime,B1,X[i],Z[i]);
             f = (f*Z[i])%n;
         }
-//         f = gcd(f,n);
+//         f = this->gcd(f,n);
         Rep ftm;
-        gcd(ftm,f,n);
+        this->gcd(ftm,f,n);
         f = ftm;
-        if (isOne(f)) {
+        if (this->isOne(f)) {
             nextprime(ftm,prime);
             prime = ftm;
 //             prime = nextprime(prime);

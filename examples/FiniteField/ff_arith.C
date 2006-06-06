@@ -121,7 +121,12 @@ int main(int argc, char ** argv) {
           // user time
     double tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ ( 1000000.0 ) ; 
 		    ;
+#ifndef __GIVARO__DONOTUSE_longlong__
     GFqDom<long long> GF2M( 2, (argc > 1 ? atoi(argv[1]) : 20) );
+#else
+    GFqDom<long> GF2M( 2, (argc > 1 ? atoi(argv[1]) : 20) );
+#endif
+
     getrusage (RUSAGE_SELF, &tmp1) ;
     tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ (1000000.0) - tim;
 

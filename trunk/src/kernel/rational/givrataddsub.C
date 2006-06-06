@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givrataddsub.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givrataddsub.C,v 1.3 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description:
 #include "givaro/givrational.h"
@@ -14,7 +14,7 @@ Rational Rational::operator + (const Rational& r)  const
 {
   if (isZero(r)) return *this ;
   if (isZero(*this)) return r ;
-  if (isinteger(*this) && isinteger(r)) 
+  if (isInteger(*this) && isInteger(r)) 
     return Rational(num+r.num) ;
 
   if (Rational::flags == Rational::NoReduce)
@@ -38,7 +38,7 @@ Rational& Rational::operator += (const Rational& r)
         den = r.den;
         return *this;
     }
-    if (isinteger(*this) && isinteger(r)) {
+    if (isInteger(*this) && isInteger(r)) {
         num += r.num;
         return *this;
     }
@@ -77,7 +77,7 @@ Rational Rational::operator - (const Rational& r)  const
 {
   if (isZero(r)) return *this ;
   if (isZero(*this)) return Rational(-r.num,r.den, 0) ;
-  if (isinteger(*this) && isinteger(r)) 
+  if (isInteger(*this) && isInteger(r)) 
     return Rational(num-r.num) ;
 
   if (Rational::flags == Rational::NoReduce)
@@ -101,7 +101,7 @@ Rational& Rational::operator -= (const Rational& r)
         den = -r.den;
         return *this;
     }
-    if (isinteger(*this) && isinteger(r)) {
+    if (isInteger(*this) && isInteger(r)) {
         num -= r.num;
         return *this;
     }

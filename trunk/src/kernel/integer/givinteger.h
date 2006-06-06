@@ -45,9 +45,8 @@ public:
 
   // -- access
   const Rep& access(const Rep& a) const { return a; }
-  long   Integer2long  ( const Rep& a) const { return ::Integer2long(a); }
-  double Integer2double( const Rep& a) const { return ::Integer2double(a); }
-  std::string& Integer2string(std::string& s, const Integer& n, int base = 10) const { return ::Integer2string(s,n,base); };
+
+  template<class XXX> XXX& convert(XXX& x, const Rep& a) const { return x=(XXX)a;}      
 
   // -- arithmetic operators
   Rep& mul( Rep& r, const Rep& a, const Rep& b ) const { return Integer::mul(r,a,b); }

@@ -2,7 +2,7 @@
 // Givaro / Athapascan-1
 // Irreducible polynomial finder
 // Primitive root finder
-// Time-stamp: <27 Jun 05 11:38:14 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:37:48 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_POLY_PRIMITIVE_ROOT_
 #define _GIVARO_POLY_PRIMITIVE_ROOT_
@@ -209,7 +209,8 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
     std::vector<IntFactorDom<>::Rep> Lp; std::vector<unsigned long> Le;
     FD.set(Lp, Le, n );
     for( std::vector<IntFactorDom<>::Rep>::const_iterator p = Lp.begin(); p != Lp.end(); ++p) {
-        FD.pow( qn, IntFactorDom<>::Rep(MOD), n/FD.Integer2long(*p) );
+        long ttmp; 
+        FD.pow( qn, IntFactorDom<>::Rep(MOD), n/FD.convert(ttmp,*p) );
         powmod(G1, Unit, qn, P);
         if (degree(d, sub(D,G1,Unit)) < 0) return 0;    
     }

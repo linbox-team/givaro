@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givtimer.h,v 1.2 2005-06-29 12:17:52 jgdumas Exp $
+// $Id: givtimer.h,v 1.3 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -25,8 +25,8 @@ enum {
   // -- total amount of second spent 
   inline double time() const { return _t; }
 
-  // -- Return a value to initialize random generator
-static long seed();
+  // -- Return a value to initialize random generator*
+  static long seed();
 
   // -- basic methods:
   std::ostream& print( std::ostream& ) const;

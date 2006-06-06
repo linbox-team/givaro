@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_io.C,v 1.2 2006-06-06 08:39:22 jgdumas Exp $
+// $Id: gmp++_int_io.C,v 1.3 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -42,19 +42,6 @@ std::ostream& Integer::print(std::ostream &o) const
   return o;
 } 
 
-std::string& Integer2string(std::string& s, const Integer& n, int base) {
-    unsigned long strSize = mpz_sizeinbase((mpz_ptr)&(n.gmp_rep), base) + 2;
-    char *str = new char[strSize + 2];
-    mpz_get_str(str, base, (mpz_ptr)&(n.gmp_rep));
-    s = std::string(str);
-//    delete [] str ;
-    return s;
-}
-Integer::operator std::string () const {
-	std::string s;
-	return Integer2string(s,*this);
-}
-
 
 Integer::Integer(const std::vector<mp_limb_t>& v) {
  	size_t s = v.size();
@@ -74,18 +61,6 @@ Integer::Integer(const std::vector<mp_limb_t>& v) {
 
 }
 
-std::vector<mp_limb_t>& Integer2vector(std::vector<mp_limb_t>& v, const Integer& n) {
-	size_t s = mpz_size( (mpz_ptr)&n.gmp_rep );
-	v.resize(s); 
-	std::vector<mp_limb_t>::iterator vi = v.begin();
-	for(mp_size_t i = 0;vi != v.end();++vi, ++i) *vi = mpz_getlimbn( (mpz_ptr)&n.gmp_rep ,i);
-	return v;
-}
-
-Integer::operator std::vector<mp_limb_t> () const {
-	std::vector<mp_limb_t> v;
-	return Integer2vector(v,*this);
-}
 
   // Entree au format de la sortie
 std::istream& operator>> (std::istream& in, Integer& a)

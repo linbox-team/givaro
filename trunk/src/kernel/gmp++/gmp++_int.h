@@ -4,7 +4,7 @@
 // Copyright(c)'2001 by LinBox Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// Time-stamp: <08 Jul 05 14:47:06 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:43:10 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -41,7 +41,70 @@ extern "C" {
 #endif
 
 
-  //------------------------------------------------------ Class Integer
+  //------------------------------------------------------ Friend Integer
+class Integer;
+
+int compare(const Integer& a, const Integer& b);
+int absCompare(const Integer& a, const Integer& b);
+Integer& inv (Integer& u, const Integer& a, const Integer& b); 
+Integer gcd (const Integer& a, const Integer& b);
+Integer gcd (const Integer& a, const Integer& b, Integer& u, Integer& v);
+Integer& gcd (Integer& g, const Integer& a, const Integer& b);
+Integer& gcd (Integer& g, const Integer& a, const Integer& b, Integer& u, Integer& v);
+Integer pp( const Integer& P, const Integer& Q );
+Integer& lcm (Integer& g, const Integer& a, const Integer& b);
+Integer lcm (const Integer& a, const Integer& b);
+Integer& pow(Integer& Res, const Integer& n, const long l);
+Integer& pow(Integer& Res, const unsigned long n, const unsigned long l);
+Integer& pow(Integer& Res, const Integer& n, const unsigned long l);
+Integer& pow(Integer& Res, const Integer& n, const int l) ;
+
+Integer& pow(Integer& Res, const Integer& n, const unsigned int l) ;
+
+Integer pow(const Integer& n, const long l);
+Integer pow(const Integer& n, const unsigned long l);
+Integer pow(const Integer& n, const int l) ;
+Integer pow(const Integer& n, const unsigned int l);
+Integer& powmod(Integer& Res, const Integer& n, const unsigned long e, const Integer& m);
+Integer& powmod(Integer& Res, const Integer& n, const long e, const Integer& m);
+Integer& powmod(Integer& Res, const Integer& n, const unsigned int e, const Integer& m) ;
+Integer& powmod(Integer& Res, const Integer& n, const int e, const Integer& m)  ;
+
+Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m);
+Integer powmod(const Integer& n, const unsigned long e, const Integer& m);
+Integer powmod(const Integer& n, const long e, const Integer& m);
+Integer powmod(const Integer& n, const unsigned int e, const Integer& m) ;
+
+Integer powmod(const Integer& n, const int e, const Integer& m) ;
+
+Integer powmod(const Integer& n, const Integer& e, const Integer& m);
+Integer fact ( unsigned long l);
+Integer sqrt(const Integer& p);
+Integer sqrtrem(const Integer& p, Integer& rem);
+Integer& sqrt(Integer& r, const Integer& p);
+Integer& sqrtrem(Integer& r, const Integer& p, Integer& rem);
+bool root(Integer& q, const Integer&, unsigned int n);
+long logp(const Integer& a, const Integer& p) ;
+double logtwo(const Integer& a) ;
+void swap(Integer& , Integer&);
+inline int sign   (const Integer& a);
+inline int isZero (const Integer& a);
+inline int isOne  (const Integer& a);
+int isperfectpower  (const Integer& );
+Integer abs(const Integer& n);
+Integer& prevprime(Integer&, const Integer& p);
+Integer& nextprime(Integer&, const Integer& p);
+int probab_prime(const Integer& p);
+int probab_prime(const Integer& p, int r);
+int jacobi(const Integer& u, const Integer& v) ;
+int legendre(const Integer& u, const Integer& v) ;
+inline unsigned long length (const Integer& a); 
+std::istream& operator >> (std::istream &i, Integer& n);
+std::ostream& operator << (std::ostream &o, const Integer& n);
+std::ostream& absOutput (std::ostream &o, const Integer& n);
+
+
+    //------------------------------------------------------ Class Integer
 class Integer {
 
 public:
@@ -87,31 +150,29 @@ public:
   int operator < (const unsigned long l) const;
 
   //------------------ Bit logic
-    Integer operator^ (const Integer&);   // XOR
-    Integer operator| (const Integer&);   // OR
-    Integer operator& (const Integer&);   // AND
-    Integer operator ~ () const;   // 1 complement
-    Integer& operator^= (const Integer&);   // XOR
-    Integer& operator|= (const Integer&);   // OR
-    Integer& operator&= (const Integer&);   // AND
-    Integer operator<< (int l) const; // lshift
-    Integer operator>> (int l) const; // rshift
-    Integer operator<< (long l) const; // lshift
-    Integer operator>> (long l) const; // rshift
-    Integer operator<< (unsigned int l) const; // lshift
-    Integer operator>> (unsigned int l) const; // rshift
-    Integer operator<< (unsigned long l) const; // lshift
-    Integer operator>> (unsigned long l) const; // rshift
-    Integer& operator<<= (int l) ; // lshift
-    Integer& operator>>= (int l) ; // rshift
-    Integer& operator<<= (long l) ; // lshift
-    Integer& operator>>= (long l) ; // rshift
-    Integer& operator<<= (unsigned int l) ; // lshift
-    Integer& operator>>= (unsigned int l) ; // rshift
-    Integer& operator<<= (unsigned long l) ; // lshift
-    Integer& operator>>= (unsigned long l) ; // rshift
-    
-
+  Integer operator^ (const Integer&);   // XOR
+  Integer operator| (const Integer&);   // OR
+  Integer operator& (const Integer&);   // AND
+  Integer operator ~ () const;   // 1 complement
+  Integer& operator^= (const Integer&);   // XOR
+  Integer& operator|= (const Integer&);   // OR
+  Integer& operator&= (const Integer&);   // AND
+  Integer operator<< (int l) const; // lshift
+  Integer operator>> (int l) const; // rshift
+  Integer operator<< (long l) const; // lshift
+  Integer operator>> (long l) const; // rshift
+  Integer operator<< (unsigned int l) const; // lshift
+  Integer operator>> (unsigned int l) const; // rshift
+  Integer operator<< (unsigned long l) const; // lshift
+  Integer operator>> (unsigned long l) const; // rshift
+  Integer& operator<<= (int l) ; // lshift
+  Integer& operator>>= (int l) ; // rshift
+  Integer& operator<<= (long l) ; // lshift
+  Integer& operator>>= (long l) ; // rshift
+  Integer& operator<<= (unsigned int l) ; // lshift
+  Integer& operator>>= (unsigned int l) ; // rshift
+  Integer& operator<<= (unsigned long l) ; // lshift
+  Integer& operator>>= (unsigned long l) ; // rshift
 
   //----------------Elementary arithmetic between Integers & longs
   Integer& operator += (const Integer& n);  
@@ -120,14 +181,14 @@ public:
   Integer  operator + (const Integer& n) const;  
   Integer  operator + (const unsigned long l) const;
   Integer  operator + (const long l) const;
-    template<class XXX> Integer& operator +=(const XXX& x) { return this->operator += ( (Integer)x ); }
+  template<class XXX> Integer& operator +=(const XXX& x) { return this->operator += ( (Integer)x ); }
     
             
 
   Integer& operator -= (const Integer& n);  
   Integer& operator -= (const unsigned long l);  
   Integer& operator -= (const long l);  
-    template<class XXX> Integer& operator -=(const XXX& x) { return this->operator -= ( (Integer)x ); }
+  template<class XXX> Integer& operator -=(const XXX& x) { return this->operator -= ( (Integer)x ); }
   Integer  operator - (const Integer& n) const;
   Integer  operator - (const unsigned long l) const;
   Integer  operator - (const long l) const;
@@ -136,9 +197,7 @@ public:
   Integer& operator *= (const Integer& n);  
   Integer& operator *= (const unsigned long l);  
   Integer& operator *= (const long l);
-    template<class XXX> Integer& operator *=(const XXX& x) { return this->operator *= ( (Integer)x ); }
-    
-
+  template<class XXX> Integer& operator *=(const XXX& x) { return this->operator *= ( (Integer)x ); }
 
   Integer  operator * (const Integer& n) const;
   Integer  operator * (const unsigned long l) const;
@@ -257,12 +316,14 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   friend Integer sqrtrem(const Integer& p, Integer& rem);
   friend Integer& sqrt(Integer& r, const Integer& p);
   friend Integer& sqrtrem(Integer& r, const Integer& p, Integer& rem);
-    friend bool root(Integer& q, const Integer&, unsigned int n);
+
+
+  friend bool root(Integer& q, const Integer&, unsigned int n);
   friend long logp(const Integer& a, const Integer& p) ;
   friend double logtwo(const Integer& a) ;
 
   //-----------------------------------------Miscellaneous
-    friend void swap(Integer& , Integer&);
+  friend void swap(Integer& , Integer&);
 
   friend inline int sign   (const Integer& a);
   friend inline int isZero (const Integer& a);
@@ -285,7 +346,7 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   friend inline unsigned long length (const Integer& a); 
   // - return the size in word.
   size_t size() const;
-  // - return the size in base B (result is always exact if B is a power of two)
+  // - return the size in base B (always exact if B is a power of two)
   size_t size_in_base(int B) const;
   // - return the size in bit.
   size_t bitsize() const;
@@ -294,10 +355,6 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
 
   // -- Convert an Integer to a basic C++ type
   // -- Cast operators
-  friend long   Integer2long  ( const Integer& n);
-  friend vect_t& Integer2vector  (vect_t& v, const Integer& n);
-  friend double Integer2double( const Integer& n);
-  friend std::string& Integer2string(std::string&, const Integer&, int base = 10);
   operator short() const { return (int) *this; }
   operator unsigned short() const { return (unsigned int) *this; }
   operator unsigned char() const { return (unsigned int) *this; }

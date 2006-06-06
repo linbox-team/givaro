@@ -3,7 +3,7 @@
 // =============================================================== //
 // Givaro / Athapascan-1
 // Cyclotomic polynomials
-// Time-stamp: <21 Mar 00 11:48:23 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:37:11 Jean-Guillaume.Dumas@imag.fr> 
 // =============================================================== //
 #include <givaro/givintfactor.h>
 
@@ -58,8 +58,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
         if (f) {
             IntFactorDom<>::Rep If, Iq;
             IF.divexact(Iq, n, IF.factor(If,n) );
-            f = IF.Integer2long( If );
-            q = IF.Integer2long( Iq );
+            IF.convert(f, If);
+            IF.convert(q, Iq);
+//             f = IF.Integer2long( If );
+//             q = IF.Integer2long( Iq );
             Rep inter;
             cyclotomic(inter,q);
             if (q % f) {

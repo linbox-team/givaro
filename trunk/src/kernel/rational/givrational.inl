@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givrational.inl,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givrational.inl,v 1.3 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -51,7 +51,7 @@ inline Rational Rational::operator + ()  const
   { return *this ; } 
 
 //----------------------------------miscellaneous inline functions
-inline int isinteger(const Rational& r)
+inline int isInteger(const Rational& r)
   { return isOne(r.den) ; }
 
 inline int isOne(const Rational& a)

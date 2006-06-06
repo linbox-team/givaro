@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.5 2005-06-14 14:53:14 pernet Exp $
+// $Id: gmp++_int.inl,v 1.6 2006-06-06 12:52:39 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -291,6 +291,17 @@ inline void Integer::seeding(long unsigned int s) {
 }
 #endif
 
+inline Integer& Integer::random (Integer& r, long size)
+{
+#ifdef __GMP_PLUSPLUS__
+    mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_bits(size)).get_mpz_t() );
+#else
+    mpz_random((mpz_ptr) &(r.gmp_rep), size);
+#endif
+    return r;
+}
+
+
 inline Integer Integer::random(int sz)
 {
   Integer res;
@@ -316,17 +327,6 @@ inline Integer& Integer::random (Integer& r, const Integer& similar)
 
 inline Integer& Integer::nonzerorandom (Integer& r, const Integer& size) {
     while (isZero(Integer::random(r,size))) {};
-    return r;
-}
-
-
-inline Integer& Integer::random (Integer& r, long size)
-{
-#ifdef __GMP_PLUSPLUS__
-    mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_bits(size)).get_mpz_t() );
-#else
-    mpz_random((mpz_ptr) &(r.gmp_rep), size);
-#endif
     return r;
 }
 

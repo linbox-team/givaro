@@ -4,7 +4,7 @@
 //              Fermat numbers,
 //              Primality tests, Factorization one by one :
 //                      (There are parameters to fix)
-// Time-stamp: <09 Jun 04 20:33:45 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 15:21:09 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include <math.h>
 #include "givaro/givintprime.h"
@@ -185,7 +185,7 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
   unsigned long int rem;
   Integer t(u);
   int exact;
-  unsigned int usize = u.size();
+  int usize = u.size();
 
   if (usize == 0)
     return 1;			/* consider 0 a perfect power */
@@ -197,7 +197,7 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
   n2=0;
   for( ; !( ((unsigned int)t) & 0x1) ; t>>=1, ++n2) {
   }
-  if (usize <0 && n2 >0 && (n2 & 1) ==0)
+  if (usize<0 && n2 >0 && (n2 & 1) ==0)
       return 0;
 
   if (n2 >0) {
@@ -249,7 +249,7 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
   
       /* We found no factors above; have to check all values of n.  */
   unsigned long int nth;
-  for (nth = usize < 0 ? 3 : 2;; ++nth)
+  for (nth = (usize < 0 ? 3 : 2);; ++nth)
   {
       if (! isprime (nth))
           continue;

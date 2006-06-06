@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <07 Jun 05 18:58:22 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:39:25 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 
@@ -624,14 +624,14 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const Integer residu 
       // -a = b [p]
       // a = p-b [p]
     if ( residu <= (Integer)(-_characteristic) ) tr =  (-residu) % (UTT)_characteristic ;
-    else tr = Integer2long(-residu);
+    else tr = long(-residu);
     if (tr)
       return r = _pol2log[ _characteristic - (UTT)tr ];
     else
       return r = zero;
   } else {
     if (residu >= (Integer)_characteristic ) tr =  residu % (UTT)_characteristic ;
-    else tr = Integer2long(residu);
+    else tr = long(residu);
     return r = _pol2log[ tr ];
   }
 }
@@ -894,7 +894,9 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
     if (e <= 1) {
         IntNumTheoDom<> NTD;
         IntNumTheoDom<>::Rep IP(P), pr;
-        UTT seed = (UTT) ( NTD.Integer2long( NTD.lowest_prim_root(pr, IP) ) );
+//         UTT seed = (UTT) ( NTD.Integer2long( NTD.lowest_prim_root(pr, IP) ) );
+        UTT seed;
+        NTD.convert(seed, NTD.lowest_prim_root(pr, IP) );
         UTT accu = 1;
         for(UTT i=1; i<P; i++) {
             accu = (accu * seed) % P;

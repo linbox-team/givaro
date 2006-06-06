@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <29 Jun 05 14:12:55 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:33:14 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_INL_
 #define _GIVARO_FACTORISATION_INL_
@@ -249,7 +249,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
     if ( isprime(n, _GIVARO_ISPRIMETESTS_) ) return g=n;
     g=1;
     Rep m(zero), x, y, p(one), t;
-    random(gen, y, n);
+    this->random(gen, y, n);
 
     if (threshold) {
         unsigned long c = 0;
@@ -479,7 +479,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
     for (unsigned long i=0;i<curves;++i) {
         a = 0, asq = 0;
         while ((( a*(asq-1UL)*(9UL*asq-1UL) ) % n) == 0L ) {
-            random(gen,r,n);
+            this->random(gen,r,n);
 //             kg = r*r + 6;
             mul(kg,r,r); addin(kg,6UL);
 //             kgg = gcd(kg,n);

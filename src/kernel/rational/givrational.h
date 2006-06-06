@@ -5,12 +5,33 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.3 2005-07-13 10:21:10 pernet Exp $
+// $Id: givrational.h,v 1.4 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description:
 
 #include "givaro/givinteger.h"
 #include "givaro/givmodule.h"
+
+
+// ----------------------------------- Functions Rational
+
+class Rational ;
+int compare(const Rational& a, const Rational& b) ;
+int absCompare(const Rational& a, const Rational& b) ;
+const Rational pow(const Rational &r, const long l);
+const Integer floor (const Rational &r) ;
+const Integer ceil  (const Rational &r) ;
+const Integer round (const Rational &r) ;
+const Integer trunc (const Rational &r) ;
+const Rational abs  (const Rational &r) ; 
+const Rational pow (const Rational& n, unsigned int l);
+const Rational pow (const Rational& n, unsigned long l);
+unsigned long length (const Rational& r) ;
+int sign   (const Rational& r) ;
+int isZero (const Rational& r) ;
+int isOne  (const Rational& r) ;
+int isInteger(const Rational& r);  
+
 // ----------------------------------- Class Rational
 
 class Rational {
@@ -64,16 +85,27 @@ public :
   friend const Integer ceil  (const Rational &r) ;
   friend const Integer round (const Rational &r) ;
   friend const Integer trunc (const Rational &r) ;
-inline friend const Rational abs  (const Rational &r) ;
+inline friend const Rational abs  (const Rational &r) ; 
 
-
+    friend const Rational pow (const Rational& n, unsigned int l) { 
+        Rational r;
+        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l); 
+        return r;
+    }
+    
+    friend const Rational pow (const Rational& n, unsigned long l) { 
+        Rational r;
+        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l); 
+        return r;
+    }
+    
   const Integer nume() const ;
   const Integer deno() const ;
 inline friend unsigned long length (const Rational& r) ;
 inline friend int sign   (const Rational& r) ;
 inline friend int isZero (const Rational& r) ;
 inline friend int isOne  (const Rational& r) ;
-inline friend int isinteger(const Rational& r);  
+inline friend int isInteger(const Rational& r);  
 
   std::ostream& print ( std::ostream& o ) const ;
 
@@ -154,8 +186,8 @@ public:
   Rep& inv( Rep& r, const Rep& a ) const { return r = Rational::one/a; };
 
   // - return n^l 
-  Rep& pow(Rep& r, const Rep& n, const long l) const { return r = ::pow(n, l); }
-  Rep& pow(Rep& r, const Rep& n, const int l) const { return r = ::pow(n, l); }
+  Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r = ::pow(n, l); }
+  Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r = ::pow(n, l); }
 
 
         // - Rational number reconstruction

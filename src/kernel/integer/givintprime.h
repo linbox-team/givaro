@@ -4,7 +4,7 @@
 //              Fermat numbers,
 //              Primality tests, Factorization :
 //                      (There are parameters to fix)
-// Time-stamp: <08 Jun 04 17:32:35 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:48:16 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_INTEGERS_PRIME_H_
 #define _GIVARO_INTEGERS_PRIME_H_
@@ -60,8 +60,8 @@ public:
 //                     (n)<BOUNDARY_2_isprime ? isprime_Tabule2(n) : 
 //                     probab_prime(n));
             long l;
-            return (islt(n,BOUNDARY_isprime) ?  isprime_Tabule(access(l,n)): 
-                    islt(n,BOUNDARY_2_isprime) ? isprime_Tabule2(access(l,n)): 
+            return (islt(n,BOUNDARY_isprime) ?  isprime_Tabule(convert(l,n)): 
+                    islt(n,BOUNDARY_2_isprime) ? isprime_Tabule2(convert(l,n)): 
                     local_prime(n,r));
         }
 
@@ -89,9 +89,6 @@ public:
 
 // Using Integer
     int local_prime(const Rep& n, int r=_GIVARO_ISPRIMETESTS_) const { return probab_prime(n,r); }
-    int& access(int& r, const Rep& a) const { return r=Integer2long(a); }
-    long& access(long& r, const Rep& a) const { return r=Integer2long(a); }
-    double& access(double& r, const Rep& a) const { return r=Integer2double(a); }
 
 private:
     static int IP[LOGMAX+5];  // -- table for Tabule

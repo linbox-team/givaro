@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_compare.C,v 1.3 2005-06-13 11:56:59 jgdumas Exp $
+// $Id: gmp++_int_compare.C,v 1.4 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++_int.h"
@@ -33,7 +33,7 @@ int Integer::operator > (const unsigned long l) const
 { return mpz_cmp_ui((mpz_ptr)&gmp_rep, l) > 0; }
  
 int Integer::operator < (const unsigned long l) const
-{ return mpz_cmp_ui((mpz_ptr)&gmp_rep, 1) < 0; }
+{ return mpz_cmp_ui((mpz_ptr)&gmp_rep, l) < 0; }
 
 int Integer::operator > (const int l) const 
 { return mpz_cmp_si((mpz_ptr)&gmp_rep, l) > 0; }

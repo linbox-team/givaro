@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givratmuldiv.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givratmuldiv.C,v 1.3 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -18,7 +18,7 @@ Rational Rational::operator * (const Rational& r) const
   if (isZero(*this)) return Rational(0L) ;
   if (isOne(r)) return *this ;
   if (isOne(*this)) return r ;
-  if (isinteger(*this) && isinteger(r))
+  if (isInteger(*this) && isInteger(r))
     return Rational(num*r.num) ;
 
   if (absCompare(den, r.den) == 0)
@@ -43,7 +43,7 @@ Rational& Rational::operator *= (const Rational& r)
   if (isZero(*this)) return *this ;
   if (isOne(r)) return *this ;
   if (isOne(*this)) return *this=r ;
-  if (isinteger(*this) && isinteger(r)) {
+  if (isInteger(*this) && isInteger(r)) {
       num *= r.num;
       return *this;
   }

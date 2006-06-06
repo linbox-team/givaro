@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.8 2005-07-08 12:54:59 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.9 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -229,15 +229,6 @@ Integer& Integer::operator >>= (unsigned long l)
 
 //------------------------------------------- convert method
 //------------------------------------------- casting method
-long Integer2long  ( const Integer& n)
-{
-  return mpz_get_si ( (mpz_srcptr)&n.gmp_rep);
-}
-double Integer2double( const Integer& n)
-{
-  return mpz_get_d( (mpz_srcptr)&n.gmp_rep);
-}
-
 Integer::operator int() const {
 	return mpz_get_si ( (mpz_srcptr)&gmp_rep);
 }

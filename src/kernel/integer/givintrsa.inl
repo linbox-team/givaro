@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              RSA public-key cipher codes
 //              ECB mode (UNSECURE !!!)
-// Time-stamp: <24 Mar 05 14:21:42 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:32:13 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
 #ifndef _GIVARO_RSA_Public_KEY_
@@ -19,7 +19,7 @@
 template<class RandIter>
 long IntRSADom<RandIter>::log(const Element& n, const long b = 10) const {
     long res = 0;
-    for(Element p = n; p>=b; ++res, divin(p,b) ) {}
+    for(Element p = n; p>=b; ++res, this->divin(p,b) ) {}
     return res;
 }   
     
@@ -34,7 +34,7 @@ std::ostream& IntRSADom<RandIter>::ecriture_str(std::ostream& o, const Element& 
 
     Element p = n, a, b;
     long i = _lm-1;
-        // First char is ignored as it is zero or random enabling CBC
+        // First char is ignored as it is zero or this->random enabling CBC
     a = p >> (i<<3);
     p -= a << (i<<3);
     for(--i; i>=0; --i) {
@@ -49,7 +49,7 @@ template<class RandIter>
 std::ostream& IntRSADom<RandIter>::ecriture_str_last(std::ostream& o, const Element& n) const {
     Element p = n, a, b;
     long i = _lm-1, nbzeroes(0);
-        // First char is ignored as it is zero or random enabling CBC
+        // First char is ignored as it is zero or this->random enabling CBC
     a = p >> (i<<3);
     p -= a << (i<<3);
     for(--i; i>=1; --i) {
@@ -187,13 +187,13 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_
     Element q,t,r,s;
 
     if (psize > 9) {
-        random(g,t,(psize>>1)-2);
+        this->random(g,t,(psize>>1)-2);
         t += Integer(1)<<( (psize>>1)-2 );
-        random(g,s,(psize>>1)-2);
+        this->random(g,s,(psize>>1)-2);
         s += Integer(1)<<( (psize>>1)-2 );
     } else {
-        random(g,t,3); 
-        random(g,s,3); 
+        this->random(g,t,3); 
+        this->random(g,s,3); 
     }
     nextprimein( t );
     nextprimein( s );
@@ -256,7 +256,7 @@ void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, 
         gcd(gd,u,v,k,phim);
     } else {
         do {
-            random(g,k,phim);
+            this->random(g,k,phim);
         } while (gcd(gd,u,v,k,phim) != 1);
     }
     modin(u,phim);
@@ -271,7 +271,7 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::point_break(Element&
     if ( isZero(_u) ) {
         Element p,v,d, pm;
         factor(p, _m);
-        mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( div(d,_m,p), IntFactorDom<RandIter>::one ) );
+        mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( this->div(d,_m,p), IntFactorDom<RandIter>::one ) );
         gcd(d,_u,v,_k,pm);
         if (islt(_u,IntFactorDom<RandIter>::zero)) addin(_u, pm);
     }

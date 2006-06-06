@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: T. Gautier
-// $Id: givaromm.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givaromm.h,v 1.2 2006-06-06 12:52:39 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - two memory managers: the first one handle a set on free-list
@@ -83,7 +83,7 @@ inline static void* allocate (const size_t sz)
 #ifdef GIVARO_DEBUG
   if (sz ==0) return 0 ;
 #endif  
-  register int index; 
+  size_t index; 
   register BlocFreeList* tmp;
   if ((sz <= 32) && ((tmp=BlocFreeList::TabFree[index =sz-1]) !=0)) {
     BlocFreeList::TabFree[index] = tmp->u.nextfree;

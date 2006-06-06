@@ -166,6 +166,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
 template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, const Rep& n) const { unsigned long runs; return prim_root(A, runs, n); }
 
+/*
 template<class T, template <class T> class Container>
 std::ostream& operator<< (std::ostream& o, const Container<T>& C) {
 	          for(typename Container<T>::const_iterator refs =  C.begin();
@@ -174,6 +175,7 @@ std::ostream& operator<< (std::ostream& o, const Container<T>& C) {
 			                            o << (*refs) << " " ;
 		              return o << std::endl;
 }
+*/
 
 
 // =================================

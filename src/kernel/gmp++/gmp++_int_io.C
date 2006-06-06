@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_io.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: gmp++_int_io.C,v 1.2 2006-06-06 08:39:22 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -60,12 +60,13 @@ Integer::Integer(const std::vector<mp_limb_t>& v) {
  	size_t s = v.size();
 	if (s) {
 	 	mpz_init_set_ui((mpz_ptr)&gmp_rep, v[0]);
-		Integer base(256), prod;
+		Integer base(256), prod, tmp;
 		prod = base = pow(base, (unsigned long)sizeof(mp_limb_t) );
 
 		std::vector<mp_limb_t>::const_iterator vi = v.begin();
 		for(++vi;vi != v.end();++vi) { 
-	 		*this += ( prod * (*vi) );
+			mpz_mul_ui( (mpz_ptr)&tmp.gmp_rep, (mpz_ptr)&prod.gmp_rep, *vi);
+	 		*this += tmp;
 			prod *= base;
 		}
 	} else

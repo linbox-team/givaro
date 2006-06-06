@@ -2,7 +2,7 @@
 // Givaro / Athapascan-1
 // Irreducible polynomial finder
 // Primitive root finder
-// Time-stamp: <06 Jun 06 14:52:35 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 15:02:39 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_POLY_PRIMITIVE_ROOT_
 #define _GIVARO_POLY_PRIMITIVE_ROOT_
@@ -193,7 +193,7 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
     const Rep& P
     , Residu_t MOD ) const  {
         // Square free ?
-    Rep W,D; gcd(W,diff(D,P),P);
+    Rep W,D; this->gcd(W,diff(D,P),P);
     Degree d, dP;
     if (degree(d,W) > 0) return 0;
     IntFactorDom<> FD; 
@@ -203,7 +203,7 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
 
     FD.pow( qn, IntFactorDom<>::Rep(MOD), n);
     Rep Unit, G1; init(Unit, Degree(1), _domain.one);
-    powmod(G1, Unit, qn, P);
+    this->powmod(G1, Unit, qn, P);
     if (degree(d, sub(D,G1,Unit)) >= 0) return 0;    
 
     std::vector<IntFactorDom<>::Rep> Lp; std::vector<unsigned long> Le;
@@ -211,7 +211,7 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
     for( std::vector<IntFactorDom<>::Rep>::const_iterator p = Lp.begin(); p != Lp.end(); ++p) {
         long ttmp; 
         FD.pow( qn, IntFactorDom<>::Rep(MOD), n/FD.convert(ttmp,*p) );
-        powmod(G1, Unit, qn, P);
+        this->powmod(G1, Unit, qn, P);
         if (degree(d, sub(D,G1,Unit)) < 0) return 0;    
     }
     
@@ -231,7 +231,7 @@ bool Poly1FactorDom<Domain,Tag, RandIter>::is_prim_root( const Rep& P, const Rep
     bool isproot = 0;
     Rep A, G; mod(A,P,F);
     Degree d;
-    if ( degree(d, gcd(G,A,F)) == 0) {
+    if ( degree(d, this->gcd(G,A,F)) == 0) {
         Residu_t MOD = _domain.residu();
         IntFactorDom<> FD;
         IntFactorDom<>::Element IMOD( MOD ), q, qp;
@@ -245,7 +245,7 @@ bool Poly1FactorDom<Domain,Tag, RandIter>::is_prim_root( const Rep& P, const Rep
         std::list< IntFactorDom<>::Element >::iterator li = L.begin();
         isproot = 1;
         for(;(li != L.end()) && isproot; ++li)
-            isproot = ( ! isOne(powmod(G, A, FD.div(q, qp , *li), F) ) );
+            isproot = ( ! this->isOne(this->powmod(G, A, FD.div(q, qp , *li), F) ) );
     }
     return isproot;
 }
@@ -255,7 +255,7 @@ inline typename IntegerDom::Element Poly1FactorDom<Domain,Tag, RandIter>::order(
     bool isproot = 0;
     Rep A, G; mod(A,P,F);
     Degree d;
-    if ( degree(d, gcd(G,A,F)) == 0) {
+    if ( degree(d, this->gcd(G,A,F)) == 0) {
         Residu_t MOD = _domain.residu();
         IntFactorDom<> FD;
         IntFactorDom<>::Element IMOD( MOD ), g, gg, tt, qp;
@@ -269,13 +269,13 @@ inline typename IntegerDom::Element Poly1FactorDom<Domain,Tag, RandIter>::order(
         std::list< IntFactorDom<>::Element >::iterator li = L.begin();
         isproot = 1;
         for(;(li != L.end()) && isproot; ++li)
-            isproot = ( ! isOne(powmod(G, A, FD.div(g, qp , *li), F) ) );
+            isproot = ( ! this->isOne(this->powmod(G, A, FD.div(g, qp , *li), F) ) );
         
         if (isproot)
             return qp;
         else {
             for(--li;li!=L.end();++li)
-                while ( FD.isZero(FD.mod(tt,g,*li)) && (isOne(powmod(G, A, FD.div(gg,g,*li), F))))
+                while ( FD.isZero(FD.mod(tt,g,*li)) && (this->isOne(this->powmod(G, A, FD.div(gg,g,*li), F))))
                     g.copy(gg);
             return g;
         }

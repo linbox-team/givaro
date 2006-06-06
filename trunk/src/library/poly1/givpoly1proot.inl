@@ -2,7 +2,7 @@
 // Givaro / Athapascan-1
 // Irreducible polynomial finder
 // Primitive root finder
-// Time-stamp: <06 Jun 06 14:37:48 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:52:35 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_POLY_PRIMITIVE_ROOT_
 #define _GIVARO_POLY_PRIMITIVE_ROOT_
@@ -61,7 +61,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
         // Search for a monic irreducible Polynomial
         // with random Elements
     do {
-        random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -79,7 +79,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
     Residu_t MOD = _domain.residu();
 
     do {
-        random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -132,7 +132,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
         // Search for a monic irreducible Polynomial
         // with random Elements
     do {
-        random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -175,7 +175,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
         // Search for a monic irreducible Polynomial
         // with random Elements
     do {
-        random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -318,7 +318,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
         // Search for a primitive Polynomial
         // with random Elements
     do {
-        random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -337,7 +337,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
         // Search for a primitive Polynomial
         // with random Elements
     do {
-        random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const 
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);

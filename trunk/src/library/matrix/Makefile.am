@@ -14,4 +14,4 @@ pkginclude_HEADERS=\
 
 noinst_LTLIBRARIES=libgivmatrix.la
 
-libgivmatrix_la_SOURCES=
+libgivmatrix_la_SOURCES=givmatrix.C

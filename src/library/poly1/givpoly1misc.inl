@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.7 2005-07-08 08:52:37 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.8 2006-06-26 16:31:03 jgdumas Exp $
 // ==========================================================================
 // Description:
 

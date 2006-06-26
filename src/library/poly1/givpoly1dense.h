@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.9 2005-07-05 08:51:34 pernet Exp $
+// $Id: givpoly1dense.h,v 1.10 2006-06-26 16:31:03 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -35,6 +35,7 @@ public:
     int areNEqual(const Self_t& p) const { 
         return *this != p;
     }
+
 };
 
 // template < typename T >
@@ -52,7 +53,7 @@ public:
 template <class Domain>
 class Poly1Dom<Domain,Dense> {
 protected:  //  -- Representation 
-  const Domain& 		_domain;  // -- subdomain
+    Domain 		_domain;  // -- subdomain
     Indeter		_x;	  // -- for I/O, if any
 public :
 
@@ -82,9 +83,11 @@ public :
         { return _domain != BC._domain;}
 
         // -- Return the domain of the entries
-    Domain& subdomain() const { return _domain; }
+    const Domain& subdomain() const { return _domain; }
         // -- Return the domain of the entries
-    Domain& getdomain() const { return _domain; }
+    const Domain& getdomain() const { return _domain; }
+    Domain& setdomain(const Domain& D) { return _domain = D; }
+            
 
         // -- Constantes
     const Rep zero;
@@ -176,6 +179,9 @@ public :
     Rep& mul   ( Rep& q, const Rep& a, const Rep& b ) const;
     Rep& mul   ( Rep& q, const Type_t& a, const Rep& b ) const;
     Rep& mul   ( Rep& q, const Rep& a, const Type_t& b ) const;
+
+    Rep& shiftin ( Rep&, int ) const;
+    Rep& shift   ( Rep&, const Rep&, int ) const;
 
     Rep& divin ( Rep& q, const Rep& a ) const;
     Rep& divin ( Rep& q, const Type_t& a ) const;

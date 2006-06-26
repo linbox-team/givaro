@@ -6,6 +6,7 @@ pkginclude_HEADERS=\
 	givindeter.h		\
 	givpoly1.h		\
 	givdegree.h		\
+	givinterp.h		\
 	givpoly1dense.h		\
 	givpoly1factor.h	\
 	givpoly1padic.h		\

@@ -3,10 +3,27 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.4 2005-07-05 08:51:34 pernet Exp $
+// $Id: givpoly1muldiv.inl,v 1.5 2006-06-26 16:31:03 jgdumas Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
+
+
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::shiftin ( Rep& R, int s) const 
+{
+    Type_t zer;
+    R.insert(R.begin(), s, this->_domain.init(zer,0) );
+    return R;
+}
+
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::shift ( Rep& R, const Rep& a, int s) const 
+{
+    R = a;
+    return R.shiftin(R, s);
+}
+
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mulin( Rep& R, const Type_t& u ) const
@@ -84,14 +101,18 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
  ( Rep& R, const Rep& P, const Type_t& val ) const
 {
-  return _domain.mul(R,P, val);
+    typename Rep::const_iterator ip = P.begin();
+    R.resize(P.size());
+    for(typename Rep::iterator ir = R.begin(); ir != R.end(); ++ir, ++ip)
+        this->_domain.mul(*ir, *ip, val);
+    return R;
 }
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
  ( Rep& R, const Type_t& val, const Rep& P ) const
 {
-  return _domain.mul(R,val,P);
+  return this->mul(R,val,P);
 }
 
 

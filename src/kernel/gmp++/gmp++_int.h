@@ -216,6 +216,13 @@ public:
   Integer& operator %= (const Integer& n);  
   Integer& operator %= (const unsigned long l);
   Integer& operator %= (const long l);
+#ifdef __USE_64_bits__
+  Integer& operator %= (const long long l) { return *this %= (Integer)l; }
+  Integer& operator %= (const unsigned long long l) { return *this %= (Integer)l; }
+  long long operator % (const long long l) const;
+  long long operator % (const unsigned long long l) const;
+#endif
+
   template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
   Integer  operator % (const Integer& n) const;
   long  operator % (const unsigned long l) const;

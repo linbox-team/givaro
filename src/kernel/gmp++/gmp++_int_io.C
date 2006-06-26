@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_io.C,v 1.3 2006-06-06 12:52:39 jgdumas Exp $
+// $Id: gmp++_int_io.C,v 1.4 2006-06-26 16:31:03 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -41,6 +41,18 @@ std::ostream& Integer::print(std::ostream &o) const
   delete [] str ;
   return o;
 } 
+
+Integer::operator std::string () const {
+    std::string s;
+    unsigned long strSize = mpz_sizeinbase((mpz_ptr)&(gmp_rep), 10) + 2;
+    char *str = new char[strSize + 2];
+    mpz_get_str(str, 10, (mpz_ptr)&(gmp_rep));
+    s = std::string(str);
+//    delete [] str ;
+    return s;
+}
+
+
 
 
 Integer::Integer(const std::vector<mp_limb_t>& v) {

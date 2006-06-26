@@ -23,10 +23,16 @@ AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(to
 LDADD = -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 
-EXTRA_PROGRAMS=isirred isprimitive pol_arith pol_eval pol_factor
+EXTRA_PROGRAMS=isirred isprimitive pol_arith pol_eval pol_factor interpolate
 
+interpolate_SOURCES = interpolate.C
 isirred_SOURCES = isirred.C
 isprimitive_SOURCES = isprimitive.C
 pol_arith_SOURCES = pol_arith.C
 pol_eval_SOURCES = pol_eval.C
 pol_factor_SOURCES = pol_factor.C
+
+# for compilation of new examples
+GIVARO_BIN=@bindir@
+%:%.C 
+	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)

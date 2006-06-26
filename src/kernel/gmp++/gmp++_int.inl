@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.6 2006-06-06 12:52:39 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.7 2006-06-26 16:31:03 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -58,7 +58,8 @@ delete [] tmp;
 //-----------------------------Integer(unsigned long long n)
 // log[10](2^8) < 2.408239966 
 inline Integer::Integer(unsigned long long n) {
-char * tmp = new char[ long(2.408239966*sizeof(unsigned long long))+1]; sprintf(tmp,"%lld",n);
+char * tmp = new char[ long(2.408239966*sizeof(unsigned long long))+1];
+sprintf(tmp,"%llu",n);
 mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 delete [] tmp;
 }
@@ -85,6 +86,9 @@ inline int operator != (int l, const Integer& n)
   { return n.operator != (l); }
 
 inline int operator != (long l, const Integer& n)
+  { return n.operator != (l); }
+
+inline int operator != (unsigned long l, const Integer& n)
   { return n.operator != (l); }
 
 inline int operator == (const Integer& a, const Integer& b) 
@@ -133,7 +137,7 @@ inline int operator <= (unsigned long l, const Integer& n)
   {  return (! (n < l) );}
 
 inline int operator >= (unsigned long l, const Integer& n)
-  {  return (! (n > l) );}
+  {  return (! (n < l) );}
 
 inline int operator >= (const Integer& n, unsigned long l)
   {  return (! (n < l) );}
@@ -195,6 +199,16 @@ inline Integer operator + (const Integer& n, const unsigned int l) { return n + 
 inline Integer& operator += (Integer& n, const int l) { return n += (long)l; }
 inline Integer& operator += (Integer& n, const unsigned int l) { return n += (unsigned long)l; }
 
+#ifdef __USE_64_bits__
+  inline Integer operator + (const Integer& n, const long long l) {return n + (Integer)l; }
+  inline Integer operator + (const Integer& n, const unsigned long long l) {return n + (Integer)l; }
+  inline Integer operator + (const long long l, const Integer& n) {return n+l;}
+  inline Integer operator + (const unsigned long long l, const Integer& n) {return n+l;}
+  inline Integer& operator += (Integer& n, const long long l) { return n += (Integer)l; }
+  inline Integer& operator += (Integer& n, const unsigned long long l) { return n += (Integer)l; }
+#endif
+
+
 // -- operator -
 inline Integer operator - (const int l, const Integer& n) { return -(n - (long)l); }
 inline Integer operator - (const unsigned int l, const Integer& n) { return -(n - (unsigned long)l); }
@@ -206,6 +220,15 @@ inline Integer operator - (const Integer& n, const unsigned int l) { return n - 
 inline Integer& operator -= (Integer& n, const int l) { return n -= (long)l; }
 inline Integer& operator -= (Integer& n, const unsigned int l) { return n -= (unsigned long)l; }
 
+#ifdef __USE_64_bits__
+  inline Integer operator - (const Integer& n, const long long l) {return n - (Integer)l; }
+  inline Integer operator - (const Integer& n, const unsigned long long l) {return n - (Integer)l; }
+  inline Integer operator - (const long long l, const Integer& n) {return n-l;}
+  inline Integer operator - (const unsigned long long l, const Integer& n) {return n-l;}
+  inline Integer& operator -= (Integer& n, const long long l) { return n -= (Integer)l; }
+  inline Integer& operator -= (Integer& n, const unsigned long long l) { return n -= (Integer)l; }
+#endif
+
 // -- operator *
 inline Integer operator * (const int l, const Integer& n) { return n * (long)l; }
 inline Integer operator * (const unsigned int l, const Integer& n) { return n * (unsigned long)l; }
@@ -216,6 +239,15 @@ inline Integer operator * (const Integer& n, const unsigned int l) { return n * 
 
 inline Integer& operator *= (Integer& n, const int l) { return n *= (long)l; }
 inline Integer& operator *= (Integer& n, const unsigned int l) { return n *= (unsigned long)l; }
+
+#ifdef __USE_64_bits__
+  inline Integer operator * (const Integer& n, const long long l) {return n * (Integer)l; }
+  inline Integer operator * (const Integer& n, const unsigned long long l) {return n * (Integer)l; }
+  inline Integer operator * (const long long l, const Integer& n) {return n*l;}
+  inline Integer operator * (const unsigned long long l, const Integer& n) {return n*l;}
+  inline Integer& operator *= (Integer& n, const long long l) { return n *= (Integer)l; }
+  inline Integer& operator *= (Integer& n, const unsigned long long l) { return n *= (Integer)l; }
+#endif
 
 // -- operator /
 inline Integer operator / (const int l, const Integer& n) { return Integer(l)/n; }

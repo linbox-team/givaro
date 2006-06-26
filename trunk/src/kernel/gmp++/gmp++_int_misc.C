@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.9 2006-06-06 12:52:39 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.10 2006-06-26 16:31:03 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -241,14 +241,19 @@ Integer::operator long() const {
 Integer::operator unsigned long() const {
 	return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 }
-#ifndef __GIVARO__DONOTUSE_longlong__
+#ifdef __USE_64_bits__
 Integer::operator unsigned long long() const {
 	unsigned long low = (unsigned long)(*this);
 	Integer rem;
-	mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), CHAR_BIT*sizeof(unsigned long int) );
+	short cbtuli = CHAR_BIT*sizeof(unsigned long int);
+	mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), cbtuli );
 	unsigned long high = (unsigned long)(rem);
 	unsigned long long tmp = high;
-	tmp <<= CHAR_BIT*sizeof(unsigned long int) ;
+//	tmp <<= CHAR_BIT*sizeof(unsigned long int) ;
+	cbtuli >>= 1;
+	tmp <<= cbtuli ;
+        tmp <<= cbtuli ;
+
 	return tmp += low;
 }
 Integer::operator long long() const {

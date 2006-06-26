@@ -27,3 +27,9 @@ LDADD = -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP
 EXTRA_PROGRAMS=iratrecon
 
 iratrecon_SOURCES = iratrecon.C
+
+# for compilation of new examples
+GIVARO_BIN=@bindir@
+%:%.C
+	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)
+

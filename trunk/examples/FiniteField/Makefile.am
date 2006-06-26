@@ -38,3 +38,8 @@ Test_Extension_SOURCES=Test_Extension.C
 zpz_atomic_SOURCES=zpz_atomic.C
 ff_arith_SOURCES=ff_arith.C
 exponentiation_SOURCES=exponentiation.C
+
+# for compilation of new examples
+GIVARO_BIN=@bindir@
+%:%.C
+	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)

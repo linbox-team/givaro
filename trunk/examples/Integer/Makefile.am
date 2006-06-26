@@ -49,3 +49,9 @@ RSA_keys_generator_SOURCES = RSA_keys_generator.C
 RSA_encipher_SOURCES = RSA_encipher.C
 RSA_decipher_SOURCES = RSA_decipher.C
 iexponentiation_SOURCES = iexponentiation.C
+
+# for compilation of new examples
+GIVARO_BIN=@bindir@
+%:%.C
+	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)
+

@@ -4,12 +4,14 @@
 // Copyright(c)'2001 by LinBox Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// Time-stamp: <06 Jun 06 14:43:10 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <26 Jun 06 18:56:58 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
+#ifndef __GIVARO__DONOTUSE_longlong__
 #ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 #define __USE_64_bits__
+#endif
 #endif
 
 #if !defined(GMP_NO_CXX) && !defined(__GIVARO_GMP_VERSION_3) && !defined(__GIVARO_GMP_NO_CXX)

@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <06 Jun 06 14:39:25 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <27 Jun 06 10:59:02 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 
@@ -209,6 +209,10 @@ template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::cardinali
 { return _q; }
 template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::characteristic( ) const
 { return _characteristic; }
+
+template<typename TT> 
+inline typename GFqDom<TT>::Residu_t GFqDom<TT>::generator( ) const
+{ return _log2pol[1]; }
 
 template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::exponent( ) const
 { return _exponent; }

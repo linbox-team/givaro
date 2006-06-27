@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <25 Sep 01 16:15:40 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <27 Jun 06 10:59:20 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -99,6 +99,7 @@ public:
     UTT residu() const;
     UTT characteristic() const;
     Integer& characteristic(Integer& p) const{return p=characteristic();}
+    UTT generator() const;
     UTT cardinality() const;
     UTT exponent() const;
     UTT size() const;

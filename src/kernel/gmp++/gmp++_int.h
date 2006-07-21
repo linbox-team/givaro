@@ -258,6 +258,8 @@ static Integer& mul   (Integer& res, const Integer& n1, const unsigned long n2);
 static Integer& axpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
 static Integer& axpyin   (Integer& res, const Integer& a, const Integer& x);  
 static Integer& axmy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
+static Integer& amxy(Integer& res, const Integer& a, const Integer& x, const Integer& b) ;
+
 static Integer& axmyin   (Integer& res, const Integer& a, const Integer& x);  
 
 static Integer& divin (Integer& q, const Integer& n);  

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mul.C,v 1.3 2005-07-14 17:36:16 jgdumas Exp $
+// $Id: gmp++_int_mul.C,v 1.4 2006-07-21 08:03:26 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++_int.h"
@@ -78,6 +78,14 @@ Integer& Integer::axpyin(Integer& res, const Integer& a, const Integer& x)
 //     mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&gmp_res);
 //     mpz_clear((mpz_ptr)&gmp_res);
     mpz_addmul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
+    return res;
+}
+
+Integer& Integer::amxy(Integer& res, const Integer& a, const Integer& x, const Integer& b)
+{
+    if (isZero(b) || isZero(x)) return res=a;
+    mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep, (mpz_ptr)&x.gmp_rep);
+    mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&res.gmp_rep);
     return res;
 }
 

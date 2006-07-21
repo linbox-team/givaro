@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.5 2005-06-14 14:53:14 pernet Exp $
+// $Id: givzpz32std.inl,v 1.6 2006-07-21 08:03:26 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -231,6 +231,15 @@ inline void ZpzDom<Std32>::axpyin
     __GIVARO_ZPZ32_N_MULADDIN(tmp, (int32)_p, (int32)a[i], (int32)x[i]);
     r[i] = (ZpzDom<Std32>::Rep)tmp;
   }
+}
+
+  // -- amxy: r <- c - a * b mod p
+inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::amxy (Rep& r, const Rep a, const Rep b, const Rep c) const 
+{
+  register int32 tmp;
+  __GIVARO_ZPZ32_N_MUL(tmp, (int32)_p, (int32)a, (int32)b);
+  __GIVARO_ZPZ32_N_SUB(r, (int32)_p, (int32)c, tmp);
+  return r;
 }
 
 inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::axmy

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.7 2005-07-06 12:23:37 jgdumas Exp $
+// $Id: givzpz16std.inl,v 1.8 2006-07-21 08:03:26 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -220,20 +220,20 @@ inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::invin (Rep& r) const
 }
 
 
-inline void ZpzDom<Std16>::axpy 
+inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::axpy 
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 { 
   register int32 tmp; 
   __GIVARO_ZPZ16_N_MULADD(tmp, (int32)_p, (int32)a, (int32)b, (int32)c); 
-  r = (ZpzDom<Std16>::Rep)tmp; 
+  return r = (ZpzDom<Std16>::Rep)tmp; 
 }
 
-inline void ZpzDom<Std16>::axpyin 
+inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::axpyin 
  (Rep& r, const Rep a, const Rep b) const
 { 
   register int32 tmp = (int32)r; 
   __GIVARO_ZPZ16_N_MULADDIN(tmp, (int32)_p, (int32)a, (int32)b); 
-  r = (ZpzDom<Std16>::Rep)tmp; 
+  return r = (ZpzDom<Std16>::Rep)tmp; 
 }
 
 
@@ -266,21 +266,22 @@ inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::amxy
   return r;
 }
 
-inline void ZpzDom<Std16>::axmy
+
+inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::axmy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 {
   register int32 tmp;
   __GIVARO_ZPZ16_N_MULSUB(tmp, (int32)_p, (int32)a, (int32)b, (int32)c);
-  r = (ZpzDom<Std16>::Rep)tmp;
+  return r = (ZpzDom<Std16>::Rep)tmp;
 }
 
 // r -= a*b
-inline void ZpzDom<Std16>::axmyin 
+inline ZpzDom<Std16>::Rep&  ZpzDom<Std16>::axmyin 
  (Rep& r, const Rep a, const Rep b) const
 {
   register int32 tmp = (int32)r;
   __GIVARO_ZPZ16_N_SUBMULIN(tmp, (int32)_p, (int32)a, (int32)b );
-  r = (ZpzDom<Std16>::Rep)tmp;
+  return r = (ZpzDom<Std16>::Rep)tmp;
 }
 
 

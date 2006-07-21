@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.4 2006-06-06 12:52:39 jgdumas Exp $
+// $Id: givrational.h,v 1.5 2006-07-21 08:03:26 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -176,6 +176,8 @@ public:
   { return r = a * b + c; };
   Rep& axpyin( Rep& r, const Rep& a, const Rep& b ) const
   { return r += a * b; };
+  Rep& amxy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
+  { return r = a - b * c; };
   Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
   { return r = a * b - c; };
   Rep& axmyin( Rep& r, const Rep& a, const Rep& b ) const
@@ -202,8 +204,8 @@ public:
   // - Misc
   size_t length (const Rep& a) const { return ::length(a); }
   int sign    (const Rep& a) const { return ::sign(a); }
-  int isone   (const Rep& a) const { return compare(a, one) ==0; }
-  int iszero  (const Rep& a) const { return compare(a, zero) ==0; }
+  int isOne   (const Rep& a) const { return compare(a, one) ==0; }
+  int isZero  (const Rep& a) const { return compare(a, zero) ==0; }
   int areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
   int areNEqual(const Rep& a, const Rep& b) const { return compare(a, b) !=0; }
 

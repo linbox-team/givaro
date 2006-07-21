@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.8 2006-06-26 16:31:03 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.9 2006-07-21 08:03:26 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -142,12 +142,16 @@ public:
   void inv (const size_t sz, Array r, constArray a) const;
 
   // -- axpy: r <- a * x + y mod p
-  Rep& axpy (Rep& r, const Rep a, const Rep b, const Rep c) const;
-  void axpy (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
+  Rep& axpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
+  void axpy 
+   (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
   // -- axpyin: r <- r + a * x mod p
   Rep& axpyin(Rep& r, const Rep a, const Rep b) const;
   void axpyin 
    (const size_t sz, Array r, constArray a, constArray x) const;
+
+  // -- amxy: r <- c - a * b mod p
+  Rep& amxy (Rep& r, const Rep a, const Rep b, const Rep c) const;
 
   // -- axmy: r <- a * x - y mod p
   Rep& axmy  (Rep& r, const Rep a, const Rep b, const Rep c) const;

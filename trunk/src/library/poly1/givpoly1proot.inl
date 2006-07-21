@@ -2,7 +2,7 @@
 // Givaro / Athapascan-1
 // Irreducible polynomial finder
 // Primitive root finder
-// Time-stamp: <06 Jun 06 15:02:39 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <21 Jul 06 09:54:41 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_POLY_PRIMITIVE_ROOT_
 #define _GIVARO_POLY_PRIMITIVE_ROOT_
@@ -288,6 +288,8 @@ template<class Domain, class Tag, class RandIter >
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::give_prim_root(Rep& R, const Rep& F)  const {
     Degree n; degree(n,F);
     Residu_t MOD = _domain.residu();
+    this->write(std::cout << "Give Pr: ", F) << std::endl;
+    
     
         // Search for a primitive BINOMIAL : X^i + a
     for(Degree di=1;di<n;++di) {

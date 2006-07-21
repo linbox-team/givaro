@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.10 2005-07-12 12:54:37 jgdumas Exp $
+// $Id: givzpz64std.h,v 1.11 2006-07-21 08:03:26 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -119,11 +119,11 @@ public:
     void inv (const size_t sz, Array r, constArray a) const;
 
         // -- axpy: r <- a * x + y mod p
-    void axpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
+    Rep& axpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
     void axpy 
     (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
         // -- axpyin: r <- r + a * x mod p
-    void axpyin(Rep& r, const Rep a, const Rep b) const;
+    Rep& axpyin(Rep& r, const Rep a, const Rep b) const;
     void axpyin 
     (const size_t sz, Array r, constArray a, constArray x) const;
 
@@ -131,11 +131,11 @@ public:
     Rep& amxy (Rep& r, const Rep a, const Rep b, const Rep c) const;
  
         // -- axmy: r <- a * x - y mod p
-    void axmy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
+    Rep& axmy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
     void axmy 
     (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
         // -- axmyin: r <- r - a * x mod p
-    void axmyin(Rep& r, const Rep a, const Rep b) const;
+    Rep& axmyin(Rep& r, const Rep a, const Rep b) const;
     void axmyin 
     (const size_t sz, Array r, constArray a, constArray x) const;
 

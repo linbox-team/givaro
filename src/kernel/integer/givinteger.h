@@ -92,8 +92,8 @@ public:
   // - return n^l 
   Rep& pow(Rep& r, const Rep& n, const long l) const { return r = ::pow(n, l); }
   Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r = ::pow(n, l); }
-  Rep& pow(Rep& r, const Rep& n, const int l) const { return r = ::pow(n, l); }
-  Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r = ::pow(n, l); }
+  Rep& pow(Rep& r, const Rep& n, const int l) const { return r = ::pow(n, (long)l); }
+  Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r = ::pow(n, (unsigned long)l); }
 
   // - return square root of n  
   Rep& sqrt(Rep& s, const Rep& n) const { return ::sqrt(s,n); }

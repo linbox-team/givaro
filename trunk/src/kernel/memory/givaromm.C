@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: givaromm.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givaromm.C,v 1.2 2006-11-09 18:54:19 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -265,9 +265,9 @@ GivMMInfo::GivMMInfo()
 
 GivMMInfo::~GivMMInfo()
 {
-  ::delete tabbloc;
-  ::delete tablog;
-  ::delete tabphy;
+  ::delete[] tabbloc;
+  ::delete[] tablog;
+  ::delete[] tabphy;
 }
 
 std::ostream& GivMMInfo::print( std::ostream& so ) const

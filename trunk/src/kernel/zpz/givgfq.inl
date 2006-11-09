@@ -5,9 +5,10 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <27 Jun 06 10:59:02 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <09 Nov 06 19:37:20 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
+#include <givaro/givpoly1padic.h>
 
 // Warning : valid iff b != c
 #ifndef __GIVARO_COUNT__
@@ -748,10 +749,26 @@ inline Integer& GFqDom<TT>::write (Integer& r, const Rep a) const
 
 
 // ---------
-// -- misc operations
+// -- Initialization operations
 // ---------
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r) const { return r = zero; }
+
+
+template<typename TT>
+template<typename val_t, template<typename V> class Polynomial>
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Polynomial<val_t>& P) {
+    static Self_t PrimeField(this->_characteristic);
+    typedef Poly1Dom< Self_t, Dense > PolDom;
+    static PolDom Pdom( PrimeField );
+    typedef Poly1PadicDom< GFqDom<TT>, Dense > PadicDom;
+    static PadicDom PAD(Pdom);
+    Degree d;  Pdom.degree(d, P);
+    if (d >= this->_exponent) { std::cerr << "Not yet implemented" << std::endl; }
+    TT tr;
+    PAD.eval(tr, P);
+    return r = this->_pol2log[ tr ];
+}
 
 /*
  * Replaced by calls to read in the .h
@@ -871,7 +888,6 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& r, 
 #include <givaro/givinteger.h>
 #include <givaro/givintnumtheo.h>
 #include <givaro/givpower.h>
-#include <givaro/givpoly1padic.h>
 #include <givaro/givpoly1factor.h>
 
 #include <vector>

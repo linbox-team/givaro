@@ -34,10 +34,10 @@ protected:
     BaseField_t _bF;
     Pol_t _pD;
     PolElement _irred;
-    const Residu_t _characteristic; 
-    const Residu_t _exponent;
-    const Residu_t _extension_order;
-    const Integer _cardinality;
+     Residu_t _characteristic; 
+     Residu_t _exponent;
+     Residu_t _extension_order;
+     Integer _cardinality;
 
 public:
 

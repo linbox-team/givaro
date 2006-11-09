@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <27 Jun 06 10:59:20 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <09 Nov 06 19:34:07 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -17,6 +17,7 @@
 #include <iostream>
 #include <vector>
 #include "givaro/giv_randiter.h"
+#include "givaro/givpoly1.h"
 
   // ------------------------------------------------- class GFqDom
 
@@ -110,17 +111,18 @@ public:
     Rep& init( Rep& a, const unsigned int i) const { return read(a,i); }
     Rep& init( Rep& a, const long i) const { return read(a,i); }
     Rep& init( Rep& a, const unsigned long i) const { return read(a,i); }
+    Rep& init( Rep&, const Integer ) const;
+    Rep& init( Rep&, const double ) const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
     Rep& init( Rep& a, const long long i) const { return read(a,i); }
     Rep& init( Rep& a, const unsigned long long i) const { return read(a,i); }
 #endif
-    Rep& init( Rep&, const Integer ) const;
-    Rep& init( Rep&, const double ) const ;
-//    Rep& init( Rep&, const Rep ) const;
+        // Initialization of a polynomial
+    template<typename val_t, template<typename V> class Polynomial>
+    Rep& init( Rep&, const Polynomial<val_t>&);
+
 
         // -- Misc: r <- a mod p
-//  Rep& assign(Rep& r, const TT a) const;
-//     Rep& assign(Rep& r, const UTT a) const;
     Rep& assign(Rep& r, const Integer a) const;
     Rep& assign(Rep& r, const Rep a) const;
     void assign ( const size_t sz, Array r, constArray a ) const;

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.10 2006-06-26 16:31:03 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.11 2006-11-09 18:54:19 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -90,8 +90,8 @@ public :
             
 
         // -- Constantes
-    const Rep zero;
-    const Rep one;
+     Rep zero;
+     Rep one;
 	
         // -- Init polynomial 
     Rep& init(Rep& a) const;

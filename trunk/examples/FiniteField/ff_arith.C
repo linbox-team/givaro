@@ -35,18 +35,14 @@ void TestField(const Field& F) {
 
 
         // Four operations
-    F.write( F.write( F.write( std::cout, a) << " += ",  b) << " is ", 
-             F.addin(a, b)
-	     ) << "   ;   ";
-    F.write( F.write( F.write( std::cout, a) << " -= ",  b) << " is ", 
-             F.subin(a, b)
-	     ) << "   ;   ";
-    F.write( F.write( F.write( std::cout, a) << " *= ",  b) << " is ", 
-             F.mulin(a, b)
-	     ) << "   ;   ";
-    F.write( F.write( F.write( std::cout, a) << " /= ",  b) << " is ", 
-             F.divin(a, b)
-	     ) << std::endl;
+    F.write( F.write( std::cout, a) << " += ",  b) << " is " ;
+    F.write( std::cout, F.addin(a, b) ) << "   ;   ";
+    F.write( F.write( std::cout, a) << " -= ",  b) << " is ";
+    F.write( std::cout, F.subin(a, b) ) << "   ;   ";
+    F.write( F.write( std::cout, a) << " *= ",  b) << " is " ;
+    F.write( std::cout, F.mulin(a, b) ) << "   ;   ";
+    F.write( F.write( std::cout, a) << " /= ",  b) << " is ";
+    F.write( std::cout, F.divin(a, b) ) << std::endl;
 
 
     F.init(a,22995);

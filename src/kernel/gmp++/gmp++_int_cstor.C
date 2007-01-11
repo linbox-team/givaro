@@ -5,10 +5,10 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_cstor.C,v 1.2 2005-04-27 14:53:00 jgdumas Exp $
+// $Id: gmp++_int_cstor.C,v 1.3 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 #include <iostream>
-#include "gmp++_int.h"
+#include "gmp++/gmp++.h"
 
 
 //------------------------------------- predefined null and one
@@ -28,6 +28,10 @@ Integer& Integer::copy(const Integer &n)
   if (this == &n) return *this;
   mpz_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
   return *this ;
+}
+
+void importWords(Integer& x, size_t count, int order, int size, int endian, size_t nails, const void* op) {
+  mpz_import( (mpz_ptr)&(x.gmp_rep), count, order, size, endian, nails, op);
 }
 
 #endif 

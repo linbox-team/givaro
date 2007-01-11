@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.7 2006-06-26 16:31:03 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.8 2007-01-11 18:42:51 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -45,12 +45,12 @@ inline Integer::Integer(long n) { mpz_init_set_si((mpz_ptr)&gmp_rep, n) ; }
 //-----------------------------Integer(unsigned long n)
 inline Integer::Integer(unsigned long n) { mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ; }
 
-#ifndef __GIVARO__DONOTUSE_longlong__
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #include <stdio.h>
 //-----------------------------Integer(long long n)
 // log[10](2^8) < 2.408239966 
 inline Integer::Integer(long long n) {
-char * tmp = new char[long(2.408239966*sizeof(unsigned long long))+1]; sprintf(tmp,"%lld",n);
+char * tmp = new char[long(2.408239966*sizeof(long long))+1]; sprintf(tmp,"%lld",n);
  mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ; 
 delete [] tmp;
 }
@@ -124,12 +124,6 @@ inline int operator < (const long l, const Integer& n)
 inline int operator < (const unsigned long l, const Integer& n)
   { return n > l; }
 
-inline int operator > (unsigned long l, const Integer& n)
-  { return n < l; }
-
-inline int operator >  (const Integer& a , const Integer& b)
-  { return compare(a,b) > 0; }
-
 inline int operator <= (const Integer& n, unsigned long l)
   {  return (! (n > l) ); }
 
@@ -147,6 +141,12 @@ inline int operator > (int l, const Integer& n)
 
 inline int operator > (long l, const Integer& n)
   { return n < l; }
+
+inline int operator > (unsigned long l, const Integer& n)
+  { return n < l; }
+
+inline int operator >  (const Integer& a , const Integer& b)
+  { return compare(a,b) > 0; }
 
 inline int operator <= (const Integer& a, const Integer& b)
   { return compare(a,b) <= 0; }
@@ -199,7 +199,7 @@ inline Integer operator + (const Integer& n, const unsigned int l) { return n + 
 inline Integer& operator += (Integer& n, const int l) { return n += (long)l; }
 inline Integer& operator += (Integer& n, const unsigned int l) { return n += (unsigned long)l; }
 
-#ifdef __USE_64_bits__
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
   inline Integer operator + (const Integer& n, const long long l) {return n + (Integer)l; }
   inline Integer operator + (const Integer& n, const unsigned long long l) {return n + (Integer)l; }
   inline Integer operator + (const long long l, const Integer& n) {return n+l;}
@@ -220,7 +220,7 @@ inline Integer operator - (const Integer& n, const unsigned int l) { return n - 
 inline Integer& operator -= (Integer& n, const int l) { return n -= (long)l; }
 inline Integer& operator -= (Integer& n, const unsigned int l) { return n -= (unsigned long)l; }
 
-#ifdef __USE_64_bits__
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
   inline Integer operator - (const Integer& n, const long long l) {return n - (Integer)l; }
   inline Integer operator - (const Integer& n, const unsigned long long l) {return n - (Integer)l; }
   inline Integer operator - (const long long l, const Integer& n) {return n-l;}
@@ -240,7 +240,7 @@ inline Integer operator * (const Integer& n, const unsigned int l) { return n * 
 inline Integer& operator *= (Integer& n, const int l) { return n *= (long)l; }
 inline Integer& operator *= (Integer& n, const unsigned int l) { return n *= (unsigned long)l; }
 
-#ifdef __USE_64_bits__
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
   inline Integer operator * (const Integer& n, const long long l) {return n * (Integer)l; }
   inline Integer operator * (const Integer& n, const unsigned long long l) {return n * (Integer)l; }
   inline Integer operator * (const long long l, const Integer& n) {return n*l;}
@@ -283,7 +283,7 @@ inline int isZero(const long a) { return a ==0; }
 inline int isZero(const unsigned short int a) { return a ==0; }
 inline int isZero(const unsigned int a) { return a ==0; }
 inline int isZero(const unsigned long a) { return a ==0UL; }
-#ifndef __GIVARO__DONOTUSE_longlong__
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 inline int isZero(const unsigned long long a) { return a ==0ULL; }
 inline int isZero(const long long a) { return a ==0LL; }
 #endif

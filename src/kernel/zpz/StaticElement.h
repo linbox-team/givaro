@@ -1,6 +1,6 @@
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // ------------------------------------------------------------------------
-// Time-stamp: <08 Oct 04 19:02:35 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <19 Dec 06 10:55:08 Jean-Guillaume.Dumas@imag.fr> 
 // ------------------------------------------------------------------------
 
 /* StaticElement.h
@@ -28,7 +28,7 @@
 #define __STATIC_ELEMENT_H__
 
 #include <iostream>
-#include <gmp++/gmp++_int.h>
+#include <gmp++/gmp++.h>
 
 template <class Domain>
 class StaticElement {

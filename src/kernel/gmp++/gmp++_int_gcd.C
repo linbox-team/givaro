@@ -3,12 +3,12 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_gcd.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: gmp++_int_gcd.C,v 1.2 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 // Description: 
 //
 
-#include "gmp++_int.h"
+#include "gmp++/gmp++.h"
 
 // ==========================================================================
 // Computes and returns the lcm of the two integers a and b.

@@ -3,10 +3,10 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_compare.C,v 1.4 2006-06-06 12:52:39 jgdumas Exp $
+// $Id: gmp++_int_compare.C,v 1.5 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 
-#include "gmp++_int.h"
+#include "gmp++/gmp++.h"
 
 // returns 1 if a > b, 0 if a == b and -1 otherwise.  
 int compare(const Integer &a, const Integer& b) 

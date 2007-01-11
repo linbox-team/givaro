@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.5 2006-06-26 16:31:03 jgdumas Exp $
+// $Id: givpoly1muldiv.inl,v 1.6 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
@@ -96,7 +96,6 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
     return setdegree(R);
 }
 
-
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
  ( Rep& R, const Rep& P, const Type_t& val ) const
@@ -112,7 +111,7 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
  ( Rep& R, const Type_t& val, const Rep& P ) const
 {
-  return this->mul(R,val,P);
+  return this->mul(R,P,val);
 }
 
 

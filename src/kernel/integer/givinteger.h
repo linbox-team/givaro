@@ -11,7 +11,7 @@
 #include "givaro/givinit.h"
 #include "givaro/giverror.h"
 #include "givaro-config.h"
-#include "gmp++/gmp++_int.h"
+#include "gmp++/gmp++.h"
 #include <string>
 
 

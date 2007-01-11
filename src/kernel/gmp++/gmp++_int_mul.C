@@ -3,10 +3,10 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mul.C,v 1.4 2006-07-21 08:03:26 jgdumas Exp $
+// $Id: gmp++_int_mul.C,v 1.5 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 
-#include "gmp++_int.h"
+#include "gmp++/gmp++.h"
 
 
 //-------------------------------------------------- operator *

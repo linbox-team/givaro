@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.11 2006-11-09 18:54:19 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.12 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -194,6 +194,21 @@ public :
     Rep& mod   ( Rep& q, const Rep& a, const Rep& b ) const;
     Rep& mod   ( Rep& q, const Type_t& a, const Rep& b ) const;
     Rep& mod   ( Rep& q, const Rep& a, const Type_t& b ) const;
+
+
+    Rep& axpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const;
+    Rep& axpy  (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const;
+    Rep& axpyin(Rep& r, const Rep& a, const Rep& x) const;
+    Rep& axpyin(Rep& r, const Type_t& a, const Rep& x) const;
+        // -- amxy: r <- c - a * b
+    Rep& amxy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
+    Rep& amxy  (Rep& r, const Type_t& a, const Rep& b, const Rep& c) const;
+        // -- amxyin: r -= a*b
+    Rep& amxyin(Rep& r, const Rep& a, const Rep& b) const;
+    Rep& amxyin(Rep& r, const Type_t& a, const Rep& b) const;
+        // -- axmy: r <- a * x - y
+    Rep& axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const;
+    Rep& axmy  (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const;
 
         // A = q*B + r
     Rep& divmod( Rep& q, Rep& r, const Rep& a, const Rep& b ) const;

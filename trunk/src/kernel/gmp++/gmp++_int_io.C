@@ -3,13 +3,13 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_io.C,v 1.4 2006-06-26 16:31:03 jgdumas Exp $
+// $Id: gmp++_int_io.C,v 1.5 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
 #include <iostream>
 #include <stdlib.h>
-#include "gmp++_int.h"
+#include "gmp++/gmp++.h"
 
 // Sortie nonsignee : 321321 meme si n = -321321, par exemple 
 std::ostream& absOutput(std::ostream &o, const Integer&n)
@@ -54,7 +54,6 @@ Integer::operator std::string () const {
 
 
 
-
 Integer::Integer(const std::vector<mp_limb_t>& v) {
  	size_t s = v.size();
 	if (s) {
@@ -72,6 +71,15 @@ Integer::Integer(const std::vector<mp_limb_t>& v) {
 	 	mpz_init( (mpz_ptr)&gmp_rep );
 
 }
+
+Integer::operator std::vector<mp_limb_t> () const {
+        size_t s = mpz_size( (mpz_ptr)&(gmp_rep) );
+        std::vector<mp_limb_t> v(s);
+        std::vector<mp_limb_t>::iterator vi = v.begin();
+        for(mp_size_t i = 0;vi != v.end();++vi, ++i) *vi = mpz_getlimbn( (mpz_ptr)& (gmp_rep) ,i);
+        return v;
+}
+
 
 
   // Entree au format de la sortie

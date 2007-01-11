@@ -3,10 +3,10 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mod.C,v 1.4 2006-06-26 16:31:03 jgdumas Exp $
+// $Id: gmp++_int_mod.C,v 1.5 2007-01-11 18:42:51 jgdumas Exp $
 // ==========================================================================
 
-#include "gmp++_int.h"
+#include "gmp++/gmp++.h"
 
 
 //-------------------------------------------------- operator /
@@ -119,34 +119,52 @@ Integer Integer::operator % (const Integer& n) const
   return res;
 }
 
-long Integer::operator % (const unsigned long l) const 
-{
-//  if (l ==0) {
-//    GivMathDivZero("[Integer::/]: division by zero");
-//  }
-  if (isZero(*this)) return 0L;
-  Integer Res(Integer::one);   
-  mpz_tdiv_r_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, l);
-//   return Integer((res.gmp_rep));
-  return long( Res );
+// long Integer::operator % (const unsigned long l) const 
+// {
+// //  if (l ==0) {
+// //    GivMathDivZero("[Integer::/]: division by zero");
+// //  }
+//   if (isZero(*this)) return 0L;
+//   Integer Res(Integer::one);   
+//   mpz_tdiv_r_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, l);
+// //   return Integer((res.gmp_rep));
+//   return long( Res );
+// }
+unsigned long Integer::operator % (const unsigned long l) const {
+    if (isZero(*this)) return 0L;
+    if (this->priv_sign()>0)
+        return  mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
+    else {
+        Integer Neg;
+        mpz_neg( (mpz_ptr)&(Neg.gmp_rep), (mpz_ptr)&gmp_rep );
+        return (l-mpz_tdiv_ui( (mpz_ptr)&(Neg.gmp_rep), l));
+    }
 }
 
 long Integer::operator % (const long l) const 
 {
-//  if (l ==0) {
-//    GivMathDivZero("[Integer::/]: division by zero");
+// //  if (l ==0) {
+// //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  if (isZero(*this)) return 0L;
-  Integer Res(Integer::one);   
-  int sgn = GMP__SGN(l);
-  mpz_tdiv_r_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
-  if (sgn <0) Res = - Res;
-  return long( Res );
+    if (l>0)
+        return static_cast<long>(this->operator%( static_cast<const unsigned long>(l) ) );
+    else {
+        long res = static_cast<long>(this->operator%( static_cast<const unsigned long>( -l ) ) );
+        return -res;
+    }
 }
+
+//long Integer::operator % (const long l) const 
+//{
+//  int sgn = GMP__SGN(l);
+//  long res = mpz_tdiv_ui((mpz_ptr)&gmp_rep, GMP__ABS(l));
+//  if (sgn <0) return -res;
+//  else return res;
+//}
 
 //Added by Dan Roche, 6-28-04
 #ifdef __USE_64_bits__
-long long Integer::operator % (const unsigned long long l) const
+unsigned long long Integer::operator % (const unsigned long long l) const
 {
   if (isZero(*this)) return 0LL;
   Integer Res(Integer::one);
@@ -165,4 +183,3 @@ long long Integer::operator % (const long long l) const
 }
 
 #endif
-

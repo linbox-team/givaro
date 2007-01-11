@@ -13,6 +13,7 @@ pkginclude_HEADERS=\
 	givpoly1denseops.inl	\
 	givpoly1addsub.inl	\
 	givpoly1muldiv.inl	\
+	givpoly1axpy.inl	\
 	givpoly1gcd.inl		\
 	givpoly1kara.inl	\
 	givpoly1cstor.inl	\

@@ -1,34 +1,15 @@
 #ifndef _GMPplusplus_INTEGER_H_
 #define _GMPplusplus_INTEGER_H_
 // ========================================================================
-// Copyright(c)'2001 by LinBox Team
+// Copyright(c)'2001-2007 by LinBox Team
 // see the copyright file.
-// Authors: M. Samama, T. Gautier
-// Time-stamp: <21 Jul 06 10:07:31 Jean-Guillaume.Dumas@imag.fr> 
+// Authors: M. Samama, T. Gautier, JG. Dumas
+// Time-stamp: <11 Jan 07 14:52:53 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
-#ifndef __GIVARO__DONOTUSE_longlong__
-#ifndef __DONOTUSE_Givaro_SIXTYFOUR__
-#define __USE_64_bits__
-#endif
-#endif
 
-#if !defined(GMP_NO_CXX) && !defined(__GIVARO_GMP_VERSION_3) && !defined(__GIVARO_GMP_NO_CXX)
-#include <gmpxx.h>
-#endif
-
-// If GMP is at least version 4, do not need extern
-#ifdef __GIVARO_GMP_VERSION_3
-extern "C" {
-#endif
-
-#include "gmp.h"
-
-#ifdef __GIVARO_GMP_VERSION_3
-}
-#endif
-
+// Core gmp++_int.h
 #include <vector>
 #include <list>
 #include <string>
@@ -43,70 +24,66 @@ extern "C" {
 #endif
 
 
-  //------------------------------------------------------ Friend Integer
+//------------------------------------------------------ Friend Integer
 class Integer;
 
-int compare(const Integer& a, const Integer& b);
-int absCompare(const Integer& a, const Integer& b);
-Integer& inv (Integer& u, const Integer& a, const Integer& b); 
-Integer gcd (const Integer& a, const Integer& b);
-Integer gcd (const Integer& a, const Integer& b, Integer& u, Integer& v);
-Integer& gcd (Integer& g, const Integer& a, const Integer& b);
-Integer& gcd (Integer& g, const Integer& a, const Integer& b, Integer& u, Integer& v);
-Integer pp( const Integer& P, const Integer& Q );
-Integer& lcm (Integer& g, const Integer& a, const Integer& b);
-Integer lcm (const Integer& a, const Integer& b);
-Integer& pow(Integer& Res, const Integer& n, const long l);
-Integer& pow(Integer& Res, const unsigned long n, const unsigned long l);
-Integer& pow(Integer& Res, const Integer& n, const unsigned long l);
-Integer& pow(Integer& Res, const Integer& n, const int l) ;
-
-Integer& pow(Integer& Res, const Integer& n, const unsigned int l) ;
-
-Integer pow(const Integer& n, const long l);
-Integer pow(const Integer& n, const unsigned long l);
-Integer pow(const Integer& n, const int l) ;
-Integer pow(const Integer& n, const unsigned int l);
-Integer& powmod(Integer& Res, const Integer& n, const unsigned long e, const Integer& m);
-Integer& powmod(Integer& Res, const Integer& n, const long e, const Integer& m);
-Integer& powmod(Integer& Res, const Integer& n, const unsigned int e, const Integer& m) ;
-Integer& powmod(Integer& Res, const Integer& n, const int e, const Integer& m)  ;
-
-Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m);
-Integer powmod(const Integer& n, const unsigned long e, const Integer& m);
-Integer powmod(const Integer& n, const long e, const Integer& m);
-Integer powmod(const Integer& n, const unsigned int e, const Integer& m) ;
-
-Integer powmod(const Integer& n, const int e, const Integer& m) ;
-
-Integer powmod(const Integer& n, const Integer& e, const Integer& m);
-Integer fact ( unsigned long l);
-Integer sqrt(const Integer& p);
-Integer sqrtrem(const Integer& p, Integer& rem);
-Integer& sqrt(Integer& r, const Integer& p);
-Integer& sqrtrem(Integer& r, const Integer& p, Integer& rem);
-bool root(Integer& q, const Integer&, unsigned int n);
-long logp(const Integer& a, const Integer& p) ;
-double logtwo(const Integer& a) ;
-void swap(Integer& , Integer&);
-inline int sign   (const Integer& a);
-inline int isZero (const Integer& a);
-inline int isOne  (const Integer& a);
-int isperfectpower  (const Integer& );
-Integer abs(const Integer& n);
-Integer& prevprime(Integer&, const Integer& p);
-Integer& nextprime(Integer&, const Integer& p);
-int probab_prime(const Integer& p);
-int probab_prime(const Integer& p, int r);
-int jacobi(const Integer& u, const Integer& v) ;
-int legendre(const Integer& u, const Integer& v) ;
-inline unsigned long length (const Integer& a); 
-std::istream& operator >> (std::istream &i, Integer& n);
-std::ostream& operator << (std::ostream &o, const Integer& n);
-std::ostream& absOutput (std::ostream &o, const Integer& n);
+int 		compare(const Integer& a, const Integer& b);
+int 		absCompare(const Integer& a, const Integer& b);
+Integer& 	inv (Integer& u, const Integer& a, const Integer& b); 
+Integer 	gcd (const Integer& a, const Integer& b);
+Integer 	gcd (const Integer& a, const Integer& b, Integer& u, Integer& v);
+Integer& 	gcd (Integer& g, const Integer& a, const Integer& b);
+Integer& 	gcd (Integer& g, const Integer& a, const Integer& b, Integer& u, Integer& v);
+Integer 	pp( const Integer& P, const Integer& Q );
+Integer& 	lcm (Integer& g, const Integer& a, const Integer& b);
+Integer 	lcm (const Integer& a, const Integer& b);
+Integer& 	pow(Integer& Res, const Integer& n, const long l);
+Integer& 	pow(Integer& Res, const unsigned long n, const unsigned long l);
+Integer& 	pow(Integer& Res, const Integer& n, const unsigned long l);
+Integer& 	pow(Integer& Res, const Integer& n, const int l) ;
+Integer& 	pow(Integer& Res, const Integer& n, const unsigned int l) ;
+Integer 	pow(const Integer& n, const long l);
+Integer 	pow(const Integer& n, const unsigned long l);
+Integer 	pow(const Integer& n, const int l) ;
+Integer 	pow(const Integer& n, const unsigned int l);
+Integer& 	powmod(Integer& Res, const Integer& n, const unsigned long e, const Integer& m);
+Integer& 	powmod(Integer& Res, const Integer& n, const long e, const Integer& m);
+Integer& 	powmod(Integer& Res, const Integer& n, const unsigned int e, const Integer& m) ;
+Integer& 	powmod(Integer& Res, const Integer& n, const int e, const Integer& m)  ;
+Integer& 	powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m);
+Integer 	powmod(const Integer& n, const unsigned long e, const Integer& m);
+Integer 	powmod(const Integer& n, const long e, const Integer& m);
+Integer 	powmod(const Integer& n, const unsigned int e, const Integer& m) ;
+Integer 	powmod(const Integer& n, const int e, const Integer& m) ;
+Integer 	powmod(const Integer& n, const Integer& e, const Integer& m);
+Integer 	fact ( unsigned long l);
+Integer 	sqrt(const Integer& p);
+Integer 	sqrtrem(const Integer& p, Integer& rem);
+Integer& 	sqrt(Integer& r, const Integer& p);
+Integer& 	sqrtrem(Integer& r, const Integer& p, Integer& rem);
+bool 		root(Integer& q, const Integer&, unsigned int n);
+long 		logp(const Integer& a, const Integer& p) ;
+double 		logtwo(const Integer& a) ;
+void 		swap(Integer& , Integer&);
+int 		sign   (const Integer& a);
+int 		isZero (const Integer& a);
+int 		isOne  (const Integer& a);
+int 		isperfectpower  (const Integer& );
+Integer 	abs(const Integer& n);
+Integer& 	prevprime(Integer&, const Integer& p);
+Integer& 	nextprime(Integer&, const Integer& p);
+int 		probab_prime(const Integer& p);
+int 		probab_prime(const Integer& p, int r);
+int 		jacobi(const Integer& u, const Integer& v) ;
+int 		legendre(const Integer& u, const Integer& v) ;
+unsigned long 	length (const Integer& a); 
+std::istream& 	operator >> (std::istream &i, Integer& n);
+std::ostream& 	operator << (std::ostream &o, const Integer& n);
+std::ostream& 	absOutput (std::ostream &o, const Integer& n);
+void 		importWords(Integer&, size_t, int, int, int, size_t, const void*);
 
 
-    //------------------------------------------------------ Class Integer
+//------------------------------------------------------ Class Integer
 class Integer {
 
 public:
@@ -118,7 +95,7 @@ public:
   Integer(unsigned char n);
   Integer(unsigned int n);
   Integer(unsigned long n);
-#ifndef __GIVARO__DONOTUSE_longlong__
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
   Integer(long long n);
   Integer(unsigned long long n);
 #endif
@@ -177,60 +154,56 @@ public:
   Integer& operator>>= (unsigned long l) ; // rshift
 
   //----------------Elementary arithmetic between Integers & longs
-  Integer& operator += (const Integer& n);  
-  Integer& operator += (const unsigned long l);  
-  Integer& operator += (const long l);  
   Integer  operator + (const Integer& n) const;  
   Integer  operator + (const unsigned long l) const;
   Integer  operator + (const long l) const;
+  Integer& operator += (const Integer& n);  
+  Integer& operator += (const unsigned long l);  
+  Integer& operator += (const long l);  
   template<class XXX> Integer& operator +=(const XXX& x) { return this->operator += ( (Integer)x ); }
-    
-            
 
+  Integer  operator - (const Integer& n) const;
+  Integer  operator - (const unsigned long l) const;
+  Integer  operator - (const long l) const;
   Integer& operator -= (const Integer& n);  
   Integer& operator -= (const unsigned long l);  
   Integer& operator -= (const long l);  
   template<class XXX> Integer& operator -=(const XXX& x) { return this->operator -= ( (Integer)x ); }
-  Integer  operator - (const Integer& n) const;
-  Integer  operator - (const unsigned long l) const;
-  Integer  operator - (const long l) const;
   Integer  operator -() const;
 
+  Integer  operator * (const Integer& n) const;
+  Integer  operator * (const unsigned long l) const;
+  Integer  operator * (const long l) const;
   Integer& operator *= (const Integer& n);  
   Integer& operator *= (const unsigned long l);  
   Integer& operator *= (const long l);
   template<class XXX> Integer& operator *=(const XXX& x) { return this->operator *= ( (Integer)x ); }
 
-  Integer  operator * (const Integer& n) const;
-  Integer  operator * (const unsigned long l) const;
-  Integer  operator * (const long l) const;
-
   // -- Euclidian division of a/b: returns q or r such that
   // - a=b*q + r, with |r| < |b|, a*r >=0
+  Integer  operator /  (const Integer& n) const;
+  Integer  operator /  (const unsigned long l) const;
+  Integer  operator /  (const long l) const;
   Integer& operator /= (const Integer& n);  
   Integer& operator /= (const unsigned long l);
   Integer& operator /= (const long l);
   template<class XXX> Integer& operator /=(const XXX& x) { return this->operator /= ( (Integer)x ); }
-  Integer  operator /  (const Integer& n) const;
-  Integer  operator /  (const unsigned long l) const;
-  Integer  operator /  (const long l) const;
 
-  Integer& operator %= (const Integer& n);  
-  Integer& operator %= (const unsigned long l);
-  Integer& operator %= (const long l);
-#ifdef __USE_64_bits__
-  Integer& operator %= (const long long l) { return *this %= (Integer)l; }
-  Integer& operator %= (const unsigned long long l) { return *this %= (Integer)l; }
-  long long operator % (const long long l) const;
-  long long operator % (const unsigned long long l) const;
-#endif
-
-  template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
   Integer  operator % (const Integer& n) const;
-  long  operator % (const unsigned long l) const;
+  unsigned long  operator % (const unsigned long l) const;
   long  operator % (const long l) const;
   unsigned short  operator % (const unsigned short l) const { return (unsigned short) ( this->operator % ( (unsigned long)l ) ); }
   template<class XXX> XXX operator %(const XXX& x) const { return (XXX)this->operator % ( Integer(x) ); }
+  Integer& operator %= (const Integer& n);  
+  Integer& operator %= (const unsigned long l);
+  Integer& operator %= (const long l);
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
+  Integer& operator %= (const long long l) { return *this %= (Integer)l; }
+  Integer& operator %= (const unsigned long long l) { return *this %= (Integer)l; }
+  long long operator % (const long long l) const;
+  unsigned long long operator % (const unsigned long long l) const;
+#endif
+  template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
 
   // - Methods
 static Integer& addin (Integer& res, const Integer& n);  
@@ -401,6 +374,8 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   friend std::ostream& operator << (std::ostream &o, const Integer& n);
   friend std::ostream& absOutput (std::ostream &o, const Integer& n);
 
+  friend void importWords(Integer&, size_t, int, int, int, size_t, const void*);
+
   std::ostream& print( std::ostream& o ) const;
   
 protected:
@@ -420,6 +395,6 @@ protected:
 
 
 
-#include "gmp++_int.inl"
+#include "gmp++/gmp++_int.inl"
 
 #endif

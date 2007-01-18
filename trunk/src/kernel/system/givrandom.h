@@ -35,7 +35,6 @@ public:
 		gettimeofday(&tp, 0) ;
 		_seed = (long)(tp.tv_usec);
 	}
-        std::cerr << "seed : " << _seed << std::endl;
     }  
      
     GivRandom(const GivRandom& R) : _seed(R._seed) {}

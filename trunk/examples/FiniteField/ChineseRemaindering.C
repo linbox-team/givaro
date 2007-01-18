@@ -19,14 +19,13 @@ typedef Montgomery<Std32>       Field7;
 typedef ZpzDom<Integer>         Field8;
 
 template <typename Field> 
-Integer tmain(int argc, char ** argv) {
+Integer tmain(int argc, char ** argv, const GivRandom& generator) {
     typedef RNSsystem<Integer, Field >  CRTSystem;
     typedef typename CRTSystem::domains	Domains;
     typedef typename CRTSystem::array	Elements;
     typedef typename CRTSystem::ring	Ring;
     
     IntPrimeDom ID; 
-    GivRandom generator( argc>3 ? atoi(argv[3]):1234 );
     Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1);
 
     Domains Primes( argc>1 ? atoi(argv[1]):15);   
@@ -92,15 +91,18 @@ int main(int argc, char ** argv) {
         // argv[2] : 2^{32-j} is size of primes
         // argv[3] : seed for generator
 
+    GivRandom seedor( argc>3 ? atoi(argv[3]):1234 );
+    unsigned long seed = seedor.seed();
+    
 
-    Integer a1 = tmain<Field1>(argc, argv);
-    Integer a2 = tmain<Field2>(argc, argv);
-    Integer a3 = tmain<Field3>(argc, argv);
-    Integer a4 = tmain<Field4>(argc, argv);
-    Integer a5 = tmain<Field5>(argc, argv);
-    Integer a6 = tmain<Field6>(argc, argv);
-    Integer a7 = tmain<Field7>(argc, argv);
-    Integer a8 = tmain<Field8>(argc, argv);
+    Integer a1 = tmain<Field1>(argc, argv, GivRandom(seed));
+    Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed));
+    Integer a3 = tmain<Field3>(argc, argv, GivRandom(seed));
+    Integer a4 = tmain<Field4>(argc, argv, GivRandom(seed));
+    Integer a5 = tmain<Field5>(argc, argv, GivRandom(seed));
+    Integer a6 = tmain<Field6>(argc, argv, GivRandom(seed));
+    Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed));
+    Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed));
 
     if (a1 != a2) std::cerr << "ERROR a1 != a2" << std::endl;
     if (a3 != a4) std::cerr << "ERROR a3 != a4" << std::endl;

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mod.C,v 1.5 2007-01-11 18:42:51 jgdumas Exp $
+// $Id: gmp++_int_mod.C,v 1.6 2007-01-24 15:40:38 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -137,7 +137,9 @@ unsigned long Integer::operator % (const unsigned long l) const {
     else {
         Integer Neg;
         mpz_neg( (mpz_ptr)&(Neg.gmp_rep), (mpz_ptr)&gmp_rep );
-        return (l-mpz_tdiv_ui( (mpz_ptr)&(Neg.gmp_rep), l));
+        unsigned long res = mpz_tdiv_ui( (mpz_ptr)&(Neg.gmp_rep), l);
+        if (res > 0UL) return (l-res);
+        else return 0UL;
     }
 }
 

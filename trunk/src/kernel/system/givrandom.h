@@ -5,6 +5,7 @@
 // =================================================================== //
 #ifndef __GIVARO_RTANDOM__H__
 #define __GIVARO_RTANDOM__H__
+#include <givaro/givconfig.h>
 
 extern "C" {
 # include <sys/time.h>

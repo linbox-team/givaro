@@ -2,15 +2,18 @@
 #define _GMPplusplus_H_
 // ========================================================================
 // Givaro version of gmp++.h
-// Time-stamp: <19 Dec 06 10:51:44 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Mar 07 14:07:31 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
+#include <givaro-config.h>
+
 #ifndef __GIVARO__DONOTUSE_longlong__
 #ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 #define __USE_64_bits__
 #endif
 #endif
 
-#if !defined(GMP_NO_CXX) && !defined(__GIVARO_GMP_VERSION_3) && !defined(__GIVARO_GMP_NO_CXX)
+#if !defined(GMP_VERSION_3) && !defined(GMP_NO_CXX) && !defined(__GIVARO_GMP_VERSION_3) && !defined(__GIVARO_GMP_NO_CXX)
+// gmpxx.h defines __GMP_PLUSPLUS__
 #include <gmpxx.h>
 #endif
 

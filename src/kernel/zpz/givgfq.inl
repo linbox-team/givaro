@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <16 Nov 06 18:28:10 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 07 18:56:06 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -548,7 +548,7 @@ template<typename TT>
 inline std::istream& GFqDom<TT>::read (std::istream& i, Rep& a) const {
     TT t;
     i >> t;
-    read(a,t);
+    init(a,t);
     return i;
 }
 
@@ -587,7 +587,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
 }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const int residu ) const {
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int residu ) const {
   int tr = residu ;
   if (tr <0) {
       // -a = b [p]
@@ -604,7 +604,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const int residu ) co
   }
 }
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const long residu ) const {
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long residu ) const {
   long tr = residu ;
   if (tr <0) {
       // -a = b [p]
@@ -622,7 +622,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const long residu ) c
 }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const Integer residu ) const 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Integer residu ) const 
 {
   UTT tr;
   if (residu <0) {
@@ -642,7 +642,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const Integer residu 
 }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned long residu ) const 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long residu ) const 
 {
     unsigned long tr = residu ;
     if (tr >= _characteristic ) tr = tr % _characteristic ;
@@ -650,7 +650,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned long r
 }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned int residu ) const 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned int residu ) const 
 {
     unsigned int tr = residu ;
     if (tr >= _characteristic ) tr = tr % _characteristic ;
@@ -659,7 +659,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned int re
 
 #ifndef __GIVARO__DONOTUSE_longlong__
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned long long residu ) const 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long long residu ) const 
 {
     unsigned long long tr = residu ;
     if (tr >= _characteristic ) tr = tr % _characteristic ;
@@ -667,7 +667,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const unsigned long l
 }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const long long residu ) const {
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long residu ) const {
   long long tr = residu ;
   if (tr <0) {
       // -a = b [p]
@@ -686,12 +686,12 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::read( Rep& r, const long long resid
 
 
 template<typename TT>
-inline unsigned long long& GFqDom<TT>::write (unsigned long long& r, const Rep a) const
+inline unsigned long long& GFqDom<TT>::convert (unsigned long long& r, const Rep a) const
 {
 	  return r = (unsigned long long)_log2pol[ (unsigned long)a] ;
 }
 template<typename TT> 
-inline long long& GFqDom<TT>::write (long long& r, const Rep a) const 
+inline long long& GFqDom<TT>::convert (long long& r, const Rep a) const 
 {
   return r = (long long)_log2pol[ (unsigned long)a] ;
 }
@@ -712,37 +712,37 @@ inline double& GFqDom<TT>::convert (double& r, const Rep a) const
 }
 
 template<typename TT> 
-inline long& GFqDom<TT>::write (long& r, const Rep a) const 
+inline long& GFqDom<TT>::convert (long& r, const Rep a) const 
 {
   return r = (long)_log2pol[ (unsigned long)a] ;
 }
 
 template<typename TT> 
-inline unsigned long& GFqDom<TT>::write (unsigned long& r, const Rep a) const 
+inline unsigned long& GFqDom<TT>::convert (unsigned long& r, const Rep a) const 
 {
   return r = (unsigned long)_log2pol[ (unsigned long)a] ;
 }
 
 template<typename TT> 
-inline int& GFqDom<TT>::write (int& r, const Rep a) const 
+inline int& GFqDom<TT>::convert (int& r, const Rep a) const 
 {
   return r = (int)_log2pol[ (UTT)a] ;
 }
 
 template<typename TT> 
-inline unsigned int& GFqDom<TT>::write (unsigned int& r, const Rep a) const 
+inline unsigned int& GFqDom<TT>::convert (unsigned int& r, const Rep a) const 
 {
   return r = (unsigned int)_log2pol[ (UTT)a] ;
 }
 
 template<typename TT> 
-inline TT GFqDom<TT>::write (const Rep a) const 
+inline TT GFqDom<TT>::convert (const Rep a) const 
 {
   return (TT)_log2pol[ (UTT)a] ;
 }
 
 template<typename TT> 
-inline Integer& GFqDom<TT>::write (Integer& r, const Rep a) const 
+inline Integer& GFqDom<TT>::convert (Integer& r, const Rep a) const 
 {
   return r = (Integer)_log2pol[ (UTT)a] ;
 }
@@ -787,6 +787,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Polynomial<val_
 //         TT tr;
 //         PAD.eval(tr, modP);
 //         return r = this->_pol2log[ tr ];        
+        return r;
     } else {
         TT tr;
         PAD.eval(tr, P);
@@ -794,30 +795,9 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Polynomial<val_
     }
 }
 
-/*
- * Replaced by calls to read in the .h
-template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const TT a) const { return read (r, a); }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const UTT a) const { return read (r, a); }
-*/
-
-template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Integer a) const { return read (r, a); }
-
-//template<typename TT> 
-//inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Rep a) const { return r = Rep(a); }
-
-
-// template<typename TT> 
-// inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const TT a) const { return read (r, a); }
-
-// template<typename TT> 
-// inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const UTT a) const { return read (r, a); }
-
-template<typename TT> 
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Integer a) const { return read (r, a); }
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Integer a) const { return init (r, a); }
 
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Rep a) const { return r = a; }

@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <09 Nov 06 19:34:07 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <06 Jun 07 19:00:34 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -106,25 +106,27 @@ public:
     UTT size() const;
 
         // Initialization of Elements
-    Rep& init( Rep& ) const;
-    Rep& init( Rep& a, const int i) const { return read(a,i); }
-    Rep& init( Rep& a, const unsigned int i) const { return read(a,i); }
-    Rep& init( Rep& a, const long i) const { return read(a,i); }
-    Rep& init( Rep& a, const unsigned long i) const { return read(a,i); }
-    Rep& init( Rep&, const Integer ) const;
-    Rep& init( Rep&, const double ) const ;
+    Rep& init( Rep&) const;
+    Rep& init( Rep&, const int) const ;
+    Rep& init( Rep&, const unsigned int) const ;
+    Rep& init( Rep&, const long) const ;
+    Rep& init( Rep&, const unsigned long) const ;
+    Rep& init( Rep&, const Integer) const;
+    Rep& init( Rep&, const float) const ;
+    Rep& init( Rep&, const double) const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
-    Rep& init( Rep& a, const long long i) const { return read(a,i); }
-    Rep& init( Rep& a, const unsigned long long i) const { return read(a,i); }
+    Rep& init( Rep&, const long long) const;
+    Rep& init( Rep&, const unsigned long long) const ;
 #endif
+    Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
         // Initialization of a polynomial
     template<typename val_t, template<typename V> class Polynomial>
     Rep& init( Rep&, const Polynomial<val_t>&);
 
 
         // -- Misc: r <- a mod p
-    Rep& assign(Rep& r, const Integer a) const;
-    Rep& assign(Rep& r, const Rep a) const;
+    Rep& assign (Rep&, const Integer) const;
+    Rep& assign (Rep&, const Rep) const;
     void assign ( const size_t sz, Array r, constArray a ) const;
 
         // --- IO methods for the Domain
@@ -132,39 +134,21 @@ public:
     std::ostream& write( std::ostream& s ) const;
         // --- IO methods for the Elements
     std::istream& read ( std::istream& s, Rep& a ) const;
-    Rep& read (Rep&, const long ) const;
-    Rep& read (Rep&, const unsigned long ) const;
-    Rep& read (Rep&, const int ) const;
-    Rep& read (Rep&, const unsigned int ) const;
-    Rep& read (Rep&, const Integer ) const;
-#ifndef __GIVARO__DONOTUSE_longlong__
-    Rep& read (Rep&, const long long) const;
-    Rep& read (Rep&, const unsigned long long ) const;
-#endif
-    
     std::ostream& write( std::ostream& s, const Rep a ) const;
-    TT write(const Rep a ) const;
-    long& write(long&, const Rep a ) const;
-    unsigned long& write(unsigned long&, const Rep a ) const;
-    int& write(int&, const Rep a ) const;
-    unsigned int& write(unsigned int&, const Rep a ) const;
-    Integer& write(Integer&, const Rep a ) const;
-#ifndef __GIVARO__DONOTUSE_longlong__
-    long long& write(long long&, const Rep a ) const;
-    unsigned long long& write(unsigned long long&, const Rep a ) const;
-#endif
-    std::ostream& convert( std::ostream& s, const Rep a ) const { return write(s,a); }
-    TT convert(const Rep a ) const {return write(a);};
-    long& convert(long& i, const Rep a ) const {return write(i,a);};
-    unsigned long& convert(unsigned long& i, const Rep a ) const {return write(i,a);};
-    int& convert(int& i, const Rep a ) const {return write(i,a);};
-    double& convert(double& i, const Rep a ) const ;
-    unsigned int& convert(unsigned int& i, const Rep a ) const {return write(i,a);};
-    Integer& convert(Integer& i, const Rep a ) const {return write(i,a);};
 
+        // Conversions of the elements
+    std::ostream& 	convert(std::ostream& s, const Rep a ) const { return write(s,a); }
+    TT 			convert(const Rep) const ;
+    long& 		convert(long&, const Rep) const ;
+    unsigned long& 	convert(unsigned long&, const Rep) const ;
+    int& 		convert(int&, const Rep) const ;
+    float& 		convert(float&, const Rep) const ;
+    double& 		convert(double&, const Rep) const ;
+    unsigned int& 	convert(unsigned int&, const Rep) const ; 
+    Integer& 		convert(Integer&, const Rep) const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
-    long long& convert(long long& i, const Rep a) const { return write(i,a); }
-    unsigned long long& convert(unsigned long long& i, const Rep a) const { return write(i,a); }
+    long long& 		convert(long long&, const Rep) const ;
+    unsigned long long& convert(unsigned long long&, const Rep) const ;
 #endif
 
         // Test operators

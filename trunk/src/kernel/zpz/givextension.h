@@ -77,6 +77,10 @@ public:
         return *this;
     }
     
+    PolElement& init( PolElement& e) const { 
+        return _pD.init(e) ; 
+    }
+    
     template<class XXX>
     PolElement& init( PolElement& e, const XXX& i) const { 
         return _pD.modin( _pD.init(e, i), _irred) ; 

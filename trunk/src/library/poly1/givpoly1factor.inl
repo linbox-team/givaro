@@ -16,9 +16,9 @@
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter>
-template< template<class> class Container > 
+template< template<class, class> class Container, template <class> class Alloc > 
 inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor( 
-    Container< Rep > & L
+    Container< Rep, Alloc<Rep> > & L
     , const Rep& G
     , Degree d
     , Residu_t MOD) const {
@@ -121,9 +121,9 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter>
-template< template<class> class Container > 
+template< template<class, class> class Container, template <class> class Alloc > 
 inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
-    Container< Rep > & L
+    Container< Rep, Alloc<Rep> > & L
     , const Rep& f
     , Residu_t MOD)  const  {
 
@@ -158,12 +158,12 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter>
-template< template<class> class Container > 
-inline void Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( 
-    Container< Rep > & Lf
-    , Container< unsigned long > & Le
-    , const Rep & P
-    , Residu_t MOD ) const  {
+template< template<class, class> class Container, template <class> class Alloc>
+inline void 
+Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & Lf,
+			   Container< unsigned long, Alloc<unsigned long> > & Le,
+	       const Rep& P,
+	       Residu_t MOD)  const {
 // write(std::cerr << "CZ in: ", P) << std::endl;
     Degree dp; degree(dp,P);
     size_t nb=dp.value()+1; 
@@ -177,7 +177,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::CZfactor(
         for( ; this_multiplicity < Lf.size(); ++this_multiplicity)
             Le[this_multiplicity] = i+1;
 // std::cerr << "multiplicities";
-// for (typename Container< unsigned long >::const_iterator e=Le.begin(); e!=Le.end(); ++e)
+// for (typename Container< unsigned long, Alloc<unsigned long> >::const_iterator e=Le.begin(); e!=Le.end(); ++e)
 // std::cerr << " " << *e;
 // std::cerr << std::endl;
         

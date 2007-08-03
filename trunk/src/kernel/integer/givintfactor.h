@@ -96,17 +96,17 @@ public:
         //  loops defaulted to 0 forces factorization to be complete
         //  otherwise returns if factorization is complete or not
         //  Factors are checked for primality
-#ifndef __ECC
-    template< template<class> class Container> bool set
-        ( Container<Rep>& setint, Container<unsigned long>& setpwd,  const Rep& a, unsigned long loops = 0) const ;
-        ///
-    template< template<class> class Container> void set( Container<Rep>&,  const Rep&) const ;
-        ///
-    template< template<class> class Container> void Erathostene(Container<Rep>&, const Rep&) const ;
-        ///
-    template< template<class> class Container, template<class> class Cont2> Container<Rep>& divisors(Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const;
-    template< template<class> class Container> Container<Rep>& divisors(Container<Rep>&, const Rep& ) const ;
-#else
+/* #ifndef __ECC */
+/*     template< template<class> class Container> bool set */
+/*         ( Container<Rep>& setint, Container<unsigned long>& setpwd,  const Rep& a, unsigned long loops = 0) const ; */
+/*         /// */
+/*     template< template<class> class Container> void set( Container<Rep>&,  const Rep&) const ; */
+/*         /// */
+/*     template< template<class> class Container> void Erathostene(Container<Rep>&, const Rep&) const ; */
+/*         /// */
+/*     template< template<class> class Container, template<class> class Cont2> Container<Rep>& divisors(Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const; */
+/*     template< template<class> class Container> Container<Rep>& divisors(Container<Rep>&, const Rep& ) const ; */
+/* #else */
     template<class Container1, class Container2> bool set
         ( Container1& setint, Container2& setpwd,  const Rep& a, unsigned long loops = 0) const ;
         ///
@@ -116,7 +116,7 @@ public:
         ///
     template<class Container, class Cont2, class Cont3> Container& divisors(Container& L, const Cont2& Lf, const Cont3& Le)  const;
     template<class Container> Container& divisors(Container&, const Rep& ) const ;
-#endif
+//#endif
 
         /// returns a small factor
     Rep& Erathostene(Rep&,  const Rep& p ) const ;

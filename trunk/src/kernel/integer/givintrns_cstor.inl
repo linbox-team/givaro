@@ -1,48 +1,49 @@
   // -- Array of primes are given
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline IntRNSsystem< Container >::IntRNSsystem( const IntRNSsystem< Container >::array& inprimes) 
+//#ifndef __ECC
+//template<template<class> class Container>
+//#else
+template<template <class,class> class Container, template <class> class Alloc>
+//#endif
+inline IntRNSsystem<Container, Alloc>::IntRNSsystem( const IntRNSsystem<Container, Alloc>::array& inprimes) 
  : _primes(inprimes),
    _prod(one), _ck(0)
 {
-   GIVARO_ASSERT( inprimes.size()>0, "[IntRNSsystem< Container >::IntRNSsystem] bad size of array");
+   GIVARO_ASSERT( inprimes.size()>0, "[IntRNSsystem::IntRNSsystem] bad size of array");
 }
 
   // -- Array of primes are given
-#ifndef __ECC
-template<template<class> class Container> template <class TT>
-inline IntRNSsystem< Container >::IntRNSsystem( const Container<TT>& inprimes) 
+//#ifndef __ECC
+template<template<class,class> class Container, template <class> class Alloc>
+template <class TT>
+inline IntRNSsystem< Container, Alloc >::IntRNSsystem( const Container<TT, Alloc<TT> >& inprimes) 
  : _prod(one), _ck(0)
 {
-   GIVARO_ASSERT( inprimes.size()>0, "[IntRNSsystem< Container >::IntRNSsystem] bad size of array");
+   GIVARO_ASSERT( inprimes.size()>0, "[IntRNSsystem::IntRNSsystem] bad size of array");
    _primes.resize(inprimes.size());
-   typename Container<TT>::const_iterator np = inprimes.begin();
+   typename Container<TT, Alloc<TT> >::const_iterator np = inprimes.begin();
    for(typename array::iterator pi = _primes.begin(); pi != _primes.end(); ++pi, ++np)
        *pi = Element( *np );
 }
-#else
-template<class Container> template <class ContTT>
-inline IntRNSsystem< Container >::IntRNSsystem( const ContTT& inprimes) 
- : _prod(one), _ck(0)
-{
-   GIVARO_ASSERT( inprimes.size()>0, "[IntRNSsystem< Container >::IntRNSsystem] bad size of array");
-   _primes.resize(inprimes.size());
-   typename ContTT::const_iterator np = inprimes.begin();
-   for(typename array::iterator pi = _primes.begin(); pi != _primes.end(); ++pi, ++np)
-       *pi = Element( *np );
-}
-#endif
+//#else
+//template<class Container> template <class ContTT>
+//inline IntRNSsystem< Container >::IntRNSsystem( const ContTT& inprimes) 
+// : _prod(one), _ck(0)
+//{
+//   GIVARO_ASSERT( inprimes.size()>0, "[IntRNSsystem< Container >::IntRNSsystem] bad size of array");
+//   _primes.resize(inprimes.size());
+//   typename ContTT::const_iterator np = inprimes.begin();
+//   for(typename array::iterator pi = _primes.begin(); pi != _primes.end(); ++pi, ++np)
+//       *pi = Element( *np );
+//}
+//#endif
 
   // -- Product of primes
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline void IntRNSsystem< Container >::ComputeProd()
+//#ifndef __ECC
+template<template<class,class> class Container, template <class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline void IntRNSsystem< Container, Alloc >::ComputeProd()
 {
     if (isOne(_prod))
         for (typename array::const_iterator pi = _primes.begin();pi != _primes.end(); ++pi)
@@ -51,12 +52,12 @@ inline void IntRNSsystem< Container >::ComputeProd()
 
   // -- Computes Ck , Ck = (\prod_{i=0}^{k-1} primes[i])^(-1) % primes[k],
   // for k=1..(_sz-1)
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline void IntRNSsystem< Container >::ComputeCk()
+//#ifndef __ECC
+template<template<class,class> class Container, template <class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline void IntRNSsystem< Container, Alloc >::ComputeCk()
 {
   if (_ck.size() !=0) return; // -- already computed
 
@@ -77,58 +78,58 @@ inline void IntRNSsystem< Container >::ComputeCk()
 }
 
 
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline const typename IntRNSsystem< Container >::array& IntRNSsystem< Container >::Primes() const
+//#ifndef __ECC
+template<template<class,class> class Container, template<class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline const typename IntRNSsystem< Container, Alloc >::array& IntRNSsystem< Container, Alloc >::Primes() const
 { 
   return _primes; 
 }
 
 
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline const typename IntRNSsystem< Container >::Element IntRNSsystem< Container >::ith(const size_t i) const
+//#ifndef __ECC
+template<template<class, class> class Container, template <class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline const typename IntRNSsystem< Container, Alloc >::Element IntRNSsystem< Container, Alloc >::ith(const size_t i) const
 {
   return _primes[i];
 }
 
 
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline const typename IntRNSsystem< Container >::Element IntRNSsystem< Container >::product() const
+//#ifndef __ECC
+template<template<class,class> class Container, template <class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline const typename IntRNSsystem< Container, Alloc >::Element IntRNSsystem< Container, Alloc >::product() const
 {
-    ((IntRNSsystem< Container >*)this)->ComputeProd();
+    ((IntRNSsystem< Container, Alloc >*)this)->ComputeProd();
     return _prod;
 }
 
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline const typename IntRNSsystem< Container >::array& IntRNSsystem< Container >::Reciprocals() const
+//#ifndef __ECC
+template<template<class,class> class Container, template <class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline const typename IntRNSsystem< Container, Alloc >::array& IntRNSsystem< Container, Alloc >::Reciprocals() const
 {
-  if (_ck.size() ==0) ((IntRNSsystem< Container >*)this)->ComputeCk();
+  if (_ck.size() ==0) ((IntRNSsystem< Container, Alloc >*)this)->ComputeCk();
   return _ck;
 }
 
  
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline const typename IntRNSsystem< Container >::Element IntRNSsystem< Container >::reciprocal(const size_t i) const
+//#ifndef __ECC
+template<template<class,class> class Container, template <class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline const typename IntRNSsystem< Container, Alloc >::Element IntRNSsystem< Container, Alloc >::reciprocal(const size_t i) const
 {
-  if (_ck.size() ==0) ((IntRNSsystem< Container >*)this)->ComputeCk();
+  if (_ck.size() ==0) ((IntRNSsystem< Container, Alloc >*)this)->ComputeCk();
   return _ck[i];
 }

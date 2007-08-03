@@ -21,45 +21,37 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, co
     if (isleq(n,3)) return sub(res,n,this->one);
     std::list<Rep> Lf;
     set(Lf,n);
-    return phi(res,Lf,n);
+    //return phi (res,Lf,n);
+    return phi (res,Lf,n);	
 }
 
 
-#ifndef __ECC
 template<class RandIter>
-template< template<class> class Container> typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Container<Rep>& Lf, const Rep& n) const {
+template< template<class, class> class Container, template<class> class Alloc>
+ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Container<Rep, Alloc<Rep> >& Lf, const Rep& n) const {
     if (isleq(n,1)) return res=n;
     if (isleq(n,3)) return sub(res,n,this->one);
     res = n; Rep t,m;
-    for(typename Container<Rep>::const_iterator f=Lf.begin(); f!=Lf.end(); ++f) 
+    for(typename Container<Rep, Alloc<Rep> >::const_iterator f=Lf.begin(); f!=Lf.end(); ++f) 
         mul(res, divexact(t,res,*f), sub(m, *f, this->one));
     return res;
 }
-#else
-template<class RandIter>
-template<class Container> typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Container& Lf, const Rep& n) const {
-    if (isleq(n,1)) return res=n;
-    if (isleq(n,3)) return sub(res,n,this->one);
-    res = n; Rep t,m;
-    for(typename Container::const_iterator f=Lf.begin(); f!=Lf.end(); ++f) 
-        mul(res, divexact(t,res,*f), sub(m, *f, this->one));
-    return res;
-}
-#endif
 
 // =================================================================== //
 // Möbius function
 // =================================================================== //
-#ifndef __ECC
+//#ifndef __ECC
 template<class RandIter>
-template< template<class> class Container> short IntNumTheoDom<RandIter>::mobius(const Container<unsigned long>& lpow) const {
-#else
-template<class RandIter>
-template<class Container> short IntNumTheoDom<RandIter>::mobius(const Container& lpow) const {
-#endif
+template< template<class, class> class Container, template <class> class Alloc> 
+//short IntNumTheoDom<RandIter>::mobius(const Container<unsigned long, Alloc<unsigned long> >& lpow) const {
+//#else
+//template<class RandIter>
+//template<template <class, class> class Container, template <class> class Alloc> 
+short IntNumTheoDom<RandIter>::mobius(const Container<Rep, Alloc<Rep> >& lpow) const {
+//#endif
     if (lpow.size()) {
         short mob = 1;
-        for(typename Container<unsigned long>::const_iterator i=lpow.begin();i != lpow.end(); ++i) {
+        for(typename Container<Rep, Alloc<Rep> >::const_iterator i=lpow.begin();i != lpow.end(); ++i) {
             if (*i > 1) {
                  return 0;
             } else
@@ -167,9 +159,9 @@ template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, const Rep& n) const { unsigned long runs; return prim_root(A, runs, n); }
 
 /*
-template<class T, template <class T> class Container>
-std::ostream& operator<< (std::ostream& o, const Container<T>& C) {
-	          for(typename Container<T>::const_iterator refs =  C.begin();
+template<class T, template <class, class> class Container, template<class> class Alloc>
+std::ostream& operator<< (std::ostream& o, const Container<T, Alloc<T> >& C) {
+	          for(typename Container<T, Alloc<T> >::const_iterator refs =  C.begin();
 				                                  refs != C.end() ;
 								                                        ++refs )
 			                            o << (*refs) << " " ;
@@ -530,11 +522,8 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_base(Rep& A
             prim_root(*a, *pe);
     }
     
-#ifndef __ECC
-    IntRNSsystem<std::vector> RNs( Pe );
-#else
-    IntRNSsystem<std::vector<Rep> > RNs( Pe );
-#endif
+    IntRNSsystem<std::vector, std::allocator > RNs( Pe );
+//    IntRNSsystem<typename std::vector >, typename std::allocator > RNs( Pe );
     RNs.RnsToRing( A, Ra );
     return A;
 }

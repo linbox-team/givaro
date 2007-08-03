@@ -23,12 +23,11 @@ public:
 // =================================================================== //
 // Euler's phi function
 // =================================================================== //
-    Rep& phi(Rep& r, const Rep& n) const ;
-#ifndef __ECC
-    template< template<class> class Container> Rep& phi(Rep& res, const Container<Rep>& Lf, const Rep& n) const ;
-#else
-    template<class Container> Rep& phi(Rep& res, const Container& Lf, const Rep& n) const ;
-#endif
+
+template <template <class, class> class Container, template<class> class Alloc>
+Rep& phi(Rep& res, const Container<Rep, Alloc<Rep> >& Lf, const Rep& n) const ;
+
+Rep& phi(Rep& r, const Rep& n) const ;
 
 // =================================================================== //
 // Primitive Root
@@ -79,12 +78,10 @@ public:
 // Möbius function
 // =================================================================== //
 
-#ifndef __ECC
-    template< template<class> class Container> short mobius(const Container<unsigned long>& lpow) const ;
-#else
-    template< class Container> short mobius(const Container& lpow) const ;
-#endif
-    short mobius(const Rep& a) const;
+template< template<class, class> class Container, template <class> class Alloc>
+short mobius(const Container<Rep, Alloc<Rep> >& lpow) const ;
+
+short mobius(const Rep& a) const;
 };
 
 

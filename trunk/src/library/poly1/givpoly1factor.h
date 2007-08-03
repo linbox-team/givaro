@@ -37,14 +37,14 @@ public:
 // Splits a polynomial into prime factors of same degree
 // ---------------------------------------------------------------
 
-    template< template<class> class Container > void SplitFactor( 
-        Container< Rep > & L
+template< template<class, class> class Container, template<class> class Alloc >
+void SplitFactor( Container< Rep, Alloc<Rep> > & L
         , const Rep& G
         , Degree d
         , Residu_t MOD)  const ;
     
-    template< template<class> class Container> void SplitFactor( 
-        Container< Rep > & L
+template< template<class, class> class Container, template <class> class Alloc>
+void SplitFactor( Container< Rep, Alloc<Rep> > & L
         , const Rep& G
         , Degree d) const {
         SplitFactor(L,G,d,_domain.residu());
@@ -70,13 +70,13 @@ public:
 // Splits a polynomial into divisors of homogenous prime factors
 // ---------------------------------------------------------------
 
-    template< template<class> class Container> void DistinctDegreeFactor(
-        Container< Rep > & L
+template< template<class, class> class Container, template<class> class Alloc>
+void DistinctDegreeFactor(Container< Rep, Alloc<Rep> > & L
         , const Rep& f
         , Residu_t MOD)  const ;
 
-    template< template<class> class Container> void DistinctDegreeFactor(
-        Container< Rep > & L
+template< template<class, class> class Container, template <class> class Alloc>
+void DistinctDegreeFactor( Container< Rep, Alloc<Rep> > & L
         , const Rep& f)  const {
         DistinctDegreeFactor(L,f,_domain.residu());
     }            
@@ -85,16 +85,16 @@ public:
 // Cantor-Zassenhaus Polynomial factorization over Z/pZ
 // ---------------------------------------------------------------
 
-    template< template<class> class Container> void CZfactor( 
-        Container< Rep > & Lf
-        , Container< unsigned long > & Le
-        , const Rep& f
-        , Residu_t MOD)  const ;
+template< template<class, class> class Container, template <class> class Alloc>
+void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
+	       Container< unsigned long, Alloc<unsigned long> > & Le,
+	       const Rep& f,
+	       Residu_t MOD)  const ;
 
-    template< template<class> class Container> void CZfactor( 
-        Container< Rep > & Lf
-        , Container< unsigned long > & Le
-        , const Rep& f )  const {
+template< template<class, class> class Container, template <class> class Alloc>
+void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
+	       Container< unsigned long, Alloc<unsigned long> > & Le,
+	       const Rep& f )  const {
         CZfactor(Lf, Le, f,_domain.residu());
     }
 

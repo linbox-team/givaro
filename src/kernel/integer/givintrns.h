@@ -16,14 +16,14 @@
   // ---------------------------------------------  class RNSsystem
   // Structure which manages list of primes in order to do 
 
-#ifndef __ECC
-template< template<class> class Container>
+//#ifndef __ECC
+template< template<class, class> class Container, template <class> class Alloc>
 class IntRNSsystem : public IntegerDom {
 public:
 //     typedef Element    Ring;
 //     typedef Element   Modulo;
     typedef Element   external;
-    typedef Container< Element > array;
+    typedef Container< Element, Alloc<Element> > array;
     
 
         // Default Cstor, Dstor/Cstor of recopy: 
@@ -36,12 +36,12 @@ public:
     IntRNSsystem( const array& primes );
 
     template<class TT>
-    IntRNSsystem( const Container< TT > & primes );
+      IntRNSsystem( const Container< TT, Alloc<TT> > & primes );
 
         // -- Computation of a mixed-radix representation of the residus.
 //     void RnsToMixedRadix(array&  mixrad, const array&  residu) const; 
     template<class TT>
-    void RnsToMixedRadix(array&  mixrad, const Container<TT>&  residu) const; 
+      void RnsToMixedRadix(array&  mixrad, const Container<TT, Alloc<TT> >&  residu) const; 
 
         // -- Convert a mixed radix representation to an external
     void MixedRadixToRing( external& res,  const array& mixrad ) const;
@@ -55,7 +55,7 @@ public:
 
         // -- Convert a representation to an external Element
     template<class TT>
-    void RnsToRing( external& a, const Container<TT>& residu ) const;
+      void RnsToRing( external& a, const Container<TT, Alloc<TT> >& residu ) const;
 
         // -- Fast conversion: requires pre-computation (first time it was called)
     void fastRnsToRing( external& a, const array& residu ) const;
@@ -95,86 +95,86 @@ protected:
     array  _qk;	// - cf algo Aho, Hopcroft & Ullman
     array  _u;	// - cf algo Aho, Hopcroft & Ullman
 };
-#else
-template<class Container>
-class IntRNSsystem : public IntegerDom {
-public:
-//     typedef Element    Ring;
-//     typedef Element   Modulo;
-    typedef Element   external;
-    typedef Container array;
+//#else
+/* template<class Container> */
+/* class IntRNSsystem : public IntegerDom { */
+/* public: */
+/* //     typedef Element    Ring; */
+/* //     typedef Element   Modulo; */
+/*     typedef Element   external; */
+/*     typedef Container array; */
     
 
-        // Default Cstor, Dstor/Cstor of recopy: 
-	// -- free memory allocated in array !
-    IntRNSsystem() : _primes(0), _prod(one), _ck(0) {}
-    ~IntRNSsystem(){} 
-    IntRNSsystem(const IntRNSsystem& R) : _primes(R._primes), _prod(R._prod), _ck(R._primes) {}
+/*         // Default Cstor, Dstor/Cstor of recopy:  */
+/* 	// -- free memory allocated in array ! */
+/*     IntRNSsystem() : _primes(0), _prod(one), _ck(0) {} */
+/*     ~IntRNSsystem(){}  */
+/*     IntRNSsystem(const IntRNSsystem& R) : _primes(R._primes), _prod(R._prod), _ck(R._primes) {} */
 
-        // -- Cstor with given primes 
-    IntRNSsystem( const array& primes );
+/*         // -- Cstor with given primes  */
+/*     IntRNSsystem( const array& primes ); */
 
-    template<class ContTT>
-    IntRNSsystem( const ContTT& primes );
+/*     template<class ContTT> */
+/*     IntRNSsystem( const ContTT& primes ); */
 
-        // -- Computation of a mixed-radix representation of the residus.
-//     void RnsToMixedRadix(array&  mixrad, const array&  residu) const; 
-    template<class ContTT>
-    void RnsToMixedRadix(array&  mixrad, const ContTT&  residu) const; 
+/*         // -- Computation of a mixed-radix representation of the residus. */
+/* //     void RnsToMixedRadix(array&  mixrad, const array&  residu) const;  */
+/*     template<class ContTT> */
+/*     void RnsToMixedRadix(array&  mixrad, const ContTT&  residu) const;  */
 
-        // -- Convert a mixed radix representation to an external
-    void MixedRadixToRing( external& res,  const array& mixrad ) const;
+/*         // -- Convert a mixed radix representation to an external */
+/*     void MixedRadixToRing( external& res,  const array& mixrad ) const; */
 
-        // -- Convert an Ring Element to a its representation
-        // with the "this" rns system.
-    void RingToRns( array& residu, const external& a ) const;
+/*         // -- Convert an Ring Element to a its representation */
+/*         // with the "this" rns system. */
+/*     void RingToRns( array& residu, const external& a ) const; */
 
-        // -- Fast conversion: requires pre-computation (first time it was called)
-    void fastRingToRns( array& residu, const external& a ) const;
+/*         // -- Fast conversion: requires pre-computation (first time it was called) */
+/*     void fastRingToRns( array& residu, const external& a ) const; */
 
-        // -- Convert a representation to an external Element
-    template<class ContTT>
-    void RnsToRing( external& a, const ContTT& residu ) const;
+/*         // -- Convert a representation to an external Element */
+/*     template<class ContTT> */
+/*     void RnsToRing( external& a, const ContTT& residu ) const; */
 
-        // -- Fast conversion: requires pre-computation (first time it was called)
-    void fastRnsToRing( external& a, const array& residu ) const;
+/*         // -- Fast conversion: requires pre-computation (first time it was called) */
+/*     void fastRnsToRing( external& a, const array& residu ) const; */
 
-        // ------------- Access methods
+/*         // ------------- Access methods */
  
-        // -- Returns the number of primes of this ctxt
-    int NumOfPrimes() const { return _primes.size(); } 
+/*         // -- Returns the number of primes of this ctxt */
+/*     int NumOfPrimes() const { return _primes.size(); }  */
 
-        // -- Returns a array to the begin of the array of primes
-    const array& Primes() const;
-        // -- Returns the ith primes of the rns system
-    const Element ith(const size_t i) const;
+/*         // -- Returns a array to the begin of the array of primes */
+/*     const array& Primes() const; */
+/*         // -- Returns the ith primes of the rns system */
+/*     const Element ith(const size_t i) const; */
 
-        // -- Returns a array of the reciprocal ck = (\prod_{j=0..k-1)p_j)^(-1) [pk]
-    const array& Reciprocals() const;
-    const Element reciprocal(const size_t i) const;
-    const Element product() const;
+/*         // -- Returns a array of the reciprocal ck = (\prod_{j=0..k-1)p_j)^(-1) [pk] */
+/*     const array& Reciprocals() const; */
+/*     const Element reciprocal(const size_t i) const; */
+/*     const Element product() const; */
 
-protected:
-        // -- Compute some fields of the structure :
-    void ComputeCk();
+/* protected: */
+/*         // -- Compute some fields of the structure : */
+/*     void ComputeCk(); */
 
-        // -- Compute product of primes
-    void ComputeProd();
+/*         // -- Compute product of primes */
+/*     void ComputeProd(); */
 
-        // -- Compute the Qk for Ring -> RNS, allocate U
-    void ComputeQk();
+/*         // -- Compute the Qk for Ring -> RNS, allocate U */
+/*     void ComputeQk(); */
 
-    array  _primes; 	// - array of the relatively primes numbers
-    Element _prod;      // - product of primes
-    array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes 
+/*     array  _primes; 	// - array of the relatively primes numbers */
+/*     Element _prod;      // - product of primes */
+/*     array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes  */
 
-        // -- for fast conversion
-    size_t _sizek;
-    size_t _log2k;
-    array  _qk;	// - cf algo Aho, Hopcroft & Ullman
-    array  _u;	// - cf algo Aho, Hopcroft & Ullman
-};
-#endif
+/*         // -- for fast conversion */
+/*     size_t _sizek; */
+/*     size_t _log2k; */
+/*     array  _qk;	// - cf algo Aho, Hopcroft & Ullman */
+/*     array  _u;	// - cf algo Aho, Hopcroft & Ullman */
+/* }; */
+/* #endif */
 
 
 #include "givaro/givintrns_cstor.inl"

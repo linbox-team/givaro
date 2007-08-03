@@ -69,15 +69,15 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
 // =================================================================== //
 // Set or Container of divisors, factors.
 // =================================================================== //
-#ifndef __ECC
-template<class RandIter>
-template< template<class> class Container> bool
-IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const 
-#else
+// #ifndef __ECC
+// template<class RandIter>
+// template< template<class> class Container> bool
+// IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const 
+// #else
 template<class RandIter>
 template<class Container1, class Container2> bool
 IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsigned long loops)  const 
-#endif
+//#endif
 {
         // n = * Lf[i] ^ Lo[i]
     bool factocomplete = true;
@@ -106,15 +106,15 @@ IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsign
 }
 
 
-#ifndef __ECC
-template<class RandIter>
-template< template<class> class Container> 
-void IntFactorDom<RandIter>::Erathostene(Container<Rep>& Lf, const Rep& p)  const 
-#else
+// #ifndef __ECC
+// template<class RandIter>
+// template< template<class> class Container> 
+//   void IntFactorDom<RandIter>::Erathostene(Container<Rep>& Lf, const Rep& p)  const 
+// #else
 template<class RandIter>
 template<class Container> 
 void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const 
-#endif
+//#endif
 {
         // Deterministic algorithm
         // Valid for p < BOUNDARY_factor
@@ -155,15 +155,15 @@ void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const
 }
  
 
-#ifndef __ECC
-template<class RandIter>
-template< template<class> class Container> 
-void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const 
-#else
+// #ifndef __ECC
+// template<class RandIter>
+// template< template<class> class Container> 
+// void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const 
+// #else
 template<class RandIter>
 template<class Container> 
 void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const 
-#endif
+//#endif
 {
         // big_factor is executed until
         // a (sometimes probably) prime factor is found.
@@ -188,16 +188,16 @@ void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const
 }
 
 
-#ifndef __ECC
-template<class RandIter>
-template< template<class> class Container, template<class> class Cont2> Container< typename IntFactorDom<RandIter>::Rep >&  IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const 
-{
-    typename Cont2<Rep>::const_iterator li = Lf.begin();
-    typename Cont2<unsigned long>::const_iterator lj = Le.begin();
-    Container<Rep> Res(1,Rep(1));
-    Container<Rep> Res2;
-    typename Container<Rep>::iterator lr;
-#else
+// #ifndef __ECC
+// template<class RandIter>
+// template< template<class> class Container, template<class> class Cont2> Container< typename IntFactorDom<RandIter>::Rep >&  IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const 
+// {
+//     typename Cont2<Rep>::const_iterator li = Lf.begin();
+//     typename Cont2<unsigned long>::const_iterator lj = Le.begin();
+//     Container<Rep> Res(1,Rep(1));
+//     Container<Rep> Res2;
+//     typename Container<Rep>::iterator lr;
+// #else
 template<class RandIter>
 template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<RandIter>::divisors( Container& L, const Cont2& Lf, const Cont3& Le)  const 
 {
@@ -206,7 +206,7 @@ template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<Ran
     Container Res(1,Rep(1));
     Container Res2;
     typename Container::iterator lr;
-#endif
+//#endif
     Rep Itmp;
     for(;li!=Lf.end();++li,++lj) {
         for(lr = Res.begin();lr!=Res.end();++lr) {
@@ -222,20 +222,20 @@ template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<Ran
 }
 
 
-#ifndef __ECC
-template<class RandIter>
-template< template<class> class Container> Container<typename IntFactorDom<RandIter>::Rep>& IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Rep& n)  const 
-{
-    Container<Rep> Lf;
-    Container<unsigned long> Le;
-#else
+// #ifndef __ECC
+// template<class RandIter>
+// template< template<class> class Container> Container<typename IntFactorDom<RandIter>::Rep>& IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Rep& n)  const 
+// {
+//     Container<Rep> Lf;
+//     Container<unsigned long> Le;
+// #else
 #include <vector>
 template<class RandIter>
 template<class Container> Container& IntFactorDom<RandIter>::divisors( Container& L, const Rep& n)  const 
 {
     Container Lf;
     std::vector<unsigned long> Le;
-#endif
+//#endif
     IntFactorDom<RandIter>::set(Lf,Le,n);
     return divisors(L, Lf, Le);
 }

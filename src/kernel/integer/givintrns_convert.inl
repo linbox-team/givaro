@@ -1,13 +1,14 @@
   // -- Computation of a mixed-radix representation of the residu.
-#ifndef __ECC
-template<template<class> class Container> template<class TT>
-inline void IntRNSsystem< Container >::RnsToMixedRadix
-  (IntRNSsystem< Container >::array& mixrad, const Container<TT>& residu) const
-#else
-template<class Container> template<class ContTT>
-inline void IntRNSsystem< Container >::RnsToMixedRadix
-  (IntRNSsystem< Container >::array& mixrad, const ContTT& residu) const
-#endif
+//#ifndef __ECC
+template<template<class, class> class Container, template <class> class Alloc>
+template<class TT>
+inline void IntRNSsystem< Container, Alloc >::RnsToMixedRadix
+  (IntRNSsystem< Container, Alloc >::array& mixrad, const Container<TT, Alloc<TT> >& residu) const
+//#else
+//template<class Container> template<class ContTT>
+//inline void IntRNSsystem< Container >::RnsToMixedRadix
+//  (IntRNSsystem< Container >::array& mixrad, const ContTT& residu) const
+//#endif
 {
   size_t size = _primes.size();
   if (mixrad.size() < size) mixrad.resize( size );
@@ -39,12 +40,12 @@ inline void IntRNSsystem< Container >::RnsToMixedRadix
   
 
   // -- Convert a mixed radix representation to an Integer
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline void IntRNSsystem< Container >::MixedRadixToRing( Element& res, const IntRNSsystem< Container >::array& mixrad ) const 
+//#ifndef __ECC
+template<template<class,class> class Container, template <class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline void IntRNSsystem< Container, Alloc >::MixedRadixToRing( Element& res, const IntRNSsystem< Container, Alloc >::array& mixrad ) const 
 {
   size_t size = _primes.size();
 //  if (size != mixrad.size()) throw GivError("[IntRNSsystem::MixedRadixToRing]: bad size of input array");
@@ -58,12 +59,12 @@ inline void IntRNSsystem< Container >::MixedRadixToRing( Element& res, const Int
 
 
   // Convert an integer to a RNS representation (which is given by this)
-#ifndef __ECC
-template<template<class> class Container>
-#else
-template<class Container>
-#endif
-inline void IntRNSsystem< Container >::RingToRns( IntRNSsystem< Container >::array& rns , const external& a) const
+//#ifndef __ECC
+template<template<class,class> class Container,template<class> class Alloc>
+//#else
+//template<class Container>
+//#endif
+inline void IntRNSsystem< Container, Alloc >::RingToRns( IntRNSsystem< Container, Alloc >::array& rns , const external& a) const
 {
   size_t size = _primes.size();
   if (rns.size() != size) rns.resize(size);
@@ -75,17 +76,18 @@ inline void IntRNSsystem< Container >::RingToRns( IntRNSsystem< Container >::arr
 }
 
   // Convert to an Integer:
-#ifndef __ECC
-template<template<class> class Container> template<class TT>
-inline void IntRNSsystem< Container >::RnsToRing( external& I, const Container<TT>& rns) const 
-#else
-template<class Container> template<class ContTT>
-inline void IntRNSsystem< Container >::RnsToRing( external& I, const ContTT& rns) const 
-#endif
+//#ifndef __ECC
+template<template<class, class> class Container, template <class> class Alloc> 
+template<class TT>
+inline void IntRNSsystem< Container, Alloc >::RnsToRing( external& I, const Container<TT, Alloc<TT> >& rns) const 
+//#else
+//template<class Container> template<class ContTT>
+//inline void IntRNSsystem< Container >::RnsToRing( external& I, const ContTT& rns) const 
+//#endif
 {
   // - Computation of a mixed radix representation of this
     
-  typename IntRNSsystem< Container >::array mixrad(_primes.size());
+  typename IntRNSsystem< Container, Alloc >::array mixrad(_primes.size());
   RnsToMixedRadix( mixrad , rns );
 
   // - Convert mixrad to an integer

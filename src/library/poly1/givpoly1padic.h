@@ -1,6 +1,6 @@
 // ================================================================= //
 // (C) The Linbox Group 1999
-// Time-stamp: <25 Sep 01 19:04:26 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <02 Oct 07 16:46:48 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 
 #ifndef _GIV_POLY1_P_ADIC_H_
@@ -87,6 +87,8 @@ public:
 
         // Reconstruction of the radix decomposition mod _domain.size()
         // E into a polynomial P of degree n-1 or of lowest degree if n==0.
+        // See e.g. [von zur Gathen, Gerhard 1999], Modern Computer Algebra
+	// Algorithm 9.14
     template<class vect>
     vect& radix(vect& P, const IntegerDom::Element& E, long n = 0) {
         if (n < 1) n = logp(E,_domain.size()) + 1;
@@ -110,12 +112,14 @@ public:
     } 
 
 
+        // vect is supposed to be a vector of doubles
+        // Therefore there is no automatic conversion
     template<class vect>
     vect& fastradixdirect(vect& P, const double& E, unsigned long n) {
         if (n <= 1) {
             P.resize(0);
             typedef typename vect::value_type elem;
-            P.push_back( elem( E ) );
+            P.push_back( E );
             return P;
         }
         double iq, ir;

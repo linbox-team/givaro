@@ -2,7 +2,7 @@
 // Givaro / Athapascan-1
 // Irreducible polynomial finder
 // Primitive root finder
-// Time-stamp: <21 Jul 06 10:15:04 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <10 Jul 07 15:31:18 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #ifndef _GIVARO_POLY_PRIMITIVE_ROOT_
 #define _GIVARO_POLY_PRIMITIVE_ROOT_
@@ -44,7 +44,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
         // WARNING : same warning as for the binomial.
 	// JGD 21.10.02
     // for(Residu_t d=2;d<n.value();++d) {
-    for(long d=2;d<=(n.value()/2);++d) {
+    for(long d=1;d<=(n.value()/2);++d) {
         for(Residu_t b=0; b<MOD; ++b) {
             _domain.assign(R[d],b);
             for(Residu_t a=1; a<MOD; ++a) {

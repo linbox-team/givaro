@@ -58,7 +58,10 @@ public:
 
     Extension ( const BaseField_t& bF, const Residu_t ex = 1)
             : _bF( bF ), _pD( _bF, "ý"  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ) {
-        _pD.creux_random_irreducible( _irred, (unsigned long)(ex));
+        if (_cardinality < (1<<20) )
+            _pD.creux_random_irreducible( _irred, (unsigned long)(ex));
+        else
+            _pD.random_irreducible( _irred, (unsigned long)(ex));
     }
 
     Extension ( const Self_t& eF)

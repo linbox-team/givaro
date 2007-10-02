@@ -6,6 +6,7 @@ pkginclude_HEADERS=\
 	StaticElement.h		\
 	givzpz.h		\
 	givgfq.h		\
+	givprimegfq.h		\
 	givzpz16std.h		\
 	givzpz32std.h		\
 	givzpz32uns.h		\
@@ -18,6 +19,7 @@ pkginclude_HEADERS=\
 	givmontg32.h		\
 	giv_randiter.h		\
 	givextension.h		\
+	givgfqext.h
 	givtablelimits.h	\
 	givzpz16std.inl		\
 	givzpz32std.inl		\
@@ -40,4 +42,5 @@ libgivzpz_la_SOURCES=\
 	givzpzInt.C		\
 	givzpz64std.C		\
 	givprimes16.C		\
+	givtablelimits.C	\
 	givzpz16table1.C

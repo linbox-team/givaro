@@ -20,7 +20,8 @@ public:
 static size_t count() { return _size; } 
 
 static size_t ith(size_t i) { 
-    GIVARO_ASSERT( (i>=0)&&(i<(int)_size), "[Primes16::ith] index out of bounds");
+//    JGD 02.10.2007 : dependent of system/givconfig.h
+//    GIVARO_ASSERT( (i>=0)&&(i<(int)_size), "[Primes16::ith] index out of bounds");
     return _primes[i]; 
 } 
 

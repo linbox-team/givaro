@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <02 Oct 07 11:07:34 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <02 Oct 07 16:40:11 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
@@ -148,7 +148,12 @@ public:
 //         return pad;
     }
     
-            
+     virtual Rep& init(Rep& pad, const float& d) const {
+//         std::cerr << d << " --<-- ";
+         return init(pad, (double)d);
+     }
+    
+           
 
 
 protected:

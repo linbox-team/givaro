@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <06 Jun 07 18:56:06 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <11 Jun 07 19:51:29 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -552,39 +552,36 @@ inline std::istream& GFqDom<TT>::read (std::istream& i, Rep& a) const {
     return i;
 }
 
+
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu ) const {
-  double tr = residu ;
-  if (tr <0) {
-          // -a = b [p]  <==>  a = p-b [p]
-      tr = -tr;
-          // JGD & CPernet 20.03.2003
-// if (tr >= (TT)_characteristic ) tr = (UTT)tr % _characteristic ;
-//     if (tr >= _dcharacteristic ) tr -= (double)floor( tr / _dcharacteristic ) * _dcharacteristic ;
-      if (tr > Signed_Trait<UTT>::max() ) 
-          tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
-      else{
-          if (tr >= (TT)_characteristic )
-              tr = (UTT)tr % _characteristic ;
-      }
-      
-      if (tr)
-          return r = _pol2log[ _characteristic - (UTT)tr ];
-      else
-          return r = zero;
-  } else {
-          // JGD & CPernet 20.03.2003
-// if (tr >= (TT)_characteristic ) tr = (UTT)tr % _characteristic ;
-//     if (tr >= _dcharacteristic ) tr -= (double)floor( tr / _dcharacteristic ) * _dcharacteristic ;
-      if (tr > Signed_Trait<UTT>::max() ) 
-          tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
-      else{
-          if (tr >= (TT)_characteristic ) 
-              tr = (UTT)tr % _characteristic ;
-      }
-      return r = _pol2log[ (UTT)tr ];
-  }
-}
+        double tr = residu ;
+        if (tr <0) {
+                // -a = b [p]  <==>  a = p-b [p]
+            tr = -tr;
+            if (tr > Signed_Trait<UTT>::max() ) 
+                tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
+            else{
+                if (tr >= (TT)_characteristic )
+                    tr = (UTT)tr % _characteristic ;
+            }
+            
+            if (tr)
+                return r = _pol2log[ _characteristic - (UTT)tr ];
+            else
+                return r = zero;
+        } else {
+            if (tr > Signed_Trait<UTT>::max() ) 
+                tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
+            else{
+                if (tr >= (TT)_characteristic ) 
+                    tr = (UTT)tr % _characteristic ;
+            }
+            return r = _pol2log[ (UTT)tr ];
+        }
+    }
+ 
+ 
 
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int residu ) const {
@@ -684,6 +681,16 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long resid
   }
 }
 
+template<typename TT> 
+inline double& GFqDom<TT>::convert (double& r, const Rep a) const {
+    return r = (double)_log2pol[ (UTT)a] ;
+}
+   
+template<typename TT> 
+inline float& GFqDom<TT>::convert (float& r, const Rep a) const {
+    return r = (float)_log2pol[ (UTT)a] ;
+}
+   
 
 template<typename TT>
 inline unsigned long long& GFqDom<TT>::convert (unsigned long long& r, const Rep a) const
@@ -699,17 +706,12 @@ inline long long& GFqDom<TT>::convert (long long& r, const Rep a) const
 #endif
 
 
-
 template<typename TT> 
 inline std::ostream& GFqDom<TT>::write (std::ostream& o, const Rep a) const {
-  return o << _log2pol[ (UTT)a] ;
+        return o << _log2pol[ (UTT)a] ;
 }
 
-template<typename TT> 
-inline double& GFqDom<TT>::convert (double& r, const Rep a) const 
-{
-  return r = (double)_log2pol[ (UTT)a] ;
-}
+
 
 template<typename TT> 
 inline long& GFqDom<TT>::convert (long& r, const Rep a) const 

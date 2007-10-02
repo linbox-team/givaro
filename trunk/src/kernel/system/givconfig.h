@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.7 2005-07-08 06:53:20 pernet Exp $
+// $Id: givconfig.h,v 1.8 2007-10-02 14:37:45 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 

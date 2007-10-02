@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <06 Jun 07 19:00:34 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <02 Oct 07 16:38:57 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -73,7 +73,7 @@ public:
         // and therefore the field generator
 //     template<class RandIter >
 //     GFqDom(RandIter& g, const UTT P, const UTT e = 1);
-    ~GFqDom() {};
+    virtual ~GFqDom() {};
 
 
     GFqDom<TT> operator=( const GFqDom<TT>& F)
@@ -112,8 +112,8 @@ public:
     Rep& init( Rep&, const long) const ;
     Rep& init( Rep&, const unsigned long) const ;
     Rep& init( Rep&, const Integer) const;
-    Rep& init( Rep&, const float) const ;
-    Rep& init( Rep&, const double) const ;
+    virtual Rep& init( Rep&, const float) const ;
+    virtual Rep& init( Rep&, const double) const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
     Rep& init( Rep&, const long long) const;
     Rep& init( Rep&, const unsigned long long) const ;
@@ -142,8 +142,8 @@ public:
     long& 		convert(long&, const Rep) const ;
     unsigned long& 	convert(unsigned long&, const Rep) const ;
     int& 		convert(int&, const Rep) const ;
-    float& 		convert(float&, const Rep) const ;
-    double& 		convert(double&, const Rep) const ;
+    virtual float&	convert(float&, const Rep) const ;
+    virtual double& 	convert(double&, const Rep) const ;
     unsigned int& 	convert(unsigned int&, const Rep) const ; 
     Integer& 		convert(Integer&, const Rep) const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
@@ -297,9 +297,9 @@ protected:
     std::vector<UTT> _pol2log;
     std::vector<TT> _plus1;
 
- private:
     double _dcharacteristic;
     double _inversecharacteristic;
+ private:
 
 #ifdef __GIVARO_COUNT__
 static    long long _add_count;

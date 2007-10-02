@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <11 Jun 07 19:51:29 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <02 Oct 07 17:04:09 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -581,7 +581,12 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
         }
     }
  
- 
+ template<typename TT> 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const float residu ) const {
+     return init(r, (const double)residu);
+ }
+
+
 
 template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int residu ) const {

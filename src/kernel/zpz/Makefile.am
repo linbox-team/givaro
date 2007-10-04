@@ -18,7 +18,7 @@ pkginclude_HEADERS=\
 	givmontg32.h		\
 	giv_randiter.h		\
 	givextension.h		\
-	givgfqext.h
+	givgfqext.h		\
 	givtablelimits.h	\
 	givzpz16std.inl		\
 	givzpz32std.inl		\

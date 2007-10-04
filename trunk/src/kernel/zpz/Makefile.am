@@ -6,7 +6,6 @@ pkginclude_HEADERS=\
 	StaticElement.h		\
 	givzpz.h		\
 	givgfq.h		\
-	givprimegfq.h		\
 	givzpz16std.h		\
 	givzpz32std.h		\
 	givzpz32uns.h		\

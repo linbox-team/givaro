@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.12 2007-01-11 18:42:51 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.13 2007-10-10 12:28:48 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -19,13 +19,14 @@
 
 
 
-template < typename T > class givvector : public std::vector<T> {
-    typedef givvector<T>     Self_t;
+template < typename T, typename A=std::allocator<T> > 
+class givvector : public std::vector<T,A> {
+    typedef givvector<T,A>     Self_t;
 public:
-    givvector() : std::vector<T>() {}
-    givvector(size_t s) : std::vector<T>(s) { }
-    givvector(const Self_t& p, givNoCopy xxx) : std::vector<T>(p) {}
-    givvector(const Self_t& p, givWithCopy xxx) : std::vector<T>(p) {}
+    givvector() : std::vector<T,A>() {}
+    givvector(size_t s) : std::vector<T,A>(s) { }
+    givvector(const Self_t& p, givNoCopy xxx) : std::vector<T,A>(p) {}
+    givvector(const Self_t& p, givWithCopy xxx) : std::vector<T,A>(p) {}
     Self_t& reallocate (size_t s) { this->resize(s); return *this; }
     Self_t& logcopy(const Self_t& src) { return *this = src; }
     Self_t& copy(const Self_t& src) { return *this = src; }

@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <02 Oct 07 17:04:09 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <24 Oct 07 15:29:37 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -901,6 +901,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& r, 
 #include <givaro/givpower.h>
 #include <givaro/givpoly1factor.h>
 
+#include <fenv.h>
 #include <vector>
 
 template<typename TT>
@@ -917,8 +918,15 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
     , _pol2log( _q )
     , _plus1( _q )
     , _dcharacteristic( (double)P )
-    , _inversecharacteristic( 1.0/(double)P )
 {
+    
+        // So that flooring should give a correct answer
+    int mode = fegetround(); // should be to nearest
+    fesetround(FE_UPWARD);
+    _inversecharacteristic = 1.0/(double)P;
+    fesetround(mode);
+        
+
         // 1 is represented by q-1, zero by 0
     _log2pol[0] = zero;
 

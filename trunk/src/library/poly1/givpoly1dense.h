@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.13 2007-10-10 12:28:48 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.14 2007-10-25 21:45:56 pernet Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -16,7 +16,7 @@
 #include "givaro/givdegree.h"
 #include "givaro/givindeter.h"
 #include "givaro/givinteger.h"
-
+#include "givaro/givrandom.h"
 
 
 template < typename T, typename A=std::allocator<T> > 
@@ -253,6 +253,8 @@ public :
     template< class RandIter > Rep& random(RandIter& g, Rep& r, long s) const ;
         // -- Random dense polynomial of degree d
     template< class RandIter > Rep& random(RandIter& g, Rep& r, Degree s) const ;
+
+    Rep& random(GivRandom& g, Rep& r, Degree s) const ;
         // -- Random dense polynomial with same size as b. 
     template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const;
 

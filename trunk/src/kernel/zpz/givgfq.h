@@ -120,8 +120,8 @@ public:
 #endif
     Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
         // Initialization of a polynomial
-    template<typename val_t, template<typename V> class Polynomial>
-    Rep& init( Rep&, const Polynomial<val_t>&);
+    template<typename val_t, template<class,class> class Polynomial,template <class> class Alloc>
+    Rep& init( Rep&, const Polynomial<val_t,Alloc<val_t> >&);
 
 
         // -- Misc: r <- a mod p

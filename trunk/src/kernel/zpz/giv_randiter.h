@@ -132,10 +132,12 @@ template <class Field , class Type> class GIV_randIter
      */	
     Element& random(Element& elt) const
       {
-      // Create new random Elements     
-      long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
-      _field.assign(elt , tmp);
-      return elt;
+	// Create new random Elements     
+	//atroce
+	//long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
+	//_field.assign(elt , tmp);
+	_field.random (_givrand, elt);
+	return elt;
       
       } // Element& random(Element& )
       

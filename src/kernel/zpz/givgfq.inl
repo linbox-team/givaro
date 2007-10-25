@@ -685,16 +685,6 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long resid
     return r = _pol2log[ tr ];
   }
 }
-
-template<typename TT> 
-inline double& GFqDom<TT>::convert (double& r, const Rep a) const {
-    return r = (double)_log2pol[ (UTT)a] ;
-}
-   
-template<typename TT> 
-inline float& GFqDom<TT>::convert (float& r, const Rep a) const {
-    return r = (float)_log2pol[ (UTT)a] ;
-}
    
 
 template<typename TT>
@@ -710,6 +700,16 @@ inline long long& GFqDom<TT>::convert (long long& r, const Rep a) const
 
 #endif
 
+
+template<typename TT> 
+inline double& GFqDom<TT>::convert (double& r, const Rep a) const {
+    return r = (double)_log2pol[ (UTT)a] ;
+}
+   
+template<typename TT> 
+inline float& GFqDom<TT>::convert (float& r, const Rep a) const {
+    return r = (float)_log2pol[ (UTT)a] ;
+}
 
 template<typename TT> 
 inline std::ostream& GFqDom<TT>::write (std::ostream& o, const Rep a) const {
@@ -763,8 +763,8 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r) const { return r = ze
 
 
 template<typename TT>
-template<typename val_t, template<typename V> class Polynomial>
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Polynomial<val_t>& P) {
+template<typename val_t, template<class, class> class Polynomial, template <class> class Alloc>
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Polynomial<val_t, Alloc<val_t> >& P) {
     static Self_t PrimeField(this->_characteristic);
     typedef Poly1Dom< Self_t, Dense > PolDom;
     static PolDom Pdom( PrimeField );

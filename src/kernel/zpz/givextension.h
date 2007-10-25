@@ -318,8 +318,9 @@ class GIV_ExtensionrandIter
       // Create new random Elements     
           elt.resize( (size_t)(_field.order()));
           for(typename Element::iterator it = elt.begin(); it != elt.end() ; ++ it) {
-              long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
-              (_field.base_field()).init(*it , tmp);
+	    long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
+            (_field.base_field()).init(*it , tmp);
+	    //(_field.base_field()) . random (*it);
           }
           return elt;
       } // Element& random(Element& )

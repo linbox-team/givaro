@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_io.C,v 1.5 2007-01-11 18:42:51 jgdumas Exp $
+// $Id: gmp++_int_io.C,v 1.6 2007-11-12 15:25:05 pernet Exp $
 // ==========================================================================
 // Description: 
 
@@ -48,7 +48,7 @@ Integer::operator std::string () const {
     char *str = new char[strSize + 2];
     mpz_get_str(str, 10, (mpz_ptr)&(gmp_rep));
     s = std::string(str);
-//    delete [] str ;
+    delete [] str ;
     return s;
 }
 

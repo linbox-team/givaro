@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32uns.inl,v 1.5 2005-07-06 12:26:41 jgdumas Exp $
+// $Id: givzpz32uns.inl,v 1.6 2007-11-12 17:13:03 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -438,7 +438,7 @@ inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::dotprod
     if (dot > _p)  return r = (Rep)(dot % _p);
     else  return r = (Rep)dot;
   }
-  uint i_begin=0;
+  size_t i_begin=0;
   stride &= ~0x1;
   if (stride ==0) {
     for( register int i= sz-1; i>0; --i) {

@@ -4,7 +4,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.10 2007-10-25 21:45:57 pernet Exp $
+// $Id: givpoly1misc.inl,v 1.11 2007-11-12 15:24:36 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -247,7 +247,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(Rand
 template <class Domain> template<class RandIter>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, Degree d) const {
 	r.reallocate(d.value()+1);
-	g.nonzerorandom(r[d.value()]) ;
+	typename Domain::Element tmp;
+	while (_domain.isZero(g.random(tmp))) ;
+	r[d.value()] = tmp;
 	for (int i=d.value(); i--;)
 		g.random(r[i]);
 	return r;

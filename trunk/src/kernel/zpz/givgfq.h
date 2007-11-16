@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <02 Oct 07 16:38:57 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Nov 07 18:14:52 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -17,18 +17,39 @@
 #include <iostream>
 #include <vector>
 #include "givaro/giv_randiter.h"
-#include "givaro/givpoly1.h"
+#include <givaro/givpoly1factor.h>
 
   // ------------------------------------------------- class GFqDom
-
 template<class TT> class GFqDom {
 protected:
     typedef typename Signed_Trait<TT>::unsigned_type UTT;
     typedef TT Rep;
 public:
+    Rep zero;
+    Rep one;
+protected:
+    UTT _characteristic;	// Field Characteristic (p)
+    UTT _exponent;		// Extension degree (k)
+    UTT _irred;			// Irreducible polynomial in p-adic
+    UTT _q;			// p^k
+    UTT _qm1;			// p^k-1
+    UTT _qm1o2;			// (p^k-1)/2
+
+        // G is a generator of GF(q)
+        // p is GF(q)'s characteristic
+        // log2pol[ i ] = G^i(p)
+        // pol2log[ j ] = i such that log2pol[i] = j
+        // plus1[i] = k such that G^i + 1 = G^k
+    std::vector<UTT> _log2pol;
+    std::vector<UTT> _pol2log;
+    std::vector<TT> _plus1;
+
+        // Floating point representations
+    double _dcharacteristic;
+    double _inversecharacteristic;
+
+public:
     typedef GFqDom<TT> Self_t;
-    
-    
     typedef Rep Element;
 //     class Element {
 //     public:
@@ -42,12 +63,7 @@ public:
         // ----- Representation of vector of the Element
     typedef Rep* Array;
     typedef const Rep* constArray;
-
-        // ----- Constantes 
-//    const Rep zero;
-//    const Rep one;
-    Rep zero;
-    Rep one;
+    
 
     GFqDom(): zero(0), _log2pol(0), _pol2log(0),_plus1(0) {}
 
@@ -61,6 +77,7 @@ public:
 	_dcharacteristic = F._dcharacteristic;
 	_inversecharacteristic = F._inversecharacteristic;
 	_exponent = F._exponent;
+	_irred = F._irred;
 	_q = F._q;
 	_qm1 = F._qm1;
 	_qm1o2 = F._qm1o2;
@@ -84,6 +101,7 @@ public:
 	this->_dcharacteristic = F._dcharacteristic;
 	this->_inversecharacteristic = F._inversecharacteristic;
 	this->_exponent = F._exponent;
+	this->_irred = F._irred;
 	this->_q = F._q;
 	this->_qm1 = F._qm1;
 	this->_qm1o2 = F._qm1o2;
@@ -96,14 +114,17 @@ public:
 
 
         // Access to the modulus, characteristic, size, exponent
-
     UTT residu() const;
     UTT characteristic() const;
     Integer& characteristic(Integer& p) const{return p=characteristic();}
-    UTT generator() const;
     UTT cardinality() const;
-    UTT exponent() const;
     UTT size() const;
+    UTT exponent() const;
+        // Those have no meaning if exponent is 1
+    UTT generator() const;
+        // an integer representation of the polynomial  
+        // where the indeterminate is replaced by the characteristic
+    UTT irreducible() const;
 
         // Initialization of Elements
     Rep& init( Rep&) const;
@@ -120,8 +141,8 @@ public:
 #endif
     Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
         // Initialization of a polynomial
-    template<typename val_t, template<class,class> class Polynomial,template <class> class Alloc>
-    Rep& init( Rep&, const Polynomial<val_t,Alloc<val_t> >&);
+    template<typename val_t, template<class,class> class Vector,template <class> class Alloc>
+    Rep& init( Rep&, const Vector<val_t,Alloc<val_t> >&);
 
 
         // -- Misc: r <- a mod p
@@ -274,31 +295,7 @@ public:
         cerr << "Inv Call: " << _inv_call << ", real: " << _inv_count << endl;
     }
 #endif
-    
 
-protected:
-//    const UTT _characteristic;
-//    const UTT _exponent;
-//    const UTT _q;
-//    const UTT _qm1;
-//    const UTT _qm1o2;
-    UTT _characteristic;
-    UTT _exponent;
-    UTT _q;
-    UTT _qm1;
-    UTT _qm1o2;
-
-        // G is a generator of GF(q)
-        // p is GF(q)'s characteristic
-        // log2pol[ i ] = G^i(p)
-        // pol2log[ j ] = i such that log2pol[i] = j
-        // plus1[i] = k such that G^i + 1 = G^k
-    std::vector<UTT> _log2pol;
-    std::vector<UTT> _pol2log;
-    std::vector<TT> _plus1;
-
-    double _dcharacteristic;
-    double _inversecharacteristic;
  private:
 
 #ifdef __GIVARO_COUNT__

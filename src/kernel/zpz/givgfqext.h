@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <02 Oct 07 16:40:11 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Nov 07 17:07:27 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
@@ -12,7 +12,7 @@
 //   Arithmetic on GF(p^k), with p a prime number less than 2^15
 //   k strictly greater than 1
 //   Specialized for fast conversions to floating point numbers
-//   See [JG Dumas, Arithmetic over small extension fields via floating point routines, 2007]
+//   See [JG Dumas, Q-adic Transform Revisited, 2007]
 // ==========================================================================
 
 #include "givaro/givgfq.h"
@@ -54,12 +54,6 @@ public:
 
         GIVARO_ASSERT(_maxn>0 , "[GFqExt]: field too large");
         builddoubletables();
-//         std::cerr << "_BITS: " << _BITS << std::endl;
-//         std::cerr << "_BASE: " << _BASE << std::endl;
-//         std::cerr << "_MASK: " << _MASK << std::endl;
-//         std::cerr << "_maxn: " << _maxn << std::endl;
-//         std::cerr << "_degree: " << _degree << std::endl;
-        
     }
 
     Self_t operator=( const Self_t& F)
@@ -114,7 +108,6 @@ public:
     }
 
     virtual Rep& init(Rep& pad, const double& d) const {
-//         std::cerr << d << " --<-- ";
         unsigned __GIVARO_INT64 rll(d);
         unsigned __GIVARO_INT64 tll(this->_inversecharacteristic*d);
         UTT mpp(1), prec(0); 
@@ -143,13 +136,9 @@ public:
         padl = this->_low2log[padl];
         pad = this->_high2log[pad];
         return this->addin(pad,padl);
-//         this->addin(pad,padl);
-//         this->write(std::cerr,pad) << std::endl;
-//         return pad;
     }
     
      virtual Rep& init(Rep& pad, const float& d) const {
-//         std::cerr << d << " --<-- ";
          return init(pad, (double)d);
      }
     

@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <24 Oct 07 15:29:37 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <12 Nov 07 18:15:21 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -203,22 +203,26 @@ if (((a1)==0) || ((a2)==0)) { (c)=(b); \
 
 
 template<typename TT> 
-inline typename GFqDom<TT>::Residu_t GFqDom<TT>::residu( ) const
+inline typename GFqDom<TT>::Residu_t GFqDom<TT>::residu() const
 { return _q; }
 
-template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::cardinality( ) const
+template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::cardinality() const
 { return _q; }
-template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::characteristic( ) const
+template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::characteristic() const
 { return _characteristic; }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Residu_t GFqDom<TT>::generator( ) const
+inline typename GFqDom<TT>::Residu_t GFqDom<TT>::generator() const
 { return _log2pol[1]; }
 
-template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::exponent( ) const
+template<typename TT> 
+inline typename GFqDom<TT>::Residu_t GFqDom<TT>::irreducible() const
+{ return _irred; }
+
+template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::exponent() const
 { return _exponent; }
 
-template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::size( ) const
+template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::size() const
 { return _q; }
 
 
@@ -763,8 +767,8 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r) const { return r = ze
 
 
 template<typename TT>
-template<typename val_t, template<class, class> class Polynomial, template <class> class Alloc>
-inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Polynomial<val_t, Alloc<val_t> >& P) {
+template<typename val_t, template<class, class> class Vector, template <class> class Alloc>
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Vector<val_t, Alloc<val_t> >& P) {
     static Self_t PrimeField(this->_characteristic);
     typedef Poly1Dom< Self_t, Dense > PolDom;
     static PolDom Pdom( PrimeField );
@@ -899,7 +903,6 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& r, 
 #include <givaro/givinteger.h>
 #include <givaro/givintnumtheo.h>
 #include <givaro/givpower.h>
-#include <givaro/givpoly1factor.h>
 
 #include <fenv.h>
 #include <vector>
@@ -945,9 +948,9 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
             // Fisrt compute an irreductible polynomial F over Z/pZ of degree e
             // Then a primitive root G (i.e. a generator of GF(q))
         GFqDom<TT> Zp(P,1);
-        typedef Poly1FactorDom< GFqDom<TT>, Dense > PolDom;
 //         typedef CyclotomicTable<  GFqDom<TT>, Dense > PolDom;
 //         PolDom Pdom( Zp, e );
+        typedef Poly1FactorDom< Self_t, Dense > PolDom;
         PolDom Pdom( Zp );
         typename PolDom::Element F, G, H;
 
@@ -969,13 +972,14 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
 #else
         Pdom.random_irreducible(F, Degree(e));
         Pdom.give_random_prim_root(G,F);
-#endif     
+#endif
         Pdom.assign(H, G);
 
         typedef Poly1PadicDom< GFqDom<TT>, Dense > PadicDom;
         PadicDom PAD(Pdom);
          
         PAD.eval(_log2pol[1], H);
+        PAD.eval(_irred, F);
         
         for (UTT i = 2; i < _qm1; ++i) {
             Pdom.mulin(H, G);

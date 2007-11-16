@@ -13,7 +13,7 @@ typedef StaticElement< Field > Element;
 template<> Field Element::_domain(2);
 
 int main(int argc, char ** argv) {
-    unsigned long P = 5009;
+    unsigned long P = (argc>1 ? atoi(argv[1]) : 5009);
 
         // Initialization of static member
     Element::setDomain( Field(P) );
@@ -30,13 +30,21 @@ int main(int argc, char ** argv) {
     a = b / c;  std::cerr << a << " = " << b << " / " << c << " mod " << P << ";" << std::endl;
 
         // Computations in place    
-    std::cerr << d << " + " << a << " mod " << P << " = "; d += a; std::cerr << d << ";" << std::endl;
-    std::cerr << d << " - " << a << " mod " << P << " = "; d -= a; std::cerr << d << ";" << std::endl;
-    std::cerr << d << " * " << a << " mod " << P << " = "; d *= a; std::cerr << d << ";" << std::endl;
-    std::cerr << d << " / " << a << " mod " << P << " = "; d /= a; std::cerr << d << ";" << std::endl;
+    std::cerr << d << " + " << a << " mod " << P << " = "; 
+    d += a; std::cerr << d << ";" << std::endl;
+
+    std::cerr << d << " - " << a << " mod " << P << " = "; 
+    d -= a; std::cerr << d << ";" << std::endl;
+
+    std::cerr << d << " * " << a << " mod " << P << " = "; 
+    d *= a; std::cerr << d << ";" << std::endl;
+
+    std::cerr << d << " / " << a << " mod " << P << " = "; 
+    d /= a; std::cerr << d << ";" << std::endl;
    
         // Tests
     std::cerr << a << " is non zero is " << (a != Element(0) ) << std::endl;
+
     a = 0; std::cerr << a << " is zero is " << (a == Element(0) ) << std::endl;    
 
 

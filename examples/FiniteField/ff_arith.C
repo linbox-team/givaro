@@ -3,6 +3,7 @@
 #include <givaro/givzpz.h>
 #include <givaro/givgfq.h>
 #include <givaro/givmontg32.h>
+#include <givaro/givgfqext.h>
 
 template<class Field>
 void TestField(const Field& F) {
@@ -45,26 +46,26 @@ void TestField(const Field& F) {
     F.write( std::cout, F.divin(a, b) ) << std::endl;
 
 
-    F.init(a,22995);
+    F.init(a,22996);
     F.inv(b,a);
     F.write( F.write( std::cout << "1/", a) << " is ", b) << std::endl;
     F.mul(c,b,a);
     F.write( std::cout << "1 is ", c) << std::endl;
-    F.init(a,22995);
-    F.init(b,22995);
+    F.init(a,22996);
+    F.init(b,22996);
     F.write( std::cout << "1/", a) << " is ";
     F.invin(a);
     F.write( std::cout, a) << std::endl;
     F.mulin(a,b);
     F.write( std::cout << "1 is ", a) << std::endl;
 
-    F.init(a,37404);
+    F.init(a,37403);
     F.inv(b,a);
     F.write( F.write( std::cout << "1/", a) << " is ", b) << std::endl;
     F.mul(c,b,a);
     F.write( std::cout << "1 is ", c) << std::endl;
-    F.init(a,37404);
-    F.init(b,37404);
+    F.init(a,37403);
+    F.init(b,37403);
     F.write( std::cout << "1/", a) << " is ";
     F.invin(a);
     F.write( std::cout, a) << std::endl;
@@ -109,7 +110,11 @@ int main(int argc, char ** argv) {
     ZpzDom<Integer> IntZ13(13); TestField( IntZ13 );
 
         // Zech log finite field with 5^4 elements
-    GFqDom<int> GF81( 5, 4 ); TestField( GF81 );
+    GFqDom<int> GF625( 5, 4 ); TestField( GF625 );
+    
+        // Zech log finite field with 3^4 elements
+        // Using the Q-adic Transform
+    GFqExt<int> GF81( 3, 4 ); TestField( GF81 );
     
     	// Zech log finite field with 2Mb tables
     struct rusage  tmp1 ; 

@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <21 Nov 07 10:27:14 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <21 Nov 07 11:44:14 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
@@ -62,12 +62,12 @@ public:
 
         // Extension MUST be a parameter of the constructor
     GFqExt( const UTT P, const UTT e) : Father_t(P,e),
-                                        balanced(false),
         _BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ), 
         _BASE(1 << _BITS),
         _MASK( _BASE - 1),
         _maxn( _BASE/(P-1)/(P-1)/e),
-        _degree( e-1 )
+        _degree( e-1 ),
+        balanced(false)
     {
 
         GIVARO_ASSERT(_maxn>0 , "[GFqExt]: field too large");
@@ -134,13 +134,13 @@ public:
 
     virtual Rep& init(Rep& pad, const double d) const {
 //             // Precondition : d < _MODOUT
-//         unsigned __GIVARO_INT64 rll(d); 
-//         unsigned __GIVARO_INT64 tll(this->_inversecharacteristic*d);
+//         unsigned __GIVARO_INT64 rll( static_cast<__GIVARO_INT64>(d) ); 
+//         unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(this->_inversecharacteristic*d) );
             // JGD 16.11.2007 : Much slower but defensive
             // What shall we do ?
-        unsigned __GIVARO_INT64 rll(d); 
+        unsigned __GIVARO_INT64 rll( static_cast<__GIVARO_INT64>(d) ); 
         rll &= _MODOUT;
-        unsigned __GIVARO_INT64 tll(this->_inversecharacteristic*rll);
+        unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(this->_inversecharacteristic*rll) );
 
         UTT prec(0); 
         UTT padl = (UTT)(rll - tll*this->_characteristic);
@@ -232,10 +232,10 @@ protected:
                                  this->_exponent)
                              );
 
-            ulong binpolit = vect[0];
+            ulong binpolit = static_cast<ulong>(vect[0]);
             for(size_t i =1; i<this->_exponent; ++i) {
                 binpolit <<= _pceil;
-                binpolit += vect[i];
+                binpolit += static_cast<ulong>(vect[i]);
             }
 
             ZElem tmp, prec, cour; 

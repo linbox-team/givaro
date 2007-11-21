@@ -1,6 +1,6 @@
 // ================================================================= //
 // (C) The Linbox Group 1999
-// Time-stamp: <02 Oct 07 16:46:48 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <21 Nov 07 11:19:56 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 
 #ifndef _GIV_POLY1_P_ADIC_H_
@@ -94,7 +94,9 @@ public:
         if (n < 1) n = logp(E,_domain.size()) + 1;
         if (n == 1) {
             typename Domain::Element e;
-            return Poly_t::init(P, Degree(0), _domain.init(e, E) );
+                // Could also be 
+                // Poly_t::assign(P, Degree(0), _domain.init(e, E) );
+            return Poly_t::init(P, Degree(0), E );
         }
         IntegerDom::Element iq, ir;
         vect Q; 

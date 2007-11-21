@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <12 Nov 07 18:15:21 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <21 Nov 07 10:42:43 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -214,6 +214,10 @@ template<typename TT> inline typename GFqDom<TT>::Residu_t GFqDom<TT>::character
 template<typename TT> 
 inline typename GFqDom<TT>::Residu_t GFqDom<TT>::generator() const
 { return _log2pol[1]; }
+
+template<typename TT> 
+inline typename GFqDom<TT>::Rep& GFqDom<TT>::generator(Rep& g) const
+{ return g=1; }
 
 template<typename TT> 
 inline typename GFqDom<TT>::Residu_t GFqDom<TT>::irreducible() const

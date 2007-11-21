@@ -3,16 +3,18 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <16 Nov 07 17:45:36 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <21 Nov 07 10:27:14 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
 // author: Jean-Guillaume.Dumas
 // Description:
 //   Arithmetic on GF(p^k), with p a prime number less than 2^15
-//   k strictly greater than 1
+//   WARNING : k strictly greater than 1
 //   Specialized for fast conversions to floating point numbers
 //   See [JG Dumas, Q-adic Transform Revisited, 2007]
+//   Main difference in interface is init/convert:
+//       - In GFq
 // ==========================================================================
 
 #include "givaro/givgfq.h"
@@ -28,6 +30,23 @@ protected:
     typedef typename Signed_Trait<TT>::unsigned_type UTT;
     typedef TT Rep;
     typedef GFqDom<TT> Father_t;
+
+    UTT _BITS; 	// the q-adic transform will be with q=2^_BITS
+    UTT _BASE;	// this is 2^_BITS
+    UTT _MASK;	// 2^_BITS - 1
+    UTT _maxn;	// Worst case Maximal number of multiplications
+        	// without reduction
+    UTT _degree;// exponent-1
+    UTT _pceil;	// smallest such that characteristic<2^_pceil, 
+                // used for fast for table indexing
+    UTT _MODOUT;// Largest accepted double for init
+    
+        // Conversion tables from exponent to double z-adic representation
+    std::vector<double> _log2dbl;	// Exponent to double
+    std::vector<UTT> 	_high2log;	// Half double to exponent
+    std::vector<UTT> 	_low2log;	// Other half in Time-Memory Trade-Off
+   
+
 public:
     typedef GFqExt<TT> Self_t;
     
@@ -48,7 +67,7 @@ public:
         _BASE(1 << _BITS),
         _MASK( _BASE - 1),
         _maxn( _BASE/(P-1)/(P-1)/e),
-                                        _degree( e-1 )
+        _degree( e-1 )
     {
 
         GIVARO_ASSERT(_maxn>0 , "[GFqExt]: field too large");
@@ -161,21 +180,6 @@ public:
 
 
 protected:
-
-    UTT _BITS;
-    UTT _BASE;
-    UTT _MASK;
-    UTT _maxn;
-    UTT _degree;
-    UTT _pceil;
-    UTT _MODOUT;
-   
-    
-        // Conversion tables from exponent to double z-adic representation
-    std::vector<double> _log2dbl;
-    std::vector<UTT> _high2log;
-    std::vector<UTT> _low2log;
-   
 
     void builddoubletables() {
         _log2dbl.resize(this->_log2pol.size());

@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <12 Nov 07 18:14:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <21 Nov 07 10:42:14 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -120,10 +120,13 @@ public:
     UTT cardinality() const;
     UTT size() const;
     UTT exponent() const;
-        // Those have no meaning if exponent is 1
+        // Internal representation of the used generator
+    Rep& generator(Rep&) const;
+        // p-adic representation of the used generator
     UTT generator() const;
         // an integer representation of the polynomial  
         // where the indeterminate is replaced by the characteristic
+        // This has no meaning if exponent is 1
     UTT irreducible() const;
 
         // Initialization of Elements

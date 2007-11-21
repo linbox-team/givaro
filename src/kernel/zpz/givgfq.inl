@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <21 Nov 07 10:42:43 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <21 Nov 07 11:36:10 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -780,29 +780,14 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Vector<val_t, A
     static PadicDom PAD(Pdom);
     Degree d;  Pdom.degree(d, P);
     if (d >= this->_exponent) { 
-        std::cerr << "Initialization from a polynomial with degree larger than that of the irreducible is Not implemented" << std::endl; 
-            // First get the irreducible polynomial irred
-            // via irred = X^e - mQ
-            // and X^e = X^(e-1) * X
-//         TT temo, t;
-//         typename PolDom::Element G, H, J, mQ, irred, modP;
-//         Pdom.init(G, Degree(this->_exponent-1));
-//         PAD.eval(temo,G);
-//         Pdom.init(H, Degree(1) );
-//         PAD.eval(t,H);
-//         Rep tmp;
-//         this->mul(tmp, this->_pol2log[temo], this->_pol2log[t]);
-//         this->negin(tmp);
-//         PAD.radix(mQ , this->_log2pol[ tmp ]);
-//         Pdom.init(J, Degree(this->_exponent));
-//         Pdom.add(irred, J, mQ);
+        static typename PadicDom::Element tmp;
+        static typename PadicDom::Element Irreducible = PAD.radix(tmp, this->_irred);
             // All this was to get the irreducible polynomial
             // Now we can mod it out
-//         Pdom.mod(modP, P, irred);
-//         TT tr;
-//         PAD.eval(tr, modP);
-//         return r = this->_pol2log[ tr ];        
-        return r;
+        typename PolDom::Element modP; Pdom.mod(modP, P, Irreducible);
+        TT tr;
+        PAD.eval(tr, modP);
+        return r = this->_pol2log[ tr ];        
     } else {
         TT tr;
         PAD.eval(tr, P);

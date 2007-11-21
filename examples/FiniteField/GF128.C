@@ -1,5 +1,5 @@
 // ========================================================== //
-// Time-stamp: <21 Nov 07 10:46:32 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <21 Nov 07 11:34:43 Jean-Guillaume.Dumas@imag.fr>
 // Thanks to Dieter Schuster
 // ========================================================== //
 #include <givaro/givgfq.h>
@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     GF128.write(std::cout, b) << std::endl;
     GF128.write(std::cout, c) << std::endl;
 
-    GFqDom<long>::Element f,g,h;
+    GFqDom<long>::Element f,g,h,j;
     GFqDom<long> F2(2);
     Poly1Dom< GFqDom<long>, Dense> Pol2(F2);
     Poly1Dom< GFqDom<long>, Dense>::Element P, Q, R;
@@ -64,6 +64,11 @@ int main(int argc, char** argv)
                 << "2-adic representation of 1+X is: ", h) 
                 << std::endl;
     
+    GF128.init(j, Padic2.radix( Q, Integer(213) ));
+    GF128.write(std::cout 
+                << "2-adic representation of the moding out of X^7+X^6+X^4+X^2+1 by the irreducible is: ", j) 
+                << std::endl;
+
     return 0;
     
 }

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.9 2006-06-22 16:49:44 jgdumas Exp $
+// $Id: givcra.h,v 1.10 2007-12-05 15:45:21 jgdumas Exp $
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm for 2 Elements. 
@@ -51,7 +51,8 @@ private:
     RingElement C_12;
 };
 
-template<>
+// JGD 05.12.2007: not required anymore ...
+//template<>
 template<class Ring, class Domain>
 struct ChineseRemainder<Ring, Domain, false>  {
     typedef typename Ring::Element   RingElement;

@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <21 Nov 07 11:44:14 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <05 Dec 07 16:05:05 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
@@ -13,8 +13,7 @@
 //   WARNING : k strictly greater than 1
 //   Specialized for fast conversions to floating point numbers
 //   See [JG Dumas, Q-adic Transform Revisited, 2007]
-//   Main difference in interface is init/convert:
-//       - In GFq
+//   Main difference in interface is init/convert
 // ==========================================================================
 
 #include "givaro/givgfq.h"
@@ -23,9 +22,14 @@
 #include <vector>
 #include <deque>
 
+// init with preconditions, bad entry could segfault
+template<class TT> class GFqExtFast;
+
+// init defensive, bad entry are transformed, to the cost of slowdown
+template<class TT> class GFqExt;
 
 
-template<class TT> class GFqExt : public GFqDom<TT> {
+template<class TT> class GFqExtFast : public GFqDom<TT> {
 protected:
     typedef typename Signed_Trait<TT>::unsigned_type UTT;
     typedef TT Rep;
@@ -48,7 +52,7 @@ protected:
    
 
 public:
-    typedef GFqExt<TT> Self_t;
+    typedef GFqExtFast<TT> Self_t;
     
     typedef Rep Element;
     typedef UTT Residu_t;
@@ -56,12 +60,12 @@ public:
     typedef Rep* Array;
     typedef const Rep* constArray;
 
-    typedef GIV_randIter< GFqExt<TT> , Rep> RandIter; 
+    typedef GIV_randIter< GFqExtFast<TT> , Rep> RandIter; 
 
-    GFqExt(): Father_t(), balanced(false) {}
+    GFqExtFast(): Father_t(), balanced(false) {}
 
         // Extension MUST be a parameter of the constructor
-    GFqExt( const UTT P, const UTT e) : Father_t(P,e),
+    GFqExtFast( const UTT P, const UTT e) : Father_t(P,e),
         _BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ), 
         _BASE(1 << _BITS),
         _MASK( _BASE - 1),
@@ -70,7 +74,7 @@ public:
         balanced(false)
     {
 
-        GIVARO_ASSERT(_maxn>0 , "[GFqExt]: field too large");
+        GIVARO_ASSERT(_maxn>0 , "[GFqExtFast]: field too large");
         builddoubletables();
         
     }
@@ -100,7 +104,7 @@ public:
 	return *this;
       }
 
-    GFqExt( const GFqDom<TT>& F) : Father_t(F),
+    GFqExtFast( const GFqDom<TT>& F) : Father_t(F),
         _BITS( F._BITS ), _BASE( F._BASE ),_MASK( F._MASK ),
         _maxn( F._maxn ),_degree( F._degree ),
         _log2dbl ( F._log2dbl ), _low2log( F._low2log ),
@@ -133,15 +137,12 @@ public:
     }
 
     virtual Rep& init(Rep& pad, const double d) const {
-//             // Precondition : d < _MODOUT
-//         unsigned __GIVARO_INT64 rll( static_cast<__GIVARO_INT64>(d) ); 
-//         unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(this->_inversecharacteristic*d) );
-            // JGD 16.11.2007 : Much slower but defensive
-            // What shall we do ?
+            // WARNING WARNING WARNING WARNING
+            // Precondition : 0 <= d < _MODOUT
+            // Can segfault if d is too large
+            // WARNING WARNING WARNING WARNING
         unsigned __GIVARO_INT64 rll( static_cast<__GIVARO_INT64>(d) ); 
-        rll &= _MODOUT;
-        unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(this->_inversecharacteristic*rll) );
-
+        unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(this->_inversecharacteristic*d) );
         UTT prec(0); 
         UTT padl = (UTT)(rll - tll*this->_characteristic);
         if (padl == this->_characteristic) {
@@ -256,6 +257,51 @@ protected:
         }
     }
 };
+
+
+
+
+template<class TT> class GFqExt : public GFqExtFast<TT> {
+protected:
+    typedef typename Signed_Trait<TT>::unsigned_type UTT;
+    typedef TT Rep;
+    typedef GFqDom<TT> Father_t;
+    typedef GFqExtFast<TT> DirectFather_t;
+
+    double _fMODOUT;
+
+public:
+    typedef GFqExt<TT> Self_t;
+    
+    typedef Rep Element;
+    typedef UTT Residu_t;
+
+    typedef Rep* Array;
+    typedef const Rep* constArray;
+
+    typedef GIV_randIter< GFqExt<TT> , Rep> RandIter; 
+
+    GFqExt(): DirectFather_t(), 
+              _fMODOUT(static_cast<double>(this->_MODOUT)) {}
+
+    GFqExt( const UTT P, const UTT e) : 
+            DirectFather_t(P,e),
+            _fMODOUT(static_cast<double>(this->_MODOUT)) {}
+
+    GFqExt( const GFqDom<TT>& F) : 
+            DirectFather_t(F),
+            _fMODOUT(static_cast<double>(this->_MODOUT)) {}
+
+    
+    using Father_t::init;
+    
+    virtual Rep& init(Rep& pad, const double d) const {
+            // Defensive init
+        const double tmp(fmod(d,this->_fMODOUT));
+        return DirectFather_t::init(pad, (tmp>0.0)?tmp:(tmp+_fMODOUT) );
+    }
+};
+    
 
 
 #endif

@@ -18,7 +18,7 @@ template<class RandIter = GivRandom>
 class IntNumTheoDom : public IntFactorDom<RandIter> {
 public:
     typedef typename IntFactorDom<RandIter>::Rep Rep;
-    IntNumTheoDom(RandIter& g = *(new RandIter())) 
+    IntNumTheoDom(RandIter g = RandIter()) 
             :  IntFactorDom<RandIter>(g) {}
 // =================================================================== //
 // Euler's phi function

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givindeter.C,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givindeter.C,v 1.2 2008-02-21 18:42:48 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -24,6 +24,8 @@ Indeter& Indeter::operator=( const Indeter& s )
   name.logcopy(s.name);
   return *this;
 }
+
+Indeter::~Indeter() {name.destroy();};
 
 int Indeter::compare(const Indeter& b)  const
 { 

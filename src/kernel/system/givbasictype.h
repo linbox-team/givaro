@@ -5,12 +5,14 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givbasictype.h,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givbasictype.h,v 1.2 2008-02-21 19:36:02 pernet Exp $
 // ==========================================================================
 // Description:
 #include "givaro/givconfig.h"
 
 #include <stdlib.h> // for size_t
+
+#include <sys/types.h> // needed on MacOS X 10.5 for uint type
 
 // -- Neutral type: definition of zero and one
 class Neutral { 

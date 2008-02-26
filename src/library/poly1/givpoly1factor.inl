@@ -5,7 +5,7 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <06 Jun 06 15:08:15 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <26 Feb 08 13:37:26 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 #ifndef _GIV_POLY1_FACTO_INL_
 #define _GIV_POLY1_FACTO_INL_
@@ -244,11 +244,12 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
         this->powmod(W, D.copy(W), MOD, P);
         this->gcd (G1, sub(D,W,Unit), P) ;
         Degree dG1; degree(dG1,G1);
-        if ( dG1 > 0 )
+        if ( dG1 > 0 ) {
             if (dG1 < dP)
                 return W.copy(G1);
             else
                 return SplitFactor(W,G1,dp,MOD);
+        }
     }
     return W.copy(P);
 }

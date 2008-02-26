@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1io.inl,v 1.4 2005-04-28 11:24:21 jgdumas Exp $
+// $Id: givpoly1io.inl,v 1.5 2008-02-26 12:44:42 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -56,11 +56,12 @@ std::ostream& Poly1Dom<Domain,Dense>::write( std::ostream& o, const Rep& R) cons
         Rep P; assign(P, R);
         setdegree(P);
         if (P.size()) {
-            if (! _domain.isZero(P[0])) 
+            if (! _domain.isZero(P[0])) {
                 if (_domain.isOne(P[0]))
                     _domain.write(o,P[0]);
                 else
                     _domain.write(o << "(",P[0]) << ")";
+            }
             if (P.size() > 1) {
                 if (! _domain.isZero(P[0])) o << " + ";
                 if (! _domain.isZero(P[1])) {

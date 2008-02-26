@@ -12,7 +12,7 @@
 //   Arithmetic on GF(p^k), with p a prime number less than 2^15
 //   WARNING : k strictly greater than 1
 //   Specialized for fast conversions to floating point numbers
-//   See [JG Dumas, Q-adic Transform Revisited, 2007]
+//   See [JG Dumas, Q-adic Transform Revisited, 2008]
 //   Main difference in interface is init/convert
 // ==========================================================================
 

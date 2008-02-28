@@ -1,6 +1,6 @@
 // ==========================================================================
 // file: givpowers.h 
-// Time-stamp: <26 Feb 08 13:36:38 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Feb 08 14:17:46 Jean-Guillaume.Dumas@imag.fr>
 // (c) 1999 Givaro Team
 // ==========================================================================
 
@@ -25,11 +25,12 @@ template<class TT, class UU> TT power(const TT n, const UU l) {
           if (is_assg) 
               res *= puiss ;
           else { 
-              is_assg = 1 ; 
-              res = puiss ; 
-          }    
-          if ((p >>= 1) != 0) puiss = puiss * puiss ;
+          is_assg = 1 ; 
+          res = puiss ; 
+          }   
       }
+      if ((p >>= 1) != 0) puiss = puiss * puiss ;
+    
   }
   return res ;
 }
@@ -52,14 +53,14 @@ template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D&
 
   while (p != 0) {
       if (p & 0x1) {
-          if (is_assg) {
+          if (is_assg)
               F.mulin(res,puiss) ;
-          } else { 
-              is_assg = 1 ; 
-              res = puiss ; 
+          else { 
+          is_assg = 1 ; 
+          res = puiss ; 
           }
-          if ((p >>= 1) != 0) { F.mul(tmp,puiss,puiss) ; puiss = tmp; }
-      }
+      } 
+      if ((p >>= 1) != 0) { F.mul(tmp,puiss,puiss) ; puiss = tmp; }
   } 
   return res ;
 }

@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <05 Dec 07 16:05:05 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Feb 08 14:06:52 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
@@ -185,8 +185,8 @@ protected:
     void builddoubletables() {
         _log2dbl.resize(this->_log2pol.size());
         _pceil = 1;
-        for(ulong ppow = 2; ppow < this->_characteristic; ppow <<= 1,++_pceil) {}
-        ulong powersize = 1<<(_pceil * this->_exponent);
+        for(unsigned long ppow = 2; ppow < this->_characteristic; ppow <<= 1,++_pceil) {}
+        unsigned long powersize = 1<<(_pceil * this->_exponent);
         _MODOUT = powersize - 1;
         _high2log.resize(powersize);
         _low2log.resize(powersize);
@@ -233,10 +233,10 @@ protected:
                                  this->_exponent)
                              );
 
-            ulong binpolit = static_cast<ulong>(vect[0]);
+            unsigned long binpolit = static_cast<unsigned long>(vect[0]);
             for(size_t i =1; i<this->_exponent; ++i) {
                 binpolit <<= _pceil;
-                binpolit += static_cast<ulong>(vect[i]);
+                binpolit += static_cast<unsigned long>(vect[i]);
             }
 
             ZElem tmp, prec, cour; 

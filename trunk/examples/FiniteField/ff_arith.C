@@ -115,7 +115,7 @@ int main(int argc, char ** argv) {
         // Zech log finite field with 3^4 elements
         // Using the Q-adic Transform
     GFqExt<int> GF81( 3, 4 ); TestField( GF81 );
-    
+   
     	// Zech log finite field with 2Mb tables
     struct rusage  tmp1 ; 
     getrusage (RUSAGE_SELF, &tmp1) ;

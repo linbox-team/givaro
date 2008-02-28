@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <21 Nov 07 11:36:10 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <28 Feb 08 14:20:03 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -912,6 +912,7 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
     , _dcharacteristic( (double)P )
 {
     
+    
         // So that flooring should give a correct answer
     int mode = fegetround(); // should be to nearest
     fesetround(FE_UPWARD);
@@ -1003,6 +1004,8 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
     }
         // -1 + 1 == 0
    _plus1[_qm1o2] = 0; 
+
+
 }
 
 

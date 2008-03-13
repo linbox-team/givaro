@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.C,v 1.3 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givzpz16table1.C,v 1.4 2008-03-13 01:58:41 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -88,10 +88,19 @@ for(i=0; i<_p; i++) {
 
    corrected by inversing the array
 */
-  for(j=0; j<_pmone; j++)
-   _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j] ];
-  for(j=1-_pmone; j<0; j++)
-    _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j + _pmone] ];  
+  for(j=0; j<_pmone; j++){
+    if (_tab_rep2value[j] < _pmone)
+      _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j] ];
+    else
+      _tab_addone[j] = _tab_value2rep[0];      
+  }
+  for(j=1-_pmone; j<0; j++){
+    if (_tab_rep2value[j+_pmone] < _pmone)
+      _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j + _pmone] ];
+    else
+      _tab_addone[j] = _tab_value2rep[0];
+    
+  }
   for(j=_pmone; j<=(int32)2*_pmone; j++) 
     _tab_addone[j] = 0;
   for(j=(int32)-2*_pmone; j<(int32)(1-_pmone); j++) 

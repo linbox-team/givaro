@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     GFqDom<long> GFq(p, e);
     GFqDom<long> PrimeField(p,1);
     
-    Poly1Dom< GFqDom<long>, Dense > Pdom( PrimeField, "X" );
+    Poly1Dom< GFqDom<long>, Dense > Pdom( PrimeField, Indeter("X") );
  
         // First get the irreducible polynomial irred
         // via irred = X^e - mQ

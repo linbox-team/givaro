@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 
   GFqDom<long> F(MOD, expo);
   
-  Poly1FactorDom<GFqDom<long>, Dense> FD(F,"X");
+  Poly1FactorDom<GFqDom<long>, Dense> FD(F,Indeter("X"));
   typedef Poly1FactorDom<GFqDom<long>, Dense>::Element Polys ;
   Polys P;
   FD.read( cin, P );

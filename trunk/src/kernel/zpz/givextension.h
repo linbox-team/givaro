@@ -47,7 +47,7 @@ public:
 
 
     Extension ( const Residu_t p, const Residu_t e = 1)
-            : _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, "ý"  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ) {
+: _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Indeter("ý")  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ) {
 /*     cerr << "Pol Cstor" << endl; */
         unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
         if (basedegree >= e) 
@@ -57,7 +57,7 @@ public:
     }
 
     Extension ( const BaseField_t& bF, const Residu_t ex = 1)
-            : _bF( bF ), _pD( _bF, "ý"  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ) {
+: _bF( bF ), _pD( _bF, Indeter("ý")  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ) {
         if (_cardinality < (1<<20) )
             _pD.creux_random_irreducible( _irred, (unsigned long)(ex));
         else

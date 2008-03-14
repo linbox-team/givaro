@@ -8,7 +8,7 @@ int main(int argc, char ** argv) {
     GFqDom<int> Z13( 13, 1 );  // integers modulo 13
 
     // Polynomials over Z13, with X as indeterminate
-    Poly1Dom< GFqDom<int>, Dense > DP13( Z13, "X" );
+    Poly1Dom< GFqDom<int>, Dense > DP13( Z13, Indeter("X") );
     Poly1Dom< GFqDom<int>, Dense>::Element P, Q, R, monomial;
     GFqDom<int>::Element tmp;
 
@@ -62,6 +62,5 @@ int main(int argc, char ** argv) {
          std::cout << "lcm(", Q ) << ",", P) << ") = ", R) << std::endl;
 
  }   
-
  return 0;
 }

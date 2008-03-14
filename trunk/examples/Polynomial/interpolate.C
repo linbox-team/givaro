@@ -20,7 +20,7 @@ int main(int argc, char** argv)
   ZpzDom<Std32> F(MOD);
 
   
-  Interpolation< ZpzDom<Std32> > FD(F,"X");
+  Interpolation< ZpzDom<Std32> > FD(F,Indeter("X"));
   Interpolation< ZpzDom<Std32> >::Element nouv, prec;
   int EarlyTerm = 0, Bound = 5;
 

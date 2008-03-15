@@ -17,7 +17,7 @@
 #include <iostream>
 #include <vector>
 #include "givaro/giv_randiter.h"
-#include <givaro/givpoly1factor.h>
+#include "givaro/givpoly1factor.h"
 
   // ------------------------------------------------- class GFqDom
 template<class TT> class GFqDom {
@@ -44,7 +44,7 @@ protected:
     std::vector<UTT> _pol2log;
     std::vector<TT> _plus1;
 
-        // Floating point representations
+    // Floating point representations
     double _dcharacteristic;
     double _inversecharacteristic;
 
@@ -64,11 +64,12 @@ public:
     typedef Rep* Array;
     typedef const Rep* constArray;
     
-
     GFqDom(): zero(0), _log2pol(0), _pol2log(0),_plus1(0) {}
 
     GFqDom( const UTT P, const UTT e = 1);
 
+    GFqDom( const UTT P, const UTT e, const std::vector<UTT>& modPoly);    
+    
     GFqDom( const GFqDom<TT>& F)
       {
 	zero = F.zero;
@@ -90,7 +91,7 @@ public:
         // and therefore the field generator
 //     template<class RandIter >
 //     GFqDom(RandIter& g, const UTT P, const UTT e = 1);
-    virtual ~GFqDom() {};
+    ~GFqDom() {};
 
 
     GFqDom<TT> operator=( const GFqDom<TT>& F)
@@ -127,6 +128,7 @@ public:
         // an integer representation of the polynomial  
         // where the indeterminate is replaced by the characteristic
         // This has no meaning if exponent is 1
+    UTT sage_generator() const;
     UTT irreducible() const;
 
         // Initialization of Elements
@@ -136,8 +138,8 @@ public:
     Rep& init( Rep&, const long) const ;
     Rep& init( Rep&, const unsigned long) const ;
     Rep& init( Rep&, const Integer) const;
-    virtual Rep& init( Rep&, const float) const ;
-    virtual Rep& init( Rep&, const double) const ;
+    Rep& init( Rep&, const float) const ;
+    Rep& init( Rep&, const double) const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
     Rep& init( Rep&, const long long) const;
     Rep& init( Rep&, const unsigned long long) const ;
@@ -166,8 +168,8 @@ public:
     long& 		convert(long&, const Rep) const ;
     unsigned long& 	convert(unsigned long&, const Rep) const ;
     int& 		convert(int&, const Rep) const ;
-    virtual float&	convert(float&, const Rep) const ;
-    virtual double& 	convert(double&, const Rep) const ;
+    float&	convert(float&, const Rep) const ;
+    double& 	convert(double&, const Rep) const ;
     unsigned int& 	convert(unsigned int&, const Rep) const ; 
     Integer& 		convert(Integer&, const Rep) const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
@@ -299,7 +301,6 @@ public:
     }
 #endif
 
- private:
 
 #ifdef __GIVARO_COUNT__
 static    long long _add_count;

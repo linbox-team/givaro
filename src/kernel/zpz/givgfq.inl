@@ -220,6 +220,16 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::generator(Rep& g) const
 { return g=1; }
 
 template<typename TT> 
+inline typename GFqDom<TT>::Residu_t GFqDom<TT>::sage_generator() const
+{
+  if (exponent()>1) {
+    return _pol2log[_characteristic];
+  } else {
+    return one;
+  }	
+}
+
+template<typename TT> 
 inline typename GFqDom<TT>::Residu_t GFqDom<TT>::irreducible() const
 { return _irred; }
 
@@ -1007,6 +1017,76 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
 
 
 }
+
+// Dan Roche 6-15-04, adapted my/ported back to Givaro by Martin Albrecht 10-06-06
+// This constructor takes a vector of ints that represent the polynomial
+// to use (for modular arithmetic on the extension field).
+template<typename TT>
+  inline GFqDom<TT>::GFqDom(const UTT P, const UTT e, const std::vector<UTT>& modPoly):
+    zero(0)
+    , one (power(P,e) - 1  )
+    , _characteristic(P)
+    , _exponent(e) 
+    , _q( one + 1 )
+    , _qm1 ( one )
+    , _qm1o2(  (P==2)?  (one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
+    , _log2pol( _q )
+    , _pol2log( _q )
+    , _plus1( _q )
+    , _dcharacteristic( (double)P )
+    , _inversecharacteristic( 1.0/(double)P )    
+{
+
+  // 1 is represented by q-1, zero by 0
+  _log2pol[0] = zero;
+
+  GFqDom<TT> Zp(P,1);
+  typedef Poly1FactorDom< GFqDom<TT>, Dense > PolDom;
+  PolDom Pdom( Zp );
+  typename PolDom::Element Ft, F, G, H;
+  
+  typename PolDom::Element tempVector(e+1);
+  for( int i = 0; i < e+1; i++ )
+    Zp.init( tempVector[i], modPoly[i]);
+  Pdom.assign( F, tempVector );
+  
+  Pdom.give_prim_root(G,F);
+  Pdom.assign(H,G);
+
+  typedef Poly1PadicDom< GFqDom<TT>, Dense > PadicDom;
+  PadicDom PAD(Pdom);
+
+  PAD.eval(_log2pol[1],H);
+
+  for (UTT i = 2; i < _qm1; ++i) {
+    Pdom.mulin(H, G);
+    Pdom.modin(H, F);
+    PAD.eval(_log2pol[i], H);
+  }
+  _log2pol[_qm1] = 1;
+
+  _log2pol[0] = 0;
+
+  for (UTT i = 0; i < _q; ++i)
+    _pol2log[ _log2pol[i] ] = i;
+	
+  _plus1[0] = 0;
+  
+  UTT a,b,r;
+  for (UTT i = 1; i < _q; ++i) {
+    a = _log2pol[i];
+    r = a % P;
+    if (r == (P - 1))
+      b = a - r;
+    else
+      b = a + 1;
+    _plus1[i] = _pol2log[b] - _qm1;
+  }
+
+  _plus1[_qm1o2] = 0;
+}
+
+
 
 
 template<typename TT> inline void GFqDom<TT>::Init() {} 

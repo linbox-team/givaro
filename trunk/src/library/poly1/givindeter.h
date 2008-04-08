@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givindeter.h,v 1.3 2008-03-14 21:32:15 pernet Exp $
+// $Id: givindeter.h,v 1.4 2008-04-08 11:43:11 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - indeterminates for polynomial manipulation
@@ -18,6 +18,8 @@ public :
      
   // -- Cstor: recopy the string
  Indeter(const std::string & x="") : name(x){}
+  // -- Cstor: recopy the string
+ Indeter(const char * x) : name(x){}
   // -- Cstor of recopy
  Indeter(const Indeter& s): name(s.name) {}
 

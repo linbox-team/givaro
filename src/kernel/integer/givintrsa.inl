@@ -131,7 +131,7 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
         p = t-delt;
         q = t+delt;
         Element gd, a, b, c, r1, r2;
-        gcd(gd, a, b, q, p);
+        this->gcd(gd, a, b, q, p);
 
         b *= p;
         b %= _m;
@@ -253,11 +253,11 @@ void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, 
 
     if (_fast_impl) {
         mod(k,SIMPLE_EXPONENT, phim);
-        gcd(gd,u,v,k,phim);
+        this->gcd(gd,u,v,k,phim);
     } else {
         do {
             this->random(g,k,phim);
-        } while (gcd(gd,u,v,k,phim) != 1);
+        } while (this->gcd(gd,u,v,k,phim) != 1);
     }
     modin(u,phim);
     if ( islt(u,IntFactorDom<RandIter>::zero) ) addin(u,phim);
@@ -272,7 +272,7 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::point_break(Element&
         Element p,v,d, pm;
         factor(p, _m);
         mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( this->div(d,_m,p), IntFactorDom<RandIter>::one ) );
-        gcd(d,_u,v,_k,pm);
+        this->gcd(d,_u,v,_k,pm);
         if (islt(_u,IntFactorDom<RandIter>::zero)) addin(_u, pm);
     }
     return u = _u;

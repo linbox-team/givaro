@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.7 2005-07-06 12:23:37 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.8 2008-04-22 15:57:14 jgdumas Exp $
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
@@ -210,7 +210,8 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const double 
   if (a < 0.0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   if ( ua > Signed_Trait<uint32>::max()){
-    ua -= (double)floor(ua * _invdp)*_dp; 
+//    ua -= (double)floor(ua * _invdp)*_dp; 
+    ua = fmod(ua,_dp);
     r = (Rep) ua;
   } else
     r = (ua >=_p) ? (uint32) ua % (uint32)_p : (uint32) ua;

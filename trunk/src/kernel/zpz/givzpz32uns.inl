@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32uns.inl,v 1.6 2007-11-12 17:13:03 jgdumas Exp $
+// $Id: givzpz32uns.inl,v 1.7 2008-04-22 15:57:14 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -47,11 +47,11 @@
 
 
 inline ZpzDom<Unsigned32>::ZpzDom( )
- : zero(0), one(1), _p(0), _dp(0.0), _invdp(0.0) // _invdp est infini en fait
+ : zero(0), one(1), _p(0), _dp(0.0)
 {}
 
 inline ZpzDom<Unsigned32>::ZpzDom( Residu_t p )
- : zero(0), one(1), _p(p), _dp((double)p), _invdp(1.0/(double)p)
+ : zero(0), one(1), _p(p), _dp((double)p)
 
 {}
 
@@ -59,7 +59,7 @@ inline ZpzDom<Unsigned32>::Residu_t ZpzDom<Unsigned32>::residu( ) const
 { return _p; }
 
 inline ZpzDom<Unsigned32>::ZpzDom(const ZpzDom<Unsigned32>& F)
-        : zero(0), one(1), _p(F._p), _dp(F._dp), _invdp(F._invdp)
+        : zero(0), one(1), _p(F._p), _dp(F._dp)
  { }
 
 inline ZpzDom<Unsigned32>::Rep& ZpzDom<Unsigned32>::mul (Rep& r, const Rep a, const Rep b) const
@@ -317,7 +317,8 @@ inline  ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::init ( Rep& r, const doubl
   if (a < 0.0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   if ( ua > Signed_Trait<uint32>::max()){
-    ua -= (double)floor(ua * _invdp)*_dp; 
+//     ua -= (double)floor(ua * _invdp)*_dp;
+    ua = fmod(ua,_dp);
     r = (Rep) ua;
   } else
     r = (ua >=_p) ? (uint32) ua % _p : (uint32) ua;

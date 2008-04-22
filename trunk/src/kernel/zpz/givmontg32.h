@@ -2,7 +2,7 @@
 #define _GIVARO_MONTG32_H_
 // ==========================================================================
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.7 2005-07-12 12:54:37 jgdumas Exp $
+// $Id: givmontg32.h,v 1.8 2008-04-22 15:57:14 jgdumas Exp $
 // ==========================================================================
 //
 #include "givbasictype.h"
@@ -41,10 +41,10 @@ public:
     Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}
 
     Montgomery( Residu_t p, int expo = 1)
-        : _p(p), _Bp(B32%p), _B2p( (_Bp<<HALF_BITS32) % p), _B3p( (_B2p<<HALF_BITS32) % p), _nim( -Montgomery<Std32>::invext(_p,B32) ), _dp((double)p), _invdp(1.0/(double)p), zero(0UL), one( redcsal(_B2p) ) {}
+        : _p(p), _Bp(B32%p), _B2p( (_Bp<<HALF_BITS32) % p), _B3p( (_B2p<<HALF_BITS32) % p), _nim( -Montgomery<Std32>::invext(_p,B32) ), _dp((double)p), zero(0UL), one( redcsal(_B2p) ) {}
 
     Montgomery( const Montgomery<Std32>& F)
-        : _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim),_dp(F._dp), _invdp(F._invdp), zero(0UL), one(F.one) { }
+        : _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim),_dp(F._dp), zero(0UL), one(F.one) { }
 
 
     int operator==( const Montgomery<Std32>& BC) const { return _p == BC._p;}
@@ -57,7 +57,6 @@ public:
         this->_B3p = F._B3p;
         this->_nim = F._nim;
         this->_dp = F._dp;
-        this->_invdp = F._invdp;
         return *this;
     }
 
@@ -191,7 +190,6 @@ protected:
     Residu_t _B3p;
     Residu_t _nim;
     double _dp;
-    double _invdp;
     
 
     static void Init();

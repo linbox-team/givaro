@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32uns.h,v 1.6 2005-07-12 12:54:37 jgdumas Exp $
+// $Id: givzpz32uns.h,v 1.7 2008-04-22 15:57:14 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -56,7 +56,6 @@ public:
   ZpzDom<Unsigned32>& operator=( const ZpzDom<Unsigned32>& F) { 
       this->_p = F._p; 
       this->_dp = F._dp;
-      this->_invdp = F._invdp;
       return *this;
   }
 
@@ -209,7 +208,6 @@ protected:
   // -- data representation of the domain:
     Residu_t _p;
     double _dp;
-    double _invdp; // inverse of _p
 
     static void Init();
     static void End();

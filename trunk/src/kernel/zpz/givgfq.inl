@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <28 Feb 08 14:20:03 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <22 Apr 08 17:24:33 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -578,7 +578,8 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
                 // -a = b [p]  <==>  a = p-b [p]
             tr = -tr;
             if (tr > Signed_Trait<UTT>::max() ) 
-                tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
+                tr = fmod(tr,_dcharacteristic);
+                //tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
             else{
                 if (tr >= (TT)_characteristic )
                     tr = (UTT)tr % _characteristic ;
@@ -590,7 +591,8 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
                 return r = zero;
         } else {
             if (tr > Signed_Trait<UTT>::max() ) 
-                tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
+                tr = fmod(tr,_dcharacteristic);
+                    //tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
             else{
                 if (tr >= (TT)_characteristic ) 
                     tr = (UTT)tr % _characteristic ;
@@ -922,13 +924,6 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
     , _dcharacteristic( (double)P )
 {
     
-    
-        // So that flooring should give a correct answer
-    int mode = fegetround(); // should be to nearest
-    fesetround(FE_UPWARD);
-    _inversecharacteristic = 1.0/(double)P;
-    fesetround(mode);
-        
 
         // 1 is represented by q-1, zero by 0
     _log2pol[0] = zero;
@@ -1018,7 +1013,8 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
 
 }
 
-// Dan Roche 6-15-04, adapted my/ported back to Givaro by Martin Albrecht 10-06-06
+// Dan Roche 6-15-04, adapted my/ported back to Givaro 
+// by Martin Albrecht 10-06-06
 // This constructor takes a vector of ints that represent the polynomial
 // to use (for modular arithmetic on the extension field).
 template<typename TT>
@@ -1034,7 +1030,6 @@ template<typename TT>
     , _pol2log( _q )
     , _plus1( _q )
     , _dcharacteristic( (double)P )
-    , _inversecharacteristic( 1.0/(double)P )    
 {
 
   // 1 is represented by q-1, zero by 0

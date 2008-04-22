@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <28 Feb 08 14:06:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <22 Apr 08 17:47:16 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
@@ -79,13 +79,14 @@ public:
         
     }
 
+    virtual ~GFqExtFast() {};
+
     Self_t operator=( const Self_t& F)
       {
 	this->zero = F.zero;
 	this->one = F.one;
 	this->_characteristic = F._characteristic;
 	this->_dcharacteristic = F._dcharacteristic;
-	this->_inversecharacteristic = F._inversecharacteristic;
 	this->_exponent = F._exponent;
 	this->_q = F._q;
 	this->_qm1 = F._qm1;
@@ -110,7 +111,7 @@ public:
         _log2dbl ( F._log2dbl ), _low2log( F._low2log ),
         _high2log (F._high2log ), balanced(false) {
     }
-    
+
         // Accesses 
     
     UTT bits() const { return _BITS;}
@@ -142,7 +143,7 @@ public:
             // Can segfault if d is too large
             // WARNING WARNING WARNING WARNING
         unsigned __GIVARO_INT64 rll( static_cast<__GIVARO_INT64>(d) ); 
-        unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(this->_inversecharacteristic*d) );
+        unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(d/this->_dcharacteristic) );
         UTT prec(0); 
         UTT padl = (UTT)(rll - tll*this->_characteristic);
         if (padl == this->_characteristic) {
@@ -155,7 +156,7 @@ public:
             prec = (UTT)(rll-tll*this->_characteristic);
 
             padl <<= _pceil;
-            padl += prec;
+            padl ^= prec;
         }
 
         pad = prec;
@@ -165,7 +166,7 @@ public:
             prec = (UTT)(rll-tll*this->_characteristic);
 
             pad <<= _pceil;
-            pad += prec;
+            pad ^= prec;
         }
         
         padl = this->_low2log[padl];
@@ -292,7 +293,8 @@ public:
             DirectFather_t(F),
             _fMODOUT(static_cast<double>(this->_MODOUT)) {}
 
-    
+    ~GFqExt() {}
+
     using Father_t::init;
     
     virtual Rep& init(Rep& pad, const double d) const {

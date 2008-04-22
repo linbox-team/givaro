@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <21 Nov 07 10:42:14 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <22 Apr 08 17:24:36 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -46,7 +46,6 @@ protected:
 
     // Floating point representations
     double _dcharacteristic;
-    double _inversecharacteristic;
 
 public:
     typedef GFqDom<TT> Self_t;
@@ -76,7 +75,6 @@ public:
 	one = F.one;
 	_characteristic = F._characteristic;
 	_dcharacteristic = F._dcharacteristic;
-	_inversecharacteristic = F._inversecharacteristic;
 	_exponent = F._exponent;
 	_irred = F._irred;
 	_q = F._q;
@@ -100,7 +98,6 @@ public:
 	this->one = F.one;
 	this->_characteristic = F._characteristic;
 	this->_dcharacteristic = F._dcharacteristic;
-	this->_inversecharacteristic = F._inversecharacteristic;
 	this->_exponent = F._exponent;
 	this->_irred = F._irred;
 	this->_q = F._q;

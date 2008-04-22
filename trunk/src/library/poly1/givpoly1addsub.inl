@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1addsub.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givpoly1addsub.inl,v 1.2 2008-04-22 15:57:14 jgdumas Exp $
 // ==========================================================================
 
 #ifndef __GIV__POLY__ADDSUB__inl__
@@ -12,6 +12,8 @@
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::addin (Rep& R, const Rep& P) const
 {
+//     this->write(this->write(std::cout, R) << " += ", P) << std::endl;
+
   size_t i;
   size_t sP = P.size(); 
   size_t sR = R.size(); 

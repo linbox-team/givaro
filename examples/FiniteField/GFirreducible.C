@@ -1,5 +1,5 @@
 // ========================================================== //
-// Time-stamp: <21 Nov 07 11:14:42 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <09 Apr 08 15:35:30 Jean-Guillaume.Dumas@imag.fr>
 // Check of irreducible polynomial and generators of GFq
 // ========================================================== //
 #include <givaro/givgfq.h>
@@ -13,6 +13,8 @@ int main(int argc, char** argv)
     long e = (argc>2?atoi(argv[2]):3);
     GFqDom<long> GFq(p, e);
     GFqDom<long> PrimeField(p,1);
+    std::cout << "Working in GF(" << p << '^' << e << ')' << std::endl;
+    std::cout << "Elements are polynomials in X modulo " << p << std::endl;
     
     Poly1Dom< GFqDom<long>, Dense > Pdom( PrimeField, Indeter("X") );
  

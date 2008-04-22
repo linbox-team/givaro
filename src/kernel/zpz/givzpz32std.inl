@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.7 2007-11-12 17:13:03 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.8 2008-04-22 15:57:14 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -305,7 +305,8 @@ inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::init ( Rep& r, const double a ) cons
   if (a < 0.0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   if ( ua > Signed_Trait<uint32>::max()){
-    ua -= (double)floor(ua * _invdp)*_dp; 
+//     ua -= (double)floor(ua * _invdp)*_dp; 
+      ua = fmod(ua,_dp);
     r = (Rep) ua;
   } else
     r = (ua >=_p) ? (uint32) ua % (uint32)_p : (uint32) ua;

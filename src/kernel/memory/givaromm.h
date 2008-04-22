@@ -5,13 +5,14 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Author: T. Gautier
-// $Id: givaromm.h,v 1.2 2006-06-06 12:52:39 jgdumas Exp $
+// $Id: givaromm.h,v 1.3 2008-04-22 16:15:49 pernet Exp $
 // ==========================================================================
 // Description:
 // - two memory managers: the first one handle a set on free-list
 //   of blocs, the second one implement a reference mecanism on
 //   the bloc. The latter used method of the former.
 
+#include <cstring>            // gcc 4.3
 #include <stddef.h>           // size_t definition 
 #include <iostream>         // ostream definition
 #include <new>

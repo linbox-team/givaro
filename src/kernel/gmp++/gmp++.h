@@ -4,6 +4,7 @@
 // Givaro version of gmp++.h
 // Time-stamp: <08 Mar 07 14:07:31 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
+#include <climits> // required by gcc 4.3
 #include <givaro-config.h>
 
 #ifndef __GIVARO__DONOTUSE_longlong__

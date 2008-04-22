@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     double error;
     IntNumTheoDom<>::Element a,pr,g;
     if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
-    bool comp ; if ( comp = (! IP.isprime(a)) ) std::cerr << a << " is not prime, primitive root will have no sense and may loop forever ..." << std::endl;
+    bool comp ; if ( (comp=(! IP.isprime(a))) )  std::cerr << a << " is not prime, primitive root will have no sense and may loop forever ..." << std::endl;
     double epsilon = argc > 2 ? atof(argv[2]) : 0.0000001;
   
     Timer tim; tim.clear(); 

@@ -2,7 +2,7 @@
 // Givaro : Euler's phi function
 //          Primitive roots.
 // Needs list structures : stl ones for instance
-// Time-stamp: <06 Jun 06 14:33:30 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <22 Apr 08 18:21:50 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 #include "givintnumtheo.h"
 #include <list>
@@ -470,7 +470,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, co
     if (isOne(gcd(tmp,A,n))) {
         noprimroot = false;
         for(;f!=Lf.end();++f)
-            if ( noprimroot = isOne( this->powmod(tmp,A, this->div(g,phin,*f),n)) )
+            if ( (noprimroot = isOne( this->powmod(tmp,A, this->div(g,phin,*f),n)) ) )
                 break;
         if (noprimroot) {
             for(;f!=Lf.end();++f)

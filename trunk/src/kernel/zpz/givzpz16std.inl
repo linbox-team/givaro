@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.8 2006-07-21 08:03:26 jgdumas Exp $
+// $Id: givzpz16std.inl,v 1.9 2008-04-22 16:55:57 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -477,7 +477,7 @@ inline void ZpzDom<Std16>::dotprod
   }
   do {
     size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
-    if (min_sz & 0x1 !=0) 
+    if ((min_sz & 0x1) !=0) 
       { min_sz--; i_begin++; dot += a++[min_sz] * b++[min_sz]; }
     if (min_sz > 1) 
       for( register size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) 

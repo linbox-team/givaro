@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: givaromm.C,v 1.2 2006-11-09 18:54:19 jgdumas Exp $
+// $Id: givaromm.C,v 1.3 2008-04-22 16:55:57 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -242,9 +242,10 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
   else --(tmp->data[0]);  // -- two pointer on the bloc:
   tmp = GivMMFreeList::_allocate( newsize+sizeof(long) );
   tmp->data[0] = 1 ;
-  if (oldsize !=0) 
-    if (newsize <= oldsize) ::memcpy( &(tmp->data[1]), p, newsize );
-    else ::memcpy( &(tmp->data[1]), p, oldsize );
+  if (oldsize !=0) {
+      if (newsize <= oldsize) ::memcpy( &(tmp->data[1]), p, newsize );
+      else ::memcpy( &(tmp->data[1]), p, oldsize );
+  }
   return &(tmp->data[1]);
 }
 

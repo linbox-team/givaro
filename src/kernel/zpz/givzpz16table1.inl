@@ -4,7 +4,7 @@
 // see the copyright file.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.5 2004-10-12 14:36:46 jgdumas Exp $
+// $Id: givzpz16table1.inl,v 1.6 2008-04-22 16:55:57 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -406,7 +406,7 @@ inline void ZpzDom<Log16>::dotprod
   }
   do {
     size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
-    if (min_sz & 0x1 !=0) { 
+    if ( (min_sz & 0x1) !=0) { 
       min_sz--; i_begin++; 
       dot += _tab_rep2value[a++[min_sz]] * _tab_rep2value[b++[min_sz]]; 
     }

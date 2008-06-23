@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfqext.h 
-// Time-stamp: <22 Apr 08 17:47:16 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <26 May 08 10:01:26 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 2007
 // version: 
@@ -12,7 +12,7 @@
 //   Arithmetic on GF(p^k), with p a prime number less than 2^15
 //   WARNING : k strictly greater than 1
 //   Specialized for fast conversions to floating point numbers
-//   See [JG Dumas, Q-adic Transform Revisited, 2008]
+//   See [JG Dumas, Q-adic Transform Revisited, ISSAC 2008]
 //   Main difference in interface is init/convert
 // ==========================================================================
 

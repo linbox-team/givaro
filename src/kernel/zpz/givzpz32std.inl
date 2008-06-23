@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.9 2008-04-22 16:55:57 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.10 2008-06-23 13:03:42 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -399,8 +399,12 @@ inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign
 { return r = (a >=_p) ? a % _p : a; }
 
 inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign 
-  ( Rep& r, const Rep a ) const
+  ( Rep& r, const int32 a ) const
 { return assign(r, (long)a); }
+
+inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign 
+  ( Rep& r, const uint32 a ) const
+{ return assign(r, (unsigned long)a); }
 
 
 inline void ZpzDom<Std32>::init 

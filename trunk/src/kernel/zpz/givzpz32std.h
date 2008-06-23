@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.10 2008-04-22 15:57:14 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.11 2008-06-23 13:03:42 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -170,7 +170,9 @@ public:
   void assign ( Rep& r, const int a ) const;
   void assign ( Rep& r, const unsigned int a ) const;
 */
-  Rep& assign ( Rep& r, const Rep a) const;
+ // Rep& assign ( Rep& r, const Rep a) const;
+  Rep& assign ( Rep& r, const int32 a) const;
+  Rep& assign ( Rep& r, const uint32 a) const;
   Rep& assign ( Rep& r, const long a ) const;
   Rep& assign ( Rep& r, const unsigned long a ) const;
   Rep& assign ( Rep& r, const short a ) const;

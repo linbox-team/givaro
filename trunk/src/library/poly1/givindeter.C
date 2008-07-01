@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givindeter.C,v 1.3 2008-03-14 21:32:15 pernet Exp $
+// $Id: givindeter.C,v 1.4 2008-07-01 15:40:33 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -31,6 +31,6 @@ std::ostream& operator<< (std::ostream& o, const Indeter& X)
 
  std::istream& operator>> (std::istream& s_in, Indeter& X) 
  { 
-   s_in>>X.name;
+   return s_in>>X.name;
  }
 

@@ -17,6 +17,7 @@
 template<class RandIter = GivRandom>
 class IntNumTheoDom : public IntFactorDom<RandIter> {
 public:
+    typedef IntFactorDom<RandIter> Father_t;
     typedef typename IntFactorDom<RandIter>::Rep Rep;
     IntNumTheoDom(RandIter g = RandIter()) 
             :  IntFactorDom<RandIter>(g) {}
@@ -60,7 +61,7 @@ Rep& phi(Rep& r, const Rep& n) const ;
 //                                                                       
 // Lambda Function : maximal orbit size                                  
 //    lambda : Order of a primitive Element                              
-//    lambda_inv : Order of an invertible Element                        
+//    lambda_inv : Order of an invertible primitive Element                        
 //    Both functions coïncides except for m=8                            
 // =================================================================== //
     Rep& prim_inv(Rep & , const Rep&) const ;

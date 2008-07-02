@@ -20,7 +20,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, co
     if (isleq(n,1)) return res=n;
     if (isleq(n,3)) return sub(res,n,this->one);
     std::list<Rep> Lf;
-    set(Lf,n);
+    Father_t::set(Lf,n);
     //return phi (res,Lf,n);
     return phi (res,Lf,n);	
 }
@@ -66,7 +66,7 @@ template<class RandIter>
 short IntNumTheoDom<RandIter>::mobius(const Rep& a) const {
     std::list< Rep> lr;
     std::list<unsigned long> lp;
-    set(lr, lp, a);
+    Father_t::set(lr, lp, a);
     return mobius(lp);
 }
 
@@ -104,7 +104,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
     Rep phin, tmp; 
     phi(phin,p);
     std::list<Rep> Lf;
-    set(Lf,phin);
+    Father_t::set(Lf,phin);
     typename std::list<Rep>::iterator f;
     for(f=Lf.begin();f!=Lf.end();++f)
              this->div(*f,phin,*f);
@@ -188,7 +188,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_ro
   Rep Q, pmun(p); --pmun;
   primroot = 1;
 
-  bool complet = set(Lq, e, pmun, L);
+  bool complet = Father_t::set(Lq, e, pmun, L);
 // partial factorisation done        
 
 //std::cerr << "Lq: " << Lq << std::endl;
@@ -299,7 +299,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_pri
     
     std::vector<Rep> Lf;
     Rep phin; sub(phin,n,this->one);
-    set(Lf,phin);
+    Father_t::set(Lf,phin);
     return prim_root_of_prime(A, Lf, phin, n);
 }
 
@@ -407,7 +407,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root
     Rep phin, tmp; 
     phi(phin,n);
     std::list<Rep> Lf;
-    set(Lf,phin);
+    Father_t::set(Lf,phin);
     typename std::list<Rep>::iterator f;
     for(f=Lf.begin();f!=Lf.end();++f)
             this->div(*f,phin,*f);
@@ -432,7 +432,7 @@ bool IntNumTheoDom<RandIter>::is_prim_root(const Rep& p, const Rep& n) const {
     Rep phin, tmp; 
     phi(phin,n);
     std::list<Rep> Lf;
-    set(Lf,phin);
+    Father_t::set(Lf,phin);
     typename std::list<Rep>::iterator f=Lf.begin();
     Rep A; mod(A,p,n);
     if (isOne(gcd(tmp,A,n))) {
@@ -464,7 +464,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, co
     Rep phin,gg,tmp;
     phi(phin,n);
     std::list<Rep> Lf;
-    set(Lf,phin);
+    Father_t::set(Lf,phin);
     Lf.sort();
     typename std::list<Rep>::iterator f=Lf.begin();
     if (isOne(gcd(tmp,A,n))) {
@@ -505,7 +505,7 @@ template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_base(Rep& A, const Rep& m) const {
         // Prerequisite : m > 4, and m != 8.
     std::vector<Rep> Lp; std::vector<unsigned long> Le;
-    set(Lp, Le, m);
+    Father_t::set(Lp, Le, m);
     unsigned long nbf = Lp.size();
     std::vector<Rep> Pe(nbf); 
     std::vector<Rep> Ra(nbf);
@@ -577,7 +577,7 @@ template<class RandIter>
 typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_base(Rep & z, const Rep& m) const {
         // Prerequisite: m > 4, and m != 8.
         std::vector<Rep> Lp; std::vector<unsigned long> Le;
-        set(Lp, Le, m);
+        Father_t::set(Lp, Le, m);
         unsigned long nbf = Lp.size();
 
         lambda_inv_primpow(z, Lp.front(), Le.front() );

@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givdegree.h,v 1.2 2008-06-23 13:44:02 jgdumas Exp $
+// $Id: givdegree.h,v 1.3 2008-07-02 12:53:02 jgdumas Exp $
 // Description: opaque class for Degree of polynomial. Degree of polynomial
 // 0 is Degree::deginfty with value DEGPOLYZERO.
 // ==========================================================================
@@ -28,11 +28,7 @@ public:
 //  operator int() { return _deg; }            
 
   // -- Degree of zero polynomial
-#ifndef __ECC
-  static const long deginfty;
-#else
- static const long deginfty = DEGPOLYZERO;
-#endif
+  static const long deginfty = DEGPOLYZERO;
 
   // -- cvrt
   long value() const { return _deg; }

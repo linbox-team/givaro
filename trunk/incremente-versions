@@ -1,0 +1,33 @@
+#!/bin/csh -f
+
+set conf = configure.in
+set mak = src/Makefile.am
+
+echo -n "Increment library version ? "
+set answ = $<
+if ("$answ" == "y") then
+	echo -n "`fgrep AM_INIT_AUTOMAKE $conf`"
+	set vern = `fgrep AM_INIT_AUTOMAKE $conf | sed 's/)//g;s/.*\.//g'`
+	set newv = $vern
+	@ newv ++
+	echo " --> $newv"
+	echo "s/\.$vern)/\.$newv)/" > /tmp/confin.sed.$$
+	sed -f /tmp/confin.sed.$$ $conf > /tmp/confin.$$
+	\rm -rf /tmp/confin.sed.$$
+	\mv -f /tmp/confin.$$ $conf
+endif
+
+
+echo -n "Increment soname revision ? "
+set answ = $<
+if ("$answ" == "y") then
+	echo -n "`fgrep libgivaro_la_LDFLAGS $mak`"
+	set revn = `fgrep libgivaro_la_LDFLAGS $mak | sed 's/.*://;s/:/ /g' | awk '{print $1}'`
+	set newr = $revn
+	@ newr ++
+	echo " ---> $newr"
+	echo "s/:${revn}:/:${newr}:/" > /tmp/makin.sed.$$
+	sed -f /tmp/makin.sed.$$ $mak > /tmp/makin.$$
+	\rm -rf /tmp/makin.sed.$$
+	\mv -f /tmp/makin.$$ $mak
+endif

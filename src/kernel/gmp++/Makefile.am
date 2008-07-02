@@ -11,9 +11,11 @@ pkgincludesub_HEADERS=\
 	gmp++.C		\
 	gmp++_int.C
 
-lib_LTLIBRARIES=libgmpxx.la
+#lib_LTLIBRARIES=libgmpxx.la
+noinst_LTLIBRARIES=libgmppp.la
 
-libgmpxx_la_SOURCES=\
+#libgmpxx_la_SOURCES=
+libgmppp_la_SOURCES=\
 	gmp++_int_div.C		\
 	gmp++_int_mod.C		\
 	gmp++_int_sub.C		\

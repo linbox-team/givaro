@@ -1,6 +1,6 @@
 AC_PREREQ(2.50)
 AC_INIT()
-AM_INIT_AUTOMAKE(givaro, 3.2.11)
+AM_INIT_AUTOMAKE(givaro, 3.2.12rc0)
 AM_CONFIG_HEADER(config.h)
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 

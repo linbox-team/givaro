@@ -5,7 +5,7 @@
 // Bugs:
 // Authors : JG Dumas
 //           Modified 20 Mar 03 by Clement Pernet
-// Time-stamp: <22 Apr 08 17:24:33 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <09 Jul 08 08:47:17 Jean-Guillaume.Dumas@imag.fr> 
 // ==========================================================================
 #include <math.h>
 #include <givaro/givpoly1padic.h>
@@ -905,7 +905,6 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& r, 
 #include <givaro/givintnumtheo.h>
 #include <givaro/givpower.h>
 
-#include <fenv.h>
 #include <vector>
 
 template<typename TT>

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givratcstor.C,v 1.3 2008-07-18 12:42:37 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -33,92 +33,50 @@ void Rational::SetNoReduce() { Rational::flags = Rational::NoReduce ; }
 // Explicit instanciation
 template double power(double x, unsigned int p) ; 
 
-//!!!Integer or unsigned for n and d ?
-//Might be better to use Rational(char *) for full prec. input, have have this 
-//sufficently fast for numerous initialisations.
-Rational::Rational(double x)
-//snarfed from netlib (file frac.c)
-//Result is already reduced
-{
-  throw GivError("Rational::Rational(double x) : undefined") ;
-/*
-  // The following values are used to test for too small
-  // and too large values of v for an integer fraction to
-  // represent.
-  
-  const double MAX = DBL_MAX;
-  const double MIN = DBL_MIN;
-  
-  // we assume a base 2 representation for doubles.
-  static const double error = 1.0 / power(2.0, DSIGNIF - 1);
-  long n = 0, d = 1;
-  int sgn = (x > 0) ? 1 : -1;
-  if (x < 0)
-    x = -x;
-  
-  int D, N, t;
-  double epsilon, r , m;
 
-  if (x < MIN || x > MAX || error < 0.0)
-    {
-      num = Integer(n);
-      den = Integer(d);
-      return;
-    }
-  
-  d = D = 1;
-  n = int(x);
-  N = n + 1;
-  r = 0.0 ;
-  goto three;
-  
- one:   
-  if (r > 1.0)
-    goto two;
-  r = 1.0 / r;
- 
- two:  
-  N += n *int(r);
-  D += d * int(r);
-  n += N;
-  d += D;
- 
- three:  
-  r = 0.0;
-  if ( x * d == double(n) )
-    goto four;
-  r = (N - x * D) / (x * d - n);
-  if (r > 1.0)
-    goto four; 
-  t = N;
-  N = n;
-  n = t;
-  t = D;
-  D = d;
-  d = t;
 
- four:
-  epsilon = fabs(1.0 - n / (x * d));
-  if (epsilon <= error)
-    goto six;
-  m = 1.0;
-  do {
-    m *= 10.0;
-  } while (m * epsilon < 1.0);
-  epsilon = 1.0/m * (int(0.5 + m * epsilon));
- 
- six:
-  if (epsilon <= error)
-    {
-      num = Integer(n * sgn);
-      den = Integer(d);
-      return;
+        struct ieee {
+#if     __BYTE_ORDER == __BIG_ENDIAN
+            uint64 negative:1;
+            uint64 exponent:11;
+            uint64 mantissa:52;
+#endif                          /* Big endian.  */
+#if     __BYTE_ORDER == __LITTLE_ENDIAN
+            uint64 mantissa:52;
+            uint64 exponent:11;
+            uint64 negative:1;
+#endif                          /* Little endian.  */
+        };
+
+Rational::Rational(double x) {
+    union { 
+        uint64 l; 
+        ieee u; 
+        double d; 
+    } t; // temp
+
+    t.d = x;
+    if (t.u.exponent == 0) {
+            // Denormal numbers
+        num = (x<0.?-t.u.mantissa:t.u.mantissa);
+        den = 1;
+        *this/=Rational(Integer(1)<<1074);
+    } else {
+        const long shift = 1075-t.u.exponent;
+        t.u.exponent = 1076;
+        if (shift > 0) {
+            Integer tt( t.u.mantissa+4503599627370496ULL );
+            num = (x<0.?-tt:tt);
+            den = Integer(1)<<shift;
+        } else {
+            Integer tt( t.u.mantissa+4503599627370496ULL);
+            tt <<=(-shift);
+            num = (x<0.?-tt:tt);
+            den = 1;
+        }
     }
-  if (r != 0.0)
-    goto one;
-*/
+    if (Rational::flags == Rational::Reduce) reduce();
 }
-
 
 
 //   ------------------------------ Rational(Neutral n )
@@ -196,7 +154,7 @@ Rational::Rational(const Integer &n) : den(Integer::one)
 }
 
 // ------------------------------ Rational(const Integer &n, const Integer &d)
-// If red == 1 then the rational is reduce (gcd computation!)
+// If red == 1 then the rational is reduced (gcd computation!)
 Rational::Rational(const Integer &n, const Integer &d, int red)
 {
   if (isZero(d))

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givratmisc.C,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givratmisc.C,v 1.3 2008-07-18 12:42:37 jgdumas Exp $
 // ==========================================================================
 // Description:
 

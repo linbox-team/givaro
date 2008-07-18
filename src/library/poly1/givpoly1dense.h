@@ -5,12 +5,11 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.15 2007-11-21 09:29:54 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.16 2008-07-18 12:42:55 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
 
-// #include "givarray0.h"
 #include <iostream>
 #include <vector>
 #include "givaro/givdegree.h"
@@ -38,17 +37,6 @@ public:
     }
 
 };
-
-// template < typename T >
-// std::ostream& operator<< (std::ostream& o, const givvector<T>& v) {
-//     o << "Poly (s [v_1, ..,  v_s]) : ";
-//     o << v.size();
-//     for(size_t i=0; i<v.size(); ++i) {
-//         o << " " << v[i];
-//     }
-// }    
-    
-
 
 //  -------------------------------------------- Class Poly1Dom<Domain>
 template <class Domain>
@@ -240,7 +228,7 @@ public :
     }
 
         // -- W <-- P(X^b)
-    Rep&  power_compose( Rep& W, const Rep& P, long b) const;
+    Rep& power_compose( Rep& W, const Rep& P, long b) const;
 
         // -- n th cyclotomic polynomial
     Rep& cyclotomic( Rep& P, long n) const;

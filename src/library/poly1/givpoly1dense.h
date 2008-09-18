@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.16 2008-07-18 12:42:55 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.17 2008-09-18 08:11:46 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -104,6 +104,9 @@ public :
     }
         // -- Assignment p = q
     Rep& assign( Rep& p, const Rep& q) const;
+
+        // -- Convert polynomials : F.assign(cste, p[0])
+    Type_t& convert(Type_t&, const Rep &) const;
 
         // -- Convert polynomials : F.convert(cste, p[0])
     template<class XXX>

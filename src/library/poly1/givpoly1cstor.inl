@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.5 2005-07-05 08:51:34 pernet Exp $
+// $Id: givpoly1cstor.inl,v 1.6 2008-09-18 08:11:46 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
@@ -71,6 +71,15 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& 
     return P;
 }
 
+
+template<class Domain> 
+inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(Poly1Dom<Domain,Dense>::Type_t & val, const Poly1Dom<Domain,Dense>::Rep& P ) const
+{ 
+    if (P.size())
+        return _domain.assign(val, P[0]);
+    else
+        return _domain.init(val, 0UL);
+}
 
 template<class Domain> template<class XXX>
 inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const Poly1Dom<Domain,Dense>::Rep& P ) const

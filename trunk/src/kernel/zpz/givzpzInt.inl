@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.4 2005-06-14 14:53:14 pernet Exp $
+// $Id: givzpzInt.inl,v 1.5 2008-09-18 08:12:55 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -499,7 +499,7 @@ inline std::ostream& ZpzDom<Integer>::write (std::ostream& s ) const
 inline std::istream& ZpzDom<Integer>::read (std::istream& s, Rep& a) const
 {
   s >> a;
-  assign(a, a);
+  init(a, a);
   return s;
 }
 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.10 2008-06-23 13:03:42 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.11 2008-09-18 08:12:55 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -565,7 +565,7 @@ inline std::ostream& ZpzDom<Std32>::write (std::ostream& s ) const
 inline std::istream& ZpzDom<Std32>::read (std::istream& s, Rep& a) const
 {
   s >> a;
-  assign(a, a);
+  init(a, a);
   return s;
 }
 

@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.3 2008-07-18 12:42:37 jgdumas Exp $
+// $Id: givratcstor.C,v 1.4 2008-09-19 17:58:17 pernet Exp $
 // ==========================================================================
 // Description:
 
@@ -36,16 +36,15 @@ template double power(double x, unsigned int p) ;
 
 
         struct ieee {
-#if     __BYTE_ORDER == __BIG_ENDIAN
+#if HAVE_BIG_ENDIAN
             uint64 negative:1;
             uint64 exponent:11;
             uint64 mantissa:52;
-#endif                          /* Big endian.  */
-#if     __BYTE_ORDER == __LITTLE_ENDIAN
+#else
             uint64 mantissa:52;
             uint64 exponent:11;
             uint64 negative:1;
-#endif                          /* Little endian.  */
+#endif                          
         };
 
 Rational::Rational(double x) {

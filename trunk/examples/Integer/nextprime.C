@@ -15,6 +15,7 @@ int main(int argc, char** argv)
   IntPrimeDom IP;
   IntPrimeDom::Element m, ff;
   if (argc > 1) m = Integer(argv[1]);
+  else std::cin >> m;
   
         Timer tim; tim.clear(); tim.start();
         IP.nextprimein(m,1);

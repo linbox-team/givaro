@@ -2,6 +2,7 @@
 
 set conf = configure.in
 set mak = src/Makefile.am
+set ver = src/kernel/system/givconfig.h
 
 echo -n "Increment library version ? "
 set answ = $<
@@ -14,7 +15,14 @@ if ("$answ" == "y") then
 	echo "s/\.$vern)/\.$newv)/" > /tmp/confin.sed.$$
 	sed -f /tmp/confin.sed.$$ $conf > /tmp/confin.$$
 	\rm -rf /tmp/confin.sed.$$
-	\mv -f /tmp/confin.$$ $conf
+	diff /tmp/confin.$$ $conf
+	echo -n "Confirmation of incrementation ? "
+	set answ = $<
+	if ("$answ" == "y") then
+	    \mv -f /tmp/confin.$$ $conf
+	else
+	    \rm -f /tmp/confin.$$
+	endif
 endif
 
 
@@ -22,12 +30,47 @@ echo -n "Increment soname revision ? "
 set answ = $<
 if ("$answ" == "y") then
 	echo -n "`fgrep libgivaro_la_LDFLAGS $mak`"
-	set revn = `fgrep libgivaro_la_LDFLAGS $mak | sed 's/.*://;s/:/ /g' | awk '{print $1}'`
+	set revn = `fgrep libgivaro_la_LDFLAGS $mak | cut -d':' -f2`
 	set newr = $revn
 	@ newr ++
 	echo " ---> $newr"
 	echo "s/:${revn}:/:${newr}:/" > /tmp/makin.sed.$$
 	sed -f /tmp/makin.sed.$$ $mak > /tmp/makin.$$
 	\rm -rf /tmp/makin.sed.$$
-	\mv -f /tmp/makin.$$ $mak
+	diff /tmp/makin.$$ $mak
+	echo -n "Confirmation of incrementation ? "
+	set answ = $<
+	if ("$answ" == "y") then
+	    \mv -f /tmp/makin.$$ $mak
+	else
+	    \rm -f /tmp/makin.$$
+	endif
+endif
+
+
+echo -n "Increment givconfig revision ? "
+set answ = $<
+if ("$answ" == "y") then
+	echo -n "`fgrep GIVARO_REVISION_VERSION $ver`"
+	set revn = `fgrep GIVARO_REVISION_VERSION $ver | awk '{print $3}'`
+	set newr = $revn
+	@ newr ++
+	echo " ---> $newr"
+	echo "s/GIVARO_REVISION_VERSION ${revn}/GIVARO_REVISION_VERSION ${newr}/" > /tmp/verin.sed.$$
+	echo -n "`fgrep GIVARO_VERSION $ver`"
+	set revn = `fgrep GIVARO_VERSION $ver | awk '{print $3}'`
+	set newr = $revn
+	@ newr ++
+	echo " ---> $newr"
+	echo "s/GIVARO_VERSION ${revn}/GIVARO_VERSION ${newr}/" >> /tmp/verin.sed.$$
+	sed -f /tmp/verin.sed.$$ $ver > /tmp/verin.$$
+	#\rm -rf /tmp/verin.sed.$$
+	diff /tmp/verin.$$ $ver
+	echo -n "Confirmation of incrementation ? "
+	set answ = $<
+	if ("$answ" == "y") then
+	    \mv -f /tmp/verin.$$ $ver
+	else
+	    \rm -f /tmp/verin.$$
+	endif
 endif

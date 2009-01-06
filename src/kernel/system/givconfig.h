@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.8 2007-10-02 14:37:45 jgdumas Exp $
+// $Id: givconfig.h,v 1.9 2009-01-06 17:20:45 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -58,7 +58,10 @@
 // - xx: major version number
 // - yy: minor version number
 // - zz: revision number
-#define GIVARO_VERSION  0x030103
+#define GIVARO_MAJOR_VERSION 03
+#define GIVARO_MINOR_VERSION 02
+#define GIVARO_REVISION_VERSION 13
+#define GIVARO_VERSION 030213
 
 // -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)

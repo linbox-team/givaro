@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: JG Dumas
-// $Id: gmp++_int_pow.C,v 1.2 2007-01-11 18:42:51 jgdumas Exp $
+// $Id: gmp++_int_pow.C,v 1.3 2009-06-08 12:35:42 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -32,6 +32,7 @@ Integer pow(const Integer& n, const unsigned long p)
 }
 
 Integer& pow(Integer& Res, const Integer& n, const long l) {
+        // Beware of negative values
 	return pow(Res, n, (unsigned long) GMP__ABS(l) );
 }
 Integer pow(const Integer& n, const long l) {
@@ -53,12 +54,16 @@ Integer powmod(const Integer& n, const unsigned long p, const Integer& m)
 
 Integer& powmod(Integer& Res, const Integer& n, const long e, const Integer& m)
 {
-  return powmod (Res, n, (unsigned long)GMP__ABS(e), m);
+    if (e < 0) {
+        inv(Res, n, m);
+        return powmod(Res, Res, (unsigned long)GMP__ABS(e), m);
+    } else 
+        return powmod (Res, n, (unsigned long)(e), m);
 }
 Integer powmod(const Integer& n, const long e, const Integer& m)
 {
-  if (e < 0)  return Integer::zero;
-  return powmod (n, (unsigned long)GMP__ABS(e), m);
+    Integer Res;
+    return powmod(Res, n, e, m);
 }
 
 

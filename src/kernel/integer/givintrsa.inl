@@ -2,7 +2,7 @@
 // Givaro : Prime numbers
 //              RSA public-key cipher codes
 //              ECB mode (UNSECURE !!!)
-// Time-stamp: <06 Jun 06 14:32:13 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <07 May 09 13:44:00 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
 #ifndef _GIVARO_RSA_Public_KEY_
@@ -99,12 +99,12 @@ std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) c
         }
 
             // Padding randomly to enable CBC
-            // indeed, decryption will return (res^ancien) % _m
-        while ( (res^ancien) > _m) {
+            // indeed, decryption will return (res^ancien) % _n
+        while ( (res^ancien) > _n) {
             res += ((Integer)((unsigned char)lrand48()) << imax);
         }
 
-        powmod(r, res^ancien,_k,_m);
+        powmod(r, res^ancien,_e,_n);
         ecriture_Int(o, r );
         ancien = r;
     } while (! in.eof());
@@ -120,36 +120,36 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
 
     if (_fast_impl) {
         Element p, q, pr, k, phi, t, delt ;
-        pr = _k*_u;
+        pr = _e*_d;
 	--pr;
-        k = pr/_m;
+        k = pr/_n;
         ++k;
         phi = pr/ k;
-        t = _m-phi; ++t;
+        t = _n-phi; ++t;
         t >>= 1;
-        sqrt(delt, t*t-_m);
+        sqrt(delt, t*t-_n);
         p = t-delt;
         q = t+delt;
         Element gd, a, b, c, r1, r2;
         this->gcd(gd, a, b, q, p);
 
         b *= p;
-        b %= _m;
+        b %= _n;
 
         Element ancien(0);
         
         in >> tmp; 
         do {
-            powmod(r, Integer(tmp)%p, _u, p);
-            powmod(r2, Integer(tmp)%q, _u, q);
+            powmod(r, Integer(tmp)%p, _d, p);
+            powmod(r2, Integer(tmp)%q, _d, q);
 	    // Chinese reconstruction
 	    r2 -= r;
             r2 *= b;
-            r2 %= _m;
+            r2 %= _n;
             r2 += r;
 	    // Must be positive
-	    if (r2 > _m) r2 -= _m;
-	    else if (r2 < IntFactorDom<RandIter>::zero) r2+=_m;
+	    if (r2 > _n) r2 -= _n;
+	    else if (r2 < IntFactorDom<RandIter>::zero) r2+=_n;
             r2 ^= ancien;
             ancien = Integer(tmp);
             in >> tmp;
@@ -164,7 +164,7 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
         Element ancien(0);
         in >> tmp;
         do {
-            powmod(r, Integer(tmp),_u,_m);
+            powmod(r, Integer(tmp),_d,_n);
             r ^= ancien;
             ancien = Integer(tmp);
             in >> tmp;
@@ -240,7 +240,13 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_
 // =================================================================== //
 template<class RandIter>
 void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, Element& m, Element& k, Element& u) const {
-    Element p,q, d, l;
+    Element p, q;
+    keys_gen(g,psize,qsize,m,k,u,p,q);
+}
+
+template<class RandIter>
+void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, Element& m, Element& k, Element& u, Element& p, Element& q) const {
+    Element d, l;
 
     strong_prime(g, psize, p);
     do  strong_prime(g, qsize, q); while (q == p);
@@ -268,14 +274,14 @@ void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, 
 // =================================================================== //
 template<class RandIter>
 typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::point_break(Element& u) {
-    if ( isZero(_u) ) {
+    if ( isZero(_d) ) {
         Element p,v,d, pm;
-        factor(p, _m);
-        mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( this->div(d,_m,p), IntFactorDom<RandIter>::one ) );
-        this->gcd(d,_u,v,_k,pm);
-        if (islt(_u,IntFactorDom<RandIter>::zero)) addin(_u, pm);
+        factor(p, _n);
+        mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( this->div(d,_n,p), IntFactorDom<RandIter>::one ) );
+        this->gcd(d,_d,v,_e,pm);
+        if (islt(_d,IntFactorDom<RandIter>::zero)) addin(_d, pm);
     }
-    return u = _u;
+    return u = _d;
 }
 
 #endif

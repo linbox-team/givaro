@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     */
 
     // Unfactored output
-    cerr << "m=pq: " << IR.getm() << ", cipher k: " << IR.getk() << "   ----> decipering key: ";
+    cerr << "n=pq: " << IR.getn() << ", cipher key: " << IR.gete() << "   ----> decipering key: ";
     cout << u << endl;
 
 

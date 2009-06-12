@@ -1,6 +1,6 @@
 // =================================================================== //
 // Givaro : RSA scheme.
-// Time-stamp: <24 Mar 05 13:52:12 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <07 May 09 13:51:58 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
 
 #ifndef _GIVARO_RSA_
@@ -31,8 +31,8 @@ public:
     typedef typename IntFactorDom<RandIter>::random_generator random_generator;
 
 private:
-    Element _m, _k;
-    Element _u;
+    Element _n, _e;
+    Element _d;
     long _lm;
 
 public:
@@ -40,18 +40,18 @@ public:
 // =================================================================== //
 // Constructors
 // =================================================================== //
-    IntRSADom(bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi) { keys_gen(IntFactorDom<RandIter>::_g, 257, 255, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const long s, bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, (s>>1)-1, (s>>1)+1, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const long p, const long q, bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, p, q, _m, _k, _u); _lm = log(_m,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const Element& m, const Element& k, const Element& u) : _m(m), _k(k), _u(u), _lm(log(m,1<<(8*sizeof(unsigned char)))), _fast_impl( k == SIMPLE_EXPONENT )  {}
-    IntRSADom(const Element& m, const Element& k) : _m(m), _k(k), _u(0), _lm(log(m,1<<(8*sizeof(unsigned char)))), _fast_impl( k == SIMPLE_EXPONENT )  {}
+    IntRSADom(bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi) { keys_gen(IntFactorDom<RandIter>::_g, 257, 255, _n, _e, _d); _lm = log(_n,1<<(8*sizeof(unsigned char))); }
+    IntRSADom(const long s, bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, (s>>1)-1, (s>>1)+1, _n, _e, _d); _lm = log(_n,1<<(8*sizeof(unsigned char))); }
+    IntRSADom(const long p, const long q, bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, p, q, _n, _e, _d); _lm = log(_n,1<<(8*sizeof(unsigned char))); }
+    IntRSADom(const Element& n, const Element& e, const Element& d) : _n(n), _e(e), _d(d), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )  {}
+    IntRSADom(const Element& n, const Element& e) : _n(n), _e(e), _d(0), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )  {}
         
 // =================================================================== //
 // Accesses
 // =================================================================== //
-    const Element& getm() const { return _m; }
-    const Element& getk() const { return _k; }
-    const Element& getu() const { return _u; }
+    const Element& getn() const { return _n; }
+    const Element& gete() const { return _e; }
+    const Element& getd() const { return _d; }
 
 // =================================================================== //
 // Text conversions
@@ -59,13 +59,12 @@ public:
     std::ostream& encipher(std::ostream&, std::istream&) const ;
     std::ostream& decipher(std::ostream&, std::istream&) ;
 
-protected:
 // =================================================================== //
 // Keys generation
-// public keys are m and k, the secret key is u.
-// ciphering is computing       : x^k mod m
-// deciphering is computing     : b^u mod m
-// since for any x, x^(k.u) = x mod m
+// public keys are n and e, the secret key is d.
+// ciphering is computing       : x^e mod m, in CBC mode
+// deciphering is computing     : b^d mod m
+// since for any x, x^(e.d) = x mod m
 // =================================================================== //
 
 
@@ -80,7 +79,8 @@ protected:
 // Moreover p-1 and q-1 have one prime factor of respective size 2/3
 // since k.u = 1 mod (p-1)(q-1)
 // =================================================================== //
-    void keys_gen(random_generator& g, long psize, long qsize, Element& m, Element& k, Element& u) const ;
+    void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d, Element& p, Element& q) const ;
+    void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d) const ;
     
 // =================================================================== //
 // log[10]
@@ -94,16 +94,17 @@ protected:
     std::ostream& ecriture_str_last(std::ostream&, const Element&) const ;
     std::ostream& ecriture_Int(std::ostream&, const Element&) const ;
 
-public:
 // =================================================================== //
 // Breaking codes : finding u knowing only m an k ...
 // =================================================================== //
     Element& point_break(Element& u) ;
 
+protected:
 // Fast implementation
 // Means simple enciphering key, and deciphering via chinese remaindering
 // WARNING: this means less security !
     bool _fast_impl;
+
 };
 
 #include "givaro/givintrsa.inl"

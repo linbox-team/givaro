@@ -19,14 +19,13 @@ int main(int argc, char** argv)
 
 
     GivRandom generator;
-    IntRSADom<GivRandom>::Rep m,k,u;
 
 
     tim.start();
     IntRSADom<GivRandom> IR(keysize,true,generator);
     tim.stop();
     
-    std::cout << IR.getm() << " " << IR.getk() << " " << IR.getu()  << std::endl;
+    std::cout << IR.getn() << " " << IR.gete() << " " << IR.getd()  << std::endl;
     std::cerr << tim << std::endl;
    
     return 0;

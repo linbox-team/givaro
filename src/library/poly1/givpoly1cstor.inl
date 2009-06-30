@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.6 2008-09-18 08:11:46 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.7 2009-06-30 12:04:17 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
@@ -125,34 +125,17 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
     Type_t _zero;
     _domain.init( _zero, 0.0);
     long deg = value(d);
-    Type_t lcoeff; _domain.init(lcoeff, val);
-    if (_domain.isZero(lcoeff)) { 
+    P.reallocate(deg+1);
+    for (int i=0; i<deg; ++i)
+        _domain.assign(P[i], _zero);
+    _domain.init(P[deg], val);
+    if (_domain.isZero(P[deg])) { 
         P.reallocate(0);
-    } else {
-        P.reallocate(deg+1);
-        for (int i=0; i<deg; ++i)
-            _domain.assign(P[i], _zero);
-        _domain.assign(P[deg], lcoeff);
-    }
+    } 
     return P;
 }
-// template<class Domain>
-// inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
-//  ( Rep& P, const Degree d, const Type_t& lcoeff ) const
-// {
-//     Type_t _zero;
-//     _domain.init( _zero, 0.0);
-//     long deg = value(d);
-//     if (_domain.isZero(lcoeff)) { 
-//         P.reallocate(0);
-//     } else {
-//         P.reallocate(deg+1);
-//         for (int i=0; i<deg; ++i)
-//             _domain.assign(P[i], _zero);
-//         _domain.assign(P[deg], lcoeff);
-//   }
-//   return P;
-// }
+
+
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign
  ( Rep& P, const Degree d, const Type_t& lcoeff ) const

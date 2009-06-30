@@ -1,6 +1,6 @@
 // ================================================================= //
 // (C) The Linbox Group 1999
-// Time-stamp: <21 Nov 07 11:36:37 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <16 Jun 09 10:43:32 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 
 #ifndef _GIV_POLY1_P_ADIC_H_
@@ -96,6 +96,7 @@ public:
                 // Could also be 
                 // typename Domain::Element e;
                 // Poly_t::assign(P, Degree(0), _domain.init(e, E) );
+                // But Poly_t::init uses less temporaries
             return Poly_t::init(P, Degree(0), E );
         }
         IntegerDom::Element iq, ir;
@@ -121,7 +122,7 @@ public:
         if (n <= 1) {
             P.resize(0);
             typedef typename vect::value_type elem;
-            P.push_back( E );
+            P.push_back( static_cast<elem>(E) );
             return P;
         }
         double iq, ir;

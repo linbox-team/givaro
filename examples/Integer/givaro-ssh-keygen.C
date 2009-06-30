@@ -3,7 +3,7 @@
 // File formats are then managed by openssl and openssh, thus this file //
 // requires to be compiled with -lssl -lssh -lopenbsd-compat            //
 // The latter libraries are avaible from openssl and openssh            //
-// Time-stamp: <12 Jun 09 14:45:41 Jean-Guillaume.Dumas@imag.fr>        //
+// Time-stamp: <30 Jun 09 13:21:45 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
 #include <iostream>
 #include <sys/stat.h>
@@ -126,6 +126,7 @@ int main(int argc, char** argv)
         } else
             mymain(filpriv,stdout,s);
         fclose(filpriv);
+        chmod(argv[2],(S_IRUSR|S_IWUSR));
     } else
         mymain(stdout,stdout,s);
     return 0;

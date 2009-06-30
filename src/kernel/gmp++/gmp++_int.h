@@ -4,7 +4,7 @@
 // Copyright(c)'2001-2007 by LinBox Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier, JG. Dumas
-// Time-stamp: <11 Jan 07 14:52:53 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 09 11:55:13 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -129,9 +129,9 @@ public:
   int operator < (const unsigned long l) const;
 
   //------------------ Bit logic
-  Integer operator^ (const Integer&);   // XOR
-  Integer operator| (const Integer&);   // OR
-  Integer operator& (const Integer&);   // AND
+  Integer operator^ (const Integer&) const;   // XOR
+  Integer operator| (const Integer&) const;   // OR
+  Integer operator& (const Integer&) const;   // AND
   Integer operator ~ () const;   // 1 complement
   Integer& operator^= (const Integer&);   // XOR
   Integer& operator|= (const Integer&);   // OR

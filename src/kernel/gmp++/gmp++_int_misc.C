@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.11 2007-01-11 18:42:51 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.12 2009-06-30 11:59:06 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -196,15 +196,15 @@ Integer& Integer::operator >>= (unsigned long l)
 }
 
 //------------------------------------------- Bit logic
-    Integer Integer::operator^ (const Integer& a) {   // XOR
+    Integer Integer::operator^ (const Integer& a) const {   // XOR
         Integer res(*this);
         return res ^= a;
     }
-    Integer Integer::operator| (const Integer& a) {   // OR
+    Integer Integer::operator| (const Integer& a) const {   // OR
         Integer res(*this);
         return res |= a;
     }
-    Integer Integer::operator& (const Integer& a) {   // AND
+    Integer Integer::operator& (const Integer& a) const {   // AND
         Integer res(*this);
         return res &= a;
     }

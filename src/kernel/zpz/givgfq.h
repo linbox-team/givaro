@@ -3,7 +3,7 @@
 
 // ==========================================================================
 // file: givgfq.h 
-// Time-stamp: <22 Apr 08 17:24:36 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Jun 09 13:52:27 Jean-Guillaume.Dumas@imag.fr>
 // (c) Givaro Team
 // date: 1999
 // version: 
@@ -89,7 +89,9 @@ public:
         // and therefore the field generator
 //     template<class RandIter >
 //     GFqDom(RandIter& g, const UTT P, const UTT e = 1);
-    ~GFqDom() {};
+
+        // Destructor
+	//    ~GFqDom() {};
 
 
     GFqDom<TT> operator=( const GFqDom<TT>& F)

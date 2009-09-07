@@ -5,7 +5,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.10 2009-01-06 17:56:37 jgdumas Exp $
+// $Id: givconfig.h,v 1.11 2009-09-07 13:42:59 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 
@@ -60,8 +60,8 @@
 // - zz: revision number
 #define GIVARO_MAJOR_VERSION 03
 #define GIVARO_MINOR_VERSION 02
-#define GIVARO_REVISION_VERSION 14
-#define GIVARO_VERSION 30214
+#define GIVARO_REVISION_VERSION 15
+#define GIVARO_VERSION 30215
 
 // -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)
@@ -76,6 +76,7 @@
 # define GIVARO_BITS_PER_INT		SIZEOF_INT
 # define GIVARO_BITS_PER_SHORTINT	SIZEOF_SHORT
 # define GIVARO_BITS_PER_CHAR		SIZEOF_CHAR
+
 
 typedef signed    __GIVARO_INT8       int8;
 typedef signed    __GIVARO_INT16      int16;
@@ -253,6 +254,7 @@ template<> inline unsigned long long GIVARO_numeric_limits<unsigned long long>::
 
 template<class XXX> struct Signed_Trait : public GIVARO_numeric_limits<XXX> {
     typedef XXX signed_type;
+    typedef XXX unsigned_type;
 };
 
 template<> struct Signed_Trait<float>  : public GIVARO_numeric_limits<float> {

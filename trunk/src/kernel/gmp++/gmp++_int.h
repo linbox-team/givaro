@@ -338,6 +338,7 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
 
   // -- Convert an Integer to a basic C++ type
   // -- Cast operators
+  operator bool() const { return *this!=0UL; }
   operator short() const { return (int) *this; }
   operator unsigned short() const { return (unsigned int) *this; }
   operator unsigned char() const { return (unsigned int) *this; }

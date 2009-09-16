@@ -2,7 +2,9 @@
 // Givaro replacement for ssh-keygen: generated keys use strong primes  //
 // File formats are then managed by openssl and openssh, thus this file //
 // requires to be compiled with -lssl -lssh -lopenbsd-compat            //
-// The latter libraries are avaible from openssl and openssh            //
+// You also need the openssl and openssh development headers below      //
+// The latter libraries/heqders are avaible from openssl and openssh    //
+// openssl > 0.9.8  and  openssh > 5.2p1  are expected                  //
 // Time-stamp: <30 Jun 09 13:21:45 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
 #include <iostream>
@@ -11,12 +13,12 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 
-#include <givaro/givintrsa.h>
-#include <givaro/givtimer.h>
-
 extern "C" {
 #include "openssh/key.h"
 }
+
+#include <givaro/givintrsa.h>
+#include <givaro/givtimer.h>
 
 /* Strong pseudo-prime generation using Gordon's algorithm */
 void Givaro_keygen(Integer& n, Integer& e, Integer& d, 
@@ -113,8 +115,14 @@ int mymain(FILE* fileout, FILE* filepub, long s) {
 
 int main(int argc, char** argv) 
 {
-    long s =  argc>1? atoi(argv[1]) : 4096;
+    if (argc>4) {
+	std::cerr << "Too many arguments.\nusage: " << argv[0] 
+		  << " [size] [private-key-file] [public-key-file]" 
+		  << std::endl;
+	return 1;
 
+    }
+    long s =  argc>1? atoi(argv[1]) : 4096;
 
     FILE * filpriv, *filpub;
     if (argc>2) {

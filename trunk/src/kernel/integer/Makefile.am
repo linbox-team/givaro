@@ -14,6 +14,8 @@ pkginclude_HEADERS=\
 	givintnumtheo.inl	\
 	givintrsa.inl		\
 	givintfactor.inl 	\
+	givintsqrootmod.h       \
+	givintsqrootmod.inl     \
         givintrns_convert.inl	\
 	givintrns_cstor.inl
 

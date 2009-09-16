@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.7 2009-06-30 12:04:17 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.8 2009-09-16 16:24:58 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
@@ -12,7 +12,7 @@ inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X )
 { 
 	Type_t _one;
 	_domain.init( _one, 1.0);
-	_domain.assign( (Type_t&)one[0], _one);
+	_domain.assign( one[0], _one);
 }
 
 template<class Domain>

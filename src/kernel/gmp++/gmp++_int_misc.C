@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.13 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.14 2009-09-17 16:07:51 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -210,6 +210,15 @@ Integer& Integer::operator >>= (unsigned long l)
     Integer Integer::operator& (const Integer& a) const {   // AND
         Integer res(*this);
         return res &= a;
+    }
+    unsigned long Integer::operator^ (const unsigned long& a) const {   // XOR
+        return mpz_get_ui((mpz_ptr)&(gmp_rep)) ^ a;
+    }
+    unsigned long Integer::operator| (const unsigned long& a) const {   // OR
+        return mpz_get_ui((mpz_ptr)&(gmp_rep)) | a;
+    }
+    unsigned long Integer::operator& (const unsigned long& a) const {   // AND
+        return mpz_get_ui((mpz_ptr)&(gmp_rep)) & a;
     }
     Integer Integer::operator~ () const {   // 1 complement
         Integer res;

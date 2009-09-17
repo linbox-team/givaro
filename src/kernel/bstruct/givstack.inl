@@ -1,9 +1,12 @@
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/bstruct/givstack.inl,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givstack.inl,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// $Id: givstack.inl,v 1.2 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
 
 template <class THING>

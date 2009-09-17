@@ -1,13 +1,15 @@
-#include <givaro/givconfig.h>
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz64std.C,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.C,v 1.3 2004-10-11 13:54:38 jgdumas Exp $
+// $Id: givzpz64std.C,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
-// Description:
 
+#include <givaro/givconfig.h>
 #include <iostream>
 #include "givaro/givzpz64std.h"
 

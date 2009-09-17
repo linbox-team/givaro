@@ -1,9 +1,12 @@
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/poly1/givpoly1sqrfree.inl,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1sqrfree.inl,v 1.7 2005-07-13 14:02:20 pernet Exp $
+// $Id: givpoly1sqrfree.inl,v 1.8 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 

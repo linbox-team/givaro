@@ -1,10 +1,11 @@
-#ifndef _GIVARO_GFQ_EXTENSION_H_
-#define _GIVARO_GFQ_EXTENSION_H_
-
 // ==========================================================================
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // file: givgfqext.h 
 // Time-stamp: <26 May 08 10:01:26 Jean-Guillaume.Dumas@imag.fr>
-// (c) Givaro Team
 // date: 2007
 // version: 
 // author: Jean-Guillaume.Dumas
@@ -15,6 +16,8 @@
 //   See [JG Dumas, Q-adic Transform Revisited, ISSAC 2008]
 //   Main difference in interface is init/convert
 // ==========================================================================
+#ifndef _GIVARO_GFQ_EXTENSION_H_
+#define _GIVARO_GFQ_EXTENSION_H_
 
 #include "givaro/givgfq.h"
 #include "givaro/givpower.h"

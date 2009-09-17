@@ -1,9 +1,11 @@
 // ==========================================================================
 // file: givadicqfq.C
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Time-stamp: <11 Jun 07 18:20:54 Jean-Guillaume.Dumas@imag.fr>
-// (c) Givaro Team
-// date: 2007
-// version: 
 // author: Jean-Guillaume.Dumas
 // Description:
 //   t-adic max sizes for BLAS based linear algebra over extension fields

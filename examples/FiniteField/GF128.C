@@ -1,4 +1,9 @@
 // ========================================================== //
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Time-stamp: <21 Nov 07 11:34:43 Jean-Guillaume.Dumas@imag.fr>
 // Thanks to Dieter Schuster
 // ========================================================== //

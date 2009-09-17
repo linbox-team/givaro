@@ -1,16 +1,19 @@
-#ifndef _GIVARO_GFQ1_H_
-#define _GIVARO_GFQ1_H_
-
 // ==========================================================================
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // file: givgfq.h 
 // Time-stamp: <15 Jun 09 13:52:27 Jean-Guillaume.Dumas@imag.fr>
-// (c) Givaro Team
 // date: 1999
 // version: 
 // author: Jean-Guillaume.Dumas
 // Description:
 //   Arithmetic on GF(p^k), with p a prime number less than 2^15
 // ==========================================================================
+#ifndef _GIVARO_GFQ1_H_
+#define _GIVARO_GFQ1_H_
 
 #include "givaro/givconfig.h"
 #include "givaro/givinteger.h"

@@ -1,3 +1,9 @@
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
+
   // -- Computation of a mixed-radix representation of the residu.
 //#ifndef __ECC
 template<template<class, class> class Container, template <class> class Alloc>

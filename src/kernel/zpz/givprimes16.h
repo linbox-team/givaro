@@ -1,14 +1,17 @@
-#ifndef _GIV_PRIMES16_H_
-#define _GIV_PRIMES16_H_
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givprimes16.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // Time-stamp: <02 Oct 07 16:43:17 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 // - set of primes less than 2^16
+#ifndef _GIV_PRIMES16_H_
+#define _GIV_PRIMES16_H_
 
 #include <stddef.h>
 

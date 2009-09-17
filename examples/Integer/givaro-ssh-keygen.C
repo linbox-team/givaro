@@ -1,4 +1,10 @@
 // ==================================================================== //
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
+//
 // Givaro replacement for ssh-keygen: generated keys use strong primes  //
 // File formats are then managed by openssl and openssh, thus this file //
 // requires to be compiled with -lssl -lssh -lopenbsd-compat            //

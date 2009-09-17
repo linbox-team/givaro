@@ -1,14 +1,17 @@
-#ifndef _INDETER_H_
-#define _INDETER_H_
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/poly1/givindeter.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givindeter.h,v 1.4 2008-04-08 11:43:11 jgdumas Exp $
+// $Id: givindeter.h,v 1.5 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - indeterminates for polynomial manipulation
+#ifndef _INDETER_H_
+#define _INDETER_H_
 
 #include <iostream>
 #include <string>

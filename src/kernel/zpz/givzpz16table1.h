@@ -1,17 +1,20 @@
-#ifndef _GIVARO_ZPZ16LOG_H_ 
-#define _GIVARO_ZPZ16LOG_H_ 
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz16table1.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.8 2005-07-12 12:54:37 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.9 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 //
 // Description:
 //   Arithmetic on Z/pZ, with tabulation of operations.
+#ifndef _GIVARO_ZPZ16LOG_H_ 
+#define _GIVARO_ZPZ16LOG_H_ 
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"

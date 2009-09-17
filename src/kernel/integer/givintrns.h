@@ -1,14 +1,17 @@
-#ifndef _ARITHMODU_INTRNS_H
-#define _ARITHMODU_INTRNS_H
 // ==========================================================================
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // Time-stamp: <08 Feb 02 16:33:39 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 //  Modular arithmetic for GIVARO. Here is defined arithmetic functions
 //  on rns representation with Givaro Integers.
+#ifndef _ARITHMODU_INTRNS_H
+#define _ARITHMODU_INTRNS_H
 
 #include "givaro/givconfig.h"
 #include "givaro/givinteger.h"

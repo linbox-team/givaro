@@ -1,10 +1,15 @@
-#ifndef __GIVARO__PRIMALITY_INL
-#define __GIVARO__PRIMALITY_INL
 // =================================================================== //
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Givaro : Prime numbers
 //              Primality tests
 // Time-stamp: <29 Jun 05 14:11:07 Jean-Guillaume.Dumas@imag.fr> 
 // =================================================================== //
+#ifndef __GIVARO__PRIMALITY_INL
+#define __GIVARO__PRIMALITY_INL
 #include <math.h>
 #include "givaro/givintprime.h"
 

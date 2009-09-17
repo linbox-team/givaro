@@ -1,16 +1,19 @@
-#ifndef _GIVAROMM_H_
-#define _GIVAROMM_H_
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/memory/givaromm.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givaromm.h,v 1.3 2008-04-22 16:15:49 pernet Exp $
+// $Id: givaromm.h,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - two memory managers: the first one handle a set on free-list
 //   of blocs, the second one implement a reference mecanism on
 //   the bloc. The latter used method of the former.
+#ifndef _GIVAROMM_H_
+#define _GIVAROMM_H_
 
 #include <cstring>            // gcc 4.3
 #include <stddef.h>           // size_t definition 

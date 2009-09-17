@@ -1,13 +1,16 @@
-#ifndef _INTERPOLATION_H
-#define _INTERPOLATION_H
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/poly1/givinterp.h,v $
-// Copyright(c)'2006 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givinterp.h,v 1.1 2006-06-26 16:31:03 jgdumas Exp $
+// $Id: givinterp.h,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
+#ifndef _INTERPOLATION_H
+#define _INTERPOLATION_H
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"

@@ -1,10 +1,14 @@
-///////////////////////////////////////////////////////////////////////////////
-//////// Primality check using Probabilistic Lucas    /////////////////////////
-//////// i.e. Primitive Root with choosen probability /////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 // =================================================================== //
-// Jack Dubrois < Jacques.Dubrois@imag.fr> 
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
+// Contributor: Jack Dubrois < Jacques.Dubrois@imag.fr> 
 // Time-stamp: <11 Oct 04 13:42:42 Jean-Guillaume.Dumas@imag.fr> 
+//
+// Primality check using Probabilistic Lucas    /////////////////////////
+// i.e. Primitive Root with choosen probability /////////////////////////
 // =================================================================== //
 
 #include <iostream>

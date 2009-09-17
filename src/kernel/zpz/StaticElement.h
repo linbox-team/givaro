@@ -1,28 +1,16 @@
-/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-// ------------------------------------------------------------------------
+//==================================================================
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
+// -----------------------------------------------------------------
 // Time-stamp: <19 Dec 06 10:55:08 Jean-Guillaume.Dumas@imag.fr> 
-// ------------------------------------------------------------------------
-
-/* StaticElement.h
- * Copyright (C) 2004 Jean-Guillaume.Dumas
- *
- * Written by Jean-Guillaume.Dumas
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
- */
+// -----------------------------------------------------------------
+// file: StaticElement.h
+// author: Jean-Guillaume.Dumas
+// date: 2004
+//==================================================================
 
 #ifndef __STATIC_ELEMENT_H__
 #define __STATIC_ELEMENT_H__

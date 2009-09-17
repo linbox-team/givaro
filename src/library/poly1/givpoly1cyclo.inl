@@ -1,10 +1,15 @@
-#ifndef _GIV_POLY1_CYCLO_INL_
-#define _GIV_POLY1_CYCLO_INL_
 // =============================================================== //
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Givaro / Athapascan-1
 // Cyclotomic polynomials
 // Time-stamp: <15 Jul 08 10:40:47 Jean-Guillaume.Dumas@imag.fr> 
 // =============================================================== //
+#ifndef _GIV_POLY1_CYCLO_INL_
+#define _GIV_POLY1_CYCLO_INL_
 #include <givaro/givintfactor.h>
 
 // ---------------------------------------------------------------

@@ -1,11 +1,12 @@
-#ifndef _GIVARO_ZPZ32STD_H_ 
-#define _GIVARO_ZPZ32STD_H_ 
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz32std.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.11 2008-06-23 13:03:42 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.12 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -14,6 +15,8 @@
 //   Arithmetic on Z/pZ, with p a prime number less than 2^32
 //   Modulo typedef is a signed long number. In case it was modified
 //   then bezout algorithm must be changed (coefficient can be negative).
+#ifndef _GIVARO_ZPZ32STD_H_ 
+#define _GIVARO_ZPZ32STD_H_ 
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"

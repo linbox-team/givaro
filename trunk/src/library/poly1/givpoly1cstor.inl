@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.8 2009-09-16 16:24:58 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.9 2009-09-17 11:30:08 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
@@ -73,7 +73,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& 
 
 
 template<class Domain> 
-inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(Poly1Dom<Domain,Dense>::Type_t & val, const Poly1Dom<Domain,Dense>::Rep& P ) const
+inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(typename Poly1Dom<Domain,Dense>::Type_t & val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
 { 
     if (P.size())
         return _domain.assign(val, P[0]);
@@ -82,7 +82,7 @@ inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(
 }
 
 template<class Domain> template<class XXX>
-inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const Poly1Dom<Domain,Dense>::Rep& P ) const
+inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
 { 
     if (P.size())
         return _domain.convert(val, P[0]);
@@ -91,7 +91,7 @@ inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const Poly1Dom<Domain,Den
 }
 
 template<class Domain> template<class UU, template<class XX> class Vect>
-inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& val, const Poly1Dom<Domain,Dense>::Rep& P ) const
+inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
 { 
     val.resize( P.size() );
     typename Vect<UU>::iterator vit = val.begin();

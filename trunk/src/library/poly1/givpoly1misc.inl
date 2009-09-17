@@ -4,7 +4,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.12 2007-12-05 15:17:50 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.13 2009-09-17 11:30:08 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -245,7 +245,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(Rand
 // -- Random dense polynomial of degree d
 // TEMPORARY VERSION SATISFYING LINBOX
 template <class Domain> template<class RandIter>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Poly1Dom<Domain,Dense>::Rep& r, Degree d) const {
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, typename Poly1Dom<Domain,Dense>::Rep& r, Degree d) const {
 	r.reallocate(d.value()+1);
 	typename Domain::Element tmp;
 	while (_domain.isZero(g.random(tmp))) ;

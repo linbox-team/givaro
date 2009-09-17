@@ -27,7 +27,7 @@ std::ostream& operator<< (std::ostream& o, const DoublePoly& v) {
 
 int main(int argc, char** argv)
 {
-    srand48(BaseTimer::seed() );
+    srandom(BaseTimer::seed() );
     
 
     Integer f,m,k;
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
     size_t n = (argc>1?atoi(argv[1]):10);
     
     for(size_t i=0;i<n;++i) 
-        D.push_back( drand48() );
+        D.push_back( (double(random()) / RAND_MAX) );
     
     
     R.resize( D.size() );

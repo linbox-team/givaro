@@ -3,7 +3,7 @@
 // Copyright(c)'94-97 by Givaro Team
 // see the copyright file.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.C,v 1.4 2008-03-13 01:58:41 pernet Exp $
+// $Id: givzpz16table1.C,v 1.5 2009-09-17 09:59:04 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -43,8 +43,8 @@ ZpzDom<Log16>::ZpzDom( Residu_t p )
     }
     if (accu != 1){
       std::cerr << "attempted to build Log16 field with non-prime base "<<_p<<", halting\n";
-      exit(1);
-    };
+      return;
+    }
     if (i ==_p-1) not_found = 0;
     else {
       do { seed = rand() % _p; } while ((seed ==0) && (seed !=1));

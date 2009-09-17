@@ -8,6 +8,8 @@ SUBDIRS=src macros examples
 
 bin_SCRIPTS=givaro-config givaro-makefile
 
+EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt
+
 include_HEADERS=givaro-config.h
 
 DISTCLEANFILES = src/kernel/system/givaro

@@ -1,9 +1,12 @@
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/rational/givratcstor.C,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.4 2008-09-19 17:58:17 pernet Exp $
+// $Id: givratcstor.C,v 1.5 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 

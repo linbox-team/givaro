@@ -1,9 +1,11 @@
-#ifndef __GIVARO_TABLESIZE_MAX__
-#define __GIVARO_TABLESIZE_MAX__
 // ==========================================================================
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // file: givadicqfq.h 
 // Time-stamp: <11 Jun 07 19:18:31 Jean-Guillaume.Dumas@imag.fr>
-// (c) Givaro Team
 // date: 2007
 // version: 
 // author: Jean-Guillaume.Dumas
@@ -15,6 +17,8 @@
 // ISSAC'02: Proceedings of the 2002 International Symposium on Symbolic
 // and Algebraic Computation, Lille, France pp 63--74.
 // ==========================================================================
+#ifndef __GIVARO_TABLESIZE_MAX__
+#define __GIVARO_TABLESIZE_MAX__
 
 
 #ifndef FF_TABLE_MAX

@@ -1,12 +1,15 @@
-#ifndef _INTEGER_H_
-#define _INTEGER_H_
 // =============================================================
-// Copyright(c)'94-02 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier, J.-G. Dumas
 // =============================================================
 // Description: 
 // Integer Domain class definition 
+#ifndef _INTEGER_H_
+#define _INTEGER_H_
 #include "givaro/givbasictype.h"
 #include "givaro/givinit.h"
 #include "givaro/giverror.h"

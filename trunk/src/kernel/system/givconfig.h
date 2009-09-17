@@ -1,13 +1,16 @@
-#ifndef _GIVARO_INTERNAL_CONFIG_H_
-#define _GIVARO_INTERNAL_CONFIG_H_ 1
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/system/givconfig.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.11 2009-09-07 13:42:59 jgdumas Exp $
+// $Id: givconfig.h,v 1.12 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
+#ifndef _GIVARO_INTERNAL_CONFIG_H_
+#define _GIVARO_INTERNAL_CONFIG_H_ 1
 
 
 // * GIVARO_HAVE_ANSI_NAMESPACE:

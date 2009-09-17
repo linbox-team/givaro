@@ -1,11 +1,12 @@
-#ifndef _GIV_VECTOR_DENSE_H_
-#define _GIV_VECTOR_DENSE_H_
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/vector/givvectordense.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givvectordense.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givvectordense.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 // Domain of dense vector over K with classic arithmetic operations
@@ -13,6 +14,8 @@
 // A Element of this domain is a vector of K^n for any n.
 // Vector handle computation over sub part of continuous Elements of
 // a vector as well as stride.
+#ifndef _GIV_VECTOR_DENSE_H_
+#define _GIV_VECTOR_DENSE_H_
 
 #include "givaro/givvector.h"
 #include "givaro/givvectorsparse.h"

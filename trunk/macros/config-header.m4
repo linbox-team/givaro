@@ -1,4 +1,8 @@
-
+# Copyright(c)'1994-2009 by The Givaro group
+# This file is part of Givaro.
+# Givaro is governed by the CeCILL-B license under French law
+# and abiding by the rules of distribution of free software. 
+# see the COPYRIGHT file for more details.
 
 AC_DEFUN([AX_PREFIX_CONFIG_H],[AC_REQUIRE([AC_CONFIG_HEADER])
 AC_CONFIG_COMMANDS([ifelse($1,,$PACKAGE-config.h,$1)],[dnl

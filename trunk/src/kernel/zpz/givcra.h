@@ -1,15 +1,18 @@
-#ifndef _CRA_H
-#define _CRA_H
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givcra.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.10 2007-12-05 15:45:21 jgdumas Exp $
+// $Id: givcra.h,v 1.11 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm for 2 Elements. 
 //  For any number of moduli see givrns.h
+#ifndef _CRA_H
+#define _CRA_H
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"

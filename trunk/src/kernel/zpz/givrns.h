@@ -1,16 +1,19 @@
-#ifndef _ARITHMODU_H
-#define _ARITHMODU_H
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givrns.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givrns.h,v 1.3 2005-06-14 14:53:14 pernet Exp $
+// $Id: givrns.h,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 //  Modular arithmetic for GIVARO. Here is defined arithmetic functions
 //  on rns representation and interface between RNS and Integer,
 //  all is done via the Chinese Remainder Algorithm.
+#ifndef _ARITHMODU_H
+#define _ARITHMODU_H
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"

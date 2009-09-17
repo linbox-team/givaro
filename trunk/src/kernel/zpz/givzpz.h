@@ -1,14 +1,17 @@
-#ifndef _GIVARO_ZPZ_H_ 
-#define _GIVARO_ZPZ_H_ 
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz.h,v 1.4 2004-10-11 15:15:14 jgdumas Exp $
+// $Id: givzpz.h,v 1.5 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Family of arithmetics over Zpz
+#ifndef _GIVARO_ZPZ_H_ 
+#define _GIVARO_ZPZ_H_ 
 
 // ==========================================================================
 // -- 

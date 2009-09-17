@@ -1,14 +1,16 @@
-#ifndef __GIVARO_POLY1_CYCLO_TABLE_C_
-#define __GIVARO_POLY1_CYCLO_TABLE_C_
 // ==========================================================================
-// Copyright(c)'1994-2000 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Time-stamp: <22 Mar 00 20:06:18 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
-
 // Tabulation of factors of cyclotomic polynomials 
 // of degree expo modulo mod
 // By vectors. P = v[0] + v[1] X + ... + v[n] X^n
+#ifndef __GIVARO_POLY1_CYCLO_TABLE_C_
+#define __GIVARO_POLY1_CYCLO_TABLE_C_
 
 #include "givaro/givpoly1tabcycl.h"
 

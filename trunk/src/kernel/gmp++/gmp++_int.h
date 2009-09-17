@@ -1,13 +1,16 @@
-#ifndef _GMPplusplus_INTEGER_H_
-#define _GMPplusplus_INTEGER_H_
 // ========================================================================
-// Copyright(c)'2001-2007 by LinBox Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier, JG. Dumas
 // Time-stamp: <29 Jun 09 11:55:13 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
+#ifndef _GMPplusplus_INTEGER_H_
+#define _GMPplusplus_INTEGER_H_
 
 // Core gmp++_int.h
 #include <vector>

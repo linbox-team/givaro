@@ -1,14 +1,17 @@
-#ifndef _GENARITH_H_
-#define _GENARITH_H_
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/system/givgenarith.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givgenarith.h,v 1.2 2005-06-14 14:53:14 pernet Exp $
+// $Id: givgenarith.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 // Domain definition for basic type of the language.
+#ifndef _GENARITH_H_
+#define _GENARITH_H_
 
 #include "givaro/givbasictype.h"
 

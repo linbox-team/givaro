@@ -1,14 +1,17 @@
-#ifndef _GIV_OPERATION_H_
-#define _GIV_OPERATION_H_
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/tools/givops.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givops.h,v 1.2 2005-04-28 11:24:21 jgdumas Exp $
+// $Id: givops.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 // Class version of operations on a group F. By default use arithmetic operator
+#ifndef _GIV_OPERATION_H_
+#define _GIV_OPERATION_H_
 // 
 #include "givaro/givconfig.h"
 #include "givaro/giviterator.h"

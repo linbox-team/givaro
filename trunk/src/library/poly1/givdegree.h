@@ -1,14 +1,17 @@
-#ifndef _POLY1DEBGREE_H_
-#define _POLY1DEBGREE_H_
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/poly1/givdegree.h,v $
-// Copyright(c)'94-97 by Givaro Team
-// see the copyright file.
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givdegree.h,v 1.3 2008-07-02 12:53:02 jgdumas Exp $
+// $Id: givdegree.h,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
 // Description: opaque class for Degree of polynomial. Degree of polynomial
 // 0 is Degree::deginfty with value DEGPOLYZERO.
 // ==========================================================================
+#ifndef _POLY1DEBGREE_H_
+#define _POLY1DEBGREE_H_
 
 #include <iostream>
 

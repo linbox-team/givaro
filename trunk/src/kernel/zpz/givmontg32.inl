@@ -1,5 +1,10 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.8 2008-04-22 15:57:14 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.9 2009-09-17 14:28:23 jgdumas Exp $
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
 // ==========================================================================
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {

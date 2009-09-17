@@ -1,9 +1,14 @@
+// ==========================================================================
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
+// author: JG Dumas (from P. Zimmermann's Montgomery implementation)
+// $Id: givmontg32.h,v 1.9 2009-09-17 14:28:23 jgdumas Exp $
+// ==========================================================================
 #ifndef _GIVARO_MONTG32_H_
 #define _GIVARO_MONTG32_H_
-// ==========================================================================
-// author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.8 2008-04-22 15:57:14 jgdumas Exp $
-// ==========================================================================
 //
 #include "givbasictype.h"
 #include "giverror.h"

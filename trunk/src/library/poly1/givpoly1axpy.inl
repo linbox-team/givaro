@@ -6,13 +6,13 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G. Dumas
-// $Id: givpoly1axpy.inl,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1axpy.inl,v 1.3 2009-10-01 09:08:04 jgdumas Exp $
 // ==========================================================================
 
-// axpy, axmy, amxy
+// axpy, axmy, maxpy
 // J.G.D. 16.11.2006
 // A lot can be done to optimize those
-// Except for axpy, axpyin, amxy with a a Type_t, 
+// Except for axpy, axpyin, maxpy with a a Type_t, 
 // all of them use a temporary vector where 
 // a temporary value only would be sufficient.
 
@@ -68,15 +68,15 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axpyin(Rep&
     }
     return r;
 }
-        // -- amxy: r <- c - a * b
+        // -- maxpy: r <- c - a * b
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::amxy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const{
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const{
     Rep tmp; this->init(tmp);
     return this->sub(r,c,this->mul(tmp,a,b));
 }
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::amxy  (Rep& r, const Type_t& a, const Rep& b, const Rep& c) const{
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpy  (Rep& r, const Type_t& a, const Rep& b, const Rep& c) const{
   size_t sC = c.size();
   size_t sB = b.size();
   size_t sR = r.size();
@@ -86,24 +86,24 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::amxy  (Rep&
   if (sR != max) r.reallocate(max);
   if (sC < sB)
   {
-    for (i=0; i<sC; ++i) _domain.amxy(r[i], a, b[i], c[i]);
+    for (i=0; i<sC; ++i) _domain.maxpy(r[i], a, b[i], c[i]);
     for (; i<sB; ++i) _domain.negin( _domain.mul(r[i], a, b[i]) );
   }
   else {
-    for (i=0; i<sB; ++i) _domain.amxy(r[i], a, b[i], c[i]);
+    for (i=0; i<sB; ++i) _domain.maxpy(r[i], a, b[i], c[i]);
     for (; i<sC; ++i) _domain.assign(r[i], c[i]);
   }
     return r;
 }
 
-        // -- amxyin: r -= a*b
+        // -- maxpyin: r -= a*b
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::amxyin(Rep& r, const Rep& a, const Rep& b) const{
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpyin(Rep& r, const Rep& a, const Rep& b) const{
     Rep tmp; this->init(tmp);    
     return this->subin(r, this->mul(tmp,a,b));
 }
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::amxyin(Rep& r, const Type_t& a, const Rep& b) const{
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpyin(Rep& r, const Type_t& a, const Rep& b) const{
     Rep tmp; this->init(tmp);    
     return this->subin(r, this->mul(tmp,a,b));
 }
@@ -117,4 +117,13 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmy  (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const{
     Rep tmp; this->init(tmp);    
     return this->sub(r, this->mul(tmp, a, x), y);
+}
+        // -- axmyin: r <- a * x - y
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep& r, const Rep& a, const Rep& x) const{
+    return this->maxpyin(r, a, x);
+}
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep& r, const Type_t& a, const Rep& x) const{
+    return this->maxpyin(r, a, x);
 }

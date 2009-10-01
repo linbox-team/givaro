@@ -28,7 +28,11 @@ pkginclude_HEADERS=\
 	givpoly1sqrfree.inl	\
 	givpoly1cyclo.inl	\
 	givpoly1factor.inl	\
-	givpoly1proot.inl
+	givpoly1proot.inl	\
+	givpoly1ratrecon.inl	\
+	givpoly1crt.h		\
+	givpoly1crtcstor.inl	\
+	givpoly1crtconvert.inl
 
 noinst_LTLIBRARIES=libgivpoly1.la
 

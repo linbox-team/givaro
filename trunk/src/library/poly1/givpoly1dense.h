@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.18 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.19 2009-10-01 09:08:04 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -14,21 +14,24 @@
 #define _GIV_POLY1_DENSE_H_
 
 #include <iostream>
-#include <vector>
 #include "givaro/givdegree.h"
 #include "givaro/givindeter.h"
 #include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
 
+#ifndef __GIV_STANDARD_VECTOR
+#include <vector>
+#define __GIV_STANDARD_VECTOR std::vector
+#endif
 
 template < typename T, typename A=std::allocator<T> > 
-class givvector : public std::vector<T,A> {
+class givvector : public __GIV_STANDARD_VECTOR<T,A> {
     typedef givvector<T,A>     Self_t;
 public:
-    givvector() : std::vector<T,A>() {}
-    givvector(size_t s) : std::vector<T,A>(s) { }
-    givvector(const Self_t& p, givNoCopy xxx) : std::vector<T,A>(p) {}
-    givvector(const Self_t& p, givWithCopy xxx) : std::vector<T,A>(p) {}
+    givvector() : __GIV_STANDARD_VECTOR<T,A>() {}
+    givvector(size_t s) : __GIV_STANDARD_VECTOR<T,A>(s) { }
+    givvector(const Self_t& p, givNoCopy xxx) : __GIV_STANDARD_VECTOR<T,A>(p) {}
+    givvector(const Self_t& p, givWithCopy xxx) : __GIV_STANDARD_VECTOR<T,A>(p) {}
     Self_t& reallocate (size_t s) { this->resize(s); return *this; }
     Self_t& logcopy(const Self_t& src) { return *this = src; }
     Self_t& copy(const Self_t& src) { return *this = src; }
@@ -195,15 +198,18 @@ public :
     Rep& axpy  (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const;
     Rep& axpyin(Rep& r, const Rep& a, const Rep& x) const;
     Rep& axpyin(Rep& r, const Type_t& a, const Rep& x) const;
-        // -- amxy: r <- c - a * b
-    Rep& amxy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
-    Rep& amxy  (Rep& r, const Type_t& a, const Rep& b, const Rep& c) const;
-        // -- amxyin: r -= a*b
-    Rep& amxyin(Rep& r, const Rep& a, const Rep& b) const;
-    Rep& amxyin(Rep& r, const Type_t& a, const Rep& b) const;
+        // -- maxpy: r <- c - a * b
+    Rep& maxpy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
+    Rep& maxpy  (Rep& r, const Type_t& a, const Rep& b, const Rep& c) const;
+        // -- maxpyin: r -= a*b
+    Rep& maxpyin(Rep& r, const Rep& a, const Rep& b) const;
+    Rep& maxpyin(Rep& r, const Type_t& a, const Rep& b) const;
         // -- axmy: r <- a * x - y
-    Rep& axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const;
-    Rep& axmy  (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const;
+    Rep& axmy   (Rep& r, const Rep& a, const Rep& x, const Rep& y) const;
+    Rep& axmy   (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const;
+        // -- axmyin: r -= a * x
+    Rep& axmyin (Rep& r, const Rep& a, const Rep& x) const;
+    Rep& axmyin (Rep& r, const Type_t& a, const Rep& x) const;
 
         // A = q*B + r
     Rep& divmod( Rep& q, Rep& r, const Rep& a, const Rep& b ) const;
@@ -222,6 +228,12 @@ public :
     Rep& lcm ( Rep& D, const Rep& P, const Rep& Q) const;  
         // -- modular inverse of P : U P = 1 + V Q
     Rep& invmod ( Rep& U, const Rep& P, const Rep& Q) const;  
+        // -- modular inverse of P : U P = e + V Q where e is of degree 0
+    Rep& invmodunit ( Rep& U, const Rep& P, const Rep& Q) const;  
+
+        // -- rational reconstruction
+        // -- Builds N and D such that P * D = N mod M and degree(N) <= dk
+    bool ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk);
 
         // -- misc
         // -- W <-- P^n

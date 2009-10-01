@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.7 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1muldiv.inl,v 1.8 2009-10-01 09:08:05 jgdumas Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
@@ -116,7 +116,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
 {
   return this->mul(R,P,val);
 }
-
+#include <typeinfo>
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& R, const Type_t& u) const
@@ -244,12 +244,12 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& 
             _domain.div(l,*ai,*bi);
             aai = A.rbegin();
             for(++bi,++ai;bi!=B.rend();++bi,++ai,--i) {
-                _domain.amxy(*aai,l,*bi,*ai);
+                _domain.maxpy(*aai,l,*bi,*ai);
                 if (! _domain.isZero(*aai)) break;
             }
             if (bi!=B.rend()) 
                 for(++bi,++ai,++aai;bi!=B.rend();++bi,++ai,++aai)
-                    _domain.amxy(*aai,l,*bi,*ai);
+                    _domain.maxpy(*aai,l,*bi,*ai);
             for(;ai!=A.rend();++ai,++aai)
                 *aai = *ai;
             *aai = _zero;
@@ -273,11 +273,14 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R,
   return R;
 }
 
+// #include <typeinfo>
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep& Q, Rep& R, const Rep& A, const Rep& B) const
 // returns Q such that A = B Q + R
 {
+//     std::cerr << "BEG divmod of " << typeid(*this).name() << std::endl;
+//     std::cerr << "BEG with _domain " << typeid(_domain).name() << std::endl;
   Degree degB; degree(degB, B);
 	Type_t _zero;
 	_domain.init( _zero, 0.0); 
@@ -295,6 +298,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep
     assign(R, zero);
     return div(Q, A, B[0]);
   }
+//   write(std::cerr, A) << " of degA " << degA << std::endl;
+//   write(std::cerr, B) << " of degB " << degB << std::endl;
+
+
 // JGD 15.12.1999 : 
 //   if (degA ==0)
 //   {
@@ -311,22 +318,26 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep
   Q.reallocate(degQuo+1);
 
   assign(R,A);
+// write(std::cerr << "A:=", A) << "; # of degA " << degA << std::endl;
+// write(std::cerr << "B:=", B) << "; # of degB " << degB << std::endl;
 
-  Type_t tmp;
-  long i,j;
-  for (i=degQuo; i>=0; --i) 
+  for (long i=degQuo; i>=0; --i) 
   {
     // == ld X^ (degRem-degQ)
-    _domain.div(Q[degQuo], R[degRem], B[degB.value()]);
-
-    _domain.neg(tmp, Q[degQuo]);
-    for (j=0; degB>j; j++) { // rem <- rem - ld*x^(degRem-degB)*B
-      _domain.axpyin(R[j+degQuo], tmp, B[j]);
+    _domain.div(Q[i], R[degRem], B[degB.value()]);
+// _domain.write(std::cerr << "Q[" << i << "]:=", Q[i]) << ';' << std::endl;
+//  std::cerr << "degB: " << degB << std::endl;
+    for (long j=0; degB>j; ++j) { // rem <- rem - ld*x^(degRem-degB)*B
+      _domain.axmyin(R[j+i], Q[i], B[j]);
     }
-    _domain.assign(R[degRem],_zero) ; degQuo--; degRem--;
+    _domain.assign(R[degRem],_zero) ; --degRem;
+// write(std::cerr << "inR:=", R) << ';' << std::endl;
   }
+// write(std::cerr << "Q:=", Q) << "; # of degQ " << degQuo << std::endl;
+// write(std::cerr << "R:=", R) << "; # of degR " << degRem << std::endl;
   R.reallocate(degRem+1);
   setdegree(R);
+//     std::cerr << "END divmod of " << typeid(*this).name() << std::endl;
   return setdegree(Q);
 }
 

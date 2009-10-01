@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // file: givgfqext.h 
-// Time-stamp: <26 May 08 10:01:26 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <29 Sep 09 18:10:13 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version: 
 // author: Jean-Guillaume.Dumas
@@ -243,7 +243,7 @@ protected:
                 binpolit += static_cast<unsigned long>(vect[i]);
             }
 
-            ZElem tmp, prec, cour; 
+            ZElem tmp, prec, cour; Zp.init(cour);
             Zp.init(prec, vect[0]);
             for(size_t i = 1; i<this->_exponent; ++i) {
                 Zp.init(cour, vect[i]);

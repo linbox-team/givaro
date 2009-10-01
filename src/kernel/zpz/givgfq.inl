@@ -352,8 +352,9 @@ inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axpyin
   _GIVARO_GFQ_MULADD((r),a,b,tmp, (GFqDom<TT>::_qm1), (GFqDom<TT>::_plus1)) ; 
 return r; }
 
+// r <- r-a*b
 template<typename TT> 
-inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmyin 
+inline typename GFqDom<TT>::Rep&  GFqDom<TT>::maxpyin
  (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b) const 
 { 
 //   Rep tmp = r; 
@@ -362,6 +363,14 @@ inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmyin
    _GIVARO_GFQ_AUTOSUB(r,tmp, _qm1o2, _qm1, _plus1) ;
 return r; }
 
+template<typename TT> 
+inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmyin 
+ (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b) const 
+{ 
+    return this->maxpyin(r,a,b); 
+}
+
+// r <- a*b-c
 template<typename TT> 
 inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmy 
  (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b, const GFqDom<TT>::Rep c) 
@@ -372,7 +381,7 @@ inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmy
 return r; }
 
 template<typename TT> 
-inline typename GFqDom<TT>::Rep&  GFqDom<TT>::amxy 
+inline typename GFqDom<TT>::Rep&  GFqDom<TT>::maxpy 
  (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b, const GFqDom<TT>::Rep c) 
  const 
 { 

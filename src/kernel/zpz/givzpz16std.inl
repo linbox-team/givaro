@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.10 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpz16std.inl,v 1.11 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -39,12 +39,17 @@
 #define __GIVARO_ZPZ16_N_MULADDIN(r,p,a,b) \
 { r += (a*b); r= (r<p ? r : r % (uint16)p);}
 
+
+#define __GIVARO_ZPZ16_NEGMOD(r,p) \
+{ r %= (int16)p; r=(r<0?r+p:r); }
+
 // // a*b-c
 #define __GIVARO_ZPZ16_N_MULSUB(r,p,a,b,c) \
-{ r = (a*b-c); r= (r<p ? (r>0? r : r% (uint16)p) : r % (uint16)p); }
+{ r = (a*b-c); if (r<0) __GIVARO_ZPZ16_NEGMOD(r,p) else { r= (r<p?r: r % (uint16)p); } }
+
 // a*b-c
 #define __GIVARO_ZPZ16_N_SUBMULIN(r,p,a,b) \
-{ r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % (uint16)p : r); } }
+{ r -= (a*b); __GIVARO_ZPZ16_NEGMOD(r,p); }
 
 
 
@@ -260,7 +265,7 @@ inline void ZpzDom<Std16>::axpyin
   }
 }
 
-inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::amxy
+inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::maxpy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 {
   register int32 tmp;
@@ -279,12 +284,21 @@ inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::axmy
 }
 
 // r -= a*b
+inline ZpzDom<Std16>::Rep&  ZpzDom<Std16>::maxpyin 
+ (Rep& r, const Rep a, const Rep b) const
+{
+  __GIVARO_ZPZ16_N_SUBMULIN(r, (int32)_p, (int32)a, (int32)b );
+  return r;
+//   register int32 tmp = (int32)r;
+//   __GIVARO_ZPZ16_N_SUBMULIN(tmp, (int32)_p, (int32)a, (int32)b );
+//   return r = (ZpzDom<Std16>::Rep)tmp;
+}
+
+// r -= a*b
 inline ZpzDom<Std16>::Rep&  ZpzDom<Std16>::axmyin 
  (Rep& r, const Rep a, const Rep b) const
 {
-  register int32 tmp = (int32)r;
-  __GIVARO_ZPZ16_N_SUBMULIN(tmp, (int32)_p, (int32)a, (int32)b );
-  return r = (ZpzDom<Std16>::Rep)tmp;
+    return maxpyin(r,a,b);
 }
 
 

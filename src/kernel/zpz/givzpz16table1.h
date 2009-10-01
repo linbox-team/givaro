@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.9 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.10 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -159,12 +159,17 @@ public:
 
   // -- axmy: r <- a * x - y mod p
   void axmy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
-  void axmyin (Rep& r, const Rep a, const Rep b) const;
   void axmy 
    (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
+  // -- axmyin: r <- r - a * b mod p
+  void axmyin (Rep& r, const Rep a, const Rep b) const;
   void axmyin 
    (const size_t sz, Array r, constArray a, constArray x) const;
 
+  // -- maxpy: r <- c - a * b mod p
+  void maxpy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
+  // -- maxpyin: r <- r - a * b mod p
+  void maxpyin (Rep& r, const Rep a, const Rep b) const;
 
 
   // <- \sum_i a[i], return 1 if a.size() ==0,

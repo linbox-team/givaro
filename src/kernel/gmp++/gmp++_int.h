@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier, JG. Dumas
-// Time-stamp: <17 Sep 09 15:47:23 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Sep 09 10:40:53 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -236,7 +236,7 @@ static Integer& mul   (Integer& res, const Integer& n1, const long n2);
 static Integer& mul   (Integer& res, const Integer& n1, const unsigned long n2);  
 static Integer& axpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
 static Integer& axpyin   (Integer& res, const Integer& a, const Integer& x);  
-static Integer& amxy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
+static Integer& maxpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
 static Integer& axmy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
 static Integer& axmyin   (Integer& res, const Integer& a, const Integer& x);  
 

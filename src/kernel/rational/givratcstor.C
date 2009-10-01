@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.5 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givratcstor.C,v 1.6 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -24,10 +24,6 @@
 // -- new interface for string stream
 #include <sstream>
 #endif
-
-  // -- Predefined cstes
-const Rational Rational::zero = givNoInit();
-const Rational Rational::one  = givNoInit();
 
 Rational::ReduceFlag Rational::flags = Rational::Reduce ;
 void Rational::SetReduce() { Rational::flags = Rational::Reduce ; }
@@ -100,6 +96,33 @@ Rational::Rational(int n ) : num(n), den(Integer::one)
 //   ------------------------------ Rational(long n)
 Rational::Rational(long n ) : num(n), den(Integer::one) 
 { }
+
+
+//   ------------------------------ Rational(unsigned long n)
+Rational::Rational(unsigned long n ) : num(n), den(Integer::one) 
+{ }
+
+//   ------------------------------ Rational(unsigned long n, unsigned long d )
+Rational::Rational(unsigned long n, unsigned long d )
+{
+  if (d == 0)
+    {
+      throw GivMathDivZero("[Rational::Rational]: null denominator of the rational.") ;
+    }
+  
+  if (n == 0)
+    {
+      num = Integer::zero;
+      den = Integer::one;
+    }
+  else
+    {
+      num = Integer(n);
+      den = Integer(d);
+    }
+    reduce();
+}
+
 
 //   ------------------------------ Rational(long n, long d )
 Rational::Rational(long n, long d )
@@ -195,12 +218,7 @@ Rational::Rational( givNoInit gi) : num(Integer::zero), den(Integer::one)
 //                            InitAfter(Integer::Module),
 //                            "Rational package") ; 
 void Rational::Init(int* argc, char***argv)
-{
-  new ((Rational*)&Rational::zero.num) Integer(Integer::zero);
-  new ((Rational*)&Rational::zero.den) Integer(Integer::one);
-  new ((Rational*)&Rational::one.num) Integer(Integer::one);
-  new ((Rational*)&Rational::one.den) Integer(Integer::one);
-}
+{}
 
 void Rational::End()
 {}

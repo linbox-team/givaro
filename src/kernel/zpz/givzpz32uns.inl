@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32uns.inl,v 1.10 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpz32uns.inl,v 1.11 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -38,15 +38,15 @@
 #define __GIVARO_ZPZ32_Uns_MULADDIN(r,p,a,b) \
 { r += a*b; r= (r < p ? r : r % p);  }
 
+#define __GIVARO_ZPZ32_Uns_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
+#define __GIVARO_ZPZ32_Uns_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
+
 // a*b-c
 #define __GIVARO_ZPZ32_Uns_MULSUB(r,p,a,b,c) \
 { r = (a*b+p-c); r= (r<p ? r : r % p);  }
 // a*b-c
 #define __GIVARO_ZPZ32_Uns_SUBMULIN(r,p,a,b) \
-{ r = (a*b+p-r); r= (r<p ? r : r % p);  }
-
-#define __GIVARO_ZPZ32_Uns_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
-#define __GIVARO_ZPZ32_Uns_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
+{ r = (a*b+p-r); r= (r<p ? r : r % p); __GIVARO_ZPZ32_Uns_NEGIN(r,p); }
 
 
 inline ZpzDom<Unsigned32>::ZpzDom( )
@@ -266,13 +266,29 @@ inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::axmy
   return r = (ZpzDom<Unsigned32>::Rep)tmp;
 }
 
+// r = c-a*b
+inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::maxpy
+ (Rep& r, const Rep a, const Rep b, const Rep c) const
+{
+  register uint32 tmp=c;
+  __GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a, b);
+  return r = (ZpzDom<Unsigned32>::Rep)tmp;
+}
+
 // r -= a*b
-inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::axmyin 
+inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::maxpyin
  (Rep& r, const Rep a, const Rep b) const
 {
   register uint32 tmp = r;
   __GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a, b );
   return r = (ZpzDom<Unsigned32>::Rep)tmp;
+}
+
+// r -= a*b
+inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::axmyin 
+ (Rep& r, const Rep a, const Rep b) const
+{
+    return maxpyin(r,a,b);
 }
 
 

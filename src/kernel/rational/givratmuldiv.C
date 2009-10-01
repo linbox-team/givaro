@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratmuldiv.C,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givratmuldiv.C,v 1.5 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -16,7 +16,7 @@
 // --------------------------------------- operator * 
 Rational Rational::operator * (const Rational& r) const
 {
-
+    
   if (isZero(r)) return Rational(0L) ;
   if (isZero(*this)) return Rational(0L) ;
   if (isOne(r)) return *this ;
@@ -31,9 +31,9 @@ Rational Rational::operator * (const Rational& r) const
   {
      return Rational( num*r.num, den*r.den, 0) ;
   }
-
   Integer d1 = gcd(num, r.den);
   Integer d2 = gcd(den, r.num);
+  
   return Rational( (num / d1) * (r.num / d2), (den / d2) * (r.den / d1), 0 );
 }
 
@@ -124,7 +124,7 @@ Rational& Rational::operator /= (const Rational& r)
   
   if (absCompare(den, r.den) == 0) {
       den = r.num;
-      return *this;
+      return this->reduce();
   }
 
   if (Rational::flags == Rational::NoReduce) {
@@ -146,6 +146,7 @@ Rational& Rational::operator /= (const Rational& r)
   
     //rden can't be nul
   if (sign(den) <0) den = abs(den) ;
+  
   return *this;
 }
 

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.6 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpzInt.inl,v 1.7 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -47,7 +47,7 @@
 #define __GIVARO_ZPZInteger_N_MULSUB(r,p,a,b,c) { r = a; r*=b; r+=p; r-=c; if (r>=p) r %= p;  }
 // a*b-c
 //#define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % p : r); } }
-#define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; if (r<0 ) r %= p ; } }
+#define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; if (r<0 ) r %= p ; if (r<0 ) r += p ; } }
 
 #define __GIVARO_ZPZInteger_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
 #define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
@@ -266,13 +266,29 @@ inline ZpzDom<Integer>::Rep&  ZpzDom<Integer>::axmy
   return r;
 }
 
+// r = c - a*b
+inline ZpzDom<Integer>::Rep&  ZpzDom<Integer>::maxpy
+ (Rep& r, const Rep& a, const Rep& b, const Rep& c) const
+{
+  Rep tmp = c;
+  __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a, b );
+  return r = (ZpzDom<Integer>::Rep)tmp;
+}
+// r -= a*b
+inline ZpzDom<Integer>::Rep&  ZpzDom<Integer>::maxpyin
+ (Rep& r, const Rep& a, const Rep& b) const
+{
+  __GIVARO_ZPZInteger_N_SUBMULIN(r, _p, a, b );
+  return r;
+//   Rep tmp = r;
+//   __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a, b );
+//   return r = (ZpzDom<Integer>::Rep)tmp;
+}
 // r -= a*b
 inline ZpzDom<Integer>::Rep&  ZpzDom<Integer>::axmyin 
  (Rep& r, const Rep& a, const Rep& b) const
 {
-  Rep tmp = r;
-  __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a, b );
-  return r = (ZpzDom<Integer>::Rep)tmp;
+    return maxpyin(r,a,b);
 }
 
 

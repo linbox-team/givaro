@@ -15,5 +15,6 @@
 #include "givaro/givpoly1gcd.inl"
 #include "givaro/givpoly1sqrfree.inl"
 #include "givaro/givpoly1cyclo.inl"
+#include "givaro/givpoly1ratrecon.inl"
 
 #endif

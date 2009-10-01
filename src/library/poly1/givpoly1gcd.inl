@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.7 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1gcd.inl,v 1.8 2009-10-01 09:08:05 jgdumas Exp $
 // ==========================================================================
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
@@ -124,15 +124,76 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
 }
 
 
+// #include <typeinfo>
+
 template <class Domain> 
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Rep& S0, const Rep& A, const Rep& B) const
 {
+//     std::cerr << "BEG invmod of " << typeid(*this).name() << std::endl;
+//     std::cerr << "with domain " << typeid(_domain).name() << std::endl;
+//        write(std::cout << "A:=", A) << ';' << std::endl;
+//        write(std::cout << "B:=", B) << ';' << std::endl;
   Type_t r0, r1, tt;
   Rep F, G; 
   Degree degF, degG;
   degree(degF,A); degree(degG,B);
   if ((degF <= 0) || (degG <= 0) ) {
       return assign(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
+  }
+  
+    assign(F, A);
+    assign(G, B);
+
+  leadcoef(r0, F);
+  leadcoef(r1, G);
+//       getdomain().write(std::cout << "r0: ", r0) << std::endl;
+//       getdomain().write(std::cout << "r1: ", r1) << std::endl;
+
+  divin(F,r0);
+  divin(G,r1);
+//        write(std::cout << "F1: ", F) << std::endl;
+//        write(std::cout << "G1: ", G) << std::endl;
+
+  Rep S1,R1,Q,TMP, TMP2;
+
+  assign(S0, 0, _domain.inv(tt,r0) );
+  assign(S1,zero);
+  
+  while ( ! isZero(G) ) {      
+//        write(std::cout << "F: ", F) << std::endl;
+//        write(std::cout << "G: ", G) << std::endl;
+      
+      divmod(Q,R1,F,G);
+//       write(std::cout << "Q: ", Q) << std::endl;
+//       write(std::cout << "R: ", R1) << std::endl;
+
+      leadcoef(r1, R1); if (_domain.isZero(r1)) _domain.assign(r1,_domain.one);
+//       getdomain().write(std::cout << "l: ", r1) << std::endl;
+
+      assign(F,G);
+      div(G,R1,r1);
+//       write(std::cout << "Fn: ", F) << std::endl;
+//       write(std::cout << "Gn: ", G) << std::endl;
+      mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); div(S1,TMP2,r1);
+//       write(std::cout << "S: ", S1) << std::endl;
+  }  
+
+//       write(std::cout << "S: ", S0) << std::endl;
+//     std::cerr << "END invmod of " << typeid(*this).name() << std::endl;
+  return S0;
+}
+
+template <class Domain> 
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodunit ( Rep& S0, const Rep& A, const Rep& B) const
+{
+//     std::cerr << "BEG invmodunit of " << typeid(*this).name() << std::endl;
+
+  Type_t r0, r1, tt;
+  Rep F, G; 
+  Degree degF, degG;
+  degree(degF,A); degree(degG,B);
+  if ((degF <= 0) || (degG <= 0) ) {
+      return assign(S0, Degree(0), _domain.one);
   }
   
 //   if (degF >= degG) {
@@ -144,25 +205,28 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Re
 //     assign(G, A);
 //   }
 
-  leadcoef(r0, F);
-  leadcoef(r1, G);
-
-  divin(F,r0);
-  divin(G,r1);
-
   Rep S1,R1,Q,TMP, TMP2;
 
-  assign(S0, 0, _domain.inv(tt,r0) );
+  assign(S0,one);
   assign(S1,zero);
   
-  while ( ! isZero(G) ) {
+  while ( ! isZero(G) ) {      
+//       write(std::cout << "F: ", F) << std::endl;
+//       write(std::cout << "G: ", G) << std::endl;
+      
       divmod(Q,R1,F,G);
-      leadcoef(r1, R1); if (_domain.isZero(r1)) _domain.assign(r1,_domain.one);
+//       write(std::cout << "Q: ", Q) << std::endl;
+//       write(std::cout << "R: ", R1) << std::endl;
+
       assign(F,G);
-      div(G,R1,r1);
-      mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); div(S1,TMP2,r1);
-  }
-  
+      assign(G,R1);
+//       write(std::cout << "Fn: ", F) << std::endl;
+//       write(std::cout << "Gn: ", G) << std::endl;
+      mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); assign(S1,TMP2);
+//       write(std::cout << "S: ", S1) << std::endl;
+  }  
+//     std::cerr << "END invmodunit of " << typeid(*this).name() << std::endl;
+
   return S0;
 }
 

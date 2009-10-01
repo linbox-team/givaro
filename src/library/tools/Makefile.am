@@ -12,7 +12,9 @@ pkginclude_HEADERS=\
 	givcategory.h		\
 	givops.h		\
 	giviterator.h		\
-	givarithmetics.h
+	givarithmetics.h	\
+	givfractiondomain.h	\
+	givquotientdomain.h
 
 noinst_LTLIBRARIES=libgivtools.la
 

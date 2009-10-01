@@ -39,6 +39,51 @@ void TestField(const Field& F) {
     F.write( std::cerr << "Within " ) << " : " << std::flush;
     F.write( F.write( F.write( F.write(
         std::cout, c) << " + ", a) << " * ", b) << " = ", d) << std::endl;
+    
+    {
+        typename Field::Element e;
+        F.init(e); F.assign(e,d);
+        F.maxpy(e, a, b, d); // e = d-a*b
+        
+            // Writing all outputs in a single command line
+        F.write( std::cerr << "Within " ) << " : " << std::flush;
+        F.write( F.write( F.write( F.write(
+            std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
+    }
+    
+    {
+        typename Field::Element e;
+        F.init(e); F.assign(e,d);
+        F.maxpyin(e, a, b); // e = d - a*b;
+        
+            // Writing all outputs in a single command line
+        F.write( std::cerr << "Within " ) << " : " << std::flush;
+        F.write( F.write( F.write( F.write(
+            std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
+    }
+    
+    {
+        typename Field::Element e;
+        F.init(e); F.assign(e,d);
+        F.axmy(e, a, b, d); // e = a*b -d;
+        
+            // Writing all outputs in a single command line
+        F.write( std::cerr << "Within " ) << " : " << std::flush;
+        F.write( F.write( F.write( F.write(
+            std::cout, a) << " * ", b) << " - ", d) << " = ", e) << std::endl;
+    }
+    
+    {
+        typename Field::Element e;
+        F.init(e); F.assign(e,d);
+        F.axmyin(e, a, b); // e = d - a*b;
+        
+            // Writing all outputs in a single command line
+        F.write( std::cerr << "Within " ) << " : " << std::flush;
+        F.write( F.write( F.write( F.write(
+            std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
+    }
+    
 
 
         // Four operations

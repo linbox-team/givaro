@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.7 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givrational.h,v 1.8 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 #ifndef _RATIONAL_H_
 #define _RATIONAL_H_
@@ -32,7 +32,9 @@ unsigned long length (const Rational& r) ;
 int sign   (const Rational& r) ;
 int isZero (const Rational& r) ;
 int isOne  (const Rational& r) ;
-int isInteger(const Rational& r);  
+int isInteger(const Rational& r); 
+ 
+class RationalDom;
 
 // ----------------------------------- Class Rational
 
@@ -43,7 +45,9 @@ public :
     Rational(Neutral n = Neutral::zero) ;
     Rational(int n) ;
     Rational(long n) ;
+    Rational(unsigned long n) ;
     Rational(long n, long d ) ;
+    Rational(unsigned long n, unsigned long d ) ;
     Rational(double x) ;
     Rational(const char* s) ;
     Rational(const Integer& n) ;
@@ -142,11 +146,12 @@ public:
 protected:
     static ReduceFlag flags ;    // flags that indicates is reduction is done or not
         // by default = Reduce 
-    void reduce(void) ;
+    Rational& reduce() ;
         // -- module initialization
     static void Init(int* argc, char***argv);
     static void End();
     friend class GivModule;
+    friend class RationalDom;
         // Rational number reconstruction
     bool ratrecon(const Integer& f, const Integer& m, const Integer& k, bool recurs = false ) ;
 
@@ -162,13 +167,14 @@ extern std::istream& operator>> (std::istream& in, Rational& r) ;
 #include "givaro/givrational.inl"
 
 //------------------------------------------------------ Class RationalDom
-class RationalDom : public Rational {
+class RationalDom  {
 public:
     typedef Rational Element;
     typedef Rational Rep;
 
         // -- Cstor
     RationalDom() : one(1), zero(0) {}
+    template<class X> RationalDom(const X& x) : one(1), zero(0) {}
 
     int operator==( const RationalDom& BC) const { return 1;}
     int operator!=( const RationalDom& BC) const { return 0;}
@@ -176,6 +182,9 @@ public:
         // -- Constants
     const Rational one;
     const Rational zero;
+
+    unsigned long characteristic() const { return 0UL; }
+    Integer& characteristic(Integer& p) const { return p=characteristic();}
 
         // -- assignement
     Rep& init( Rep& a ) const{ return a; }
@@ -197,16 +206,20 @@ public:
         { return r = a * b + c; };
     Rep& axpyin( Rep& r, const Rep& a, const Rep& b ) const
         { return r += a * b; };
-    Rep& amxy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
-        { return r = a - b * c; };
+    Rep& maxpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
+        { return r = c - a * b; };
     Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
         { return r = a * b - c; };
     Rep& axmyin( Rep& r, const Rep& a, const Rep& b ) const
         { return r -= a * b; };
+    Rep& maxpyin( Rep& r, const Rep& a, const Rep& b ) const
+        { return r -= a * b; };
 
         // -- unary methods
     Rep& neg( Rep& r, const Rep& a ) const { return r = -a; };
-    Rep& inv( Rep& r, const Rep& a ) const { return r = Rational::one/a; };
+    Rep& inv( Rep& r, const Rep& a ) const { r.num=a.den; r.den=a.num; return r; }
+    Rep& negin( Rep& r ) const { r.num=-r.num; return r; }
+    Rep& invin( Rep& r ) const { std::swap(r.num,r.den); return r; }
 
         // - return n^l 
     Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r = ::pow(n, l); }
@@ -229,6 +242,11 @@ public:
     int isZero  (const Rep& a) const { return compare(a, zero) ==0; }
     int areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
     int areNEqual(const Rep& a, const Rep& b) const { return compare(a, b) !=0; }
+    template< class RandIter > Rep& random(RandIter& g, Rep& r, long s = 1) const { return r=Rational(Integer::random(s), Integer::nonzerorandom(s)); }
+    template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const { Integer rnum,rden; Integer::random(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
+    template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, long s = 1) const { return r=Rational(Integer::nonzerorandom(s), Integer::nonzerorandom(s)); }
+    template< class RandIter > Rep& nonzerorandom (RandIter& g,Rep& r, const Rep& b) const { Integer rnum,rden; Integer::nonzerorandom(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
+
 
         // -- IO
         // -- IO

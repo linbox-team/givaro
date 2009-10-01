@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // file: givgfq.h 
-// Time-stamp: <15 Jun 09 13:52:27 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <29 Sep 09 18:15:41 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version: 
 // author: Jean-Guillaume.Dumas
@@ -232,13 +232,13 @@ public:
     Rep& axpyin (Rep& r, const Rep a, const Rep b) const;
     void axpyin (const size_t sz, Array r, Rep a, constArray x) const;
 
-        // -- axmy: r <- a * x - y mod p
+        // -- axmy: r <- a * b - c mod p
     Rep& axmy (Rep& r, const Rep a, const Rep b, const Rep c) const;
     void axmy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
     void axmy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
 
-        // -- amxy: r <- c - a * b mod p
-    Rep& amxy (Rep& r, const Rep a, const Rep b, const Rep c) const;
+        // -- maxpy: r <- c - a * b mod p
+    Rep& maxpy (Rep& r, const Rep a, const Rep b, const Rep c) const;
 
         // -- axmyin: r <- r - a * b mod p
     Rep& axmyin (Rep& r, const Rep a, const Rep b) const;
@@ -248,8 +248,8 @@ public:
 //     Rep& sqpyin (Rep& r, const Rep a) const;
     
 
-        // -- axpyin: r <- r - a * b mod p
-    Rep& amxyin (Rep& r, const Rep a, const Rep b) const;
+        // -- maxpyin: r <- r - a * b mod p
+    Rep& maxpyin (Rep& r, const Rep a, const Rep b) const;
 
         // <- \sum_i a[i], return 1 if a.size() ==0,
     void reduceadd ( Rep& r, const size_t sz, constArray a ) const; 

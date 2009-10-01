@@ -6,21 +6,22 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratmisc.C,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givratmisc.C,v 1.5 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
 #include "givaro/givrational.h"
 
 // 
-void Rational::reduce(void) 
+Rational& Rational::reduce() 
 {
   Integer t = gcd(num, den);
   if (!isOne(t) )
   {
 	  num /= t;
 	  den /= t;
-   }
+  }
+  return *this;
 }
 	  
 const Integer trunc(const Rational &r)

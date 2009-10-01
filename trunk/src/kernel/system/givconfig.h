@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.12 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givconfig.h,v 1.13 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 #ifndef _GIVARO_INTERNAL_CONFIG_H_
@@ -62,9 +62,9 @@
 // - yy: minor version number
 // - zz: revision number
 #define GIVARO_MAJOR_VERSION 03
-#define GIVARO_MINOR_VERSION 02
-#define GIVARO_REVISION_VERSION 15
-#define GIVARO_VERSION 30215
+#define GIVARO_MINOR_VERSION 03
+#define GIVARO_REVISION_VERSION 00
+#define GIVARO_VERSION 30300
 
 // -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)

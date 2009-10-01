@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.12 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.13 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -36,12 +36,16 @@
 
 #define __GIVARO_ZPZ32_N_MULADDIN(r,p,a,b) ( r = (uint32)(a*b+r) % (uint32)p )
 
+#define __GIVARO_ZPZ32_NEGMOD(r,p) \
+{ r %= (int16)p; r=(r<0?r+p:r); }
+
 // a*b-c
 #define __GIVARO_ZPZ32_N_MULSUB(r,p,a,b,c) \
-{ r = (a*b+p-c); r= (r<p ? r : (uint32)r % (uint32)p);  }
+{ r = (a*b-c); if (r<0) __GIVARO_ZPZ32_NEGMOD(r,p) else { r= (r<p?r: r % (uint32)p); } }
+
 // a*b-c
 #define __GIVARO_ZPZ32_N_SUBMULIN(r,p,a,b) \
-{ r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % (uint32)p : r); } }
+{ r -= (a*b); __GIVARO_ZPZ32_NEGMOD(r,p); }
 
 #define __GIVARO_ZPZ32_N_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
 #define __GIVARO_ZPZ32_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
@@ -236,8 +240,8 @@ inline void ZpzDom<Std32>::axpyin
   }
 }
 
-  // -- amxy: r <- c - a * b mod p
-inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::amxy (Rep& r, const Rep a, const Rep b, const Rep c) const 
+  // -- maxpy: r <- c - a * b mod p
+inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::maxpy (Rep& r, const Rep a, const Rep b, const Rep c) const 
 {
   register int32 tmp;
   __GIVARO_ZPZ32_N_MUL(tmp, (int32)_p, (int32)a, (int32)b);
@@ -254,13 +258,22 @@ inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::axmy
 }
 
 // r -= a*b
+inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::maxpyin
+ (Rep& r, const Rep a, const Rep b) const
+{
+  __GIVARO_ZPZ32_N_SUBMULIN(r, (int32)_p, (int32)a, (int32)b );
+  return r;
+//   register int32 tmp = (int32)r;
+//   __GIVARO_ZPZ32_N_SUBMULIN(tmp, (int32)_p, (int32)a, (int32)b );
+//   return r = (ZpzDom<Std32>::Rep)tmp;
+}
+// r -= a*b
 inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::axmyin 
  (Rep& r, const Rep a, const Rep b) const
 {
-  register int32 tmp = (int32)r;
-  __GIVARO_ZPZ32_N_SUBMULIN(tmp, (int32)_p, (int32)a, (int32)b );
-  return r = (ZpzDom<Std32>::Rep)tmp;
+    return maxpyin(r,a,b);
 }
+
 
 
 inline void ZpzDom<Std32>::axmy

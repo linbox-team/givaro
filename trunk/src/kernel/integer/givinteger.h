@@ -19,7 +19,7 @@
 
 
 //------------------------------------ Class IntegerDom
-class IntegerDom : public Integer {
+class IntegerDom {
 public:
     typedef Integer Rep;
     typedef Rep Element;
@@ -69,8 +69,8 @@ public:
 
   Rep& axpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const 
   { return Integer::axpy(r,a,b,c); }
-  Rep& amxy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const 
-  { return Integer::amxy(r,a,b,c); }
+  Rep& maxpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const 
+  { return Integer::maxpy(r,a,b,c); }
   Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const 
   { return Integer::axmy(r,a,b,c); }
   Rep& axpyin( Rep& r, const Rep& a, const Rep& b ) const 

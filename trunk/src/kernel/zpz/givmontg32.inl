@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.9 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.10 2009-10-01 09:07:36 jgdumas Exp $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
@@ -76,11 +76,6 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const 
 
 
 #define __GIVARO_MONTG32_MULADDIN(r,p,a,b) { r+=redcal(a*b); r= (r < p ? r : r-p); }
-
-// a*b-c
-#define __GIVARO_MONTG32_MULSUB(r,p,a,b,c) (r)
-// a*b-c
-#define __GIVARO_MONTG32_SUBMULIN(r,p,a,b) (r)
 
 #define __GIVARO_MONTG32_NEG(r,p,a) (r = (a == 0 ? 0 : p-a))
 #define __GIVARO_MONTG32_NEGIN(r,p) (r = (r == 0 ? 0 : p-r))
@@ -176,17 +171,34 @@ inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axpyin
   return r;
 }
 
+// r <- a*b-c
 inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axmy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 {
-  return __GIVARO_MONTG32_MULSUB(r, _p, a, b, c);
+    return this->subin(this->mul(r,a,b), c);
+}
+
+// r = c - a*b
+inline Montgomery<Std32>::Rep&  Montgomery<Std32>::maxpy
+ (Rep& r, const Rep a, const Rep b, const Rep c) const
+{
+    Rep t;
+    return this->sub(r, c, this->mul(t,a,b));
+}
+
+// r -= a*b
+inline Montgomery<Std32>::Rep&  Montgomery<Std32>::maxpyin
+ (Rep& r, const Rep a, const Rep b) const
+{
+    Rep t;
+    return this->subin(r, this->mul(t,a,b));
 }
 
 // r -= a*b
 inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axmyin 
  (Rep& r, const Rep a, const Rep b) const
 {
-  return __GIVARO_MONTG32_SUBMULIN(r, _p, a, b );
+    return maxpyin(r,a,b);
 }
 
 

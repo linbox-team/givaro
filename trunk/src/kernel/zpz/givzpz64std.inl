@@ -7,7 +7,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.11 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.12 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -38,12 +38,16 @@
 #define __GIVARO_ZPZ64_N_MULADDIN(r,p,a,b) \
 { r += (a*b); r= (r<p ? r : r % (uint64)p);}
 
-// // a*b-c
+#define __GIVARO_ZPZ64_NEGMOD(r,p) \
+{ r %= (int64)p; r=(r<0?r+p:r); }
+
+// a*b-c
 #define __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,c) \
-{ r = (a*b-c); r= (r<p ? (r>0? r : r% (uint64)p) : r % (uint64)p); }
+{ r = (a*b-c); if (r<0) __GIVARO_ZPZ64_NEGMOD(r,p) else { r= (r<p?r: r % (uint32)p); } }
+
 // a*b-c
 #define __GIVARO_ZPZ64_N_SUBMULIN(r,p,a,b) \
-{ r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % (uint64)p : r); } }
+{ r -= (a*b); __GIVARO_ZPZ64_NEGMOD(r,p); }
 
 
 
@@ -259,15 +263,6 @@ inline void ZpzDom<Std64>::axpyin
   }
 }
 
-inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::amxy
- (Rep& r, const Rep a, const Rep b, const Rep c) const
-{
-  register int64 tmp;
-  __GIVARO_ZPZ64_N_MUL(tmp, (int64)_p, (int64)a, (int64)b);
-  __GIVARO_ZPZ64_N_SUB(r, (int64)_p, (int64)c, tmp);
-  return r;
-}
-
 inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::axmy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 {
@@ -276,13 +271,40 @@ inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::axmy
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
+// r = c - a*b
+inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::maxpy
+ (Rep& r, const Rep a, const Rep b, const Rep c) const
+{
+  register int64 tmp = (int64)c;
+  __GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64)_p, (int64)a, (int64)b );
+  return r = (ZpzDom<Std64>::Rep)tmp;
+}
+
+// inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::maxpy
+//  (Rep& r, const Rep a, const Rep b, const Rep c) const
+// {
+//   register int64 tmp;
+//   __GIVARO_ZPZ64_N_MUL(tmp, (int64)_p, (int64)a, (int64)b);
+//   __GIVARO_ZPZ64_N_SUB(r, (int64)_p, (int64)c, tmp);
+//   return r;
+// }
+
+// r -= a*b
+inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::maxpyin
+ (Rep& r, const Rep a, const Rep b) const
+{
+  __GIVARO_ZPZ64_N_SUBMULIN(r, (int64)_p, (int64)a, (int64)b );
+  return r;
+//   register int64 tmp = (int64)r;
+//   __GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64)_p, (int64)a, (int64)b );
+//   return r = (ZpzDom<Std64>::Rep)tmp;
+}
+
 // r -= a*b
 inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::axmyin 
  (Rep& r, const Rep a, const Rep b) const
 {
-  register int64 tmp = (int64)r;
-  __GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64)_p, (int64)a, (int64)b );
-  return r = (ZpzDom<Std64>::Rep)tmp;
+    return maxpyin(r,a,b);
 }
 
 

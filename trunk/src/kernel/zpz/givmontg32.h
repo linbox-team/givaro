@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.9 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givmontg32.h,v 1.10 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 #ifndef _GIVARO_MONTG32_H_
 #define _GIVARO_MONTG32_H_
@@ -151,6 +151,10 @@ public:
     Rep& axmy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
         // -- axmyin: r <- r - a * x mod p
     Rep& axmyin(Rep& r, const Rep a, const Rep b) const;
+        // -- maxpy: r <- c - a * b mod p
+    Rep& maxpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
+        // -- maxpyin: r <- r - a * x mod p
+    Rep& maxpyin(Rep& r, const Rep a, const Rep b) const;
         // -- Misc: r <- a mod p
     Rep& assign ( Rep& r, const Rep a) const;
 

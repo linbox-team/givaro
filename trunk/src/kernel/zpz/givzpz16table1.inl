@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.7 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpz16table1.inl,v 1.8 2009-10-01 09:07:36 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -254,11 +254,35 @@ inline void ZpzDom<Log16>::axpyin
   }
 }
 
-
+// r <- a*b-c
 inline void ZpzDom<Log16>::axmy 
   (Rep& r, const Rep a, const Rep b, const Rep c) const
 { 
   __GIVARO_ZPZ16_LOG_MULSUB(r,_p,a,b,c); 
+}
+
+// r <- r-a*b
+inline void ZpzDom<Log16>::maxpyin
+  (Rep& r, const Rep a, const Rep b) const
+{
+    Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
+    this->addin(r,this->negin(t));
+}
+
+// r <- c-a*b
+inline void ZpzDom<Log16>::maxpy
+  (Rep& r, const Rep a, const Rep b, const Rep c) const
+{
+    Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
+    this->sub(r,c,t);
+}
+
+
+// r <- r-a*b
+inline void ZpzDom<Log16>::axmyin 
+  (Rep& r, const Rep a, const Rep b) const
+{
+    return maxpyin(r,a,b);
 }
 
 inline void ZpzDom<Log16>::axmy 

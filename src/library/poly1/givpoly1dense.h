@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.19 2009-10-01 09:08:04 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.20 2009-10-01 17:02:23 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -42,6 +42,23 @@ public:
         return *this != p;
     }
 
+
+    template<typename X>
+    struct rebind
+    {
+        typedef givvector<typename X::Element> other;
+		
+        void operator() (other *& P2, 
+                         const Self_t& P1, 
+                         const X& F)
+            {
+                P2 = new other(P1.size());
+                typename Self_t::const_iterator it1 = P1.begin();
+                typename other::iterator it2 = P2->begin();
+                for (; it1 != P1.end(); ++it1, ++it2)
+                    F.init (*it2, *it1);
+            }
+    };
 };
 
 //  -------------------------------------------- Class Poly1Dom<Domain>

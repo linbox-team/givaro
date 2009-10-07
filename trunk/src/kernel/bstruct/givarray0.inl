@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givarray0.inl,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givarray0.inl,v 1.5 2009-10-07 11:28:40 jgdumas Exp $
 // ======================================================================= //
 // Description:
 // implementation of operators of Array0<T>
@@ -148,7 +148,7 @@ inline Array0<T>& Array0<T>::copy (const Array0<T>& src)
   return *this;
 }
 
-// Physical copy : recopy and assignement on each Element
+// Logical copy
 template <class T>
 inline Array0<T>& Array0<T>::logcopy (const Array0<T>& src)
 {
@@ -163,12 +163,14 @@ inline Array0<T>& Array0<T>::logcopy (const Array0<T>& src)
   return *this;
 }
 
+
+// Physical copy
 template<class T>
 Array0<T>& Array0<T>::operator= (const Array0<T>& p)
 { 
   //throw GivError("[Array0<T>::operator=] cannot be used" " File:" ##__FILE__ ", line:" ##__LINE__ );
-  throw GivError("[Array0<T>::operator=] cannot be used");
-  return *this;
+//   throw GivError("[Array0<T>::operator=] cannot be used");
+    return this->copy(p);
 }
 
 template<class T>

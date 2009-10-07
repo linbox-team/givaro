@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <29 Sep 09 14:56:56 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <07 Oct 09 11:17:17 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: fractions over a Ring domain
 // ===============================================================
@@ -49,15 +49,12 @@ public :
 
     void reduce(Ring_E& a, Ring_E& b) const {
         Ring_E g; Ring_t::gcd(g,a,b);
+//         Ring_t::write(std::cerr << "a: ", a) << std::endl;
+//         Ring_t::write(std::cerr << "b: ", b) << std::endl;
+//         Ring_t::write(std::cerr << "g: ", g) << std::endl;
         if(! ( Ring_t::isOne(g) || Ring_t::isZero(g) ) ) {
             Ring_t::divin(a,g);
             Ring_t::divin(b,g);
-        }
-        typename Ring_t::Type_t b0;
-        Ring_t::leadcoef(b0,b);
-        if (! ( Ring_t::getdomain().isOne(b0) || Ring_t::getdomain().isZero(b0) ) ) {
-            Ring_t::divin(a,b0);
-            Ring_t::divin(b,b0);
         }
     }
     

@@ -5,17 +5,16 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: J-G. Dumas
-// Time-stamp: <30 Sep 09 09:33:33 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <05 Oct 09 14:07:29 Jean-Guillaume.Dumas@imag.fr> 
 // Description: generic rational fraction reconstruction
 // ===============================================================
 
 template <class Domain> 
-bool Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) 
-{
+bool Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
 
   Degree degU, degV;
   this->degree(degU,P); this->degree(degV,M);
-  if ((degU < 0) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return true; }
+  if ((degU < dk) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return true; }
   if ((degV < 0) || (degU == 0)) { this->assign(N,one); this->assign(D,one); return false; }
   
   typename Poly1Dom<Domain,Dense>::Rep U, V;

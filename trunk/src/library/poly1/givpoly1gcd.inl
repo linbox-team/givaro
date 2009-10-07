@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.8 2009-10-01 09:08:05 jgdumas Exp $
+// $Id: givpoly1gcd.inl,v 1.9 2009-10-07 11:30:45 jgdumas Exp $
 // ==========================================================================
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
@@ -234,11 +234,15 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodunit 
 template <class Domain> 
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& F, const Rep& A, const Rep& B) const
 {
+//     write(write(std::cerr << "A: ", A) << ", B: ", B) << std::endl;
+    
   Rep G, S0, T0; 
   Degree degA, degB, degG;
   degree(degA,A); degree(degB,B);
-  if ((degA < 0) || (degB == 0)) return assign(F, B);
-  if ((degB < 0) || (degA == 0)) return assign(F, A);
+  if (degA < 0) return assign(F, Degree(0), _domain.zero);
+  if (degB < 0) return assign(F, Degree(0), _domain.zero);
+  if (degB == 0) return assign(F, A);
+  if (degA == 0) return assign(F, B);
   
   if (degA >= degB) {
     assign(F, A);
@@ -287,20 +291,21 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& 
   
   degree(degG, G);
 
+//     write(write(std::cerr << "S1: ", S1) << ", T1: ", T1) << std::endl;
     
   if ( degG <= 0) {
 // If normalisation is needed
 //       if (degA >= degB) {
 //           return mul(G, S1, A);
 //       } else {
-//           return mul(G, S1, B);
+//           return mul(G, T1, B);
 //       }
 //       leadcoef(tt, G);
 //       return div(F,G,tt);
       if (degA >= degB) {
           return mul(F, S1, A);
       } else {
-          return mul(F, S1, B);
+          return mul(F, T1, B);
       }
   } else {
       return mul(F, A, B);

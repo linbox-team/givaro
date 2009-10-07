@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.20 2009-10-01 17:02:23 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.21 2009-10-07 11:30:06 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -93,6 +93,9 @@ public :
         { return _domain == BC._domain;}
     int operator!=( const Poly1Dom<Domain,Dense>& BC) const 
         { return _domain != BC._domain;}
+
+    const Indeter& getIndeter() const { return _x; }
+    Indeter& setIndeter(const Indeter& X) { return _x=X; }
 
         // -- Return the domain of the entries
     const Domain& subdomain() const { return _domain; }
@@ -250,7 +253,7 @@ public :
 
         // -- rational reconstruction
         // -- Builds N and D such that P * D = N mod M and degree(N) <= dk
-    bool ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk);
+    bool ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk) const;
 
         // -- misc
         // -- W <-- P^n

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givarray0.h,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givarray0.h,v 1.5 2009-10-07 11:28:40 jgdumas Exp $
 // ========================================================================== 
 // Description:
 // Array of type T with reference mecanism.
@@ -22,8 +22,6 @@ GIVARO_PERF_DEFCLASS(Array0,T)
 
 template <class T>
 class Array0 GIVARO_PERF_INEHERIT(Array0,T) {
-  //-- Recopy cstor : private: don't use it
-  Array0 (const Array0<T>& p);
   void build( size_t s, const T& t) ;
 public :
   typedef int  		Indice_t;
@@ -69,6 +67,9 @@ public :
   //-- Logical recopy operator: make an alias to src. Return dest.
   Self_t& logcopy(const Self_t& src);
 
+  //-- assignement operator is physical copy
+  Self_t& operator= (const Self_t& p);
+
   //-- Return the occuped size of the array
   size_t size() const { return _size; }
 
@@ -96,9 +97,6 @@ protected :  //--------------------- protected Internal representation
   size_t _size;  // actual size of the array. If ==0 then _psz=_d=_cnt=0
   size_t _psz;   // physical size of the array
   T*  _d;        // ptr to the memory
-private:
-  //-- assignement operator cannot be herited. 
-  Self_t& operator= (const Self_t& p);
 };
 
 

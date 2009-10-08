@@ -937,7 +937,6 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
     , _dcharacteristic( (double)P )
 {
     
-
         // 1 is represented by q-1, zero by 0
     _log2pol[0] = zero;
 

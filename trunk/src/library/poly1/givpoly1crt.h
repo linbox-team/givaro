@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <08 Oct 09 12:39:08 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Oct 09 16:52:01 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 #ifndef _GIVARO_Poly1_CRT_H
@@ -21,6 +21,7 @@ public:
     typedef Poly1Dom<Field, Dense>		Ring_t;
     typedef typename Field_t::Element 		Type_t;
     typedef typename Ring_t::Element 		Element;
+    typedef Element 				Rep;
     typedef Array0<Type_t> 			array_T;
     typedef Array0<Element> 			array_E;
 
@@ -55,6 +56,29 @@ public:
 
     const Field_t& getdomain() { return _F; }
     const Ring_t&  getpolydom() { return _PolRing; }
+
+    std::ostream& write( std::ostream& o ) const {
+        return _PolRing.write(o << "CRT(") << ')';
+    }
+    
+    std::istream& read ( std::istream& i, Element& n) const {
+        return _PolRing.read(i,n);
+    }
+            
+    std::ostream& write( std::ostream& o, const Element& n) const {
+        return _PolRing.write(o,n);
+    }
+    
+    std::istream& read ( std::istream& i, Type_t& n) const {
+        return _F.read(i,n);
+    }
+            
+    std::ostream& write( std::ostream& o, const Type_t& n) const {
+        return _F.write(o,n);
+    }
+    
+            
+
 protected:
         // -------------- Compute some fields of the structure :
     void ComputeCk();

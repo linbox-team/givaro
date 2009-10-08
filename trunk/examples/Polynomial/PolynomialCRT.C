@@ -30,7 +30,7 @@ typedef ZpzDom<Integer>         Field8;
 typedef RationalDom	        Field9;
 
 template <typename Field> 
-bool tmain(int argc, char ** argv, const GivRandom& generator) {
+bool tmain(int argc, char ** argv, GivRandom& generator) {
     bool pass = true;
     typedef Poly1CRT< Field >  CRTSystem;
     typedef typename CRTSystem::Element	Poly;
@@ -90,21 +90,21 @@ bool tmain(int argc, char ** argv, const GivRandom& generator) {
             break;
         }        
   
+    CRT.getpolydom().random(generator, res, Degree(Primes.size()-1));
+    CRT.RingToRns( Verifs, res );
+    Poly nres;
+
+    tim.clear(); tim.start();
+    CRT.RnsToRing( nres, Verifs );
+    tim.stop();
+    if (! CRT.getpolydom().areEqual(res,nres) ) {
+        CRT.getpolydom().write(std::cerr << "incoherency within ") << std::endl;
+        pass = false;
+    }
+    F.write( std::cerr << tim << " using ") << std::endl;
 
    
-//    Integer p( generator() >>(argc>2?atoi(argv[2]):17) ), res;
-//    Field F( ID.nextprimein(p) );
-//    typename Field::Element el;
-//    F.init(el, generator() );
-
-//    ChineseRemainder<IntPrimeDom, Field> CRA(ID, M, F);
-//    CRA( res, a, el);
-
-//    std::cout << res << " mod " << M << " = " << a << ";"  << std::endl;
-//    std::cout << res << " mod " << F.characteristic() << " = " << F.convert(a, el) << ";"  << std::endl;
-   
-
-   return pass;
+    return pass;
 }
 
 
@@ -118,16 +118,17 @@ int main(int argc, char ** argv) {
     unsigned long seed = seedor.seed();
     std::cerr << "seed: " << seed << std::endl;
     
+    Integer::seeding(seed);
 
     return 
-        tmain<Field1>(argc, argv, GivRandom(seed)) &&
-        tmain<Field2>(argc, argv, GivRandom(seed)) &&
-        tmain<Field3>(argc, argv, GivRandom(seed)) &&
-        tmain<Field4>(argc, argv, GivRandom(seed)) &&
-        tmain<Field5>(argc, argv, GivRandom(seed)) &&
-        tmain<Field6>(argc, argv, GivRandom(seed)) &&
-        tmain<Field7>(argc, argv, GivRandom(seed)) &&
-        tmain<Field8>(argc, argv, GivRandom(seed)) &&
-        tmain<Field9>(argc, argv, GivRandom(seed));
+        tmain<Field1>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field2>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field3>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field4>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field5>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field6>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field7>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field8>(argc, argv, *( new GivRandom(seed))) &&
+        tmain<Field9>(argc, argv, *( new GivRandom(seed)));
 
 }

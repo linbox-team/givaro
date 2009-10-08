@@ -7,7 +7,7 @@
 #include <iostream>
 #include <algorithm>
 #include <givaro/givtimer.h>
-#include "givpoly1crt.h"
+#include <givaro/givpoly1crt.h>
 #include <givaro/givintprime.h>
 #include <givaro/givmontg32.h>
 #include <givaro/givzpz.h>

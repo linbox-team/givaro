@@ -15,9 +15,10 @@
 #include <givaro-config.h>
 
 #ifndef __GIVARO__DONOTUSE_longlong__
-#ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 #define __USE_64_bits__
 #endif
+#ifndef __DONOTUSE_Givaro_SIXTYFOUR__
+#define __USE_64_bits__
 #endif
 
 #if !defined(GMP_VERSION_3) && !defined(GMP_NO_CXX) && !defined(__GIVARO_GMP_VERSION_3) && !defined(__GIVARO_GMP_NO_CXX)

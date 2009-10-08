@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.14 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.15 2009-10-08 19:29:14 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -235,16 +235,6 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(Rand
 
     
 // -- Random dense polynomial of degree d
-// template <class Domain> template<class RandIter>
-// inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, Degree d) const {
-//     r.reallocate(d.value()+1);
-//     _domain.nonzerorandom(g,r[d.value()]);
-//     for (int i=d.value(); i--;)
-//         _domain.random(g,r[i]);
-//     return r;       
-// }
-    
-// -- Random dense polynomial of degree d
 // TEMPORARY VERSION SATISFYING LINBOX
 template <class Domain> template<class RandIter>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, typename Poly1Dom<Domain,Dense>::Rep& r, Degree d) const {
@@ -259,7 +249,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(Rand
 
 // -- Random dense polynomial of degree d
 // specialization pour Givrandom
-template <class Domain> 
+template<> template <class Domain> 
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(GivRandom& g, Rep& r, Degree d) const {
 	r.reallocate(d.value()+1);
 	_domain.nonzerorandom(g, r[d.value()]);

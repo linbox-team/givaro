@@ -5,11 +5,12 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <05 Oct 09 12:57:18 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <08 Oct 09 12:39:08 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 #ifndef _GIVARO_Poly1_CRT_H
 #define _GIVARO_Poly1_CRT_H
+#include <givaro/givpoly1.h>
 
 template<class Field>
 class Poly1CRT  {
@@ -61,7 +62,7 @@ protected:
     const Field_t& _F;
     const Ring_t   _P;
     array_T   _primes; 	// - array of the primes
-    array_E       _ck;  // - reciprocals, _ck[0] = 1, same size as _primes 
+    array_E       _ck;  // - Radix list reciprocals
 };
 
 #include "givaro/givpoly1crtcstor.inl"

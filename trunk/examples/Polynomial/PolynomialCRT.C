@@ -6,18 +6,18 @@
 
 #include <iostream>
 #include <algorithm>
+#include <givaro/givtimer.h>
+#include "givpoly1crt.h"
 #include <givaro/givintprime.h>
 #include <givaro/givmontg32.h>
 #include <givaro/givzpz.h>
 #include <givaro/givgfq.h>
 #include <givaro/givcra.h>    // Chinese Remainder of two elements
 #include <givaro/givrns.h>    // Chinese Remainder of an array of elements
-#include <givaro/givtimer.h>
 #include <givaro/givrandom.h>
 
 #include <givaro/givrational.h>
 
-#include <givaro/givpoly1crt.h>
 
 typedef GFqDom<long> 		Field1;
 typedef ZpzDom<Std16>           Field2; 

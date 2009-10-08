@@ -11,6 +11,7 @@
 #ifndef _GIVARO_Poly1_CRT_H
 #define _GIVARO_Poly1_CRT_H
 #include <givaro/givpoly1.h>
+#include <givaro/givindeter.h>
 
 template<class Field>
 class Poly1CRT  {
@@ -53,14 +54,14 @@ public:
     const Element& reciprocal(const size_t i) const;
 
     const Field_t& getdomain() { return _F; }
-    const Ring_t&  getpolydom() { return _P; }
+    const Ring_t&  getpolydom() { return _PolRing; }
 protected:
         // -------------- Compute some fields of the structure :
     void ComputeCk();
 
-    const Indeter  _X;
+    const Indeter  _XIndet;
     const Field_t& _F;
-    const Ring_t   _P;
+    const Ring_t   _PolRing;
     array_T   _primes; 	// - array of the primes
     array_E       _ck;  // - Radix list reciprocals
 };

@@ -21,9 +21,9 @@ Poly1CRT<Field>::Poly1CRT ()
 
 template<class Field>
 Poly1CRT<Field>::Poly1CRT (const Poly1CRT<Field>& R)
- : _X(R._X),
+ : _XIndet(R._XIndet),
    _F(R._F),
-   _P(R._P),
+   _PolRing(R._PolRing),
    _primes(R._primes, givWithCopy()), 
    _ck(R._ck, givWithCopy())
 {}
@@ -32,9 +32,9 @@ Poly1CRT<Field>::Poly1CRT (const Poly1CRT<Field>& R)
   // -- Array of primes are given
 template<class Field>
 Poly1CRT<Field>::Poly1CRT( const Field& F, const Poly1CRT<Field>::array_T& inprimes, const Indeter& X) 
- : _X(X),
+ : _XIndet(X),
    _F(F),
-   _P(F,X),
+   _PolRing(F,X),
    _primes(inprimes, givWithCopy()),
    _ck(0)
 {
@@ -53,30 +53,30 @@ void Poly1CRT<Field>::ComputeCk()
 
   size_t size = _primes.size();
   _ck.reallocate(size+1);
-  Element irred; _P.init(irred); _P.assign(irred, Degree(1), _F.one);
-  Element prod; _P.init(prod); _P.assign(prod, Degree(0), _F.one);
+  Element irred; _PolRing.init(irred); _PolRing.assign(irred, Degree(1), _F.one);
+  Element prod; _PolRing.init(prod); _PolRing.assign(prod, Degree(0), _F.one);
 // Never used
-//   _P.assign(_ck[0], prod);
+//   _PolRing.assign(_ck[0], prod);
   for (size_t k=1; k < size; ++k) {
       _F.assign(irred[0], _primes[k-1]);
       _F.negin(irred[0]);
-//       _P.write(std::cerr<< "irred["<<k<<"]: ", irred) <<std::endl;
-      _P.mulin(prod, irred);
-//       _P.write(std::cerr<< "prod["<<k<<"]: ", prod) <<std::endl;
+//       _PolRing.write(std::cerr<< "irred["<<k<<"]: ", irred) <<std::endl;
+      _PolRing.mulin(prod, irred);
+//       _PolRing.write(std::cerr<< "prod["<<k<<"]: ", prod) <<std::endl;
       Type_t invC; _F.init(invC);
-      _P.eval(invC, prod, _primes[k]);
+      _PolRing.eval(invC, prod, _primes[k]);
 //       _F.write(std::cerr<< "eval["<<k<<"]: ", invC) <<std::endl;
       _F.invin(invC);
 //       _F.write(std::cerr<< "inv["<<k<<"]: ", invC) <<std::endl;
-      _P.mul(_ck[k],prod,invC);
-//       _P.write(std::cerr<< "mul["<<k<<"]: ", _ck[k]) <<std::endl;
+      _PolRing.mul(_ck[k],prod,invC);
+//       _PolRing.write(std::cerr<< "mul["<<k<<"]: ", _ck[k]) <<std::endl;
   }
   _F.assign(irred[0], _primes[size-1]);
   _F.negin(irred[0]);
-  _P.mul(_ck[size], prod, irred);
+  _PolRing.mul(_ck[size], prod, irred);
 
 //    for(typename array_E::const_iterator it=_ck.begin(); it!=_ck.end();++it)
-//        _P.write(std::cout, *it) << std::endl;
+//        _PolRing.write(std::cout, *it) << std::endl;
   
 }
 

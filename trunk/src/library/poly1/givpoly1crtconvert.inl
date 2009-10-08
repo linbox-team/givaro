@@ -15,7 +15,7 @@ typename Poly1CRT<Field>::array_T& Poly1CRT<Field>::RingToRns( typename Poly1CRT
     size_t size = _primes.size();
     if (rns.size() != size) rns.reallocate(size);
     for (size_t i=0; i<size; i++) 
-        _P.eval(rns[i], a, _primes[i]);
+        _PolRing.eval(rns[i], a, _primes[i]);
     return rns;
 }
 #define EarlyTermThreshold 4
@@ -28,20 +28,20 @@ typename Poly1CRT<Field>::Element& Poly1CRT<Field>::RnsToRing(typename Poly1CRT<
 //     loc.stop(); std::cerr << "RnsToRing. CompCK: " << loc << std::endl;
 //     loc.start();
     size_t size = _primes.size();
-    _P.assign(I, Degree(0), rns[0]);
+    _PolRing.assign(I, Degree(0), rns[0]);
     size_t EarlyTerm = 0;
-//     _P.write(std::cerr<< "R[0]: ", I) <<std::endl;
+//     _PolRing.write(std::cerr<< "R[0]: ", I) <<std::endl;
     for(size_t i=1; i<size; ++i) {
         Type_t addon; 
-        _P.eval(addon, I, _primes[i]);
+        _PolRing.eval(addon, I, _primes[i]);
         _F.negin(addon);
         _F.addin(addon, rns[i]);
         if (_F.isZero(addon))
             ++EarlyTerm;
         else {
             EarlyTerm=0;
-            _P.axpyin(I, addon, _ck[i]);
-                // _P.modin(I, _ck[i+1]);
+            _PolRing.axpyin(I, addon, _ck[i]);
+                // _PolRing.modin(I, _ck[i+1]);
         }
         if (EarlyTerm >= EarlyTermThreshold)
             break;

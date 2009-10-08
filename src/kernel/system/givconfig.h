@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.13 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givconfig.h,v 1.14 2009-10-08 09:01:27 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 #ifndef _GIVARO_INTERNAL_CONFIG_H_
@@ -177,8 +177,9 @@ typedef unsigned __GIVARO_INT64  uint64;
 
 // ==========================================================================
 // -- System variable
+#ifndef GIVARO_SYS
 #define GIVARO_SYS _SYS_UNDEF
-
+#endif
 
 
 // ==========================================================================
@@ -189,7 +190,9 @@ typedef unsigned __GIVARO_INT64  uint64;
 //#define GIVARO_MAPMEM 
 
 // -- Define this variable to compute statistics about memory usage
+#ifndef GIVARO_STATMEM
 #define GIVARO_STATMEM  1
+#endif
 
 
 

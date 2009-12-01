@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.8 2009-10-01 09:08:05 jgdumas Exp $
+// $Id: givpoly1muldiv.inl,v 1.9 2009-12-01 11:24:21 jgdumas Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
@@ -96,6 +96,35 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
         if (! _domain.isZero(*ai))
             for(ri=rig,bi=Q.begin();bi!=Q.end();++bi,++ri)
                 _domain.axpyin(*ri,*ai,*bi);
+    return setdegree(R);
+}
+
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, const Rep& Q, const Degree& val, const Degree& deg) const
+{
+    Type_t _zero;
+    _domain.init( _zero, 0.0);
+    size_t sR = R.size(); 
+    size_t sP = P.size(); 
+    size_t sQ = Q.size(); 
+    if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
+    size_t newS = value(deg-val)+1;
+    if (sR != newS) R.reallocate(sR = newS);
+    for(typename Rep::iterator ri=R.begin(); ri!= R.end(); ++ri)
+        *ri = _zero;
+   
+    for(size_t i=0; i<sR; ++i) {
+        long k=i+val.value();
+        size_t j=0;
+        if (static_cast<size_t>(k)>=sQ) {
+            j=k;
+            k=sQ-1;
+            j-=k;
+        }
+        for( ; (j<sP) && (k>=0); ++j,--k) {
+            _domain.axpyin(R[i],P[j],Q[k]);
+        }
+    }
     return setdegree(R);
 }
 

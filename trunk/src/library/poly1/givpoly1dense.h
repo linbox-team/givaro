@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.21 2009-10-07 11:30:06 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.22 2009-12-01 11:24:21 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -197,6 +197,11 @@ public :
     Rep& mul   ( Rep& q, const Rep& a, const Rep& b ) const;
     Rep& mul   ( Rep& q, const Type_t& a, const Rep& b ) const;
     Rep& mul   ( Rep& q, const Rep& a, const Type_t& b ) const;
+    
+        // Compute truncated mul: only the coefficients inside
+        // the degree interval, included
+    Rep& mul( Rep&, const Rep&, const Rep&, const Degree&, const Degree&) const;
+    
 
     Rep& shiftin ( Rep&, int ) const;
     Rep& shift   ( Rep&, const Rep&, int ) const;

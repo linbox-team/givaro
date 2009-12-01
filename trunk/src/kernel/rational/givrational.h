@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.8 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givrational.h,v 1.9 2009-12-01 11:24:21 jgdumas Exp $
 // ==========================================================================
 #ifndef _RATIONAL_H_
 #define _RATIONAL_H_
@@ -227,10 +227,10 @@ public:
 
 
         // - Rational number reconstruction
-    Rep& ratrecon(Rep& r, const Integer& f, const Integer& m, const Integer& k, bool recurs = false) {
+    Rep& ratrecon(Rep& r, const Integer& f, const Integer& m, const Integer& k, bool recurs = false) const {
         return r = Rational(f,m,k,recurs);
     }       
-    Rep& ratrecon(Rep& r, const Integer& f, const Integer& m, bool recurs=true) {
+    Rep& ratrecon(Rep& r, const Integer& f, const Integer& m, bool recurs=true) const {
         return r = Rational(f,m,::sqrt(m),recurs);
     }       
 

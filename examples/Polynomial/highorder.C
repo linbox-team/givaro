@@ -166,19 +166,7 @@ int main(int argc, char ** argv) {
     success &= TestFracDevel(HO101, P, Q, 98,100);
 
 
-// Error 857475
-//     for(size_t i=0; i<452; ++i) {
-//         long deg1 = generator() % 16;
-//         long deg2 = generator() % 15;
-//         long v1 = generator() % 29;
-//         long v2 = v1 + (generator() % 24);
-//         DP101.random(generator, P, Degree(deg1) );
-//         DP101.random(generator, Q, Degree(deg2) );
-//         success &= TestFracDevel(HO101, P, Q, v1, v2);
-//     }
-
-// Error 201149
-    for(size_t i=0; i<2000; ++i) {
+    for(size_t i=0; i<200; ++i) {
         long deg1 = generator() % 66;
         long deg2 = generator() % 65;
         long v1 = generator() % 19195;

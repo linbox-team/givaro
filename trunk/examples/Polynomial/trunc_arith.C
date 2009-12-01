@@ -12,11 +12,11 @@
 #include <givaro/givtruncdomain.h>
 
 
-long long count = 0;
+long long TTcount = 0;
 
 bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
 {
-    ++count;
+    ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
     DP.add ( R, P, Q, d1, d2); // R = P*Q;
 //     DP.write( DP.write(
@@ -28,7 +28,7 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     DP.truncin(V,d1,d2);
 
     if( DP.areNEqual( V, R) ) {
-        std::cerr << "ERROR ADD:" << count << std::endl;
+        std::cerr << "ERROR ADD:" << TTcount << std::endl;
         DP.write(std::cout << "  R: " , R) << std::endl;
         DP.write(std::cout << "  T: " , T) << std::endl;
         DP.write(std::cout << "  V: " , V) << std::endl;
@@ -44,7 +44,7 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 
 bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
 {
-    ++count;
+    ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
     DP.sub ( R, P, Q, d1, d2); // R = P*Q;
 //     DP.write( DP.write(
@@ -56,7 +56,7 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     DP.truncin(V,d1,d2);
 
     if( DP.areNEqual( V, R) ) {
-        std::cerr << "ERROR SUB:" << count << std::endl;
+        std::cerr << "ERROR SUB:" << TTcount << std::endl;
         DP.write(std::cout << "  R: " , R) << std::endl;
         DP.write(std::cout << "  T: " , T) << std::endl;
         DP.write(std::cout << "  V: " , V) << std::endl;
@@ -72,7 +72,7 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 
 bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
 {
-    ++count;
+    ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
     DP.mul ( R, P, Q, d1, d2); // R = P*Q;
 //     DP.write( DP.write(
@@ -84,7 +84,7 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     DP.truncin(V,d1,d2);
 
     if( DP.areNEqual( V, R) ) {
-        std::cerr << "ERROR MUL:" << count << std::endl;
+        std::cerr << "ERROR MUL:" << TTcount << std::endl;
         DP.write(std::cout << "  R: " , R) << std::endl;
         DP.write(std::cout << "  T: " , T) << std::endl;
         DP.write(std::cout << "  V: " , V) << std::endl;
@@ -100,7 +100,7 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 
 bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
 {
-    ++count;
+    ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
     DP.axpy ( R, P, Q, G, d1, d2); // R = P*Q;
 //     DP.write( DP.write(
@@ -133,7 +133,7 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 
 bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
 {
-    ++count;
+    ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
     DP.axmy ( R, P, Q, G, d1, d2); // R = P*Q;
 //     DP.write( DP.write(
@@ -161,7 +161,7 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 
 bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
 {
-    ++count;
+    ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
     DP.maxpy ( R, P, Q, G, d1, d2); // R = P*Q;
 //     DP.write( DP.write(
@@ -407,7 +407,7 @@ int main(int argc, char ** argv) {
     if (! success) {
         std::cerr << "Error: " << seed << std::endl;
     } else {
-        std::cerr << "Success:" << count << std::endl;
+        std::cerr << "Success:" << TTcount << std::endl;
     }
 
     success &= TestAxpy(DP101, P, Q, monomial, 11, 11);

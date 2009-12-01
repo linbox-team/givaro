@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <07 Oct 09 11:17:17 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <18 Nov 09 10:55:44 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: fractions over a Ring domain
 // ===============================================================
@@ -49,13 +49,15 @@ public :
 
     void reduce(Ring_E& a, Ring_E& b) const {
         Ring_E g; Ring_t::gcd(g,a,b);
-//         Ring_t::write(std::cerr << "a: ", a) << std::endl;
-//         Ring_t::write(std::cerr << "b: ", b) << std::endl;
-//         Ring_t::write(std::cerr << "g: ", g) << std::endl;
+// Ring_t::write(std::cerr << "a BEF: ", a) << std::endl;
+// Ring_t::write(std::cerr << "b BEF: ", b) << std::endl;
+// Ring_t::write(std::cerr << "g GCD: ", g) << std::endl;
         if(! ( Ring_t::isOne(g) || Ring_t::isZero(g) ) ) {
             Ring_t::divin(a,g);
             Ring_t::divin(b,g);
         }
+// Ring_t::write(std::cerr << "a AFT: ", a) << std::endl;
+// Ring_t::write(std::cerr << "b AFT: ", b) << std::endl;
     }
     
     Rep& reduce(Rep& r) const {
@@ -66,6 +68,8 @@ public :
 
     FracDom (const RingDom& R ) : Ring_t(R), zero(R.zero,R.one), one(R.one,R.one) {}
     FracDom (const Self_t& F) : Ring_t(static_cast<const Ring_t&>(F)), zero(F.zero), one(F.one) {}
+    const Ring_t& getdomain() const { return static_cast<const Ring_t&>(*this); }
+    const Ring_t& getring() const { return static_cast<const Ring_t&>(*this); }
 	
     Rep& init(Rep& a) const { Ring_t::init(a._num); Ring_t::init(a._den); return a; }
 
@@ -128,7 +132,7 @@ public :
     Rep& mulin ( Rep& q, const Ring_E& a ) const {
         Ring_E u(a);
         reduce(u,q._den);
-        Ring_E::mulin(q._num,u);
+        Ring_t::mulin(q._num,u);
         return q;
     }       
     Rep& mul   ( Rep& q, const Rep& a, const Ring_E& b ) const {
@@ -250,6 +254,10 @@ public :
     }       
 
     Rep& divin ( Rep& q, const Rep& a ) const {
+        invin(q); mulin(q,a); return invin(q);
+    }       
+
+    Rep& divin ( Rep& q, const Ring_E& a ) const {
         invin(q); mulin(q,a); return invin(q);
     }       
 
@@ -405,6 +413,7 @@ public :
         }
         return W;
     }
+
         // -- Random generators
     template< class RandIter > Rep& random(RandIter& g, Rep& r) const {
         Ring_t::random(g, r._num);

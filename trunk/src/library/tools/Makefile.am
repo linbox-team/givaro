@@ -14,7 +14,10 @@ pkginclude_HEADERS=\
 	giviterator.h		\
 	givarithmetics.h	\
 	givfractiondomain.h	\
-	givquotientdomain.h
+	givquotientdomain.h	\
+	givtruncdomain.h	\
+	givtruncdomain.inl	\
+	givhighorder.h
 
 noinst_LTLIBRARIES=libgivtools.la
 

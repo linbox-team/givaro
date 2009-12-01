@@ -6,12 +6,12 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givdegree.h,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givdegree.h,v 1.5 2009-12-01 11:24:21 jgdumas Exp $
 // Description: opaque class for Degree of polynomial. Degree of polynomial
 // 0 is Degree::deginfty with value DEGPOLYZERO.
 // ==========================================================================
-#ifndef _POLY1DEBGREE_H_
-#define _POLY1DEBGREE_H_
+#ifndef _POLY1DEGREE_H_
+#define _POLY1DEGREE_H_
 
 #include <iostream>
 
@@ -19,10 +19,10 @@
 // 
 class Degree { 
 public:
-    typedef long value_type;
+  typedef long value_type;
 
   enum { DEGPOLYZERO =-1};
-    Degree(long a = DEGPOLYZERO): _deg(a) { }
+  Degree(long a = DEGPOLYZERO): _deg(a) { }
     
 // JGD 03.06.2003
 // Commented out because of ambiguous overload on the operators
@@ -31,7 +31,7 @@ public:
 //  operator int() { return _deg; }            
 
   // -- Degree of zero polynomial
-  static const long deginfty = DEGPOLYZERO;
+  static const long deginfty;
 
   // -- cvrt
   long value() const { return _deg; }
@@ -41,6 +41,14 @@ public:
   Degree operator-( const Degree& d) const { return Degree(_deg-d._deg); }
   Degree operator*( const Degree& d) const { return Degree(_deg*d._deg); }
   Degree operator/( const Degree& d) const { return Degree(_deg/d._deg); }
+  Degree& operator+=( const Degree& d) { _deg+=d._deg; return *this; }
+  Degree& operator-=( const Degree& d) { _deg-=d._deg; return *this; }
+  Degree& operator*=( const Degree& d) { _deg*=d._deg; return *this; }
+  Degree& operator/=( const Degree& d) { _deg/=d._deg; return *this; }
+    Degree operator<<( const int i) const { return Degree(_deg<<i); }
+    Degree operator>>( const int i) const { return Degree(_deg>>i); }
+    Degree& operator <<=( const int i) { _deg<<=i; return *this;}
+    Degree& operator >>=( const int i) { _deg>>=i; return *this;}
   long operator++() { return ++_deg; }
   long operator--() { return --_deg; }
   long operator++(int) { return _deg++; }
@@ -53,6 +61,12 @@ public:
   int operator< ( const Degree& d) const { return _deg <  d._deg; }
   int operator>=( const Degree& d) const { return _deg >= d._deg; }
   int operator> ( const Degree& d) const { return _deg >  d._deg; }
+  int operator==( const long& d) const { return _deg == d; }
+  int operator!=( const long& d) const { return _deg != d; }
+  int operator<=( const long& d) const { return _deg <= d; }
+  int operator< ( const long& d) const { return _deg <  d; }
+  int operator>=( const long& d) const { return _deg >= d; }
+  int operator> ( const long& d) const { return _deg >  d; }
   
   // -- methods
     friend std::ostream& operator<< (std::ostream& o, const Degree& d) { return o << d._deg; }
@@ -64,5 +78,7 @@ public:
 };
 
 inline long value(const Degree& d) { return d._deg; }
+
+const long Degree::deginfty = Degree::DEGPOLYZERO;
 
 #endif

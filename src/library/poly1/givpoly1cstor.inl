@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.10 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.11 2009-12-01 11:24:21 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
@@ -132,6 +132,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
     for (int i=0; i<deg; ++i)
         _domain.assign(P[i], _zero);
     _domain.init(P[deg], val);
+    
     if (_domain.isZero(P[deg])) { 
         P.reallocate(0);
     } 

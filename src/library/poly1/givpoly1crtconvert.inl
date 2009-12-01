@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <08 Oct 09 16:36:51 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <28 Oct 09 18:49:34 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 

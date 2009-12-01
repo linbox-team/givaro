@@ -18,14 +18,14 @@ typedef Poly1Dom< Field, Dense> Polys;
 typedef HighOrder< Field > HighOrders;
 
 
-long long count = 0;
+long long TFDcount = 0;
 Timer Ttaylor, Thighorder; 
 
 
 
 bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys::Element oQ, Degree a, Degree b) {
-    ++count;
-//     std::cerr << "------------------------------------------------------------" << count <<std::endl;
+    ++TFDcount;
+//     std::cerr << "------------------------------------------------------------" << TFDcount <<std::endl;
 
     HighOrders::Truncated TQ;
     Degree dp; HO101.getpoldom().degree(dp, P);
@@ -196,7 +196,7 @@ int main(int argc, char ** argv) {
     if (! success) {
         std::cerr << "Error: " << seed << std::endl;
     } else {
-        std::cerr << "Success:" << count << std::endl;
+        std::cerr << "Success:" << TFDcount << std::endl;
     }
 
     return 0;

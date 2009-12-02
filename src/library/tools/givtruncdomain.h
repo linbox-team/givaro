@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Nov 09 16:39:55 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <02 Dec 09 11:29:18 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Pieces of polynomials as defined in
 // [Arne Storjohann, High-Order Lifting
@@ -30,19 +30,27 @@ public :
     typedef          Storage_t                Rep;
     typedef          Storage_t                Element;
 
-    TruncDom (const Domain& d, const Indeter& X = Indeter() ) : Father_t(d,X) {}
-    TruncDom (const Self_t& t) : Father_t(static_cast<const Father_t&>(t)) {}
-    TruncDom (const Father_t& t) : Father_t(t) {}
+
+    Storage_t zero, one;
+
+    TruncDom (const Domain& d, const Indeter& X = Indeter() ) : Father_t(d,X) {
+        this->assign(zero,Father_t::zero);
+        this->assign(one,Father_t::one);
+    }
+    TruncDom (const Self_t& t) : Father_t(static_cast<const Father_t&>(t)) {
+        this->assign(zero,Father_t::zero);
+        this->assign(one,Father_t::one);        
+    }
+    TruncDom (const Father_t& t) : Father_t(t) {
+        this->assign(zero,Father_t::zero);
+        this->assign(one,Father_t::one);        
+    }
     
     Rep& init(Rep& p) const { Father_t::init(p.first); p.second=0; return p; }
 
     template<class XXX>
     Rep& init(Rep& p, const XXX &cste ) const {
         Father_t::init(p.first,cste); p.second=0; return p;
-    }
-
-    Rep& init(Rep& p, const Polynomial_t& r ) const {
-        Father_t::init(p.first,r); p.second=0; return setval(p);
     }
 
         // -- For polynomial = lcoeff X^deg 
@@ -141,7 +149,11 @@ public :
 
         // -- Comparaison operator
     int isZero  ( const Rep& P ) const { return Father_t::isZero(P.first); }
-    int isOne   ( const Rep& P ) const;
+    int isOne   ( const Rep& P ) const { 
+        Degree vP;val(vP,P);
+        return (Father_t::isOne(P.first) && (vP == 0));
+    }
+            
     
     int areEqual ( const Rep& P, const Rep& Q ) const {
         Degree vP;val(vP,P);

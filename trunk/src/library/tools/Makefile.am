@@ -17,6 +17,7 @@ pkginclude_HEADERS=\
 	givquotientdomain.h	\
 	givtruncdomain.h	\
 	givtruncdomain.inl	\
+	givfixedtrunc.h		\
 	givhighorder.h
 
 noinst_LTLIBRARIES=libgivtools.la

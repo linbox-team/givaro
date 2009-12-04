@@ -4,9 +4,9 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <02 Dec 09 11:39:33 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <03 Dec 09 17:06:20 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
-// Description: Polynomials modulo X^k
+// Description: Polynomials modulo X^{k+1}
 // ===============================================================
 #ifndef _GIV_Fixed_Trunc_Domain_H_
 #define _GIV_Fixed_Trunc_Domain_H_
@@ -33,6 +33,12 @@ public :
     FixedTruncDom (const Domain& d, const Degree deg, const Indeter& X = Indeter() ) : Father_t(d,X), _deg(deg) {}
     FixedTruncDom (const Self_t& t) : Father_t(static_cast<const Father_t&>(t)),_deg(t._deg) {}
     FixedTruncDom (const Father_t& t, const Degree deg) : Father_t(t), _deg(deg) {}
+
+
+    Degree& getModulus(Degree& d) const {
+        return d=_deg;
+    }
+            
     
     template<class XXX>
     Rep& init(Rep& p, const XXX &cste ) const {
@@ -141,7 +147,7 @@ public :
 
 
     Rep& invin ( Rep& q) const {
-        Polynomial_t Xk; PolDom::init(Xk,_deg);
+        Polynomial_t Xk; PolDom::init(Xk,_deg+1);
         Polynomial_t pq; Father_t::convert(pq,q);
         Polynomial_t t; PolDom::invmod(t,pq,Xk);
         return Father_t::assign(q,t);
@@ -168,6 +174,19 @@ public :
 
     Rep& random(GivRandom& g, Rep& r, Degree s) const {
         return Father_t::truncin(Father_t::random(g,r,s),0,_deg);
+    }
+
+
+    Type_t& leadcoef (Type_t& c, const Rep& P) const {
+        return PolDom::leadcoef(c,P.first);
+    }
+
+    std::istream& read ( std::istream& i, Rep& n) const {
+        n.second=0;
+        return PolDom::read(i,n.first);
+    }
+    std::ostream& write( std::ostream& o, const Rep& n) const {
+        return PolDom::write(o,n.first);
     }
 
 };

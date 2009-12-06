@@ -5,6 +5,7 @@
 // see the COPYRIGHT file for more details.
 
 #include <gmp.h>
+#include <givaro/givconfig.h>
 #include <givaro/givgfq.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givpoly1factor.h>

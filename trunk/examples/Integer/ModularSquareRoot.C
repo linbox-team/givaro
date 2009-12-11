@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <17 Sep 09 15:52:53 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <11 Dec 09 21:07:13 Jean-Guillaume.Dumas@imag.fr> 
 // Givaro : Modular square roots
 // =================================================================== //
 
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     std::cout << r << std::endl;
     std::cerr << chrono << std::endl;
     
-    std::cerr << "Check, " << r << "^2 mod " << n << " = " << ( (r*r)%n) << std::endl;	
+    std::cerr << "Check, (" << r << ")^2 mod " << n << " = " << ( (r*r)%n) << std::endl;	
     
     return 0;
 }

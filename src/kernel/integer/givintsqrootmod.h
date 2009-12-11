@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <17 Sep 09 17:10:25 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <11 Dec 09 21:08:33 Jean-Guillaume.Dumas@imag.fr> 
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -70,6 +70,7 @@ public:
         IntRNSsystem < std::vector, std::allocator > RNs (Pe);
 
         RNs.RnsToRing (x, roots);
+        x = (x<0?-x:x);
         return x;
     }
 

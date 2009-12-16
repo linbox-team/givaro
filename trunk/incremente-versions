@@ -13,12 +13,14 @@ set ver = src/kernel/system/givconfig.h
 echo -n "Increment library version ? "
 set answ = $<
 if ("$answ" == "y") then
-	echo -n "`fgrep AM_INIT_AUTOMAKE $conf`"
-	set vern = `fgrep AM_INIT_AUTOMAKE $conf | sed 's/)//g;s/.*\.//g'`
-	set newv = $vern
-	@ newv ++
+	echo -n "`fgrep AC_INIT $conf`"
+	set vern = `fgrep AC_INIT $conf | cut -d',' -f2 | sed 's/ //g'`
+
+	set num = `echo $vern | cut -d'.' -f3`
+	@ num ++
+	set newv = "`echo $vern | cut -d'.' -f1`.`echo $vern | cut -d'.' -f2`.$num"
 	echo " --> $newv"
-	echo "s/\.$vern)/\.$newv)/" > /tmp/confin.sed.$$
+	echo "s/$vern/$newv/" | sed 's/\./\\\./g' > /tmp/confin.sed.$$
 	sed -f /tmp/confin.sed.$$ $conf > /tmp/confin.$$
 	\rm -rf /tmp/confin.sed.$$
 	diff /tmp/confin.$$ $conf

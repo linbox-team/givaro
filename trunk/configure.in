@@ -5,7 +5,7 @@
 # see the COPYRIGHT file for more details.
 
 AC_PREREQ(2.50)
-AC_INIT(Givaro, 3.3.1, Jean-Guillaume.Dumas@imag.fr, givaro, http://ljk.imag.fr/CASYS/LOGICIELS/givaro)
+AC_INIT(Givaro, 3.3.2, Jean-Guillaume.Dumas@imag.fr, givaro, http://ljk.imag.fr/CASYS/LOGICIELS/givaro)
 AM_INIT_AUTOMAKE()
 AM_CONFIG_HEADER(config.h)
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)

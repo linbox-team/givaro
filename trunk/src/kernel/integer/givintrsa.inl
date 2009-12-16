@@ -14,8 +14,9 @@
 #define _GIVARO_RSA_Public_KEY_
 
 #include <iostream>
-#include "givinteger.h"
-#include "givintrsa.h"
+#include <givaro/givinteger.h>
+#include <givaro/givrandom.h>
+#include <givaro/givintrsa.h>
 
 // =================================================================== //
 // log[10]
@@ -85,10 +86,11 @@ std::ostream& IntRSADom<RandIter>::ecriture_Int(std::ostream& o, const Element& 
 // CBC mode enciphering
 template<class RandIter>
 std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) const {
-    srand48(1);
+    RandIter generator;
     unsigned char x;
     Element res,r;
-    Element ancien(0);
+    o << generator.seed() << std::endl;
+    Element ancien(generator());
     int imax = (_lm-1)<<3;
     do { 
         res = 0;
@@ -106,7 +108,7 @@ std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) c
             // Padding randomly to enable CBC
             // indeed, decryption will return (res^ancien) % _n
         while ( (res^ancien) > _n) {
-            res += ((Integer)((unsigned char)lrand48()) << imax);
+            res += ((Integer)((unsigned char)generator()) << imax);
         }
 
         powmod(r, res^ancien,_e,_n);
@@ -122,14 +124,18 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
     double length = _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
     char * tmp = new char[(long)length+2];
     Element r;
+    unsigned long seed; in >> seed;
+    GivRandom generator(seed);
 
     if (_fast_impl) {
         Element p, q, pr, k, phi, t, delt ;
         pr = _e*_d;
 	--pr;
         k = pr/_n;
-        ++k;
-        phi = pr/ k;
+	do {
+            ++k;
+            phi = pr/ k;
+        } while (k*phi != pr);
         t = _n-phi; ++t;
         t >>= 1;
         sqrt(delt, t*t-_n);
@@ -141,7 +147,7 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
         b *= p;
         b %= _n;
 
-        Element ancien(0);
+        Element ancien( generator() );
         
         in >> tmp; 
         do {
@@ -166,7 +172,7 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
                 ecriture_str(o, r2);
         } while (! in.eof());
     } else {      
-        Element ancien(0);
+        Element ancien( generator() );
         in >> tmp;
         do {
             powmod(r, Integer(tmp),_d,_n);

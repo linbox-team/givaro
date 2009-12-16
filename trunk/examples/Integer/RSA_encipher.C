@@ -18,22 +18,24 @@ int main(int argc, char** argv)
     Timer tim;
     tim.clear();
     
-    IntRSADom<GivRandom>::Rep m,k;
+    IntRSADom<GivRandom>::Rep n,e;
     if (argc > 3)
-        m = Integer( argv[3] );
+        n = Integer( argv[3] );
     else 
-        std::cin >> m;
+        std::cin >> n;
     if (argc > 4)
-        k = Integer( argv[4] );
+        e = Integer( argv[4] );
     else 
-        std::cin >> k;
+        std::cin >> e;
     
-    IntRSADom<GivRandom> IR(m,k);
+    IntRSADom<GivRandom> IR(n,e);
 
-    tim.start();
     std::ifstream TXT(argv[1]);
+    if (!TXT) { std::cerr << "Error opening input file: " << argv[1] << std::endl; return -1; }
     std::ofstream OUT(argv[2]);
-    IR.encipher( OUT, TXT );
+    if (!OUT) { std::cerr << "Error opening output file: " << argv[2] << std::endl; return -1; }
+    tim.start();
+   IR.encipher( OUT, TXT );
     OUT.close();
     TXT.close();
     tim.stop();

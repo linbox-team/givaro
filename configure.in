@@ -9,6 +9,9 @@ AC_INIT(Givaro, 3.3.2, Jean-Guillaume.Dumas@imag.fr, givaro, http://ljk.imag.fr/
 AM_INIT_AUTOMAKE()
 AM_CONFIG_HEADER(config.h)
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
+AC_PATH_PROG(RM, rm, $FALSE)
+RM="$RM -f"
+
 
 AM_MAINTAINER_MODE
 

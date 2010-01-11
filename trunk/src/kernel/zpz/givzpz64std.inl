@@ -7,7 +7,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.12 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.13 2010-01-11 12:22:09 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -393,7 +393,7 @@ inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const Integer& residu 
   if (residu <0) {
       // -a = b [p]
       // a = p-b [p]
-    if ( residu <= (Integer)(-_p) ) tr = int64( (-residu) % (Integer)_p) ;
+    if ( (-residu) >= (Integer)(_p) ) tr = int64( (-residu) % (Integer)_p) ;
     else tr = int64(-residu);
     if (tr)
       return r = (uint64)_p - (uint64)tr;

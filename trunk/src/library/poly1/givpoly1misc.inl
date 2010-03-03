@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.17 2009-12-14 11:30:17 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.18 2010-03-03 16:48:48 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -122,10 +122,11 @@ inline Degree& Poly1Dom<Domain,Dense>::val(Degree& d, const Rep& P) const
   size_t sz = P.size();
   if (sz ==0) {  return d = Degree::deginfty;}
   if (!_domain.isZero(P[0])) { return d = 0;}
-  for (int i=1; i<sz; ++i) 
+  for (size_t i=1; i<sz; ++i) 
   {
     if (!_domain.isZero(P[i])) {  return d = i; }
   }
+  return d=0;
 }
 
 

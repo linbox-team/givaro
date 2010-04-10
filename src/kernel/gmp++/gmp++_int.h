@@ -391,7 +391,7 @@ static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const
   
 protected:
 
-    typedef MP_INT Rep;
+    typedef __mpz_struct Rep;
 
     Rep gmp_rep;
 

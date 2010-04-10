@@ -41,7 +41,7 @@ for GMP_HOME in ${GMP_HOME_PATH}
 	if test "x$GMP_HOME" != "x/usr" -a "x$GMP_HOME" != "x/usr/local"; then
 		if test -r "$GMP_HOME/include/gmp.h" ; then
 			GMP_CFLAGS="-I${GMP_HOME}/include"
-			GMP_LIBS="-L${GMP_HOME}/lib -lgmp"
+			GMP_LIBS="-Wl,-rpath=${GMP_HOME}/lib -L${GMP_HOME}/lib -lgmp"
 		else
 			echo "($GMP_HOME) seems an invalid GMP prefix"
 			echo "Searching GMP in PATH"

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: Jean-Guillaume Dumas
-// $Id: givratreconstruct.C,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givratreconstruct.C,v 1.4 2010-04-12 15:54:39 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -31,7 +31,9 @@ Rational::Rational(const Integer& f, const Integer& m, const Integer& k, bool re
 bool Rational::ratrecon(const Integer& f, const Integer& m, const Integer& k, bool recurs ) 
 {
 
-// 	std::cerr << "RatRecon : " << f << " " << m << " " << k << std::endl;
+#ifdef DEBUG
+std::cerr << "RatRecon : " << f << " " << m << " " << k << std::endl;
+#endif
 
 
     Integer r0, t0, r1, t1, q, u;
@@ -42,15 +44,14 @@ bool Rational::ratrecon(const Integer& f, const Integer& m, const Integer& k, bo
     t1=1;
     while(r1>=k)
     {
-//         std::cerr << "r0: " << r0
-//                   << ", r1: " << r1
-//                   << ", q: " << q
-// //                   << ", s0: " << s0
-// //                   << ", s1: " << s1
-//                   << ", t0: " << t0
-//                   << ", t1: " << t1
-//                   << std::endl;
-        
+#ifdef DEBUG
+        std::cerr << "r0: " << r0
+                  << ", r1: " << r1
+                  << ", q: " << q
+                  << ", t0: " << t0
+                  << ", t1: " << t1
+                  << std::endl;
+#endif
         q = r0;
         q /= r1;        // r0/r1
 

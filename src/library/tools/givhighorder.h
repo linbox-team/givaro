@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <20 Nov 09 15:06:04 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <24 Mar 10 11:51:01 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
@@ -89,7 +89,14 @@ struct HighOrder {
             Polynomial Tay; Degree dT;
             Degree dA; _poldom.degree(dA, Fra._den);
 
+#ifdef GIVARO_HIGHORDER_TIMER
+            Timer GivHOTimer; GivHOTimer.clear(); GivHOTimer.start();
+#endif
             this->highorder(Gam, T, Deg, Tay, dT, a, b, Fra._den, dA);
+#ifdef GIVARO_HIGHORDER_TIMER
+            GivHOTimer.stop();
+            std::cerr << "HighOrder_" << a << '^' << b << " : " << GivHOTimer << std::endl;
+#endif
             
             Truncated A, B;
             _truncdom.assign(A, Fra._den);
@@ -184,18 +191,29 @@ struct HighOrder {
         Truncated TA; _truncdom.assign(TA, A);
         size_t ordero2 = order.value()/2;
 
+
         for( ; k0<ordero2; ) {
+#ifdef GIVARO_HIGHORDER_TIMER
+        Timer GivHOTimer; GivHOTimer.clear(); GivHOTimer.start();
+#endif
             doubleorder(G0, T0, Gam.back(), T.back(), S, TA, dA, k0);
             Gam.push_back(G0);
             T.push_back(T0);
             k0*=2; Deg.push_back(k0-dA);
+#ifdef GIVARO_HIGHORDER_TIMER
+        GivHOTimer.stop();
+        std::cerr << "DoubleOrder[" << dA << "]^" << k0 << " out of " << ordero2 << " : " << GivHOTimer << std::endl;
+#endif
         }
         return Gam;
     }
     
     Truncated& Betta(Truncated& B, const Truncated& TB, const Truncated& TA, const Degree dA, const Degree a, const Polynomial& Tay, const Degree dT, const std::vector<Truncated>& Gam, const std::vector<Truncated>& T, const std::vector<Degree>& Deg) const {
 // this->write(std::cerr << "BEG Betta" << a << "TB: [", TB) << "]_" << a << std::endl;
-    
+#ifdef GIVARO_HIGHORDER_TIMER
+          Timer GivHOTimer; GivHOTimer.clear(); GivHOTimer.start();
+#endif
+   
           Degree a0=dA*2-1;
           a0 = (a0>a? 0 : a-a0);
           Truncated S; 
@@ -206,6 +224,10 @@ struct HighOrder {
 
           _truncdom.maxpy(B, TA, U, TB, a, a+dA-1);
 // this->write(std::cerr << "END Betta" << a << " B: [", B) << "]/" << a << std::endl;
+#ifdef GIVARO_HIGHORDER_TIMER
+          GivHOTimer.stop();
+          std::cerr << "Betta[" << dA << "]_" << a << " : " << GivHOTimer << std::endl;
+#endif
           return _truncdom.divin(B, a);
     }     
     

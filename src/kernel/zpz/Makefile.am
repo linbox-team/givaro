@@ -26,6 +26,7 @@ pkginclude_HEADERS=\
 	givextension.h		\
 	givgfqext.h		\
 	givtablelimits.h	\
+	givgfqkron.h		\
 	givzpz16std.inl		\
 	givzpz32std.inl		\
 	givzpz32uns.inl		\

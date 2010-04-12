@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <16 Jun 09 10:43:32 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <12 Apr 10 14:56:39 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 
 #ifndef _GIV_POLY1_P_ADIC_H_
@@ -14,7 +14,7 @@
 #include <math.h>
 #include <iostream>
 
-template<class Domain, class Tag> class Poly1PadicDom;
+template<class Domain, class Tag=Dense> class Poly1PadicDom;
 
 
 
@@ -145,6 +145,18 @@ public:
     } 
 
 
+    template<class vect, class TT>
+    vect& radixdirect(vect& P, const TT& E, unsigned long n) {
+        P.resize(n);
+        TT r = E, s=r;
+        for(typename vect::iterator pit=P.begin(); pit != P.end(); ++pit) {
+            s /= _domain.size();
+            *pit = typename vect::value_type(r-s*_domain.size());
+            r = s;
+        }
+        return P;
+    } 
+
     template<class vect>
     vect& radixdirect(vect& P, const double& E, unsigned long n) {
         P.resize(n);
@@ -156,6 +168,7 @@ public:
         }
         return P;
     } 
+
 };
 
 #endif 

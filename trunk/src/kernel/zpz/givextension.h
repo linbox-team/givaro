@@ -52,14 +52,16 @@ public:
 
     typedef PolElement Element;
 
+    Element zero;
+    Element one;
 
     Extension ( const Residu_t p, const Residu_t e = 1)
-: _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Indeter("ý")  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ) {
+: _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Indeter("ý")  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_bF.zero), one (_bF.one) {
 /*     cerr << "Pol Cstor" << endl; */
         unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
         if (basedegree >= e) 
-            cerr << "ERROR : Try a direct extension field GFDom instead of a polynomial extension" << endl;
-        else
+            std::cerr << "ERROR : Try a direct extension field GFDom instead of a polynomial extension" << endl;
+	else
             _pD.creux_random_irreducible( _irred, _extension_order );
     }
 
@@ -181,6 +183,16 @@ public:
     bool isOne (const PolElement& b) const {
         return _pD.isOne(b) ;
     }
+
+
+    template<class RandIter> Element& random(RandIter& g, Element& r) const { return _pD.random(g,r,Degree(_exponent-1)); }
+    template<class RandIter> Element& random(RandIter& g, Element& r, long s) const { return _pD.random(g,r,(s>=_exponent?_exponent-1:s)); }
+    template<class RandIter> Element& random(RandIter& g, Element& r, const Element& b) const {  return _pD.random(g,r,b.size()); }
+    template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r) const { return _pD.nonzerorandom(g,r,Degree(_exponent-1)); }
+    template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, long s) const { return _pD.nonzerorandom(g,r,(s>=_exponent?_exponent-1:s)); }
+    template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, const Element& b) const {  return _pD.nonzerorandom(g,r,b.size()); }
+
+
             
     
     Integer &cardinality (Integer &c) const 

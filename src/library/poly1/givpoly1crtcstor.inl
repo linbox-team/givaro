@@ -53,8 +53,8 @@ void Poly1CRT<Field>::ComputeCk()
 
   size_t size = _primes.size();
   _ck.reallocate(size+1);
-  Element irred; _PolRing.init(irred); _PolRing.assign(irred, Degree(1), _F.one);
-  Element prod; _PolRing.init(prod); _PolRing.assign(prod, Degree(0), _F.one);
+  Element irred; _PolRing.init(irred, Degree(1));
+  Element prod; _PolRing.init(prod, Degree(0));
 // Never used
 //   _PolRing.assign(_ck[0], prod);
   for (size_t k=1; k < size; ++k) {

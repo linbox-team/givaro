@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.9 2009-12-01 11:24:21 jgdumas Exp $
+// $Id: givrational.h,v 1.10 2010-04-14 16:20:30 jgdumas Exp $
 // ==========================================================================
 #ifndef _RATIONAL_H_
 #define _RATIONAL_H_
@@ -261,6 +261,4 @@ public:
     std::istream& read ( std::istream& i, Rep& n) const { return i >> n; }
     std::ostream& write( std::ostream& o, const Rep& n) const { return n.print(o); }
 };
-
-
 #endif

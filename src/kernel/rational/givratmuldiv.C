@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratmuldiv.C,v 1.5 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givratmuldiv.C,v 1.6 2010-04-14 14:56:00 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -110,16 +110,21 @@ Rational& Rational::operator /= (const Rational& r)
   }
   if (isZero(*this)) return *this ;
   if (isOne(r)) return *this ;
+//   if (isOne(*this))  {
+//       if (sign(r) < 0) {
+//           num = r.den;
+//           den = r.num;
+//           return *this;
+//       } else {
+//           num = -r.den;
+//           den = -r.num;
+//           return *this;
+//       }
+//   }
   if (isOne(*this))  {
-      if (sign(r) < 0) {
-          num = r.den;
-          den = r.num;
-          return *this;
-      } else {
-          num = -r.den;
-          den = -r.num;
-          return *this;
-      }
+      num = r.den;
+      den = r.num;
+      return *this;
   }
   
   if (absCompare(den, r.den) == 0) {

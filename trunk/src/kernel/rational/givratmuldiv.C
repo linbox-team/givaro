@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratmuldiv.C,v 1.6 2010-04-14 14:56:00 jgdumas Exp $
+// $Id: givratmuldiv.C,v 1.7 2010-04-14 16:20:30 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -105,53 +105,71 @@ Rational Rational::operator / (const Rational& r) const
 // --------------------------------------- operator /= 
 Rational& Rational::operator /= (const Rational& r)
 {
+// std::cerr << "   BEGIN divin: " << *this << " /= " << r << std::endl;
+
   if ( isZero(r) ) {
      throw GivMathDivZero("*** division by zero, in operator / (const Rational&)") ;
   }
   if (isZero(*this)) return *this ;
   if (isOne(r)) return *this ;
-//   if (isOne(*this))  {
-//       if (sign(r) < 0) {
-//           num = r.den;
-//           den = r.num;
-//           return *this;
-//       } else {
-//           num = -r.den;
-//           den = -r.num;
-//           return *this;
-//       }
-//   }
   if (isOne(*this))  {
-      num = r.den;
-      den = r.num;
+      if (sign(r.num)<0) {
+          Integer::neg(this->num,r.den);
+          Integer::neg(this->den,r.num);
+      } else {
+          this->num = r.den;
+          this->den = r.num;
+      }
+// std::cerr << "   DIVIN isone result: " << *this << std::endl;
       return *this;
   }
   
-  if (absCompare(den, r.den) == 0) {
-      den = r.num;
+  if (compare(this->den, r.den) == 0) {
+      if (sign(r.num)<0) {
+          Integer::neg(this->den,r.num);
+          Integer::negin( this->num );
+      } else {
+          this->den = r.num;
+      }
+// std::cerr << "   DIVIN id result: " << this->num << " / " << this->den << std::endl;
+// std::cerr << "   DIVIN id den result: " << *this << std::endl;
       return this->reduce();
   }
 
   if (Rational::flags == Rational::NoReduce) {
-      num *= r.den;
-      den *= r.num;
+      if (sign(r.num)<0) {
+          this->num *= r.den;
+          this->den *= r.num;
+          Integer::negin( this->num );
+          Integer::negin( this->den );
+      } else {
+          this->num *= r.den;
+          this->den *= r.num;
+      }
       return *this;
   }
   
-  Integer d1 = gcd(num, r.num);
-  Integer d2 = gcd(den, r.den);
+  Integer d1 = gcd(this->num, r.num);
+  Integer d2 = gcd(this->den, r.den);
+// std::cerr << "   d1: " << d1 << ", d2: " << d2 << std::endl;
 
-  num /= d1;
-  num *= (r.den / d2);
-  if (sign(r.num) < 0)
-    num = -num ;
+  this->num /= d1;
+  this->num *= (r.den / d2);
+//   if (sign(r.num) < 0)
+//     num = -num ;
 
-  den /= d2;
-  den *= (r.num / d1);
+  this->den /= d2;
+  this->den *= (r.num / d1);
   
-    //rden can't be nul
-  if (sign(den) <0) den = abs(den) ;
+      //rden can't be neg
+  if (sign(den) <0) {
+          Integer::negin( this->num );
+          Integer::negin( this->den );
+  }
   
+// std::cerr << "   num: " << num << ", den: " << den << std::endl;
+// std::cerr << "   DIVIN result: " << *this << std::endl;
+
   return *this;
 }
 

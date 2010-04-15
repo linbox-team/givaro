@@ -39,6 +39,9 @@ public :
         return d=_deg;
     }
             
+    Rep& init(Rep& p) const {
+        return Father_t::init(p);
+    }
     
     template<class XXX>
     Rep& init(Rep& p, const XXX &cste ) const {

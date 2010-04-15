@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <14 Apr 10 13:06:43 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <15 Apr 10 14:28:48 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Polynomials modulo X^{k+1}
 // ===============================================================
@@ -185,6 +185,10 @@ public :
 
     Type_t& leadcoef (Type_t& c, const Rep& P) const {
         return PolDom::leadcoef(c,P.first);
+    }
+
+    std::ostream& write( std::ostream& o) const {
+        return PolDom::write(o) << " mod " << this->_x << '^' << _deg;
     }
 
     std::istream& read ( std::istream& i, Rep& n) const {

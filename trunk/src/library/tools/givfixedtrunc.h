@@ -73,7 +73,9 @@ public :
         return Father_t::truncin(Father_t::mulin(p,s),0,_deg);
     }            
     
-    Rep& shift(Rep& p, const Degree& s) const;
+    Rep& shiftin(Rep& p, const Degree& s) const {
+	 return Father_t::truncin(Father_t::mulin(p,s),0,_deg);
+    }
     Rep& truncin(Rep& p, const Degree& v, const Degree& d) const {
         return Father_t::truncin(p,v,(d>_deg?_deg:d)); 
     }
@@ -196,10 +198,10 @@ public :
 
     std::istream& read ( std::istream& i, Rep& n) const {
         n.second=0;
-        return PolDom::read(i,n.first);
+        return Father_t::read(i,n.first);
     }
     std::ostream& write( std::ostream& o, const Rep& n) const {
-        return PolDom::write(o,n.first);
+        return Father_t::write(o,n);
     }
 
 };

@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <16 Apr 10 17:01:14 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <16 Apr 10 17:05:09 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
@@ -59,14 +59,14 @@ struct HighOrder {
         Degree d; _poldom.degree(d,Fra._den);
         Tay.resize(order.value()+1);
         size_t i = 0;
-        for( ; (i<Fra._num.size()) && (i<=order); ++i) {
+        for( ; (i<Fra._num.size()) && (order>=i); ++i) {
             _dom.assign(Tay[i],Fra._num[i]);
             for(size_t j = 1; (j<Fra._den.size()) && (j<=i); ++j) {
                 _dom.maxpyin(Tay[i],Fra._den[j],Tay[i-j]);
             }
             _dom.divin(Tay[i], Fra._den.front());
         }
-        for( ; (i<=order); ++i) {
+        for( ; (order>=i); ++i) {
             _dom.assign(Tay[i], _dom.zero);
             for(size_t j = 1; (j<Fra._den.size()) && (j<=i); ++j) {
                 _dom.maxpyin(Tay[i],Fra._den[j],Tay[i-j]);

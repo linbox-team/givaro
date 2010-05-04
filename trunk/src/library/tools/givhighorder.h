@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <16 Apr 10 17:05:09 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <04 May 10 23:36:56 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
@@ -20,6 +20,9 @@
 #include <givaro/givpoly1.h>
 #include <givaro/givfractiondomain.h>
 #include <givaro/givtruncdomain.h>
+
+#include <givaro/givpower.h>
+#include <givaro/givquotientdomain.h>
 
 template<class Domain>
 struct HighOrder {
@@ -74,6 +77,39 @@ struct HighOrder {
             _dom.divin(Tay[i], Fra._den.front());
         }
         return _poldom.setdegree(Tay);
+    }
+
+
+    Truncated& Fiduccia(Truncated& F, const Rep& Fra, Degree b) const {
+//         _dom.write(std::cout << "F: ", F.first.back()) << std::endl;
+        Polynomial Tay; Degree dT;
+        Degree dA; _poldom.degree(dA, Fra._den);
+        this->taylor(Tay, Fra, dA);
+
+//        _poldom.write(std::cout << "A: ", Fra._den) << std::endl;
+        
+
+        Polynomial Rev; _poldom.init(Rev,dA);
+        for(size_t i=0;i<dA.value();++i)
+            _dom.div(Rev[i],(Fra._den)[dA.value()-i],Fra._den.front());
+
+//        _poldom.write(std::cout << "P: ", Rev) << std::endl;
+
+        Polynomial Xl; _poldom.init(Xl);
+        Polynomial Xone; _poldom.init(Xone,Degree(1));
+        QuotientDom<Poly_t> Qdom(_poldom, Rev);
+        dom_power(Xl, Xone, b.value()-1, Qdom);
+
+//         _poldom.write(std::cout << "Xl recurs: ", Xl) << std::endl;
+
+        Type_t Tl; _dom.init(Tl); _dom.assign(Tl,_dom.zero);
+        for(size_t i=0;i<dA.value();++i) {
+            _dom.axpyin(Tl, Xl[i], Tay[i+1]);
+        }
+
+//         _dom.write(std::cerr << "Tl: ", Tl) << std::endl;
+
+        return _truncdom.assign(F, Degree(b), Tl);
     }
 
 

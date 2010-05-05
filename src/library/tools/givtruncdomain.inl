@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <02 Dec 09 11:26:13 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <05 May 10 09:02:07 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Pieces of polynomials as defined in
 // [Arne Storjohann, High-Order Lifting
@@ -82,13 +82,13 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
 
 template <class Domain>
 inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const Rep& P, const Degree& v, const Degree& d) const {
+    Degree vP; val(vP, P);
+    Degree vR; val(vR, R);
     size_t sP = P.first.size(); 
     if (sP == 0) return this->truncin(R,v,d);
     size_t sR = R.first.size(); 
     if (sR == 0) { return this->trunc(R,P,v,d); }
-    Degree vP; val(vP, P);
-    Degree vR; val(vR, R);
-// Degree dP; degree(dP, P); Degree dR; degree(dR, R); std::cout << "vR: " << vR << ", dR: "<< dR << ", vP: "<< vP << ", dP: "<< dP << ", v: "<< v << ", d: "<< d << std::endl;
+// Degree dP; degree(dP, P); Degree dR; degree(dR, R); std::cout << "vR: " << vR << ", dR: "<< dR << ",sR: " << sR << ", vP: "<< vP << ", dP: "<< dP << ", sP: " << sP << ", v: "<< v << ", d: "<< d << std::endl;
     if (vP<=d) {
         if (vR<=d) {
             if (v<=vP) {

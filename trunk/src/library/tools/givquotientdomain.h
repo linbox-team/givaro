@@ -4,13 +4,16 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Nov 09 16:35:50 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <05 May 10 08:35:40 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Quotients over a Ring domain
 // ===============================================================
 #ifndef _GIV_Quotient_Domain_H_
 #define _GIV_Quotient_Domain_H_
 #include <givaro/givpower.h>
+#ifndef GIVABS
+#define GIVABS(a) ((a)>0?(a):-(a))
+#endif
 
 template<class RingDom>
 struct QuotientDom : public RingDom {

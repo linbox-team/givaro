@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <28 Oct 09 18:49:04 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 May 10 13:53:33 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 
@@ -24,8 +24,8 @@ Poly1CRT<Field>::Poly1CRT (const Poly1CRT<Field>& R)
  : _XIndet(R._XIndet),
    _F(R._F),
    _PolRing(R._PolRing),
-   _primes(R._primes, givWithCopy()), 
-   _ck(R._ck, givWithCopy())
+   _primes(R._primes), 
+   _ck(R._ck)
 {}
 
 
@@ -35,7 +35,7 @@ Poly1CRT<Field>::Poly1CRT( const Field& F, const Poly1CRT<Field>::array_T& inpri
  : _XIndet(X),
    _F(F),
    _PolRing(F,X),
-   _primes(inprimes, givWithCopy()),
+   _primes(inprimes),
    _ck(0)
 {
    GIVARO_ASSERT( inprimes.size()>0, "[Poly1CRT<Field>::Poly1CRT] bad size of array");
@@ -52,7 +52,7 @@ void Poly1CRT<Field>::ComputeCk()
   if (_ck.size() !=0) return; // -- already computed
 
   size_t size = _primes.size();
-  _ck.reallocate(size+1);
+  _ck.resize(size+1);
   Element irred; _PolRing.init(irred, Degree(1));
   Element prod; _PolRing.init(prod, Degree(0));
 // Never used

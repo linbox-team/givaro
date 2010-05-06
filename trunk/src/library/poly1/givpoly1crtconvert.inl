@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <28 Oct 09 18:49:34 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 May 10 13:51:41 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 
@@ -13,7 +13,7 @@
 template<class Field>
 typename Poly1CRT<Field>::array_T& Poly1CRT<Field>::RingToRns( typename Poly1CRT<Field>::array_T& rns , const typename Poly1CRT<Field>::Element& a) const {
     size_t size = _primes.size();
-    if (rns.size() != size) rns.reallocate(size);
+    if (rns.size() != size) rns.resize(size);
     for (size_t i=0; i<size; i++) 
         _PolRing.eval(rns[i], a, _primes[i]);
     return rns;

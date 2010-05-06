@@ -5,13 +5,14 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <08 Oct 09 16:52:01 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 May 10 13:47:28 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 #ifndef _GIVARO_Poly1_CRT_H
 #define _GIVARO_Poly1_CRT_H
 #include <givaro/givpoly1.h>
 #include <givaro/givindeter.h>
+#include <vector>
 
 template<class Field>
 class Poly1CRT  {
@@ -22,8 +23,8 @@ public:
     typedef typename Field_t::Element 		Type_t;
     typedef typename Ring_t::Element 		Element;
     typedef Element 				Rep;
-    typedef Array0<Type_t> 			array_T;
-    typedef Array0<Element> 			array_E;
+    typedef std::vector<Type_t> 			array_T;
+    typedef std::vector<Element> 			array_E;
 
         // Default Cstor, Dstor/Cstor of recopy: 
     Poly1CRT() ;

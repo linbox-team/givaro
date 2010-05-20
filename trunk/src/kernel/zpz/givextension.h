@@ -55,18 +55,21 @@ public:
     Element zero;
     Element one;
 
-    Extension ( const Residu_t p, const Residu_t e = 1)
-: _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Indeter("Y")  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_bF.zero), one (_bF.one) {
+    Extension ( const Residu_t p, const Residu_t e = 1, const Indeter Y="Y")
+: _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_bF.zero), one (_bF.one) {
 /*     cerr << "Pol Cstor" << endl; */
         unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
-        if (basedegree >= e) 
-            std::cerr << "ERROR : Try a direct extension field GFDom instead of a polynomial extension" << endl;
-	else
-            _pD.creux_random_irreducible( _irred, _extension_order );
+        if (basedegree >= e) {
+            std::cerr << "WARNING : Try a direct extension field GFDom instead of a polynomial extension" << endl;
+            _bF = BaseField_t(p, 1);
+            _pD = Pol_t(_bF, Y);
+            _extension_order = _exponent;
+        }
+        _pD.creux_random_irreducible( _irred, _extension_order );
     }
 
-    Extension ( const BaseField_t& bF, const Residu_t ex = 1)
-: _bF( bF ), _pD( _bF, Indeter("Y")  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ) {
+    Extension ( const BaseField_t& bF, const Residu_t ex = 1, const Indeter Y="Y")
+: _bF( bF ), _pD( _bF, Y  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ) {
         if (_cardinality < (1<<20) )
             _pD.creux_random_irreducible( _irred, (unsigned long)(ex));
         else

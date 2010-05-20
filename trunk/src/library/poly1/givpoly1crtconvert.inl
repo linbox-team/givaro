@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <06 May 10 13:51:41 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <20 May 10 15:52:06 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 
@@ -34,10 +34,13 @@ typename Poly1CRT<Field>::Element& Poly1CRT<Field>::RnsToRing(typename Poly1CRT<
 #ifdef  GIVARO_CRT_EARLY_TERMINATION
     size_t EarlyTerm = 0;
 #endif
-//     _PolRing.write(std::cerr<< "R[0]: ", I) <<std::endl;
+// _PolRing.write(std::cerr<< "R[0]: ", I) <<std::endl;
     for(size_t i=1; i<size; ++i) {
         Type_t addon; 
         _PolRing.eval(addon, I, _primes[i]);
+
+//         _F.write(_PolRing.write(_F.write(std::cout << "subs(X=", _primes[i]) << ",", I) << ") mod " << _F.characteristic() << " = ", addon) << ';' << std::endl;   
+
         _F.negin(addon);
         _F.addin(addon, rns[i]);
 #ifdef  GIVARO_CRT_EARLY_TERMINATION

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.18 2010-03-03 16:48:48 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.19 2010-05-20 14:53:46 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -134,14 +134,13 @@ inline Degree& Poly1Dom<Domain,Dense>::val(Degree& d, const Rep& P) const
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Type_t& res, const Rep& P, const Type_t& val) const
 {
-typename Domain::Element zero;
-_domain.init(zero,0UL);
+    typename Domain::Element tmp; _domain.init(tmp);
   Degree dP ; degree(dP, P);
-  if (dP == Degree::deginfty) _domain.assign(res, zero);
+  if (dP == Degree::deginfty) _domain.init(res, 0UL);
   else {
     _domain.assign(res, P[dP.value()]);
     for (int i = dP.value(); i>0; --i)
-      _domain.axpy(res, res, val, P[i-1]);
+        _domain.assign(res,_domain.axpy(tmp, res, val, P[i-1]));
   }
   return res;
 }

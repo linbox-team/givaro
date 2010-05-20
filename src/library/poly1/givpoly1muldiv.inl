@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.9 2009-12-01 11:24:21 jgdumas Exp $
+// $Id: givpoly1muldiv.inl,v 1.10 2010-05-20 14:14:37 jgdumas Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
@@ -178,7 +178,7 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::div(Rep& R, const Type_t& u, const Rep& P) const
 {
 #ifdef GIVARO_DEBUG
-  if (isZero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::divin]"));
+  if (isZero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
   if (_domain.isZero(u)) { return assign(R,zero);}
   size_t sP =P.size();

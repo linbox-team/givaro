@@ -10,11 +10,7 @@
 #include <givaro/givpoly1factor.h>
 #include <givaro/givtimer.h>
 
-using namespace std;
-
-
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
   GFqDom<long>::Residu_t MOD;
   if (argc > 1) 	
 	  MOD = atoi(argv[1]);
@@ -28,13 +24,13 @@ int main(int argc, char** argv)
   Poly1FactorDom<GFqDom<long>, Dense> FD(F,Indeter("X"));
   Poly1FactorDom<GFqDom<long>, Dense>::Element P, IXE;
   FD.init(IXE,Degree(1),F.one);
-  FD.read( cin, P );
+  FD.read( std::cin, P );
 
         Timer tim; tim.clear(); tim.start();
         bool f = FD.is_prim_root(IXE, P );
         tim.stop();
 
-  F.write( FD.write( cout, P ) << " is " << (f?"":"not ") << "primitive in " ) << endl;
+  F.write( FD.write( std::cout, P ) << " is " << (f?"":"not ") << "primitive in " ) << endl;
 
       // std::cout << f << std::endl;
   std::cerr << tim << std::endl;

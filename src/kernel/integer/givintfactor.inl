@@ -124,7 +124,7 @@ void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const
         // Deterministic algorithm
         // Valid for p < BOUNDARY_factor
         // Lf is the Container of factors
-    long n; access(n,p);
+    long n = (long)p;
     if (! (n & 0x1)) {
         Lf.push_back(Rep(2));
         do
@@ -136,7 +136,7 @@ void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const
     for(int ii=n+1;ii--;)
 	IP[ii] = 0L;
     i=3;
-    int j, ii, cofact;
+    int j, ii;
     Rep sq;
     while (i<=sqrt(sq,Rep(n))) {
         ii= i << 1;

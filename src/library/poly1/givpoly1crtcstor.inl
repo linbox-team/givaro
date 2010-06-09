@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <06 May 10 13:53:33 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <09 Jun 10 18:15:58 Jean-Guillaume.Dumas@imag.fr> 
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
 
@@ -16,7 +16,7 @@ Poly1CRT<Field>::~Poly1CRT()
 
 template<class Field>
 Poly1CRT<Field>::Poly1CRT ()
- : _primes(0), _ck(0)
+ : _XIndet(), _F(), _PolRing(), _primes(0), _ck(0)
 {}
 
 template<class Field>

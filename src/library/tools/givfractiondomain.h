@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <18 Nov 09 10:55:44 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <24 May 10 18:32:30 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: fractions over a Ring domain
 // ===============================================================
@@ -39,7 +39,7 @@ public :
 
         // -- Exported types
     typedef	     RingDom			Ring_t;
-    typedef typename RingDom::Element		Ring_E;
+    typedef typename RingDom::Element	Ring_E;
     typedef Frac<Ring_E, Ring_E>		Element;
     typedef Frac<Ring_E, Ring_E>		Rep;
 

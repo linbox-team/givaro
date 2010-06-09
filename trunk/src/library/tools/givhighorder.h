@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <04 May 10 23:36:56 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <24 May 10 18:33:44 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
@@ -85,13 +85,16 @@ struct HighOrder {
         Polynomial Tay; Degree dT;
         Degree dA; _poldom.degree(dA, Fra._den);
         this->taylor(Tay, Fra, dA);
-
-//        _poldom.write(std::cout << "A: ", Fra._den) << std::endl;
-        
-
+        return Fiduccia(F, Tay, Fra._den, b);    
+    }
+    
+    Truncated& Fiduccia(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree b) const {
+//         _dom.write(std::cout << "F: ", F.first.back()) << std::endl;
+//        _poldom.write(std::cout << "A: ", FraDen) << std::endl;
+        Degree dA; _poldom.degree(dA, FraDen);
         Polynomial Rev; _poldom.init(Rev,dA);
         for(size_t i=0;i<dA.value();++i)
-            _dom.div(Rev[i],(Fra._den)[dA.value()-i],Fra._den.front());
+            _dom.div(Rev[i],(FraDen)[dA.value()-i],FraDen.front());
 
 //        _poldom.write(std::cout << "P: ", Rev) << std::endl;
 

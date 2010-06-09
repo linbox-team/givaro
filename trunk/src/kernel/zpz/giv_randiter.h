@@ -159,7 +159,7 @@ template <class Field , class Type> class GIV_randIter
     //@{
 
     /// Default constructor
-    GIV_randIter(void) : _size(0) {GivRandom tmp();_givrand=tmp;Field f(); _field=f;}
+    GIV_randIter(void) : _size(0), _givrand(), _field() {}
     
     //@}
 

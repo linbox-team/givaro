@@ -36,4 +36,4 @@ pkginclude_HEADERS=\
 
 noinst_LTLIBRARIES=libgivpoly1.la
 
-libgivpoly1_la_SOURCES=givindeter.C 
+libgivpoly1_la_SOURCES=givindeter.C givdegree.C

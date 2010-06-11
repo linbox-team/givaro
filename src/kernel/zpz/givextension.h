@@ -381,7 +381,7 @@ class GIV_ExtensionrandIter
     //@{
 
     /// Default constructor
-    GIV_ExtensionrandIter(void) : _size(0) {GivRandom tmp();_givrand=tmp;ExtensionField f(); _field=f;}
+    GIV_ExtensionrandIter(void) : _size(0), _givrand(), _field() {}
     
     //@}
 

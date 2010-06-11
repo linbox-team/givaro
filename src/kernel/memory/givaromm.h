@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givaromm.h,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givaromm.h,v 1.5 2010-06-11 14:14:29 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - two memory managers: the first one handle a set on free-list
@@ -108,7 +108,7 @@ inline static void* allocate (const size_t sz)
 static void* reallocate (void* p, const size_t oldsize, const size_t newsize);
 
   // -- Free the bloc pointed by p and allocated by the manager GivMMFreeList.
-inline static void desallocate(void* p, const size_t size=0) 
+inline static void desallocate(void* p, const size_t = 0) 
 { 
   if (p==0) return ;
   register BlocFreeList* tmp = (BlocFreeList*)(((char*)p) - 
@@ -187,7 +187,7 @@ inline static void* allocate (const size_t s)
 static void* reallocate (void* p, const size_t oldsize, const size_t newsize);
 
   // -- Free the bloc allocated by the manager GivMMRefCount.
-inline static void desallocate(void* p, const size_t size=0) 
+inline static void desallocate(void* p, const size_t = 0) 
 { 
   if (p==0) return ;
   register BlocFreeList* tmp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));

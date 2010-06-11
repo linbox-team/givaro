@@ -4,14 +4,14 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Apr 10 14:56:39 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <11 Jun 10 14:43:52 Jean-Guillaume.Dumas@imag.fr> 
 // ================================================================= //
 
 #ifndef _GIV_POLY1_P_ADIC_H_
 #define _GIV_POLY1_P_ADIC_H_
 #include <givaro/givinteger.h>
 #include <givaro/givpoly1.h>
-#include <math.h>
+#include <cmath>
 #include <iostream>
 
 template<class Domain, class Tag=Dense> class Poly1PadicDom;
@@ -132,7 +132,7 @@ public:
         double iq, ir;
         vect Q; 
             long t = (n+1)/2;
-            double q = pow(double(_domain.size()), double(t));
+            double q = std::pow(double(_domain.size()), double(t));
             iq = floor( E / q );
             ir = E - iq*q;
             radixdirect(Q, iq, n-t);

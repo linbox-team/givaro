@@ -26,10 +26,10 @@ public:
 
 
   IntegerDom() : one(1UL), zero(0UL) {}
-  IntegerDom(const IntegerDom& D) : one(1UL), zero(0UL) {}
+  IntegerDom(const IntegerDom&) : one(1UL), zero(0UL) {}
 
-  int operator==( const IntegerDom& BC) const { return 1;}
-  int operator!=( const IntegerDom& BC) const { return 0;}
+  int operator==( const IntegerDom&) const { return 1;}
+  int operator!=( const IntegerDom&) const { return 0;}
 
   // -- Constants: 
   const Integer one;
@@ -134,10 +134,10 @@ public:
 #ifdef __GMP_PLUSPLUS__
     void seeding(unsigned long s = 0) const { Integer::seeding(s) ; }
 #endif
-    template< class RandIter > Rep& random(RandIter& g, Rep& r, long s = 1) const { return Integer::random(r,s); }
-    template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const { return Integer::random(r,b); }
-    template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, long s = 1) const { return Integer::nonzerorandom(r,s); }
-    template< class RandIter > Rep& nonzerorandom (RandIter& g,Rep& r, const Rep& b) const { return Integer::nonzerorandom(r,b); }
+    template< class RandIter > Rep& random(RandIter&, Rep& r, long s = 1) const { return Integer::random(r,s); }
+    template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const { return Integer::random(r,b); }
+    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s = 1) const { return Integer::nonzerorandom(r,s); }
+    template< class RandIter > Rep& nonzerorandom (RandIter&,Rep& r, const Rep& b) const { return Integer::nonzerorandom(r,b); }
 
   // -- IO
   std::istream& read ( std::istream& i ) 

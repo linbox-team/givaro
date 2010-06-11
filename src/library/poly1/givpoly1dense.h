@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.22 2009-12-01 11:24:21 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.23 2010-06-11 14:14:29 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -28,6 +28,7 @@ template < typename T, typename A=std::allocator<T> >
 class givvector : public __GIV_STANDARD_VECTOR<T,A> {
     typedef givvector<T,A>     Self_t;
 public:
+    typedef typename __GIV_STANDARD_VECTOR<T,A>::const_iterator const_iterator ;
     givvector() : __GIV_STANDARD_VECTOR<T,A>() {}
     givvector(size_t s) : __GIV_STANDARD_VECTOR<T,A>(s) { }
     givvector(const Self_t& p, givNoCopy xxx) : __GIV_STANDARD_VECTOR<T,A>(p) {}

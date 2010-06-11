@@ -381,7 +381,7 @@ int main(int argc, char ** argv) {
 
     GivRandom generator(seed);
     
-    for(size_t i=0; i<2000; ++i) {
+    for(size_t i=0; i<100; ++i) {
         long deg1 = generator() % 75;
         long deg2 = generator() % 85;
         long deg3 = generator() % 155;

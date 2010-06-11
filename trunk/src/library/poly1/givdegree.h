@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givdegree.h,v 1.5 2009-12-01 11:24:21 jgdumas Exp $
+// $Id: givdegree.h,v 1.6 2010-06-11 11:59:01 jgdumas Exp $
 // Description: opaque class for Degree of polynomial. Degree of polynomial
 // 0 is Degree::deginfty with value DEGPOLYZERO.
 // ==========================================================================
@@ -78,7 +78,5 @@ public:
 };
 
 inline long value(const Degree& d) { return d._deg; }
-
-const long Degree::deginfty = Degree::DEGPOLYZERO;
 
 #endif

@@ -28,12 +28,13 @@ AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(to
 LDADD = -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 
-EXTRA_PROGRAMS=isirred isprimitive pol_arith pol_eval pol_factor interpolate PolynomialCRT 
+EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT 
 
 interpolate_SOURCES = interpolate.C
 isirred_SOURCES = isirred.C
 isprimitive_SOURCES = isprimitive.C
 pol_arith_SOURCES = pol_arith.C
+trunc_arith_SOURCES = trunc_arith.C
 pol_eval_SOURCES = pol_eval.C
 pol_factor_SOURCES = pol_factor.C
 PolynomialCRT_SOURCES =  PolynomialCRT.C

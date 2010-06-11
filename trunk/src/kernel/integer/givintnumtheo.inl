@@ -105,7 +105,7 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A
         }
     }
     if (isZero(ismod2)) mul(q,p,2); else q=p;
-    for(;q != n;++k,q*=p);
+    for(;q != n;++k,q*=p) ;
     Rep phin, tmp; 
     phi(phin,p);
     std::list<Rep> Lf;

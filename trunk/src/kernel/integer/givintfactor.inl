@@ -125,6 +125,9 @@ void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const
         // Valid for p < BOUNDARY_factor
         // Lf is the Container of factors
     long n = (long)p;
+    if (Integer(n) != p) std::cerr << "*** Erathostene with " << p << " too large, using " << n << " instead ***" << std::endl;
+
+
     if (! (n & 0x1)) {
         Lf.push_back(Rep(2));
         do

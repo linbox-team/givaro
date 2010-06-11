@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.19 2010-05-20 14:53:46 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.20 2010-06-11 14:14:29 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -249,9 +249,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(Rand
 
 // -- Random dense polynomial of degree d
 // specialization pour Givrandom
-#ifndef __INTEL_COMPILER
-template<>
-#endif
+// #if !defined(__INTEL_COMPILER) && !defined(__CUDACC__)
+// template<>
+// #endif
 template <class Domain> 
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(GivRandom& g, Rep& r, Degree d) const {
 	r.reallocate(d.value()+1);

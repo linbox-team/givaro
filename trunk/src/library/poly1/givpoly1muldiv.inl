@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.10 2010-05-20 14:14:37 jgdumas Exp $
+// $Id: givpoly1muldiv.inl,v 1.11 2010-06-11 14:14:29 jgdumas Exp $
 // ==========================================================================
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
@@ -480,7 +480,6 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pmod
 
   Type_t tmp, lB;
   _domain.assign(lB, B[degB.value()]);
-  long i,j;
 //write(std::cout << "B:", B) << std::endl;
 //_domain.write(std::cout << "lB:", lB) << "^" << degA-degB+1 << std::endl;
 //   _domain.pow(m, lB, degA.value()-degB.value()+1);
@@ -490,12 +489,12 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pmod
   {
     long d = degR.value()-degB.value();
     // R <- lB*R - lR*x^(degR-degB)*B
-    for (j=0; degB>j; j++)
+    for (long j=0; degB>j; j++)
     {
       _domain.mulin (R[j+d], lB);
       _domain.axmyin(R[j+d], R[degR.value()], B[j]);
     }
-    for (j=0; j<d; ++j)
+    for (long j=0; j<d; ++j)
       _domain.mulin (R[j], lB);
     _domain.assign(R[degR.value()],_domain.zero); 
     degree(degR, R); 

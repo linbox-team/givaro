@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.23 2010-06-11 14:14:29 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.24 2010-06-22 11:13:57 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -44,22 +44,29 @@ public:
     }
 
 
-    template<typename X>
+    template<typename _Tp1>
     struct rebind
     {
-        typedef givvector<typename X::Element> other;
+        typedef givvector<typename _Tp1::Element> other;
 		
-        void operator() (other *& P2, 
+        void operator() (other & P2, 
                          const Self_t& P1, 
-                         const X& F)
+                         const _Tp1& F)
             {
-                P2 = new other(P1.size());
                 typename Self_t::const_iterator it1 = P1.begin();
-                typename other::iterator it2 = P2->begin();
+                typename other::iterator it2 = P2.begin();
                 for (; it1 != P1.end(); ++it1, ++it2)
                     F.init (*it2, *it1);
             }
     };
+
+    template<typename _Elt1, typename _Alc1, typename Field>
+    givvector(const givvector<_Elt1, _Alc1>& V, const Field& F)
+            : __GIV_STANDARD_VECTOR<T,A>(V.size()) {
+        typename givvector<_Elt1, _Alc1>::template rebind<Field>() (*this, V, F);
+    }
+
+    
 };
 
 //  -------------------------------------------- Class Poly1Dom<Domain>
@@ -87,6 +94,7 @@ public :
     typedef          Storage_t                 Rep;
     typedef          Storage_t                 Element;
 
+    Poly1Dom () {}
     Poly1Dom (const Domain& d, const Indeter& X = Indeter() );
     Poly1Dom (const Self_t&);
 

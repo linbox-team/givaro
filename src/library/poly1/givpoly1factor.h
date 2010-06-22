@@ -33,6 +33,7 @@ public:
         // typedef typename Domain::Residu_t Residu_t;
     typedef typename Signed_Trait<typename Domain::Element>::unsigned_type Residu_t;
 
+    Poly1FactorDom () {}
         // Warning : there is a copy of the random Iterator ...
     Poly1FactorDom (Domain& d, const Indeter& X = Indeter(), const RandIter& g = RandIter() ) : Poly1Dom<Domain,Tag> (d,X), _g(g) {}
     Poly1FactorDom (const Poly1Dom<Domain,Tag>& P, const RandIter& g = RandIter()) : Poly1Dom<Domain,Tag> (P), _g(g) {}

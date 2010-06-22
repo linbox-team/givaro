@@ -55,6 +55,9 @@ public:
     Element zero;
     Element one;
 
+    Extension() {}
+    
+
     Extension ( const Residu_t p, const Residu_t e = 1, const Indeter Y="Y")
 : _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_bF.zero), one (_bF.one) {
 /*     cerr << "Pol Cstor" << endl; */

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.6 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givratcstor.C,v 1.7 2010-10-15 13:43:48 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -209,7 +209,7 @@ Rational::Rational(const Integer &n, const Integer &d, int red)
 Rational::Rational(const Rational &r) : num(r.num), den(r.den) 
 { } 
 
-Rational::Rational( givNoInit gi) : num(Integer::zero), den(Integer::one) 
+Rational::Rational( givNoInit ) : num(Integer::zero), den(Integer::one) 
 { } 
 
 // ------ Initialization module:
@@ -217,7 +217,7 @@ Rational::Rational( givNoInit gi) : num(Integer::zero), den(Integer::one)
 //                            Rational::End, 
 //                            InitAfter(Integer::Module),
 //                            "Rational package") ; 
-void Rational::Init(int* argc, char***argv)
+void Rational::Init(int* , char***)
 {}
 
 void Rational::End()

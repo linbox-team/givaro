@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.8 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givzpz16table1.inl,v 1.9 2010-10-15 13:43:48 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -43,7 +43,7 @@ inline ZpzDom<Log16>::Residu_t ZpzDom<Log16>::residu( ) const
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::mul (Rep& r, const Rep a, const Rep b) const
 { 
-  register int32 tmp; 	
+   int32 tmp; 	
   __GIVARO_ZPZ16_LOG_MUL(tmp,(int32)_p,(int32)a,(int32)b);
   return r= (ZpzDom<Log16>::Rep)tmp;
 }
@@ -118,63 +118,63 @@ inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, lo
  // -- inline array operations between ZpzDom<Log16>::Rep
 inline void ZpzDom<Log16>::mul (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_MUL(r[i], _p,a[i], b[i]); 
   }
 }
 
 inline void ZpzDom<Log16>::mul (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_MUL(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Log16>::div (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_DIV( r[i], _p, a[i], b[i]); 
   }
 }
 
 inline void ZpzDom<Log16>::div (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_DIV( r[i], _p, a[i], b); 
   }
 }
 
 inline void ZpzDom<Log16>::add (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_ADD(r[i], _p, a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Log16>::add (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_ADD(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Log16>::sub (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_SUB(r[i], _p, a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Log16>::sub (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_SUB(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Log16>::neg (const size_t sz, Array r, constArray a) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_NEG(r[i], _p, a[i]);
   }
 }
@@ -241,7 +241,7 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axpyin
 inline void ZpzDom<Log16>::axpy 
   (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_MULADD(r[i], _p, a[i], x[i], y[i]);
   }
 }
@@ -249,7 +249,7 @@ inline void ZpzDom<Log16>::axpy
 inline void ZpzDom<Log16>::axpyin 
   (const size_t sz, Array r, constArray a, constArray x) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_MULADD(r[i], _p, a[i], x[i], r[i]);
   }
 }
@@ -288,7 +288,7 @@ inline void ZpzDom<Log16>::axmyin
 inline void ZpzDom<Log16>::axmy 
   (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_MULSUB(r[i], _p, a[i], x[i], y[i]);
   }
 }
@@ -296,7 +296,7 @@ inline void ZpzDom<Log16>::axmy
 inline void ZpzDom<Log16>::axmyin 
   (const size_t sz, Array r, constArray a, constArray x) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZ16_LOG_MULSUB(r[i], _p, a[i], x[i], r[i]);
     __GIVARO_ZPZ16_LOG_NEG(r[i], _p, r[i]);
   }
@@ -310,7 +310,7 @@ inline int ZpzDom<Log16>::iszero(const Rep a) const
 inline int ZpzDom<Log16>::isone(const Rep a) const
 { return a == ZpzDom<Log16>::one; }
 
-inline size_t ZpzDom<Log16>::length(const Rep a) const
+inline size_t ZpzDom<Log16>::length(const Rep ) const
 { return ZpzDom<Log16>::size_rep;}
 
 inline int ZpzDom<Log16>::isZero( const Rep a ) const {return iszero(a);}
@@ -324,7 +324,7 @@ inline int ZpzDom<Log16>::isOne ( const Rep a ) const {return isone(a);}
 inline void ZpzDom<Log16>::assign 
   ( const size_t sz, Array r, constArray a ) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     if (a[i] <ZpzDom<Log16>::zero) {
        r[i] = a[i] + _p;
        if (r[i] <ZpzDom<Log16>::zero) r[i] = r[i] % _p;
@@ -340,7 +340,7 @@ inline void ZpzDom<Log16>::assign
 
 inline void ZpzDom<Log16>::assign ( const size_t sz, Array r, constArray a ) const
 {
-  for (register size_t i=sz-1; i!=0; --i) 
+  for ( size_t i=sz-1; i!=0; --i) 
     r[i] = a[i];
 }
 
@@ -415,7 +415,7 @@ inline void ZpzDom<Log16>::dotprod
    stride = GIVARO_MAXUINT32/((unsigned long)bound * (unsigned long)bound);
   uint32 dot = zero;
   if ((sz <10) && (sz <stride)) {
-    for( register int i= sz-1; i>=0; --i) 
+    for(  int i= sz-1; i>=0; --i) 
       dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]]; 
     if (dot > _p) r = _tab_value2rep[(Rep)(dot % _p)];
     else r = _tab_value2rep[dot];
@@ -424,7 +424,7 @@ inline void ZpzDom<Log16>::dotprod
   unsigned int i_begin=0;
   stride &= ~0x1;
   if (stride ==0) {
-    for( register int i= sz-1; i>0; --i) {
+    for(  int i= sz-1; i>0; --i) {
       dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]]; 
       if (dot>_p) dot %= _p;
     }
@@ -438,7 +438,7 @@ inline void ZpzDom<Log16>::dotprod
       dot += _tab_rep2value[a++[min_sz]] * _tab_rep2value[b++[min_sz]]; 
     }
     if (min_sz > 1) 
-      for( register size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) 
+      for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) 
       {
         dot += _tab_rep2value[a[0]] * _tab_rep2value[b[0]]; 
         dot += _tab_rep2value[a[1]] * _tab_rep2value[b[1]]; 
@@ -472,14 +472,17 @@ inline void
     int32 r[2];
   };
   static const double offset = 4503599627370496.0; // 2^52
-  register size_t i=sz-1;
+  size_t i=sz-1;
+//warning todo while
+//do
 label1: 
   {
-      register d_2_l tmp;
+      d_2_l tmp;
       // - normalization: put fractional part at the end of the representation
       tmp.d = a[i] + offset; 
       r[i--] = _tab_value2rep[(tmp.r[1] >_p ? tmp.r[1] : tmp.r[1] % _p)];
   }
+  // while (i!=0)
   if (i >0) goto label1;
   //for (size_t i=sz-1; i>=0; --i)
 }

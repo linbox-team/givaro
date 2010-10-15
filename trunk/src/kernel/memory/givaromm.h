@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givaromm.h,v 1.5 2010-06-11 14:14:29 jgdumas Exp $
+// $Id: givaromm.h,v 1.6 2010-10-15 13:43:48 bboyer Exp $
 // ==========================================================================
 // Description:
 // - two memory managers: the first one handle a set on free-list
@@ -88,7 +88,7 @@ inline static void* allocate (const size_t sz)
   if (sz ==0) return 0 ;
 #endif  
   size_t index; 
-  register BlocFreeList* tmp;
+   BlocFreeList* tmp;
   if ((sz <= 32) && ((tmp=BlocFreeList::TabFree[index =sz-1]) !=0)) {
     BlocFreeList::TabFree[index] = tmp->u.nextfree;
     tmp->u.index = index;
@@ -111,9 +111,9 @@ static void* reallocate (void* p, const size_t oldsize, const size_t newsize);
 inline static void desallocate(void* p, const size_t = 0) 
 { 
   if (p==0) return ;
-  register BlocFreeList* tmp = (BlocFreeList*)(((char*)p) - 
+   BlocFreeList* tmp = (BlocFreeList*)(((char*)p) - 
                                (sizeof(BlocFreeList)-sizeof(long)));
-  register int index = tmp->u.index;
+   int index = tmp->u.index;
 #ifdef GIVARO_DEBUG
   if ((index <0) || (index >= BlocFreeList::lenTables))
     throw GivError("[GivMMFreeList::desallocate]: bad pointer.");
@@ -163,9 +163,9 @@ inline static void* allocate (const size_t s)
 #ifdef GIVARO_DEBUG
   if (s ==0) return 0 ;
 #endif  
-  register int index; 
-  register BlocFreeList* tmp;
-  register size_t sz = s + sizeof(long);
+   int index; 
+   BlocFreeList* tmp;
+   size_t sz = s + sizeof(long);
   if ((sz <= 32) && ((tmp=BlocFreeList::TabFree[index =sz-1]) !=0)) {
     BlocFreeList::TabFree[index] = tmp->u.nextfree;
     tmp->u.index = index;
@@ -190,9 +190,9 @@ static void* reallocate (void* p, const size_t oldsize, const size_t newsize);
 inline static void desallocate(void* p, const size_t = 0) 
 { 
   if (p==0) return ;
-  register BlocFreeList* tmp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+   BlocFreeList* tmp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
   if ( --(tmp->data[0]) ==0) {
-    register int index = tmp->u.index;
+     int index = tmp->u.index;
 #ifdef GIVARO_DEBUG
     if ((index <0) || (index >= BlocFreeList::lenTables))
       GivError::throw_error(GivError("[GivMMRefCount::desallocate]: bad pointer."));
@@ -216,7 +216,7 @@ inline static void* assign (void** dest, void*src)
   if (src == *dest) return *dest ;
   if (*dest !=0) GivMMRefCount::desallocate( *dest );
   if (src ==0) return *dest=src;
-  register BlocFreeList* s = (BlocFreeList*)(((char*)src) - sizeof(BlocFreeList));
+   BlocFreeList* s = (BlocFreeList*)(((char*)src) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
     if ((s->u.index <0) || (s->u.index >= BlocFreeList::lenTables))
       GivError::throw_error(GivError("[GivMMRefCount::assign]: bad pointer 'src'."));
@@ -230,7 +230,7 @@ inline static void* assign (void** dest, void*src)
 inline static int incrc(void* p)
 {
   if (p ==0) return 0;
-  register BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+   BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
     if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
       throw GivError("[GivMMRefCount::incrc]: bad pointer.");
@@ -240,7 +240,7 @@ inline static int incrc(void* p)
 inline static int decrc(void* p)
 {
   if (p ==0) return 0;
-  register BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+   BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
     if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
       throw GivError("[GivMMRefCount::incrc]: bad pointer.");
@@ -250,7 +250,7 @@ inline static int decrc(void* p)
 inline static int getrc(void* p)
 {
   if (p ==0) return 0;
-  register BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+   BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
     if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
       throw GivError("[GivMMRefCount::incrc]: bad pointer.");

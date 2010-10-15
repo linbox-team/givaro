@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.7 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givzpzInt.inl,v 1.8 2010-10-15 13:43:48 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -126,21 +126,21 @@ inline ZpzDom<Integer>::Rep& ZpzDom<Integer>::div (Rep& r, const Rep& a, const R
  // -- inline array operations between ZpzDom<Integer>::Rep
 inline void ZpzDom<Integer>::mul (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_MUL(r[i], _p,a[i], b[i]); 
   }
 }
 
 inline void ZpzDom<Integer>::mul (const size_t sz, Array r, constArray a, const Rep& b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_MUL(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Integer>::div (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     div( r[i], a[i], b[i]); 
   }
 }
@@ -154,35 +154,35 @@ inline void ZpzDom<Integer>::div (const size_t sz, Array r, constArray a, const 
 
 inline void ZpzDom<Integer>::add (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_ADD(r[i], _p, a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Integer>::add (const size_t sz, Array r, constArray a, const Rep& b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_ADD(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Integer>::sub (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_SUB(r[i], _p, a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Integer>::sub (const size_t sz, Array r, constArray a, const Rep& b) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_SUB(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Integer>::neg (const size_t sz, Array r, constArray a) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_NEG(r[i], _p, a[i]);
   }
 }
@@ -244,7 +244,7 @@ inline ZpzDom<Integer>::Rep&  ZpzDom<Integer>::axpyin
 inline void ZpzDom<Integer>::axpy 
   (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_MULADD(r[i], _p, a[i], x[i], y[i]);
   }
 }
@@ -252,7 +252,7 @@ inline void ZpzDom<Integer>::axpy
 inline void ZpzDom<Integer>::axpyin 
   (const size_t sz, Array r, constArray a, constArray x) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     Rep tmp = r[i];
     __GIVARO_ZPZInteger_N_MULADDIN(tmp, _p, a[i], x[i]);
     r[i] = (ZpzDom<Integer>::Rep)tmp;
@@ -295,7 +295,7 @@ inline ZpzDom<Integer>::Rep&  ZpzDom<Integer>::axmyin
 inline void ZpzDom<Integer>::axmy
   (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     __GIVARO_ZPZInteger_N_MULSUB(r[i], _p, a[i], x[i], y[i]);
   }
 }
@@ -304,7 +304,7 @@ inline void ZpzDom<Integer>::axmy
 inline void ZpzDom<Integer>::axmyin
   (const size_t sz, Array r, constArray a, constArray x) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     Rep tmp = r[i];
     __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a[i], x[i]);
     r[i] = (ZpzDom<Integer>::Rep)tmp;
@@ -369,7 +369,7 @@ inline ZpzDom<Integer>::Rep& ZpzDom<Integer>::init( Rep& a, const unsigned int i
 inline void ZpzDom<Integer>::assign 
   ( const size_t sz, Array r, constArray a ) const
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     if (a[i] <ZpzDom<Integer>::zero) {
        r[i] = a[i] + _p;
        if (r[i] <ZpzDom<Integer>::zero) r[i] %= _p;
@@ -405,7 +405,7 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::assign
 inline void ZpzDom<Integer>::init 
   ( const size_t sz, Array r, constArray a ) const
 {
-  for (register size_t i=sz-1; i!=0; --i) 
+  for ( size_t i=sz-1; i!=0; --i) 
        r[i] = a[i];
 }
 
@@ -468,7 +468,7 @@ inline void
   double offset = 4503599627370496.0; // 2^52
   for (size_t i=0; i<sz; ++i)
   {
-      register d_2_l tmp;
+       d_2_l tmp;
       // - normalization: put fractional part at the end of the representation
       tmp.d = a[i] + offset; 
       r[i] = tmp.r[1];

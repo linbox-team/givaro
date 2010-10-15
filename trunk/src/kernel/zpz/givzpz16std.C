@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.C,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givzpz16std.C,v 1.3 2010-10-15 13:43:48 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -20,13 +20,13 @@
 int32& ZpzDom<Std16>::gcdext 
   ( int32& d,  int32& u, int32& v, const int32 a, const int32 b ) const
 {
-   register long u1,u2,u3;
-   register long v1,v2,v3;
+    long u1,u2,u3;
+    long v1,v2,v3;
    u1 = 1; u2 = 0; u3 = a;
    v1 = 0; v2 = 1; v3 = b;
    while (v3 != 0)
      {
-        register long q , t1, t2 ,t3;
+         long q , t1, t2 ,t3;
         q = u3 / v3;
         t1 = u1 - q * v1; t2 = u2 - q * v2; t3 = u3 - q * v3;
         u1 = v1; u2 = v2; u3 = v3; v1 = t1; v2 = t2; v3 = t3;
@@ -39,13 +39,13 @@ int32& ZpzDom<Std16>::gcdext
 int32& ZpzDom<Std16>::invext 
   ( int32& u, const int32 a, const int32 b ) const
 {
-   register long u3;
-   register long v1,v3;
+    long u3;
+    long v1,v3;
    u = 1; u3 = a;
    v1 = 0; v3 = b;
    while (v3 != 0)
      {
-        register long q, t1, t3;
+         long q, t1, t3;
         q = u3 / v3;
         t1 = u - q * v1; t3 = u3 - q * v3;
         u = v1; u3 = v3; v1 = t1; v3 = t3;

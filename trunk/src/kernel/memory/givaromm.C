@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givaromm.C,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givaromm.C,v 1.5 2010-10-15 13:43:48 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -32,7 +32,7 @@ long*& GivMMFreeList::tabphy = GivMMFreeList::info.tabphy;
 #endif
  
 
-// -- for debug #define register    
+// -- for debug #define     
 
 // ======================================================================= //
 // Short description of the Givaro memory mechanism:
@@ -124,12 +124,12 @@ const size_t BlocFreeList::TabSize[] = { // -- array of different sizes of bloc 
 inline int BlocFreeList::search_binary( size_t sz ) 
 {
   if (sz <= 32) return sz-1;
-  register int max = BlocFreeList::lenTables-1; // -- last element in TabSize
+   int max = BlocFreeList::lenTables-1; // -- last element in TabSize
   if (sz > BlocFreeList::TabSize[max]) 
     throw GivError("[GivaroMM]: unable to allocate this size of memory");
-  register int min = 0;
-  register int med;
-  register unsigned int curr;
+   int min = 0;
+   int med;
+   unsigned int curr;
   med = 8; // may be value < TabSize[8]
   do {
     curr = BlocFreeList::TabSize[med];
@@ -147,12 +147,12 @@ inline int BlocFreeList::search_binary( size_t sz )
 
 BlocFreeList* GivMMFreeList::_allocate (const size_t s)
 { 
-  register int index = BlocFreeList::search_binary( s );
+   int index = BlocFreeList::search_binary( s );
 #ifdef GIVARO_DEBUG
     if ((index <0) || (index >= BlocFreeList::lenTables))
       throw GivError("[GivMMFreeList::_allocate]: index error, invalid bloc size.");
 #endif  
-  register BlocFreeList* tmp;
+   BlocFreeList* tmp;
   if (BlocFreeList::TabFree[index] !=0) {
     tmp = BlocFreeList::TabFree[index];
     BlocFreeList::TabFree[index] = tmp->u.nextfree;
@@ -180,7 +180,7 @@ void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t n
 {
   if (src ==0) return _allocate(newsize) ;
   if (newsize <= oldsize) return src;
-  register BlocFreeList* tmp = (BlocFreeList*)(((char*)src)-sizeof(BlocFreeList)+sizeof(long));
+   BlocFreeList* tmp = (BlocFreeList*)(((char*)src)-sizeof(BlocFreeList)+sizeof(long));
 #ifdef GIVARO_DEBUG
     if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
       throw GivError("[GivMMFreeList::reallocate]: bad pointer 'src'");
@@ -188,7 +188,7 @@ void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t n
 #ifdef GIVARO_MAPMEM
 memlog << "reall: in:" << (void*) tmp << ", user:" << (void*)src << std::endl;
 #endif
-  register int index = tmp->u.index;
+   int index = tmp->u.index;
   if (BlocFreeList::TabSize[index] >= newsize) return src;
   tmp = GivMMFreeList::_allocate( newsize );
   if (oldsize !=0) ::memcpy( tmp->data, src, oldsize );
@@ -197,8 +197,8 @@ memlog << "reall: in:" << (void*) tmp << ", user:" << (void*)src << std::endl;
 
 void GivMMFreeList::memcpy( void* dest, const void* src, const size_t size )
 {
-  register BlocFreeList* tmp1 = (BlocFreeList*)(((char*)dest) - sizeof(BlocFreeList)+sizeof(long));
-  register BlocFreeList* tmp2 = (BlocFreeList*)(((char*)src) - sizeof(BlocFreeList)+sizeof(long));
+   BlocFreeList* tmp1 = (BlocFreeList*)(((char*)dest) - sizeof(BlocFreeList)+sizeof(long));
+   BlocFreeList* tmp2 = (BlocFreeList*)(((char*)src) - sizeof(BlocFreeList)+sizeof(long));
 #ifdef GIVARO_DEBUG
     if ((tmp1->u.index <0) || (tmp1->u.index >= BlocFreeList::lenTables))
       throw GivError("[GivMMFreeList::memcpy]: bad pointer 'dest'");
@@ -228,7 +228,7 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
     return &(GivMMFreeList::_allocate(newsize+sizeof(long))->data[1]) ;
 
 
-  register BlocFreeList* tmp = (BlocFreeList*)(((char*)p)-sizeof(BlocFreeList));
+   BlocFreeList* tmp = (BlocFreeList*)(((char*)p)-sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
     if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
       throw GivError("[GivMMRefCount::reallocate]: bad pointer");
@@ -238,7 +238,7 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
 #ifdef GIVARO_MAPMEM
     memlog << "reall: in:" << (void*) tmp << ", user:" << (void*)p << std::endl;
 #endif
-    register int index = tmp->u.index;
+     int index = tmp->u.index;
     if (BlocFreeList::TabSize[index] >= sizeof(long)+newsize) return p;
     GivMMRefCount::desallocate(p);
   }
@@ -307,7 +307,7 @@ GivModule GivMMFreeList::Module (GivMMFreeList::Init,
                                   GivModule::MaxPriority,
                                  "Givaro Memory Manager") ; 
 
-void GivMMFreeList::Init(int* argc, char***argv)
+void GivMMFreeList::Init(int* , char***)
 {
 #ifdef GIVARO_MAPMEM
   memlog.open("mem.log", ios::out);

@@ -395,7 +395,7 @@ template<typename TT>
 inline void GFqDom<TT>::mul 
  (const size_t sz, Array r, constArray a, constArray b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_MUL(r[i],a[i],b[i], GFqDom<TT>::_qm1) ; 
   }
 }
@@ -404,7 +404,7 @@ template<typename TT>
 inline void GFqDom<TT>::mul 
  (const size_t sz, Array r, constArray a, Rep b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_MUL(r[i],a[i],b, GFqDom<TT>::_qm1) ; 
   }
 }
@@ -413,7 +413,7 @@ template<typename TT>
 inline void GFqDom<TT>::div 
  (const size_t sz, Array r, constArray a, constArray b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_DIV(r[i],a[i],b[i], GFqDom<TT>::_qm1) ; 
   }
 }
@@ -422,7 +422,7 @@ template<typename TT>
 inline void GFqDom<TT>::div 
  (const size_t sz, Array r, constArray a, Rep b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_DIV(r[i],a[i],b, GFqDom<TT>::_qm1) ; 
   }
 }
@@ -431,7 +431,7 @@ template<typename TT>
 inline void GFqDom<TT>::add 
  (const size_t sz, Array r, constArray a, constArray b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_ADD(r[i], a[i], b[i], GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
 }
@@ -440,7 +440,7 @@ template<typename TT>
 inline void GFqDom<TT>::add 
  (const size_t sz, Array r, constArray a, Rep b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_ADD(r[i], a[i], b, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
 }
@@ -449,7 +449,7 @@ template<typename TT>
 inline void GFqDom<TT>::sub 
  (const size_t sz, Array r, constArray a, constArray b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_SUB(r[i], a[i], b[i], GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
 }
@@ -458,7 +458,7 @@ template<typename TT>
 inline void GFqDom<TT>::sub 
  (const size_t sz, Array r, constArray a, Rep b) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_SUB(r[i], a[i], b, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
 }
@@ -467,7 +467,7 @@ template<typename TT>
 inline void GFqDom<TT>::neg 
  (const size_t sz, Array r, constArray a) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_NEG(r[i], a[i], GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1) ;
   }
 }
@@ -476,7 +476,7 @@ template<typename TT>
 inline void GFqDom<TT>::inv 
  (const size_t sz, Array r, constArray a) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_INV(r[i], a[i], GFqDom<TT>::_qm1) ;
   }
 }
@@ -485,7 +485,7 @@ template<typename TT>
 inline void GFqDom<TT>::axpy 
 (const size_t sz, Array r, Rep a, constArray x, constArray y) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_MULADD(r[i], a, x[i], y[i], GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
 }
@@ -495,7 +495,7 @@ inline void GFqDom<TT>::axpyin
  (const size_t sz, Array r, Rep a, constArray x) const 
 {
   Rep tmp;
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     tmp = r[i];
     _GIVARO_GFQ_MULADD(r[i], a, x[i], tmp, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
@@ -505,7 +505,7 @@ template<typename TT>
 inline void GFqDom<TT>::axpy 
  (const size_t sz, Array r, Rep a, constArray x, Rep y) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_MULADD(r[i], a, x[i], y, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
 }
@@ -514,7 +514,7 @@ template<typename TT>
 inline void GFqDom<TT>::axmy 
  (const size_t sz, Array r, Rep a, constArray x, constArray y) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_MUL(r[i], a, x[i], GFqDom<TT>::_qm1) ;
     _GIVARO_GFQ_AUTOSUB(r[i], y[i], GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
@@ -524,7 +524,7 @@ template<typename TT>
 inline void GFqDom<TT>::axmy 
  (const size_t sz, Array r, Rep a, constArray x, Rep y) const 
 {
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_MUL(r[i], a, x[i], GFqDom<TT>::_qm1) ;
     _GIVARO_GFQ_AUTOSUB(r[i], y, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
@@ -535,7 +535,7 @@ inline void GFqDom<TT>::axmyin
  (const size_t sz, Array r, Rep a, constArray x) const 
 {
   Rep tmp;
-  for (register size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz-1; i!=0; --i) {
     _GIVARO_GFQ_MUL(tmp, a, x[i], GFqDom<TT>::_qm1) ;
     _GIVARO_GFQ_AUTOSUB(r[i], tmp, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
   }
@@ -831,8 +831,8 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Rep a) const 
 
 template<typename TT> inline void GFqDom<TT>::assign( const size_t sz, Array r, constArray a ) const {
     TT tr;
-//    for (register size_t i=sz-1; i!=0; --i) {
-    for (register size_t i=sz; i--;) { 
+//    for ( size_t i=sz-1; i!=0; --i) {
+    for ( size_t i=sz; i--;) { 
         tr = a[i] ;
         if (tr <0) {
                 // -a = b [p]
@@ -857,7 +857,7 @@ inline typename  GFqDom<TT>::Rep& GFqDom<TT>::dotprod
   if (sz) {
     _GIVARO_GFQ_MUL(r,a[0],b[0],_qm1);
     Rep tmp;
-    for( register int i= sz-1; i>0; --i) {
+    for(  int i= sz-1; i>0; --i) {
       _GIVARO_GFQ_MUL(tmp,a[i],b[i],_qm1);
       _GIVARO_GFQ_ADD(r,r,tmp,_qm1,_plus1);
     }

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givarrayfixed.h,v 1.3 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givarrayfixed.h,v 1.4 2010-10-15 13:43:48 bboyer Exp $
 // ========================================================================== 
 // Description:
 // ArrayFixed of type T with fixed dimension
@@ -86,13 +86,13 @@ struct __giv_map_less_ith;
 
 template<class T, class UNARYOP>
 struct __giv_map_less_ith<T, UNARYOP, 0> {
-  inline void operator()( register T* data, UNARYOP& opcode )
+  inline void operator()(  T* data, UNARYOP& opcode )
   { opcode(data[0]); }
 };
 
 template<class T, class UNARYOP, size_t ith>
 struct __giv_map_less_ith<T, UNARYOP, ith> {
-  inline void operator()( register T* data, UNARYOP& opcode )
+  inline void operator()(  T* data, UNARYOP& opcode )
   {  
     opcode(data[ith]); 
     __giv_map_less_ith<T,UNARYOP,ith-1>()(data, opcode); 
@@ -104,13 +104,13 @@ struct __giv_map_less_ith_const;
 
 template<class T, class UNARYOP>
 struct __giv_map_less_ith_const<T,UNARYOP,0> {
-  inline operator()( register const T* data, UNARYOP& opcode )
+  inline operator()(  const T* data, UNARYOP& opcode )
   { opcode(data[0]); }
 };
 
 template<class T, class UNARYOP, size_t ith>
 struct __giv_map_less_ith_const<T,UNARYOP,ith> {
-  inline void operator() ( register const T* data, UNARYOP& opcode )
+  inline void operator() (  const T* data, UNARYOP& opcode )
   {  opcode(data[ith]); 
      __giv_map_less_ith<T,UNARYOP,ith-1>(data, opcode); 
   }

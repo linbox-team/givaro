@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.9 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.10 2010-10-15 13:43:48 bboyer Exp $
 // ========================================================================
 // Description: 
 
@@ -19,15 +19,15 @@ inline Integer::~Integer() {  mpz_clear((mpz_ptr)&gmp_rep) ; }
 
 //-------------------------------Integer(const Integer &n)
 inline Integer::Integer(const Integer &n) {
-    mpz_init_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
+	mpz_init_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
 }
 
 //------------------------------------------operator = (const Integer &n)
 inline Integer& Integer::logcpy(const Integer &n)
 {
-  if (this == &n) return *this;
-  mpz_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
-  return *this;
+	if (this == &n) return *this;
+	mpz_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
+	return *this;
 }
 
 // same as logcopy
@@ -53,18 +53,18 @@ inline Integer::Integer(unsigned long n) { mpz_init_set_ui((mpz_ptr)&gmp_rep, n)
 //-----------------------------Integer(long long n)
 // log[10](2^8) < 2.408239966 
 inline Integer::Integer(long long n) {
-char * tmp = new char[long(2.408239966*sizeof(long long))+1]; sprintf(tmp,"%lld",n);
- mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ; 
-delete [] tmp;
+	char * tmp = new char[long(2.408239966*sizeof(long long))+1]; sprintf(tmp,"%lld",n);
+	mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ; 
+	delete [] tmp;
 }
 
 //-----------------------------Integer(unsigned long long n)
 // log[10](2^8) < 2.408239966 
 inline Integer::Integer(unsigned long long n) {
-char * tmp = new char[ long(2.408239966*sizeof(unsigned long long))+1];
-sprintf(tmp,"%llu",n);
-mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
-delete [] tmp;
+	char * tmp = new char[ long(2.408239966*sizeof(unsigned long long))+1];
+	sprintf(tmp,"%llu",n);
+	mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
+	delete [] tmp;
 }
 #endif
 
@@ -75,120 +75,120 @@ inline Integer::Integer(double d) { mpz_init_set_d((mpz_ptr)&gmp_rep, d) ; }
 
 //-----------------------------Integer(const neutral n), default n = zero
 /* Neutral is causing a problem
-inline Integer::Integer(const Neutral n) { 
-  if (n == Neutral::zero) mpz_init_set_ui((mpz_ptr)&gmp_rep, 0L) ;
-  else  mpz_init_set_ui((mpz_ptr)&gmp_rep, 1L) ;
-}
-*/
+   inline Integer::Integer(const Neutral n) { 
+   if (n == Neutral::zero) mpz_init_set_ui((mpz_ptr)&gmp_rep, 0L) ;
+   else  mpz_init_set_ui((mpz_ptr)&gmp_rep, 1L) ;
+   }
+   */
 
 //-------------------------------------------------inline comparaison operators
 inline int operator != (const Integer& a , const Integer& b)
-  { return compare(a,b) != 0; }
+{ return compare(a,b) != 0; }
 
 inline int operator != (int l, const Integer& n)
-  { return n.operator != (l); }
+{ return n.operator != (l); }
 
 inline int operator != (long l, const Integer& n)
-  { return n.operator != (l); }
+{ return n.operator != (l); }
 
 inline int operator != (unsigned long l, const Integer& n)
-  { return n.operator != (l); }
+{ return n.operator != (l); }
 
 inline int operator == (const Integer& a, const Integer& b) 
-  {  return compare(a,b) == 0; }
+{  return compare(a,b) == 0; }
 
 inline int operator == (int l, const Integer& n)
-  { return (! (n.operator != (l))); }
+{ return (! (n.operator != (l))); }
 
 inline int operator == (long l, const Integer& n)
-  { return (! (n.operator != (l))); }
- 
+{ return (! (n.operator != (l))); }
+
 inline int operator == (unsigned long l, const Integer& n)
-  { return (! (n.operator != (l))); }
- 
+{ return (! (n.operator != (l))); }
+
 inline int operator == (const Integer& n, unsigned long l)
-  { return (! (n.operator != (l))); }
+{ return (! (n.operator != (l))); }
 
 inline int operator == (const Integer& n, int l)
-  { return (! (n.operator != (l))); }
+{ return (! (n.operator != (l))); }
 
 inline int operator == (const Integer& n, long l)
-  { return (! (n.operator != (l))); }
+{ return (! (n.operator != (l))); }
 
 inline int operator < (const Integer& a , const Integer& b)
-  { return compare(a,b) < 0; }
+{ return compare(a,b) < 0; }
 
 inline int operator < (const int l, const Integer& n)
-  { return n > l; }
+{ return n > l; }
 
 inline int operator < (const long l, const Integer& n)
-  { return n > l; }
+{ return n > l; }
 
 inline int operator < (const unsigned long l, const Integer& n)
-  { return n > l; }
+{ return n > l; }
 
 inline int operator <= (const Integer& n, unsigned long l)
-  {  return (! (n > l) ); }
+{  return (! (n > l) ); }
 
 inline int operator <= (unsigned long l, const Integer& n)
-  {  return (! (n < l) );}
+{  return (! (n < l) );}
 
 inline int operator >= (unsigned long l, const Integer& n)
-  {  return (! (n < l) );}
+{  return (! (n < l) );}
 
 inline int operator >= (const Integer& n, unsigned long l)
-  {  return (! (n < l) );}
+{  return (! (n < l) );}
 
 inline int operator > (int l, const Integer& n)
-  { return n < l; }
+{ return n < l; }
 
 inline int operator > (long l, const Integer& n)
-  { return n < l; }
+{ return n < l; }
 
 inline int operator > (unsigned long l, const Integer& n)
-  { return n < l; }
+{ return n < l; }
 
 inline int operator >  (const Integer& a , const Integer& b)
-  { return compare(a,b) > 0; }
+{ return compare(a,b) > 0; }
 
 inline int operator <= (const Integer& a, const Integer& b)
-  { return compare(a,b) <= 0; }
+{ return compare(a,b) <= 0; }
 
 inline int operator <= (const Integer& n, int l)
-  {  return (! (n > l) ); }
+{  return (! (n > l) ); }
 
 inline int operator <= (const Integer& n, long l)
-  {  return (! (n > l) ); }
+{  return (! (n > l) ); }
 
 inline int operator <= (int l, const Integer& n)
-  {  return (! (n < l) );}
+{  return (! (n < l) );}
 
 inline int operator <= (long l, const Integer& n)
-  {  return (! (n < l) );}
+{  return (! (n < l) );}
 
 inline int operator >= (const Integer& a, const Integer& b)
-  { return compare(a,b) >= 0; }
+{ return compare(a,b) >= 0; }
 
 inline int operator >= (int l, const Integer& n)
-  {  return (! (n > l) );}
+{  return (! (n > l) );}
 
 inline int operator >= (long l, const Integer& n)
-  {  return (! (n > l) );}
+{  return (! (n > l) );}
 
 inline int operator >= (const Integer& n, int l)
-  {  return (! (n < l) );}
+{  return (! (n < l) );}
 
 inline int operator >= (const Integer& n, long l)
-  {  return (! (n < l) );}
+{  return (! (n < l) );}
 
 
 //----------------------------------arithmetic inline operators
 inline Integer Integer::operator - () const
 {
-// JGD 18.06.1999
-    Integer Res ;
-    mpz_neg((mpz_ptr)&Res.gmp_rep, (mpz_ptr)&gmp_rep ); 
-    return Res ;
+	// JGD 18.06.1999
+	Integer Res ;
+	mpz_neg((mpz_ptr)&Res.gmp_rep, (mpz_ptr)&gmp_rep ); 
+	return Res ;
 }
 
 // -- operator +
@@ -203,12 +203,12 @@ inline Integer& operator += (Integer& n, const int l) { return n += (long)l; }
 inline Integer& operator += (Integer& n, const unsigned int l) { return n += (unsigned long)l; }
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-  inline Integer operator + (const Integer& n, const long long l) {return n + (Integer)l; }
-  inline Integer operator + (const Integer& n, const unsigned long long l) {return n + (Integer)l; }
-  inline Integer operator + (const long long l, const Integer& n) {return n+l;}
-  inline Integer operator + (const unsigned long long l, const Integer& n) {return n+l;}
-  inline Integer& operator += (Integer& n, const long long l) { return n += (Integer)l; }
-  inline Integer& operator += (Integer& n, const unsigned long long l) { return n += (Integer)l; }
+inline Integer operator + (const Integer& n, const long long l) {return n + (Integer)l; }
+inline Integer operator + (const Integer& n, const unsigned long long l) {return n + (Integer)l; }
+inline Integer operator + (const long long l, const Integer& n) {return n+l;}
+inline Integer operator + (const unsigned long long l, const Integer& n) {return n+l;}
+inline Integer& operator += (Integer& n, const long long l) { return n += (Integer)l; }
+inline Integer& operator += (Integer& n, const unsigned long long l) { return n += (Integer)l; }
 #endif
 
 
@@ -224,12 +224,12 @@ inline Integer& operator -= (Integer& n, const int l) { return n -= (long)l; }
 inline Integer& operator -= (Integer& n, const unsigned int l) { return n -= (unsigned long)l; }
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-  inline Integer operator - (const Integer& n, const long long l) {return n - (Integer)l; }
-  inline Integer operator - (const Integer& n, const unsigned long long l) {return n - (Integer)l; }
-  inline Integer operator - (const long long l, const Integer& n) {return n-l;}
-  inline Integer operator - (const unsigned long long l, const Integer& n) {return n-l;}
-  inline Integer& operator -= (Integer& n, const long long l) { return n -= (Integer)l; }
-  inline Integer& operator -= (Integer& n, const unsigned long long l) { return n -= (Integer)l; }
+inline Integer operator - (const Integer& n, const long long l) {return n - (Integer)l; }
+inline Integer operator - (const Integer& n, const unsigned long long l) {return n - (Integer)l; }
+inline Integer operator - (const long long l, const Integer& n) {return n-l;}
+inline Integer operator - (const unsigned long long l, const Integer& n) {return n-l;}
+inline Integer& operator -= (Integer& n, const long long l) { return n -= (Integer)l; }
+inline Integer& operator -= (Integer& n, const unsigned long long l) { return n -= (Integer)l; }
 #endif
 
 // -- operator *
@@ -244,12 +244,12 @@ inline Integer& operator *= (Integer& n, const int l) { return n *= (long)l; }
 inline Integer& operator *= (Integer& n, const unsigned int l) { return n *= (unsigned long)l; }
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-  inline Integer operator * (const Integer& n, const long long l) {return n * (Integer)l; }
-  inline Integer operator * (const Integer& n, const unsigned long long l) {return n * (Integer)l; }
-  inline Integer operator * (const long long l, const Integer& n) {return n*l;}
-  inline Integer operator * (const unsigned long long l, const Integer& n) {return n*l;}
-  inline Integer& operator *= (Integer& n, const long long l) { return n *= (Integer)l; }
-  inline Integer& operator *= (Integer& n, const unsigned long long l) { return n *= (Integer)l; }
+inline Integer operator * (const Integer& n, const long long l) {return n * (Integer)l; }
+inline Integer operator * (const Integer& n, const unsigned long long l) {return n * (Integer)l; }
+inline Integer operator * (const long long l, const Integer& n) {return n*l;}
+inline Integer operator * (const unsigned long long l, const Integer& n) {return n*l;}
+inline Integer& operator *= (Integer& n, const long long l) { return n *= (Integer)l; }
+inline Integer& operator *= (Integer& n, const unsigned long long l) { return n *= (Integer)l; }
 #endif
 
 // -- operator /
@@ -300,14 +300,14 @@ inline Integer abs(const Integer &n) { if (sign(n) >= 0) return n; return -n; }
 inline size_t Integer::size() const { return  mpz_size( (mpz_ptr)&gmp_rep ) ; }
 
 inline size_t Integer::size_in_base(int BASE) const { return  mpz_sizeinbase ((mpz_ptr)&gmp_rep, BASE);}
- 
+
 inline size_t Integer::bitsize() const { return  mpz_sizeinbase ((mpz_ptr)&gmp_rep, 2);}
 
 inline unsigned long Integer::operator[](size_t i) const
 { if ( mpz_size( (mpz_ptr)&gmp_rep ) > i)
-    return mpz_getlimbn( (mpz_ptr)&gmp_rep, i);
- else
-     return 0;
+	return mpz_getlimbn( (mpz_ptr)&gmp_rep, i);
+	else
+		return 0;
 }
 
 //-------------------------------------------------inline >> & << operators
@@ -329,44 +329,45 @@ inline void Integer::seeding(long unsigned int s) {
 inline Integer& Integer::random (Integer& r, long size)
 {
 #ifdef __GMP_PLUSPLUS__
-    mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_bits(size)).get_mpz_t() );
+	mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_bits(size)).get_mpz_t() );
 #else
-    mpz_random((mpz_ptr) &(r.gmp_rep), size);
+	mpz_random((mpz_ptr) &(r.gmp_rep), size);
 #endif
-    return r;
+	return r;
 }
 
 
 inline Integer Integer::random(int sz)
 {
-  Integer res;
-  return Integer::random(res, sz);
+	Integer res;
+	return Integer::random(res, sz);
 }
 
 inline Integer Integer::nonzerorandom(int sz) {
-    Integer r;
-    while(isZero(Integer::random(r, sz) )) {};
-    return r;
+	Integer r;
+	while(isZero(Integer::random(r, sz) )) {};
+	return r;
 }
 
 inline Integer& Integer::random (Integer& r, const Integer& similar) 
 {
-// J.G.D. 28/04/2004 : z_range thanks to Jack Dubrois
+	// J.G.D. 28/04/2004 : z_range thanks to Jack Dubrois
 #ifdef __GMP_PLUSPLUS__
-    mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_range( (mpz_class)( (mpz_ptr) &(similar.gmp_rep) )             )).get_mpz_t() );
+	mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_range( (mpz_class)( (mpz_ptr) &(similar.gmp_rep) )             )).get_mpz_t() );
 #else
-    mpz_random((mpz_ptr) &(r.gmp_rep), mpz_size( (mpz_ptr)&(similar.gmp_rep) ) );
+	mpz_random((mpz_ptr) &(r.gmp_rep), mpz_size( (mpz_ptr)&(similar.gmp_rep) ) );
 #endif
-     return r;
+	return r;
 }
 
 inline Integer& Integer::nonzerorandom (Integer& r, const Integer& size) {
-    while (isZero(Integer::random(r,size))) {};
-    return r;
+	while (isZero(Integer::random(r,size))) {};
+	return r;
 }
 
 
 inline Integer& Integer::nonzerorandom (Integer& r, long size)
 {    while (isZero(Integer::random(r,size))) {};
-    return r;
+	return r;
 }
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

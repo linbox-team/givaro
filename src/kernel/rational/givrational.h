@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.10 2010-04-14 16:20:30 jgdumas Exp $
+// $Id: givrational.h,v 1.11 2010-10-15 13:43:48 bboyer Exp $
 // ==========================================================================
 #ifndef _RATIONAL_H_
 #define _RATIONAL_H_
@@ -176,8 +176,8 @@ public:
     RationalDom() : one(1), zero(0) {}
     template<class X> RationalDom(const X& x) : one(1), zero(0) {}
 
-    int operator==( const RationalDom& BC) const { return 1;}
-    int operator!=( const RationalDom& BC) const { return 0;}
+    int operator==( const RationalDom& ) const { return 1;}
+    int operator!=( const RationalDom& ) const { return 0;}
 
         // -- Constants
     const Rational one;

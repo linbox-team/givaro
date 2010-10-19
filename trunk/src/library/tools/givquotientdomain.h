@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <05 May 10 08:35:40 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <19 Oct 10 18:35:20 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Quotients over a Ring domain
 // ===============================================================
@@ -40,6 +40,9 @@ public :
         return Ring_t::modin(Ring_t::init(p,cste),_modulo); 
     }
 
+    Rep& assign(Rep& p) const {
+        return Ring_t::modin(p,_modulo); 
+    }
     Rep& assign(Rep& p, const Rep& Q) const {
         return Ring_t::modin(Ring_t::assign(p,Q),_modulo); 
     }

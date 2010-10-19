@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.17 2010-06-23 11:45:54 jgdumas Exp $
+// $Id: givconfig.h,v 1.18 2010-10-19 16:59:03 jgdumas Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 #ifndef _GIVARO_INTERNAL_CONFIG_H_
@@ -138,34 +138,42 @@ typedef unsigned __GIVARO_INT64  uint64;
 #    include <sstream>
 #    define GIVARO_ASSERT(cond, msg) { \
       if (!(cond)) {\
-        ostringstream ostr;\
+        std::ostringstream ostr;\
         ostr << msg << "\nFile:"##__FILE__##", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
       }}
 #    define GIVARO_ASSERT2(cond, msg1, msg2) { \
       if (!(cond)) {\
-        ostringstream ostr;\
+        std::ostringstream ostr;\
         ostr << msg1 << msg2 << "\nFile:"##__FILE__##", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
       }}
 #  else
-#    include <strstream>
+#    include <sstream>
 #    define GIVARO_ASSERT(cond, msg) { \
       if (!(cond)) {\
-        ostrstream ostr;\
+        std::ostringstream ostr;\
         ostr << msg << "\nFile:" << __FILE__ << ", Line:" << __LINE__;\
-        GivError::throw_error( GivError(ostr.str()) );\
+        GivError::throw_error( GivError(ostr.str().c_str()) );\
       }}
 #    define GIVARO_ASSERT2(cond, msg1, msg2) { \
       if (!(cond)) {\
-        ostrstream ostr;\
+        std::ostringstream ostr;\
         ostr << msg1 << msg2 << "\nFile:" << __FILE__ << ", Line:" << __LINE__;\
-        GivError::throw_error( GivError(ostr.str()) );\
+        GivError::throw_error( GivError(ostr.str().c_str()) );\
       }}
 #  endif
+
+#define GIVARO_REQUIRE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro required: ", msg)
+#define GIVARO_ENSURE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro ensured: ", msg)
+#define GIVARO_STATE(expression) expression
 #else
 #define GIVARO_ASSERT(cond, msg)
 #define GIVARO_ASSERT2(cond, msg1, msg2)
+#define GIVARO_REQUIRE(ignore, msg) ((void) 0)
+#define GIVARO_ENSURE(ignore, msg) ((void) 0)
+#define GIVARO_STATE(ignore, msg) ((void) 0)
+
 #endif
 
 // ==========================================================================

@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <02 Dec 09 11:29:18 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <19 Oct 10 17:44:34 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Pieces of polynomials as defined in
 // [Arne Storjohann, High-Order Lifting
@@ -75,7 +75,10 @@ public :
 
         //    F.assign(P[deg], lcoeff); 
     Rep& assign (Rep& p, const Degree deg , const Type_t& lcoeff) const {
-        Father_t::assign(p.first,Degree(0),lcoeff); p.second=deg; return p;
+        Father_t::assign(p.first,Degree(0),lcoeff); 
+        Father_t::setdegree(p.first);
+        p.second=deg; 
+        return setval(p);
     }
             
         // -- Assign polynomial with field value : F.assign(p[0],cste)
@@ -140,18 +143,13 @@ public :
         this->setval(const_cast<Rep&>(P));
         return d=P.second;
     }
-  
-    
-
-
-
 
 
         // -- Comparaison operator
     int isZero  ( const Rep& P ) const { return Father_t::isZero(P.first); }
     int isOne   ( const Rep& P ) const { 
         Degree vP;val(vP,P);
-        return (Father_t::isOne(P.first) && (vP == 0));
+        return ((vP == 0) && Father_t::isOne(P.first));
     }
             
     
@@ -187,6 +185,7 @@ public :
         return Father_t::read(i>>tmp,n.first)>>tmp>>tmp>>tmp>>tmp>> n.second;
     }
     std::ostream& write( std::ostream& o, const Rep& n) const {
+        
         return Father_t::write(o<<'(',n.first)<<")*" << this->_x << '^' << n.second;
     }
 

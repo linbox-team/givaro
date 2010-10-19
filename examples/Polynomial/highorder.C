@@ -5,12 +5,13 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
+#define GIVARO_DEBUG 1
 #include <givaro/givrandom.h>
 #include <givaro/givtimer.h>
 #include <givaro/givgfq.h>
 #include <givaro/givpoly1.h>
-#include "givtruncdomain.h"
-#include "givhighorder.h"
+#include <givaro/givtruncdomain.h>
+#include <givaro/givhighorder.h>
 
 
 typedef GFqDom<int> Field;
@@ -19,11 +20,17 @@ typedef HighOrder< Field > HighOrders;
 
 
 long long TFDcount = 0;
-Timer Ttaylor, Thighorder; 
+long long FiDcount = 0;
+Timer Ttaylor, Thighorder, Tfiduccia; 
 
 
 
 bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys::Element oQ, Degree a, Degree b) {
+    bool success, successF;
+    
+    try {
+        
+
     ++TFDcount;
 //     std::cerr << "------------------------------------------------------------" << TFDcount <<std::endl;
 
@@ -60,18 +67,18 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
 
 //HO101.write(std::cout << "TTy17b:=", TTy17b) << ';' << std::endl;
     
-    bool success = HO101.gettruncdom().areEqual(TTy17,TTy17b);
+    success = HO101.gettruncdom().areEqual(TTy17,TTy17b);
 
     if (! success) {
         std::cerr << "---------- BEG ERROR ----------" <<std::endl;
-        HO101.getpoldom().write(std::cerr << "P:=", P) << ';' << std::endl;
         HO101.getpoldom().write(std::cerr << "Q:=", Q) << ';' << std::endl;
+        HO101.getpoldom().write(std::cerr << "P:=", P) << ';' << std::endl;
         HO101.getpoldom().write(std::cerr << "TTy:=", TTy) << ';' << std::endl;
 
-        Fra._num = HO101.getpoldom().one;
-        Polys::Element Tay;
-        HO101.taylor(Tay, Fra, b);
-        HO101.getpoldom().write(std::cerr << "Tay:=", Tay) << ';' << std::endl;
+//         Fra._num = HO101.getpoldom().one;
+//         Polys::Element Tay;
+//         HO101.taylor(Tay, Fra, b);
+//         HO101.getpoldom().write(std::cerr << "Tay:=", Tay) << ';' << std::endl;
         
 
         HO101.write(std::cerr << "TTy17:=", TTy17) << ';' << std::endl;
@@ -79,8 +86,50 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
         std::cerr << "---------- END ERROR ----------" <<std::endl;
     } 
         
+ 
+    HighOrders::Truncated TTy17c; HO101.gettruncdom().init(TTy17c);
+    HighOrders::Truncated TTy17d; HO101.gettruncdom().init(TTy17d);
+    
+    tt.clear(); tt.start(); 
+//     HO101.Fiduccia(TTy17c, Fra, b);
+//     for(Degree d=a; d<b; ++d) {
+//         HO101.Fiduccia(TTy17d, Fra, d);
+//         HO101.gettruncdom().addin(TTy17c, TTy17d);
+//     }
+    HO101.Fiduccia(TTy17c, Fra, a, b);
+    tt.stop();
+    Tfiduccia+=tt;
+    
 
-    return success;
+//HO101.write(std::cout << "TTy17b:=", TTy17b) << ';' << std::endl;
+    
+    successF = HO101.gettruncdom().areEqual(TTy17,TTy17c);
+
+    if (! successF) {
+        std::cerr << "---------- BEG ERROR ----------" <<std::endl;
+        HO101.getpoldom().write(std::cerr << "Q:=", Q) << ';' << std::endl;
+        HO101.getpoldom().write(std::cerr << "P:=", P) << ';' << std::endl;
+        HO101.getpoldom().write(std::cerr << "TTy:=", TTy) << ';' << std::endl;
+
+//         Fra._num = HO101.getpoldom().one;
+//         Polys::Element Tay;
+//         HO101.taylor(Tay, Fra, b);
+//         HO101.getpoldom().write(std::cerr << "Tay:=", Tay) << ';' << std::endl;
+        
+
+        HO101.write(std::cerr << "TTy17:=", TTy17) << ';' << std::endl;
+        HO101.write(std::cerr << "TTy17c:=", TTy17c) << ';' << std::endl;
+        std::cerr << "---------- END ERROR ----------" <<std::endl;
+    } else {
+        ++FiDcount;
+    }    
+
+
+} catch (GivError e) {
+    std::cerr << e << std::endl;
+}
+
+    return success && successF;
 }
     
 
@@ -89,7 +138,13 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
 
 
 int main(int argc, char ** argv) {
-    long seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
+
+    
+    long numb = (argc>1?atoi(argv[1]):200);
+    std::cerr << "numb: " << numb << std::endl;
+    long tttn = (argc>2?atoi(argv[2]):100);
+    std::cerr << "tttn: " << tttn << std::endl;
+    long seed = (argc>3?atoi(argv[3]):BaseTimer::seed());
     std::cerr << "seed: " << seed << std::endl;
 
     Field Z101( 101, 1 );  // integers modulo 101
@@ -155,22 +210,22 @@ int main(int argc, char ** argv) {
 
     bool success=true;
 
-    success &= TestFracDevel(HO101, P, Q, 100-17,100);
-    success &= TestFracDevel(HO101, P, Q, 100-27,100);
-    success &= TestFracDevel(HO101, P, Q, 100-87,100);
-    success &= TestFracDevel(HO101, P, Q, 0,100);
-    success &= TestFracDevel(HO101, P, Q, 1,100);
-    success &= TestFracDevel(HO101, P, Q, 2,100);
-    success &= TestFracDevel(HO101, P, Q, 100,100);
-    success &= TestFracDevel(HO101, P, Q, 99,100);
-    success &= TestFracDevel(HO101, P, Q, 98,100);
+    success &= TestFracDevel(HO101, P, Q, tttn-(17*tttn)/100,tttn);
+    success &= TestFracDevel(HO101, P, Q, tttn-(27*tttn)/100,tttn);
+    success &= TestFracDevel(HO101, P, Q, tttn-(87*tttn)/100,tttn);
+    success &= TestFracDevel(HO101, P, Q, 0,tttn);
+    success &= TestFracDevel(HO101, P, Q, 1,tttn);
+    success &= TestFracDevel(HO101, P, Q, 2,tttn);
+    success &= TestFracDevel(HO101, P, Q, tttn,tttn);
+    success &= TestFracDevel(HO101, P, Q, tttn-1,tttn);
+    success &= TestFracDevel(HO101, P, Q, tttn-2,tttn);
 
 
-    for(size_t i=0; i<200; ++i) {
-        long deg1 = generator() % 66;
-        long deg2 = generator() % 65;
-        long v1 = generator() % 19195;
-        long v2 = v1 + (generator() % 45);
+    for(size_t i=0; i<numb; ++i) {
+        long deg1 = generator() % ((66*tttn)/100);
+        long deg2 = generator() % ((65*tttn)/100);
+        long v1 = generator() % ((19195*tttn)/100);
+        long v2 = v1 + (generator() % ((45*tttn)/100));
         DP101.random(generator, P, Degree(deg1) );
         DP101.random(generator, Q, Degree(deg2) );
         success &= TestFracDevel(HO101, P, Q, v1, v2);
@@ -178,6 +233,7 @@ int main(int argc, char ** argv) {
 
     std::cerr << "Taylor: " << Ttaylor << std::endl;
     std::cerr << "HighOrder: " << Thighorder << std::endl;
+    std::cerr << "Fiduccia: " << Tfiduccia << std::endl;
     
 
 
@@ -186,6 +242,7 @@ int main(int argc, char ** argv) {
     } else {
         std::cerr << "Success:" << TFDcount << std::endl;
     }
+    std::cerr << "Success F:" << FiDcount << std::endl;
 
     return 0;
 }

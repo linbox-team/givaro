@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <24 May 10 18:33:44 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <19 Oct 10 19:03:23 Jean-Guillaume.Dumas@imag.fr> 
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
@@ -80,40 +80,114 @@ struct HighOrder {
     }
 
 
-    Truncated& Fiduccia(Truncated& F, const Rep& Fra, Degree b) const {
-//         _dom.write(std::cout << "F: ", F.first.back()) << std::endl;
-        Polynomial Tay; Degree dT;
+    Truncated& Fiduccia(Truncated& F, const Rep& Fra, Degree a, Degree b) const {
+        Polynomial Tay;
         Degree dA; _poldom.degree(dA, Fra._den);
         this->taylor(Tay, Fra, dA);
-        return Fiduccia(F, Tay, Fra._den, b);    
+        return Fiduccia(F, Tay, Fra._den, a, b);    
     }
     
-    Truncated& Fiduccia(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree b) const {
-//         _dom.write(std::cout << "F: ", F.first.back()) << std::endl;
-//        _poldom.write(std::cout << "A: ", FraDen) << std::endl;
-        Degree dA; _poldom.degree(dA, FraDen);
-        Polynomial Rev; _poldom.init(Rev,dA);
-        for(size_t i=0;i<dA.value();++i)
+    Truncated& Fiduccia(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree a, Degree b) const {
+	  Degree dA; _poldom.degree(dA, FraDen);
+	  Polynomial Rev; _poldom.init(Rev,dA);
+	  for(size_t i=0;i<dA.value();++i)
             _dom.div(Rev[i],(FraDen)[dA.value()-i],FraDen.front());
-
-//        _poldom.write(std::cout << "P: ", Rev) << std::endl;
-
-        Polynomial Xl; _poldom.init(Xl);
-        Polynomial Xone; _poldom.init(Xone,Degree(1));
-        QuotientDom<Poly_t> Qdom(_poldom, Rev);
-        dom_power(Xl, Xone, b.value()-1, Qdom);
-
-//         _poldom.write(std::cout << "Xl recurs: ", Xl) << std::endl;
-
-        Type_t Tl; _dom.init(Tl); _dom.assign(Tl,_dom.zero);
-        for(size_t i=0;i<dA.value();++i) {
-            _dom.axpyin(Tl, Xl[i], Tay[i+1]);
-        }
-
-//         _dom.write(std::cerr << "Tl: ", Tl) << std::endl;
-
-        return _truncdom.assign(F, Degree(b), Tl);
+          _dom.assign(Rev[dA.value()],_dom.one);
+          return FiducciaReversed(F, Tay, Rev, a, b);
     }
+
+    Truncated& Fiduccia(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree b) const {
+          return Fiduccia(F, Tay, FraDen, b, b);
+    }
+
+    Truncated& Fiduccia(Truncated& F, const Rep& Fra, Degree b) const {
+        return Fiduccia(F, Fra, b, b);    
+    }
+
+
+    Type_t& shifteddotproduct(Type_t& dp, const Polynomial& P, const Polynomial& Q, const long shift) const {
+        Degree dl; _poldom.degree(dl, P);
+
+        GIVARO_STATE( Degree dq; _poldom.degree(dq, Q); );
+        GIVARO_ASSERT( (dl.value()+shift) <= (dq.value()+1), " in dotproduct HighOrder dP: " << dl << ", dQ: " << dq << ", shift: " << shift );
+        
+        _dom.assign(dp,_dom.zero);
+        for(long i=0;i<=dl.value();++i) 
+            _dom.axpyin(dp, P[i], Q[i+shift]);
+        
+        return dp;
+    }
+        
+            
+
+    Truncated& FiducciaReversed(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree a, Degree b) const {
+
+	Degree dT; _poldom.degree(dT, Tay);
+//         std::cout << "a: " << a << ", b: " << b << ", dT: " << dT << std::endl;
+	if (b > dT) { 
+	  Degree dA; _poldom.degree(dA, FraDen);
+	  
+	  Polynomial Xl; _poldom.init(Xl);
+	  Polynomial Xone; _poldom.init(Xone,Degree(1));
+	  QuotientDom<Poly_t> Qdom(_poldom, FraDen);
+	  Qdom.assign(Xone);
+          
+	  const long bonus = dT.value()-dA.value()+1;
+	  
+          Degree dR(b-a);
+          Polynomial Res; _poldom.init(Res, dR); 
+          long iterT=a.value();
+          long iterR=0;
+
+          for( ; iterT < dT.value(); ++iterR,++iterT) 
+              _dom.assign(Res[iterR],Tay[iterT]);
+
+	  dom_power(Xl, Xone, iterT-bonus, Qdom);
+	  
+ 	  Degree dl; _poldom.degree(dl, Xl);
+          shifteddotproduct( Res[iterR], Xl, Tay, bonus);
+          
+          
+          for( ++iterR; iterR<=dR.value(); ++iterR) {
+              Qdom.mulin(Xl, Xone);
+              shifteddotproduct( Res[iterR], Xl, Tay, bonus);
+          }
+	  _truncdom.assign(F, Res);
+          return _truncdom.mulin(F, a);
+	} else {
+	  return _truncdom.assign(F, Tay, Degree(a), Degree(b));
+        }
+    }
+
+    Truncated& FiducciaReversed(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree b) const {
+        return FiducciaReversed(F, Tay, FraDen, b, b);
+    }
+    
+
+//     Truncated& FiducciaReversed(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree b) const {
+// 	Degree dT; _poldom.degree(dT, Tay);
+// 	if (b > dT) { 
+// 	  Degree dA; _poldom.degree(dA, FraDen);
+	  
+// 	  Polynomial Xl; _poldom.init(Xl);
+// 	  Polynomial Xone; _poldom.init(Xone,Degree(1));
+// 	  QuotientDom<Poly_t> Qdom(_poldom, FraDen);
+// 	  Qdom.assign(Xone);
+          
+// 	  const long bonus = dT.value()-dA.value()+1;
+	  
+// 	  dom_power(Xl, Xone, b.value()-bonus, Qdom);
+	  
+//  	  Degree dl; _poldom.degree(dl, Xl);
+
+//           Type_t Tl; _dom.init(Tl); 
+//           shifteddotproduct( Tl, Xl, Tay, bonus);
+
+// 	  return _truncdom.assign(F, Degree(b), Tl);
+// 	} else {
+// 	  return _truncdom.assign(F, Degree(b), Tay[b.value()]);
+// 	}
+//     }
 
 
     Truncated& FracDevel(Truncated& F, const Rep& Fra, Degree a, Degree b) const {

@@ -363,18 +363,47 @@ public:
 	operator vect_t() const ;
 
 	//--------------------Random Iterators
-	// -- return a random number with sz machine word. 
-	// -- To be improved.
+	static void seeding(unsigned long int  s);
+	static void seeding(Integer s);
+	static void seeding();
+
 #ifdef __GMP_PLUSPLUS__
-	static void seeding(unsigned long int s=0);
-	static gmp_randclass& randstate(unsigned long int s=0);
+	static gmp_randclass& randstate(unsigned long int s=0); // pourquoi ?
+#else 
+	static inline gmp_randstate_t intializerandstate() 
+	static gmp_randstate_t randstate(); 
 #endif
-	static Integer  random(int sz=1 );
-	static Integer  nonzerorandom(int sz=1 );
-	static Integer& random(Integer& r, const Integer& size );
-	static Integer& nonzerorandom(Integer& r, const Integer& size );
-	static Integer& random(Integer& r, long size =1 );
-	static Integer& nonzerorandom(Integer& r, long size =1 );
+	static Integer& random_lessthan (Integer& r, const Integer & m);
+	static Integer& random_lessthan_2exp (Integer& r, const unsigned long & m);
+	static Integer random_lessthan_2exp (const unsigned long & m);
+	static Integer& random_lessthan (Integer& r, const unsigned long & m) ;
+	template<class T>
+	static Integer random_lessthan (const T & m);
+	static Integer& random_exact (Integer& r, const Integer & s) ;
+	static Integer& random_exact_2exp (Integer& r, const unsigned long int & m) ;
+	static Integer& random_exact (Integer& r, const unsigned long int & m)  ;
+	template<class T>
+	static Integer random_exact (const T & s) ;
+	static Integer& random_between (Integer& r, const Integer& m, const Integer&M) ;
+	static Integer random_between (const Integer& m, const Integer &M) ;
+	static Integer& random_between_2exp (Integer& r, const unsigned long int& m, const unsigned long int &M) ;
+	static Integer random_between_2exp (const unsigned long int & m, const unsigned long int &M) ;
+	static Integer random_between (const unsigned long int & m, const unsigned long int &M) ;
+	template<class T>
+	static Integer random_exact (const T & m, const T & M) ;
+
+	// useful functions :
+	template<class T>
+	static Integer& random (Integer& r, const T & m) ;
+	template<class T>
+	static Integer random(const T & sz) ;
+	static Integer random();
+	template<class T>
+	static Integer nonzerorandom(const T & sz) ;
+	template<class T>
+	static Integer& nonzerorandom (Integer& r, const T& size) ;
+
+
 	//----------------------------------------------I/O
 
 	friend std::istream& operator >> (std::istream &i, Integer& n);

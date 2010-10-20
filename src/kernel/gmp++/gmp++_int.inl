@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.11 2010-10-20 14:12:20 bboyer Exp $
+// $Id: gmp++_int.inl,v 1.12 2010-10-20 16:40:34 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -342,25 +342,25 @@ inline void Integer::seeding(Integer  s)
 #else 
 /*{{{*/
 /* seeding, initialising */
-static inline gmp_randstate_t intializerandstate() 
+inline __gmp_randstate_struct Integer::intializerandstate() 
 {/*{{{*/
 	gmp_randstate_t state;
 	gmp_randinit_default(state);
-	return state;
+	return state[0];
 }/*}}}*/
 
-inline gmp_randstate_t& Integer::randstate() 
+inline __gmp_randstate_struct* Integer::randstate() 
 {/*{{{*/
-	static gmp_randstate_t state = intializerandstate() ;
-	return state;
+	static __gmp_randstate_struct state = intializerandstate() ;
+	return &state;
 }/*}}}*/
 
-inline void Integer::seeding(long unsigned int s) 
+inline void Integer::seeding(long unsigned int seed) 
 {/*{{{*/
 	gmp_randseed_ui(Integer::randstate(), seed);
 }/*}}}*/
 
-inline void Integer::seeding(Integer s) 
+inline void Integer::seeding(Integer seed) 
 {/*{{{*/
 	gmp_randseed(Integer::randstate(), (mpz_ptr) &(seed.gmp_rep));
 }/*}}}*/
@@ -390,7 +390,7 @@ inline Integer& Integer::random_lessthan (Integer& r, const Integer & m)
 //! returns a random integer \p r in the intervall <code>[[0, m-1]]</code>
 inline Integer& Integer::random_lessthan (Integer& r, const Integer & m)
 {/*{{{*/
-	mpz_urandomm((mpz_ptr) &(r.gmp_rep),state,(mpz_ptr)&(m.gmp_rep));
+	mpz_urandomm((mpz_ptr) &(r.gmp_rep),Integer::randstate(),(mpz_ptr)&(m.gmp_rep));
 	return r;
 }/*}}}*/
 #endif

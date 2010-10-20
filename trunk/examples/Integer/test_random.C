@@ -1,0 +1,92 @@
+// Copyright(c)'2010 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
+// written by BB.
+
+#include <iostream>
+#include <givaro/givinteger.h>
+
+
+using std::cout ; using std::endl;
+
+int main() {
+
+	Integer toto  ;
+	toto.seeding((long unsigned int)0);
+	cout << "this is a random() number : " << toto.random() << endl;
+
+	Integer un(26);
+	Integer autre(511);
+	cout << "random...............OK" << endl;
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.random_between(un,autre);
+		//cout << tata << endl;
+		if (tata < un || tata >= autre) {
+			cout << "random_between  failed" << endl;
+			exit(-1);
+		}
+	}
+	cout << "random_between.......OK" << endl;
+
+	unsigned long trois = 3 ;
+	unsigned long petits = 6 ;
+	//std::vector<int> T(1<<petits) ;
+
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.random_between(trois,petits);
+		//cout << tata << endl;
+		//T[tata] += 1 ;
+		if (tata < (1<<trois) || tata >= (1<<petits) ) {
+			cout << "random_between_exp  failed" << endl;
+			exit(-1);
+		}
+	}
+	//    for (size_t i = 0 ; i < 1<<petits ; ++i) cout << T[i] << " " ;
+	cout << "random_between_exp...OK" << endl;
+
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.random_exact(petits);
+		if (mpz_sizeinbase(tata.get_mpz(),2) != petits) {
+			//        cout << tata << endl;
+			cout << "random_exact_exp  failed" << endl;
+			exit(-1);
+		}
+	}
+	cout << "random_exact_exp.....OK" << endl;
+
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.random_exact(autre);
+		//        cout << tata << endl;
+		if (mpz_sizeinbase(tata.get_mpz(),2) != mpz_sizeinbase(autre.get_mpz(),2)) {
+			cout << "random_exact  failed" << endl;
+			exit(-1);
+		}
+	}
+	cout << "random_exact.........OK" << endl;
+
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.nonzerorandom(petits);
+		if (tata == 0 || tata >= 1<<petits) {
+			//        cout << tata << endl;
+			cout << "nonzerorandom  failed" << endl;
+			exit(-1);
+		}
+	}
+	cout << "nonzerorandom_exp....OK" << endl;
+
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.nonzerorandom(autre);
+		if (tata == 0 || tata >= autre) {
+			//        cout << tata << endl;
+			cout << "nonzerorandom  failed" << endl;
+			exit(-1);
+		}
+	}
+	cout << "nonzerorandom........OK" << endl;
+
+	return 0;
+
+}
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

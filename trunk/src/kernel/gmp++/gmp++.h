@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Givaro version of gmp++.h
-// Time-stamp: <08 Mar 07 14:07:31 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <20 Oct 10 18:46:59 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 #ifndef _GMPplusplus_H_
 #define _GMPplusplus_H_
@@ -30,7 +30,7 @@
 extern "C" {
 #endif
 
-#include "gmp.h"
+#include <gmp.h>
 
 #ifdef __GIVARO_GMP_VERSION_3
 }

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier, JG. Dumas
-// Time-stamp: <29 Sep 09 10:40:53 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <20 Oct 10 18:44:38 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -370,8 +370,8 @@ public:
 #ifdef __GMP_PLUSPLUS__
 	static gmp_randclass& randstate(unsigned long int s=0); // pourquoi ?
 #else 
-	static inline gmp_randstate_t intializerandstate() 
-	static gmp_randstate_t randstate(); 
+    	static __gmp_randstate_struct intializerandstate();
+	static __gmp_randstate_struct* randstate(); 
 #endif
 	static Integer& random_lessthan (Integer& r, const Integer & m);
 	static Integer& random_lessthan_2exp (Integer& r, const unsigned long & m);

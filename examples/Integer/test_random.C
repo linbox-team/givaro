@@ -48,7 +48,7 @@ int main() {
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.random_exact(petits);
-		if (mpz_sizeinbase(tata.get_mpz(),2) != petits) {
+		if ( tata.bitsize() != petits ) {
 			//        cout << tata << endl;
 			cout << "random_exact_exp  failed" << endl;
 			exit(-1);
@@ -59,7 +59,7 @@ int main() {
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.random_exact(autre);
 		//        cout << tata << endl;
-		if (mpz_sizeinbase(tata.get_mpz(),2) != mpz_sizeinbase(autre.get_mpz(),2)) {
+		if ( tata.bitsize() != autre.bitsize() ){
 			cout << "random_exact  failed" << endl;
 			exit(-1);
 		}

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.12 2010-10-20 16:40:34 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.13 2010-10-22 09:02:32 bboyer Exp $
 // ========================================================================
 // Description: 
 
@@ -438,7 +438,7 @@ inline Integer Integer::random_lessthan (const T & m)
 //! returns a reference to a random number \p r of the size of \p s, exactly.
 inline Integer& Integer::random_exact (Integer& r, const Integer & s) 
 {/*{{{*/
-	size_t t = mpz_sizeinbase((mpz_ptr) &(s.gmp_rep),2);
+	size_t t = s.bitsize() ;
 	random_exact_2exp(r,t);
 	return r;
 }/*}}}*/

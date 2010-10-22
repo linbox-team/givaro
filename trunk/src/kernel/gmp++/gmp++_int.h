@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier, JG. Dumas
-// Time-stamp: <20 Oct 10 18:44:38 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <22 Oct 10 15:35:39 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
@@ -198,6 +198,7 @@ public:
 	Integer  operator % (const Integer& n) const;
 	unsigned long  operator % (const unsigned long l) const;
 	long  operator % (const long l) const;
+	double  operator % (const double l) const;
 	unsigned short  operator % (const unsigned short l) const { return (unsigned short) ( this->operator % ( (unsigned long)l ) ); }
 	template<class XXX> XXX operator %(const XXX& x) const { return (XXX)this->operator % ( Integer(x) ); }
 	Integer& operator %= (const Integer& n);  

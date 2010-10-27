@@ -3,7 +3,7 @@
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software. 
 # see the COPYRIGHT file for more details.
-check: $(EXTRA_PROGRAMS)
+all: $(EXTRA_PROGRAMS)
 INCLUDES=-I$(top_srcdir)
 
 #OPTFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing

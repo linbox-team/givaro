@@ -4,7 +4,7 @@
 # and abiding by the rules of distribution of free software. 
 # see the COPYRIGHT file for more details.
 
-SUBDIRS=src macros examples
+SUBDIRS=src macros tests
 
 bin_SCRIPTS=givaro-config givaro-makefile
 
@@ -23,3 +23,9 @@ DISTCLEANFILES += src/library/matrix/givaro
 DISTCLEANFILES += src/library/poly1/givaro
 DISTCLEANFILES += src/library/tools/givaro
 DISTCLEANFILES += src/library/vector/givaro
+
+.PHONY: examples 
+
+examples: 
+	cd examples && $(MAKE) $(AM_MAKEFLAGS) examples
+

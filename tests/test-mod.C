@@ -16,6 +16,8 @@
 		return -1 ; \
 	}
 
+#define NB_ITERS 40
+
 int main()
 {/*{{{*/
 
@@ -39,7 +41,7 @@ int main()
 	Integer R3 = M%pi ;
 	SONT_EQ(R,R3);
 
-	for (unsigned i = 0 ; i < _ITERS ; ++i)
+	for (unsigned i = 0 ; i < NB_ITERS ; ++i)
 	{/*{{{*/
 		M = Integer::random_between(680,700);
 		P = Integer::random_between(134,198);

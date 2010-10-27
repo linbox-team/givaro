@@ -11,7 +11,7 @@ check: $(BASE_TESTS)
 
 INCLUDES=-I$(top_srcdir) 
 #AM_LDFLAGS = 
-AM_CXXFLAGS = -g -Wall
+AM_CXXFLAGS = -g -Wall -W
 AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
 
 LDADD = $(OPTLINKS) -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
@@ -32,7 +32,7 @@ TESTS =   \
 	   $(BASIC_TESTS)
 
 test_random_SOURCES= test-random.C
-test_ifacor_SOURCES= test-ifactor.C
+test_ifactor_SOURCES= test-ifactor.C
 test_ffarith_SOURCES= test-ffarith.C
 test_mod_SOURCES= test-mod.C
 

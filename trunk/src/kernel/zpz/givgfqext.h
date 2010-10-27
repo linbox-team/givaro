@@ -122,6 +122,7 @@ public:
     UTT mask() const { return _MASK;}
     UTT maxdot() const { return _maxn; }
     UTT& characteristic(UTT& a) const { return a=this->_characteristic; }
+    UTT characteristic() const { return this->_characteristic; }
     const bool balanced;
             
     Rep& init( Rep& r, const unsigned long l) const {

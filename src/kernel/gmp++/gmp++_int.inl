@@ -1,12 +1,13 @@
 // ========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/gmp++/gmp++_int.inl,v $
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2010 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int.inl,v 1.13 2010-10-22 09:02:32 bboyer Exp $
+// Modified by: B. Boyer
+// $Id: gmp++_int.inl,v 1.14 2010-10-27 15:15:05 bboyer Exp $
 // ========================================================================
 // Description: 
 
@@ -507,13 +508,10 @@ inline Integer Integer::random_between_2exp (const unsigned long int & m, const 
 // synonym.
 inline Integer Integer::random_between (const unsigned long & m, const unsigned long &M) { return random_between_2exp(m,M) ; }
 
-template<class T>
-inline Integer Integer::random_exact (const T & m, const T & M) 
-{/*{{{*/
-	Integer res ;
-	return random_between(res,m,M);
-}/*}}}*/
 
+inline Integer& Integer::random_between (Integer& r, const unsigned long int& m, const unsigned long int &M) {
+	return random_between_2exp(r,m,M);
+}
 /* **************/
 /*  short hand  */
 /* **************/

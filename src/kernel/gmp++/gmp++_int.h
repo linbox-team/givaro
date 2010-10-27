@@ -1,10 +1,11 @@
 // ========================================================================
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2010 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier, JG. Dumas
+// Modified by: B. Boyer
 // Time-stamp: <22 Oct 10 15:35:39 Jean-Guillaume.Dumas@imag.fr> 
 // ========================================================================
 // Description: 
@@ -371,27 +372,44 @@ public:
 #ifdef __GMP_PLUSPLUS__
 	static gmp_randclass& randstate(unsigned long int s=0); // pourquoi ?
 #else 
-    	static __gmp_randstate_struct intializerandstate();
+	static __gmp_randstate_struct intializerandstate();
 	static __gmp_randstate_struct* randstate(); 
 #endif
+	/*  random <= */
 	static Integer& random_lessthan (Integer& r, const Integer & m);
 	static Integer& random_lessthan_2exp (Integer& r, const unsigned long & m);
 	static Integer random_lessthan_2exp (const unsigned long & m);
 	static Integer& random_lessthan (Integer& r, const unsigned long & m) ;
 	template<class T>
 	static Integer random_lessthan (const T & m);
+
+	/*  random = */
 	static Integer& random_exact (Integer& r, const Integer & s) ;
 	static Integer& random_exact_2exp (Integer& r, const unsigned long int & m) ;
 	static Integer& random_exact (Integer& r, const unsigned long int & m)  ;
 	template<class T>
+	static Integer& random_exact (Integer& r, const T & m) {
+		return random_exact(r,static_cast<unsigned long int>(m)); 
+	}
+	template<class T>
 	static Integer random_exact (const T & s) ;
+
+	/*  random <.< */
 	static Integer& random_between (Integer& r, const Integer& m, const Integer&M) ;
 	static Integer random_between (const Integer& m, const Integer &M) ;
 	static Integer& random_between_2exp (Integer& r, const unsigned long int& m, const unsigned long int &M) ;
+	static Integer& random_between (Integer& r, const unsigned long int& m, const unsigned long int &M) ;
 	static Integer random_between_2exp (const unsigned long int & m, const unsigned long int &M) ;
 	static Integer random_between (const unsigned long int & m, const unsigned long int &M) ;
-	template<class T>
-	static Integer random_exact (const T & m, const T & M) ;
+	
+	template<class R>
+	static Integer random_between (const R & m, const R & M) 
+	{ return random_between(static_cast<const unsigned long int>(m), static_cast<const unsigned long int>(M)); }
+
+	template<class R>
+	static Integer & random_between (Integer &r, const R & m, const R & M) 
+	{ return random_between(r,static_cast<const unsigned long int>(m), static_cast<const unsigned long int>(M)); }
+
 
 	// useful functions :
 	template<class T>

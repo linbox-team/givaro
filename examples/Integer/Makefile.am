@@ -3,7 +3,7 @@
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software. 
 # see the COPYRIGHT file for more details.
-check: $(EXTRA_PROGRAMS)
+all: $(EXTRA_PROGRAMS)
 INCLUDES=-I$(top_srcdir)
 
 #OPTFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
@@ -28,7 +28,7 @@ AM_CPPFLAGS += -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memo
 
 LDADD = -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
-EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi lambda lambda_inv iexponentiation RSA_decipher  RSA_encipher  ispower probable_primroot ProbLucas ModularSquareRoot test_random
+EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi lambda lambda_inv iexponentiation RSA_decipher  RSA_encipher  ispower probable_primroot ProbLucas ModularSquareRoot
 
 ModularSquareRoot_SOURCES=ModularSquareRoot.C
 ProbLucas_SOURCES=ProbLucas.C
@@ -55,7 +55,6 @@ RSA_keys_generator_SOURCES = RSA_keys_generator.C
 RSA_encipher_SOURCES = RSA_encipher.C
 RSA_decipher_SOURCES = RSA_decipher.C
 iexponentiation_SOURCES = iexponentiation.C
-test_random_SOURCES= test_random.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@

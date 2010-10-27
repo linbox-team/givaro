@@ -18,7 +18,9 @@ LDADD = $(OPTLINKS) -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -l
 
 BASIC_TESTS =   \
 		test-random  \
-		test-ifactor
+		test-ifactor \
+		test-ffarith \
+		test-mod
 
 CLEAN_FILES =   \
 			 $(BASIC_TESTS)
@@ -31,8 +33,10 @@ TESTS =   \
 
 test_random_SOURCES= test-random.C
 test_ifacor_SOURCES= test-ifactor.C
+test_ffarith_SOURCES= test-ffarith.C
+test_mod_SOURCES= test-mod.C
 
-# for compilation of new tests (?)
+# for compilation of new tests 
 GIVARO_BIN=@bindir@
 %:%.C
 	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)

@@ -95,14 +95,14 @@ int main(int argc, char ** argv) {
     tim.stop();
     std::cout << NB << " * " << TAILLE << " Sub: " << coef / tim.usertime() 
          << "Mop/s\n" << tim << ", ex: " << z3 << std::endl << std::flush;
-/*
+#if 0
     tim.clear();tim.start();
     for (k=0; k<NB; ++k)  for(i=0; i<TAILLE; ++i)
         GFq.div(z3, z1, z2);
     tim.stop();
     std::cout << NB << " * " << TAILLE << " Div: " << coef / tim.usertime() 
          << "Mop/s\n" << tim << ", ex: " << z3 << std::endl << std::flush;
-*/
+#endif
 
     tim.clear();tim.start();
     for (k=0; k<NB; ++k) for(i=0; i<TAILLE; ++i)
@@ -153,4 +153,7 @@ int main(int argc, char ** argv) {
 
     return 0;
 }
+
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen
+/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 

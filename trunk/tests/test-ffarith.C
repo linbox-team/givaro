@@ -135,7 +135,7 @@ int TestField(const Field& F)
 }/*}}}*/
 
 
-int main(int argc, char ** argv) 
+int main() 
 {/*{{{*/
 
 	// modulo 13 over 16 bits

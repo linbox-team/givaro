@@ -5,14 +5,14 @@
 // written by BB
 // see the COPYRIGHT file for more details.
 
-#include <iostream>
-using namespace std;
-#include <givaro/givinit.h>
+//#include <iostream>
+//#include <givaro/givinit.h>
 #include <givaro/givintfactor.h>
-#include <givaro/givintprime.h>
+//#include <givaro/givintprime.h>
 
-#define _ITERS 100
+#define NB_ITERS 100
 //#define LOOPS 0
+
 
 int test(const IntFactorDom<> & IP, const Integer & m)
 {/*{{{*/
@@ -30,32 +30,33 @@ int test(const IntFactorDom<> & IP, const Integer & m)
 	return 0 ;
 }/*}}}*/
 
-int main(int argc, char** argv)
+int main()
 {/*{{{*/
 	IntFactorDom<> IP;
 	Integer m;
+	m.seeding();
 	int err = 0 ;
 	long int a = 3;
 	long int b = 50 ;
 
-	for (size_t i = 0 ; i < _ITERS ; ++i)
+	for (size_t i = 0 ; i < NB_ITERS ; ++i)
 	{/*{{{*/
-		if (!(i%25)) std::cout << i << "..." ;
+//                if (!(i%25)) std::cout << i << "..." ;
 		m = Integer::random_between(a,b);
 		err = test(IP,m);
 		if (err) break ;
 
 	}/*}}}*/
-	std::cout << _ITERS << std::endl;
+	//std::cout << NB_ITERS << std::endl;
 
 	if (err) return err ;
 
 	Integer p,q ;
 	a = 29 ;
 	b = 30 ;
-	for (size_t i = 0 ; i < _ITERS ; ++i)
+	for (size_t i = 0 ; i < NB_ITERS ; ++i)
 	{/*{{{*/
-		if (!(i%25)) std::cout << i << "..." ;
+//                if (!(i%25)) std::cout << i << "..." ;
 
 		p = Integer::random_between(a,b);
 		IP.nextprimein(p);
@@ -68,7 +69,7 @@ int main(int argc, char** argv)
 		m = p*q ;
 
 	}/*}}}*/
-	std::cout << _ITERS << std::endl;
+//        std::cout << NB_ITERS << std::endl;
 
 	if (err) return err ;
 

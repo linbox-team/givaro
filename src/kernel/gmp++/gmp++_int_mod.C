@@ -1,12 +1,13 @@
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/gmp++/gmp++_int_mod.C,v $
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2010 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mod.C,v 1.8 2010-10-22 13:42:16 jgdumas Exp $
+// Modified: JG. Dumas, BB.
+// $Id: gmp++_int_mod.C,v 1.9 2010-10-28 09:26:12 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -84,13 +85,12 @@ Integer& Integer::operator %= (const long l)
   return *this;
 }
 
-
 Integer Integer::operator % (const Integer& n) const
 {
   if (isZero(*this)) return Integer::zero;
   Integer res;   
 //   mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
-  mpz_mod( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+  mpz_mod( (mpz_ptr) &(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr) &(n.gmp_rep) ) ;
   return res;
 }
 
@@ -105,7 +105,12 @@ unsigned long Integer::operator % (const unsigned long l) const {
 //         if (res > 0UL) return (l-res);
 //         else return 0UL;
 //     }
-    return  mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
+	if (isZero(*this)) return Integer::zero;
+	int sgn = ((*this)<0)?(-1):(1) ;
+	unsigned long res =   mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
+	if (sgn <0) return (l-res) ;
+
+	return  res;
 }
 
 long Integer::operator % (const long l) const 
@@ -113,18 +118,23 @@ long Integer::operator % (const long l) const
 // //  if (l ==0) {
 // //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-    if (l>0)
-        return static_cast<long>(this->operator%( static_cast<const unsigned long>(l) ) );
-    else {
-        long res = static_cast<long>(this->operator%( static_cast<const unsigned long>( -l ) ) );
-        return -res;
-    }
+	if (l>0)
+		return static_cast<long>(this->operator%( static_cast<const unsigned long>(l) ) );
+	else {
+		long res = static_cast<long>(this->operator%( static_cast<const unsigned long>( -l ) ) );
+		return res;
+	}
 }
 
-double Integer::operator % (const double l) const {
-    return static_cast<double>(this->operator%( static_cast<const unsigned long>(l) ) );
+double Integer::operator % (const double l) const 
+{
+	if (l>0)
+		return  static_cast<double>(this->operator%( static_cast<const unsigned long>(l) ) );
+	else{
+		double res =  static_cast<double>(this->operator%( static_cast<const unsigned long>(-l) ) );
+		return res;
+	}
 }
-
 
 //Added by Dan Roche, 6-28-04
 #ifdef __USE_64_bits__
@@ -145,5 +155,7 @@ long long Integer::operator % (const long long l) const
   mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
   return (long long)( Res );
 }
+#endif //__USE_64_bits__
 
-#endif
+/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

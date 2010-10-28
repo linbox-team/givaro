@@ -9,69 +9,133 @@
 
 #include <givaro/givinteger.h>
 
+//#define TEST_PASS
+#undef TEST_PASS
+
+#ifndef TEST_PASS
 #define SONT_EQ(a,b)\
 	if ( (a) != (b) ) { \
 		std::cout << "erreur à la ligne " << __LINE__ << std::endl; \
 		std::cout << a << "!=" << b << std::endl; \
 		return -1 ; \
 	}
+#else
+#define SONT_EQ(a,b)\
+	if ( (a) != (b) ) { \
+		std::cout << "erreur à la ligne " << __LINE__ << std::endl; \
+		std::cout << a << "!=" << b << std::endl; \
+	}
+#endif
 
 #define NB_ITERS 40
+
+template< class T, class U>
+int test1( const T m, const U p)
+{/*{{{*/
+	double pi (p);
+	long int r = m % p;
+	if (r<0)  r += (p<0)?(-p):(p); // r est dans [[0,p-1]]
+	const Integer M(m);
+	const Integer P(p);
+	Integer R ;
+
+	Integer::mod(R,M,P);
+	SONT_EQ(r,R);
+	// R a bon r.
+
+	Integer R1 = M%p ; //!XX
+	SONT_EQ(R,R1);
+
+	Integer R2 = M%P ;
+	SONT_EQ(R,R2);
+
+	Integer R3 = M%pi ; //!XX
+	SONT_EQ(R,R3);
+
+	R1 = M ;
+	Integer::modin(R1,P);
+	SONT_EQ(R,R1);
+
+
+	R2 = M ;
+	R2 %= P ;
+	SONT_EQ(R,R2);
+
+	return 0;
+}/*}}}*/
+
+int test2(Integer & M, Integer & P)
+{/*{{{*/
+	Integer RR ;
+	Integer MM = M ;
+	Integer PP = P ;
+	mpz_mod(RR.get_mpz() ,MM.get_mpz() ,PP.get_mpz());
+	if (RR<0) RR+=(PP<0)?(-PP):(PP);
+
+	Integer R = 0 ;
+
+	//!@todo existe pas !
+	//R = Integer:: mod(M,P) ; 
+	Integer:: mod(R,M,P) ;
+	SONT_EQ(RR,R);
+
+	R = M ;
+	Integer::modin(R,P);
+	SONT_EQ(RR,R);
+
+	R = M ;
+	R %= P;
+	SONT_EQ(RR,R);
+
+	R = M ;
+	R = M%P;
+	SONT_EQ(RR,R);
+
+	return 0;
+}/*}}}*/
+
 
 int main()
 {/*{{{*/
 
-	unsigned long int m = 1253345363665346363;
-	unsigned long int p = 78678675;
-	double pi (p);
-	unsigned long int r = m % p;
-	Integer M(m);
-	Integer P(p);
-	Integer R ;
+	long int m = 1253345363665346363;
+	long int p = 78678675;
+	unsigned long int M(m);
+	unsigned long int P(p);
 
-	Integer::mod(R,M,P);
-	SONT_EQ(R,r);
+	int rez = 0;
 
-	Integer R1 = M%p ;
-	SONT_EQ(R,R1);
+	rez =  test1(m,p);   if (rez) return 1 ;
+	//std::cout << "ok0" << std::endl;
+	rez =  test1(-m,p);  if (rez) return 2 ;
+	//std::cout << "ok1" << std::endl;
+	rez =  test1(m,-p);  if (rez) return 3 ;
+	//std::cout << "ok2" << std::endl;
+	rez =  test1(-m,-p); if (rez) return 4 ;
+	//std::cout << "ok3" << std::endl;
+	rez =  test1(m,P);   if (rez) return 5 ;
+	//std::cout << "ok4" << std::endl;
+	rez =  test1(M,P);   if (rez) return 6 ;
+	//std::cout << "ok5" << std::endl;
 	
-	Integer R2 = M%P ;
-	SONT_EQ(R,R2);
-
-	Integer R3 = M%pi ;
-	SONT_EQ(R,R3);
-
 	for (unsigned i = 0 ; i < NB_ITERS ; ++i)
 	{/*{{{*/
-		M = Integer::random_between(680,700);
-		P = Integer::random_between(134,198);
-
-		//!@todo existe pas !
-		//R = Integer:: mod(M,P) ; 
-		Integer:: mod(R,M,P) ;
-
-		Integer RR ;
-		mpz_tdiv_r(RR.get_mpz() ,M.get_mpz() ,P.get_mpz());
-		SONT_EQ(RR,R);
-
-		Integer::negin(P);
-
-		Integer:: mod(R,M,P) ;
-		mpz_tdiv_r(RR.get_mpz() ,M.get_mpz() ,P.get_mpz());
-		SONT_EQ(RR,R);
-
+		Integer M = Integer::random_between(680,700);
+		Integer P = Integer::random_between(134,198);
+		rez = test2(M,P); if (rez) return 7 ;
 		Integer::negin(M);
-		Integer:: mod(R,M,P) ;
-		mpz_tdiv_r(RR.get_mpz() ,M.get_mpz() ,P.get_mpz());
-		if (RR<0) RR-=P ;
-		SONT_EQ(RR,R);
-
+		rez = test2(M,P); if (rez) return 8 ;
 		Integer::negin(P);
-		Integer:: mod(R,M,P) ;
-		mpz_tdiv_r(RR.get_mpz() ,M.get_mpz() ,P.get_mpz());
-		if (RR<0) RR+=P ;
-		SONT_EQ(RR,R);
+		rez = test2(M,P); if (rez) return 9 ;
+		Integer::negin(M);
+		rez = test2(M,P); if (rez) return 10 ;
 	}/*}}}*/
+	//std::cout << "ok6" << std::endl;
+
+	rez =  test1(0,p);   if (rez) return 11 ;
+	rez =  test1(0,-p);   if (rez) return 12 ;
+	//std::cout << "ok7" << std::endl;
+
 
 
 	return 0;

@@ -15,6 +15,7 @@ pkginclude_HEADERS=\
 	givintnumtheo.h		\
 	givintrsa.h		\
 	givintrns.h		\
+	givinteger.inl		\
 	givintprime.inl		\
 	givintnumtheo.inl	\
 	givintrsa.inl		\

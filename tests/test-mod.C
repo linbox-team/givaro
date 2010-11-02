@@ -97,8 +97,12 @@ int test2(Integer & M, Integer & P)
 
 int main()
 {/*{{{*/
-
+#if (SIZEOF_LONG==8)
 	long int m = 1253345363665346363;
+#else
+	long int m = 1665346363;
+#endif
+
 	long int p = 78678675;
 	unsigned long int M(m);
 	unsigned long int P(p);

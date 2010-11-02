@@ -9,7 +9,7 @@ check: $(BASE_TESTS)
 
 INCLUDES=-I$(top_srcdir) 
 #AM_LDFLAGS = 
-AM_CXXFLAGS = -g -Wall -W -m32
+AM_CXXFLAGS = -g -Wall -W 
 AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
 
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)

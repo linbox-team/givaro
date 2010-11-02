@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified: JG. Dumas, BB.
-// $Id: gmp++_int_mod.C,v 1.9 2010-10-28 09:26:12 bboyer Exp $
+// $Id: gmp++_int_mod.C,v 1.10 2010-11-02 12:04:20 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -158,4 +158,4 @@ long long Integer::operator % (const long long l) const
 #endif //__USE_64_bits__
 
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax

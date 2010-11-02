@@ -4,8 +4,6 @@
 # and abiding by the rules of distribution of free software. 
 # see the COPYRIGHT file for more details.
 
-check:$(BASIC_TESTS)
-
 SUBDIRS =
 check: $(BASE_TESTS)
 
@@ -14,7 +12,7 @@ INCLUDES=-I$(top_srcdir)
 AM_CXXFLAGS = -g -Wall -W
 AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
 
-LDADD = $(OPTLINKS) -L${libdir} -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
+LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 BASIC_TESTS =   \
 		test-random  \

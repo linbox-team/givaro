@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified by: B. Boyer
-// $Id: gmp++_int.inl,v 1.14 2010-10-27 15:15:05 bboyer Exp $
+// $Id: gmp++_int.inl,v 1.15 2010-11-02 12:04:20 bboyer Exp $
 // ========================================================================
 // Description: 
 
@@ -323,57 +323,57 @@ inline std::ostream& operator<< (std::ostream& o, const Integer& a) { return a.p
 /* seeding, initialising  */
 /* ********************** */
 #ifdef __GMP_PLUSPLUS__
-/*{{{*/
+
 inline gmp_randclass& Integer::randstate(long unsigned int ) 
-{/*{{{*/
+{
 	static gmp_randclass randstate(gmp_randinit_default);
 	return static_cast<gmp_randclass&>(randstate);
-}/*}}}*/
+}
 
 inline void Integer::seeding(unsigned long  s) 
-{/*{{{*/
+{
 	Integer::randstate().seed(s) ;
-}/*}}}*/
+}
 
 inline void Integer::seeding(Integer  s) 
-{/*{{{*/
+{
 	Integer::randstate().seed((mpz_class) (mpz_ptr) &(s.gmp_rep) ) ;
-}/*}}}*/
-/*}}}*/
+}
+
 #else 
-/*{{{*/
+
 /* seeding, initialising */
 inline __gmp_randstate_struct Integer::intializerandstate() 
-{/*{{{*/
+{
 	gmp_randstate_t state;
 	gmp_randinit_default(state);
 	return state[0];
-}/*}}}*/
+}
 
 inline __gmp_randstate_struct* Integer::randstate() 
-{/*{{{*/
+{
 	static __gmp_randstate_struct state = intializerandstate() ;
 	return &state;
-}/*}}}*/
+}
 
 inline void Integer::seeding(long unsigned int seed) 
-{/*{{{*/
+{
 	gmp_randseed_ui(Integer::randstate(), seed);
-}/*}}}*/
+}
 
 inline void Integer::seeding(Integer seed) 
-{/*{{{*/
+{
 	gmp_randseed(Integer::randstate(), (mpz_ptr) &(seed.gmp_rep));
-}/*}}}*/
+}
 
 
-/*}}}*/
+
 #endif
 inline void Integer::seeding() 
-{/*{{{*/
+{
 	unsigned long seed = 0 ;
 	Integer::seeding(seed);
-}/*}}}*/
+}
 
 /* ****************************** */
 /*  random number smaller than m  */
@@ -382,18 +382,18 @@ inline void Integer::seeding()
 #ifdef __GMP_PLUSPLUS__
 //! returns a random integer \p r in the intervall <code>[[0, m-1]]</code>
 inline Integer& Integer::random_lessthan (Integer& r, const Integer & m)
-{/*{{{*/
+{
 	mpz_set( (mpz_ptr) &(r.gmp_rep) , 
 		 ( (mpz_class)Integer::randstate().get_z_range((mpz_class) (mpz_ptr) &(m.gmp_rep)) ).get_mpz_t() );
 	return r;
-}/*}}}*/
+}
 #else
 //! returns a random integer \p r in the intervall <code>[[0, m-1]]</code>
 inline Integer& Integer::random_lessthan (Integer& r, const Integer & m)
-{/*{{{*/
+{
 	mpz_urandomm((mpz_ptr) &(r.gmp_rep),Integer::randstate(),(mpz_ptr)&(m.gmp_rep));
 	return r;
-}/*}}}*/
+}
 #endif
 
 /* ******************************** */
@@ -403,34 +403,34 @@ inline Integer& Integer::random_lessthan (Integer& r, const Integer & m)
 #ifdef __GMP_PLUSPLUS__
 //! returns a random integer \p r of at most \p m bits
 inline Integer& Integer::random_lessthan_2exp (Integer& r, const unsigned long & m)
-{/*{{{*/
+{
 	mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_bits(m)).get_mpz_t() );
 	return r;
-}/*}}}*/
+}
 #else
 //! returns a random integer \p r of at most \p m bits
 inline Integer& Integer::random_lessthan_2exp (Integer& r, const unsigned long & m)
-{/*{{{*/
+{
 	mpz_urandomb((mpz_ptr) &(r.gmp_rep),Integer::randstate(),m) ; 
 	return r;
-}/*}}}*/
+}
 #endif
 
 inline Integer Integer::random_lessthan_2exp (const unsigned long & m)
-{/*{{{*/
+{
 	Integer res ;
 	return random_lessthan_2exp(res,m);
-}/*}}}*/
+}
 
 // synonym
 inline Integer& Integer::random_lessthan (Integer& r, const unsigned long & m) { return Integer::random_lessthan_2exp(r,m);}
 
 template<class T>
 inline Integer Integer::random_lessthan (const T & m)
-{/*{{{*/
+{
 	Integer res ;
 	return random_lessthan(res,m);
-}/*}}}*/
+}
 
 /* ********************************* */
 /*  random number of same size as s  */
@@ -438,11 +438,11 @@ inline Integer Integer::random_lessthan (const T & m)
 
 //! returns a reference to a random number \p r of the size of \p s, exactly.
 inline Integer& Integer::random_exact (Integer& r, const Integer & s) 
-{/*{{{*/
+{
 	size_t t = s.bitsize() ;
 	random_exact_2exp(r,t);
 	return r;
-}/*}}}*/
+}
 
 
 /* ************************* */
@@ -451,59 +451,59 @@ inline Integer& Integer::random_exact (Integer& r, const Integer & s)
 
 //! returns a reference to a random number \p r of the size \p m bits, exactly.
 inline Integer& Integer::random_exact_2exp (Integer& r, const unsigned long int & m) 
-{/*{{{*/
+{
 	if (m) random_lessthan_2exp(r,m-1);
 	mpz_setbit( (mpz_ptr) &(r.gmp_rep) , m-1);
 	return r;
-}/*}}}*/
+}
 
 // synonym
 inline Integer& Integer::random_exact (Integer& r, const unsigned long int & m) { return Integer::random_exact_2exp(r,m) ; } ;
 
 template<class T>
 inline Integer Integer::random_exact (const T & s) 
-{/*{{{*/
+{
 	Integer res ;
 	return random_exact(res,s);
-}/*}}}*/
+}
 
 /* **************************** */
 /*  random number in [[m,M-1]]  */
 /* **************************** */
 
 inline Integer& Integer::random_between (Integer& r, const Integer& m, const Integer&M) 
-{/*{{{*/
+{
 	assert(M > m);
 	random_lessthan(r,Integer(M-m));
 	r += m ;
 	return (r);
-}/*}}}*/
+}
 
 inline Integer Integer::random_between (const Integer& m, const Integer &M) 
-{/*{{{*/
+{
 	Integer r ;
 	return random_between(r,m,M);
-}/*}}}*/
+}
 
 /* ******************************** */
 /*  random number in [[2^m,2^M-1]]  */
 /* ******************************** */
 
 inline Integer& Integer::random_between_2exp (Integer& r, const unsigned long int& m, const unsigned long int &M) 
-{/*{{{*/
+{
 	assert(M > m);
 	r = nonzerorandom(M-m);
 	Integer r1 = random_lessthan_2exp(m);
 	r <<= m ;
 	r+= r1 ;
 	return (r);
-}/*}}}*/
+}
 
 inline Integer Integer::random_between_2exp (const unsigned long int & m, const unsigned long int &M) 
-{/*{{{*/
+{
 	Integer r ;
 	return random_between_2exp(r,m,M);
-}/*}}}*/
+}
 
 // synonym.
 inline Integer Integer::random_between (const unsigned long & m, const unsigned long &M) { return random_between_2exp(m,M) ; }
@@ -523,9 +523,9 @@ inline Integer& Integer::random (Integer& r, const T & m) { return Integer::rand
 //! returns a random integer less than...
 template<class T>
 inline Integer Integer::random(const T & sz) 
-{/*{{{*/
+{
 	return Integer::random_lessthan(sz);
-}/*}}}*/
+}
 
 inline Integer Integer::random() { return Integer::random(sizeof(mp_limb_t)*8) ; }	
 
@@ -535,20 +535,21 @@ inline Integer Integer::random() { return Integer::random(sizeof(mp_limb_t)*8) ;
 
 template<class T>
 inline Integer Integer::nonzerorandom(const T & sz) 
-{/*{{{*/
+{
 	Integer r;
 	while(isZero(Integer::random(r, sz) )) {};
 	return r;
-}/*}}}*/
+}
 
 // BB: It's also 1+random(sz-1)...
 
 template<class T>
 inline Integer& Integer::nonzerorandom (Integer& r, const T& size) 
-{/*{{{*/
+{
 	while (isZero(Integer::random(r,size))) {};
 	return r;
-}/*}}}*/
+}
 
 
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax
+/*  -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-  */

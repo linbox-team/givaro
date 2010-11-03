@@ -4,6 +4,8 @@
 # and abiding by the rules of distribution of free software. 
 # see the COPYRIGHT file for more details.
 
+ACLOCAL_AMFLAGS = -I macros
+
 SUBDIRS=src macros tests
 
 bin_SCRIPTS=givaro-config givaro-makefile

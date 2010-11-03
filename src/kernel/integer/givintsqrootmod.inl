@@ -70,7 +70,7 @@ IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
     }
 	// now we have e and q such like : p-1=q*2^e with q odd
 	// we need a non quadratic element : g 
-    Rep g; while (legendre (Rep::random (g, l), p) != -1);
+    Rep g; while (legendre (Rep::random (g, l), p) != -1) ;
 
     Rep z;
     powmod (z, g, q, p);

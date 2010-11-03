@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.13 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givzpz64std.h,v 1.14 2010-11-03 14:11:42 bboyer Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -24,7 +24,8 @@
 // ==========================================================================
 
 template<>
-class ZpzDom<Std64> {
+class ZpzDom<Std64> 
+{
     typedef ZpzDom<Std64> Self_t;
     
 public:

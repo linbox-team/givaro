@@ -6,10 +6,10 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givtimer.h,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givtimer.h,v 1.5 2010-11-03 14:11:42 bboyer Exp $
 // ==========================================================================
-#ifndef _TIMER_H_
-#define _TIMER_H_
+#ifndef _GIVARO_TIMER_H_
+#define _GIVARO_TIMER_H_
 
 #include <iostream>
 

@@ -19,3 +19,4 @@ AC_DEFUN([AM_ACLOCAL_INCLUDE],
 
 	for k in $1 ; do ACLOCAL="$ACLOCAL -I $k" ; done
 ])
+

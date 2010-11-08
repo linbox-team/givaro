@@ -441,7 +441,7 @@ int test5()
 		return -1  ;
 	}
 	cout << "random...............OK" << endl;
-
+	return 0 ;
 
 }
 

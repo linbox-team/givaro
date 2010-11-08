@@ -331,7 +331,19 @@ public:
 	friend int legendre(const Integer& u, const Integer& v) ;
 
 	Integer& operator++() { return *this+=1UL; } // prefix
+	Integer& operator++(int) 
+	{ // postfix
+	       Integer tmp = *this ;
+	       ++*this;
+       	       return tmp; 
+	}
 	Integer& operator--() { return *this-=1UL; } // prefix
+	Integer& operator--(int) 
+	{// postfix
+	       Integer tmp = *this ;
+	       --*this;
+       	       return tmp; 
+	} 
 
 	// - return the size in byte
 	friend inline unsigned long length (const Integer& a); 
@@ -375,24 +387,55 @@ public:
 	static __gmp_randstate_struct intializerandstate();
 	static __gmp_randstate_struct* randstate(); 
 #endif
+	static bool RandBool()  ;
 	/*  random <= */
+	template<bool U>
 	static Integer& random_lessthan (Integer& r, const Integer & m);
+	static Integer& random_lessthan (Integer& r, const Integer & m)
+	{return random_lessthan<true>(r,m);}
+	template<bool U>
 	static Integer& random_lessthan_2exp (Integer& r, const unsigned long & m);
+	static Integer& random_lessthan_2exp (Integer& r, const unsigned long & m)
+	{ return random_lessthan_2exp<true>(r,m);}
+	template<bool U>
 	static Integer random_lessthan_2exp (const unsigned long & m);
+	static Integer random_lessthan_2exp (const unsigned long & m)
+	{ return random_lessthan_2exp<true>(m);}
+	template<bool U>
 	static Integer& random_lessthan (Integer& r, const unsigned long & m) ;
-	template<class T>
+	static Integer& random_lessthan (Integer& r, const unsigned long & m) 
+	{ return random_lessthan<true>(r,m);}
+	template<bool U,class T>
 	static Integer random_lessthan (const T & m);
+	template<class T>
+	static Integer random_lessthan (const T & m)
+	{ return random_lessthan<T,true>(m);}
+
 
 	/*  random = */
+	template<bool U>
 	static Integer& random_exact (Integer& r, const Integer & s) ;
+	static Integer& random_exact (Integer& r, const Integer & s) 
+	{ return random_exact<true>(r,s); }
+	template<bool U>
 	static Integer& random_exact_2exp (Integer& r, const unsigned long int & m) ;
+	static Integer& random_exact_2exp (Integer& r, const unsigned long int & m) 
+	{return random_exact_2exp<true>(r,m);}
+	template<bool U>
 	static Integer& random_exact (Integer& r, const unsigned long int & m)  ;
+	static Integer& random_exact (Integer& r, const unsigned long int & m)  
+	{return random_exact<true>(r,m);}
+	template<bool U,class T>
+	static Integer& random_exact (Integer& r, const T & m) 
+	{ return random_exact<U>(r,static_cast<unsigned long int>(m)); }
 	template<class T>
-	static Integer& random_exact (Integer& r, const T & m) {
-		return random_exact(r,static_cast<unsigned long int>(m)); 
-	}
-	template<class T>
+	static Integer& random_exact (Integer& r, const T & m) 
+	{ return random_exact(r,static_cast<unsigned long int>(m)); }
+	template<bool U,class T>
 	static Integer random_exact (const T & s) ;
+	template<class T>
+	static Integer random_exact (const T & s) 
+	{ return random_exact<true>(s) ; }
 
 	/*  random <.< */
 	static Integer& random_between (Integer& r, const Integer& m, const Integer&M) ;
@@ -412,15 +455,30 @@ public:
 
 
 	// useful functions :
-	template<class T>
+	template<bool U,class T>
 	static Integer& random (Integer& r, const T & m) ;
 	template<class T>
+	static Integer& random (Integer& r, const T & m) 
+	{return random<true>(r,m);}
+	template<bool U,class T>
 	static Integer random(const T & sz) ;
+	template<class T>
+	static Integer random(const T & sz) 
+	{ return random<true>(sz);}
+	template<bool U>
 	static Integer random();
-	template<class T>
+	static Integer random();
+	template<bool U,class T>
 	static Integer nonzerorandom(const T & sz) ;
-	template<class T>
+	template<bool U,class T>
 	static Integer& nonzerorandom (Integer& r, const T& size) ;
+	template<class T>
+	static Integer nonzerorandom(const T & sz) 
+	{ return nonzerorandom<true>(sz); }
+	template<class T>
+	static Integer& nonzerorandom (Integer& r, const T& size) 
+	{ return nonzerorandom<true>(r,size); }
+
 
 
 	//----------------------------------------------I/O

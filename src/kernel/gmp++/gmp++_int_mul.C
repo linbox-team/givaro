@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mul.C,v 1.7 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: gmp++_int_mul.C,v 1.8 2010-11-08 15:24:53 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -68,8 +68,10 @@ Integer& Integer::axpy(Integer& res, const Integer& a, const Integer& x, const I
 {
     if (&res == &b) return Integer::axpyin(res,a,x);
     if (isZero(a) || isZero(x)) return res = b;
-    mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
-    mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep);
+	mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
+	mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep);
+//    res = a ;
+//    mpz_addmul(  (mpz_ptr) &res.gmp_rep, (mpz_ptr) &a.gmp_rep, (mpz_ptr) &x.gmp_rep );
     return res;
 }
 

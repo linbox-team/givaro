@@ -331,14 +331,14 @@ public:
 	friend int legendre(const Integer& u, const Integer& v) ;
 
 	Integer& operator++() { return *this+=1UL; } // prefix
-	Integer& operator++(int) 
+	Integer operator++(int) 
 	{ // postfix
 	       Integer tmp = *this ;
 	       ++*this;
        	       return tmp; 
 	}
 	Integer& operator--() { return *this-=1UL; } // prefix
-	Integer& operator--(int) 
+	Integer operator--(int) 
 	{// postfix
 	       Integer tmp = *this ;
 	       --*this;

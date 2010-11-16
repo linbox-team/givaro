@@ -29,12 +29,15 @@
 
 #define NB_ITERS 40
 
+template<class U> inline bool IsNeg(const U p) { return (p<0); }
+template<> inline bool IsNeg<unsigned long>(const unsigned long p) { return false; }
+
 template< class T, class U>
 int test1( const T m, const U p)
 {/*{{{*/
 	double pi (p);
 	long int r = m % p;
-	if (r<0)  r += (p<0)?(-p):(p); // r est dans [[0,p-1]]
+	if (r<0)  r += (IsNeg(p) )?(-p):(p); // r est dans [[0,p-1]]
 	const Integer M(m);
 	const Integer P(p);
 	Integer R ;

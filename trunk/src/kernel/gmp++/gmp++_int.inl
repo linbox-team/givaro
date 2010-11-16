@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified by: B. Boyer
-// $Id: gmp++_int.inl,v 1.16 2010-11-08 15:24:53 bboyer Exp $
+// $Id: gmp++_int.inl,v 1.17 2010-11-16 10:46:54 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -15,6 +15,7 @@
 #define GMP__SGN(l)    ((l) <0 ? -1 : (l >0 ? 1 : 0)) 
 
 #include <cassert>
+#include <givaro/givtimer.h>
 
 //-----------------------------~Integer()
 inline Integer::~Integer() {  mpz_clear((mpz_ptr)&gmp_rep) ; }
@@ -369,8 +370,7 @@ inline void Integer::seeding(Integer seed)
 #endif
 inline void Integer::seeding() 
 {
-	unsigned long seed = 0 ;
-	Integer::seeding(seed);
+	Integer::seeding( BaseTimer::seed() );
 }
 
 

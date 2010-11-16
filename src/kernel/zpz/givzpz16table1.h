@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.10 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.11 2010-11-16 10:45:26 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -207,7 +207,7 @@ public:
 
 protected:
   // -- based for modular inverse, d = a*u + b*v
-  static const int32 gcdext ( int32& u, int32& v, const int32 a, const int32 b );
+  static int32 gcdext ( int32& u, int32& v, const int32 a, const int32 b );
 
 protected:
   // -- data representation of the domain:

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givarray0.inl,v 1.5 2009-10-07 11:28:40 jgdumas Exp $
+// $Id: givarray0.inl,v 1.6 2010-11-16 10:45:02 jgdumas Exp $
 // ======================================================================= //
 // Description:
 // implementation of operators of Array0<T>
@@ -180,7 +180,7 @@ template<class T>
 inline T* Array0<T>::baseptr() { return _d; }
 
 template<class T>
-inline T* const Array0<T>::baseptr() const { return _d; }
+inline const T* Array0<T>::baseptr() const { return _d; }
 
 
   // This foloowing functions directly access to protected

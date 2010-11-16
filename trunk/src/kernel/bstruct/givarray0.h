@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givarray0.h,v 1.5 2009-10-07 11:28:40 jgdumas Exp $
+// $Id: givarray0.h,v 1.6 2010-11-16 10:45:02 jgdumas Exp $
 // ========================================================================== 
 // Description:
 // Array of type T with reference mecanism.
@@ -78,7 +78,7 @@ public :
 
   //-- Return the base ptr to the array 
   Type_t* baseptr();
-  Type_t* const baseptr() const;
+  const Type_t* baseptr() const;
 
   //-- Access to the ith Element:
   const T& operator[] (Indice_t i)  const; //  { return _d[i]; }

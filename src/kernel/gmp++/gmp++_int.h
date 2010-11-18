@@ -88,7 +88,8 @@ void 		importWords(Integer&, size_t, int, int, int, size_t, const void*);
 
 
 //------------------------------------------------------ Class Integer
-class Integer {
+class Integer 
+{
 
 public:
 	typedef std::vector<mp_limb_t> vect_t;
@@ -409,7 +410,7 @@ public:
 	static Integer random_lessthan (const T & m);
 	template<class T>
 	static Integer random_lessthan (const T & m)
-	{ return random_lessthan<T,true>(m);}
+	{ return random_lessthan<true>(m);}
 
 
 	/*  random = */

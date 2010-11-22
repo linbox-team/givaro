@@ -10,72 +10,100 @@
 #include <givaro/givintfactor.h>
 //#include <givaro/givintprime.h>
 
-#define NB_ITERS 100
+#define NB_ITERS 15
 //#define LOOPS 0
 
 
 int test(const IntFactorDom<> & IP, const Integer & m)
-{/*{{{*/
+{
 
-	Integer f  = 1 ;
+	Integer f = 1 ;
 	Integer r = 1 ;
 
 	//IP.factor(f,m,LOOPS);
 	IP.factor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
 
 	Integer::mod(r,m,f);
-	if (r || !probab_prime(f) )  return -1 ;
+	if (r || !probab_prime(f) )  
+	{
+#ifdef DEBUG
+		if (r)
+			std::cout << "error : factor does not divide integer" << std::endl;
+		if (!probab_prime(f))
+			std::cout << "error : factor " << f << " of " << m << " is not prime" << std::endl;
+#endif
+		return -1 ;
+	}
+
 
 
 	return 0 ;
-}/*}}}*/
+}
 
 int main()
-{/*{{{*/
+{
 	IntFactorDom<> IP;
 	Integer m;
 	m.seeding();
 	int err = 0 ;
+
 	long int a = 3;
 	long int b = 50 ;
-
 	for (size_t i = 0 ; i < NB_ITERS ; ++i)
-	{/*{{{*/
-//                if (!(i%25)) std::cout << i << "..." ;
+	{
+		//if (!(i%25)) std::cout << i << "..." ;
 		m = Integer::random_between(a,b);
 		err = test(IP,m);
 		if (err) break ;
+	}
+	if (err) return err ;
 
-	}/*}}}*/
-	//std::cout << NB_ITERS << std::endl;
-
+	a = 1;
+	b = 30 ;
+	for (size_t i = 0 ; i < NB_ITERS ; ++i)
+	{
+		m = Integer::random_between(a,b);
+		err = test(IP,m);
+		if (err) break ;
+	}
 	if (err) return err ;
 
 	Integer p,q ;
 	a = 29 ;
 	b = 30 ;
 	for (size_t i = 0 ; i < NB_ITERS ; ++i)
-	{/*{{{*/
-//                if (!(i%25)) std::cout << i << "..." ;
-
+	{
 		p = Integer::random_between(a,b);
 		IP.nextprimein(p);
 		q = Integer::random_between(a,b);
 		IP.nextprimein(q);
 
+		m = p*q ;
 		err = test(IP,m);
 		if (err) break ;
-
-		m = p*q ;
-
-	}/*}}}*/
-//        std::cout << NB_ITERS << std::endl;
-
+	}
 	if (err) return err ;
 
+	a = 35 ;
+	b = 36 ;
+	for (size_t i = 0 ; i < NB_ITERS ; ++i)
+	{
+		p = Integer::random_between(a,b);
+		IP.nextprimein(p);
+		q = Integer::random_between(a,b);
+		IP.nextprimein(q);
+
+		m = p*q ;
+		err = test(IP,m);
+		if (err) break ;
+	}
+	if (err) return err ;
+
+#ifdef DEBUG
+	std::cout << "success" <<std::endl;
+#endif
 	return 0;
-}/*}}}*/
+}
 
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen
-

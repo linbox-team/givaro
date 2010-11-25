@@ -5,8 +5,9 @@
 # see the COPYRIGHT file for more details.
 
 AC_PREREQ(2.61)
+
 AC_INIT([Givaro],[3.3.3],[Jean-Guillaume.Dumas@imag.fr],[givaro],[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
-AM_INIT_AUTOMAKE()
+AM_INIT_AUTOMAKE([1.8 gnu no-dependencies])
 AC_CONFIG_HEADERS([config.h])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 AC_PATH_PROG(RM, rm, $FALSE)
@@ -14,6 +15,8 @@ RM="$RM -f"
 
 
 AM_MAINTAINER_MODE
+AM_DEP_TRACK
+AM_OUTPUT_DEPENDENCY_COMMANDS 
 
 # Give a sane default for CFLAGS and CXXFLAGS
 DEFAULT_CFLAGS="-g -O2 -Wall -Wextra -Wno-unused-parameter"
@@ -26,12 +29,22 @@ CXXFLAGS=${CXXFLAGS:-$DEFAULT_CFLAGS}
 
 AM_ACLOCAL_INCLUDE(macros)
 
-AC_DISABLE_SHARED
+# work around to fix the backward compatibility issue of automake 1.10 with 1.9 (pb with MKDIR_P)
+AC_SUBST([MKDIR_P])
+# AC_DISABLE_SHARED
 
 # check for programs
 AC_PROG_CC
 AC_PROG_CXX
+AC_HEADER_STDC
+
+# old ones
+AC_PROG_LIBTOOL
 AM_PROG_LIBTOOL
+
+# newer libtool...
+LT_PREREQ([2.2])
+LT_INIT
 
 
 # Checks for header files.

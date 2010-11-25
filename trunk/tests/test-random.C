@@ -1,7 +1,7 @@
 // Copyright(c)'2010 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // written by BB.
 
@@ -12,9 +12,10 @@
 #include <iostream>
 #include <givaro/givinteger.h>
 
+//#define _GIV_DBG
 using std::cout ; using std::endl;
 
-//! tests ret= .func(arg,arg); ... 
+//! tests ret= .func(arg,arg); ...
 int test1()
 {/*{{{*/
 	Integer toto  ;
@@ -23,7 +24,9 @@ int test1()
 
 	Integer un(26);
 	Integer autre(511);
+#ifdef _GIV_DBG
 	cout << "random...............OK" << endl;
+#endif
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.random_between(un,autre);
 		//cout << tata << endl;
@@ -32,7 +35,9 @@ int test1()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_between.......OK" << endl;
+#endif
 
 	unsigned long trois = 3 ;
 	unsigned long petits = 6 ;
@@ -48,7 +53,9 @@ int test1()
 		}
 	}
 	//    for (size_t i = 0 ; i < 1<<petits ; ++i) cout << T[i] << " " ;
+#ifdef _GIV_DBG
 	cout << "random_between_exp...OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.random_exact(petits);
@@ -58,7 +65,9 @@ int test1()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_exact_exp.....OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.random_exact(autre);
@@ -68,7 +77,9 @@ int test1()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_exact.........OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.nonzerorandom(petits);
@@ -78,7 +89,9 @@ int test1()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "nonzerorandom_exp....OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.nonzerorandom(autre);
@@ -88,7 +101,9 @@ int test1()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "nonzerorandom........OK" << endl;
+#endif
 
 	return 0;
 
@@ -107,7 +122,9 @@ int test2()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_between.......OK" << endl;
+#endif
 
 	unsigned long trois = 3 ;
 	unsigned long petits = 6 ;
@@ -122,8 +139,10 @@ int test2()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	//    for (size_t i = 0 ; i < 1<<petits ; ++i) cout << T[i] << " " ;
 	cout << "random_between_exp...OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = Integer::random_exact(petits);
@@ -133,7 +152,9 @@ int test2()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_exact_exp.....OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = Integer::random_exact(autre);
@@ -143,7 +164,9 @@ int test2()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_exact.........OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = Integer::nonzerorandom(petits);
@@ -153,7 +176,9 @@ int test2()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "nonzerorandom_exp....OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = Integer::nonzerorandom(autre);
@@ -163,7 +188,9 @@ int test2()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "nonzerorandom........OK" << endl;
+#endif
 
 	return 0;
 
@@ -183,7 +210,9 @@ int test3()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_between.......OK" << endl;
+#endif
 
 	unsigned long trois = 3 ;
 	unsigned long petits = 6 ;
@@ -198,8 +227,10 @@ int test3()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	//    for (size_t i = 0 ; i < 1<<petits ; ++i) cout << T[i] << " " ;
 	cout << "random_between_exp...OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer::random_exact(tata,petits);
@@ -209,7 +240,9 @@ int test3()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_exact_exp.....OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer::random_exact(tata,autre);
@@ -219,7 +252,9 @@ int test3()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "random_exact.........OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer::nonzerorandom(tata,petits);
@@ -229,7 +264,9 @@ int test3()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "nonzerorandom_exp....OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer::nonzerorandom(tata,autre);
@@ -239,7 +276,9 @@ int test3()
 			return -1  ;
 		}
 	}
+#ifdef _GIV_DBG
 	cout << "nonzerorandom........OK" << endl;
+#endif
 
 	return 0;
 
@@ -269,7 +308,9 @@ int test4()
 		return -1  ;
 	}
 
+#ifdef _GIV_DBG
 	cout << "random_between.......OK" << endl;
+#endif
 
 	unsigned long petits = 6 ;
 	//std::vector<int> T(1<<petits) ;
@@ -289,7 +330,9 @@ int test4()
 		return -1  ;
 	}
 
+#ifdef _GIV_DBG
 	cout << "random_exact_exp.....OK" << endl;
+#endif
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -306,7 +349,9 @@ int test4()
 		return -1  ;
 	}
 
+#ifdef _GIV_DBG
 	cout << "random_exact.........OK" << endl;
+#endif
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -323,7 +368,9 @@ int test4()
 		return -1  ;
 	}
 
+#ifdef _GIV_DBG
 	cout << "nonzerorandom_exp....OK" << endl;
+#endif
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -340,7 +387,9 @@ int test4()
 		cout << "nonzerorandom  failed" << endl;
 		return -1  ;
 	}
+#ifdef _GIV_DBG
 	cout << "nonzerorandom........OK" << endl;
+#endif
 
 	return 0;
 
@@ -384,7 +433,9 @@ int test5()
 		cout << "random() failed" << endl;
 		return -1  ;
 	}
+#ifdef _GIV_DBG
 	cout << "random().............OK" << endl;
+#endif
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -414,7 +465,9 @@ int test5()
 		cout << "random failed" << endl;
 		return -1  ;
 	}
+#ifdef _GIV_DBG
 	cout << "random...............OK" << endl;
+#endif
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -444,13 +497,16 @@ int test5()
 		cout << "random failed" << endl;
 		return -1  ;
 	}
+#ifdef _GIV_DBG
 	cout << "random...............OK" << endl;
+#endif
 	return 0 ;
 
 }
 
-int main() 
+int main()
 {/*{{{*/
+#ifdef _GIV_DBG
 	std::cout << "T1" << std::endl;
 	if (test1()) return -1;
 	std::cout << "T2" << std::endl;
@@ -461,7 +517,15 @@ int main()
 	if (test4()) return -1;
 	std::cout << "T5" << std::endl;
 	if (test5()) return -1;
+#else
+	if (test1()) return -1;
+	if (test2()) return -1;
+	if (test3()) return -1;
+	if (test4()) return -1;
+	if (test5()) return -1;
+#endif
 
+return 0 ;
 
 }/*}}}*/
 

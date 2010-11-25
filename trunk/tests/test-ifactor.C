@@ -1,7 +1,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // written by BB
 // see the COPYRIGHT file for more details.
 
@@ -24,18 +24,29 @@ int test(const IntFactorDom<> & IP, const Integer & m)
 	IP.factor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
 
 	Integer::mod(r,m,f);
-	if (r || !probab_prime(f) )  
+	if (r || ((f==1 || f==m) && !probab_prime(f)))
 	{
 #ifdef DEBUG
 		if (r)
 			std::cout << "error : factor does not divide integer" << std::endl;
-		if (!probab_prime(f))
-			std::cout << "error : factor " << f << " of " << m << " is not prime" << std::endl;
+		else
+			std::cout << "error : " << f << " is no good..." << std::endl;
 #endif
 		return -1 ;
 	}
 
 
+	IP.primefactor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
+	if (r || !probab_prime(f))
+	{
+#ifdef DEBUG
+		if (r)
+			std::cout << "error : factor does not divide integer" << std::endl;
+		else
+			std::cout << "error : " << f << " is no good..." << std::endl;
+#endif
+		return -1 ;
+	}
 
 	return 0 ;
 }
@@ -68,10 +79,11 @@ int main()
 	}
 	if (err) return err ;
 
+	// harder :
 	Integer p,q ;
 	a = 29 ;
 	b = 30 ;
-	for (size_t i = 0 ; i < NB_ITERS ; ++i)
+	for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
 	{
 		p = Integer::random_between(a,b);
 		IP.nextprimein(p);
@@ -86,7 +98,7 @@ int main()
 
 	a = 35 ;
 	b = 36 ;
-	for (size_t i = 0 ; i < NB_ITERS ; ++i)
+	for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
 	{
 		p = Integer::random_between(a,b);
 		IP.nextprimein(p);

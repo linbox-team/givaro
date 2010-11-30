@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.10 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givmontg32.h,v 1.11 2010-11-30 17:07:36 jgdumas Exp $
 // ==========================================================================
 #ifndef _GIVARO_MONTG32_H_
 #define _GIVARO_MONTG32_H_
@@ -20,9 +20,9 @@
 // -- This class implement the standard arithmetic with Modulo Elements:
 //    Reduction is made through Montgomery's reduction
 //    Representation of a is by storing (aB).
-//
+//    We must have p>2
 //    We must have (p-1)^2 + p*(B-1) < B^2,
-//    i.e. p<=40504 for B=2^16
+//    i.e. 2<p<=40504 for B=2^16
 // ==========================================================================
 
 #define B32 65536UL

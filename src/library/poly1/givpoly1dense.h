@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.24 2010-06-22 11:13:57 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.25 2010-11-30 17:05:53 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -31,6 +31,7 @@ public:
     typedef typename __GIV_STANDARD_VECTOR<T,A>::const_iterator const_iterator ;
     givvector() : __GIV_STANDARD_VECTOR<T,A>() {}
     givvector(size_t s) : __GIV_STANDARD_VECTOR<T,A>(s) { }
+    givvector(size_t s, const T& t) : __GIV_STANDARD_VECTOR<T,A>(s,t) { }
     givvector(const Self_t& p, givNoCopy xxx) : __GIV_STANDARD_VECTOR<T,A>(p) {}
     givvector(const Self_t& p, givWithCopy xxx) : __GIV_STANDARD_VECTOR<T,A>(p) {}
     Self_t& reallocate (size_t s) { this->resize(s); return *this; }
@@ -114,8 +115,8 @@ public :
             
 
         // -- Constantes
-     Rep zero;
-     Rep one;
+    Rep zero;
+    Rep one;
 	
         // -- Init polynomial 
     Rep& init(Rep& a) const;

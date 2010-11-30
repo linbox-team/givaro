@@ -26,7 +26,7 @@ int test(const IntFactorDom<> & IP, const Integer & m)
 	Integer::mod(r,m,f);
 	if (r || ((f==1 || f==m) && !probab_prime(f)))
 	{
-#ifdef DEBUG
+#ifdef GIVARO_DEBUG
 		if (r)
 			std::cout << "error : factor does not divide integer" << std::endl;
 		else
@@ -39,7 +39,7 @@ int test(const IntFactorDom<> & IP, const Integer & m)
 	IP.primefactor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
 	if (r || !probab_prime(f))
 	{
-#ifdef DEBUG
+#ifdef GIVARO_DEBUG
 		if (r)
 			std::cout << "error : factor does not divide integer" << std::endl;
 		else
@@ -111,7 +111,7 @@ int main()
 	}
 	if (err) return err ;
 
-#ifdef DEBUG
+#ifdef GIVARO_DEBUG
 	std::cout << "success" <<std::endl;
 #endif
 	return 0;

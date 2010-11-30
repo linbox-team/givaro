@@ -27,9 +27,11 @@ if (TestField( (a) )) {\
 template<class Field>
 int TestField(const Field& F) 
 {/*{{{*/
+#ifdef GIVARO_DEBUG
 	std::cerr << "testing " ; 
 	F.write(std::cerr );
 	std::cerr  << " : " << std::flush;
+#endif
 
 	typename Field::Element a, b, c, d,a_,b_,c_,d_;
 	typename Field::Element e,e_;
@@ -226,8 +228,9 @@ int main()
 	JETESTE(GF2M1);
 
 
+#ifdef GIVARO_DEBUG
 	std::cerr << std::endl ;
-
+#endif
 
 	return 0;
 }/*}}}*/

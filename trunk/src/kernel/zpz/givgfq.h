@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // file: givgfq.h 
-// Time-stamp: <29 Sep 09 18:15:41 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <30 Nov 10 16:43:14 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version: 
 // author: Jean-Guillaume.Dumas
@@ -66,7 +66,7 @@ public:
     typedef Rep* Array;
     typedef const Rep* constArray;
     
-    GFqDom(): zero(0), _log2pol(0), _pol2log(0),_plus1(0) {}
+    GFqDom(): zero(0), one(1), _log2pol(0), _pol2log(0),_plus1(0) {}
 
     GFqDom( const UTT P, const UTT e = 1);
 

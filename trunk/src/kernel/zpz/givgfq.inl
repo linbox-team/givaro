@@ -975,11 +975,14 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
             // with X as a primitive polynomial
 #ifndef GIVARO_RANDOM_IRREDUCTIBLE_PRIMITIVE_ROOT
         Pdom.ixe_irreducible(F, Degree(e));
-        Pdom.init(G, Degree(1), Zp.one);
+//         Pdom.init(G, Degree(1), Zp.one);
+//         Pdom.assign(G, Degree(1), Zp.one);
+        Pdom.init(G, Degree(1));
 #else
         Pdom.random_irreducible(F, Degree(e));
         Pdom.give_random_prim_root(G,F);
 #endif
+
         Pdom.assign(H, G);
 
         typedef Poly1PadicDom< GFqDom<TT>, Dense > PadicDom;
@@ -1021,8 +1024,6 @@ inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
     }
         // -1 + 1 == 0
    _plus1[_qm1o2] = 0; 
-
-
 }
 
 // Dan Roche 6-15-04, adapted my/ported back to Givaro 

@@ -6,17 +6,13 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.12 2009-12-02 11:35:14 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.13 2010-11-30 17:05:26 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
 inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X )
-  : _domain(d), _x(X) ,zero(0), one(1)
-{ 
-	Type_t locone;
-	_domain.init( locone, 1.0);
-	_domain.assign( one[0], locone);
-}
+  : _domain(d), _x(X) ,zero(d.zero), one(1,d.one)
+{}
 
 template<class Domain>
 inline Poly1Dom<Domain,Dense>::Poly1Dom(const Self_t& P)
@@ -109,28 +105,23 @@ inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& val, const typename 
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const Degree deg ) const
 { 
-  P.reallocate(value(deg+1)); 
-	Type_t _one,_zero;
-	_domain.init( _one, 1.0);
-	_domain.init( _zero, 0.0);
-	
-	size_t sz = P.size();
-	for (unsigned int i=0; i<sz-1; ++i)
-		_domain.assign(P[i], _zero);
-	_domain.assign(P[sz-1], _one);
-	return P;
+    P.reallocate(value(deg+1)); 
+    
+    size_t sz = P.size();
+    for (unsigned int i=0; i<sz-1; ++i)
+        _domain.assign(P[i], _domain.zero);
+    _domain.assign(P[sz-1], _domain.one);
+    return P;
 }
 
 template<class Domain> template<class XXX>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
  ( Rep& P, const Degree d, const XXX& val ) const
 {
-    Type_t _zero;
-    _domain.init( _zero, 0.0);
     long deg = value(d);
     P.reallocate(deg+1);
     for (int i=0; i<deg; ++i)
-        _domain.assign(P[i], _zero);
+        _domain.assign(P[i], _domain.zero);
     _domain.init(P[deg], val);
     
     if (_domain.isZero(P[deg])) { 
@@ -144,15 +135,13 @@ template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign
  ( Rep& P, const Degree d, const Type_t& lcoeff ) const
 {
-    Type_t _zero;
-    _domain.init( _zero, 0.0);
     long deg = value(d);
     if (_domain.isZero(lcoeff)) { 
         P.reallocate(0);
     } else {
         P.reallocate(deg+1);
         for (int i=0; i<deg; ++i)
-            _domain.assign(P[i], _zero);
+            _domain.assign(P[i], _domain.zero);
         _domain.assign(P[deg], lcoeff);
     }
     return P;

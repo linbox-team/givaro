@@ -18,7 +18,8 @@ BASIC_TESTS =   \
 		test-random  \
 		test-ifactor \
 		test-ffarith \
-		test-mod
+		test-mod     \
+                test-trunc
 
 CLEAN_FILES =   \
 			 $(BASIC_TESTS)
@@ -33,6 +34,7 @@ test_random_SOURCES= test-random.C
 test_ifactor_SOURCES= test-ifactor.C
 test_ffarith_SOURCES= test-ffarith.C
 test_mod_SOURCES= test-mod.C
+test_trunc_SOURCES= test-trunc.C
 
 # for compilation of new tests 
 GIVARO_BIN=@bindir@

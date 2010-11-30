@@ -59,7 +59,7 @@ public:
     
 
     Extension ( const Residu_t p, const Residu_t e = 1, const Indeter Y="Y")
-: _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_bF.zero), one (_bF.one) {
+: _bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_pD.zero), one (_pD.one) {
 /*     cerr << "Pol Cstor" << endl; */
         unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
         if (basedegree >= e) {
@@ -72,7 +72,7 @@ public:
     }
 
     Extension ( const BaseField_t& bF, const Residu_t ex = 1, const Indeter Y="Y")
-: _bF( bF ), _pD( _bF, Y  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ) {
+: _bF( bF ), _pD( _bF, Y  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ), zero (_pD.zero), one (_pD.one) {
         if (_cardinality < (1<<20) )
             _pD.creux_random_irreducible( _irred, (unsigned long)(ex));
         else
@@ -80,7 +80,7 @@ public:
     }
 
     Extension ( const Self_t& eF)
-            : _bF( eF._bF ), _pD( eF._pD ), _irred( eF._irred ), _characteristic( eF._characteristic ), _exponent( eF._exponent ) , _extension_order( eF._extension_order ), _cardinality( eF._cardinality ) { }
+            : _bF( eF._bF ), _pD( eF._pD ), _irred( eF._irred ), _characteristic( eF._characteristic ), _exponent( eF._exponent ) , _extension_order( eF._extension_order ), _cardinality( eF._cardinality ), zero (_pD.zero), one (_pD.one) { }
 
     Self_t & operator=(const Self_t& eF) {
         if (this != &eF) {
@@ -143,9 +143,31 @@ public:
     }
     
     PolElement& axpy (PolElement& r, const PolElement& a, const PolElement& b, const PolElement& c) const {
-        return _pD.modin( _pD.addin(_pD.mul( r, a, b), c), _irred );
-    }
+//         return _pD.modin( _pD.addin(_pD.mul( r, a, b), c), _irred );
+//          return _pD.modin( _pD.axpy(r, a, b, c), _irred );
+        return addin(mul(r,a,b),c);
+   }
   
+        // -- maxpy: r <- c - a * b mod p
+    PolElement& maxpy (PolElement& r, const PolElement a, const PolElement b, const PolElement c) const {
+        return _pD.modin( _pD.maxpy( r, a, b, c), _irred );        
+    }
+    
+        // -- maxpyin: r <- r - a * b mod p
+    PolElement& maxpyin(PolElement& r, const PolElement a, const PolElement b) const {
+        return _pD.modin( _pD.maxpyin( r, a, b), _irred );        
+    }
+
+        // -- axmy: r <- a * x - y mod p
+    PolElement& axmy  (PolElement& r, const PolElement a, const PolElement b, const PolElement c) const {
+        return subin(mul(r,a,b),c);
+    }
+            
+        // -- axmyin: r <- r - a * x mod p
+    PolElement& axmyin(PolElement& r, const PolElement a, const PolElement b) const {
+        return maxpyin(r,a,b);
+    }
+
     PolElement& addin(PolElement& r, const PolElement& b) const {
         return _pD.addin( r, b);
     }

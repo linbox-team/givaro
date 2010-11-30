@@ -81,8 +81,8 @@ int main()
 
 	// harder :
 	Integer p,q ;
-	a = 29 ;
-	b = 30 ;
+	a = 19 ;
+	b = 20 ;
 	for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
 	{
 		p = Integer::random_between(a,b);
@@ -96,8 +96,8 @@ int main()
 	}
 	if (err) return err ;
 
-	a = 35 ;
-	b = 36 ;
+	a = 25 ;
+	b = 26 ;
 	for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
 	{
 		p = Integer::random_between(a,b);

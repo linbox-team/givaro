@@ -11,6 +11,7 @@
 #include <givaro/givgfq.h>
 #include <givaro/givmontg32.h>
 #include <givaro/givgfqext.h>
+#include <givaro/givextension.h>
 
 #define TESTE_EG( a, b ) \
 if (!F.areEqual((a),(b))) {\
@@ -18,14 +19,20 @@ if (!F.areEqual((a),(b))) {\
 	return(-1); \
 }
 
-#define JETESTE( a ) \
-if (TestField( (a) )) {\
+#define JETESTE( a, s ) \
+if (TestField( (a), (s)) ) {\
+	std::cout << #a << " failed !" << std::endl;\
+	return -1 ; \
+}
+
+#define JEONETESTE( F, a, x ) \
+if (TestOneField(F,a,x)) {\
 	std::cout << #a << " failed !" << std::endl;\
 	return -1 ; \
 }
 
 template<class Field>
-int TestField(const Field& F) 
+int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 {/*{{{*/
 #ifdef GIVARO_DEBUG
 	std::cerr << "testing " ; 
@@ -33,10 +40,21 @@ int TestField(const Field& F)
 	std::cerr  << " : " << std::flush;
 #endif
 
+
+
 	typename Field::Element a, b, c, d,a_,b_,c_,d_;
 	typename Field::Element e,e_;
-	F.init(a, 7UL);
-	F.init(b, -29.3);
+
+        F.init(a, 0UL);
+        TESTE_EG(a, F.zero);
+        F.init(a, 1UL);
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "1: ", F.one) << std::endl;
+        TESTE_EG(a, F.one);
+
+	F.init(a, FIRSTINT);
+	F.init(b, FIRSTFLOAT);
 
 	F.init(c);            // empty constructor
 	F.init(d);            // empty constructor
@@ -46,11 +64,23 @@ int TestField(const Field& F)
 	F.assign(c_,c);       // c_ <- c
 	TESTE_EG(c,c_);
 	F.subin(c_,a);
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "b: ", b) << std::endl;
+//         F.write(std::cerr << "c: ", c) << std::endl;
+//         F.write(std::cerr << "c_: ", c_) << std::endl;
+
 	TESTE_EG(b,c_);
 
 	F.mul(c, a, b);     // c = a*b
 	F.assign(c_,c);       // c_ <- c
-	F.divin(c_,b);      // c_ == b ?
+	F.divin(c_,b);      // c_ == a ?
+
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "b: ", b) << std::endl;
+//         F.write(std::cerr << "c: ", c) << std::endl;
+//         F.write(std::cerr << "c_: ", c_) << std::endl;
 	TESTE_EG(a,c_);
 
 	F.axpy(d, a, b, c); // d = a*b + c;
@@ -132,85 +162,116 @@ int TestField(const Field& F)
 
 	TESTE_EG(e,a);
 
+#ifdef GIVARO_DEBUG
+	F.write(std::cerr );
+	std::cerr  << " done." << std::endl;
+#endif
 	return 0 ;
 
 }/*}}}*/
 
+#define NBITER 50
 
-int main() 
+template<class Field>
+int TestField(const Field& F, const int seed) 
 {/*{{{*/
+    long ch = F.characteristic();
+    JEONETESTE(F,7UL,-29.3);
+    srand48(seed);
+    for(size_t i=0; i< NBITER; ++i) {
+        typename Field::Element x;
+        float d; do {
+            F.init(x, d = ch*drand48()); 
+        } while(F.isZero(x));
+        int a; do {
+            F.init(x, a = lrand48()); 
+        } while(F.isZero(x));
+        JEONETESTE(F,a,d);
+    }
+    return 0;
+}/*}}}*/
 
+
+
+int main(int argc, char ** argv)
+{/*{{{*/
+    int seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
+#ifdef GIVARO_DEBUG
+    std::cerr << "seed: " << seed << std::endl;
+#endif
+    
+    
 	// modulo 13 over 16 bits
 	ZpzDom<Std16> C13(13); 
-	JETESTE(C13);
+	JETESTE(C13,seed);
 
 	// modulo 13 over 32 bits
 	ZpzDom<Std32> Z13(13); 
-	JETESTE(Z13);
+	JETESTE(Z13,seed);
 
 	// modulo 13 over unsigned 32 bits
 	ZpzDom<Unsigned32> U13(13); 
-	JETESTE(U13);
+	JETESTE(U13,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 13 over 64 bits
 	ZpzDom<Std64> LL13(13UL); 
-	JETESTE(LL13);
+	JETESTE(LL13,seed);
 #endif
 
 	// modulo 13 fully tabulated
 	ZpzDom<Log16> L13(13); 
-	JETESTE(L13);
+	JETESTE(L13,seed);
 
 	// modulo 13 over 32 bits with Montgomery reduction
 	Montgomery<Std32> M13(13); 
-	JETESTE(M13);
+	JETESTE(M13,seed);
 
 	// modulo 2 over 16 bits
 	ZpzDom<Std16> C2(2); 
-	JETESTE(C2);
+	JETESTE(C2,seed);
 
 	// modulo 2 over 32 bits
 	ZpzDom<Std32> Z2(2);
-	JETESTE(Z2);
+	JETESTE(Z2,seed);
 
 	// modulo 2 over unsigned 32 bits
 	ZpzDom<Unsigned32> U2(2); 
-	JETESTE(U2);
+	JETESTE(U2,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
 	ZpzDom<Std64> LL2(2UL); 
-	JETESTE(LL2);
+	JETESTE(LL2,seed);
 #endif
 
 	// modulo 2 fully tabulated
 	ZpzDom<Log16> L2(2); 
-	JETESTE(L2);
+	JETESTE(L2,seed);
 
-	// modulo 2 over 32 bits with Montgomery reduction
-	Montgomery<Std32> M2(2); 
-	JETESTE(M2);
+	// modulo 3 over 32 bits with Montgomery reduction
+	Montgomery<Std32> M2(3); 
+	JETESTE(M2,seed);
 
 	Montgomery<Std32> M3(39989);
-	JETESTE(M3);
+	JETESTE(M3,seed);
 
 	// modulo 13 with primitive root representation
 	GFqDom<int> GF13( 13 ); 
-	JETESTE(GF13);
+	JETESTE(GF13,seed);
 
 	// modulo 13 over arbitrary size
 	ZpzDom<Integer> IntZ13(13);
-	JETESTE(IntZ13);
+	JETESTE(IntZ13,seed);
 
 	// Zech log finite field with 5^4 elements
 	GFqDom<int> GF625( 5, 4 );
-	JETESTE(GF625);
+	JETESTE(GF625,seed);
 
 	// Zech log finite field with 3^4 elements
 	// Using the Q-adic Transform
 	GFqExt<int> GF81( 3, 4 );
-	JETESTE(GF81);
+	JETESTE(GF81,seed);
 
 	// Zech log finite field with 2Mb tables
 #ifndef __GIVARO__DONOTUSE_longlong__
@@ -218,16 +279,19 @@ int main()
 #else
 	GFqDom<long> GF2M( 2, 20) ;
 #endif
-	JETESTE(GF2M);
+	JETESTE(GF2M,seed);
 
 #ifndef __GIVARO__DONOTUSE_longlong__
 	GFqDom<long long> GF2M1( 2, 2 );
 #else
 	GFqDom<long> GF2M1( 2, 2) ;
 #endif
-	JETESTE(GF2M1);
+	JETESTE(GF2M1,seed);
 
 
+        Extension<> GF13E8(13,8);
+	JETESTE(GF13E8,seed);
+        
 #ifdef GIVARO_DEBUG
 	std::cerr << std::endl ;
 #endif

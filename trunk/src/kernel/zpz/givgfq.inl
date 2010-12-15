@@ -617,7 +617,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
  
  template<typename TT> 
 inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const float residu ) const {
-     return init(r, (const double)residu);
+     return init(r, static_cast<double>(residu));
  }
 
 

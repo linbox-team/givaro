@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_misc.C,v 1.14 2009-09-17 16:07:51 jgdumas Exp $
+// $Id: gmp++_int_misc.C,v 1.15 2010-12-15 15:01:08 jgdumas Exp $
 // ==========================================================================
 // Description: 
 
@@ -61,6 +61,13 @@ void swap(Integer& a, Integer& b) {
 }
 
     
+// Natural logarithm of a
+double naturallog(const Integer& a) {
+  signed long int exp;
+  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) ); 
+  return (double)exp*1.44269504088896341+log(d); 
+}
+
 
 
 // base p logarithm of a

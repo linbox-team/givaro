@@ -68,6 +68,7 @@ Integer& 	sqrtrem(Integer& r, const Integer& p, Integer& rem);
 bool 		root(Integer& q, const Integer&, unsigned int n);
 long 		logp(const Integer& a, const Integer& p) ;
 double 		logtwo(const Integer& a) ;
+double 		naturallog(const Integer& a) ;
 void 		swap(Integer& , Integer&);
 int 		sign   (const Integer& a);
 int 		isZero (const Integer& a);
@@ -313,6 +314,7 @@ public:
 	friend bool root(Integer& q, const Integer&, unsigned int n);
 	friend long logp(const Integer& a, const Integer& p) ;
 	friend double logtwo(const Integer& a) ;
+	friend double naturallog(const Integer& a) ;
 
 	//-----------------------------------------Miscellaneous
 	friend void swap(Integer& , Integer&);
@@ -448,11 +450,11 @@ public:
 	
 	template<class R>
 	static Integer random_between (const R & m, const R & M) 
-	{ return random_between(static_cast<const unsigned long int>(m), static_cast<const unsigned long int>(M)); }
+	{ return random_between(static_cast<unsigned long int>(m), static_cast<unsigned long int>(M)); }
 
 	template<class R>
 	static Integer & random_between (Integer &r, const R & m, const R & M) 
-	{ return random_between(r,static_cast<const unsigned long int>(m), static_cast<const unsigned long int>(M)); }
+	{ return random_between(r,static_cast<unsigned long int>(m), static_cast<unsigned long int>(M)); }
 
 
 	// useful functions :

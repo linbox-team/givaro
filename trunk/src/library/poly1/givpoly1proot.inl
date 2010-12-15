@@ -33,7 +33,7 @@
 
 template<class Domain, class Tag, class RandIter >
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::creux_random_irreducible (Element& R, Degree n) const {
-    init(R, n, _domain.one);
+    init(R, n);
     Residu_t MOD = _domain.residu();
 
         // Search for an irreducible BINOMIAL : X^n + a
@@ -80,7 +80,7 @@ template<class Domain, class Tag, class RandIter >
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::random_irreducible (Element& R, Degree n) const {
         // Search for a monic irreducible Polynomial
         // with random Elements
-    init(R, n, _domain.one);
+    init(R, n);
     Residu_t MOD = _domain.residu();
 
     do {
@@ -102,9 +102,9 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
 // ---------------------------------------------------------------
 template<class Domain, class Tag, class RandIter >
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible (Element& R, Degree n) const {
-    init(R, n, _domain.one);
+    init(R, n);
     Element IXE;
-    init(IXE,Degree(1),_domain.one);
+    init(IXE,Degree(1));
     Residu_t MOD = _domain.residu();
 
         // Search for an irreducible BINOMIAL : X^n + a
@@ -149,9 +149,9 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
 
 template<class Domain, class Tag, class RandIter >
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible2 (Element& R, Degree n) const {
-    init(R, n, _domain.one);
+    init(R, n);
     Element IXE;
-    init(IXE,Degree(1),_domain.one);
+    init(IXE,Degree(1));
     Residu_t MOD = _domain.residu();
 
         // Search for an irreducible BINOMIAL : X^n + a
@@ -207,7 +207,7 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
     IntFactorDom<>::Rep qn;
 
     FD.pow( qn, IntFactorDom<>::Rep(MOD), n);
-    Rep Unit, G1; init(Unit, Degree(1), _domain.one);
+    Rep Unit, G1; init(Unit, Degree(1));
     this->powmod(G1, Unit, qn, P);
     if (degree(d, sub(D,G1,Unit)) >= 0) return 0;    
 
@@ -249,8 +249,9 @@ bool Poly1FactorDom<Domain,Tag, RandIter>::is_prim_root( const Rep& P, const Rep
         L.sort();
         std::list< IntFactorDom<>::Element >::iterator li = L.begin();
         isproot = 1;
-        for(;(li != L.end()) && isproot; ++li)
+        for(;(li != L.end()) && isproot; ++li) {
             isproot = ( ! this->isOne(this->powmod(G, A, FD.div(q, qp , *li), F) ) );
+        }
     }
     return isproot;
 }
@@ -298,7 +299,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     
         // Search for a primitive BINOMIAL : X^i + a
     for(Degree di=1;di<n;++di) {
-        init(R, di, _domain.one);
+        init(R, di);
 //         for(Residu_t a=MOD; a--; ) {
         for(Residu_t a=0; a<MOD;++a ) {
             _domain.assign(R[0],a);
@@ -308,7 +309,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     }
         // Search for a primitive TRINOMIAL : X^i + b*X^j + a
     for(Degree di=2;di<n;++di) {
-        init(R, di, _domain.one);
+        init(R, di);
         for(Degree dj=1;dj<di;++dj)
 //             for(Residu_t b=MOD; b--;) {
             for(Residu_t b=0; b<MOD;++b) {

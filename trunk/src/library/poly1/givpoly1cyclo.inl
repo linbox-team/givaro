@@ -21,7 +21,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::power_compo
   Degree dp; degree(dp, P);
   Type_t lc;
   leadcoef(lc, P);
-  init( W, b*dp.value(), lc); // all coeffs to zero ...
+  assign( W, b*dp.value(), lc); // all coeffs to zero, except leading ...
   for(long i=0;i<dp.value();++i) {
       _domain.assign(W[i*b], P[i]);
   }
@@ -41,12 +41,12 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
 //   Integer In(n);
     IntFactorDom<> IF;
     if (n <= 1) {
-        init(P, Degree(1), _domain.one);
+        init(P, Degree(1));
         _domain.assign(P[0], _domain.one);
         _domain.negin(P[0]);
         return setdegree(P);
     } else if (IF.isprime(n)) {
-        init(P, Degree(n-1), _domain.one);
+        init(P, Degree(n-1));
         for(size_t i=n-1;i--;)
             _domain.assign(P[i], _domain.one); 
         return setdegree(P);

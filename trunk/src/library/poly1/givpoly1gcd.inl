@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.9 2009-10-07 11:30:45 jgdumas Exp $
+// $Id: givpoly1gcd.inl,v 1.10 2010-12-15 10:21:10 jgdumas Exp $
 // ==========================================================================
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
@@ -25,9 +25,6 @@ template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& G, const Rep& P, const Rep& Q) const
 {
 
-  typename Domain::Element one;
-  _domain.init(one,1UL);
-
   Rep U,V; 
   Degree degU, degV;
   degree(degU,P); degree(degV,Q);
@@ -44,7 +41,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   }
   // -- PRS (U,V) using pmod:
   Type_t g;
-  _domain.assign(g, one);
+  _domain.assign(g, _domain.one);
   Degree degR;
   Rep R;
   do {
@@ -63,7 +60,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   G.logcopy(V);
 // JGD 15.12.1999
 //   if (degV <= 1) assign(G,one);
-  if (degV <= 0) assign(G,one);
+  if (degV <= 0) assign(G,_domain.one);
 // write(cout << "gcd: G:", G) << endl;
   return G;
 }

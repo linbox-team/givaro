@@ -27,8 +27,6 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
     , const Rep& G
     , Degree d
     , Residu_t MOD) const {
-	typename Domain::Element one;
-	_domain.init(one, 1UL);
     Degree dG;degree(dG,G);
     if (dG == d)
         L.push_back(G);
@@ -49,7 +47,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                 Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
 // std::cerr << "pp: " << pp << std::endl;
                 Rep tp, tp2, G2;
-                this->gcd(G2,G, sub(tp2, this->powmod(tp, tmp, pp, G) , one) );
+                this->gcd(G2,G, sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
                 Degree dG2; degree(dG2,G2);
 // write(std::cerr << "SF t2: ", tp2) << std::endl;
 // write(std::cerr << "SF G2: ", G2) << std::endl;
@@ -59,7 +57,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                         SplitFactor ( L, G2, d, MOD) ;
                     }
 // UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
-                     Rep G3; this->gcd(G3, G, add(tp2,tp,one) );
+                     Rep G3; this->gcd(G3, G, add(tp2,tp,_domain.one) );
                      Degree dG3; degree(dG3,G3);
 // write(std::cerr << "SF t3: ", tp2) << std::endl;
 // write(std::cerr << "SF G3: ", G3) << std::endl;
@@ -80,8 +78,6 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     , const Rep& G
     , Degree d
     , Residu_t MOD)  const  {
-	typename Domain::Element one;
-	_domain.init(one, 1UL);
     Degree dG;degree(dG,G);
     if (dG == d)
         return G1.copy(G) ;
@@ -98,7 +94,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
                 }
                 Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
                 Rep tp, tp2, G2;
-                this->gcd(G2,G, sub(tp2, this->powmod(tp, tmp, pp, G) , one) );
+                this->gcd(G2,G, sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
                 Degree dG2; degree(dG2,G2);
 // write(std::cerr << "SF t2: ", tp2) << std::endl;
 // write(std::cerr << "SF G2: ", G2) << std::endl;
@@ -107,7 +103,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
                         return G1.copy(G2);
                     }
 // UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
-                     Rep G3; this->gcd(G3, G, add(tp2,tp,one) );
+                     Rep G3; this->gcd(G3, G, add(tp2,tp,_domain.one) );
                      Degree dG3; degree(dG3,G3);
 // write(std::cerr << "SF t3: ", tp2) << std::endl;
 // write(std::cerr << "SF G3: ", G3) << std::endl;
@@ -132,13 +128,11 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     , const Rep& f
     , Residu_t MOD)  const  {
 
-	typename Domain::Element one;
-	_domain.init(one, 1UL);
     // srand48(BaseTimer::seed());
 // write(std::cerr << "DD in: ", f) << std::endl;
     Rep W, D, P = f;
     Degree dP;
-    Rep Unit, G1; init(Unit, Degree(1), one);
+    Rep Unit, G1; init(Unit, Degree(1));
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
@@ -200,16 +194,11 @@ template<class Domain, class Tag, class RandIter>
 inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible(
     const Rep& P
     , Residu_t MOD ) const  {
-	typename Domain::Element one;
-	_domain.init(one, 1UL);
-        // Square free ?
-   typename Domain::Element _one;
-   _domain.init(_one,1UL); 
    Rep W,D; this->gcd(W,diff(D,P),P);
     Degree d, dP;
     if (degree(d,W) > 0) return 0;
         // Distinct degree free ?
-    Rep Unit, G1; init(Unit, Degree(1), _one);
+    Rep Unit, G1; init(Unit, Degree(1));
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
@@ -240,7 +229,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
  
     if (degree(d,W) > 0) return W;
         // Distinct degree free ?
-    Rep Unit, G1; init(Unit, Degree(1), one);
+    Rep Unit, G1; init(Unit, Degree(1));
 // write(cerr << "In factor U:", Unit) << endl;
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);

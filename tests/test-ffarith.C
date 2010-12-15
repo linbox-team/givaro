@@ -199,6 +199,7 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
+    Integer::seeding(seed);
     
     
 	// modulo 13 over 16 bits
@@ -291,10 +292,23 @@ int main(int argc, char ** argv)
 
         Extension<> GF13E8(13,8);
 	JETESTE(GF13E8,seed);
-        
+
+#ifndef __GIVARO__DONOTUSE_longlong__
+        GFqDom<long long> GF11e3( 11, 3 );
+	JETESTE(GF11e3,seed);
+        Extension<GFqDom<long long> > GF11e9(GF11e3,3);
+	JETESTE(GF11e9,seed);
+#else
+        GFqDom<long> GF11e3( 11, 3) ;
+	JETESTE(GF11e3,seed);
+        Extension<> GF11e9(GF11e3,3);
+	JETESTE(GF11e9,seed);
+#endif
+
 #ifdef GIVARO_DEBUG
 	std::cerr << std::endl ;
 #endif
+        
 
 	return 0;
 }/*}}}*/

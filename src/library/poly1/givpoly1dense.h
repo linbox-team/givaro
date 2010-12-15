@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.25 2010-11-30 17:05:53 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.26 2010-12-15 10:42:51 jgdumas Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -98,6 +98,8 @@ public :
     Poly1Dom () {}
     Poly1Dom (const Domain& d, const Indeter& X = Indeter() );
     Poly1Dom (const Self_t&);
+    typename Domain::Residu_t characteristic() const { return _domain.characteristic(); }
+    Integer& characteristic( Integer& p) const { return _domain.characteristic(p); }
 
     int operator==( const Poly1Dom<Domain,Dense>& BC) const 
         { return _domain == BC._domain;}

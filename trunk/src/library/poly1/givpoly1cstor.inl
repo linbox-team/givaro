@@ -6,12 +6,12 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.13 2010-11-30 17:05:26 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.14 2010-12-16 09:05:31 jgdumas Exp $
 // ==========================================================================
 
 template<class Domain>
 inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X )
-  : _domain(d), _x(X) ,zero(d.zero), one(1,d.one)
+  : _domain(d), _x(X) ,zero(1,d.zero), one(1,d.one)
 {}
 
 template<class Domain>

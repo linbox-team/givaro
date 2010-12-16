@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1misc.inl,v 1.20 2010-06-11 14:14:29 jgdumas Exp $
+// $Id: givpoly1misc.inl,v 1.21 2010-12-16 09:05:31 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -92,11 +92,9 @@ inline Degree& Poly1Dom<Domain,Dense>::degree(Degree& deg, const Rep& P) const
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::leadcoef (Type_t& c, const Rep& P) const
 {
-typename Domain::Element zero;
-_domain.init(zero,0UL);
   Degree dP;
   degree(dP, P);
-  if (dP == Degree::deginfty) return _domain.assign(c, zero);
+  if (dP == Degree::deginfty) return _domain.assign(c, _domain.zero);
   else return _domain.assign(c, P[dP.value()]);
 }
 
@@ -105,11 +103,9 @@ _domain.init(zero,0UL);
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::getEntry (Type_t& c, const Degree& i, const Rep& P) const 
 {
-    typename Domain::Element zero;
-    _domain.init(zero,0UL);
     Degree dP;
     degree(dP, P);
-    if (dP < i) return _domain.assign(c, zero);
+    if (dP < i) return _domain.assign(c, _domain.zero);
     else return _domain.assign(c, P[i.value()]);
 }
     
@@ -136,7 +132,7 @@ inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Ty
 {
     typename Domain::Element tmp; _domain.init(tmp);
   Degree dP ; degree(dP, P);
-  if (dP == Degree::deginfty) _domain.init(res, 0UL);
+  if (dP == Degree::deginfty) _domain.assign(res, _domain.zero);
   else {
     _domain.assign(res, P[dP.value()]);
     for (int i = dP.value(); i>0; --i)
@@ -148,10 +144,6 @@ inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Ty
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::diff(Rep& P, const Rep& Q) const 
 {
-typename Domain::Element zero, one;
-_domain.init(zero,0UL);
-_domain.init(one,1UL);
-
   Degree dQ;
   degree(dQ, Q);
   if ((dQ == Degree::deginfty) || (dQ == 0)) {
@@ -159,9 +151,9 @@ _domain.init(one,1UL);
     return P;
   }
   P.reallocate(dQ.value());
-  Type_t cste; _domain.init(cste, zero);
+  Type_t cste; _domain.assign(cste, _domain.zero);
   for (int i=0; dQ>i; ++i) {
-    _domain.add(cste, cste, one);
+    _domain.add(cste, cste, _domain.one);
     _domain.mul(P[i], Q[i+1], cste);
   }
   return P;

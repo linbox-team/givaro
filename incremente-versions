@@ -14,7 +14,7 @@ echo -n "Increment library version ? "
 set answ = $<
 if ("$answ" == "y") then
 	echo -n "`fgrep AC_INIT $conf`"
-	set vern = `fgrep AC_INIT $conf | cut -d',' -f2 | sed 's/ //g'`
+	set vern = `fgrep AC_INIT $conf | cut -d',' -f2 | sed 's/ //g;s/\[//;s/\]//'`
 
 	set num = `echo $vern | cut -d'.' -f3`
 	@ num ++

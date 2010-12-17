@@ -97,6 +97,7 @@ int test2(Integer & M, Integer & P)
 	return 0;
 }/*}}}*/
 
+#include <cassert>
 
 int main()
 {/*{{{*/
@@ -109,6 +110,12 @@ int main()
 	long int p = 78678675;
 	unsigned long int M(m);
 	unsigned long int P(p);
+
+        Integer mone(-1);
+            // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep 
+        assert(mpz_tdiv_ui( (mpz_ptr)&mone, 3) == 1);
+        
+
 
 	int rez = 0;
 

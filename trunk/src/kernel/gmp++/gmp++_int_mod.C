@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified: JG. Dumas, BB.
-// $Id: gmp++_int_mod.C,v 1.11 2010-12-17 14:52:05 bboyer Exp $
+// $Id: gmp++_int_mod.C,v 1.12 2010-12-17 15:23:12 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -97,7 +97,7 @@ Integer Integer::operator % (const Integer& n) const
 unsigned long Integer::operator % (const unsigned long l) const
 {
 #if 0
-	if (isZero(*this)) return 0L;
+	if (isZero(*this)) return 0UL;
 	if (this->priv_sign()>0)
 		return  mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
 	else {
@@ -109,13 +109,12 @@ unsigned long Integer::operator % (const unsigned long l) const
 	}
 #endif
 
-	if (isZero(*this)) return Integer::zero;
-	int sgn = ((*this)<0)?(-1):(1) ;
-	unsigned long res =   mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
+	if (isZero(*this)) return 0UL;
+	bool isneg = (*this)<0 ;
+            // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep 
+	unsigned long res = mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
 	if (!res) return res ;
-
-	if (sgn <0) return (l-res) ;
-
+	if (isneg) return (l-res) ;
 	return  res;
 }
 

@@ -2,12 +2,12 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier, J.-G. Dumas
 // =============================================================
-// Description: 
-// Integer Domain class definition 
+// Description:
+// Integer Domain class definition
 #ifndef __GIVARO_integer_H
 #define __GIVARO_integer_H
 #include "givaro/givbasictype.h"
@@ -31,11 +31,11 @@ public:
 	int operator==( const IntegerDom&) const { return 1;}
 	int operator!=( const IntegerDom&) const { return 0;}
 
-	// -- Constants: 
+	// -- Constants:
 	const Integer one;
 	const Integer zero;
 
-	// -- assignement 
+	// -- assignement
 	Rep& init  ( Rep& a ) const {return a;}
 	Rep& init  ( Rep& a, const Rep& b) const { return a = b ; }
 	Rep& read( Rep& a, const long i) const { return a = Integer(i) ; }
@@ -49,7 +49,7 @@ public:
 	// -- access
 	const Rep& access(const Rep& a) const { return a; }
 
-	template<class XXX> XXX& convert(XXX& x, const Rep& a) const { return x=(XXX)a;}      
+	template<class XXX> XXX& convert(XXX& x, const Rep& a) const { return x=(XXX)a;}
 
 	// -- arithmetic operators
 	Rep& mul( Rep& r, const Rep& a, const Rep& b ) const { return Integer::mul(r,a,b); }
@@ -57,7 +57,7 @@ public:
 	Rep& mod( Rep& r, const Rep& a, const Rep& b ) const { return Integer::mod(r,a,b); }
 	Rep& add( Rep& r, const Rep& a, const Rep& b ) const { return Integer::add(r,a,b); }
 	Rep& sub( Rep& r, const Rep& a, const Rep& b ) const { return Integer::sub(r,a,b); }
-	Rep& divmod( Rep& q, Rep& r, const Rep& a, const Rep& b ) const 
+	Rep& divmod( Rep& q, Rep& r, const Rep& a, const Rep& b ) const
 	{ return Integer::divmod(q,r,a,b); }
 	Rep& divexact( Rep& q, const Rep& a, const Rep& b ) const { return Integer::divexact(q,a,b); }
 
@@ -67,15 +67,15 @@ public:
 	Rep& addin( Rep& r, const Rep& a) const { return r += a; }
 	Rep& subin( Rep& r, const Rep& a) const { return r -= a; }
 
-	Rep& axpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const 
+	Rep& axpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
 	{ return Integer::axpy(r,a,b,c); }
-	Rep& maxpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const 
+	Rep& maxpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
 	{ return Integer::maxpy(r,a,b,c); }
-	Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const 
+	Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
 	{ return Integer::axmy(r,a,b,c); }
-	Rep& axpyin( Rep& r, const Rep& a, const Rep& b ) const 
+	Rep& axpyin( Rep& r, const Rep& a, const Rep& b ) const
 	{ return r += a * b; }
-	Rep& axmyin( Rep& r, const Rep& a, const Rep& b ) const 
+	Rep& axmyin( Rep& r, const Rep& a, const Rep& b ) const
 	{ return r -= a * b; }
 
 	// -- unary methods
@@ -83,22 +83,22 @@ public:
 	Rep& negin( Rep& r ) const { return Integer::negin(r); }
 
 	// -- extended gcd  q = gcd(a,b) = u*a+v*b;
-	Rep& gcd( Rep& g, Rep& u, Rep& v, const Rep& a, const Rep& b ) const 
+	Rep& gcd( Rep& g, Rep& u, Rep& v, const Rep& a, const Rep& b ) const
 	{ return ::gcd(g, a, b, u, v); }
-	Rep& gcd( Rep& g, const Rep& a, const Rep& b ) const 
+	Rep& gcd( Rep& g, const Rep& a, const Rep& b ) const
 	{ return ::gcd(g, a, b); }
-	Rep& lcm( Rep& l, const Rep& a, const Rep& b ) const 
+	Rep& lcm( Rep& l, const Rep& a, const Rep& b ) const
 	{ return ::lcm(l, a, b); }
-	Rep& lcmin( Rep& l, const Rep& a) const 
+	Rep& lcmin( Rep& l, const Rep& a) const
 	{ Rep tmp(l); return lcm(l, tmp, a); }
 
-	// - return n^l 
+	// - return n^l
 	Rep& pow(Rep& r, const Rep& n, const long l) const { return r = ::pow(n, l); }
 	Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r = ::pow(n, l); }
 	Rep& pow(Rep& r, const Rep& n, const int l) const { return r = ::pow(n, (long)l); }
 	Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r = ::pow(n, (unsigned long)l); }
 
-	// - return square root of n  
+	// - return square root of n
 	Rep& sqrt(Rep& s, const Rep& n) const { return ::sqrt(s,n); }
 	Rep& sqrt(Rep& s, Rep& r, const Rep& n) const { return ::sqrtrem(s,n, r); }
 	// - base p logarithm of a
@@ -140,11 +140,11 @@ public:
 	template< class RandIter > Rep& nonzerorandom (RandIter&,Rep& r, const Rep& b) const { return Integer::nonzerorandom(r,b); }
 
 	// -- IO
-	std::istream& read ( std::istream& i ) 
+	std::istream& read ( std::istream& i )
 	{ char ch;
-		i >> std::ws >> ch; 
+		i >> std::ws >> ch;
 		// JGD 22.03.03
-		//    if (ch != 'I') 
+		//    if (ch != 'I')
 		//      GivError::throw_error(GivBadFormat("IntegerDom::read: bad signature domain"));
 		return i;
 	}

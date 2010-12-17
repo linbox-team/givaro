@@ -2,13 +2,13 @@
 // Copyright(c)'1994-2010 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier, JG. Dumas
 // Modified by: B. Boyer
-// Time-stamp: <22 Oct 10 15:35:39 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <22 Oct 10 15:35:39 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
-// Description: 
+// Description:
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
 #ifndef _GMPplusplus_INTEGER_H_
 #define _GMPplusplus_INTEGER_H_
@@ -33,7 +33,7 @@ class Integer;
 
 int 		compare(const Integer& a, const Integer& b);
 int 		absCompare(const Integer& a, const Integer& b);
-Integer& 	inv (Integer& u, const Integer& a, const Integer& b); 
+Integer& 	inv (Integer& u, const Integer& a, const Integer& b);
 Integer 	gcd (const Integer& a, const Integer& b);
 Integer 	gcd (const Integer& a, const Integer& b, Integer& u, Integer& v);
 Integer& 	gcd (Integer& g, const Integer& a, const Integer& b);
@@ -81,7 +81,7 @@ int 		probab_prime(const Integer& p);
 int 		probab_prime(const Integer& p, int r);
 int 		jacobi(const Integer& u, const Integer& v) ;
 int 		legendre(const Integer& u, const Integer& v) ;
-unsigned long 	length (const Integer& a); 
+unsigned long 	length (const Integer& a);
 std::istream& 	operator >> (std::istream &i, Integer& n);
 std::ostream& 	operator << (std::ostream &o, const Integer& n);
 std::ostream& 	absOutput (std::ostream &o, const Integer& n);
@@ -89,7 +89,7 @@ void 		importWords(Integer&, size_t, int, int, int, size_t, const void*);
 
 
 //------------------------------------------------------ Class Integer
-class Integer 
+class Integer
 {
 
 public:
@@ -163,28 +163,28 @@ public:
 	Integer& operator>>= (unsigned long l) ; // rshift
 
 	//----------------Elementary arithmetic between Integers & longs
-	Integer  operator + (const Integer& n) const;  
+	Integer  operator + (const Integer& n) const;
 	Integer  operator + (const unsigned long l) const;
 	Integer  operator + (const long l) const;
-	Integer& operator += (const Integer& n);  
-	Integer& operator += (const unsigned long l);  
-	Integer& operator += (const long l);  
+	Integer& operator += (const Integer& n);
+	Integer& operator += (const unsigned long l);
+	Integer& operator += (const long l);
 	template<class XXX> Integer& operator +=(const XXX& x) { return this->operator += ( (Integer)x ); }
 
 	Integer  operator - (const Integer& n) const;
 	Integer  operator - (const unsigned long l) const;
 	Integer  operator - (const long l) const;
-	Integer& operator -= (const Integer& n);  
-	Integer& operator -= (const unsigned long l);  
-	Integer& operator -= (const long l);  
+	Integer& operator -= (const Integer& n);
+	Integer& operator -= (const unsigned long l);
+	Integer& operator -= (const long l);
 	template<class XXX> Integer& operator -=(const XXX& x) { return this->operator -= ( (Integer)x ); }
 	Integer  operator -() const;
 
 	Integer  operator * (const Integer& n) const;
 	Integer  operator * (const unsigned long l) const;
 	Integer  operator * (const long l) const;
-	Integer& operator *= (const Integer& n);  
-	Integer& operator *= (const unsigned long l);  
+	Integer& operator *= (const Integer& n);
+	Integer& operator *= (const unsigned long l);
 	Integer& operator *= (const long l);
 	template<class XXX> Integer& operator *=(const XXX& x) { return this->operator *= ( (Integer)x ); }
 
@@ -193,7 +193,7 @@ public:
 	Integer  operator /  (const Integer& n) const;
 	Integer  operator /  (const unsigned long l) const;
 	Integer  operator /  (const long l) const;
-	Integer& operator /= (const Integer& n);  
+	Integer& operator /= (const Integer& n);
 	Integer& operator /= (const unsigned long l);
 	Integer& operator /= (const long l);
 	template<class XXX> Integer& operator /=(const XXX& x) { return this->operator /= ( (Integer)x ); }
@@ -204,7 +204,7 @@ public:
 	double  operator % (const double l) const;
 	unsigned short  operator % (const unsigned short l) const { return (unsigned short) ( this->operator % ( (unsigned long)l ) ); }
 	template<class XXX> XXX operator %(const XXX& x) const { return (XXX)this->operator % ( Integer(x) ); }
-	Integer& operator %= (const Integer& n);  
+	Integer& operator %= (const Integer& n);
 	Integer& operator %= (const unsigned long l);
 	Integer& operator %= (const long l);
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
@@ -216,63 +216,63 @@ public:
 	template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
 
 	// - Methods
-	static Integer& addin (Integer& res, const Integer& n);  
-	static Integer& addin (Integer& res, const long n);  
-	static Integer& addin (Integer& res, const unsigned long n);  
-	static Integer& add   (Integer& res, const Integer& n1, const Integer& n2);  
-	static Integer& add   (Integer& res, const Integer& n1, const long n2);  
-	static Integer& add   (Integer& res, const Integer& n1, const unsigned long n2);  
+	static Integer& addin (Integer& res, const Integer& n);
+	static Integer& addin (Integer& res, const long n);
+	static Integer& addin (Integer& res, const unsigned long n);
+	static Integer& add   (Integer& res, const Integer& n1, const Integer& n2);
+	static Integer& add   (Integer& res, const Integer& n1, const long n2);
+	static Integer& add   (Integer& res, const Integer& n1, const unsigned long n2);
 
-	static Integer& subin (Integer& res, const Integer& n);  
-	static Integer& subin (Integer& res, const long n);  
-	static Integer& subin (Integer& res, const unsigned long n);  
-	static Integer& sub   (Integer& res, const Integer& n1, const Integer& n2);  
-	static Integer& sub   (Integer& res, const Integer& n1, const long n2);  
-	static Integer& sub   (Integer& res, const Integer& n1, const unsigned long n2);  
-	static Integer& negin (Integer& res);  
-	static Integer& neg   (Integer& res, const Integer& n);  
+	static Integer& subin (Integer& res, const Integer& n);
+	static Integer& subin (Integer& res, const long n);
+	static Integer& subin (Integer& res, const unsigned long n);
+	static Integer& sub   (Integer& res, const Integer& n1, const Integer& n2);
+	static Integer& sub   (Integer& res, const Integer& n1, const long n2);
+	static Integer& sub   (Integer& res, const Integer& n1, const unsigned long n2);
+	static Integer& negin (Integer& res);
+	static Integer& neg   (Integer& res, const Integer& n);
 
-	static Integer& mulin (Integer& res, const Integer& n);  
-	static Integer& mulin (Integer& res, const long n);  
-	static Integer& mulin (Integer& res, const unsigned long n);  
-	static Integer& mul   (Integer& res, const Integer& n1, const Integer& n2);  
-	static Integer& mul   (Integer& res, const Integer& n1, const long n2);  
-	static Integer& mul   (Integer& res, const Integer& n1, const unsigned long n2);  
-	static Integer& axpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
-	static Integer& axpyin   (Integer& res, const Integer& a, const Integer& x);  
-	static Integer& maxpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
-	static Integer& axmy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );  
-	static Integer& axmyin   (Integer& res, const Integer& a, const Integer& x);  
+	static Integer& mulin (Integer& res, const Integer& n);
+	static Integer& mulin (Integer& res, const long n);
+	static Integer& mulin (Integer& res, const unsigned long n);
+	static Integer& mul   (Integer& res, const Integer& n1, const Integer& n2);
+	static Integer& mul   (Integer& res, const Integer& n1, const long n2);
+	static Integer& mul   (Integer& res, const Integer& n1, const unsigned long n2);
+	static Integer& axpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
+	static Integer& axpyin   (Integer& res, const Integer& a, const Integer& x);
+	static Integer& maxpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
+	static Integer& axmy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
+	static Integer& axmyin   (Integer& res, const Integer& a, const Integer& x);
 
-	static Integer& divin (Integer& q, const Integer& n);  
-	static Integer& divin (Integer& q, const long n);  
-	static Integer& divin (Integer& q, const unsigned long n);  
-	static Integer& div   (Integer& q, const Integer& n1, const Integer& n2);  
-	static Integer& div   (Integer& q, const Integer& n1, const long n2);  
-	static Integer& div   (Integer& q, const Integer& n1, const unsigned long n2);  
-	static Integer& divexact  (Integer& q, const Integer& n1, const Integer& n2);  
-	static Integer  divexact  (const Integer& n1, const Integer& n2);  
+	static Integer& divin (Integer& q, const Integer& n);
+	static Integer& divin (Integer& q, const long n);
+	static Integer& divin (Integer& q, const unsigned long n);
+	static Integer& div   (Integer& q, const Integer& n1, const Integer& n2);
+	static Integer& div   (Integer& q, const Integer& n1, const long n2);
+	static Integer& div   (Integer& q, const Integer& n1, const unsigned long n2);
+	static Integer& divexact  (Integer& q, const Integer& n1, const Integer& n2);
+	static Integer  divexact  (const Integer& n1, const Integer& n2);
 
-	static Integer& modin (Integer& r, const Integer& n);  
-	static Integer& modin (Integer& r, const long n);  
-	static Integer& modin (Integer& r, const unsigned long n);  
-	static Integer& mod   (Integer& r, const Integer& n1, const Integer& n2);  
-	static Integer& mod   (Integer& r, const Integer& n1, const long n2);  
-	static Integer& mod   (Integer& r, const Integer& n1, const unsigned long n2);  
+	static Integer& modin (Integer& r, const Integer& n);
+	static Integer& modin (Integer& r, const long n);
+	static Integer& modin (Integer& r, const unsigned long n);
+	static Integer& mod   (Integer& r, const Integer& n1, const Integer& n2);
+	static Integer& mod   (Integer& r, const Integer& n1, const long n2);
+	static Integer& mod   (Integer& r, const Integer& n1, const unsigned long n2);
 
 	// -- return q, the quotient
-	static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const Integer& n2);  
-	static Integer& divmod   (Integer& q, long& r, const Integer& n1, const long n2);  
-	static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const unsigned long n2);  
+	static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const Integer& n2);
+	static Integer& divmod   (Integer& q, long& r, const Integer& n1, const long n2);
+	static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const unsigned long n2);
 
 
 	//------------------------------------- Arithmetic functions
-	friend Integer& inv (Integer& u, const Integer& a, const Integer& b); 
+	friend Integer& inv (Integer& u, const Integer& a, const Integer& b);
 	friend Integer gcd (const Integer& a, const Integer& b);
-	friend Integer gcd (const Integer& a, const Integer& b, 
+	friend Integer gcd (const Integer& a, const Integer& b,
 			    Integer& u, Integer& v);
 	friend Integer& gcd (Integer& g, const Integer& a, const Integer& b);
-	friend Integer& gcd (Integer& g, const Integer& a, const Integer& b, 
+	friend Integer& gcd (Integer& g, const Integer& a, const Integer& b,
 			     Integer& u, Integer& v);
 
 	friend Integer pp( const Integer& P, const Integer& Q );
@@ -280,7 +280,7 @@ public:
 	friend Integer& lcm (Integer& g, const Integer& a, const Integer& b);
 	friend Integer lcm (const Integer& a, const Integer& b);
 
-	// - return n^l 
+	// - return n^l
 	friend Integer& pow(Integer& Res, const Integer& n, const long l);
 	friend Integer& pow(Integer& Res, const unsigned long n, const unsigned long l);
 	friend Integer& pow(Integer& Res, const Integer& n, const unsigned long l);
@@ -334,22 +334,22 @@ public:
 	friend int legendre(const Integer& u, const Integer& v) ;
 
 	Integer& operator++() { return *this+=1UL; } // prefix
-	Integer operator++(int) 
+	Integer operator++(int)
 	{ // postfix
 	       Integer tmp = *this ;
 	       ++*this;
-       	       return tmp; 
+       	       return tmp;
 	}
 	Integer& operator--() { return *this-=1UL; } // prefix
-	Integer operator--(int) 
+	Integer operator--(int)
 	{// postfix
 	       Integer tmp = *this ;
 	       --*this;
-       	       return tmp; 
-	} 
+       	       return tmp;
+	}
 
 	// - return the size in byte
-	friend inline unsigned long length (const Integer& a); 
+	friend inline unsigned long length (const Integer& a);
 	// - return the size in word.
 	size_t size() const;
 	// - return the size in base B (always exact if B is a power of two)
@@ -357,7 +357,7 @@ public:
 	// - return the size in bit.
 	size_t bitsize() const;
 	// - return the i-th word of the integer. Word 0 is lowest word.
-	unsigned long operator[](size_t i) const; 
+	unsigned long operator[](size_t i) const;
 
 	// -- Convert an Integer to a basic C++ type
 	// -- Cast operators
@@ -386,9 +386,9 @@ public:
 
 #ifdef __GMP_PLUSPLUS__
 	static gmp_randclass& randstate(unsigned long int s=0); // pourquoi ?
-#else 
+#else
 	static __gmp_randstate_struct intializerandstate();
-	static __gmp_randstate_struct* randstate(); 
+	static __gmp_randstate_struct* randstate();
 #endif
 	static bool RandBool()  ;
 	/*  random <= */
@@ -406,7 +406,7 @@ public:
 	{ return random_lessthan_2exp<true>(m);}
 	template<bool U>
 	static Integer& random_lessthan (Integer& r, const unsigned long & m) ;
-	static Integer& random_lessthan (Integer& r, const unsigned long & m) 
+	static Integer& random_lessthan (Integer& r, const unsigned long & m)
 	{ return random_lessthan<true>(r,m);}
 	template<bool U,class T>
 	static Integer random_lessthan (const T & m);
@@ -418,26 +418,26 @@ public:
 	/*  random = */
 	template<bool U>
 	static Integer& random_exact (Integer& r, const Integer & s) ;
-	static Integer& random_exact (Integer& r, const Integer & s) 
+	static Integer& random_exact (Integer& r, const Integer & s)
 	{ return random_exact<true>(r,s); }
 	template<bool U>
 	static Integer& random_exact_2exp (Integer& r, const unsigned long int & m) ;
-	static Integer& random_exact_2exp (Integer& r, const unsigned long int & m) 
+	static Integer& random_exact_2exp (Integer& r, const unsigned long int & m)
 	{return random_exact_2exp<true>(r,m);}
 	template<bool U>
 	static Integer& random_exact (Integer& r, const unsigned long int & m)  ;
-	static Integer& random_exact (Integer& r, const unsigned long int & m)  
+	static Integer& random_exact (Integer& r, const unsigned long int & m)
 	{return random_exact<true>(r,m);}
 	template<bool U,class T>
-	static Integer& random_exact (Integer& r, const T & m) 
+	static Integer& random_exact (Integer& r, const T & m)
 	{ return random_exact<U>(r,static_cast<unsigned long int>(m)); }
 	template<class T>
-	static Integer& random_exact (Integer& r, const T & m) 
+	static Integer& random_exact (Integer& r, const T & m)
 	{ return random_exact(r,static_cast<unsigned long int>(m)); }
 	template<bool U,class T>
 	static Integer random_exact (const T & s) ;
 	template<class T>
-	static Integer random_exact (const T & s) 
+	static Integer random_exact (const T & s)
 	{ return random_exact<true>(s) ; }
 
 	/*  random <.< */
@@ -447,13 +447,13 @@ public:
 	static Integer& random_between (Integer& r, const unsigned long int& m, const unsigned long int &M) ;
 	static Integer random_between_2exp (const unsigned long int & m, const unsigned long int &M) ;
 	static Integer random_between (const unsigned long int & m, const unsigned long int &M) ;
-	
+
 	template<class R>
-	static Integer random_between (const R & m, const R & M) 
+	static Integer random_between (const R & m, const R & M)
 	{ return random_between(static_cast<unsigned long int>(m), static_cast<unsigned long int>(M)); }
 
 	template<class R>
-	static Integer & random_between (Integer &r, const R & m, const R & M) 
+	static Integer & random_between (Integer &r, const R & m, const R & M)
 	{ return random_between(r,static_cast<unsigned long int>(m), static_cast<unsigned long int>(M)); }
 
 
@@ -461,12 +461,12 @@ public:
 	template<bool U,class T>
 	static Integer& random (Integer& r, const T & m) ;
 	template<class T>
-	static Integer& random (Integer& r, const T & m) 
+	static Integer& random (Integer& r, const T & m)
 	{return random<true>(r,m);}
 	template<bool U,class T>
 	static Integer random(const T & sz) ;
 	template<class T>
-	static Integer random(const T & sz) 
+	static Integer random(const T & sz)
 	{ return random<true>(sz);}
 	template<bool U>
 	static Integer random();
@@ -476,10 +476,10 @@ public:
 	template<bool U,class T>
 	static Integer& nonzerorandom (Integer& r, const T& size) ;
 	template<class T>
-	static Integer nonzerorandom(const T & sz) 
+	static Integer nonzerorandom(const T & sz)
 	{ return nonzerorandom<true>(sz); }
 	template<class T>
-	static Integer& nonzerorandom (Integer& r, const T& size) 
+	static Integer& nonzerorandom (Integer& r, const T& size)
 	{ return nonzerorandom<true>(r,size); }
 
 
@@ -508,7 +508,7 @@ protected:
 	//mpz_ptr get_mpz() {return (mpz_ptr)&gmp_rep;}
 	const Rep* get_rep() const { return &gmp_rep; }
 
-	// -- Creates a new Integer from a size sz and a array of unsigned long d 
+	// -- Creates a new Integer from a size sz and a array of unsigned long d
 	Integer(unsigned long* d, long size);
 
 }; //----------------------------------------------- End of Class Integer

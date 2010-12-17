@@ -2,7 +2,7 @@
 // This file is part of Givaro.
 // written by BB
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
@@ -78,7 +78,7 @@ int test2(Integer & M, Integer & P)
 	Integer R = 0 ;
 
 	//!@todo existe pas !
-	//R = Integer:: mod(M,P) ; 
+	//R = Integer:: mod(M,P) ;
 	Integer:: mod(R,M,P) ;
 	SONT_EQ(RR,R);
 
@@ -113,18 +113,22 @@ int main()
 	int rez = 0;
 
 	rez =  test1(m,p);   if (rez) return 1 ;
-	//std::cout << "ok0" << std::endl;
 	rez =  test1(-m,p);  if (rez) return 2 ;
-	//std::cout << "ok1" << std::endl;
 	rez =  test1(m,-p);  if (rez) return 3 ;
-	//std::cout << "ok2" << std::endl;
 	rez =  test1(-m,-p); if (rez) return 4 ;
-	//std::cout << "ok3" << std::endl;
 	rez =  test1(m,P);   if (rez) return 5 ;
-	//std::cout << "ok4" << std::endl;
 	rez =  test1(M,P);   if (rez) return 6 ;
-	//std::cout << "ok5" << std::endl;
-	
+
+	rez =  test1(m,m);   if (rez) return 1 ;
+	rez =  test1(p,p);   if (rez) return 2 ;
+	rez =  test1(-m,m);  if (rez) return 3 ;
+	rez =  test1(-p,p);  if (rez) return 4 ;
+	rez =  test1(m,-m);  if (rez) return 5 ;
+	rez =  test1(p,-p);  if (rez) return 6 ;
+	rez =  test1(-m,-m); if (rez) return 7 ;
+	rez =  test1(-p,-p); if (rez) return 8 ;
+
+
 	for (unsigned i = 0 ; i < NB_ITERS ; ++i)
 	{/*{{{*/
 		Integer M = Integer::random_between(680,700);

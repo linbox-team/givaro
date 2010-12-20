@@ -44,7 +44,6 @@ int test1( const T m, const U p)
 
 	Integer::mod(R,M,P);
 	SONT_EQ(r,R);
-	// R a bon r.
 
 	Integer R1 = M%p ; //!XX
 	SONT_EQ(R,R1);
@@ -97,6 +96,39 @@ int test2(Integer & M, Integer & P)
 	return 0;
 }/*}}}*/
 
+template< class T, class U>
+int test3( const T m, const U p)
+{/*{{{*/
+	int pi (p);
+	long int q = m / p;
+	const Integer M(m);
+	const Integer P(p);
+	Integer Q ;
+
+	Integer::div(Q,M,P);
+	SONT_EQ(q,Q);
+
+	Integer Q1 = M/p ; //!XX
+	SONT_EQ(Q,Q1);
+
+	Integer Q2 = M/P ;
+	SONT_EQ(Q,Q2);
+
+	Integer Q3 = M/pi ; //!XX
+	SONT_EQ(Q,Q3);
+
+	Q1 = M ;
+	Integer::divin(Q1,P);
+	SONT_EQ(Q,Q1);
+
+
+	Q2 = M ;
+	Q2 /= P ;
+	SONT_EQ(Q,Q2);
+
+	return 0;
+}/*}}}*/
+
 #include <cassert>
 
 int main()
@@ -108,13 +140,28 @@ int main()
 #endif
 
 	long int p = 78678675;
+	std::cout << "mod " << p << std::endl;
 	unsigned long int M(m);
 	unsigned long int P(p);
 
         Integer mone(-1);
-            // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep 
+            // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
         assert(mpz_tdiv_ui( (mpz_ptr)&mone, 3) == 1);
-        
+
+	for (long i = -7 ; i < 7 ; ++i){
+		long j = 3 ;
+		std::cout << i/j << '=';
+		Integer I = i;
+		Integer::divin(I,j);
+		std::cout << I << '|' ;
+
+		std::cout << i/(-j) << '=';
+		I = i;
+		Integer::divin(I,-j);
+		std::cout << I << std::endl ;
+
+
+	}
 
 
 	int rez = 0;
@@ -123,17 +170,63 @@ int main()
 	rez =  test1(-m,p);  if (rez) return 2 ;
 	rez =  test1(m,-p);  if (rez) return 3 ;
 	rez =  test1(-m,-p); if (rez) return 4 ;
-	rez =  test1(m,P);   if (rez) return 5 ;
-	rez =  test1(M,P);   if (rez) return 6 ;
 
-	rez =  test1(m,m);   if (rez) return 1 ;
-	rez =  test1(p,p);   if (rez) return 2 ;
-	rez =  test1(-m,m);  if (rez) return 3 ;
-	rez =  test1(-p,p);  if (rez) return 4 ;
-	rez =  test1(m,-m);  if (rez) return 5 ;
-	rez =  test1(p,-p);  if (rez) return 6 ;
-	rez =  test1(-m,-m); if (rez) return 7 ;
-	rez =  test1(-p,-p); if (rez) return 8 ;
+	rez =  test1(m,P);   if (rez) return 5 ;
+	rez =  test1(m,-P);  if (rez) return 6 ;
+	rez =  test1(-m,P);  if (rez) return 7 ;
+	rez =  test1(-m,-P); if (rez) return 8 ;
+
+	rez =  test1(M,P);   if (rez) return 9 ;
+	rez =  test1(M,-P);  if (rez) return 10 ;
+	rez =  test1(-M,P);  if (rez) return 11 ;
+	rez =  test1(-M,-P); if (rez) return 12 ;
+
+	rez =  test1(-M,p);  if (rez) return 13 ;
+	rez =  test1(M,-p);  if (rez) return 14 ;
+	rez =  test1(M,p);   if (rez) return 15 ;
+	rez =  test1(-M,-p); if (rez) return 16 ;
+
+	rez =  test1(m,m);   if (rez) return 16 ;
+	rez =  test1(-m,m);  if (rez) return 18 ;
+	rez =  test1(m,-m);  if (rez) return 19 ;
+	rez =  test1(-m,-m); if (rez) return 20 ;
+
+	rez =  test1(P,P);   if (rez) return 21 ;
+	rez =  test1(P,-P);  if (rez) return 22 ;
+	rez =  test1(-P,P);  if (rez) return 23 ;
+	rez =  test1(-P,-P); if (rez) return 24 ;
+
+
+	rez =  test3(m,p);   if (rez) return 11 ;
+	rez =  test3(-m,p);  if (rez) return 12 ;
+	rez =  test3(m,-p);  if (rez) return 13 ;
+	rez =  test3(-m,-p); if (rez) return 14 ;
+
+	rez =  test3(m,P);   if (rez) return 15 ;
+	rez =  test3(m,-P);  if (rez) return 16 ;
+	rez =  test3(-m,P);  if (rez) return 17 ;
+	rez =  test3(-m,-P); if (rez) return 18 ;
+
+	rez =  test3(M,P);   if (rez) return 19 ;
+	rez =  test3(M,-P);  if (rez) return 110 ;
+	rez =  test3(-M,P);  if (rez) return 111 ;
+	rez =  test3(-M,-P); if (rez) return 112 ;
+
+	rez =  test3(-M,p);  if (rez) return 113 ;
+	rez =  test3(M,-p);  if (rez) return 114 ;
+	rez =  test3(M,p);   if (rez) return 115 ;
+	rez =  test3(-M,-p); if (rez) return 116 ;
+
+	rez =  test3(m,m);   if (rez) return 116 ;
+	rez =  test3(-m,m);  if (rez) return 118 ;
+	rez =  test3(m,-m);  if (rez) return 119 ;
+	rez =  test3(-m,-m); if (rez) return 120 ;
+
+	rez =  test3(P,P);   if (rez) return 121 ;
+	rez =  test3(P,-P);  if (rez) return 122 ;
+	rez =  test3(-P,P);  if (rez) return 123 ;
+	rez =  test3(-P,-P); if (rez) return 124 ;
+
 
 
 	for (unsigned i = 0 ; i < NB_ITERS ; ++i)
@@ -150,8 +243,12 @@ int main()
 	}/*}}}*/
 	//std::cout << "ok6" << std::endl;
 
-	rez =  test1(0,p);   if (rez) return 11 ;
-	rez =  test1(0,-p);   if (rez) return 12 ;
+	rez =  test1(0,p);    if (rez) return 21 ;
+	rez =  test1(0,-p);   if (rez) return 22 ;
+
+	rez =  test3(0,p);    if (rez) return 23 ;
+	rez =  test3(0,-p);   if (rez) return 24 ;
+
 	//std::cout << "ok7" << std::endl;
 
 

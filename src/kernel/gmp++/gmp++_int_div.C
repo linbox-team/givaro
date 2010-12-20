@@ -3,17 +3,17 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_div.C,v 1.6 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: gmp++_int_div.C,v 1.7 2010-12-20 12:09:37 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
 
 
 //-------------------------------------------------- operator /
-Integer& Integer::divin(Integer& res, const Integer& n) 
+Integer& Integer::divin(Integer& res, const Integer& n)
 {
 //  if (isZero(n)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
@@ -22,18 +22,24 @@ Integer& Integer::divin(Integer& res, const Integer& n)
   mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
   return res;
 }
-Integer& Integer::divin(Integer& res, const long n) 
+Integer& Integer::divin(Integer& res, const long n)
 {
 //  if (n ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   if (isZero(res)) return res;
-  int sgn = GMP__SGN(n); 
+  int sgn = GMP__SGN(n);
   mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
   if (sgn <0) return res = -res;
+	// if (n<0)
+		// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
+	// else
+		// mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
+
+
   return res;
 }
-Integer& Integer::divin(Integer& res, const unsigned long n) 
+Integer& Integer::divin(Integer& res, const unsigned long n)
 {
 //  if (n ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
@@ -58,9 +64,16 @@ Integer& Integer::div(Integer& res, const Integer& n1, const long n2)
 //  if (isZero(n2)) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
-  int sgn = GMP__SGN(n2); 
+  int sgn = GMP__SGN(n2);
   mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
   if (sgn <0) return res = -res;
+
+  // if (n2>0)
+	  // mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+  // else
+	  // mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+
+
   return res;
 }
 Integer& Integer::div(Integer& res, const Integer& n1, const unsigned long n2)
@@ -136,29 +149,29 @@ Integer Integer::operator / (const Integer& n) const
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   if (isZero(*this)) return Integer::zero;
-  Integer res;   
+  Integer res;
   mpz_tdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
   return res;
 }
 
-Integer Integer::operator / (const unsigned long l) const 
+Integer Integer::operator / (const unsigned long l) const
 {
 //  if (l ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   if (isZero(*this)) return Integer::zero;
-  Integer res;   
+  Integer res;
   mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
   return res;
 }
 
-Integer Integer::operator / (const long l) const 
+Integer Integer::operator / (const long l) const
 {
 //  if (l ==0) {
 //    GivMathDivZero("[Integer::/]: division by zero");
 //  }
   if (isZero(*this)) return Integer::zero;
-  Integer res;   
+  Integer res;
   int sgn = GMP__SGN(l);
   mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
   if (sgn <0) return negin(res);
@@ -183,7 +196,7 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 //    GivMathDivZero("[Integer::divide]: division by zero");
 //  }
   int sgn = GMP__SGN(b);
-  r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep), 
+  r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
                   (mpz_ptr)&(a.gmp_rep), GMP__ABS(b));
   if (sgn <0) return negin(q);
   return q;

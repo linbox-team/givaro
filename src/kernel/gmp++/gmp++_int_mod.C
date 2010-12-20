@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified: JG. Dumas, BB.
-// $Id: gmp++_int_mod.C,v 1.12 2010-12-17 15:23:12 jgdumas Exp $
+// $Id: gmp++_int_mod.C,v 1.13 2010-12-20 12:09:37 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -33,6 +33,13 @@ Integer& Integer::modin(Integer& res, const long n)
 	int sgn = GMP__SGN(n);
 	mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
 	if (sgn <0) return res = -res;
+
+	// if (n>0)
+		// mpz_fdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
+	// else
+		// mpz_cdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
+
+
 	return res;
 }
 
@@ -49,6 +56,12 @@ Integer& Integer::mod(Integer& res, const Integer& n1, const long n2)
 	int sgn = GMP__SGN(n2);
 	mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
 	if (sgn <0) return res = - res;
+
+	// if (n2>0)
+		// mpz_fdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+	// else
+		// mpz_cdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+
 	return res;
 }
 Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
@@ -82,6 +95,11 @@ Integer& Integer::operator %= (const long l)
 	int sgn = GMP__SGN(l);
 	mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
 	if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
+
+	// if (l>0)
+		// mpz_fdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
+	// else
+		// mpz_cdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
 	return *this;
 }
 
@@ -111,11 +129,12 @@ unsigned long Integer::operator % (const unsigned long l) const
 
 	if (isZero(*this)) return 0UL;
 	bool isneg = (*this)<0 ;
-            // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep 
+	//CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
 	unsigned long res = mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
 	if (!res) return res ;
 	if (isneg) return (l-res) ;
-	return  res;
+	// unsigned long  res = mpz_fdiv_ui( (mpz_ptr)&gmp_rep, l);
+	return res ;
 }
 
 long Integer::operator % (const long l) const

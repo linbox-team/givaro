@@ -159,6 +159,8 @@ echo '**************************************************************************
 exit 1
 ])
 
+GIV_DOC
+
 CXXFLAGS="${GMP_CFLAGS} ${CXXFLAGS}"
 LIBS="${GMP_LIBS}"
 AC_SUBST(CXXFLAGS)
@@ -188,5 +190,6 @@ examples/Integer/Makefile
 examples/Rational/Makefile
 examples/Polynomial/Makefile
 tests/Makefile
+docs/Makefile
 ])
 AC_OUTPUT

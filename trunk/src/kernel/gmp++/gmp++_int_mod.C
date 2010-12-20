@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified: JG. Dumas, BB.
-// $Id: gmp++_int_mod.C,v 1.14 2010-12-20 18:04:00 bboyer Exp $
+// $Id: gmp++_int_mod.C,v 1.15 2010-12-20 18:45:47 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -51,7 +51,7 @@ Integer& Integer::modin(Integer& res, const long n)
 Integer& Integer::mod(Integer& res, const Integer& n1, const Integer& n2)
 {
 	if (isZero(n1)) return res = Integer::zero;
-	//   mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
+	// mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
 	mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
 	return res;
 }
@@ -81,7 +81,7 @@ Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
 Integer& Integer::operator %= (const Integer& n)
 {
 	if (isZero(*this)) return *this;
-	  mpz_tdiv_r( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+	mpz_tdiv_r( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
 	// mpz_mod( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
 	return *this;
 }
@@ -178,7 +178,7 @@ long Integer::operator % (const long l) const
 
 	// std::cout << res << ',' << l << ',' << *this << std::endl;
 	assert((res<GIVABS(l)) && (res> -GIVABS(l)) && (((res>0)?1:((res==0)?0:-1))*(*this).priv_sign()>=0)) ;
-		return res;
+	return res;
 }
 
 double Integer::operator % (const double l) const

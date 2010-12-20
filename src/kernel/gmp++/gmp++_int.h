@@ -188,8 +188,9 @@ public:
 	Integer& operator *= (const long l);
 	template<class XXX> Integer& operator *=(const XXX& x) { return this->operator *= ( (Integer)x ); }
 
-	// -- Euclidian division of a/b: returns q or r such that
-	// - a=b*q + r, with |r| < |b|, a*r >=0
+	/*! -- Euclidian division of a/b: returns q or r such that
+	 - a=b*q + r, with |r| < |b|, a*r >=0
+	 */
 	Integer  operator /  (const Integer& n) const;
 	Integer  operator /  (const unsigned long l) const;
 	Integer  operator /  (const long l) const;
@@ -198,11 +199,14 @@ public:
 	Integer& operator /= (const long l);
 	template<class XXX> Integer& operator /=(const XXX& x) { return this->operator /= ( (Integer)x ); }
 
+	/*! operator % behaves like C %.
+	 * % rounds towards 0 and the sign of the dividend is preserved.
+	 */
 	Integer  operator % (const Integer& n) const;
-	unsigned long  operator % (const unsigned long l) const;
+	long  operator % (const unsigned long l) const;
 	long  operator % (const long l) const;
 	double  operator % (const double l) const;
-	unsigned short  operator % (const unsigned short l) const { return (unsigned short) ( this->operator % ( (unsigned long)l ) ); }
+	short  operator % (const unsigned short l) const { return (short) ( this->operator % ( (unsigned long)l ) ); }
 	template<class XXX> XXX operator %(const XXX& x) const { return (XXX)this->operator % ( Integer(x) ); }
 	Integer& operator %= (const Integer& n);
 	Integer& operator %= (const unsigned long l);
@@ -257,6 +261,10 @@ public:
 	static Integer& div   (Integer& q, const Integer& n1, const unsigned long n2);
 	static Integer& divexact  (Integer& q, const Integer& n1, const Integer& n2);
 	static Integer  divexact  (const Integer& n1, const Integer& n2);
+
+	/*! function \c mod behaves like gmp's \c mpz_mod.
+	 *  mod returns a positive remainder.
+	 */
 
 	static Integer& modin (Integer& r, const Integer& n);
 	static Integer& modin (Integer& r, const long n);

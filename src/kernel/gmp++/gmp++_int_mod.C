@@ -7,10 +7,14 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified: JG. Dumas, BB.
-// $Id: gmp++_int_mod.C,v 1.13 2010-12-20 12:09:37 bboyer Exp $
+// $Id: gmp++_int_mod.C,v 1.14 2010-12-20 18:04:00 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
+
+#ifndef GIVABS
+#define GIVABS(a) ((a)>0?(a):-(a))
+#endif
 
 
 //-------------------------------------------------- operator /
@@ -24,20 +28,21 @@ Integer& Integer::modin(Integer& res, const Integer& n)
 Integer& Integer::modin(Integer& res, const unsigned long n)
 {
 	if (isZero(res)) return res;
-	mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
+	// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
+	mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
 	return res;
 }
 Integer& Integer::modin(Integer& res, const long n)
 {
 	if (isZero(res)) return res;
-	int sgn = GMP__SGN(n);
-	mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
-	if (sgn <0) return res = -res;
+	// int sgn = GMP__SGN(n);
+	// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
+	// if (sgn <0) return res = -res;
 
-	// if (n>0)
-		// mpz_fdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
-	// else
-		// mpz_cdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
+	if (n>0)
+		mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
+	else
+		mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, -n);
 
 
 	return res;
@@ -53,21 +58,22 @@ Integer& Integer::mod(Integer& res, const Integer& n1, const Integer& n2)
 Integer& Integer::mod(Integer& res, const Integer& n1, const long n2)
 {
 	if (isZero(n1)) return res = Integer::zero;
-	int sgn = GMP__SGN(n2);
-	mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
-	if (sgn <0) return res = - res;
+	// int sgn = GMP__SGN(n2);
+	// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
+	// if (sgn <0) return res = - res;
 
-	// if (n2>0)
-		// mpz_fdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
-	// else
-		// mpz_cdiv_r_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+	if (n2>0)
+		mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+	else
+		mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, -n2);
 
 	return res;
 }
 Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
 {
 	if (isZero(n1)) return res = Integer::zero;
-	mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
+	// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
+	mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
 	return res;
 }
 
@@ -75,31 +81,40 @@ Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
 Integer& Integer::operator %= (const Integer& n)
 {
 	if (isZero(*this)) return *this;
-	//   Integer res;
-	//   mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
-	//   mpz_set( (mpz_ptr)&gmp_rep , (mpz_ptr)&(res.gmp_rep) );
-	mpz_mod( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+	  mpz_tdiv_r( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+	// mpz_mod( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
 	return *this;
 }
 
 Integer& Integer::operator %= (const unsigned long l)
 {
 	if (isZero(*this)) return *this;
+#ifdef DEBUG
+	int sgn_this = (*this>0)?1:-1;
+#endif
+
 	mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
+
+#ifdef DEBUG
+	assert((*this<GIVABS(l)) && (*this> -GIVABS(l)) && (sgn_this*(*this).priv_sign()>=0)) ;
+#endif
+
 	return *this;
 }
 
 Integer& Integer::operator %= (const long l)
 {
 	if (isZero(*this)) return *this;
+#ifdef DEBUG
+	int sgn_this = (*this>0)?1:-1;
+#endif
 	int sgn = GMP__SGN(l);
 	mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
 	if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
 
-	// if (l>0)
-		// mpz_fdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
-	// else
-		// mpz_cdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
+#ifdef DEBUG
+	assert((*this<GIVABS(l)) && (*this> -GIVABS(l)) && (sgn_this*(*this).priv_sign()>=0)) ;
+#endif
 	return *this;
 }
 
@@ -107,12 +122,14 @@ Integer Integer::operator % (const Integer& n) const
 {
 	if (isZero(*this)) return Integer::zero;
 	Integer res;
-	// mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
-	mpz_mod( (mpz_ptr) &(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr) &(n.gmp_rep) ) ;
+	mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+
+	// std::cout << res << ',' << n << ',' << *this << std::endl;
+	assert((res<GIVABS(n)) && (res> -GIVABS(n)) && (res.priv_sign()*(*this).priv_sign()>=0)) ;
 	return res;
 }
 
-unsigned long Integer::operator % (const unsigned long l) const
+long Integer::operator % (const unsigned long l) const
 {
 #if 0
 	if (isZero(*this)) return 0UL;
@@ -131,9 +148,17 @@ unsigned long Integer::operator % (const unsigned long l) const
 	bool isneg = (*this)<0 ;
 	//CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
 	unsigned long res = mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
+#ifdef DEBUG
+	Integer toto = res;
+	if (isneg) toto = -(long)res ;
+
+	// std::cout << toto << ',' << l << ',' << ',' << *this << std::endl;
+	assert((toto<l) && (-toto<l) && (toto.priv_sign()*(*this).priv_sign()>=0)) ;
+#endif
 	if (!res) return res ;
-	if (isneg) return (l-res) ;
-	// unsigned long  res = mpz_fdiv_ui( (mpz_ptr)&gmp_rep, l);
+	if (isneg) return (-(long)res) ;
+
+
 	return res ;
 }
 
@@ -144,22 +169,28 @@ long Integer::operator % (const long l) const
 		GivMathDivZero("[Integer::/]: division by zero");
 	}
 #endif
+	long res ;
 	if (l>0)
-		return static_cast<long>(this->operator%( static_cast<const unsigned long>(l) ) );
+		res = static_cast<long>(this->operator%( static_cast<const unsigned long>(l) ) );
 	else {
-		long res = static_cast<long>(this->operator%( static_cast<const unsigned long>( -l ) ) );
-		return res;
+		res = static_cast<long>(this->operator%( static_cast<const unsigned long>( -l ) ) );
 	}
+
+	// std::cout << res << ',' << l << ',' << *this << std::endl;
+	assert((res<GIVABS(l)) && (res> -GIVABS(l)) && (((res>0)?1:((res==0)?0:-1))*(*this).priv_sign()>=0)) ;
+		return res;
 }
 
 double Integer::operator % (const double l) const
 {
+	double res ;
 	if (l>0)
-		return  static_cast<double>(this->operator%( static_cast<const unsigned long>(l) ) );
+		res =  static_cast<double>(this->operator%( static_cast<const unsigned long>(l) ) );
 	else{
-		double res =  static_cast<double>(this->operator%( static_cast<const unsigned long>(-l) ) );
-		return res;
+		res =  static_cast<double>(this->operator%( static_cast<const unsigned long>(-l) ) );
 	}
+	assert((res<GIVABS(l)) && (res> -GIVABS(l)) && (((res>0)?1:((res==0)?0:-1))*(*this).priv_sign()>=0)) ;
+	return res;
 }
 
 //Added by Dan Roche, 6-28-04

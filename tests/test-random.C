@@ -6,7 +6,9 @@
 // written by BB.
 
 /** @file tests/test-random.C
+ * @ingroup tests
  * @brief we test  bounds for random Integers
+ * @test we test  bounds for random Integers
  */
 
 #include <iostream>
@@ -15,7 +17,7 @@
 //#define GIVARO_DEBUG
 using std::cout ; using std::endl;
 
-//! tests ret= .func(arg,arg); ...
+//! tests <code>ret= .func(arg,arg);</code> ...
 int test1()
 {/*{{{*/
 	Integer toto  ;
@@ -113,7 +115,7 @@ int test1()
 
 }/*}}}*/
 
-//! tests ret= ::func(arg,arg);
+//! tests <code>ret= ::func(arg,arg);</code>
 int test2()
 {/*{{{*/
 	Integer un(26);
@@ -200,7 +202,7 @@ int test2()
 
 }/*}}}*/
 
-//! tests ::func(ret,arg,arg);
+//! tests <code>::func(ret,arg,arg);</code>
 int test3()
 {/*{{{*/
 	Integer un(26);

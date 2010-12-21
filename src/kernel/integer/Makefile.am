@@ -27,3 +27,5 @@ pkginclude_HEADERS=\
 noinst_LTLIBRARIES=libgivinteger.la
 
 libgivinteger_la_SOURCES=givintprime.C
+
+EXTRA_DIST= integer.doxy

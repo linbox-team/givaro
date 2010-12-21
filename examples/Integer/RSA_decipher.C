@@ -1,9 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*! @file examples/Integer/RSA_decipher.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/RSA_decipher.C
+ * @brief NO DOC
+ */
 #include <iostream>
 #include <fstream>
 #include "givaro/givintrsa.h"
@@ -18,21 +24,21 @@ int main(int argc, char** argv)
 {
     Timer tim;
     tim.clear();
-    
+
     IntRSADom<GivRandom>::Rep n,e,d;
     if (argc > 3)
         n = Integer( argv[3] );
-    else 
+    else
         std::cin >> e;
     if (argc > 4)
         e = Integer( argv[4] );
-    else 
+    else
         std::cin >> e;
     if (argc > 5)
         d = Integer( argv[5] );
-    else 
+    else
         std::cin >> d;
-    
+
     IntRSADom<GivRandom> IR(n,e,d);
 
     std::ifstream TXT(argv[1]);
@@ -40,7 +46,7 @@ int main(int argc, char** argv)
     std::ofstream OUT(argv[2]);
     if (!OUT) { std::cerr << "Error opening output file: " << argv[2] << std::endl; return -1; }
 
-    
+
     tim.start();
     IR.decipher( OUT, TXT );
     OUT.close();
@@ -48,8 +54,8 @@ int main(int argc, char** argv)
     tim.stop();
 
     std::cerr << tim << std::endl;
-    
-   
+
+
     return 0;
 }
 

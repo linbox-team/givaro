@@ -1,8 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+
+/*! @file examples/FiniteField/ff_arith.C
+ * @ingroup examples
+ * @ingroup finitefields
+ * @example examples/FiniteField/ff_arith.C
+ * @brief NO DOC
+ */
 
 #include <iostream>
 #include <givaro/givzpz64std.h>
@@ -13,7 +20,7 @@
 
 template<class Field>
 void TestField(const Field& F) {
-    std::cerr << "Within " ; 
+    std::cerr << "Within " ;
     F.write(std::cerr );
     std::cerr  << " : " << std::flush;
 
@@ -23,14 +30,14 @@ void TestField(const Field& F) {
 
     F.init(c);            // empty constructor
     F.init(d);            // empty constructor
-    
+
     F.add(c, a, b);       // c = a+b
-    
+
      // Separate output writing
-    F.write( std::cout, a) << " + " << std::flush;  
-    F.write( std::cout, b) << " = " << std::flush; 
+    F.write( std::cout, a) << " + " << std::flush;
+    F.write( std::cout, b) << " = " << std::flush;
     F.write( std::cerr, c) << std::endl;
-    
+
 
     F.mul(c, a, b);     // c = a*b
     F.axpy(d, a, b, c); // d = a*b + c;
@@ -39,51 +46,51 @@ void TestField(const Field& F) {
     F.write( std::cerr << "Within " ) << " : " << std::flush;
     F.write( F.write( F.write( F.write(
         std::cout, c) << " + ", a) << " * ", b) << " = ", d) << std::endl;
-    
+
     {
         typename Field::Element e;
         F.init(e); F.assign(e,d);
         F.maxpy(e, a, b, d); // e = d-a*b
-        
+
             // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
             std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
     }
-    
+
     {
         typename Field::Element e;
         F.init(e); F.assign(e,d);
         F.maxpyin(e, a, b); // e = d - a*b;
-        
+
             // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
             std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
     }
-    
+
     {
         typename Field::Element e;
         F.init(e); F.assign(e,d);
         F.axmy(e, a, b, d); // e = a*b -d;
-        
+
             // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
             std::cout, a) << " * ", b) << " - ", d) << " = ", e) << std::endl;
     }
-    
+
     {
         typename Field::Element e;
         F.init(e); F.assign(e,d);
         F.axmyin(e, a, b); // e = d - a*b;
-        
+
             // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
             std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
     }
-    
+
 
 
         // Four operations
@@ -122,7 +129,7 @@ void TestField(const Field& F) {
     F.write( std::cout, a) << std::endl;
     F.mulin(a,b);
     F.write( std::cout << "1 is ", a) << std::endl;
-    
+
 }
 
 extern "C" {
@@ -135,7 +142,7 @@ int main(int argc, char ** argv) {
 
         // modulo 13 over 16 bits
     ZpzDom<Std16> C13(13); TestField( C13 );
-    
+
         // modulo 13 over 32 bits
     ZpzDom<Std32> Z13(13); TestField( Z13 );
 
@@ -153,25 +160,25 @@ int main(int argc, char ** argv) {
         // modulo 13 over 32 bits with Montgomery reduction
     Montgomery<Std32> M13(13); TestField( M13 );
     Montgomery<Std32> M3(39989); TestField( M3 );
-    
+
         // modulo 13 with primitive root representation
     GFqDom<int> GF13( 13 ); TestField( GF13 );
-    
+
         // modulo 13 over arbitrary size
     ZpzDom<Integer> IntZ13(13); TestField( IntZ13 );
 
         // Zech log finite field with 5^4 elements
     GFqDom<int> GF625( 5, 4 ); TestField( GF625 );
-    
+
         // Zech log finite field with 3^4 elements
         // Using the Q-adic Transform
     GFqExt<int> GF81( 3, 4 ); TestField( GF81 );
-   
+
     	// Zech log finite field with 2Mb tables
-    struct rusage  tmp1 ; 
+    struct rusage  tmp1 ;
     getrusage (RUSAGE_SELF, &tmp1) ;
           // user time
-    double tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ ( 1000000.0 ) ; 
+    double tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ ( 1000000.0 ) ;
 		    ;
 #ifndef __GIVARO__DONOTUSE_longlong__
     GFqDom<long long> GF2M( 2, (argc > 1 ? atoi(argv[1]) : 20) );

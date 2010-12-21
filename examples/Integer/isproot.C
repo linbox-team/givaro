@@ -1,9 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*! @file examples/Integer/isproot.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/isproot.C
+ * @brief NO DOC
+ */
 #include <iostream>
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
@@ -19,7 +25,7 @@ int main(int argc, char** argv)
   IntNumTheoDom<>::Element a,b;
   if (argc > 1) a = Integer(argv[1]); else std::cin >> a;
   if (argc > 2) b = Integer(argv[2]); else std::cin >> b;
-  
+
         Timer tim; tim.clear(); tim.start();
         bool f = IP.is_prim_root(a,b);
         tim.stop();

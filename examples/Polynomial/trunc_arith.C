@@ -1,9 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*! @file examples/Polynomial/trunc_arith.C
+ * @ingroup examples
+ * @ingroup polynomials
+ * @example examples/Polynomial/trunc_arith.C
+ * @brief NO DOC
+ */
 #include <iostream>
 #include <givaro/givrandom.h>
 #include <givaro/givtimer.h>
@@ -14,7 +20,7 @@
 
 long long TTcount = 0;
 
-bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
+bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
@@ -22,7 +28,7 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.add (T, P, Q);
     V=T;
     DP.truncin(V,d1,d2);
@@ -42,7 +48,7 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     return true;
 }
 
-bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
+bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
@@ -50,7 +56,7 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-  
+
     DP.sub (T, P, Q);
     V=T;
     DP.truncin(V,d1,d2);
@@ -70,7 +76,7 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     return true;
 }
 
-bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
+bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
@@ -78,7 +84,7 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-   
+
     DP.mul (T, P, Q);
     V=T;
     DP.truncin(V,d1,d2);
@@ -98,7 +104,7 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     return true;
 }
 
-bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
+bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
@@ -106,7 +112,7 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.axpy (T, P, Q, G);
     V=T;
     DP.truncin(V,d1,d2);
@@ -131,7 +137,7 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
     return true;
 }
 
-bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
+bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
@@ -139,7 +145,7 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.axmy (T, P, Q, G);
     V=T;
     DP.truncin(V,d1,d2);
@@ -159,7 +165,7 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
     return true;
 }
 
-bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
+bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
@@ -167,7 +173,7 @@ bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >:
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.maxpy (T, P, Q, G);
     V=T;
     DP.truncin(V,d1,d2);
@@ -221,9 +227,9 @@ int main(int argc, char ** argv) {
     Q = P;
     DP101.write( std::cout << "P: " , P )<< std::endl;
     DP101.write( std::cout << "Q: " , Q )<< std::endl;
-    
 
-    DP101.init( Q, Degree(0), 6UL ); 
+
+    DP101.init( Q, Degree(0), 6UL );
     DP101.write( std::cout << "Q: " , Q )<< std::endl;
     DP101.init( monomial, Degree(4), 3UL);
     DP101.write( std::cout << "m: " , monomial )<< std::endl;
@@ -309,9 +315,9 @@ int main(int argc, char ** argv) {
     DP101.write( DP101.write(
         std::cout << "(" , P ) << ") + (", Q) << ")";
     DP101.write(std::cout << " = " , R) << std::endl;
-    
+
 /*
-    DP101.gcd ( R, P, Q); // 
+    DP101.gcd ( R, P, Q); //
 
     DP101.write( DP101.write( DP101.write(
          std::cout << "gcd(", P ) << ",", Q) << ") = ", R) << std::endl;
@@ -319,11 +325,11 @@ int main(int argc, char ** argv) {
     DP101.lcm ( R, P, Q); //
     DP101.write( DP101.write( DP101.write(
          std::cout << "lcm(", P ) << ",", Q) << ") = ", R) << std::endl;
-    DP101.lcm ( R, Q, P); // 
+    DP101.lcm ( R, Q, P); //
     DP101.write( DP101.write( DP101.write(
          std::cout << "lcm(", Q ) << ",", P) << ") = ", R) << std::endl;
 
 */
- }   
+ }
  return 0;
 }

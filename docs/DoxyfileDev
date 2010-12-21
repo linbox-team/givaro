@@ -25,7 +25,7 @@ DOXYFILE_ENCODING      = UTF-8
 # The PROJECT_NAME tag is a single word (or a sequence of words surrounded
 # by quotes) that should identify the project.
 
-PROJECT_NAME           = givaro
+PROJECT_NAME           = Givaro
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
@@ -591,8 +591,9 @@ WARN_LOGFILE           = doxydev.debug
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = ../src \
-/bin/bash: :w: command not found
+INPUT                  = .. \
+						 ../src \
+                         ../docs \
                          ../examples \
                          ../tests
 
@@ -628,7 +629,7 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = *_src.inl Attic
+EXCLUDE                = CVS *_src.inl Attic
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded
@@ -642,7 +643,7 @@ EXCLUDE_SYMLINKS       = NO
 # against the file with absolute path, so to exclude all test directories
 # for example use the pattern */test/*
 
-EXCLUDE_PATTERNS       = *_src.inl */Attic/*
+EXCLUDE_PATTERNS       = */CVS/* *_src.inl */Attic/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
@@ -650,7 +651,7 @@ EXCLUDE_PATTERNS       = *_src.inl */Attic/*
 # wildcard * is used, a substring. Examples: ANamespace, AClass,
 # AClass::ANamespace, ANamespace::*Test
 
-EXCLUDE_SYMBOLS        = *__LINBOX_*
+EXCLUDE_SYMBOLS        = *__GIVARO_*
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or
 # directories that contain example code fragments that are included (see

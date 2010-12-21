@@ -1,8 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+
+/*! @file examples/FiniteField/domain_to_operatorstyle.C
+ * @ingroup examples
+ * @ingroup finitefields
+ * @example examples/FiniteField/domain_to_operatorstyle.C
+ * @brief NO DOC
+ */
 
 #include <iostream>
 #include <givaro/givgfq.h>
@@ -35,23 +42,23 @@ int main(int argc, char ** argv) {
     a = b * c;  std::cerr << a << " = " << b << " * " << c << " mod " << P << ";" << std::endl;
     a = b / c;  std::cerr << a << " = " << b << " / " << c << " mod " << P << ";" << std::endl;
 
-        // Computations in place    
-    std::cerr << d << " + " << a << " mod " << P << " = "; 
+        // Computations in place
+    std::cerr << d << " + " << a << " mod " << P << " = ";
     d += a; std::cerr << d << ";" << std::endl;
 
-    std::cerr << d << " - " << a << " mod " << P << " = "; 
+    std::cerr << d << " - " << a << " mod " << P << " = ";
     d -= a; std::cerr << d << ";" << std::endl;
 
-    std::cerr << d << " * " << a << " mod " << P << " = "; 
+    std::cerr << d << " * " << a << " mod " << P << " = ";
     d *= a; std::cerr << d << ";" << std::endl;
 
-    std::cerr << d << " / " << a << " mod " << P << " = "; 
+    std::cerr << d << " / " << a << " mod " << P << " = ";
     d /= a; std::cerr << d << ";" << std::endl;
-   
+
         // Tests
     std::cerr << a << " is non zero is " << (a != Element(0) ) << std::endl;
 
-    a = 0; std::cerr << a << " is zero is " << (a == Element(0) ) << std::endl;    
+    a = 0; std::cerr << a << " is zero is " << (a == Element(0) ) << std::endl;
 
 
         // Access to Field object

@@ -1,9 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*! @file examples/Integer/nextprime.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/nextprime.C
+ * @brief NO DOC
+ */
 #include <iostream>
 using namespace std;
 #include <stdlib.h>
@@ -22,7 +28,7 @@ int main(int argc, char** argv)
   IntPrimeDom::Element m, ff;
   if (argc > 1) m = Integer(argv[1]);
   else std::cin >> m;
-  
+
         Timer tim; tim.clear(); tim.start();
         IP.nextprimein(m,1);
         tim.stop();

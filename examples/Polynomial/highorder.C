@@ -1,8 +1,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+/*! @file examples/Polynomial/highorder.C
+ * @ingroup examples
+ * @ingroup polynomials
+ * @example examples/Polynomial/highorder.C
+ * @brief NO DOC
+ */
 
 #include <iostream>
 #define GIVARO_DEBUG 1
@@ -21,15 +27,15 @@ typedef HighOrder< Field > HighOrders;
 
 long long TFDcount = 0;
 long long FiDcount = 0;
-Timer Ttaylor, Thighorder, Tfiduccia; 
+Timer Ttaylor, Thighorder, Tfiduccia;
 
 
 
 bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys::Element oQ, Degree a, Degree b) {
     bool success, successF;
-    
+
     try {
-        
+
 
     ++TFDcount;
 //     std::cerr << "------------------------------------------------------------" << TFDcount <<std::endl;
@@ -46,27 +52,27 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
     Fra._den = P;
 
     Polys::Element TTy;
-    Timer tt; tt.clear(); tt.start(); 
+    Timer tt; tt.clear(); tt.start();
     HO101.taylor(TTy, Fra, b);
     tt.stop();
     Ttaylor+=tt;
 
     HighOrders::Truncated TTy17;
     HO101.gettruncdom().assign(TTy17, TTy, a, b);
- 
+
 //HO101.write(std::cout << "TTy17:=", TTy17) << ';' << std::endl;
-    
- 
+
+
     HighOrders::Truncated TTy17b;
-    
-    tt.clear(); tt.start(); 
+
+    tt.clear(); tt.start();
     HO101.FracDevel(TTy17b, Fra, a, b);
     tt.stop();
     Thighorder+=tt;
-    
+
 
 //HO101.write(std::cout << "TTy17b:=", TTy17b) << ';' << std::endl;
-    
+
     success = HO101.gettruncdom().areEqual(TTy17,TTy17b);
 
     if (! success) {
@@ -79,18 +85,18 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
 //         Polys::Element Tay;
 //         HO101.taylor(Tay, Fra, b);
 //         HO101.getpoldom().write(std::cerr << "Tay:=", Tay) << ';' << std::endl;
-        
+
 
         HO101.write(std::cerr << "TTy17:=", TTy17) << ';' << std::endl;
         HO101.write(std::cerr << "TTy17b:=", TTy17b) << ';' << std::endl;
         std::cerr << "---------- END ERROR ----------" <<std::endl;
-    } 
-        
- 
+    }
+
+
     HighOrders::Truncated TTy17c; HO101.gettruncdom().init(TTy17c);
     HighOrders::Truncated TTy17d; HO101.gettruncdom().init(TTy17d);
-    
-    tt.clear(); tt.start(); 
+
+    tt.clear(); tt.start();
 //     HO101.Fiduccia(TTy17c, Fra, b);
 //     for(Degree d=a; d<b; ++d) {
 //         HO101.Fiduccia(TTy17d, Fra, d);
@@ -99,10 +105,10 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
     HO101.Fiduccia(TTy17c, Fra, a, b);
     tt.stop();
     Tfiduccia+=tt;
-    
+
 
 //HO101.write(std::cout << "TTy17b:=", TTy17b) << ';' << std::endl;
-    
+
     successF = HO101.gettruncdom().areEqual(TTy17,TTy17c);
 
     if (! successF) {
@@ -115,14 +121,14 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
 //         Polys::Element Tay;
 //         HO101.taylor(Tay, Fra, b);
 //         HO101.getpoldom().write(std::cerr << "Tay:=", Tay) << ';' << std::endl;
-        
+
 
         HO101.write(std::cerr << "TTy17:=", TTy17) << ';' << std::endl;
         HO101.write(std::cerr << "TTy17c:=", TTy17c) << ';' << std::endl;
         std::cerr << "---------- END ERROR ----------" <<std::endl;
     } else {
         ++FiDcount;
-    }    
+    }
 
 
 } catch (GivError e) {
@@ -131,7 +137,7 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
 
     return success && successF;
 }
-    
+
 
 
 
@@ -139,7 +145,7 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
 
 int main(int argc, char ** argv) {
 
-    
+
     long numb = (argc>1?atoi(argv[1]):200);
     std::cerr << "numb: " << numb << std::endl;
     long tttn = (argc>2?atoi(argv[2]):100);
@@ -169,19 +175,19 @@ int main(int argc, char ** argv) {
     DP101.write(std::cout << "P:=", P) << ';' << std::endl;
 
     HighOrders HO101( Z101, Indeter("X") );
-    
+
     HighOrders::Element F;
     F._num = DP101.one;
     F._den = P;
-    
+
     Polys::Element Tay;
 
     HO101.taylor(Tay, F, 128);
     DP101.write(std::cout << "Tay:=", Tay) << ';' << std::endl;
 
-    
+
     Polys::Element S; Degree dS;
-    
+
     size_t e;
 
     HighOrders::Truncated G0;
@@ -189,7 +195,7 @@ int main(int argc, char ** argv) {
     std::cout << "e:=" << e << ';' << std::endl;
     HO101.write(std::cout << "G0:=", G0) << ';' << std::endl;
     DP101.write(std::cout << "S:=", S) << ';' << std::endl;
-    
+
     std::vector<HighOrders::Truncated> Gam, T;
     std::vector<Degree> D;
 
@@ -234,7 +240,7 @@ int main(int argc, char ** argv) {
     std::cerr << "Taylor: " << Ttaylor << std::endl;
     std::cerr << "HighOrder: " << Thighorder << std::endl;
     std::cerr << "Fiduccia: " << Tfiduccia << std::endl;
-    
+
 
 
     if (! success) {

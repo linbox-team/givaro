@@ -1,9 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*! @file examples/Integer/nb_primes.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/nb_primes.C
+ * @brief NO DOC
+ */
 #include <iostream>
 #include "givaro/givintprime.h"
 #include "givaro/givtimer.h"
@@ -24,13 +30,13 @@ int main(int argc, char** argv)
     else
 	m = 2;
     Integer nf = m;
-    unsigned long long nb = (IPD.isprime(m)?1:0); 
+    unsigned long long nb = (IPD.isprime(m)?1:0);
     Timer tim; tim.clear(); tim.start();
     for (;m < np; tp *= 2) {
         std::cout << nb << " primes between " << nf << " and " << m << "\t\t == nextprime(" << (ttp+nf-1) << ")" << std::endl; ttp = tp;
-        for (;(m < np) && (m < (nf+tp)); ++nb) 
+        for (;(m < np) && (m < (nf+tp)); ++nb)
 	            IPD.nextprimein(m);
-    }    
+    }
     tim.stop();
     std::cout << (m>np?nb-1:nb) << " primes between " << nf << " and " << np << std::endl << tim << std::endl;
     return 0;

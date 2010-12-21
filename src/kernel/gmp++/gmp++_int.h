@@ -13,7 +13,13 @@
 #ifndef _GMPplusplus_INTEGER_H_
 #define _GMPplusplus_INTEGER_H_
 
-// Core gmp++_int.h
+
+
+/*! @file kernel/gmp++/gmp++_int.h
+ * @ingroup integers
+ * Core gmp++_int.h.
+ */
+
 #include <vector>
 #include <list>
 #include <string>
@@ -29,6 +35,7 @@
 
 
 //------------------------------------------------------ Friend Integer
+// forward declaration.
 class Integer;
 
 int 		compare(const Integer& a, const Integer& b);
@@ -89,13 +96,22 @@ void 		importWords(Integer&, size_t, int, int, int, size_t, const void*);
 
 
 //------------------------------------------------------ Class Integer
+/*! @ingroup integers
+ * This is the Integer class.
+ * An Integer is represented as a GMP integer.
+ * This class provides arithmetic on Integers.
+ */
 class Integer
 {
 
 public:
+	//! vector of limbs (ie a gmp number).
 	typedef std::vector<mp_limb_t> vect_t;
-	Integer( const std::vector<mp_limb_t>& vect_t );
 	//--------------------------------------cstors & dstors
+	/*! @name Constructor/Destructors
+	 */
+	//@{
+	Integer( const std::vector<mp_limb_t>& vect_t );
 	Integer(int n = 0);
 	Integer(long n);
 	Integer(unsigned char n);
@@ -109,17 +125,27 @@ public:
 	Integer(const char *s);
 	Integer(const Integer& n);
 	~Integer();
+	//@}
 
 	//------------------------------------- predefined null and one
+	//! zero
 	static const Integer zero;
+	//! one
 	static const Integer one;
 
 	// -- Assignment and copy operators
+	/*! @name Assignment and copy operators
+	 */
+	//@{
 	Integer& operator = (const Integer& n);
 	Integer& logcpy(const Integer& n);
 	Integer& copy(const Integer& n);
+	//@}
 
 	//------------------Equalities and inequalities between integers and longs
+	/*! @name (in)equality
+	 */
+	//@{
 	int operator != (const int l) const;
 	int operator != (const long l) const;
 	int operator != (const unsigned long l) const;
@@ -133,8 +159,12 @@ public:
 	int operator < (const int l) const;
 	int operator < (const long l) const;
 	int operator < (const unsigned long l) const;
+	//@}
 
 	//------------------ Bit logic
+	/*!@name Bit logic
+	 */
+	//@{
 	Integer operator^ (const Integer&) const;   // XOR
 	Integer operator| (const Integer&) const;   // OR
 	Integer operator& (const Integer&) const;   // AND
@@ -161,125 +191,314 @@ public:
 	Integer& operator>>= (unsigned int l) ; // rshift
 	Integer& operator<<= (unsigned long l) ; // lshift
 	Integer& operator>>= (unsigned long l) ; // rshift
-
-	//----------------Elementary arithmetic between Integers & longs
-	Integer  operator + (const Integer& n) const;
-	Integer  operator + (const unsigned long l) const;
-	Integer  operator + (const long l) const;
-	Integer& operator += (const Integer& n);
-	Integer& operator += (const unsigned long l);
-	Integer& operator += (const long l);
-	template<class XXX> Integer& operator +=(const XXX& x) { return this->operator += ( (Integer)x ); }
-
-	Integer  operator - (const Integer& n) const;
-	Integer  operator - (const unsigned long l) const;
-	Integer  operator - (const long l) const;
-	Integer& operator -= (const Integer& n);
-	Integer& operator -= (const unsigned long l);
-	Integer& operator -= (const long l);
-	template<class XXX> Integer& operator -=(const XXX& x) { return this->operator -= ( (Integer)x ); }
-	Integer  operator -() const;
-
-	Integer  operator * (const Integer& n) const;
-	Integer  operator * (const unsigned long l) const;
-	Integer  operator * (const long l) const;
-	Integer& operator *= (const Integer& n);
-	Integer& operator *= (const unsigned long l);
-	Integer& operator *= (const long l);
-	template<class XXX> Integer& operator *=(const XXX& x) { return this->operator *= ( (Integer)x ); }
-
-	/*! -- Euclidian division of a/b: returns q or r such that
-	 - a=b*q + r, with |r| < |b|, a*r >=0
-	 */
-	Integer  operator /  (const Integer& n) const;
-	Integer  operator /  (const unsigned long l) const;
-	Integer  operator /  (const long l) const;
-	Integer& operator /= (const Integer& n);
-	Integer& operator /= (const unsigned long l);
-	Integer& operator /= (const long l);
-	template<class XXX> Integer& operator /=(const XXX& x) { return this->operator /= ( (Integer)x ); }
-
-	/*! operator % behaves like C %.
-	 * % rounds towards 0 and the sign of the dividend is preserved.
-	 */
-	Integer  operator % (const Integer& n) const;
-	long  operator % (const unsigned long l) const;
-	long  operator % (const long l) const;
-	double  operator % (const double l) const;
-	short  operator % (const unsigned short l) const { return (short) ( this->operator % ( (unsigned long)l ) ); }
-	template<class XXX> XXX operator %(const XXX& x) const { return (XXX)this->operator % ( Integer(x) ); }
-	Integer& operator %= (const Integer& n);
-	Integer& operator %= (const unsigned long l);
-	Integer& operator %= (const long l);
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	Integer& operator %= (const long long l) { return *this %= (Integer)l; }
-	Integer& operator %= (const unsigned long long l) { return *this %= (Integer)l; }
-	long long operator % (const long long l) const;
-	unsigned long long operator % (const unsigned long long l) const;
-#endif
-	template<class XXX> Integer& operator %=(const XXX& x) { return this->operator %= ( (Integer)x ); }
+	//@}
 
 	// - Methods
+	/*! @name Addition, substraction, multiplication
+	 */
+	//@{
+	/*!  Addition (inplace)
+	 * <code>res+=n</code>.
+	 * @param res as in the formula
+	 * @param n as in the formula
+	 */
 	static Integer& addin (Integer& res, const Integer& n);
 	static Integer& addin (Integer& res, const long n);
 	static Integer& addin (Integer& res, const unsigned long n);
+	/*!  Addition
+	 * <code>res=n1+n2</code>.
+	 * @param res as in the formula
+	 * @param n1 as in the formula
+	 * @param n2 as in the formula
+	 */
 	static Integer& add   (Integer& res, const Integer& n1, const Integer& n2);
 	static Integer& add   (Integer& res, const Integer& n1, const long n2);
 	static Integer& add   (Integer& res, const Integer& n1, const unsigned long n2);
 
+	/*!  Substraction (inplace)
+	 * <code>res-=n</code>.
+	 * @param res as in the formula
+	 * @param n as in the formula
+	 */
 	static Integer& subin (Integer& res, const Integer& n);
 	static Integer& subin (Integer& res, const long n);
 	static Integer& subin (Integer& res, const unsigned long n);
+	/*!  Substraction
+	 * <code>res=n1-n2</code>.
+	 * @param res as in the formula
+	 * @param n1 as in the formula
+	 * @param n2 as in the formula
+	 */
 	static Integer& sub   (Integer& res, const Integer& n1, const Integer& n2);
 	static Integer& sub   (Integer& res, const Integer& n1, const long n2);
 	static Integer& sub   (Integer& res, const Integer& n1, const unsigned long n2);
+	/*!  Negation (inplace)
+	 * <code>res=-res</code>.
+	 * @param res as in the formula
+	 */
 	static Integer& negin (Integer& res);
+	/*!  Negation
+	 * <code>res=-n</code>.
+	 * @param n as in the formula
+	 * @param res as in the formula
+	 */
 	static Integer& neg   (Integer& res, const Integer& n);
 
+	/*!  Multiplication (inplace)
+	 * <code>res*=n</code>.
+	 * @param res as in the formula
+	 * @param n as in the formula
+	 */
 	static Integer& mulin (Integer& res, const Integer& n);
 	static Integer& mulin (Integer& res, const long n);
 	static Integer& mulin (Integer& res, const unsigned long n);
+	/*! Multiplication
+	 * <code>res=n1*n2</code>.
+	 * @param res as in the formula
+	 * @param n1 as in the formula
+	 * @param n2 as in the formula
+	 */
 	static Integer& mul   (Integer& res, const Integer& n1, const Integer& n2);
 	static Integer& mul   (Integer& res, const Integer& n1, const long n2);
 	static Integer& mul   (Integer& res, const Integer& n1, const unsigned long n2);
-	// res = ax+y
-	static Integer& axpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
-	// res += ax
-	static Integer& axpyin   (Integer& res, const Integer& a, const Integer& x);
-	// res = y - ax
-	static Integer& maxpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
-	// res = ax - y
-	static Integer& axmy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
-	// res -= ax
-	static Integer& axmyin   (Integer& res, const Integer& a, const Integer& x);
 
-	static Integer& divin (Integer& q, const Integer& n);
-	static Integer& divin (Integer& q, const long n);
-	static Integer& divin (Integer& q, const unsigned long n);
-	static Integer& div   (Integer& q, const Integer& n1, const Integer& n2);
-	static Integer& div   (Integer& q, const Integer& n1, const long n2);
-	static Integer& div   (Integer& q, const Integer& n1, const unsigned long n2);
-	static Integer& divexact  (Integer& q, const Integer& n1, const Integer& n2);
-	static Integer  divexact  (const Integer& n1, const Integer& n2);
-
-	/*! function \c mod behaves like gmp's \c mpz_mod.
-	 *  mod returns a positive remainder.
+	//----------------Elementary arithmetic between Integers & longs
+	/*! operator \c +.
+	 * @return <code> (*this)+n</code>
+	 * @param n as in the formula.
 	 */
+	Integer  operator + (const Integer& n) const;
+	Integer  operator + (const unsigned long n) const;
+	Integer  operator + (const long n) const;
+	/*! operator \c += .
+	 * @param n as in the formula.
+	 * @return <code> (*this) += n</code>.
+	 */
+	Integer& operator += (const Integer& n);
+	Integer& operator += (const unsigned long n);
+	Integer& operator += (const long n);
+	template<class XXX>
+	Integer& operator +=(const XXX& n) { return this->operator += ( (Integer)n ); }
 
+	/*! operator \c -.
+	 * @return <code> (*this)-n</code>
+	 * @param n as in the formula.
+	 */
+	Integer  operator - (const Integer& n) const;
+	Integer  operator - (const unsigned long n) const;
+	Integer  operator - (const long n) const;
+	/*! operator \c -= .
+	 * @param n as in the formula.
+	 * @return <code> (*this) -= n</code>.
+	 */
+	Integer& operator -= (const Integer& n);
+	Integer& operator -= (const unsigned long n);
+	Integer& operator -= (const long n);
+	template<class XXX>
+	Integer& operator -=(const XXX& n) { return this->operator -= ( (Integer)n ); }
+
+	/*! Opposite.
+	 * \return <code>-(*this)</code>.
+	 */
+	Integer  operator -() const;
+
+	/*! operator \c *.
+	 * @return <code> (*this)*n</code>
+	 * @param n as in the formula.
+	 */
+	Integer  operator * (const Integer& n) const;
+	Integer  operator * (const unsigned long n) const;
+	Integer  operator * (const long n) const;
+	/*! operator \c *= .
+	 * @param n as in the formula.
+	 * @return <code> (*this) *= n</code>.
+	 */
+	Integer& operator *= (const Integer& n);
+	Integer& operator *= (const unsigned long n);
+	Integer& operator *= (const long n);
+	template<class XXX>
+	Integer& operator *=(const XXX& n) { return this->operator *= ( (Integer)n ); }
+	//@}
+
+	/*! @name fused add-multiply
+	 * @brief
+	 * Groups a multiplication adn an addition/division is a single function.
+	 * This is usually faster than doing the two operations separately.
+	 */
+	//@{
+	/*! axpy
+	 *  <code>res = ax+y</code>.
+	 * @param res Integers as in the forumla
+	 * @param a Integers as in the forumla
+	 * @param x Integers as in the forumla
+	 * @param y Integers as in the forumla
+	 */
+	static Integer& axpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
+	/*! axpy (inplace)
+	 *  <code>res += ax</code>.
+	 * @param res Integers as in the formula.
+	 * @param a Integers as in the formula.
+	 * @param x Integers as in the formula.
+	 */
+	static Integer& axpyin   (Integer& res, const Integer& a, const Integer& x);
+	/*! maxpy
+	 *  <code>res = y - ax</code>.
+	 * @param res Integers as in the formula.
+	 * @param a Integers as in the formula.
+	 * @param x Integers as in the formula.
+	 * @param y Integers as in the formula.
+	 */
+	static Integer& maxpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
+	/*! axmy
+	*  <code>res = ax - y</code>.
+	 * @param res Integers as in the formula.
+	 * @param a Integers as in the formula.
+	 * @param x Integers as in the formula.
+	 * @param y Integers as in the formula.
+	*/
+	static Integer& axmy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
+	/*! axmy (in place)
+	 * <code>res -= ax</code>.
+	 * @param res Integers as in the formula.
+	 * @param a Integers as in the formula.
+	 * @param x Integers as in the formula.
+	 */
+	static Integer& axmyin   (Integer& res, const Integer& a, const Integer& x);
+	//@}
+
+	/*! @name Division/euclidean division/modulo
+	 * @brief
+	 * The convention for rounding are the following :
+	 * -  <code>q = a/b</code>, or equivalent operations with the name \c
+	 *   div or \c divin, return \c q  rounded towards \c 0, in the same
+	 *   manner as C's '/' (truncated division).
+	 * -  <code>r = a % b</code> behaves like C %. The modulo function %
+	 *    rounds towards 0 and the sign of the dividend is preserved.  This
+	 *    is : \f[ a= b q + r, \text{with } \vert r\vert  < \vert b\vert
+	 *    \text{ and } a r \geq 0 \f]
+	 * -  <code>r = a mod b</code> or similar functions have the same
+	 *    behaviour as GMP \c mpz_mod, that is the remainder is always
+	 *    positive (>=0). This is the  division algorithm convention that
+	 *    is used (see \c divmod). In a formula : \f[ a= b q + r,
+	 *    \text{with } 0 \leq  r  < \vert b\vert \f]
+	 *
+	 * @warning if <code>q=a/b</code> and <code>r= a % b</code> then <code>
+	 * a = b q + r </code> is always true (with in addition <code>0 <= |r|
+	 * < |b|</code>).  This is also true for <code>divmod(q,a,b,r)</code>
+	 * (and <code>0<=r<|b|</code>).  However, one should not mix the two
+	 * conventions and expect equalities <small>(except if a>=0)</small>.
+	 */
+	//@{
+	/*! Division \c q/=d.
+	 * @param q quotient
+	 * @param d divisor.
+	 * @return \c q
+	 */
+	static Integer& divin (Integer& q, const Integer& d);
+	static Integer& divin (Integer& q, const long d);
+	static Integer& divin (Integer& q, const unsigned long d);
+	/*! Division \c q=n/d.
+	 * @param q quotient
+	 * @param n dividand.
+	 * @param d divisor
+	 * @return \c q
+	 */
+	static Integer& div   (Integer& q, const Integer& n, const Integer& d);
+	static Integer& div   (Integer& q, const Integer& n, const long d);
+	static Integer& div   (Integer& q, const Integer& n, const unsigned long d);
+	/*! Division when \c d divides \c n.
+	 * @param q exact quotient
+	 * @param n dividend
+	 * @param d divisor
+	 * @warning if quotient is not exact, the result is not predictable.
+	 */
+	static Integer& divexact  (Integer& q, const Integer& n, const Integer& d);
+	/*! Division when \c d divides \c n.
+	 * @param n dividend
+	 * @param d divisor
+	 * @return  exact quotient \c n/d
+	 * @warning if quotient is not exact, the result is not predictable.
+	 */
+	static Integer  divexact  (const Integer& n, const Integer& d);
+
+	/*! Division operator.
+	 * @param d divisor
+	 */
+	Integer  operator /  (const Integer&      d) const;
+	Integer  operator /  (const unsigned long d) const;
+	Integer  operator /  (const long          d) const;
+	/*! Division operator (inplace).
+	 * @param d divisor
+	 */
+	Integer& operator /= (const Integer&      d);
+	Integer& operator /= (const unsigned long d);
+	Integer& operator /= (const long          d);
+	template<class XXX>
+	Integer& operator /=(const XXX& d) { return this->operator /= ( (Integer)d ); }
+
+	/*!  Function \c mod (inplace).
+	 * \f$ r \gets r \mod n\f$
+	 * @param r remainder
+	 * @param n modulus
+	 */
 	static Integer& modin (Integer& r, const Integer& n);
 	static Integer& modin (Integer& r, const long n);
 	static Integer& modin (Integer& r, const unsigned long n);
-	static Integer& mod   (Integer& r, const Integer& n1, const Integer& n2);
-	static Integer& mod   (Integer& r, const Integer& n1, const long n2);
-	static Integer& mod   (Integer& r, const Integer& n1, const unsigned long n2);
+	/*!  Function \c mod.
+	 * \f$ r \gets n \mod d\f$
+	 * @param r remainder
+	 * @param n integer
+	 * @param d modulus
+	 */
+	static Integer& mod   (Integer& r, const Integer& n, const Integer& d);
+	static Integer& mod   (Integer& r, const Integer& n, const long d);
+	static Integer& mod   (Integer& r, const Integer& n, const unsigned long d);
 
-	// -- return q, the quotient
-	static Integer& divmod   (Integer& q, Integer& r, const Integer& n1, const Integer& n2);
-	static Integer& divmod   (Integer& q, long& r, const Integer& n1, const long n2);
-	static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n1, const unsigned long n2);
+	/*! Euclidean division.
+	 * <code> n = d q + r </code>.
+	 * @param q as in the formula
+	 * @param r as in the formula
+	 * @param n as in the formula
+	 * @param d as in the formula
+	 * @return the quotient \c q
+	 */
+	static Integer& divmod   (Integer& q, Integer& r, const Integer& n, const Integer& d);
+	static Integer& divmod   (Integer& q, long& r, const Integer& n, const long d);
+	static Integer& divmod   (Integer& q, unsigned long& r, const Integer& n, const unsigned long d);
+
+	/*! Modulo operator.
+	 * @param n modulus
+	 * @return remainder <code> (*this) mod n</code>
+	 */
+	Integer  operator % (const Integer& n) const;
+	long     operator % (const unsigned long n) const;
+	long     operator % (const long n) const;
+	double   operator % (const double n) const;
+	short    operator % (const unsigned short n) const { return (short) ( this->operator % ( (unsigned long)n ) ); }
+	template<class XXX>
+	XXX      operator %(const XXX& n) const { return (XXX)this->operator % ( Integer(n) ); }
+
+	/*! Modulo operator (inplace).
+	 * @param n modulus
+	 * @return remainder <code> (*this) <- (*this) mod n</code>
+	 */
+	Integer&  operator %= (const Integer& n);
+	Integer&  operator %= (const unsigned long n);
+	Integer&  operator %= (const long n);
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
+	Integer&  operator %= (const long long n) { return *this %= (Integer)n; }
+	Integer&  operator %= (const unsigned long long n) { return *this %= (Integer)n; }
+	long long operator % (const long long n) const;
+	unsigned long long operator % (const unsigned long long n) const;
+#endif
+	template<class XXX>
+	Integer& operator  %=(const XXX& n) { return this->operator %= ( (Integer)n ); }
+	//@}
 
 
 	//------------------------------------- Arithmetic functions
+	/*! @name Arithmetic functions */
+	//@{
 	friend Integer& inv (Integer& u, const Integer& a, const Integer& b);
 	friend Integer gcd (const Integer& a, const Integer& b);
 	friend Integer gcd (const Integer& a, const Integer& b,
@@ -328,8 +547,12 @@ public:
 	friend long logp(const Integer& a, const Integer& p) ;
 	friend double logtwo(const Integer& a) ;
 	friend double naturallog(const Integer& a) ;
+	//@}
 
 	//-----------------------------------------Miscellaneous
+	/*! @name Miscellaneous.
+	 */
+	//@{
 	friend void swap(Integer& , Integer&);
 
 	friend inline int sign   (const Integer& a);
@@ -391,8 +614,12 @@ public:
 	operator float() const ;
 	operator double() const ;
 	operator vect_t() const ;
+	//@}
 
 	//--------------------Random Iterators
+	/*! @name Random numbers functions
+	 */
+	//@{
 	static void seeding(unsigned long int  s);
 	static void seeding(Integer s);
 	static void seeding();
@@ -495,10 +722,12 @@ public:
 	static Integer& nonzerorandom (Integer& r, const T& size)
 	{ return nonzerorandom<true>(r,size); }
 
-
+	//@}
 
 	//----------------------------------------------I/O
-
+	/*! @name I/O
+	 */
+	//@{
 	friend std::istream& operator >> (std::istream &i, Integer& n);
 	friend std::ostream& operator << (std::ostream &o, const Integer& n);
 	friend std::ostream& absOutput (std::ostream &o, const Integer& n);
@@ -506,6 +735,7 @@ public:
 	friend void importWords(Integer&, size_t, int, int, int, size_t, const void*);
 
 	std::ostream& print( std::ostream& o ) const;
+	//@}
 
 	int sign() const {return priv_sign(); } // but figure out the friend sign()
 

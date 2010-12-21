@@ -2,7 +2,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Time-stamp: <21 Oct 10 10:20:21 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
@@ -15,6 +15,12 @@
 // The latter libraries/heqders are avaible from openssl and openssh    //
 // openssl > 0.9.8  and  openssh > 5.2p1  are expected                  //
 // ==================================================================== //
+/*! @file examples/Integer/givaro-ssh-keygen.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/givaro-ssh-keygen.C
+ * @brief NO DOC
+ */
 #include <iostream>
 #include <sys/stat.h>
 
@@ -29,13 +35,13 @@ extern "C" {
 #include <givaro/givtimer.h>
 
 /* Strong pseudo-prime generation using Gordon's algorithm */
-void Givaro_keygen(Integer& n, Integer& e, Integer& d, 
+void Givaro_keygen(Integer& n, Integer& e, Integer& d,
                    Integer& p, Integer& q,
                    Integer& dmp1, Integer& dmq1,
                    Integer& iqmp, long size) {
 
     IntRSADom<> IRD; IntRSADom<>::random_generator gen;
-    
+
     IRD.keys_gen(gen, (size>>1)+1, (size>>1)-1, n, e, d, p, q);
 
     Integer phim,p1,q1; IRD.mul(phim, IRD.sub(p1,p,IRD.one), IRD.sub(q1,q,IRD.one));
@@ -51,7 +57,7 @@ void Givaro_keygen(Integer& n, Integer& e, Integer& d,
 
     IRD.mod(dmp1,d,p1);
     IRD.mod(dmq1,d,q1);
-    
+
     IRD.gcd(g,iqmp,v,q,p);
     if ( IRD.islt(iqmp,IRD.zero) ) IRD.addin(iqmp,p);
 
@@ -83,9 +89,9 @@ int mymain(FILE* fileout, FILE* filepub, long s) {
     std::cerr << "dmq1: " << idmq1 << std::endl;
     std::cerr << "iqmp: " << iiqmp << std::endl;
 */
-  
+
     std::cerr << tim << std::endl;
-        
+
     rsa->n = BN_new(); Integer2BN(rsa->n, in);
     rsa->e = BN_new(); Integer2BN(rsa->e, ie);
     rsa->d = BN_new(); Integer2BN(rsa->d, id);
@@ -99,7 +105,7 @@ int mymain(FILE* fileout, FILE* filepub, long s) {
     Key rsakey;
     rsakey.type=KEY_RSA;
     rsakey.rsa = rsa;
-    
+
 /*
     std::cerr << "print: " << std::endl;
     RSA_print_fp(stdout, rsa, 0);
@@ -116,17 +122,17 @@ int mymain(FILE* fileout, FILE* filepub, long s) {
         // Write Public key in ssh b64 format
     key_write(&rsakey, filepub);
     fprintf(filepub,"\n");
-        
-    return 0;
-        
-}   
 
-int main(int argc, char** argv) 
+    return 0;
+
+}
+
+int main(int argc, char** argv)
 {
-    if ( (argc>4) || ( 
+    if ( (argc>4) || (
         (argc>1) && (argv[1][0] == '-') ) ) {
-	std::cerr << "usage: " << argv[0] 
-		  << " [size] [private-key-file] [public-key-file]" 
+	std::cerr << "usage: " << argv[0]
+		  << " [size] [private-key-file] [public-key-file]"
 		  << std::endl;
 	return 1;
     }

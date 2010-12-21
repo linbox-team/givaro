@@ -1,8 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+
+/*! @file examples/FiniteField/ChineseRemaindering.C
+ * @ingroup examples
+ * @ingroup finitefields
+ * @example examples/FiniteField/ChineseRemaindering.C
+ * @brief NO DOC
+ */
 
 #include <iostream>
 #include <givaro/givintprime.h>
@@ -16,25 +23,25 @@
 
 
 typedef GFqDom<long> 		Field1;
-typedef ZpzDom<Std16>           Field2; 
-typedef ZpzDom<Log16>           Field3; 
+typedef ZpzDom<Std16>           Field2;
+typedef ZpzDom<Log16>           Field3;
 typedef ZpzDom<Std32>  		Field4;
 typedef ZpzDom<Std64>  		Field5;
-typedef ZpzDom<Unsigned32>	Field6; 
-typedef Montgomery<Std32>       Field7; 
+typedef ZpzDom<Unsigned32>	Field6;
+typedef Montgomery<Std32>       Field7;
 typedef ZpzDom<Integer>         Field8;
 
-template <typename Field> 
+template <typename Field>
 Integer tmain(int argc, char ** argv, const GivRandom& generator) {
     typedef RNSsystem<Integer, Field >  CRTSystem;
     typedef typename CRTSystem::domains	Domains;
     typedef typename CRTSystem::array	Elements;
     typedef typename CRTSystem::ring	Ring;
-    
-    IntPrimeDom ID; 
+
+    IntPrimeDom ID;
     Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1);
 
-    Domains Primes( argc>1 ? atoi(argv[1]):15);   
+    Domains Primes( argc>1 ? atoi(argv[1]):15);
     Elements Moduli( Primes.size() );
 
     typename Domains::iterator i = Primes.begin();
@@ -45,24 +52,24 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
         i->init(*e,  generator() );
         M *= a;
     }
-    
+
 
     CRTSystem CRT( Primes );
-    
+
     Timer tim; tim.clear(); tim.start();
     CRT.RnsToRing( a, Moduli );
     tim.stop();
     Field().write( std::cerr << tim << " using ") << std::endl;
-    
+
     if (Primes.size() < 50) {
         i = Primes.begin();
         e = Moduli.begin();
         for( ; i != Primes.end(); ++i, ++e)
-            i->write(std::cout << a << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;   
+            i->write(std::cout << a << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;
     }
-    
 
-   Elements Verifs( Primes.size() );    
+
+   Elements Verifs( Primes.size() );
    CRT.RingToRns( Verifs, a );
    typename Elements::const_iterator v = Verifs.begin();
    i = Primes.begin();
@@ -71,10 +78,10 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
        if (! i->areEqual(*e, *v) ) {
            i->write( std::cerr << "incoherency within ") << std::endl;
            break;
-       }        
-  
+       }
 
-   
+
+
    Integer p( generator() >>(argc>2?atoi(argv[2]):17) ), res;
    Field F( ID.nextprimein(p) );
    typename Field::Element el;
@@ -85,7 +92,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
 
    std::cout << res << " mod " << M << " = " << a << ";"  << std::endl;
    std::cout << res << " mod " << F.characteristic() << " = " << F.convert(a, el) << ";"  << std::endl;
-   
+
 
    return  res;
 }
@@ -99,7 +106,7 @@ int main(int argc, char ** argv) {
 
     GivRandom seedor( argc>3 ? atoi(argv[3]):1234 );
     unsigned long seed = seedor.seed();
-    
+
 
     Integer a1 = tmain<Field1>(argc, argv, GivRandom(seed));
     Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed));
@@ -120,7 +127,7 @@ int main(int argc, char ** argv) {
 
 
 
-    
+
 
 
     return 0;

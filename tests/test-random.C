@@ -261,6 +261,18 @@ int test3()
 #ifdef GIVARO_DEBUG
 	cout << "random_exact.........OK" << endl;
 #endif
+	const Integer tutu(autre);
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer::random_exact(tata,tutu);
+		//        cout << tata << endl;
+		if ( tata.bitsize() != tutu.bitsize() ){
+			cout << "random_exact  failed" << endl;
+			return -1  ;
+		}
+	}
+#ifdef GIVARO_DEBUG
+	cout << "random_exact.........OK" << endl;
+#endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer::nonzerorandom(tata,petits);

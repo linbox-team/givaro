@@ -33,3 +33,5 @@ libgmppp_la_SOURCES=\
 	gmp++_int_cstor.C	\
 	gmp++_int_misc.C	\
 	gmp++_int_pow.C
+
+EXTRA_DIST= gmp++.doxy

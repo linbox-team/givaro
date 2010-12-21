@@ -1,8 +1,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+/*! @file examples/Polynomial/isprimitive.C
+ * @ingroup examples
+ * @ingroup polynomials
+ * @example examples/Polynomial/isprimitive.C
+ * @brief NO DOC
+ */
 
 #include <iostream>
 #include <stdlib.h>
@@ -12,7 +18,7 @@
 
 int main(int argc, char** argv) {
   GFqDom<long>::Residu_t MOD;
-  if (argc > 1) 	
+  if (argc > 1)
 	  MOD = atoi(argv[1]);
   else
 	  std::cin >> MOD;
@@ -20,7 +26,7 @@ int main(int argc, char** argv) {
   if (argc > 2) expo = atoi(argv[2]);
 
   GFqDom<long> F(MOD, expo);
-  
+
   Poly1FactorDom<GFqDom<long>, Dense> FD(F,Indeter("X"));
   Poly1FactorDom<GFqDom<long>, Dense>::Element P, IXE;
   FD.init(IXE,Degree(1),F.one);
@@ -51,12 +57,12 @@ int main(int argc, char** argv) {
 
 //         bool f;
 
-//     Poly1FactorDom<GFqDom<long>, Dense>::element W,D; 
+//     Poly1FactorDom<GFqDom<long>, Dense>::element W,D;
 //     FD.gcd(W,FD.diff(D,P),P);
 //     Degree d, dP;
 //     if (FD.degree(d,W) > 0) return 0;
 //         // Distinct degree free ?
-//     Poly1FactorDom<GFqDom<long>, Dense>::element  Unit, G1; 
+//     Poly1FactorDom<GFqDom<long>, Dense>::element  Unit, G1;
 //     FD.init(Unit, Degree(1), F.one);
 //     W.copy(Unit);
 //     FD.degree(dP,P); Degree dPo = (dP/2);

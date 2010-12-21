@@ -2,15 +2,21 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Contributor: Jack Dubrois < Jacques.Dubrois@imag.fr> 
-// Time-stamp: <11 Oct 04 13:42:42 Jean-Guillaume.Dumas@imag.fr> 
+// Contributor: Jack Dubrois < Jacques.Dubrois@imag.fr>
+// Time-stamp: <11 Oct 04 13:42:42 Jean-Guillaume.Dumas@imag.fr>
 //
 // Primality check using Probabilistic Lucas    /////////////////////////
 // i.e. Primitive Root with choosen probability /////////////////////////
 // =================================================================== //
 
+/*! @file examples/Integer/ProbLucas.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/ProbLucas.C
+ * @brief NO DOC
+ */
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
@@ -98,20 +104,20 @@ unsigned long Revert(const Integer p, const double epsilon, double firstguess) {
           t22 = log(t7);
           t23 = (-t8/t18*t3*t22+t11*t5*t3/t7);
           t34 = dL-(  1.0 - (1.0-epsilon)/(t4*t12))/(2.0*t23);
-      } while( (GIVABSDIV(t34,dL) < 0.95) && (dL<1048576.0)  );  
+      } while( (GIVABSDIV(t34,dL) < 0.95) && (dL<1048576.0)  );
       return L = (unsigned long)GIVMIN(dL,1048576.0);
 }
 
 unsigned long Revert(const Integer p, const double epsilon) {
     return Revert(p, epsilon, ::sqrt(1.2/epsilon));
-}    
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// Recherche de la racine primitive ///////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool ProbLucas(const Integer n, const double orig_epsilon)
-{	
+{
 #ifdef __GMP_PLUSPLUS__
     Integer::seeding( BaseTimer::seed() );
 #endif
@@ -122,7 +128,7 @@ bool ProbLucas(const Integer n, const double orig_epsilon)
 
     double P = 1.0;
     double epsilon = orig_epsilon;
-    
+
         // Miller-Rabin
     unsigned long s=0;
     for( ; !( (int)Q & 0x1) ; Q>>=1, ++s) { }
@@ -145,7 +151,7 @@ bool ProbLucas(const Integer n, const double orig_epsilon)
         epsilon *= 4.0;
         P /= 2.0;
     }
-    
+
     unsigned long L = Revert(Q,epsilon);
     Integer trn, r, b, expo; root( trn, n, 3); trn *= trn;
     q = 2;
@@ -169,14 +175,14 @@ bool ProbLucas(const Integer n, const double orig_epsilon)
         r=0;
         Integer::divexact(b, Q, q);
         while( isZero(r) ) {
-            Q.copy(b); 
+            Q.copy(b);
             Integer::divmod( b, r, Q, q );
         }
         L = Revert(Q,epsilon, (double)L);
     }
- 
+
     while ( Q > trn ) {
-        
+
         IP.random(generator, a, n);
         IP.powmod(tmp,a,expo,n);
         if (tmp == 1) {
@@ -209,19 +215,19 @@ bool ProbLucas(const Integer n, const double orig_epsilon)
                 r=0;
                 Integer::divexact(b, Q, q);
                 while( isZero(r) ) {
-                    Q.copy(b); 
+                    Q.copy(b);
                     Integer::divmod( b, r, Q, q );
                 }
                 L = Revert(Q,epsilon, (double)L);
             }
         }
-    } 
-    if (! IP.isprime(q)) 
+    }
+    if (! IP.isprime(q))
         std::cerr << "Prime with probability > 1-" << orig_epsilon << std::endl;
-    return 1;    
+    return 1;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 int main (int argc, char * * argv)
@@ -233,7 +239,7 @@ int main (int argc, char * * argv)
     unsigned int NB = argc > 3 ? atoi(argv[3]) : 1;
 
 //    std::cerr << "P: " << P << " ; proba: " << epsilon << std::endl;
-    
+
     bool a1(true);
     Timer tim; tim.clear();
     for(unsigned int i = 0; i < NB; ++i) {

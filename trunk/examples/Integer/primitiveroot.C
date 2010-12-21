@@ -1,9 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*! @file examples/Integer/primitiveroot.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/primitiveroot.C
+ * @brief NO DOC
+ */
 #include <iostream>
 #define GIVARO_LENSTRA
 #include <givaro/givintnumtheo.h>
@@ -22,15 +28,15 @@ int main(int argc, char** argv)
 #endif
   IntNumTheoDom<>::Element a,pr;
   if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
-  
+
         unsigned long runs;
-        Timer tim; tim.clear(); 
+        Timer tim; tim.clear();
 	if (IP.isprime(a)) {
 		Integer phin; IP.sub(phin,a,IP.one);
 		std::vector<Integer> Lf;
 		IP.write(std::cout << "Totient : ", Lf,phin) << std::endl;
 		tim.start();
-		for(unsigned long i = 0; i < TIMING; ++i) 
+		for(unsigned long i = 0; i < TIMING; ++i)
 			IP.prim_root_of_prime(pr, a);
         	tim.stop();
 		IP.write( std::cout << "Deterministic   : ", pr ) << std::endl;

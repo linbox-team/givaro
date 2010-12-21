@@ -1,8 +1,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+/*! @file examples/FiniteField/Test_Extension.C
+ * @ingroup examples
+ * @ingroup finitefields
+ * @example examples/FiniteField/Test_Extension.C
+ * @brief NO DOC
+ */
 
 using namespace std;
 #include "givaro/givpoly1.h"
@@ -16,20 +22,20 @@ void FaireEssai(const FField & F) {
 
   typename FField::Element a, b, r;
 
-  std::cout << "Enter an Element of this field: ";  F.read( std::cin , a ); 
+  std::cout << "Enter an Element of this field: ";  F.read( std::cin , a );
 //   F.init( a, "1+3*X+5*X^2" );
   F.init( b, (Integer)23 );
 
   F.add(r, a, b);
 
-  F.write( F.write( F.write( F.write(std::cout, a) << " + " , b ) << " = " , r) << " with ") << endl ; 
+  F.write( F.write( F.write( F.write(std::cout, a) << " + " , b ) << " = " , r) << " with ") << endl ;
 
 }
 
 
 
 int main (int argc, char * * argv) {
-    
+
     unsigned long q = (argc>1?atoi(argv[1]):13);
     unsigned long expo = (argc>2?atoi(argv[2]):8);
 
@@ -43,7 +49,7 @@ int main (int argc, char * * argv) {
         FaireEssai( Extension<>(q, expo) );
     else
         FaireEssai( GFqDom<long>(q, expo) );
-       
-      
+
+
     return 0;
 }

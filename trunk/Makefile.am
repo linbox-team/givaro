@@ -12,7 +12,8 @@ bin_SCRIPTS=givaro-config givaro-makefile
 
 include_HEADERS=givaro-config.h
 
-EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt
+EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt \
+		   givaro.doxy
 
 DISTCLEANFILES = src/kernel/system/givaro
 DISTCLEANFILES += src/kernel/bstruct/givaro

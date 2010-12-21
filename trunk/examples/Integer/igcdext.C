@@ -1,9 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*! @file examples/Integer/igcdext.C
+ * @ingroup examples
+ * @ingroup integers
+ * @example examples/Integer/igcdext.C
+ * @brief NO DOC
+ */
 #include <iostream>
 using namespace std;
 #include <stdlib.h>
@@ -22,7 +28,7 @@ int main(int argc, char** argv)
   IntegerDom::Element g,a,b,u,v;
   if (argc > 1) a = Integer(argv[1]); else cin >> a;
   if (argc > 2) b = Integer(argv[2]); else cin >> b;
-  
+
         Timer tim; tim.clear(); tim.start();
         IP.gcd(g,u,v,a,b);
         tim.stop();

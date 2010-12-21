@@ -1,8 +1,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+
+/*! @file examples/FiniteField/all_field.C
+ * @ingroup examples
+ * @ingroup finitefields
+ * @example examples/FiniteField/all_field.C
+ * @brief NO DOC
+ */
 
 #include <iostream>
 #include <givaro/givzpz32uns.h>
@@ -36,22 +43,22 @@ void TestField() {
     Element a(2),b(-29.8),c(33),d(Integer("123456789012345678901234567890")),e(0);
 
 
-    
+
     e += (a = b);  	std::cout << a << " = " << b << " mod " << P << ";" << std::endl;
     e += (a = b + c);  	std::cout << a << " = " << b << " + " << c << " mod " << P << ";" << std::endl;
     e += (a = b - c);  	std::cout << a << " = " << b << " - " << c << " mod " << P << ";" << std::endl;
     e += (a = b * c);  	std::cout << a << " = " << b << " * " << c << " mod " << P << ";" << std::endl;
     e += (a = b / c);  	std::cout << a << " = " << b << " / " << c << " mod " << P << ";" << std::endl;
-    
+
     std::cout << d << " + " << a << " mod " << P << " = "; e += (d += a); std::cout << d << ";" << std::endl;
     std::cout << d << " - " << a << " mod " << P << " = "; e += (d -= a); std::cout << d << ";" << std::endl;
     std::cout << d << " * " << a << " mod " << P << " = "; e += (d *= a); std::cout << d << ";" << std::endl;
     std::cout << d << " / " << a << " mod " << P << " = "; e += (d /= a); std::cout << d << ";" << std::endl;
-   
-    std::cout << a << " is non zero ? " << (a != Element(0) ) << std::endl;
-    a = 0; std::cout << a << " is zero ? " << (a == Element(0) ) << std::endl;    
 
-    double dd(0.0); dd += (double)(e); dd += (float)e; dd += (unsigned int)e;    
+    std::cout << a << " is non zero ? " << (a != Element(0) ) << std::endl;
+    a = 0; std::cout << a << " is zero ? " << (a == Element(0) ) << std::endl;
+
+    double dd(0.0); dd += (double)(e); dd += (float)e; dd += (unsigned int)e;
     Element::getDomain().write( std::cerr << "Test: " << dd << " within ") << std::endl;
 }
 
@@ -67,7 +74,7 @@ int main(int argc, char ** argv) {
     TestField<Field6, Element6>();
     TestField<Field7, Element7>();
 #ifdef GIVARO_USE_SIXTYFOUR
-    TestField<Field8, Element8>();  
+    TestField<Field8, Element8>();
 #endif
 
     return 0;

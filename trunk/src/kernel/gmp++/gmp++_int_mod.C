@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified: JG. Dumas, BB.
-// $Id: gmp++_int_mod.C,v 1.15 2010-12-20 18:45:47 bboyer Exp $
+// $Id: gmp++_int_mod.C,v 1.16 2010-12-21 23:46:20 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -53,6 +53,7 @@ Integer& Integer::mod(Integer& res, const Integer& n1, const Integer& n2)
 	if (isZero(n1)) return res = Integer::zero;
 	// mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
 	mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
+	assert(!(res<0) && (res<GMP__ABS(n2)));
 	return res;
 }
 Integer& Integer::mod(Integer& res, const Integer& n1, const long n2)
@@ -67,6 +68,7 @@ Integer& Integer::mod(Integer& res, const Integer& n1, const long n2)
 	else
 		mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, -n2);
 
+	assert(!(res<0) && (res<GMP__ABS(n2)));
 	return res;
 }
 Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
@@ -74,6 +76,7 @@ Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
 	if (isZero(n1)) return res = Integer::zero;
 	// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
 	mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
+	assert(!(res<0) && (res<n2));
 	return res;
 }
 

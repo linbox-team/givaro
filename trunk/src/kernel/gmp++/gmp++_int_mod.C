@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified: JG. Dumas, BB.
-// $Id: gmp++_int_mod.C,v 1.16 2010-12-21 23:46:20 bboyer Exp $
+// $Id: gmp++_int_mod.C,v 1.17 2010-12-22 13:47:45 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -174,9 +174,9 @@ long Integer::operator % (const long l) const
 #endif
 	long res ;
 	if (l>0)
-		res = static_cast<long>(this->operator%( static_cast<const unsigned long>(l) ) );
+		res = static_cast<long>(this->operator%( static_cast<unsigned long>(l) ) );
 	else {
-		res = static_cast<long>(this->operator%( static_cast<const unsigned long>( -l ) ) );
+		res = static_cast<long>(this->operator%( static_cast<unsigned long>( -l ) ) );
 	}
 
 	// std::cout << res << ',' << l << ',' << *this << std::endl;
@@ -188,9 +188,9 @@ double Integer::operator % (const double l) const
 {
 	double res ;
 	if (l>0)
-		res =  static_cast<double>(this->operator%( static_cast<const unsigned long>(l) ) );
+		res =  static_cast<double>(this->operator%( static_cast<unsigned long>(l) ) );
 	else{
-		res =  static_cast<double>(this->operator%( static_cast<const unsigned long>(-l) ) );
+		res =  static_cast<double>(this->operator%( static_cast<unsigned long>(-l) ) );
 	}
 	assert((res<GIVABS(l)) && (res> -GIVABS(l)) && (((res>0)?1:((res==0)?0:-1))*(*this).priv_sign()>=0)) ;
 	return res;

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_div.C,v 1.8 2010-12-20 18:45:47 bboyer Exp $
+// $Id: gmp++_int_div.C,v 1.9 2011-01-06 18:02:37 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -211,6 +211,11 @@ Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer
 		// mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
 				// (mpz_ptr)&(a.gmp_rep), b);
 
+	if (a<0 && r) {
+		subin(q,(long)1) ;
+		r = b - r;
+	}
+
 
 	return q;
 }
@@ -220,16 +225,21 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 	//  if (isZero(b)) {
 	//    GivMathDivZero("[Integer::divide]: division by zero");
 	//  }
-	int sgn = GMP__SGN(b);
+	// int sgn = GMP__SGN(b);
 	r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
 			   (mpz_ptr)&(a.gmp_rep), GMP__ABS(b));
-	if (sgn <0) return negin(q);
+	// if (sgn <0) return negin(q);
 	// if (a>0)
 		// mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
 				// (mpz_ptr)&(a.gmp_rep), b);
 	// else
 		// mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
 				// (mpz_ptr)&(a.gmp_rep), b);
+	if (a<0 && r) {
+		subin(q,(long)1) ;
+		r = b - r ;
+	}
+
 
 
 	return q;
@@ -242,13 +252,11 @@ Integer& Integer::divmod(Integer& q, unsigned long& r, const Integer& a, const u
 	//  }
 	r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
 			   (mpz_ptr)&(a.gmp_rep), b);
-	// if (a>0)
-		// mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-				// (mpz_ptr)&(a.gmp_rep), b);
-	// else
-		// mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-				// (mpz_ptr)&(a.gmp_rep), b);
 
+	if (a<0 && r) {
+		subin(q,(long)1) ;
+		r = b - r;
+	}
 
 	return q;
 }

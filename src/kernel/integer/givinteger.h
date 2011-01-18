@@ -131,9 +131,6 @@ public:
 	bool islt(const Rep& a, const long b) const { return islt(a,Rep(b));}
 
 
-#ifdef __GMP_PLUSPLUS__
-	void seeding(unsigned long s = 0) const { Integer::seeding(s) ; }
-#endif
 	template< class RandIter > Rep& random(RandIter&, Rep& r, long s = 1) const { return Integer::random(r,s); }
 	template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const { return Integer::random(r,b); }
 	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s = 1) const { return Integer::nonzerorandom(r,s); }

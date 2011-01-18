@@ -44,9 +44,6 @@ public:
     typedef RandIter random_generator;
 
     IntFactorDom(RandIter g = RandIter()) :  IntPrimeDom(),PROD_first_primes(223092870), PROD_second_primes("10334565887047481278774629361"), _g(g) {
-#ifdef __GMP_PLUSPLUS__
-	    seeding( _g.seed() );
-#endif
     }
 
         //  loops defaulted to 0 forces Pollard's factorization to 

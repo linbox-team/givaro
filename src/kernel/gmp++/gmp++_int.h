@@ -500,14 +500,15 @@ public:
 	//------------------------------------- Arithmetic functions
 	/*! @name Arithmetic functions */
 	//@{
-	friend Integer& inv (Integer& u, const Integer& a, const Integer& b);
-	friend Integer& invin (Integer& u, const Integer& b);
 	friend Integer gcd (const Integer& a, const Integer& b);
 	friend Integer gcd (const Integer& a, const Integer& b,
 			    Integer& u, Integer& v);
 	friend Integer& gcd (Integer& g, const Integer& a, const Integer& b);
 	friend Integer& gcd (Integer& g, const Integer& a, const Integer& b,
 			     Integer& u, Integer& v);
+        // modular inverses
+	friend Integer& inv (Integer& u, const Integer& a, const Integer& b);
+	friend Integer& invin (Integer& u, const Integer& b);
 
 	friend Integer pp( const Integer& P, const Integer& Q );
 

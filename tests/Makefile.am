@@ -20,6 +20,7 @@ BASIC_TESTS =   \
 		test-ffarith \
 		test-ringarith \
 		test-mod     \
+		test-modsqroot     \
                 test-trunc
 
 CLEAN_FILES =   \
@@ -36,6 +37,7 @@ test_ifactor_SOURCES= test-ifactor.C
 test_ffarith_SOURCES= test-ffarith.C
 test_ringarith_SOURCES= test-ringarith.C
 test_mod_SOURCES= test-mod.C
+test_modsqroot_SOURCES= test-modsqroot.C
 test_trunc_SOURCES= test-trunc.C
 
 # for compilation of new tests 

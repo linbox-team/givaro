@@ -92,6 +92,12 @@ public:
 	Rep& lcmin( Rep& l, const Rep& a) const
 	{ Rep tmp(l); return lcm(l, tmp, a); }
 
+    	Rep& inv(Rep& u, const Rep& a, const Rep& b) const 
+        { return ::inv(u,a,b); }
+    	Rep& invin(Rep& u, const Rep& b) const 
+        { return ::invin(u,b); }
+
+
 	// - return n^l
 	Rep& pow(Rep& r, const Rep& n, const long l) const { return r = ::pow(n, l); }
 	Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r = ::pow(n, l); }

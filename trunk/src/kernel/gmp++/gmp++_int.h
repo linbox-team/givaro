@@ -41,6 +41,7 @@ class Integer;
 int 		compare(const Integer& a, const Integer& b);
 int 		absCompare(const Integer& a, const Integer& b);
 Integer& 	inv (Integer& u, const Integer& a, const Integer& b);
+Integer& 	invin (Integer& u, const Integer& b);
 Integer 	gcd (const Integer& a, const Integer& b);
 Integer 	gcd (const Integer& a, const Integer& b, Integer& u, Integer& v);
 Integer& 	gcd (Integer& g, const Integer& a, const Integer& b);
@@ -500,6 +501,7 @@ public:
 	/*! @name Arithmetic functions */
 	//@{
 	friend Integer& inv (Integer& u, const Integer& a, const Integer& b);
+	friend Integer& invin (Integer& u, const Integer& b);
 	friend Integer gcd (const Integer& a, const Integer& b);
 	friend Integer gcd (const Integer& a, const Integer& b,
 			    Integer& u, Integer& v);
@@ -625,7 +627,7 @@ public:
 	static void seeding();
 
 #ifdef __GMP_PLUSPLUS__
-	static gmp_randclass& randstate(unsigned long int s=0); // pourquoi ?
+	static gmp_randclass& randstate();
 #else
 	static __gmp_randstate_struct intializerandstate();
 	static __gmp_randstate_struct* randstate();

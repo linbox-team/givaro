@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified by: B. Boyer
-// $Id: gmp++_int.inl,v 1.17 2010-11-16 10:46:54 jgdumas Exp $
+// $Id: gmp++_int.inl,v 1.18 2011-01-18 17:49:06 jgdumas Exp $
 // ========================================================================
 // Description: 
 
@@ -323,9 +323,7 @@ inline std::ostream& operator<< (std::ostream& o, const Integer& a) { return a.p
 /* ********************** */
 /* seeding, initialising  */
 /* ********************** */
-#ifdef __GMP_PLUSPLUS__
-
-inline gmp_randclass& Integer::randstate(long unsigned int ) 
+inline gmp_randclass& Integer::randstate() 
 {
 	static gmp_randclass randstate(gmp_randinit_default);
 	return static_cast<gmp_randclass&>(randstate);
@@ -341,33 +339,6 @@ inline void Integer::seeding(Integer  s)
 	Integer::randstate().seed((mpz_class) (mpz_ptr) &(s.gmp_rep) ) ;
 }
 
-#else 
-
-/* seeding, initialising */
-inline __gmp_randstate_struct Integer::intializerandstate() 
-{
-	gmp_randstate_t state;
-	gmp_randinit_default(state);
-	return state[0];
-}
-
-inline __gmp_randstate_struct* Integer::randstate() 
-{
-	static __gmp_randstate_struct state = intializerandstate() ;
-	return &state;
-}
-
-inline void Integer::seeding(long unsigned int seed) 
-{
-	gmp_randseed_ui(Integer::randstate(), seed);
-}
-
-inline void Integer::seeding(Integer seed) 
-{
-	gmp_randseed(Integer::randstate(), (mpz_ptr) &(seed.gmp_rep));
-}
-
-#endif
 inline void Integer::seeding() 
 {
 	Integer::seeding( BaseTimer::seed() );

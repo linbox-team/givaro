@@ -26,11 +26,12 @@ int main(int argc, char** argv) {
     int failures = 0;
     Integer::seeding (BaseTimer::seed ());
     IntSqrtModDom<> ISM;
-    Integer r,x,a,b,n(1UL);
+    Integer r,x,a,b,n;
 
     for(int i=0; i<nbtests; ++i) {
         
         Integer::random(a,sizes);
+        Integer::nonzerorandom(n,sizes);
         while (n<=1) Integer::nonzerorandom(n,sizes);
 
         ISM.modin(a,n);

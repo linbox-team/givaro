@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <11 Dec 09 21:08:33 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <18 Jan 11 18:41:17 Jean-Guillaume.Dumas@imag.fr> 
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -108,17 +108,17 @@ protected:
         // Liftings
         // ======================================================== //
 
-        // PRECONDITION: x0^2 = a [p^k]
-        // RETURNS: x1 s.t. x1^2 = a [p^{2k}]
-    Rep & sqroothensellift (Rep & x1, const Rep & x0, const Rep & a, const Rep & p, const unsigned long k, const Rep & pk) const;
+        // PRECONDITION: x^2 = a [p^k]
+        // RETURNS: x s.t. x^2 = a [p^{2k}]
+    Rep & sqroothensellift (Rep & x, const Rep & a, const Rep & p, const unsigned long k, const Rep & pk) const;
 
-        // PRECONDITION: x0^2 = a [p^k]
-        // RETURNS: x1 s.t. x1^2 = a [p^{k+1}]
-    Rep & sqrootonemorelift (Rep & x1, const Rep & x0, const Rep & a, const Rep & p, const unsigned long k, const Rep & pk) const;
+        // PRECONDITION: x^2 = a [p^k]
+        // RETURNS: x s.t. x^2 = a [p^{k+1}]
+    Rep & sqrootonemorelift (Rep & x, const Rep & a, const Rep & p, const unsigned long k, const Rep & pk) const;
 
-        // PRECONDITION: x0^2 = a [2^k], with k>=3, a and x0 are odd
-        // RETURNS: x1 s.t. x1^2 = a [2^{2k-2}]
-    Rep & sqrootmodtwolift (Rep & x1, const Rep & x0, const Rep & a, const unsigned long k, const Rep & pk) const;
+        // PRECONDITION: x^2 = a [2^k], with k>=3, a and x are odd
+        // RETURNS: x s.t. x^2 = a [2^{2k-2}]
+    Rep & sqrootmodtwolift (Rep & x, const Rep & a, const unsigned long k, const Rep & pk) const;
 
 };
 

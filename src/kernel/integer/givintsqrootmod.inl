@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <17 Sep 09 17:09:44 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <18 Jan 11 18:40:46 Jean-Guillaume.Dumas@imag.fr> 
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -128,6 +128,7 @@ IntSqrtModDom<RandIter>::sqrootmodprimepower (Rep & x,
                                               const Rep & p, 
                                               const unsigned long k, 
                                               const Rep & pk) const{
+    
     Rep tmpa(a);
     tmpa%=pk;
     if(tmpa==0) return x=0;
@@ -137,16 +138,12 @@ IntSqrtModDom<RandIter>::sqrootmodprimepower (Rep & x,
     if ((tmpa%p)==0){
         Rep b(tmpa);
         unsigned long t=0;
-        while((b%p) == 0){
-            b/=p;
-            ++t;
-        }
-        if((t%2)==0){
+        for( ; (b%p) == 0; ++t) b/=p;
+        
+        if((t&1UL)==0){
             Rep sqrtb;
             sqrootmodprimepower(sqrtb,b,p,k,pk);
-            Rep sqrtpt;
-            powmod(sqrtpt,p,(t/2),pk);
-            x=sqrtpt;
+            powmod(x,p,(t/2),pk);
             x*=sqrtb;
             return x%=pk;
         }
@@ -159,34 +156,30 @@ IntSqrtModDom<RandIter>::sqrootmodprimepower (Rep & x,
     if (k < 3 ) return sqrootlinear (x, a, p, k);
     else{
 	//quadratic version
-        Rep x0;
-        Rep x1 (0);
-        unsigned long kdivtwo = k;
-        kdivtwo >>= 1;
-        Rep pkdivp (pk);
-        pkdivp /= p;
-        unsigned long kmone = k;
-        --kmone;
+        unsigned long kdivtwo(k>>1);
         if ((k & 1) == 1){
+            Rep pkdivp (pk); pkdivp /= p;
+            unsigned long kmone(k); --kmone;
+
                 //x1^2 = a mod (p^((k-1)/2))
 	    Rep sqpkdivp; this->sqrt(sqpkdivp,pkdivp);
-            sqrootmodprimepower (x1, a, p, kdivtwo, sqpkdivp);	
-            if (x1 == -1) return x = -1;
+            sqrootmodprimepower (x, a, p, kdivtwo, sqpkdivp);	
+            if (x == -1) return x;
 
                 //x0^2 = a mod (p^(k-1))
-            sqroothensellift (x0, x1, a, p, kdivtwo, sqpkdivp);
-            if (x0 == -1) return x = -1;
+            sqroothensellift (x, a, p, kdivtwo, sqpkdivp);
+            if (x == -1) return x;
 
                 //x2^2 = a mod (p^k)
-            return sqrootonemorelift (x, x0, a, p, kmone, ((pkdivp)));	
+            return sqrootonemorelift (x, a, p, kmone, ((pkdivp)));	
         } else {
             	//x1^2 = a mod (p^(k/2))
 	    Rep sqpk; this->sqrt(sqpk,pk);
-            sqrootmodprimepower(x1, a, p, kdivtwo, sqpk);	
-            if (x1 == -1) return x = -1;
+            sqrootmodprimepower(x, a, p, kdivtwo, sqpk);	
+            if (x == -1) return x = -1;
             
                 //x0^2 = a mod (p^k)
-            return sqroothensellift (x, x1, a, p, kdivtwo, sqpk);
+            return sqroothensellift (x, a, p, kdivtwo, sqpk);
         }
     }
     return x;
@@ -268,9 +261,9 @@ IntSqrtModDom<RandIter>::sqrootmodpoweroftwo (Rep & x,
             }
         }
         else{
-            Rep x1;
-            Rep x0;
-            Rep un (1);
+            std::cerr << "sqrootmodpoweroftwo" << std::endl;
+            
+           Rep un (1);
             unsigned long kdivtwoplusone = k;
             kdivtwoplusone >>= 1;
             ++kdivtwoplusone;
@@ -285,11 +278,11 @@ IntSqrtModDom<RandIter>::sqrootmodpoweroftwo (Rep & x,
 		this->sqrt(sqrt_pk_mult_two, pk);
                 sqrt_pk_mult_two <<= 1;
                     //x0^2=a mod (2^{k/2+1})
-                sqrootmodpoweroftwo (x0, tmpa, kdivtwoplusone, (sqrt_pk_mult_two));
-                if (x0 == -1) return x = -1;
+                sqrootmodpoweroftwo (x, tmpa, kdivtwoplusone, (sqrt_pk_mult_two));
+                if (x == -1) return x;
 
                     //x1^2=a mod (2^k)
-                return sqrootmodtwolift (x, x0, tmpa, kdivtwoplusone, (sqrt_pk_mult_two));
+                return sqrootmodtwolift (x, tmpa, kdivtwoplusone, (sqrt_pk_mult_two));
             } else {
                     //if k is odd
                 Rep sqrt_pkdivtwo_mult_two (1);
@@ -297,22 +290,20 @@ IntSqrtModDom<RandIter>::sqrootmodpoweroftwo (Rep & x,
                 this->sqrt(sqrt_pkdivtwo_mult_two,pkdivtwo);
                 sqrt_pkdivtwo_mult_two <<= 1;
                     //x0^2=a mod (2^{k/2+1})
-                sqrootmodpoweroftwo (x0, tmpa,kdivtwoplusone, (sqrt_pkdivtwo_mult_two));
-                if (x0 == -1) return x = -1;
+                sqrootmodpoweroftwo (x, tmpa,kdivtwoplusone, (sqrt_pkdivtwo_mult_two));
+                if (x == -1) return x;
                 
                     //x1^2=a mod (p^{k-1})
-                sqrootmodtwolift (x1, x0, tmpa, kdivtwoplusone, (sqrt_pkdivtwo_mult_two));
-                if (x1 == -1) return x = -1;
+                sqrootmodtwolift (x, tmpa, kdivtwoplusone, (sqrt_pkdivtwo_mult_two));
+                if (x == -1) return x;
 
-                if ((x1 * x1) % pk == tmpa % pk){
+                if ((x * x) % pk == tmpa % pk){
                         //if x1 is a square root of a mod p^k
-                    return x = x1;
+                    return x;
                 }
                     //if x is not square root of a mod p^k
                     //x1 + (p^{k-2}) is a square root of a mod p^k
-                x = pk;
-                x >>= 2;
-                return x += x1;
+                return x += pk>>2;
             }
         }
     }
@@ -328,9 +319,8 @@ IntSqrtModDom<RandIter>::sqrootlinear (Rep & x,
     Rep pk(p);
     Rep x1;
     for(unsigned long i=1;i<k;i++){	
-        sqrootonemorelift(x1,x,a,p,i,pk);
-        x=x1;
-        pk*=p;
+        sqrootonemorelift(x,a,p,i,pk);
+        pk *= p;
     }
     return x;
 }    
@@ -344,12 +334,10 @@ IntSqrtModDom<RandIter>::sqrootquad (Rep & x,
     sqrootmodprime (x, a, p);
     Rep pn (p);
     unsigned long ktmp = 1;
-    Rep x1;
     for (unsigned long i = 1; pn <= pk; i++){
-        sqroothensellift (x1, x, a, p, ktmp, pn);
+        sqroothensellift (x, a, p, ktmp, pn);
         ktmp <<= 1;
         pn *= pn;
-        x = x1;
     }
     return x;
 }
@@ -386,8 +374,7 @@ IntSqrtModDom<RandIter>::sqroottwoquad (Rep & x,
     Rep pn (8);
     Rep x1 (x);
     for (unsigned long i = 4; pn <= pk; i++){
-        sqrootmodtwolift (x1, x, a, i, pn);
-        x = x1;
+        sqrootmodtwolift (x, a, i, pn);
         pn *= pn;
         pn >>= 2;
     }
@@ -397,7 +384,6 @@ IntSqrtModDom<RandIter>::sqroottwoquad (Rep & x,
 
 template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
 IntSqrtModDom<RandIter>::sqroothensellift (Rep & x, 
-                                           const Rep & x0, 
                                            const Rep & a,
                                            const Rep & p, 
                                            const unsigned long k, 
@@ -406,80 +392,58 @@ IntSqrtModDom<RandIter>::sqroothensellift (Rep & x,
 //x = x0 + h*p^k mod p^{2k} 
 //with h = ((((a-x0^2) mod p^{2k})/p^k)*(2x0)^{-1} mod p^k) mod p^(2k)
 //is a square root of a mod p^{2k}
+    Rep u(a);
+    Integer::axmyin(u,x,x);
+    if(u == 0) return x;
+    
+    u /= pk;
+    u %= pk;
+//u=(a-x0^2)/p^k
+    
+    Rep h(x<<1);
+    this->invin (h, pk);
+    h *= u;
+    h %= pk;
+// h = (a-x0^2)/(2*x0*p^k) modulo pk
 
-    Rep rtmp (x0);
-    x = 0;
-    Rep p2k (pk);
-    p2k *= pk;
-    rtmp %= pk;
-    Rep tmp (rtmp);
-    tmp *= tmp;
-    tmp -= a;
-    tmp %= p2k;
-
-	//if tmp = 0 x0 is already a square root of a mod p^{2k}
-    if (tmp == 0) return x = rtmp;
-
-    Rep h (0);
-    inv (h, 2 * rtmp, pk);
-    h *= -tmp;
-    h /= pk;
-    h %= p2k;
-    x += h;
-    x *= pk;
-    x += rtmp;
-    return x %= p2k;
+    return Integer::axpyin(x,h,pk);
 }
 
 template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqrootonemorelift (Rep & x, 
-                                            const Rep & x0, 
+IntSqrtModDom<RandIter>::sqrootonemorelift (Rep & x0, 
                                             const Rep & a, 
                                             const Rep & p, 
                                             const unsigned long k, 
                                             const Rep & pk) const {
-    Rep p2 (p);
-    p2 *= p;
-    Rep pkpone (pk);
-    pkpone *= p;
-    Rep x0multtwo (2);
-    x0multtwo *= x0;
-
-//p2=p^2 pkpone = p^{k+1} and x0multtwo = 2x0
-
-    Rep u (x0);
-    u *= x0;
-    u -= a;
-    if (u == 0) return x = x0;
+    Rep u(a);
+    Integer::axmyin(u,x0,x0);
+    if (u == 0) return x0;
 
     u /= pk;
     u %= p;
-//u=(x0^2-a)/p^k
+//u=(a-x0^2)/p^k
 
-    Rep h;
-    inv (h, x0multtwo, p);
-    h *= -u;
-// h = (x0^2-a)/(2*x0*p^k)
+    Rep h(x0<<1);
+    this->invin (h, p);
+    h *= u;
+    h %= p;
+// h = (a-x0^2)/(2*x0*p^k) modulo p
 
-    x = h;
-    x *= pk;
-    x += x0;
-    return x %= pkpone;
+    return Integer::axpyin(x0,h,pk);
 }
 
 template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
 IntSqrtModDom<RandIter>::sqrootmodtwolift (Rep & x, 
-                                           const Rep & x0, 
                                            const Rep & a,
                                            const unsigned long k, 
                                            const Rep & pk) const {
+    std::cerr << "sqrootmodtwolift" << std::endl;
 //we have a square root of a mod 2^k : x0 and we have
 //x = x0 + h*2^{k-1}
 //with h = ((((a-x0^2)mod 2^{2k-2})/2^k)*x0^{-1}mod 2^{k-1}) mod 2^{k-1}
 //is a square root of a mod 2^{2k-2}
 
-    Rep rtmp (x0);
-    x = 0;
+    Rep rtmp (x);
     Rep p2k2 (pk);
     p2k2 *= pk;
     p2k2 <<= 2;
@@ -496,8 +460,6 @@ IntSqrtModDom<RandIter>::sqrootmodtwolift (Rep & x,
     h *= -tmp;
     h /= pk;
     h %= (pk / 2);
-    x += h;
-    x *= (pk / 2);
-    x += rtmp;
+    Integer::axpyin(x,h,(pk/2));
     return x %= p2k2;
 }

@@ -3,18 +3,18 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.11 2010-11-16 10:45:26 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.12 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 //
 // Description:
 //   Arithmetic on Z/pZ, with tabulation of operations.
-#ifndef _GIVARO_ZPZ16LOG_H_ 
-#define _GIVARO_ZPZ16LOG_H_ 
+#ifndef _GIVARO_ZPZ16LOG_H_
+#define _GIVARO_ZPZ16LOG_H_
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
@@ -44,7 +44,7 @@ public:
   typedef Residu_t* Array;
   typedef const Residu_t* constArray;
 
-  // ----- Constantes 
+  // ----- Constantes
   const Rep zero;
   const Rep one;
 
@@ -58,33 +58,33 @@ public:
 
   ZpzDom<Log16>& operator=( const ZpzDom<Log16>& F);
 
-  // ----- Access to the modulus 
+  // ----- Access to the modulus
   Residu_t residu() const;
   Residu_t characteristic() const { return _p;}
   Integer& characteristic( Integer& p) const { return p=_p;}
   Residu_t size() const { return _p;}
 
   // ----- Convert from Element to int
-    int16& convert( int16& x , const Rep a) const { 
+    int16& convert( int16& x , const Rep a) const {
         return x = ((a >= _p)?0:_tab_rep2value[a]);
     }
-    uint16& convert( uint16& x , const Rep a) const { 
+    uint16& convert( uint16& x , const Rep a) const {
         return x = ((a >= _p)?0:_tab_rep2value[a]);
     }
-    unsigned long & convert( unsigned long& x , const Rep a) const { 
+    unsigned long & convert( unsigned long& x , const Rep a) const {
         return x = ((a >= _p)?0:_tab_rep2value[a]);
     }
-        
-    double& convert( double& x , const Rep a)  const { 
+
+    double& convert( double& x , const Rep a)  const {
         return x = (double)((a >= _p)?0:_tab_rep2value[a]);
     }
-    long& convert( long& x , const Rep a)  const { 
+    long& convert( long& x , const Rep a)  const {
         return x = (long)((a >= _p)?0:_tab_rep2value[a]);
     }
     Integer& convert(Integer& i, const Rep a) const {
         return i = (Integer)((a >= _p)?0:_tab_rep2value[a]);
-    }        
-    
+    }
+
 
 
 // initialized by a degree of the generator.
@@ -101,8 +101,8 @@ public:
   Rep& init( Rep& a, const int16 i) const ;
   Rep& init( Rep& r, const uint16 a) const;
 
-  // -- Assignment :  r = a 
-  Rep& assign (Rep& r, const Rep a) const;  
+  // -- Assignment :  r = a
+  Rep& assign (Rep& r, const Rep a) const;
   void assign ( const size_t sz, Array r, constArray a ) const;
 
   // ----- Misc methods
@@ -115,7 +115,7 @@ public:
 
   // ----- Equality between two Elements
   int areEqual( const Element& a, const Element& b) const {return a==b;}
-  
+
 
   // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
   Rep& mul (Rep& r, const Rep a, const Rep b) const;
@@ -152,41 +152,41 @@ public:
   // -- axpy: r <- a * x + y mod p
   Rep& axpy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
   Rep& axpyin (Rep& r, const Rep a, const Rep b) const;
-  void axpy 
+  void axpy
    (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
-  void axpyin 
+  void axpyin
    (const size_t sz, Array r, constArray a, constArray x) const;
 
   // -- axmy: r <- a * x - y mod p
   void axmy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
-  void axmy 
+  void axmy
    (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
-  // -- axmyin: r <- r - a * b mod p
+  // -- axmyin: r <- a * b - r  mod p
   void axmyin (Rep& r, const Rep a, const Rep b) const;
-  void axmyin 
-   (const size_t sz, Array r, constArray a, constArray x) const;
+  // void axmyin (const size_t sz, Array r, constArray a, constArray x) const;
 
   // -- maxpy: r <- c - a * b mod p
   void maxpy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
   // -- maxpyin: r <- r - a * b mod p
   void maxpyin (Rep& r, const Rep a, const Rep b) const;
+  void maxpyin (const size_t sz, Array r, constArray a, constArray x) const;
 
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
-  void reduceadd ( Rep& r, const size_t sz, constArray a ) const; 
+  void reduceadd ( Rep& r, const size_t sz, constArray a ) const;
 
   // <- \prod_i a[i], return 1 if a.size() ==0,
-  void reducemul ( Rep& r, const size_t sz, constArray a ) const; 
+  void reducemul ( Rep& r, const size_t sz, constArray a ) const;
 
-  // <- \sum_i a[i] * b[i] 
-  void dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const; 
-  void dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const; 
+  // <- \sum_i a[i] * b[i]
+  void dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
+  void dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
 
   // ----- a -> r: uint16 to double
-  void i2d ( const size_t sz, double* r, constArray a ) const; 
+  void i2d ( const size_t sz, double* r, constArray a ) const;
 
   // ----- a -> r % p: double to uint16 % p
-  void d2i ( const size_t sz, Array r, const double* a ) const; 
+  void d2i ( const size_t sz, Array r, const double* a ) const;
 
    // ----- random generators
     template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
@@ -224,7 +224,7 @@ protected:
 
   static void Init();
   static void End();
-  
+
 };
 
 

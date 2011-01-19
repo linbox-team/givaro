@@ -2,10 +2,10 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.11 2010-11-30 17:07:36 jgdumas Exp $
+// $Id: givmontg32.h,v 1.12 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 #ifndef _GIVARO_MONTG32_H_
 #define _GIVARO_MONTG32_H_
@@ -42,7 +42,7 @@ public:
     typedef uint32 Rep;
     typedef uint32 Element;
 
-        // ----- Constructor 
+        // ----- Constructor
     Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}
 
     Montgomery( Residu_t p, int expo = 1)
@@ -54,9 +54,9 @@ public:
 
     int operator==( const Montgomery<Std32>& BC) const { return _p == BC._p;}
     int operator!=( const Montgomery<Std32>& BC) const { return _p != BC._p;}
- 
-    Montgomery<Std32>& operator=( const Montgomery<Std32>& F) { 
-        this->_p = F._p; 
+
+    Montgomery<Std32>& operator=( const Montgomery<Std32>& F) {
+        this->_p = F._p;
         this->_Bp = F._Bp;
         this->_B2p = F._B2p;
         this->_B3p = F._B3p;
@@ -65,7 +65,7 @@ public:
         return *this;
     }
 
-        // ----- Access to the modulus 
+        // ----- Access to the modulus
     Residu_t residu() const;
     Residu_t size() const {return _p;}
     Rep access( const Rep a ) const { return a; }
@@ -74,33 +74,33 @@ public:
     Residu_t cardinality() const { return _p; }
 
 
-        // ----- Access to the modulus 
+        // ----- Access to the modulus
     Rep& init( Rep& a ) const;
     Rep& init( Rep& r, const long a) const ;
     Rep& init( Rep& r, const unsigned long a) const ;
     Rep& init( Rep& a, const int i) const ;
     Rep& init( Rep& a, const unsigned int i) const ;
     Rep& init ( Rep& r, const Integer& residu ) const ;
-    
+
         // Initialisation from double ( added for FFLAS usage) (C Pernet)
     Rep& init( Rep& a, const double i) const;
     Rep& init( Rep& a, const float i) const;
 
-    unsigned long int& convert(unsigned long int& r, const Rep a) const { 
+    unsigned long int& convert(unsigned long int& r, const Rep a) const {
 	    uint32 ur;
 	    return r = (unsigned long)redc(ur,a);}
 
-    uint32& convert(uint32& r, const Rep a) const { 
+    uint32& convert(uint32& r, const Rep a) const {
 	    unsigned long ur;
 	    return r = (uint32)convert(ur, a);
     }
 
-     int32& convert(int32& r, const Rep a) const { 
+     int32& convert(int32& r, const Rep a) const {
 	    unsigned long ur;
 	    return r = (int32)convert(ur, a);
     }
 
-   long int& convert(long int& r, const Rep a) const { 
+   long int& convert(long int& r, const Rep a) const {
 	    unsigned long ur;
 	    return r = (long int)convert(ur, a);
     }
@@ -108,23 +108,23 @@ public:
     Integer& convert(Integer& i, const Rep a) const {
         unsigned long ur;
         return i = (Integer)convert(ur, a);
-    }        
+    }
 
         // Conversion to double ( added for FFLAS usage) (C Pernet)
-    float& convert(float& r, const Rep a ) const { 
+    float& convert(float& r, const Rep a ) const {
 	    unsigned long ur;
 	    return r = (float)convert(ur, a); }
     double& convert(double& r, const Rep a ) const {
 	    unsigned long ur;
 	    return r = (double)convert(ur, a); }
-    
+
         // ----- Misc methods
     int isZero( const Rep a ) const;
     int isOne ( const Rep a ) const;
     size_t length ( const Rep a ) const;
 
         // ----- Equality between two Elements
-    int areEqual(const  Rep& a, const Rep& b) const { 
+    int areEqual(const  Rep& a, const Rep& b) const {
 	    return a==b;
     }
 
@@ -149,7 +149,7 @@ public:
     Rep& axpyin(Rep& r, const Rep a, const Rep b) const;
         // -- axmy: r <- a * x - y mod p
     Rep& axmy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
-        // -- axmyin: r <- r - a * x mod p
+	// -- axmyin: r <- a * x - r  mod p
     Rep& axmyin(Rep& r, const Rep a, const Rep b) const;
         // -- maxpy: r <- c - a * b mod p
     Rep& maxpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
@@ -165,7 +165,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
-    
+
     typedef GIV_randIter< Montgomery<Std32> , Rep > randIter;
 
         // --- IO methods
@@ -189,7 +189,7 @@ protected:
     Element& redcin(Element&) const;
     Element& redcs(Element&, const Element) const;
     Element& redcsin(Element&) const;
-    
+
 
 protected:
         // -- data representation of the domain:
@@ -199,13 +199,13 @@ protected:
     Residu_t _B3p;
     Residu_t _nim;
     double _dp;
-    
+
 
     static void Init();
     static void End();
 
 public:
-        // ----- Constantes 
+        // ----- Constantes
     const Rep zero;
     const Rep one;
 };

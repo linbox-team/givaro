@@ -334,14 +334,22 @@ public:
 	 * @param x Integers as in the forumla
 	 * @param y Integers as in the forumla
 	 */
-	static Integer& axpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
-	/*! axpy (inplace)
+	static Integer& axpy   (Integer& res,
+				const Integer& a, const Integer& x, const Integer& y );
+	static Integer& axpy   (Integer& res,
+				const Integer& a, const unsigned long x, const Integer& y );
+
+	/*! axpyin (inplace)
 	 *  <code>res += ax</code>.
 	 * @param res Integers as in the formula.
 	 * @param a Integers as in the formula.
 	 * @param x Integers as in the formula.
 	 */
-	static Integer& axpyin   (Integer& res, const Integer& a, const Integer& x);
+	static Integer& axpyin   (Integer& res,
+				  const Integer& a, const Integer& x);
+	static Integer& axpyin   (Integer& res,
+				  const Integer& a, const unsigned long x);
+
 	/*! maxpy
 	 *  <code>res = y - ax</code>.
 	 * @param res Integers as in the formula.
@@ -349,7 +357,24 @@ public:
 	 * @param x Integers as in the formula.
 	 * @param y Integers as in the formula.
 	 */
-	static Integer& maxpy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
+	static Integer& maxpy   (Integer& res,
+				 const Integer& a, const Integer& x, const Integer& y );
+	static Integer& maxpy   (Integer& res,
+				 const Integer& a, const unsigned long x, const Integer& y );
+
+	/*! maxpyin
+	 *  <code>res -= ax</code>.
+	 * @param res Integers as in the formula.
+	 * @param a Integers as in the formula.
+	 * @param x Integers as in the formula.
+	 * @param y Integers as in the formula.
+	 */
+	static Integer& maxpyin (Integer& res,
+				 const Integer& a, const Integer& x );
+	static Integer& maxpyin (Integer& res,
+				 const Integer& a, const unsigned long x );
+
+
 	/*! axmy
 	*  <code>res = ax - y</code>.
 	 * @param res Integers as in the formula.
@@ -357,14 +382,22 @@ public:
 	 * @param x Integers as in the formula.
 	 * @param y Integers as in the formula.
 	*/
-	static Integer& axmy   (Integer& res, const Integer& a, const Integer& x, const Integer& y );
-	/*! axmy (in place)
-	 * <code>res -= ax</code>.
+	static Integer& axmy   (Integer& res,
+				const Integer& a, const Integer& x, const Integer& y );
+	static Integer& axmy   (Integer& res,
+				const Integer& a, const unsigned long x, const Integer & y );
+
+
+	/*! axmyin (in place)
+	 * <code>res = ax - res</code>.
 	 * @param res Integers as in the formula.
 	 * @param a Integers as in the formula.
 	 * @param x Integers as in the formula.
 	 */
-	static Integer& axmyin   (Integer& res, const Integer& a, const Integer& x);
+	static Integer& axmyin   (Integer& res,
+				  const Integer& a, const Integer& x);
+	static Integer& axmyin   (Integer& res,
+				  const Integer& a, const unsigned long x);
 	//@}
 
 	/*! @name Division/euclidean division/modulo
@@ -724,7 +757,12 @@ public:
 	template<class T>
 	static Integer& nonzerorandom (Integer& r, const T& size)
 	{ return nonzerorandom<true>(r,size); }
-
+	static Integer nonzerorandom()
+	{
+		Integer rez = Integer::nonzerorandom(sizeof(mp_limb_t)*8) ;
+		// if (!U) if (Integer::RandBool()) negin(rez);
+		return rez;
+	}
 	//@}
 
 	//----------------------------------------------I/O

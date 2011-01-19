@@ -543,7 +543,15 @@ int main()
 	if (test5()) return -1;
 #endif
 
-return 0 ;
+	/* check seeding */
+	Integer toto, tata ;
+	Integer::seeding(3);
+	toto = Integer::random();
+	Integer::seeding(3);
+	tata = Integer::random();
+	if (toto != tata) return -1 ;
+
+	return 0 ;
 
 }/*}}}*/
 

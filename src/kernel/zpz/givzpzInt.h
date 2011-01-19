@@ -3,16 +3,16 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.8 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givzpzInt.h,v 1.9 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 //
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number in arbitrary precision
-#ifndef _GIVARO_ZPZInteger_H_ 
-#define _GIVARO_ZPZInteger_H_ 
+#ifndef _GIVARO_ZPZInteger_H_
+#define _GIVARO_ZPZInteger_H_
 
 #include "givbasictype.h"
 #include "giverror.h"
@@ -39,11 +39,11 @@ public:
   typedef Rep* Array;
   typedef const Rep* constArray;
 
-  // ----- Constantes 
+  // ----- Constantes
   const Rep zero;
   const Rep one;
 
-  // ----- Constructor 
+  // ----- Constructor
   ZpzDom() : zero(0), one(1), _p(0) {}
   ZpzDom( Residu_t p ) : zero(0), one(1), _p(p) {}
   ZpzDom( const ZpzDom<Integer>& F) : zero(0), one(1), _p(F._p) { }
@@ -51,13 +51,13 @@ public:
 
   int operator==( const ZpzDom<Integer>& BC) const { return _p == BC._p;}
   int operator!=( const ZpzDom<Integer>& BC) const { return _p != BC._p;}
- 
-  ZpzDom<Integer>& operator=( const ZpzDom<Integer>& F) { 
-      this->_p = F._p; 
+
+  ZpzDom<Integer>& operator=( const ZpzDom<Integer>& F) {
+      this->_p = F._p;
       return *this;
   }
 
-  // ----- Access to the modulus 
+  // ----- Access to the modulus
   Residu_t residu() const;
   Residu_t size() const {return _p;}
   Rep access( const Rep& a ) const { return a; }
@@ -66,7 +66,7 @@ public:
   Residu_t cardinality() const { return _p; }
 
 
-  // ----- Access to the modulus 
+  // ----- Access to the modulus
   Rep& init( Rep& a ) const;
   void init( const size_t, Array a, constArray b ) const;
   Rep& init( Rep& r , const long a) const ;
@@ -87,8 +87,8 @@ public:
     Integer& convert(Integer& i, const Rep& a) const {
         unsigned long ur;
         return i = (Integer)convert(ur, a);
-    }        
-    
+    }
+
 
 
   // ----- Misc methods
@@ -132,36 +132,33 @@ public:
 
   // -- axpy: r <- a * x + y mod p
   Rep& axpy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
-  void axpy 
-   (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
+  void axpy (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
   // -- axpyin: r <- r + a * x mod p
   Rep& axpyin(Rep& r, const Rep& a, const Rep& b) const;
-  void axpyin 
-   (const size_t sz, Array r, constArray a, constArray x) const;
+  void axpyin (const size_t sz, Array r, constArray a, constArray x) const;
 
   // -- axmy: r <- a * x - y mod p
   Rep& axmy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
-  void axmy 
-   (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
-  // -- axmyin: r <- r - a * x mod p
+  void axmy (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
+  // -- axmyin: r <-  a * x - r mod p
   Rep& axmyin(Rep& r, const Rep& a, const Rep& b) const;
-  void axmyin 
-   (const size_t sz, Array r, constArray a, constArray x) const;
+  // void axmyin (const size_t sz, Array r, constArray a, constArray x) const;
 
   // -- maxpy: r <- c - a * b mod p
   Rep& maxpy  (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
   // -- maxpyin: r <- r - a * x mod p
   Rep& maxpyin(Rep& r, const Rep& a, const Rep& b) const;
+  void maxpyin (const size_t sz, Array r, constArray a, constArray x) const;
 
   // -- Misc: r <- a mod p
   void assign ( const size_t sz, Array r, constArray a ) const;
-/* JGD 26.10.99
+#if 0 /* JGD 26.10.99 */
   void assign ( Rep& r, const Rep& a) const;
   void assign ( Rep& r, const long a ) const;
   void assign ( Rep& r, const unsigned long a ) const;
   void assign ( Rep& r, const int a ) const;
   void assign ( Rep& r, const unsigned int a ) const;
-*/
+#endif
   Rep& assign ( Rep& r, const Rep& a) const;
   Rep& assign ( Rep& r, const long a ) const;
   Rep& assign ( Rep& r, const unsigned long a ) const;
@@ -176,24 +173,24 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
-    
+
     typedef GIV_randIter< ZpzDom<Integer> , Rep > randIter;
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
-  Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const; 
+  Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;
 
   // <- \prod_i a[i], return 1 if a.size() ==0,
-  Rep& reducemul ( Rep& r, const size_t sz, constArray a ) const; 
+  Rep& reducemul ( Rep& r, const size_t sz, constArray a ) const;
 
-  // <- \sum_i a[i] * b[i] 
-//   Rep& dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const; 
-//   Rep& dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const; 
+  // <- \sum_i a[i] * b[i]
+//   Rep& dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
+//   Rep& dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
 
   // ----- a -> r: Rep to double
-  void i2d ( const size_t sz, double* r, constArray a ) const; 
+  void i2d ( const size_t sz, double* r, constArray a ) const;
 
   // ----- a -> r % p: double to Rep % p
-  void d2i ( const size_t sz, Array r, const double* a ) const; 
+  void d2i ( const size_t sz, Array r, const double* a ) const;
 
   // --- IO methods
   std::istream& read ( std::istream& s );
@@ -213,3 +210,4 @@ protected:
 #include "givzpzInt.inl"
 
 #endif
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

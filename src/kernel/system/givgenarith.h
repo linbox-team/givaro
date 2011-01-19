@@ -3,10 +3,10 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givgenarith.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givgenarith.h,v 1.4 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 // Description:
 // Domain definition for basic type of the language.
@@ -34,8 +34,8 @@ public:
 
   BaseDomain() : zero((T)0), one((T)1) {}
 
-  // -- Assignment of domain: default operator= 
-  // -- Comparizon of domain: 
+  // -- Assignment of domain: default operator=
+  // -- Comparizon of domain:
   int operator==( const BaseDomain<T>& BC) const { return 1;}
   int operator!=( const BaseDomain<T>& BC) const { return 0;}
 
@@ -63,12 +63,12 @@ public:
   void addin( Rep& r, const Rep a) const { r += a; };
   void subin( Rep& r, const Rep a) const { r -= a; };
 
-  void axpy( Rep& r, const Rep a, const Rep b, const Rep c ) const 
+  void axpy( Rep& r, const Rep a, const Rep b, const Rep c ) const
   { r = a * b + c; };
   void axpyin( Rep& r, const Rep a, const Rep b ) const { r += a * b; };
-  void axmy( Rep& r, const Rep a, const Rep b, const Rep c ) const 
+  void axmy( Rep& r, const Rep a, const Rep b, const Rep c ) const
   { r = a * b - c; };
-  void axmyin( Rep& r, const Rep a, const Rep b ) const { r -= a * b; };
+  void axmyin( Rep& r, const Rep a, const Rep b ) const { r = a * b - r; };
 
   // -- unary methods
   void neg( Rep& r, const Rep a ) const { r = -a; };
@@ -77,11 +77,11 @@ public:
   void invin( Rep& r ) const { r = 1/r; };
 
   // -- IO methods: of the object domain
-  ostream& write( ostream& s ) const 
+  ostream& write( ostream& s ) const
   { return s << (char)__givdom_trait_name<T>::val; }
-  istream& read ( istream& s ) 
-  { 
-    char c; s >> std::ws >> c; 
+  istream& read ( istream& s )
+  {
+    char c; s >> std::ws >> c;
     if (c != (char)__givdom_trait_name<T>::val)
       GivError::throw_error(GivBadFormat("Bad domain"));
   }

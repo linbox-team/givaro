@@ -3,10 +3,10 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.27 2010-12-15 15:01:08 jgdumas Exp $
+// $Id: givpoly1dense.h,v 1.28 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
@@ -24,7 +24,7 @@
 #define __GIV_STANDARD_VECTOR std::vector
 #endif
 
-template < typename T, typename A=std::allocator<T> > 
+template < typename T, typename A=std::allocator<T> >
 class givvector : public __GIV_STANDARD_VECTOR<T,A> {
     typedef givvector<T,A>     Self_t;
 public:
@@ -37,10 +37,10 @@ public:
     Self_t& reallocate (size_t s) { this->resize(s); return *this; }
     Self_t& logcopy(const Self_t& src) { return *this = src; }
     Self_t& copy(const Self_t& src) { return *this = src; }
-    int areEqual(const Self_t& p) const { 
-        return *this == p; 
+    int areEqual(const Self_t& p) const {
+        return *this == p;
     }
-    int areNEqual(const Self_t& p) const { 
+    int areNEqual(const Self_t& p) const {
         return *this != p;
     }
 
@@ -49,9 +49,9 @@ public:
     struct rebind
     {
         typedef givvector<typename _Tp1::Element> other;
-		
-        void operator() (other & P2, 
-                         const Self_t& P1, 
+
+        void operator() (other & P2,
+                         const Self_t& P1,
                          const _Tp1& F)
             {
                 typename Self_t::const_iterator it1 = P1.begin();
@@ -67,13 +67,13 @@ public:
         typename givvector<_Elt1, _Alc1>::template rebind<Field>() (*this, V, F);
     }
 
-    
+
 };
 
 //  -------------------------------------------- Class Poly1Dom<Domain>
 template <class Domain>
 class Poly1Dom<Domain,Dense> {
-protected:  //  -- Representation 
+protected:  //  -- Representation
     Domain 		_domain;  // -- subdomain
     Indeter		_x;	  // -- for I/O, if any
 public :
@@ -101,9 +101,9 @@ public :
     Type_t characteristic() const { return _domain.characteristic(); }
     Integer& characteristic( Integer& p) const { return _domain.characteristic(p); }
 
-    int operator==( const Poly1Dom<Domain,Dense>& BC) const 
+    int operator==( const Poly1Dom<Domain,Dense>& BC) const
         { return _domain == BC._domain;}
-    int operator!=( const Poly1Dom<Domain,Dense>& BC) const 
+    int operator!=( const Poly1Dom<Domain,Dense>& BC) const
         { return _domain != BC._domain;}
 
     const Indeter& getIndeter() const { return _x; }
@@ -114,27 +114,27 @@ public :
         // -- Return the domain of the entries
     const Domain& getdomain() const { return _domain; }
     Domain& setdomain(const Domain& D) { return _domain = D; }
-            
+
 
         // -- Constantes
     Rep zero;
     Rep one;
-	
-        // -- Init polynomial 
+
+        // -- Init polynomial
     Rep& init(Rep& a) const;
         // -- Init polynomial with value : F.init(p[0],cste)
     template<class XXX>
     Rep& init(Rep& p, const XXX &cste ) const;
 
-        // -- Allocate a polynomial with deg+1 coefficients, each of them are 
+        // -- Allocate a polynomial with deg+1 coefficients, each of them are
         // set to zero, except the leading coef which is set to one.
     Rep& init (Rep& r, const Degree deg) const;
 
-        // -- For polynomial = lcoeff X^deg 
+        // -- For polynomial = lcoeff X^deg
     template<class XXX>
     Rep& init (Rep& p, const Degree deg , const XXX& lcoeff) const;
 
-        //    F.assign(P[deg], lcoeff); 
+        //    F.assign(P[deg], lcoeff);
     Rep& assign (Rep& p, const Degree deg , const Type_t& lcoeff) const;
         // -- Assign polynomial with field value : F.assign(p[0],cste)
     Rep& assign(Rep& p, const Type_t &cste ) const {
@@ -174,7 +174,7 @@ public :
 
         // -- Returns the valuation of polynomial
     Degree& val(Degree& d, const Rep& P) const;
-  
+
         // -- Compute the degree of P
     Rep& setdegree( Rep& P ) const;
 
@@ -184,7 +184,7 @@ public :
         // -- Returns the differentiate polynomial
     Rep& diff( Rep& P, const Rep& Q) const;
 
-        // -- 
+        // --
     std::istream& read ( std::istream& i );
     std::ostream& write( std::ostream& o ) const;
     std::istream& read ( std::istream& i, Rep& n) const;
@@ -209,11 +209,11 @@ public :
     Rep& mul   ( Rep& q, const Rep& a, const Rep& b ) const;
     Rep& mul   ( Rep& q, const Type_t& a, const Rep& b ) const;
     Rep& mul   ( Rep& q, const Rep& a, const Type_t& b ) const;
-    
+
         // Compute truncated mul: only the coefficients inside
         // the degree interval, included
     Rep& mul( Rep&, const Rep&, const Rep&, const Degree&, const Degree&) const;
-    
+
 
     Rep& shiftin ( Rep&, int ) const;
     Rep& shift   ( Rep&, const Rep&, int ) const;
@@ -244,7 +244,7 @@ public :
         // -- axmy: r <- a * x - y
     Rep& axmy   (Rep& r, const Rep& a, const Rep& x, const Rep& y) const;
     Rep& axmy   (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const;
-        // -- axmyin: r -= a * x
+	// -- axmyin: r = a * x - r
     Rep& axmyin (Rep& r, const Rep& a, const Rep& x) const;
     Rep& axmyin (Rep& r, const Type_t& a, const Rep& x) const;
 
@@ -260,13 +260,13 @@ public :
 
 
         // -- gcd D = gcd(P,Q) = P*U+Q*V;
-    Rep& gcd ( Rep& D, const Rep& P, const Rep& Q) const;  
-    Rep& gcd ( Rep& D, Rep& U, Rep& V, const Rep& P, const Rep& Q) const;  
-    Rep& lcm ( Rep& D, const Rep& P, const Rep& Q) const;  
+    Rep& gcd ( Rep& D, const Rep& P, const Rep& Q) const;
+    Rep& gcd ( Rep& D, Rep& U, Rep& V, const Rep& P, const Rep& Q) const;
+    Rep& lcm ( Rep& D, const Rep& P, const Rep& Q) const;
         // -- modular inverse of P : U P = 1 + V Q
-    Rep& invmod ( Rep& U, const Rep& P, const Rep& Q) const;  
+    Rep& invmod ( Rep& U, const Rep& P, const Rep& Q) const;
         // -- modular inverse of P : U P = e + V Q where e is of degree 0
-    Rep& invmodunit ( Rep& U, const Rep& P, const Rep& Q) const;  
+    Rep& invmodunit ( Rep& U, const Rep& P, const Rep& Q) const;
 
         // -- rational reconstruction
         // -- Builds N and D such that P * D = N mod M and degree(N) <= dk
@@ -298,14 +298,14 @@ public :
     template< class RandIter > Rep& random(RandIter& g, Rep& r, Degree s) const ;
 
     Rep& random(GivRandom& g, Rep& r, Degree s) const ;
-        // -- Random dense polynomial with same size as b. 
+        // -- Random dense polynomial with same size as b.
     template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const;
 
     template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r) const;
     template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, long s) const;
     template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, Degree s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const;
-    
+
         // -- Square free decomposition
      size_t& sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const;
 

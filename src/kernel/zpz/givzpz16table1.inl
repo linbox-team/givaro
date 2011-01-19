@@ -3,11 +3,11 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.9 2010-10-15 13:43:48 bboyer Exp $
+// $Id: givzpz16table1.inl,v 1.10 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -30,7 +30,7 @@
 
 /* Pascal Giorgi
    Changing the order of parameters.
-*/	
+*/
 #define __GIVARO_ZPZ16_LOG_MULADD(r,p,a,b,c) \
   { __GIVARO_ZPZ16_LOG_MUL(r, p, a, b); __GIVARO_ZPZ16_LOG_ADD(r, p, r, c); }
 #define __GIVARO_ZPZ16_LOG_MULSUB(r,p,a,b,c) \
@@ -42,38 +42,38 @@ inline ZpzDom<Log16>::Residu_t ZpzDom<Log16>::residu( ) const
 { return _p; }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::mul (Rep& r, const Rep a, const Rep b) const
-{ 
-   int32 tmp; 	
+{
+   int32 tmp;
   __GIVARO_ZPZ16_LOG_MUL(tmp,(int32)_p,(int32)a,(int32)b);
   return r= (ZpzDom<Log16>::Rep)tmp;
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::div (Rep& r, const Rep a, const Rep b) const
-{ 
-  __GIVARO_ZPZ16_LOG_DIV(r,_p,a,b); 
+{
+  __GIVARO_ZPZ16_LOG_DIV(r,_p,a,b);
   return r;
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::sub (Rep& r, const Rep a, const Rep b) const
-{ 
-  __GIVARO_ZPZ16_LOG_SUB(r,_p,a,b); 
+{
+  __GIVARO_ZPZ16_LOG_SUB(r,_p,a,b);
   return r;
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::add (Rep& r, const Rep a, const Rep b) const
-{ 
-  __GIVARO_ZPZ16_LOG_ADD(r,_p,a,b); 
+{
+  __GIVARO_ZPZ16_LOG_ADD(r,_p,a,b);
   return r;
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::neg (Rep& r, const Rep a) const
-{ 
-  __GIVARO_ZPZ16_LOG_NEG(r,_p,a); 
+{
+  __GIVARO_ZPZ16_LOG_NEG(r,_p,a);
   return r;
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::inv (Rep& r, const Rep a) const
-{ 
+{
   __GIVARO_ZPZ16_LOG_INV(r,_p,a);
   // GivError::throw_error( GivMathDivZero("Zpz::inv"));
   return r;
@@ -118,76 +118,76 @@ inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, lo
  // -- inline array operations between ZpzDom<Log16>::Rep
 inline void ZpzDom<Log16>::mul (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
-    __GIVARO_ZPZ16_LOG_MUL(r[i], _p,a[i], b[i]); 
+  for ( size_t i=sz ; --i ; ) {
+    __GIVARO_ZPZ16_LOG_MUL(r[i], _p,a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Log16>::mul (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_MUL(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Log16>::div (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
-    __GIVARO_ZPZ16_LOG_DIV( r[i], _p, a[i], b[i]); 
+  for ( size_t i=sz ; --i ; ) {
+    __GIVARO_ZPZ16_LOG_DIV( r[i], _p, a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Log16>::div (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
-    __GIVARO_ZPZ16_LOG_DIV( r[i], _p, a[i], b); 
+  for ( size_t i=sz ; --i ; ) {
+    __GIVARO_ZPZ16_LOG_DIV( r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Log16>::add (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_ADD(r[i], _p, a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Log16>::add (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_ADD(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Log16>::sub (const size_t sz, Array r, constArray a, constArray b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_SUB(r[i], _p, a[i], b[i]);
   }
 }
 
 inline void ZpzDom<Log16>::sub (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_SUB(r[i], _p, a[i], b);
   }
 }
 
 inline void ZpzDom<Log16>::neg (const size_t sz, Array r, constArray a) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_NEG(r[i], _p, a[i]);
   }
 }
 
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::mulin (Rep& r, const Rep a) const
-{ 
-  __GIVARO_ZPZ16_LOG_MUL(r,_p, r,a); 
+{
+  __GIVARO_ZPZ16_LOG_MUL(r,_p, r,a);
   return r;
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::divin (Rep& r, const Rep a) const
-{ 
+{
   ZpzDom<Log16>::Rep ia;
   inv(ia, a);
   mulin(r, ia);
@@ -195,14 +195,14 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::divin (Rep& r, const Rep a) const
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::addin (Rep& r, const Rep a) const
-{ 
-  __GIVARO_ZPZ16_LOG_ADD(r, _p, r,a); 
+{
+  __GIVARO_ZPZ16_LOG_ADD(r, _p, r,a);
   return r;
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::subin (Rep& r, const Rep a) const
-{ 
-  __GIVARO_ZPZ16_LOG_SUB(r,_p, r,a); 
+{
+  __GIVARO_ZPZ16_LOG_SUB(r,_p, r,a);
   return r;
 }
 
@@ -210,55 +210,55 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::negin (Rep& r) const
 {
   __GIVARO_ZPZ16_LOG_NEG(r,_p,r);
   return r;
-}	
+}
 
 inline ZpzDom<Log16>::Rep&  ZpzDom<Log16>::invin (Rep& r) const
 {
   __GIVARO_ZPZ16_LOG_INV(r,_p,r);
   return r;
-}	
+}
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axpy 
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axpy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
-{ 
-  __GIVARO_ZPZ16_LOG_MULADD(r, _p, a, b, c); 
+{
+  __GIVARO_ZPZ16_LOG_MULADD(r, _p, a, b, c);
   return r;
 }
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axpyin 
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axpyin
  (Rep& r, const Rep a, const Rep b) const
-{ 
+{
   //__GIVARO_ZPZ16_LOG_MULADD(r, _p, a, b, r);
   // Pascal giorgi
-  // non consistant because don't perform an axpyin 
+  // non consistant because don't perform an axpyin
   // due to the name of parameter
-  // the operation performed is 2*a*b 
- 
+  // the operation performed is 2*a*b
+
   return axpy(r,a,b,r);
 }
 
 
-inline void ZpzDom<Log16>::axpy 
+inline void ZpzDom<Log16>::axpy
   (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_MULADD(r[i], _p, a[i], x[i], y[i]);
   }
 }
 
-inline void ZpzDom<Log16>::axpyin 
+inline void ZpzDom<Log16>::axpyin
   (const size_t sz, Array r, constArray a, constArray x) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_MULADD(r[i], _p, a[i], x[i], r[i]);
   }
 }
 
 // r <- a*b-c
-inline void ZpzDom<Log16>::axmy 
+inline void ZpzDom<Log16>::axmy
   (Rep& r, const Rep a, const Rep b, const Rep c) const
-{ 
-  __GIVARO_ZPZ16_LOG_MULSUB(r,_p,a,b,c); 
+{
+  __GIVARO_ZPZ16_LOG_MULSUB(r,_p,a,b,c);
 }
 
 // r <- r-a*b
@@ -278,25 +278,26 @@ inline void ZpzDom<Log16>::maxpy
 }
 
 
-// r <- r-a*b
-inline void ZpzDom<Log16>::axmyin 
-  (Rep& r, const Rep a, const Rep b) const
+// r <- a*b-r
+inline void ZpzDom<Log16>::axmyin (Rep& r,
+	   	const Rep a, const Rep b) const
 {
-    return maxpyin(r,a,b);
+    maxpyin(r,a,b);
+    negin(r);
 }
 
-inline void ZpzDom<Log16>::axmy 
+inline void ZpzDom<Log16>::axmy
   (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_MULSUB(r[i], _p, a[i], x[i], y[i]);
   }
 }
 
-inline void ZpzDom<Log16>::axmyin 
-  (const size_t sz, Array r, constArray a, constArray x) const
+inline void ZpzDom<Log16>::maxpyin (const size_t sz, Array r,
+	   	constArray a, constArray x) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZ16_LOG_MULSUB(r[i], _p, a[i], x[i], r[i]);
     __GIVARO_ZPZ16_LOG_NEG(r[i], _p, r[i]);
   }
@@ -320,11 +321,11 @@ inline int ZpzDom<Log16>::isOne ( const Rep a ) const {return isone(a);}
 // ---------
 // -- misc operations
 // ---------
-/* 
-inline void ZpzDom<Log16>::assign 
+/*
+inline void ZpzDom<Log16>::assign
   ( const size_t sz, Array r, constArray a ) const
 {
-  for ( size_t i=sz-1; i!=0; --i) {
+  for ( size_t i=sz ; --i ; ) {
     if (a[i] <ZpzDom<Log16>::zero) {
        r[i] = a[i] + _p;
        if (r[i] <ZpzDom<Log16>::zero) r[i] = r[i] % _p;
@@ -340,7 +341,7 @@ inline void ZpzDom<Log16>::assign
 
 inline void ZpzDom<Log16>::assign ( const size_t sz, Array r, constArray a ) const
 {
-  for ( size_t i=sz-1; i!=0; --i) 
+  for ( size_t i=sz ; --i ; )
     r[i] = a[i];
 }
 
@@ -407,7 +408,7 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const Integer& residu )
 
 
 
-inline void ZpzDom<Log16>::dotprod 
+inline void ZpzDom<Log16>::dotprod
   ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
 {
   unsigned int stride = 1;
@@ -415,8 +416,8 @@ inline void ZpzDom<Log16>::dotprod
    stride = GIVARO_MAXUINT32/((unsigned long)bound * (unsigned long)bound);
   uint32 dot = zero;
   if ((sz <10) && (sz <stride)) {
-    for(  int i= sz-1; i>=0; --i) 
-      dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]]; 
+    for(  int i= sz-1; i>=0; --i)
+      dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
     if (dot > _p) r = _tab_value2rep[(Rep)(dot % _p)];
     else r = _tab_value2rep[dot];
     return;
@@ -425,7 +426,7 @@ inline void ZpzDom<Log16>::dotprod
   stride &= ~0x1;
   if (stride ==0) {
     for(  int i= sz-1; i>0; --i) {
-      dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]]; 
+      dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
       if (dot>_p) dot %= _p;
     }
     r = _tab_value2rep[dot];
@@ -433,15 +434,15 @@ inline void ZpzDom<Log16>::dotprod
   }
   do {
     size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
-    if ( (min_sz & 0x1) !=0) { 
-      min_sz--; i_begin++; 
-      dot += _tab_rep2value[a++[min_sz]] * _tab_rep2value[b++[min_sz]]; 
+    if ( (min_sz & 0x1) !=0) {
+      min_sz--; i_begin++;
+      dot += _tab_rep2value[a++[min_sz]] * _tab_rep2value[b++[min_sz]];
     }
-    if (min_sz > 1) 
-      for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) 
+    if (min_sz > 1)
+      for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b )
       {
-        dot += _tab_rep2value[a[0]] * _tab_rep2value[b[0]]; 
-        dot += _tab_rep2value[a[1]] * _tab_rep2value[b[1]]; 
+        dot += _tab_rep2value[a[0]] * _tab_rep2value[b[0]];
+        dot += _tab_rep2value[a[1]] * _tab_rep2value[b[1]];
       }
     if (dot>_p) dot %= _p;
     i_begin += min_sz;
@@ -457,14 +458,14 @@ inline void ZpzDom<Log16>::dotprod
 
 
   //  a -> r: int16 to double
-inline void 
+inline void
   ZpzDom<Log16>::i2d ( const size_t sz, double* r, constArray a ) const
 {
   for (size_t i=0; i<sz; ++i) r[i] = _tab_rep2value[a[i]];
 }
 
-  //  a -> r: double to int16 
-inline void 
+  //  a -> r: double to int16
+inline void
   ZpzDom<Log16>::d2i ( const size_t sz, Array r, const double* a ) const
 {
   union d_2_l {
@@ -475,11 +476,11 @@ inline void
   size_t i=sz-1;
 //warning todo while
 //do
-label1: 
+label1:
   {
       d_2_l tmp;
       // - normalization: put fractional part at the end of the representation
-      tmp.d = a[i] + offset; 
+      tmp.d = a[i] + offset;
       r[i--] = _tab_value2rep[(tmp.r[1] >_p ? tmp.r[1] : tmp.r[1] % _p)];
   }
   // while (i!=0)
@@ -489,9 +490,9 @@ label1:
 
 
  // -- Input: (z, <_p>)
-inline std::istream& ZpzDom<Log16>::read (std::istream& s) 
+inline std::istream& ZpzDom<Log16>::read (std::istream& s)
 {
-  char ch; 
+  char ch;
   s >> std::ws >> ch;
 //   if (ch != '(')
 //     GivError::throw_error( GivBadFormat("ZpzDom<Log16>::read: syntax error: no '('"));

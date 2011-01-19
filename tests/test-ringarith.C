@@ -2,7 +2,7 @@
 // This file is part of Givaro.
 // BB: adapted,enhanced from examples/FiniteFields/ff-arith.C
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
@@ -14,6 +14,8 @@
 #include <givaro/givzpz64std.h>
 #include <givaro/givzpz.h>
 #include <givaro/givpoly1.h>
+
+#include <givaro/givinteger.h>
 
 #define TESTE_EG( a, b ) \
 if (!F.areEqual((a),(b))) {\
@@ -37,7 +39,7 @@ template<class Ring>
 int TestOneRing(const Ring& F, const int FIRSTINT, const float FIRSTFLOAT)
 {/*{{{*/
 #ifdef GIVARO_DEBUG
-	std::cerr << "testing " ; 
+	std::cerr << "testing " ;
 	F.write(std::cerr );
 	std::cerr  << " : " << std::flush;
 #endif
@@ -106,7 +108,7 @@ int TestOneRing(const Ring& F, const int FIRSTINT, const float FIRSTFLOAT)
 	F.axmy(e, a, b, d); // e = a*b -d;
 
 	F.assign(e_,d);
-	F.axmyin(e_, a, b); // e = d - a*b;
+	F.maxpyin(e_, a, b); // e = d - a*b;
 
 	F.negin(e_);
 
@@ -125,7 +127,7 @@ int TestOneRing(const Ring& F, const int FIRSTINT, const float FIRSTFLOAT)
 #define NBITER 50
 
 template<class Ring>
-int TestRing(const Ring& F, const int seed) 
+int TestRing(const Ring& F, const int seed)
 {/*{{{*/
     long ch = F.characteristic();
     JEONETESTE(F,7UL,-29.3);
@@ -133,17 +135,15 @@ int TestRing(const Ring& F, const int seed)
     for(size_t i=0; i< NBITER; ++i) {
         typename Ring::Element x;
         float d; do {
-            F.init(x, d = ch*drand48()); 
+            F.init(x, d = ch*drand48());
         } while(F.isZero(x));
         int a; do {
-            F.init(x, a = lrand48()); 
+            F.init(x, a = lrand48());
         } while(F.isZero(x));
         JEONETESTE(F,a,d);
     }
     return 0;
 }/*}}}*/
-
-
 
 int main(int argc, char ** argv)
 {/*{{{*/
@@ -152,23 +152,23 @@ int main(int argc, char ** argv)
     std::cerr << "seed: " << seed << std::endl;
 #endif
     Integer::seeding(seed);
-    
-    
+
+
 	// modulo 13 over 16 bits
-	ZpzDom<Std16> C13(13); 
+	ZpzDom<Std16> C13(13);
 	JETESTE(C13,seed);
 
 	// modulo 13 over 32 bits
-	ZpzDom<Std32> Z13(13); 
+	ZpzDom<Std32> Z13(13);
 	JETESTE(Z13,seed);
 
 	// modulo 13 over unsigned 32 bits
-	ZpzDom<Unsigned32> U13(13); 
+	ZpzDom<Unsigned32> U13(13);
 	JETESTE(U13,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 13 over 64 bits
-	ZpzDom<Std64> LL13(13UL); 
+	ZpzDom<Std64> LL13(13UL);
 	JETESTE(LL13,seed);
 #endif
 
@@ -178,7 +178,7 @@ int main(int argc, char ** argv)
 
 
 	// modulo 2 over 16 bits
-	ZpzDom<Std16> C2(2); 
+	ZpzDom<Std16> C2(2);
 	JETESTE(C2,seed);
 
 	// modulo 2 over 32 bits
@@ -186,17 +186,17 @@ int main(int argc, char ** argv)
 	JETESTE(Z2,seed);
 
 	// modulo 2 over unsigned 32 bits
-	ZpzDom<Unsigned32> U2(2); 
+	ZpzDom<Unsigned32> U2(2);
 	JETESTE(U2,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<Std64> LL2(2UL); 
+	ZpzDom<Std64> LL2(2UL);
 	JETESTE(LL2,seed);
 #endif
 
 	// modulo 2 fully tabulated
-	ZpzDom<Log16> L2(2); 
+	ZpzDom<Log16> L2(2);
 	JETESTE(L2,seed);
 
 	// modulo 13 over arbitrary size
@@ -205,7 +205,7 @@ int main(int argc, char ** argv)
 
 // --------------------------------------------
 	// modulo 4 over 16 bits
-	ZpzDom<Std16> C4(4); 
+	ZpzDom<Std16> C4(4);
 	JETESTE(C4,seed);
 
 	// modulo 4 over 32 bits
@@ -213,12 +213,12 @@ int main(int argc, char ** argv)
 	JETESTE(Z4,seed);
 
 	// modulo 4 over unsigned 32 bits
-	ZpzDom<Unsigned32> U4(4); 
+	ZpzDom<Unsigned32> U4(4);
 	JETESTE(U4,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<Std64> LL4(4UL); 
+	ZpzDom<Std64> LL4(4UL);
 	JETESTE(LL4,seed);
 #endif
 
@@ -228,7 +228,7 @@ int main(int argc, char ** argv)
 
 // --------------------------------------------
 	// modulo 75 over 16 bits
-	ZpzDom<Std16> C75(75); 
+	ZpzDom<Std16> C75(75);
 	JETESTE(C75,seed);
 
 	// modulo 75 over 32 bits
@@ -236,12 +236,12 @@ int main(int argc, char ** argv)
 	JETESTE(Z75,seed);
 
 	// modulo 75 over unsigned 32 bits
-	ZpzDom<Unsigned32> U75(75); 
+	ZpzDom<Unsigned32> U75(75);
 	JETESTE(U75,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 675 bits
-	ZpzDom<Std64> LL75(75UL); 
+	ZpzDom<Std64> LL75(75UL);
 	JETESTE(LL75,seed);
 #endif
 
@@ -279,11 +279,11 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
 	std::cerr << std::endl ;
 #endif
-        
 
 
 
-        
+
+
 	return 0;
 }/*}}}*/
 

@@ -71,12 +71,14 @@ public:
 	{ return Integer::axpy(r,a,b,c); }
 	Rep& maxpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
 	{ return Integer::maxpy(r,a,b,c); }
+	Rep& maxpyin( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
+	{ return Integer::maxpyin(r,a,b); }
 	Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
 	{ return Integer::axmy(r,a,b,c); }
 	Rep& axpyin( Rep& r, const Rep& a, const Rep& b ) const
-	{ return r += a * b; }
+	{ return Integer::axpyin(r,a,b); }
 	Rep& axmyin( Rep& r, const Rep& a, const Rep& b ) const
-	{ return r -= a * b; }
+	{ return Integer::axmyin(r,a,b); }
 
 	// -- unary methods
 	Rep& neg( Rep& r, const Rep& a ) const { return Integer::neg(r,a); }
@@ -92,9 +94,9 @@ public:
 	Rep& lcmin( Rep& l, const Rep& a) const
 	{ Rep tmp(l); return lcm(l, tmp, a); }
 
-    	Rep& inv(Rep& u, const Rep& a, const Rep& b) const 
+    	Rep& inv(Rep& u, const Rep& a, const Rep& b) const
         { return ::inv(u,a,b); }
-    	Rep& invin(Rep& u, const Rep& b) const 
+    	Rep& invin(Rep& u, const Rep& b) const
         { return ::invin(u,b); }
 
 
@@ -137,6 +139,9 @@ public:
 	bool islt(const Rep& a, const long b) const { return islt(a,Rep(b));}
 
 
+#ifdef __GMP_PLUSPLUS__
+	void seeding(unsigned long s = 0) const { Integer::seeding(s) ; }
+#endif
 	template< class RandIter > Rep& random(RandIter&, Rep& r, long s = 1) const { return Integer::random(r,s); }
 	template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const { return Integer::random(r,b); }
 	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s = 1) const { return Integer::nonzerorandom(r,s); }
@@ -144,7 +149,8 @@ public:
 
 	// -- IO
 	std::istream& read ( std::istream& i )
-	{ char ch;
+	{
+		char ch;
 		i >> std::ws >> ch;
 		// JGD 22.03.03
 		//    if (ch != 'I')
@@ -159,4 +165,4 @@ public:
 
 
 #endif //__GIVARO_integer_H
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

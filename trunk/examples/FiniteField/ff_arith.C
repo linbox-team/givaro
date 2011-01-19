@@ -83,7 +83,7 @@ void TestField(const Field& F) {
     {
         typename Field::Element e;
         F.init(e); F.assign(e,d);
-        F.axmyin(e, a, b); // e = d - a*b;
+        F.maxpyin(e, a, b); // e = d - a*b;
 
             // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;

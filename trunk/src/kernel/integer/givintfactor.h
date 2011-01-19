@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : Prime numbers
 //              Factor sets :
 //              Pollard's rho method for factorization
 //              Elliptic curves factorization by Lenstra
 // Needs Container structures : stl ones for instance
-// Time-stamp: <29 Jun 05 14:12:09 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 05 14:12:09 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 #ifndef _GIVARO_FACTORISATION_H_
 #define _GIVARO_FACTORISATION_H_
@@ -46,7 +46,7 @@ public:
     IntFactorDom(RandIter g = RandIter()) :  IntPrimeDom(),PROD_first_primes(223092870), PROD_second_primes("10334565887047481278774629361"), _g(g) {
     }
 
-        //  loops defaulted to 0 forces Pollard's factorization to 
+        //  loops defaulted to 0 forces Pollard's factorization to
         //  be complete
     Rep& factor(Rep& r, const Rep& n, unsigned long loops = 0) const {
         if (isOne(gcd(r,n,PROD_first_primes)))
@@ -58,13 +58,13 @@ public:
 #endif
             } else
                 return factor_second_primes(r,n);
-        else 
+        else
             return factor_first_primes(r,n);
     }
 
         //  Factors are checked for primality
     Rep& iffactorprime (Rep& r, const Rep& n, unsigned long loops = 0) const {
-	if (factor(r, n, loops) != 1) {            
+	if (factor(r, n, loops) != 1) {
 	   if (! isprime(r,_GIVARO_ISPRIMETESTS_) ) {
 		Rep nn = r; factor(r,nn, loops);
 	   }
@@ -84,7 +84,7 @@ public:
 			break; // In case Lenstra fails also
 		}
            }
-	} 
+	}
 	return r;
     }
 
@@ -116,7 +116,7 @@ public:
     Rep& Pollard(RandIter&, Rep&, const Rep& n, unsigned long threshold = 0) const ;
         // returns a factor by Lenstra's elliptic curves method
     Rep& Lenstra(RandIter&, Rep&, const Rep& n, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
-    
+
     std::ostream& write(std::ostream& o, const Rep& n) const;
     template<class Array> std::ostream& write(std::ostream& o, Array&, const Rep& n) const;
 
@@ -128,7 +128,7 @@ private:
 #ifndef Pollard_cst
 #define Pollard_cst 1
 #endif
-    
+
     Rep& Pollard_fctin(Rep & x, const Rep& n) const {
         mulin(x,x);
         addin(x,Pollard_cst);

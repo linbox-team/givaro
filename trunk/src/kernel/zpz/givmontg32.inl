@@ -1,9 +1,9 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.10 2009-10-01 09:07:36 jgdumas Exp $
+// $Id: givmontg32.inl,v 1.11 2011-01-19 18:29:09 bboyer Exp $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // ==========================================================================
 
@@ -85,28 +85,28 @@ inline Montgomery<Std32>::Residu_t Montgomery<Std32>::residu( ) const
 { return _p; }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::mul (Rep& r, const Rep a, const Rep b) const
-{ 
-  return __GIVARO_MONTG32_MUL(r,_p,a,b); 
+{
+  return __GIVARO_MONTG32_MUL(r,_p,a,b);
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::sub (Rep& r, const Rep a, const Rep b) const
-{ 
-  return __GIVARO_MONTG32_SUB(r,_p,a,b); 
+{
+  return __GIVARO_MONTG32_SUB(r,_p,a,b);
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::add (Rep& r, const Rep a, const Rep b) const
-{ 
-  __GIVARO_MONTG32_ADD(r,_p,a,b); 
-  return r; 
+{
+  __GIVARO_MONTG32_ADD(r,_p,a,b);
+  return r;
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::neg (Rep& r, const Rep a) const
-{ 
-  return __GIVARO_MONTG32_NEG(r,_p,a); 
+{
+  return __GIVARO_MONTG32_NEG(r,_p,a);
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::inv (Rep& r, const Rep a) const
-{ 
+{
 	// invext(aB) --> 1/a*1/B
 	// % * B^3    --> B²/a
 	// redc       --> B/a
@@ -115,59 +115,59 @@ inline Montgomery<Std32>::Rep& Montgomery<Std32>::inv (Rep& r, const Rep a) cons
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::div (Rep& r, const Rep a, const Rep b) const
-{ 
+{
 	return mulin( inv(r,b), a );
 }
 
 
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::mulin (Rep& r, const Rep a) const
-{ 
-  return __GIVARO_MONTG32_MULIN(r,_p, a); 
+{
+  return __GIVARO_MONTG32_MULIN(r,_p, a);
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::divin (Rep& r, const Rep a) const
-{ 
+{
   Montgomery<Std32>::Rep ia;
   inv(ia, a);
   return mulin(r, ia);
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::addin (Rep& r, const Rep a) const
-{ 
-   __GIVARO_MONTG32_ADDIN(r,_p, a); 
-  return r; 
+{
+   __GIVARO_MONTG32_ADDIN(r,_p, a);
+  return r;
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::subin (Rep& r, const Rep a) const
-{ 
-  __GIVARO_MONTG32_SUBIN(r,_p, a); 
-  return r; 
+{
+  __GIVARO_MONTG32_SUBIN(r,_p, a);
+  return r;
 }
 
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::negin (Rep& r) const
-{ 
-  return __GIVARO_MONTG32_NEGIN(r,_p); 
+{
+  return __GIVARO_MONTG32_NEGIN(r,_p);
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::invin (Rep& r) const
-{ 
+{
 	uint32 t;
 	return r = inv(t,r);
 }
 
-inline Montgomery<Std32>::Rep& Montgomery<Std32>::axpy 
+inline Montgomery<Std32>::Rep& Montgomery<Std32>::axpy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
-{ 
-  __GIVARO_MONTG32_MULADD(r, _p, a, b, c); 
+{
+  __GIVARO_MONTG32_MULADD(r, _p, a, b, c);
   return r;
 }
 
-inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axpyin 
+inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axpyin
  (Rep& r, const Rep a, const Rep b) const
-{ 
-  __GIVARO_MONTG32_MULADDIN(r, _p, a, b); 
+{
+  __GIVARO_MONTG32_MULADDIN(r, _p, a, b);
   return r;
 }
 
@@ -194,11 +194,12 @@ inline Montgomery<Std32>::Rep&  Montgomery<Std32>::maxpyin
     return this->subin(r, this->mul(t,a,b));
 }
 
-// r -= a*b
-inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axmyin 
+// r = a*b - r
+inline Montgomery<Std32>::Rep&  Montgomery<Std32>::axmyin
  (Rep& r, const Rep a, const Rep b) const
 {
-    return maxpyin(r,a,b);
+    maxpyin(r,a,b);
+    return negin(r);
 }
 
 
@@ -227,7 +228,7 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const double 
   if (a < 0.0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   if ( ua > Signed_Trait<uint32>::max()){
-//    ua -= (double)floor(ua * _invdp)*_dp; 
+//    ua -= (double)floor(ua * _invdp)*_dp;
     ua = fmod(ua,_dp);
     r = (Rep) ua;
   } else
@@ -259,7 +260,7 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const long a 
 }
 
 
-inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const Integer& residu ) const 
+inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const Integer& residu ) const
 {
   long tr;
   if (residu <0) {
@@ -287,7 +288,7 @@ inline Montgomery<Std32>::Rep& Montgomery<Std32>::init( Rep& a, const int i) con
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::init( Rep& a, const unsigned int i) const { return init(a,(unsigned long)i); }
 
-inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::assign 
+inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::assign
   ( Rep& r, const Rep a ) const
 { return r=a; }
 
@@ -309,7 +310,7 @@ inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a, c
 template< class RandIter >
 inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a, long b) const {
 	        return init(a, g() %(uint32) b);
-		
+
 }
 
 template< class RandIter >
@@ -332,9 +333,9 @@ inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Re
 
 
  // -- Input: (z, <_p>)
-inline std::istream& Montgomery<Std32>::read (std::istream& s) 
+inline std::istream& Montgomery<Std32>::read (std::istream& s)
 {
-  char ch; 
+  char ch;
   s >> std::ws >> ch;
   if (ch != '(')
 //    GivError::throw_error( GivBadFormat("Montgomery<Std32>::read: syntax error: no '('"));

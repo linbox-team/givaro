@@ -3,10 +3,10 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.11 2010-10-15 13:43:48 bboyer Exp $
+// $Id: givrational.h,v 1.12 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 #ifndef _RATIONAL_H_
 #define _RATIONAL_H_
@@ -25,15 +25,15 @@ const Integer floor (const Rational &r) ;
 const Integer ceil  (const Rational &r) ;
 const Integer round (const Rational &r) ;
 const Integer trunc (const Rational &r) ;
-const Rational abs  (const Rational &r) ; 
+const Rational abs  (const Rational &r) ;
 const Rational pow (const Rational& n, unsigned int l);
 const Rational pow (const Rational& n, unsigned long l);
 unsigned long length (const Rational& r) ;
 int sign   (const Rational& r) ;
 int isZero (const Rational& r) ;
 int isOne  (const Rational& r) ;
-int isInteger(const Rational& r); 
- 
+int isInteger(const Rational& r);
+
 class RationalDom;
 
 // ----------------------------------- Class Rational
@@ -63,15 +63,15 @@ public :
 
         // Logical and physical copies
     Rational& operator = (const Rational& );
-    Rational& logcpy (const Rational& ) ; 
-    Rational& copy (const Rational& ) ; 
+    Rational& logcpy (const Rational& ) ;
+    Rational& copy (const Rational& ) ;
 
-//------------------Equalities and inequalities between rationals 
+//------------------Equalities and inequalities between rationals
     friend int compare(const Rational& a, const Rational& b) ;
     friend int absCompare(const Rational& a, const Rational& b) ;
 
 
-//----------------Elementary arithmetic between Rational 
+//----------------Elementary arithmetic between Rational
     Rational operator + (const Rational& r) const ;
     Rational operator - (const Rational& r) const ;
     Rational operator -() const ;
@@ -85,42 +85,42 @@ public :
 
 //-----------------------------------------Arithmetic functions
     friend const Rational pow(const Rational &r, const long l);
-  
+
 //-----------------------------------------Miscellaneous
     friend const Integer floor (const Rational &r) ;
     friend const Integer ceil  (const Rational &r) ;
     friend const Integer round (const Rational &r) ;
     friend const Integer trunc (const Rational &r) ;
 
-    inline friend const Rational abs  (const Rational &r) ; 
+    inline friend const Rational abs  (const Rational &r) ;
 
-    friend const Rational pow (const Rational& n, unsigned int l) { 
+    friend const Rational pow (const Rational& n, unsigned int l) {
         Rational r;
-        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l); 
+        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l);
         return r;
     }
-    
-    friend const Rational pow (const Rational& n, unsigned long l) { 
+
+    friend const Rational pow (const Rational& n, unsigned long l) {
         Rational r;
-        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l); 
+        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l);
         return r;
     }
-    
+
     const Integer nume() const ;
     const Integer deno() const ;
     inline friend unsigned long length (const Rational& r) ;
     inline friend int sign   (const Rational& r) ;
     inline friend int isZero (const Rational& r) ;
     inline friend int isOne  (const Rational& r) ;
-    inline friend int isInteger(const Rational& r);  
+    inline friend int isInteger(const Rational& r);
 
     std::ostream& print ( std::ostream& o ) const ;
 
     inline Rational reduce(const Rational& R) const ;
 
-    static void SetReduce() ; 
-    static void SetNoReduce() ; 
-  
+    static void SetReduce() ;
+    static void SetNoReduce() ;
+
         // -- Cast operators
     operator short() const { return (int) *this; }
     operator unsigned short() const { return (unsigned int) *this; }
@@ -138,14 +138,14 @@ public :
     operator float() const { return ((float)this->num)/((float)this->den); }
     operator double() const { return ((double)this->num)/((double)this->den); }
 
-protected: // Internal Representation : num/den 
+protected: // Internal Representation : num/den
     Integer num, den;
 
 public:
     enum ReduceFlag { Reduce = 0x1, NoReduce = 0x0 } ;
 protected:
     static ReduceFlag flags ;    // flags that indicates is reduction is done or not
-        // by default = Reduce 
+        // by default = Reduce
     Rational& reduce() ;
         // -- module initialization
     static void Init(int* argc, char***argv);
@@ -157,10 +157,10 @@ protected:
 
 public:
         // - exportation of the module
-    static GivModule Module; 
+    static GivModule Module;
         // -- Cstor for Zero and One to delay initialization after the main
     Rational( givNoInit );
-}; // ----------------------------------- End of Class Rationalional 
+}; // ----------------------------------- End of Class Rationalional
 
 extern std::istream& operator>> (std::istream& in, Rational& r) ;
 
@@ -211,7 +211,7 @@ public:
     Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
         { return r = a * b - c; };
     Rep& axmyin( Rep& r, const Rep& a, const Rep& b ) const
-        { return r -= a * b; };
+        { return r = a * b - r ; };
     Rep& maxpyin( Rep& r, const Rep& a, const Rep& b ) const
         { return r -= a * b; };
 
@@ -221,7 +221,7 @@ public:
     Rep& negin( Rep& r ) const { r.num=-r.num; return r; }
     Rep& invin( Rep& r ) const { std::swap(r.num,r.den); return r; }
 
-        // - return n^l 
+        // - return n^l
     Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r = ::pow(n, l); }
     Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r = ::pow(n, l); }
 
@@ -229,10 +229,10 @@ public:
         // - Rational number reconstruction
     Rep& ratrecon(Rep& r, const Integer& f, const Integer& m, const Integer& k, bool recurs = false) const {
         return r = Rational(f,m,k,recurs);
-    }       
+    }
     Rep& ratrecon(Rep& r, const Integer& f, const Integer& m, bool recurs=true) const {
         return r = Rational(f,m,::sqrt(m),recurs);
-    }       
+    }
 
 
         // - Misc
@@ -250,10 +250,10 @@ public:
 
         // -- IO
         // -- IO
-    std::istream& read ( std::istream& i ) 
+    std::istream& read ( std::istream& i )
         { char ch;
-        i >> std::ws >> ch; 
-        if (ch != 'R') 
+        i >> std::ws >> ch;
+        if (ch != 'R')
             GivError::throw_error(GivBadFormat("RationalDom::read: bad signature domain"));
         return i;
         }

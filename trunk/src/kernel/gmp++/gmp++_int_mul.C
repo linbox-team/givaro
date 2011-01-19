@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mul.C,v 1.9 2010-12-20 10:25:29 bboyer Exp $
+// $Id: gmp++_int_mul.C,v 1.10 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -53,7 +53,7 @@ Integer& Integer::mul(Integer& res, const Integer& n1, const long n2)
   if (isZero(n2)) return res = Integer::zero;
   // int sgn = GMP__SGN(n2);
   // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
-//   if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
+  // if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
   // if (sgn <0) return res = -res;
   mpz_mul_si( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
   return res;
@@ -72,30 +72,51 @@ Integer& Integer::axpy(Integer& res, const Integer& a, const Integer& x, const I
     if (isZero(a) || isZero(x)) return res = b;
 	mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
 	mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep);
-//    res = a ;
-//    mpz_addmul(  (mpz_ptr) &res.gmp_rep, (mpz_ptr) &a.gmp_rep, (mpz_ptr) &x.gmp_rep );
     return res;
 }
+
+Integer& Integer::axpy(Integer& res, const Integer& a, const long unsigned x, const Integer& b)
+{
+    if (&res == &b) return Integer::axpyin(res,a,x);
+    if (isZero(a) || isZero(x)) return res = b;
+	mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, x);
+	mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep);
+    return res;
+}
+
 
 Integer& Integer::axpyin(Integer& res, const Integer& a, const Integer& x)
 {
     if (isZero(a) || isZero(x)) return res;
-//     Rep gmp_res; mpz_init((mpz_ptr)&gmp_res);
-//     mpz_mul( (mpz_ptr)&gmp_res, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
-//     mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&gmp_res);
-//     mpz_clear((mpz_ptr)&gmp_res);
     mpz_addmul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
     return res;
 }
 
-Integer& Integer::maxpy(Integer& res, const Integer& a, const Integer& x, const Integer& b)
+Integer& Integer::axpyin(Integer& res, const Integer& a, const long unsigned x)
 {
-    if (isZero(b) || isZero(x)) return res=a;
-    mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
-    mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep, (mpz_ptr)&res.gmp_rep);
+    if (isZero(a) || isZero(x)) return res;
+    mpz_addmul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, x);
     return res;
 }
 
+
+Integer& Integer::maxpy(Integer& res, const Integer& a, const Integer& x, const Integer& b)
+{
+    if (isZero(a) || isZero(x)) return res=b;
+	if (&res == &b) return Integer::maxpyin(res,a,x);
+    mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
+    mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep, (mpz_ptr)&res.gmp_rep);
+	return res;
+}
+
+Integer& Integer::maxpy(Integer& res, const Integer& a, const long unsigned x, const Integer& b)
+{
+    if (isZero(a) || isZero(x)) return res=b;
+	if (&res == &b) return Integer::maxpyin(res,a,x);
+    mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, x);
+    mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep, (mpz_ptr)&res.gmp_rep);
+	return res;
+}
 
 Integer& Integer::axmy(Integer& res, const Integer& a, const Integer& x, const Integer& b)
 {
@@ -105,14 +126,41 @@ Integer& Integer::axmy(Integer& res, const Integer& a, const Integer& x, const I
     mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep);
     return res;
 }
+
+Integer& Integer::axmy(Integer& res, const Integer& a, const long unsigned x, const Integer& b)
+{
+    if (&res == &b) return Integer::axmyin(res,a,x);
+    if (isZero(a) || isZero(x)) return Integer::neg(res,b);
+    mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, x);
+    mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep);
+    return res;
+}
+
 Integer& Integer::axmyin(Integer& res, const Integer& a, const Integer& x)
 {
+	Integer::maxpyin(res,a,x);
+	Integer::negin(res);
+	return res ;
+}
+
+Integer& Integer::axmyin(Integer& res, const Integer& a, const unsigned long x)
+{
+	Integer::maxpyin(res,a,x);
+	Integer::negin(res);
+	return res ;
+}
+
+Integer& Integer::maxpyin(Integer& res, const Integer& a, const Integer& x)
+{
     if (isZero(a) || isZero(x)) return res;
-//     Rep gmp_res; mpz_init((mpz_ptr)&gmp_res);
-//     mpz_mul( (mpz_ptr)&gmp_res, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
-//     mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&gmp_res);
-//     mpz_clear((mpz_ptr)&gmp_res);
     mpz_submul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
+    return res;
+}
+
+Integer& Integer::maxpyin(Integer& res, const Integer& a, const unsigned long x)
+{
+    if (isZero(a) || isZero(x)) return res;
+    mpz_submul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, x);
     return res;
 }
 
@@ -182,3 +230,4 @@ Integer Integer::operator * (const long l) const
   mpz_mul_si( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
   return res;
 }
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

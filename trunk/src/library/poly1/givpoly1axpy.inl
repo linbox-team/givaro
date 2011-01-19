@@ -3,17 +3,17 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J-G. Dumas
-// $Id: givpoly1axpy.inl,v 1.3 2009-10-01 09:08:04 jgdumas Exp $
+// $Id: givpoly1axpy.inl,v 1.4 2011-01-19 18:29:09 bboyer Exp $
 // ==========================================================================
 
 // axpy, axmy, maxpy
 // J.G.D. 16.11.2006
 // A lot can be done to optimize those
-// Except for axpy, axpyin, maxpy with a a Type_t, 
-// all of them use a temporary vector where 
+// Except for axpy, axpyin, maxpy with a a Type_t,
+// all of them use a temporary vector where
 // a temporary value only would be sufficient.
 
 template <class Domain>
@@ -33,20 +33,20 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axpy  (Rep&
         for( ; ix != x.end(); ++ir, ++ix, ++iy)
             this->_domain.axpy(*ir, a, *ix, *iy);
         for( ; ir != r.end(); ++ir, ++iy)
-            this->_domain.assign(*ir, *iy);    
+            this->_domain.assign(*ir, *iy);
     } else {
         r.resize(x.size());
         typename Rep::iterator ir = r.begin();
         for( ; iy != y.end(); ++ir, ++ix, ++iy)
             this->_domain.axpy(*ir, a, *ix, *iy);
         for( ; ir != r.end(); ++ir, ++ix)
-            this->_domain.mul(*ir, a, *ix);    
+            this->_domain.mul(*ir, a, *ix);
     }
     return r;
 }
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axpyin(Rep& r, const Rep& a, const Rep& x) const 
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axpyin(Rep& r, const Rep& a, const Rep& x) const
 {
     Rep tmp; this->init(tmp);
     this->assign(tmp,r);
@@ -99,31 +99,36 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpy  (Rep
         // -- maxpyin: r -= a*b
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpyin(Rep& r, const Rep& a, const Rep& b) const{
-    Rep tmp; this->init(tmp);    
+    Rep tmp; this->init(tmp);
     return this->subin(r, this->mul(tmp,a,b));
 }
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpyin(Rep& r, const Type_t& a, const Rep& b) const{
-    Rep tmp; this->init(tmp);    
+    Rep tmp; this->init(tmp);
     return this->subin(r, this->mul(tmp,a,b));
 }
         // -- axmy: r <- a * x - y
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const{
-    Rep tmp; this->init(tmp);    
+    Rep tmp; this->init(tmp);
     return this->sub(r, this->mul(tmp, a, x), y);
 }
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmy  (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const{
-    Rep tmp; this->init(tmp);    
+    Rep tmp; this->init(tmp);
     return this->sub(r, this->mul(tmp, a, x), y);
 }
-        // -- axmyin: r <- a * x - y
+// -- axmyin: r <- a * x - y
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep& r, const Rep& a, const Rep& x) const{
-    return this->maxpyin(r, a, x);
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep& r, const Rep& a, const Rep& x) const
+{
+	this->maxpyin(r, a, x);
+	return this->negin(r);
 }
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep& r, const Type_t& a, const Rep& x) const{
-    return this->maxpyin(r, a, x);
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep& r, const Type_t& a, const Rep& x) const
+{
+	this->maxpyin(r, a, x);
+	return this->negin(r);
 }
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

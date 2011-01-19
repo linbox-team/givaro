@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <18 Jan 11 18:41:17 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <19 Jan 11 15:53:22 Jean-Guillaume.Dumas@imag.fr> 
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -87,23 +87,18 @@ public:
         // modulo is taken mod 2^k
     Rep & sqrootmodpoweroftwo (Rep & x, const Rep & a,const unsigned long k, const Rep & pk) const;
 
-        //p is supposed to be prime and odd
-        //use only onemorelift
-    Rep & sqrootlinear (Rep & x, const Rep & a,const Rep & p,const unsigned long k) const;
-
-        //p is supposed to be prime and odd
-        //use only hensellift
-    Rep & sqrootquad (Rep & x, const Rep & a,const Rep & p,const unsigned long k, const Rep & pk) const;
-
-        //using only onemorelift
-    Rep & sqroottwolinear(Rep & x, const Rep & a,const unsigned long k) const;
-
-        //using only hensellift
-    Rep & sqroottwoquad(Rep & x, const Rep & a,const unsigned long k, const Rep & pk) const;
-
- 
 protected:
 
+        // ======================================================== //
+        // Linear update using only onemorelift
+        // ======================================================== //
+
+        // p is supposed to be prime and odd
+    Rep & sqrootlinear (Rep & x, const Rep & a,const Rep & p,const unsigned long k) const;
+
+        // result is modulo 2^{k+1}
+    Rep & sqroottwolinear(Rep & x, const Rep & a,const unsigned long k) const;
+ 
         // ======================================================== //
         // Liftings
         // ======================================================== //

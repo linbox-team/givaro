@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <24 May 10 18:32:30 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <20 Jan 11 08:59:29 Jean-Guillaume.Dumas@imag.fr>
 // Author: J-G. Dumas
 // Description: fractions over a Ring domain
 // ===============================================================
@@ -400,22 +400,22 @@ public :
 		// -- axmyin: r <-  a * x - r
 		Rep& axmyin(Rep& r, const Rep& a, const Rep& x) const
 		{
-			axmyin(r,a,x);
+			maxpyin(r,a,x);
 			return negin(r);
 		}
 		Rep& axmyin(Rep& r, const Ring_E& a, const Rep& x) const
 		{
-			axmyin(r,a,x);
+			maxpyin(r,a,x);
 			return negin(r);
 		}
 		Rep& axmyin(Rep& r, const Rep& a, const Ring_E& x) const
 		{
-			axmyin(r,a,x);
+			maxpyin(r,a,x);
 			return negin(r);
 		}
 		Rep& axmyin(Rep& r, const Ring_E& a, const Ring_E& x) const
 		{
-			axmyin(r,a,x);
+			maxpyin(r,a,x);
 			return negin(r);
 		}
 		// -- maxpyin: r <- r - a * x

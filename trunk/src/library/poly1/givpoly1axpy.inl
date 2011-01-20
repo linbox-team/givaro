@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J-G. Dumas
-// $Id: givpoly1axpy.inl,v 1.4 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givpoly1axpy.inl,v 1.5 2011-01-20 08:15:39 jgdumas Exp $
 // ==========================================================================
 
 // axpy, axmy, maxpy
@@ -110,15 +110,13 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpyin(Rep
         // -- axmy: r <- a * x - y
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const{
-    Rep tmp; this->init(tmp);
-    return this->sub(r, this->mul(tmp, a, x), y);
+    return this->subin(this->mul(r, a, x),y);
 }
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmy  (Rep& r, const Type_t& a, const Rep& x, const Rep& y) const{
-    Rep tmp; this->init(tmp);
-    return this->sub(r, this->mul(tmp, a, x), y);
+    return this->subin(this->mul(r, a, x),y);
 }
-// -- axmyin: r <- a * x - y
+// -- axmyin: r <- a * x - r
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep& r, const Rep& a, const Rep& x) const
 {

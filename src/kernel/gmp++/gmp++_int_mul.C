@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_mul.C,v 1.10 2011-01-19 18:29:09 bboyer Exp $
+// $Id: gmp++_int_mul.C,v 1.11 2011-01-20 08:19:15 jgdumas Exp $
 // ==========================================================================
 
 #include "gmp++/gmp++.h"
@@ -103,16 +103,15 @@ Integer& Integer::axpyin(Integer& res, const Integer& a, const long unsigned x)
 Integer& Integer::maxpy(Integer& res, const Integer& a, const Integer& x, const Integer& b)
 {
     if (isZero(a) || isZero(x)) return res=b;
-	if (&res == &b) return Integer::maxpyin(res,a,x);
+    if (&res == &b) return Integer::maxpyin(res,a,x);
     mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, (mpz_ptr)&x.gmp_rep);
     mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep, (mpz_ptr)&res.gmp_rep);
 	return res;
 }
-
 Integer& Integer::maxpy(Integer& res, const Integer& a, const long unsigned x, const Integer& b)
 {
     if (isZero(a) || isZero(x)) return res=b;
-	if (&res == &b) return Integer::maxpyin(res,a,x);
+    if (&res == &b) return Integer::maxpyin(res,a,x);
     mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&a.gmp_rep, x);
     mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&b.gmp_rep, (mpz_ptr)&res.gmp_rep);
 	return res;

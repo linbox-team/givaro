@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Oct 10 17:44:34 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <20 Jan 11 09:48:37 Jean-Guillaume.Dumas@imag.fr>
 // Author: J-G. Dumas
 // Description: Pieces of polynomials as defined in
 // [Arne Storjohann, High-Order Lifting
@@ -290,12 +290,12 @@ public :
 
 	Rep& axpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const
 	{
-		return this->addin( this->mul(r,a,x), y);
+            return this->addin( this->mul(r,a,x), y);
 	}
 	Rep& axpyin(Rep& r, const Rep& a, const Rep& x) const
 	{
-		Rep tmp;
-		return this->addin(r, this->mul(tmp,a,x));
+            Rep tmp; this->init(tmp);
+            return this->addin(r, this->mul(tmp,a,x));
 	}
 	Rep& axpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& val, const Degree& deg) const
 	{
@@ -303,7 +303,7 @@ public :
 	}
 	Rep& axpyin  (Rep& r, const Rep& a, const Rep& x, const Degree& val, const Degree& deg) const
 	{
-		Rep tmp;
+		Rep tmp; this->init(tmp);
 		return this->addin(r, this->mul(tmp,a,x,val,deg), val, deg);
 	}
 
@@ -313,9 +313,7 @@ public :
 	}
 	Rep& axmyin(Rep& r, const Rep& a, const Rep& x) const
 	{
-		Rep tmp;
-		this->subin(r, this->mul(tmp,a,x));
-		return this->negin(r);
+		return this->negin(this->maxpyin(r,a,x));
 	}
 	Rep& axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& val, const Degree& deg) const
 	{
@@ -323,9 +321,7 @@ public :
 	}
 	Rep& axmyin  (Rep& r, const Rep& a, const Rep& x, const Degree& val, const Degree& deg) const
 	{
-		Rep tmp;
-		this->subin(r, this->mul(tmp,a,x,val,deg), val, deg);
-		return this->negin(r);
+                return this->negin(this->maxpyin(r,a,x,val,deg));
 	}
 
 	Rep& maxpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const

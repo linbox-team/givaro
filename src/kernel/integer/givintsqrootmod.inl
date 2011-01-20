@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Jan 11 16:31:06 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <20 Jan 11 11:02:30 Jean-Guillaume.Dumas@imag.fr> 
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -15,109 +15,99 @@ template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
 IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x, 
                                          const Rep & a, 
                                          const Rep & p) const {
-    Integer res;
-    Rep amp (a);
-    amp %=p;
-    if (amp == 0 || amp == 1) return x = amp;
+//         std::cerr << "p:= " << p << ';' << std::endl;
+//         std::cerr << "a:= " << a << ';' << std::endl;
+    Rep amp (a); amp %=p;
+    if (amp == 0UL || amp == 1UL) return x = amp;
 
     if (legendre (amp, p) == -1){
         std::cerr << amp << " is not a quadratic residue mod " << p << std::endl;
         return x = -1;
     }
 
-	// p = 3 mod 4: x=a^{(p+1)/4 } mod p
-    if ((p & 3UL) == 3UL) {
-        Rep ppu (p);
-        ++ppu;
-        ppu >>= 2;			// ppu = (p+1)/4
-        return powmod (x, amp, ppu, p);	// powmod (x,a,(p+1)/4,p);
+    if ((p & 3UL) == 3UL) {			// If p = 3 mod 4
+        Rep ppu (p); ++ppu; ppu >>= 2UL;	// ppu = (p+1)/4
+        return powmod (x, amp, ppu, p);		// powmod (x,a,(p+1)/4,p);
+    }
+
+        // O. Atkin
+    if ((p & 7UL) == 5UL) {			// If p = 5 mod 8
+        Rep tmp;
+        Rep puis (p); puis -= 1UL; puis >>= 2UL;// puis = (p-1)/4
+        powmod (tmp, amp, puis, p);
+
+        if (tmp == 1UL) {
+            puis = p; puis += 3UL; puis >>= 3UL;// puis = (p+3)/8
+            return powmod (x, amp, puis, p);
+        } 
+        puis = p; puis -= 5UL; puis >>= 3UL; 	// puis = (p-5)/8
+        
+        Rep a4 (amp); a4 <<= 2;
+        powmod (x, a4, puis, p);
+        x *= amp; x <<= 1; 			// 2a(4a)^{(p-5)/8}
+        return x %= p;	
     }
 
     size_t l = (size_t) ceil (logtwo (p) - 1);
 
-    if ((p & 7UL) == 5UL) {
-        Rep tmp;
-        Rep puis (p);
-        puis -= 1;
-        puis >>= 2;
+        // S. Mueller
+    if ((p & 15UL) == 9UL) {			// If p = 9 mod 16
+        Rep i (amp); i <<= 1UL;
+        Rep puis (p); puis -= 1UL; puis >>= 2UL;// puis = (p-1)/4
+        powmod (x, i, puis, p);			// (2a)^{(p-1}/4} is +1 or -1
+ 	if (x != 1UL) x = -1L;
 
-        powmod (tmp, amp, puis, p);
-        if (tmp == 1UL) {
-            puis = p;
-            puis += 3;
-            puis >>= 3;
-            return powmod (x, amp, puis, p);
-        } 
-        puis = p;
-        puis -= 5;
-        puis >>= 3;
-        Rep a4 (amp);
-        a4 *= 4;
-        powmod (x, a4, puis, p);
-        x *= amp;
-        x <<= 1;
-        return x %= p;
+        Rep d; while (legendre (Rep::nonzerorandom (d, l), p) == x) ;
+        puis = p; puis -= 9UL; puis >>= 4UL; 	// puis = (p-9)/16
+        i *= d; i *= d; 	
+        powmod(x, i, puis, p);			// (2d^2a)^{(p-9)/16}
+        i *= x; i *= x; --i;			// i=(2d^2x^2a-1) ; i^2 = -1
+
+        x *= d; x *= amp; x *= i;		// xda(i-1)
+        return x %= p;				// +/- x is a root
     }
 
-	// H. Cohen version
-    Rep p1 (p);
-    --p1;
+        // Tonelli and Shanks
+	// [H. Cohen, Algorithm 1.5.1, p33,
+        // A course in computational algebraic number theory]
+    Rep p1 (p); --p1;
     Rep q (p1);
     long e (0);
-    while ((q & 1UL) == 0){
-        q >>= 1;
-        ++e;
-    }
-	// now we have e and q such like : p-1=q*2^e with q odd
+    for( ; (q & 1UL) == 0; ++e) q >>= 1; 
+
+	// now we have e and q such that : p-1=q*2^e with q odd
 	// we need a non quadratic element : g 
-    Rep g; while (legendre (Rep::random (g, l), p) != -1) ;
+    Rep g; while (legendre (Rep::nonzerorandom (g, l), p) != -1) ;
 
     Rep z;
-    powmod (z, g, q, p);
+    powmod (z, g, q, p);	// z = g^q mod p
 	//Initialize
     Rep y (z);
-    long  r (e);
-    Rep tmp (q);
-    tmp -= 1;
-    tmp >>= 1;
-    powmod (x, amp, tmp, p);
+    Rep tmp (q); tmp -= 1; tmp >>= 1;
+    powmod (x, amp, tmp, p); 	// a^{(q-1)/2} mod p
     Rep b (x);
-    b *= x;
-    b *= amp;
-    b %= p;
-    x *= amp;
-    x %= p;
+    b *= x; b *= amp; b %= p;	// ax^2
+    x *= amp; x %= p;		// ax
 
-    long m;
-    Rep twopuism;
-    Rep bpuis2puism;
-    Rep t;
-    Rep puis (r);
-    while ((b % p) != 1){
-        m = 1;
-        twopuism = 2;
-        Rep bpuis2puism;
-        powmod (bpuis2puism, b, twopuism, p);
-        while (bpuis2puism != 1){
-            ++m;
-            this->pow (twopuism, Integer(2), m);
-            powmod (bpuis2puism, b, twopuism, p);
-        }
+        // Find exponent
+    long m(1), r(e);
+    Rep b2k, t, puis(r);
+    while (b != 1){
+        b2k = b;
+        for(m = 0; b2k != 1; ++m) {
+            b2k *= b2k; b2k %= p;
+        } // m smallest such that b^{2^m} is 1 mod p
         if (m == r){
-            x = -1;
             std::cerr << amp << " is not a quadratic residu mod " << p << std::endl;
+            return x = -1;
         }
-        long lpuis = r;
-        lpuis -= m;
-        --lpuis;
-        pow (puis, Integer(2), lpuis);
-        powmod (t, y, puis, p);
-        powmod (y, t, 2, p);
-        r = m;
-        x *= t;
-        x %= p;
-        b *= y;
-        b %= p;
+        long lpuis = r; lpuis -= m; --lpuis;
+        puis = 1; puis <<= lpuis;	// 2^{m-r-1}
+        powmod (t, y, puis, p);		// t = y^{ 2^{m-r-1} } mod p
+        y = t; y *= t; y %= p;		// y = t^2 mod p
+        r = m;				// r = m
+        x *= t; x %= p;			// x = xt mod p
+        b *= y; b %= p;			// b = by mod p
     }
     return x;
 }
@@ -129,8 +119,7 @@ IntSqrtModDom<RandIter>::sqrootmodprimepower (Rep & x,
                                               const unsigned long k, 
                                               const Rep & pk) const{
     
-    Rep tmpa(a);
-    tmpa%=pk;
+    Rep tmpa(a); tmpa%=pk;
     if(tmpa==0) return x=0;
     if(tmpa==1) return x=1;
     if (k == 1) return sqrootmodprime (x, tmpa, p);
@@ -190,8 +179,7 @@ IntSqrtModDom<RandIter>::sqrootmodpoweroftwo (Rep & x,
                                               const Rep & a, 
                                               const unsigned long k,
                                               const Rep & pk) const {
-    Rep tmpa (a);
-    tmpa %= pk;
+    Rep tmpa (a); tmpa %= pk;
     x = 0;
         //first cases k = 1,2,3
     if (k == 1) return x = tmpa;
@@ -334,8 +322,7 @@ IntSqrtModDom<RandIter>::sqroothensellift (Rep & x,
     
     Rep h(x<<1);
     this->invin (h, pk);
-    h *= u;
-    h %= pk;
+    h *= u; h %= pk;
 // h = (a-x0^2)/(2*x0*p^k) modulo pk
 
     return Integer::axpyin(x,h,pk);
@@ -349,16 +336,14 @@ IntSqrtModDom<RandIter>::sqrootonemorelift (Rep & x0,
                                             const Rep & pk) const {
     Rep u(a);
     Integer::maxpyin(u,x0,x0);
-    u /= pk;
-    u %= p;
+    u /= pk; u %= p;
     if (u == 0) return x0;
 
 //u=(a-x0^2)/p^k
 
     Rep h(x0<<1);
     this->invin (h, p);
-    h *= u;
-    h %= p;
+    h *= u; h %= p;
 // h = (a-x0^2)/(2*x0*p^k) modulo p
 
     return Integer::axpyin(x0,h,pk);
@@ -383,8 +368,7 @@ IntSqrtModDom<RandIter>::sqrootmodtwolift (Rep & x,
     
     Rep h(x);
     invin(h,pk1);
-    h *= u;
-    h %= pk1;
+    h *= u; h %= pk1;
 
     return Integer::axpyin(x,h,pk1);
 }

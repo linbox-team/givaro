@@ -114,6 +114,15 @@ int TestOneRing(const Ring& F, const int FIRSTINT, const float FIRSTFLOAT)
 
 	TESTE_EG(e,e_);
 
+	F.maxpy(e, a, b, d); // e = d-a*b;
+
+	F.assign(e_,d);
+	F.axmyin(e_, a, b); // e = a*b-e=a*b-d;
+
+	F.negin(e_);
+
+	TESTE_EG(e,e_);
+
 
 
 #ifdef GIVARO_DEBUG

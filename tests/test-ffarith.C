@@ -89,6 +89,12 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 	F.addin(d_,c);
 	F.subin(d,c);
 
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a:=", a) << ';' << std::endl;
+//         F.write(std::cerr << "b:=", b) << ';' << std::endl;
+//         F.write(std::cerr << "c:=", c) << ';' << std::endl;
+//         F.write(std::cerr << "d:=", d) << ';' << std::endl;
+//         F.write(std::cerr << "d_:=", d_) << ';' << std::endl;
 	TESTE_EG(d_,d);
 
 	F.sub(d,a,b); // d = a -b
@@ -113,13 +119,15 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 	TESTE_EG(a_,a);
 
 
-
-
 	F.maxpy(e, a, b, d); // e = d-a*b
-
 	F.assign(e_,d);
 	F.maxpyin(e_, a, b); // e = d - a*b;
 
+//         F.write(std::cerr << "a:=", a) << ';' << std::endl;
+//         F.write(std::cerr << "b:=", b) << ';' << std::endl;
+//         F.write(std::cerr << "d:=", d) << ';' << std::endl;
+//         F.write(std::cerr << "e:=", e) << ';' << std::endl;
+//         F.write(std::cerr << "e_:=", e_) << ';' << std::endl;
 	TESTE_EG(e,e_);
 
 
@@ -202,6 +210,9 @@ int main(int argc, char ** argv)
     Integer::seeding(seed);
 
 
+    
+
+
 	// modulo 13 over 16 bits
 	ZpzDom<Std16> C13(13);
 	JETESTE(C13,seed);
@@ -227,6 +238,14 @@ int main(int argc, char ** argv)
 	// modulo 13 over 32 bits with Montgomery reduction
 	Montgomery<Std32> M13(13);
 	JETESTE(M13,seed);
+
+
+
+
+	// modulo max over 32 bits
+	ZpzDom<Std32> Zmax(65521);
+	JETESTE(Zmax,seed);
+
 
 	// modulo 2 over 16 bits
 	ZpzDom<Std16> C2(2);

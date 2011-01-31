@@ -268,7 +268,13 @@ int main(int argc, char ** argv)
 	JETESTE(LLmax,seed);
 #endif
 
-      
+	// Zech log prime field with prime max
+	GFqDom<int> GFmax( 32749 );
+	JETESTE(GFmax,seed);
+
+	// Zech log prime field with prime max
+	GFqDom<long long> GFLLmax( 4194301ULL );
+	JETESTE(GFLLmax,seed);
 
 
 // Characteristic 2
@@ -295,6 +301,9 @@ int main(int argc, char ** argv)
 	// modulo 2 fully tabulated
 	ZpzDom<Log16> L2(2);
 	JETESTE(L2,seed);
+
+// Other Characteristics
+
 
 	// modulo 3 over 32 bits with Montgomery reduction
 	Montgomery<Std32> M2(3);

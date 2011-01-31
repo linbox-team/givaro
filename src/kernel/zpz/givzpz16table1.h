@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.12 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpz16table1.h,v 1.13 2011-01-31 09:21:29 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -26,6 +26,7 @@
 // ==========================================================================
 // -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
+// - p max is 251
 // ==========================================================================
 
 template<>

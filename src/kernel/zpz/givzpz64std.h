@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.15 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpz64std.h,v 1.16 2011-01-31 09:21:29 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -21,6 +21,7 @@
 // ==========================================================================
 // -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
+// - p max is 4294967291
 // ==========================================================================
 
 template<>

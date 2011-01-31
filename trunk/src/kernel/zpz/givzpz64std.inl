@@ -7,7 +7,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.15 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpz64std.inl,v 1.16 2011-01-31 09:11:58 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -17,9 +17,9 @@
 
 
 // r = a*b
-#define __GIVARO_ZPZ64_N_MUL(r,p,a,b) { r = (a*b); r= (r>=p ? r % (uint64)p : r); }
+#define __GIVARO_ZPZ64_N_MUL(r,p,a,b) ( r = (uint64)(a*b) % (uint64)p )
 // r *= a
-#define __GIVARO_ZPZ64_N_MULIN(r,p,a) { r *= a; r= (r<p ? r : r % (uint64)p);}
+#define __GIVARO_ZPZ64_N_MULIN(r,p,a) (  r = (uint64)(r*a) % (uint64)p  )
 
 // r = a - b
 #define __GIVARO_ZPZ64_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
@@ -32,28 +32,19 @@
 #define __GIVARO_ZPZ64_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p);}
 
 // r <- a*b+c % p
-#define __GIVARO_ZPZ64_N_MULADD(r,p,a,b,c) \
-{ r = (a*b+c); r= (r<p ? r : r % (uint64)p); }
+#define __GIVARO_ZPZ64_N_MULADD(r,p,a,b,c) ( r = (uint64)(a*b+c) % (uint64)p )
 
-#define __GIVARO_ZPZ64_N_MULADDIN(r,p,a,b) \
-{ r += (a*b); r= (r<p ? r : r % (uint64)p);}
-
-#define __GIVARO_ZPZ64_NEGMOD(r,p) \
-{ r %= (int64)p; r=(r<0?r+p:r); }
-
-// a*b-c
-#define __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,c) \
-{ r = (a*b-c); if (r<0) __GIVARO_ZPZ64_NEGMOD(r,p) else { r= (r<p?r: r % (uint32)p); } }
-
-// a*b-c
-#define __GIVARO_ZPZ64_N_SUBMULIN(r,p,a,b) \
-{ r -= (a*b); __GIVARO_ZPZ64_NEGMOD(r,p); }
-
-
-
+#define __GIVARO_ZPZ64_N_MULADDIN(r,p,a,b) ( r = (uint64)(a*b+r) % (uint64)p )
 
 #define __GIVARO_ZPZ64_N_NEG(r,p,a) { r = (a == 0 ? 0 : p-a); }
 #define __GIVARO_ZPZ64_N_NEGIN(r,p) { r = (r == 0 ? 0 : p-r); }
+
+// a*b-c
+#define __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,c) ( r = (uint64)(a*b+p-c) % (uint64)p )
+
+// r-a*b
+#define __GIVARO_ZPZ64_N_SUBMULIN(r,p,a,b) { \
+    __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,r); __GIVARO_ZPZ64_N_NEGIN(r,p); }
 
 
 inline ZpzDom<Std64>::Residu_t ZpzDom<Std64>::residu( ) const

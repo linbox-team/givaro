@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.16 2011-01-31 09:05:07 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.17 2011-01-31 09:11:58 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -35,15 +35,15 @@
 
 #define __GIVARO_ZPZ32_N_MULADDIN(r,p,a,b) ( r = (uint32)(a*b+r) % (uint32)p )
 
+#define __GIVARO_ZPZ32_N_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
+#define __GIVARO_ZPZ32_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
+
 // a*b-c
 #define __GIVARO_ZPZ32_N_MULSUB(r,p,a,b,c) ( r = (uint32)(a*b+p-c) % (uint32)p )
 
 // r-a*b
 #define __GIVARO_ZPZ32_N_SUBMULIN(r,p,a,b) { \
     __GIVARO_ZPZ32_N_MULSUB(r,p,a,b,r); __GIVARO_ZPZ32_N_NEGIN(r,p); }
-
-#define __GIVARO_ZPZ32_N_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
-#define __GIVARO_ZPZ32_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
 
 inline ZpzDom<Std32>::Residu_t ZpzDom<Std32>::residu( ) const
 { return _p; }

@@ -240,13 +240,39 @@ int main(int argc, char ** argv)
 	JETESTE(M13,seed);
 
 
-	// modulo max over 32 bits
+// Maximal values
+
+	// prime modulo max over 16 bits
+	ZpzDom<Std16> Cmax(251);
+	JETESTE(Cmax,seed);
+
+	// prime modulo max fully tabulated
+	ZpzDom<Log16> Lmax(251);
+	JETESTE(Lmax,seed);
+
+	// prime modulo max over 32 bits
 	ZpzDom<Std32> Zmax(65521);
 	JETESTE(Zmax,seed);
 
-	// modulo max over 64 bits
+	// prime modulo max over 32 bits
+	ZpzDom<Unsigned32> Umax(65521);
+	JETESTE(Umax,seed);
+
+	// prime modulo max over 32 bits with Montgomery reduction
+	Montgomery<Std32> Mmax(40499);
+	JETESTE(Mmax,seed);
+
+#ifdef __USE_Givaro_SIXTYFOUR__
+	// prime modulo max over 64 bits
 	ZpzDom<Std64> LLmax(4294967291ULL);
 	JETESTE(LLmax,seed);
+#endif
+
+      
+
+
+// Characteristic 2
+
 
 	// modulo 2 over 16 bits
 	ZpzDom<Std16> C2(2);

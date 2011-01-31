@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.13 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpz16std.inl,v 1.14 2011-01-31 09:21:29 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -16,9 +16,9 @@
 
 
 // r = a*b
-#define __GIVARO_ZPZ16_N_MUL(r,p,a,b) { r = (a*b); r= (r>=p ? r % (uint16)p : r); }
+#define __GIVARO_ZPZ16_N_MUL(r,p,a,b) ( r = (uint16)(a*b) % (uint16)p )
 // r *= a
-#define __GIVARO_ZPZ16_N_MULIN(r,p,a) { r *= a; r= (r<p ? r : r % (uint16)p);}
+#define __GIVARO_ZPZ16_N_MULIN(r,p,a) (  r = (uint16)(r*a) % (uint16)p  )
 
 // r = a - b
 //#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
@@ -33,23 +33,20 @@
 #define __GIVARO_ZPZ16_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p);}
 
 // r <- a*b+c % p
-#define __GIVARO_ZPZ16_N_MULADD(r,p,a,b,c) \
-{ r = (a*b+c); r= (r<p ? r : r % (uint16)p); }
+#define __GIVARO_ZPZ16_N_MULADD(r,p,a,b,c) ( r = (uint16)(a*b+c) % (uint16)p )
 
-#define __GIVARO_ZPZ16_N_MULADDIN(r,p,a,b) \
-{ r += (a*b); r= (r<p ? r : r % (uint16)p);}
-
+#define __GIVARO_ZPZ16_N_MULADDIN(r,p,a,b) ( r = (uint16)(a*b+r) % (uint16)p )
 
 #define __GIVARO_ZPZ16_NEGMOD(r,p) \
 { r %= (int16)p; r=(r<0?r+p:r); }
 
-// // a*b-c
-#define __GIVARO_ZPZ16_N_MULSUB(r,p,a,b,c) \
-{ r = (a*b-c); if (r<0) __GIVARO_ZPZ16_NEGMOD(r,p) else { r= (r<p?r: r % (uint16)p); } }
 
 // a*b-c
-#define __GIVARO_ZPZ16_N_SUBMULIN(r,p,a,b) \
-{ r -= (a*b); __GIVARO_ZPZ16_NEGMOD(r,p); }
+#define __GIVARO_ZPZ16_N_MULSUB(r,p,a,b,c) ( r = (uint16)(a*b+p-c) % (uint16)p )
+
+// r-a*b
+#define __GIVARO_ZPZ16_N_SUBMULIN(r,p,a,b) { \
+    __GIVARO_ZPZ16_N_MULSUB(r,p,a,b,r); __GIVARO_ZPZ16_N_NEGIN(r,p); }
 
 
 

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software. 
 // see the COPYRIGHT file for more details.
 // file: givpowers.h 
-// Time-stamp: <28 Feb 08 14:17:46 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <20 Jan 11 11:22:23 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 
 #ifndef _GIVARO_POWER_H_
@@ -33,7 +33,8 @@ template<class TT, class UU> TT power(const TT n, const UU l) {
           res = puiss ; 
           }   
       }
-      if ((p >>= 1) != 0) puiss = puiss * puiss ;
+//       if ((p >>= 1) != 0) puiss = puiss * puiss ;
+      if ((p >>= 1) != 0) puiss *= puiss ;
     
   }
   return res ;
@@ -52,7 +53,7 @@ template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D&
   unsigned long p = l ;
   short is_assg = 0 ;
 
-  TT puiss = n, tmp ;
+  TT puiss = n ;
   res = F.one ;
 
   while (p != 0) {
@@ -64,7 +65,8 @@ template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D&
           res = puiss ; 
           }
       } 
-      if ((p >>= 1) != 0) { F.mul(tmp,puiss,puiss) ; puiss = tmp; }
+      if ((p >>= 1) != 0) { F.mulin(puiss,puiss) ; }
+//       if ((p >>= 1) != 0) { F.mul(tmp,puiss,puiss) ; puiss = tmp; }
   } 
   return res ;
 }

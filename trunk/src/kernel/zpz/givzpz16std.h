@@ -6,13 +6,13 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.12 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpz16std.h,v 1.13 2011-02-01 17:59:25 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 //
 // Description:
-//   Arithmetic on Z/pZ, with p a prime number less than 2^16
+//   Arithmetic on Z/pZ, with p a prime number less than 2^14
 //   Modulo typedef is a signed long number. In case it was modified
 //   then bezout algorithm must be changed (coefficient can be negative).
 #ifndef _GIVARO_ZPZ16STD_H_
@@ -186,18 +186,8 @@ public:
 
 	// -- Misc: r <- a mod p
 	void assign ( const size_t sz, Array r, constArray a ) const;
-	/* JGD 26.10.99
-	   void assign ( Rep& r, const Rep a) const;
-	   void assign ( Rep& r, const long a ) const;
-	   void assign ( Rep& r, const unsigned long a ) const;
-	   void assign ( Rep& r, const int a ) const;
-	   void assign ( Rep& r, const unsigned int a ) const;
-	   */
-	Rep& assign ( Rep& r, const Rep a) const;
-	Rep& assign ( Rep& r, const long a ) const;
-	Rep& assign ( Rep& r, const unsigned long a ) const;
-	Rep& assign ( Rep& r, const int a ) const;
-	Rep& assign ( Rep& r, const unsigned int a ) const;
+    	Rep& assign ( Rep& r, const Rep a) const;
+
 	// ----- random generators
 	template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
 	template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;

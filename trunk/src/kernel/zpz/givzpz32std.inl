@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.17 2011-01-31 09:11:58 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.18 2011-02-01 17:59:25 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -267,8 +267,7 @@ inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::maxpyin (Rep& r,
 inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::axmyin (Rep& r,
 						   const Rep a, const Rep b) const
 {
-    maxpyin(r,a,b);
-    return negin(r);
+    return __GIVARO_ZPZ32_N_MULSUB(r, (int32)_p, (int32)a, (int32)b, r );
 }
 
 inline void ZpzDom<Std32>::axmy (const size_t sz,
@@ -376,47 +375,14 @@ inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::init( Rep& a, const unsigned int i) co
 inline void ZpzDom<Std32>::assign
   ( const size_t sz, Array r, constArray a ) const
 {
-  for ( size_t i=sz ; --i ; ) {
-    if (a[i] <ZpzDom<Std32>::zero) {
-       r[i] = a[i] + _p;
-       if (r[i] <ZpzDom<Std32>::zero) r[i] = r[i] % _p;
-    }
-    else if ((uint32)a[i] >_p) {
-       r[i] = a[i] - _p;
-       if ((uint32)r[i] >=_p) r[i] = r[i] % _p;
-    }
-    else r[i] = a[i];
-  }
+  for ( size_t i=sz ; --i ; )
+    r[i] = a[i];
 }
 
-inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign ( Rep& r, const long a ) const
+inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign ( Rep& r, const Rep a ) const
 {
-  int sign; uint32 ua;
-  if (a <0) { sign =-1; ua = -a;}
-  else { ua = a; sign =1; }
-  r = (ua >=_p) ? ua % _p : ua;
-  if (sign ==-1) r = _p - r;
-  return r;
+  return r=a;
 }
-
-inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign ( Rep& r, const short a ) const
-{ return ZpzDom<Std32>::assign( r, (long)a); }
-
-inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign ( Rep& r, const unsigned long a ) const
-{ return r = (a >=_p) ? a % _p : a; }
-
-inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign
-  ( Rep& r, const unsigned short a ) const
-{ return r = (a >=_p) ? a % _p : a; }
-
-inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign
-  ( Rep& r, const int32 a ) const
-{ return assign(r, (long)a); }
-
-inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::assign
-  ( Rep& r, const uint32 a ) const
-{ return assign(r, (unsigned long)a); }
-
 
 inline void ZpzDom<Std32>::init
   ( const size_t sz, Array r, constArray a ) const

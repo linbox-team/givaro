@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.15 2011-01-31 09:21:29 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.16 2011-02-01 17:59:25 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -28,7 +28,7 @@
 // ==========================================================================
 // -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
-// - p max is 65521
+// - p max is 32749
 // ==========================================================================
 
 template<>
@@ -166,20 +166,7 @@ public:
 
   // -- Misc: r <- a mod p
   void assign ( const size_t sz, Array r, constArray a ) const;
-/* JGD 26.10.99
-  void assign ( Rep& r, const Rep a) const;
-  void assign ( Rep& r, const long a ) const;
-  void assign ( Rep& r, const unsigned long a ) const;
-  void assign ( Rep& r, const int a ) const;
-  void assign ( Rep& r, const unsigned int a ) const;
-*/
- // Rep& assign ( Rep& r, const Rep a) const;
-  Rep& assign ( Rep& r, const int32 a) const;
-  Rep& assign ( Rep& r, const uint32 a) const;
-  Rep& assign ( Rep& r, const long a ) const;
-  Rep& assign ( Rep& r, const unsigned long a ) const;
-  Rep& assign ( Rep& r, const short a ) const;
-  Rep& assign ( Rep& r, const unsigned short a ) const;
+  Rep& assign ( Rep& r, const Rep a) const;
    // ----- random generators
 //     Rep& NONZEROGIVRANDOM(Rep&) const ;
 //     Rep& GIVRANDOM(Rep&) const ;

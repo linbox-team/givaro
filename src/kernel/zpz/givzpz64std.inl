@@ -7,7 +7,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.16 2011-01-31 09:11:58 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.17 2011-02-01 17:59:25 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -348,17 +348,8 @@ inline size_t ZpzDom<Std64>::length(const Rep ) const
 inline void ZpzDom<Std64>::assign
   ( const size_t sz, Array r, constArray a ) const
 {
-	for ( size_t i = sz; --i; ) {
-    if (a[i] <ZpzDom<Std64>::zero) {
-       r[i] = a[i] + _p;
-       if (r[i] <ZpzDom<Std64>::zero) r[i] = r[i] % (uint64)_p;
-    }
-    else if ((uint64)a[i] >_p) {
-       r[i] = a[i] - _p;
-       if ((uint64)r[i] >=_p) r[i] = r[i] % (uint64)_p;
-    }
-    else r[i] = a[i];
-  }
+    for ( size_t i = sz; --i; )
+        r[i] = a[i];
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const unsigned long a ) const

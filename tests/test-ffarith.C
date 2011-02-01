@@ -37,7 +37,9 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 #ifdef GIVARO_DEBUG
 	std::cerr << "testing " ;
 	F.write(std::cerr );
+        std::cerr << " (" << FIRSTINT << ',' << FIRSTFLOAT << ')';
 	std::cerr  << " : " << std::flush;
+        
 #endif
 
 
@@ -62,6 +64,13 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 	F.add(c, a, b);       // c = a+b
 	F.init(c_);           //! @warning F.init(c_,c); ne marche pas !
 	F.assign(c_,c);       // c_ <- c
+
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "b: ", b) << std::endl;
+//         F.write(std::cerr << "c: ", c) << std::endl;
+//         F.write(std::cerr << "c_: ", c_) << std::endl;
+
 	TESTE_EG(c,c_);
 	F.subin(c_,a);
 //         F.write(std::cerr) << std::endl;
@@ -106,6 +115,15 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 	F.mul(b_,b,b); // b_ = b*b
 	F.sub(e_,a_,b_); // e_ = a_ - b_
 
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a:=", a) << ';' << std::endl;
+//         F.write(std::cerr << "b:=", b) << ';' << std::endl;
+//         F.write(std::cerr << "c:=", c) << ';' << std::endl;
+//         F.write(std::cerr << "d:=", d) << ';' << std::endl;
+//         F.write(std::cerr << "e:=", e) << ';' << std::endl;
+//         F.write(std::cerr << "e_:=", e_) << ';' << std::endl;
+//         F.write(std::cerr << "a_:=", a_) << ';' << std::endl;
+//         F.write(std::cerr << "b_:=", b_) << ';' << std::endl;
 	TESTE_EG(e,e_) // a^2 - b^2 = (a-b)(a+b) ;)
 
 	// Four operations
@@ -242,16 +260,19 @@ int main(int argc, char ** argv)
 
 // Maximal values
 
-	// prime modulo max over 16 bits
+	// prime modulo max over 15 bits
 	ZpzDom<Std16> Cmax(251);
 	JETESTE(Cmax,seed);
+	// prime modulo max over 15 bits
+	ZpzDom<Std16> CUmax(16381);
+	JETESTE(CUmax,seed);
 
 	// prime modulo max fully tabulated
 	ZpzDom<Log16> Lmax(251);
 	JETESTE(Lmax,seed);
 
-	// prime modulo max over 32 bits
-	ZpzDom<Std32> Zmax(65521);
+	// prime modulo max over 31 bits
+	ZpzDom<Std32> Zmax(32749);
 	JETESTE(Zmax,seed);
 
 	// prime modulo max over 32 bits
@@ -263,8 +284,8 @@ int main(int argc, char ** argv)
 	JETESTE(Mmax,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
-	// prime modulo max over 64 bits
-	ZpzDom<Std64> LLmax(4294967291ULL);
+	// prime modulo max over 63 bits
+	ZpzDom<Std64> LLmax(2147483647ULL);
 	JETESTE(LLmax,seed);
 #endif
 

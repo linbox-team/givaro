@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.10 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givzpzInt.inl,v 1.11 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 #ifndef __GIVARO_zpz_int_INL
 #define __GIVARO_zpz_int_INL
@@ -452,20 +452,20 @@ inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::nonzerorandom(RandIter& g, Rep& a
 }
 
 
-  //  a -> r: int32 to double
+  //  a -> r: int32_t to double
 inline void
   ZpzDom<Integer>::i2d ( const size_t sz, double* r, constArray a ) const
 {
   for (size_t i=0; i<sz; ++i) r[i] = a[i];
 }
 
-  //  a -> r: double to int32
+  //  a -> r: double to int32_t
 inline void
   ZpzDom<Integer>::d2i ( const size_t sz, Array r, const double* a ) const
 {
   union d_2_l {
     double d;
-    int32 r[2];
+    int32_t r[2];
   };
 //  static const double offset = 4503599627370496.0; // 2^52
   double offset = 4503599627370496.0; // 2^52

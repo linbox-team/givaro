@@ -7,7 +7,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.11 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givzpz16table1.inl,v 1.12 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -46,8 +46,8 @@ inline ZpzDom<Log16>::Residu_t ZpzDom<Log16>::residu( ) const
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::mul (Rep& r, const Rep a, const Rep b) const
 {
-   int32 tmp;
-  __GIVARO_ZPZ16_LOG_MUL(tmp,(int32)_p,(int32)a,(int32)b);
+   int32_t tmp;
+  __GIVARO_ZPZ16_LOG_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)b);
   return r= (ZpzDom<Log16>::Rep)tmp;
 }
 
@@ -95,7 +95,7 @@ inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a, const Rep
 
 template< class RandIter >
 inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a, long b) const {
-	return init(a, g() %(uint16) b);
+	return init(a, g() %(uint16_t) b);
 }
 
 template< class RandIter >
@@ -112,7 +112,7 @@ inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, co
 
 template< class RandIter >
 inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	while (iszero(init(a, g() %(uint16) b))) {};
+	while (iszero(init(a, g() %(uint16_t) b))) {};
 	return a;
 }
 
@@ -377,10 +377,10 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned long a )
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned int a ) const
 { r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const uint16 a ) const
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const uint16_t a ) const
 { r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int16 a ) const
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int16_t a ) const
 { return ZpzDom<Log16>::init( r, (long)a); }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const double i) const {
@@ -392,19 +392,19 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const float i) const {
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const Integer& residu ) const
 {
-  int16 tr;
+  int16_t tr;
   if (residu <0) {
       // -a = b [p]
       // a = p-b [p]
-    if ( residu <= (Integer)(-_p) ) tr = int16( (-residu) % _p) ;
-    else tr = int16(-residu);
+    if ( residu <= (Integer)(-_p) ) tr = int16_t( (-residu) % _p) ;
+    else tr = int16_t(-residu);
     if (tr)
-      return r = _tab_value2rep[ _p - (uint16)tr ];
+      return r = _tab_value2rep[ _p - (uint16_t)tr ];
     else
       return r = zero;
   } else {
-    if (residu >= (Integer)_p ) tr =   int16(residu % _p) ;
-    else tr = int16(residu);
+    if (residu >= (Integer)_p ) tr =   int16_t(residu % _p) ;
+    else tr = int16_t(residu);
     return r = _tab_value2rep[tr];
   }
 }
@@ -417,7 +417,7 @@ inline void ZpzDom<Log16>::dotprod
   unsigned int stride = 1;
   if ((unsigned long)bound < GIVARO_MAXUINT16)
    stride = GIVARO_MAXUINT32/((unsigned long)bound * (unsigned long)bound);
-  uint32 dot = zero;
+  uint32_t dot = zero;
   if ((sz <10) && (sz <stride)) {
     for(  int i= sz-1; i>=0; --i)
       dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
@@ -460,20 +460,20 @@ inline void ZpzDom<Log16>::dotprod
 }
 
 
-  //  a -> r: int16 to double
+  //  a -> r: int16_t to double
 inline void
   ZpzDom<Log16>::i2d ( const size_t sz, double* r, constArray a ) const
 {
   for (size_t i=0; i<sz; ++i) r[i] = _tab_rep2value[a[i]];
 }
 
-  //  a -> r: double to int16
+  //  a -> r: double to int16_t
 inline void
   ZpzDom<Log16>::d2i ( const size_t sz, Array r, const double* a ) const
 {
   union d_2_l {
     double d;
-    int32 r[2];
+    int32_t r[2];
   };
   static const double offset = 4503599627370496.0; // 2^52
   size_t i=sz-1;

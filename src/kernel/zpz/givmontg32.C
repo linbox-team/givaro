@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givmontg32.C,v 1.5 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givmontg32.C,v 1.6 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -15,10 +15,10 @@
 
   // Returns d, and u and v such that u a + v b = d;
 // JGD 04.11.1999
-// const int32 Montgomery<Std32>::gcdext
-//   ( int32& u, int32& v, const int32 a, const int32 b )
-int32& Montgomery<Std32>::gcdext
-  ( int32& d,  int32& u, int32& v, const int32 a, const int32 b ) const
+// const int32_t Montgomery<Std32>::gcdext
+//   ( int32_t& u, int32_t& v, const int32_t a, const int32_t b )
+int32_t& Montgomery<Std32>::gcdext
+  ( int32_t& d,  int32_t& u, int32_t& v, const int32_t a, const int32_t b ) const
 {
     long u1,u2,u3;
     long v1,v2,v3;
@@ -37,8 +37,8 @@ int32& Montgomery<Std32>::gcdext
 //    return u3;
 }
 
-int32& Montgomery<Std32>::invext
-  ( int32& u, const int32 a, const int32 b ) const
+int32_t& Montgomery<Std32>::invext
+  ( int32_t& u, const int32_t a, const int32_t b ) const
 {
     long u1,u3;
     long v1,v3;
@@ -57,10 +57,10 @@ int32& Montgomery<Std32>::invext
        return u = u1;
 }
 
-int32 Montgomery<Std32>::invext
-  ( const int32 a, const int32 b ) const
+int32_t Montgomery<Std32>::invext
+  ( const int32_t a, const int32_t b ) const
 {
-    int32 tmp;
+    int32_t tmp;
     return invext(tmp, a, b);
 }
 

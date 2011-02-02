@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.15 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givzpz16std.h,v 1.16 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -19,32 +19,32 @@
 #define __GIVARO_zpz16std_H
 
 
-/* Thierry -> JG: Constantes necessaires:
-   (typedef) uint16 : type des int sur 16bits non signe
-   (typedef) uint32 : type des int sur 16bits non signe
-   (typedef) int16 : type des int sur 16bits signe
-   (typedef) int32 : type des int sur 16bits signe
-   (#define) GIVARO_MAXUINT16: 2^16 -1
-   (#define) GIVARO_MAXUINT32: 2^32 -1
-   (#define) GIVARO_MAXULONG: val max en unsigned long
-   */
-/*
+#if 0 /*  Thierry -> JG: Constantes necessaires: */
+(typedef) uint16_t : type des int sur 16bits non signe
+(typedef) uint32_t : type des int sur 16bits non signe
+(typedef) int16_t : type des int sur 16bits signe
+(typedef) int32_t : type des int sur 16bits signe
+(#define) GIVARO_MAXUINT16: 2^16 -1
+(#define) GIVARO_MAXUINT32: 2^32 -1
+(#define) GIVARO_MAXULONG: val max en unsigned long
+#endif
+#if 0
 #define GIVARO_BITS_PER_LONGINT        32
 #define GIVARO_BITS_PER_INT            32
 #define GIVARO_BITS_PER_SHORTINT       16
 #define GIVARO_BITS_PER_CHAR           16
-typedef char    int8;
-typedef short   int16;
-typedef int     int32;
-typedef unsigned char   uint8;
-typedef unsigned short  uint16;
-typedef unsigned int    uint32;
+typedef char    int8_t;
+typedef short   int16_t;
+typedef int     int32_t;
+typedef unsigned char   uint8_t;
+typedef unsigned short  uint16_t;
+typedef unsigned int    uint32_t;
 
 #define GIVARO_MAXUINT8                255U            // 2^8-1
 #define GIVARO_MAXUINT16               65535U          // 2^16-1
 #define GIVARO_MAXUINT32               4294967295U     // 2^32-1
 #define GIVARO_MAXULONG                4294967295U     // 2^32-1
-*/
+#endif
 #include "givaro/givbasictype.h"
 
 /*
@@ -67,11 +67,11 @@ template<>
 class ZpzDom<Std16> {
 public:
 	// ----- Exported Types and constantes
-	typedef uint16 Residu_t;                    // - type to store residue
+	typedef uint16_t Residu_t;                    // - type to store residue
 	enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
 	// ----- Representation of Element of the domain ZpzDom
-	typedef int16 Rep;
-	typedef int16 Element;
+	typedef int16_t Rep;
+	typedef int16_t Element;
 
 	// ----- Representation of vector of the Element
 	typedef Rep* Array;
@@ -100,8 +100,8 @@ public:
 	Rep access( const Rep a ) const { return a; }
 
 	// ----- Convert from Element to int
-	int16& convert( int16& x , const Rep a) const { return x=(int16)(a);}
-	uint16& convert( uint16& x , const Rep a) const { return x=(uint16)(a);}
+	int16_t& convert( int16_t& x , const Rep a) const { return x=(int16_t)(a);}
+	uint16_t& convert( uint16_t& x , const Rep a) const { return x=(uint16_t)(a);}
 	unsigned long& convert( unsigned long& x , const Rep a) const { return x=(unsigned long)(a);}
 	double& convert( double& x , const Rep a) const { return x=(double)(a);}
 	int& convert( int& x , const Rep a) const { return x=int(a);}
@@ -209,10 +209,10 @@ public:
 	void dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
 	void dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
 
-	// ----- a -> r: uint16 to double
+	// ----- a -> r: uint16_t to double
 	void i2d ( const size_t sz, double* r, constArray a ) const;
 
-	// ----- a -> r % p: double to uint16 % p
+	// ----- a -> r % p: double to uint16_t % p
 	void d2i ( const size_t sz, Array r, const double* a ) const;
 
 	// --- IO methods
@@ -223,9 +223,9 @@ public:
 
 protected:
 	// -- based for modular inverse, d = a*u + b*v
-	//   static const int32 gcdext ( int32& u, int32& v, const int32 a, const int32 b );
-	int32& gcdext (int32& d, int32& u, int32& v, const int32 a, const int32 b ) const;
-	int32& invext (int32& u, const int32 a, const int32 b ) const;
+	//   static const int32_t gcdext ( int32_t& u, int32_t& v, const int32_t a, const int32_t b );
+	int32_t& gcdext (int32_t& d, int32_t& u, int32_t& v, const int32_t a, const int32_t b ) const;
+	int32_t& invext (int32_t& u, const int32_t a, const int32_t b ) const;
 
 protected:
 	// -- data representation of the domain:

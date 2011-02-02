@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.12 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givmontg32.inl,v 1.13 2011-02-02 17:16:43 bboyer Exp $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
@@ -10,7 +10,8 @@
 #ifndef __GIVARO_mong32_INL
 #define __GIVARO_mong32_INL
 
-inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
+inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const
+{
         Element c0 = c & MASK32;	/* c mod B */
         c0 = (c0 * _nim) & MASK32; 	/* -c/p mod B */
 	// c0 *= _p;
@@ -19,14 +20,16 @@ inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) con
 	c0 >>= HALF_BITS32;
         return (c0>_p?c0-=_p:c0);
 }
-inline Montgomery<Std32>::Element Montgomery<Std32>::redcsal(const Element c) const {
+inline Montgomery<Std32>::Element Montgomery<Std32>::redcsal(const Element c) const
+{
         Element c0 = (c * _nim) & MASK32; 	/* -c/p mod B */
         c0 = c + c0 * _p; 		/* c = 0 mod B */
         c0 >>= HALF_BITS32;
 	return (c0>_p?c0-=_p:c0);
 }
 
-inline Montgomery<Std32>::Element& Montgomery<Std32>::redc(Element& r, const Element c) const {
+inline Montgomery<Std32>::Element& Montgomery<Std32>::redc(Element& r, const Element c) const
+{
         r = c & MASK32;			/* c mod B */
 	r *= _nim;
 	r &= MASK32;
@@ -36,21 +39,24 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redc(Element& r, const Ele
 	return (r>_p?r-=_p:r);
 }
 
-inline Montgomery<Std32>::Element& Montgomery<Std32>::redcs(Element& r, const Element c) const {
+inline Montgomery<Std32>::Element& Montgomery<Std32>::redcs(Element& r, const Element c) const
+{
         r = (c * _nim) & MASK32; 	/* -c/p mod B */
         r = c + r * _p; 		/* c = 0 mod B */
         r >>= HALF_BITS32;
 	return (r>_p?r-=_p:r);
 }
 
-inline Montgomery<Std32>::Element& Montgomery<Std32>::redcin(Element& r) const {
+inline Montgomery<Std32>::Element& Montgomery<Std32>::redcin(Element& r) const
+{
         Element c0 = r & MASK32;	/* c mod B */
         c0 = (c0 * _nim) & MASK32; 	/* -c/p mod B */
         r += c0 * _p; 			/* c = 0 mod B */
         r >>= HALF_BITS32;
 	return (r>_p?r-=_p:r);
 }
-inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const {
+inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const
+{
         Element c0 = (r * _nim) & MASK32; 	/* -c/p mod B */
         r += c0 * _p; 				/* c = 0 mod B */
         r >>= HALF_BITS32;
@@ -111,10 +117,10 @@ inline Montgomery<Std32>::Rep& Montgomery<Std32>::neg (Rep& r, const Rep a) cons
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::inv (Rep& r, const Rep a) const
 {
 	// invext(aB) --> 1/a*1/B
-	// % * B^3    --> B²/a
+	// % * B^3    --> BÂ²/a
 	// redc       --> B/a
-    int32 t;
-    return redc(r, uint32( invext( t,int32(a),int32(_p)) ) * _B3p) ;
+    int32_t t;
+    return redc(r, uint32_t( invext( t,int32_t(a),int32_t(_p)) ) * _B3p) ;
 }
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::div (Rep& r, const Rep a, const Rep b) const
@@ -156,7 +162,7 @@ inline Montgomery<Std32>::Rep& Montgomery<Std32>::negin (Rep& r) const
 
 inline Montgomery<Std32>::Rep& Montgomery<Std32>::invin (Rep& r) const
 {
-	uint32 t;
+	uint32_t t;
 	return r = inv(t,r);
 }
 
@@ -230,25 +236,26 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const double 
   int sign; double ua;
   if (a < 0.0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
-  if ( ua > Signed_Trait<uint32>::max()){
+  if ( ua > Signed_Trait<uint32_t>::max()){
 //    ua -= (double)floor(ua * _invdp)*_dp;
     ua = fmod(ua,_dp);
     r = (Rep) ua;
   } else
-    r = (ua >=_p) ? (uint32) ua % (uint32)_p : (uint32) ua;
+    r = (ua >=_p) ? (uint32_t) ua % (uint32_t)_p : (uint32_t) ua;
   if (r && (sign ==-1)) r = _p - r;
 //  std::cerr << a << "dbl --> " << r << "(" << redcal(r*_B2p) << ")" << std::endl;
   return redc(r,r*_B2p);
 }
 
-inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const float a ) const {
+inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const float a ) const
+{
     return init(r, (double)a);
 }
 
 
 
 inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const unsigned long a ) const
-{ r = ( a >= (uint32)_p ? a % (uint32)_p : a);
+{ r = ( a >= (uint32_t)_p ? a % (uint32_t)_p : a);
   return redc(r,r*_B2p);
 }
 
@@ -257,7 +264,7 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const long a 
   int sign; unsigned long ua;
   if (a <0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
-  r = ( ua >= (uint32)_p ? ua % (uint32)_p : ua);
+  r = ( ua >= (uint32_t)_p ? ua % (uint32_t)_p : ua);
   if (r && (sign ==-1)) r = _p - r;
   return redc(r,r*_B2p);
 }
@@ -287,9 +294,11 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const Integer
 
 
 
-inline Montgomery<Std32>::Rep& Montgomery<Std32>::init( Rep& a, const int i) const { return init(a,(long)i); }
+inline Montgomery<Std32>::Rep& Montgomery<Std32>::init( Rep& a, const int i) const
+{ return init(a,(long)i); }
 
-inline Montgomery<Std32>::Rep& Montgomery<Std32>::init( Rep& a, const unsigned int i) const { return init(a,(unsigned long)i); }
+inline Montgomery<Std32>::Rep& Montgomery<Std32>::init( Rep& a, const unsigned int i) const
+{ return init(a,(unsigned long)i); }
 
 inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::assign
   ( Rep& r, const Rep a ) const
@@ -302,35 +311,41 @@ inline Montgomery<Std32>::Rep& Montgomery<Std32>::init ( Rep& r ) const
 
 
 template< class RandIter >
-inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a) const {
+inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a) const
+{
 	        return init(a, g());
 }
 
 template< class RandIter >
-inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a, const Rep& b) const {
+inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a, const Rep& b) const
+{
 	        return init(a, g());
 }
 template< class RandIter >
-inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a, long b) const {
-	        return init(a, g() %(uint32) b);
+inline  Montgomery<Std32>::Rep& Montgomery<Std32>::random(RandIter& g, Rep& a, long b) const
+{
+	        return init(a, g() %(uint32_t) b);
 
 }
 
 template< class RandIter >
-inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a) const {
+inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a) const
+{
 	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
 template< class RandIter >
-inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
+inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const
+{
 	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
 template< class RandIter >
-inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	        while (isZero(init(a, g() %(uint32) b))) {};
+inline  Montgomery<Std32>::Rep& Montgomery<Std32>::nonzerorandom(RandIter& g, Rep& a, long b) const
+{
+	        while (isZero(init(a, g() %(uint32_t) b))) {};
 		return a;
 }
 

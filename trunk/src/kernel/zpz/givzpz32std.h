@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.16 2011-02-01 17:59:25 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.17 2011-02-02 00:14:34 bboyer Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -15,8 +15,10 @@
 //   Arithmetic on Z/pZ, with p a prime number less than 2^32
 //   Modulo typedef is a signed long number. In case it was modified
 //   then bezout algorithm must be changed (coefficient can be negative).
-#ifndef _GIVARO_ZPZ32STD_H_
-#define _GIVARO_ZPZ32STD_H_
+
+#ifndef __GIVARO_zpz32std_H
+#define __GIVARO_zpz32std_H
+
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
@@ -216,8 +218,8 @@ protected:
     static void End();
 };
 
-
 #include "givaro/givzpz32std.inl"
 
 #endif
+
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

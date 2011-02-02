@@ -6,14 +6,18 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.inl,v 1.18 2011-02-01 17:59:25 jgdumas Exp $
+// $Id: givzpz32std.inl,v 1.19 2011-02-02 00:14:34 bboyer Exp $
 // ==========================================================================
+
+#ifndef __GIVARO_zpz32std_INL
+#define __GIVARO_zpz32std_INL
+
+
 // Description:
 
 // ---------
 // -- normalized operations
 // ---------
-
 // r = a*b
 #define __GIVARO_ZPZ32_N_MUL(r,p,a,b) ( r = (uint32)(a*b) % (uint32)p )
 // r *= a
@@ -550,4 +554,6 @@ inline std::ostream& ZpzDom<Std32>::write (std::ostream& s, const Rep a) const
 {
   return s << a;
 }
+
+#endif // __GIVARO_zpz32std_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -8,7 +8,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givtimer.C,v 1.3 2011-02-02 00:14:34 bboyer Exp $
+// $Id: givtimer.C,v 1.4 2011-02-02 14:15:45 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - various timer objects
@@ -53,6 +53,7 @@ std::ostream& BaseTimer::print( std::ostream& o ) const
 // Some arithmetic operator :
 BaseTimer& BaseTimer::operator = (const BaseTimer & T)
 {
+	_start_t = T._start_t ;
 	_t = T._t ;
 	return *this ;
 }
@@ -84,13 +85,13 @@ const BaseTimer BaseTimer::operator + (const BaseTimer & T)  const
 void RealTimer::start()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
-	_t = USER_TIME ;
+	_t = _start_t = USER_TIME ;
 #else
 	struct timeval tmp2 ;
 	gettimeofday (&tmp2, 0) ;
 
 	// real time
-	_start_t = (double) tmp2.tv_sec +
+	_t = _start_t = (double) tmp2.tv_sec +
 	((double) tmp2.tv_usec)/ (double)BaseTimer::MSPSEC ;
 #endif
 }
@@ -100,14 +101,14 @@ void RealTimer::start()
 void RealTimer::stop()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
-	_t = USER_TIME - _t ;
+	_t = USER_TIME - _start_t ;
 #else
 	struct timeval tmp2 ;
 	gettimeofday (&tmp2, 0) ;
 
 	// real time
 	_t = (double) tmp2.tv_sec +
-	((double) tmp2.tv_usec)/ (double)BaseTimer::MSPSEC - _t ;
+	((double) tmp2.tv_usec)/ (double)BaseTimer::MSPSEC - _start_t ;
 #endif
 }
 
@@ -115,13 +116,14 @@ void RealTimer::stop()
 void UserTimer::start()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
-	_t = USER_TIME ;
+	_t = _start_t = USER_TIME ;
 #else
 	struct rusage  tmp1 ;  // to getrusage (sys+user times)
 	getrusage (RUSAGE_SELF, &tmp1) ;
 	// user time
-	_start_t = (double) tmp1.ru_utime.tv_sec +
+	_t = _start_t = (double) tmp1.ru_utime.tv_sec +
 	((double) tmp1.ru_utime.tv_usec)/ (double)MSPSEC ;
+        
 #endif
 }
 
@@ -130,13 +132,13 @@ void UserTimer::start()
 void UserTimer::stop()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
-	_t = USER_TIME - _t;
+	_t = USER_TIME - _start_t;
 #else
 	struct rusage  tmp1 ;  // to getrusage (sys+user times)
 	getrusage (RUSAGE_SELF, &tmp1) ;
 	// user time
 	_t = (double) tmp1.ru_utime.tv_sec +
-	((double) tmp1.ru_utime.tv_usec)/ (double)MSPSEC - _t ;
+	((double) tmp1.ru_utime.tv_usec)/ (double)MSPSEC - _start_t;
 #endif
 }
 
@@ -145,12 +147,12 @@ void UserTimer::stop()
 void SysTimer::start()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
-	_t = USER_TIME ;
+	_t = _start_t = USER_TIME ;
 #else
 	struct rusage  tmp1 ;  // to getrusage (sys+user times)
 	getrusage (RUSAGE_SELF, &tmp1) ;
 	// user time
-	_start_t = (double) tmp1.ru_stime.tv_sec +
+	_t = _start_t = (double) tmp1.ru_stime.tv_sec +
 	((double) tmp1.ru_stime.tv_usec)/ (double)MSPSEC ;
 #endif
 }
@@ -160,13 +162,13 @@ void SysTimer::start()
 void SysTimer::stop()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
-	_t = USER_TIME - _t ;
+	_t = USER_TIME - _start_t ;
 #else
 	struct rusage  tmp1 ;  // to getrusage (sys+user times)
 	getrusage (RUSAGE_SELF, &tmp1) ;
 	// user time
 	_t = (double) tmp1.ru_stime.tv_sec +
-	((double) tmp1.ru_stime.tv_usec)/ (double)MSPSEC - _t ;
+	((double) tmp1.ru_stime.tv_usec)/ (double)MSPSEC - _start_t ;
 #endif
 }
 

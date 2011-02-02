@@ -6,14 +6,18 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.15 2011-02-01 17:59:25 jgdumas Exp $
+// $Id: givzpz16std.inl,v 1.16 2011-02-02 00:14:34 bboyer Exp $
 // ==========================================================================
 // Description:
 
 // ---------
 // -- normalized operations
 // ---------
-#include <givaro/givzpz32std.h>
+#ifndef __GIVARO_zpz16std_INL
+#define __GIVARO_zpz16std_INL
+
+#include "givaro/givzpz32std.h"
+
 
 // r = a - b
 //#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
@@ -128,7 +132,7 @@ inline void ZpzDom<Std16>::sub (const size_t sz, Array r, constArray a, constArr
 
 inline void ZpzDom<Std16>::sub (const size_t sz, Array r, constArray a, Rep b) const
 {
-  for ( size_t i=sz ; --i ; ) 
+  for ( size_t i=sz ; --i ; )
     __GIVARO_ZPZ16_N_SUB(r[i], _p, a[i], b);
 }
 
@@ -522,4 +526,6 @@ inline std::ostream& ZpzDom<Std16>::write (std::ostream& s, const Rep a) const
 {
   return s << a;
 }
+
+#endif // __GIVARO_zpz16std_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

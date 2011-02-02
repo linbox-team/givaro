@@ -6,11 +6,11 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
-#include <givaro/givzpz32std.h>
-#include <givaro/givzpz32uns.h>
+#include "givaro/givzpz16std.h"
+#include "givaro/givzpz16table1.h"
+#include "givaro/givzpz32std.h"
+#include "givaro/givzpz32uns.h"
 #include <givaro/givzpzInt.h>
-#include <givaro/givzpz16std.h>
-#include <givaro/givzpz16table1.h>
 #include <givaro/givzpz64std.h>
 #include <givaro/givzpz.h>
 #include <givaro/givpoly1.h>

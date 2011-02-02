@@ -11,6 +11,7 @@ AM_CPPFLAGS= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(t
 pkginclude_HEADERS=\
 	StaticElement.h		\
 	givzpz.h		\
+	givzpztypes.h		\
 	givgfq.h		\
 	givzpz16std.h		\
 	givzpz32std.h		\

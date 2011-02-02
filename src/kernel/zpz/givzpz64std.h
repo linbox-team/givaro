@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.17 2011-02-01 17:59:25 jgdumas Exp $
+// $Id: givzpz64std.h,v 1.18 2011-02-02 13:45:03 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -16,7 +16,7 @@
 #define _GIVARO_ZPZ64STD_H_
 #include "givaro/givinteger.h"
 #include "givaro/giverror.h"
-#include "givaro/givzpz.h"
+#include "givaro/givzpztypes.h"
 
 // ==========================================================================
 // -- This class implement the standard arithmetic with Modulo Elements:

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.9 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpzInt.h,v 1.10 2011-02-02 13:45:03 jgdumas Exp $
 // ==========================================================================
 //
 // Description:
@@ -14,10 +14,11 @@
 #ifndef _GIVARO_ZPZInteger_H_
 #define _GIVARO_ZPZInteger_H_
 
-#include "givbasictype.h"
-#include "giverror.h"
-#include "givzpz.h"
-#include "givinteger.h"
+#include "givaro/givbasictype.h"
+#include "givaro/giverror.h"
+#include "givaro/givzpztypes.h"
+#include "givaro/givinteger.h"
+#include "givaro/giv_randiter.h"
 
 
 // ==========================================================================

@@ -12,11 +12,10 @@
  */
 
 #include <iostream>
-#include <givaro/givzpz32uns.h>
 #include <givaro/givgfq.h>
 #include <givaro/givmontg32.h>
-#include <givaro/givzpzInt.h>
-#include "StaticElement.h"
+#include <givaro/givzpz.h>
+#include <givaro/StaticElement.h>
 
 // Domain kind
 typedef ZpzDom<Unsigned32>	Field1;	typedef StaticElement< Field1 > Element1; 	template<> Field1 Element1::_domain(2);

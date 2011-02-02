@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.18 2011-02-02 00:22:22 bboyer Exp $
+// $Id: givzpz32std.h,v 1.19 2011-02-02 13:45:03 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -22,7 +22,7 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
-// #include "givaro/givzpz.h"
+#include "givaro/givzpztypes.h"
 #include "givaro/giv_randiter.h"
 #include <math.h>
 

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.16 2011-02-02 00:14:34 bboyer Exp $
+// $Id: givzpz16std.inl,v 1.17 2011-02-02 13:45:03 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -15,9 +15,6 @@
 // ---------
 #ifndef __GIVARO_zpz16std_INL
 #define __GIVARO_zpz16std_INL
-
-#include "givaro/givzpz32std.h"
-
 
 // r = a - b
 //#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}

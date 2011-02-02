@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.13 2011-02-01 17:59:25 jgdumas Exp $
+// $Id: givzpz16std.h,v 1.14 2011-02-02 13:45:03 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -54,7 +54,8 @@ typedef unsigned int    uint32;
  * GivBadFormat( " ... " )
  */
 #include "givaro/giverror.h"
-#include "givaro/givzpz.h"
+#include "givaro/givzpz16std.h"
+#include "givaro/givzpz32std.h"
 #include "givaro/giv_randiter.h"
 
 // ==========================================================================

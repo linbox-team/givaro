@@ -30,6 +30,6 @@ Documentation for Developers</a>. If everything around is green, then you can
 get to everything (not necessarily yet) documented.
 .
 \section contrib Contributing to Givaro, getting assistance.
-\version 3.3.4
+\version 3.3.5
  */
 // vim:syn=doxygen

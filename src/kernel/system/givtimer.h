@@ -164,33 +164,38 @@ public :
 	SysTimer  st;
 };
 
-#ifdef _OPENMP
-#include <omp.h>
-	struct OMPTimer
-	{
-		double _c;
-		void start() { _c = omp_get_wtime(); }
-		void stop() { _c = omp_get_wtime() - _c; }
-		void clear() { _c = 0.0; }
-		double usertime() { return _c; }
-		friend std::ostream& operator<<(std::ostream& o, const OMPTimer& t) {
-			return o << t._c << 's';
-		}
-
-		OMPTimer& operator+=(const OMPTimer& t) {
-			_c += t._c;
-			return *this;
-		}
-
-	};
-#endif
-
 	inline std::ostream &operator << (std::ostream &o, const Timer &T)
 {
 	double ut = T.usertime();
 	if (ut < 0.0000000001) ut = 0;
 	return o << T.realtime() << "s (" << ut << " cpu) [" << T.count() << "]";
 }
+
+#ifdef _OPENMP
+#include <omp.h>
+struct OMPTimer {
+    double _c;
+    void start() { _c = omp_get_wtime(); }
+    void stop() { _c = omp_get_wtime() - _c; }
+    void clear() { _c = 0.0; }
+    double realtime() { return _c; }
+    double usertime() { return _c; }
+    double time() const { return _c; }
+    friend std::ostream& operator<<(std::ostream& o, const OMPTimer& t) {
+        return o << t._c << 's';
+    }
+    
+    OMPTimer& operator =(const OMPTimer& t) { _c = t._c; return *this; }
+    OMPTimer& operator+=(const OMPTimer& t) { _c += t._c; return *this; }
+    OMPTimer& operator-=(const OMPTimer& t) { _c -= t._c; return *this; }
+    OMPTimer  operator +(const OMPTimer& t) const { 
+        OMPTimer r; r._c = _c + t._c; return r; }
+    OMPTimer  operator -(const OMPTimer& t) const { 
+        OMPTimer r; r._c = _c - t._c; return r; }
+    OMPTimer  operator -() { OMPTimer r; r._c = - _c; return r; }
+};
+#endif
+
 
 
 #endif // __GIVARO_timer_H

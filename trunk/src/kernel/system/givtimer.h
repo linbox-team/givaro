@@ -34,10 +34,7 @@ class BaseTimer {
 		MSPSEC = 1000000  // microsecond per second
 	};
 
-	BaseTimer()
-	{
-		_start_t = 0;
-	}
+    	BaseTimer() : _start_t(0.), _t(0.) {}
 
 	// -- Clear timer :
 	inline void clear()
@@ -64,7 +61,6 @@ class BaseTimer {
 	const BaseTimer operator +  (const BaseTimer & T)  const;
 	BaseTimer& operator += (const BaseTimer & T) { return *this = *this + T; };
 	BaseTimer& operator -= (const BaseTimer & T) { return *this = *this - T; };
-
 	public:
 	double _start_t;  // time as of start ()
 	double _t;        // time
@@ -77,9 +73,7 @@ inline std::ostream& operator<< (std::ostream& o, const BaseTimer& BT)
 
 class RealTimer : public BaseTimer {
 public:
-	inline RealTimer( const BaseTimer& BT ):
-		BaseTimer(BT)
-	{};
+	inline RealTimer( const BaseTimer& BT ): BaseTimer(BT) {};
 	inline RealTimer(){};
 	void start();
 	void stop();
@@ -88,9 +82,7 @@ public:
 
 class UserTimer : public BaseTimer {
 public:
-	inline UserTimer( const BaseTimer& BT ) :
-		BaseTimer(BT)
-	{};
+	inline UserTimer( const BaseTimer& BT ) : BaseTimer(BT) {};
 	inline UserTimer() {};
 	void start();
 	void stop();
@@ -99,9 +91,7 @@ public:
 
 class SysTimer : public BaseTimer {
 public:
-	inline SysTimer( const BaseTimer& BT ):
-		BaseTimer(BT)
-	{};
+	inline SysTimer( const BaseTimer& BT ): BaseTimer(BT) {};
 	inline SysTimer() {};
 	void start();
 	void stop();
@@ -111,12 +101,11 @@ public:
 class Timer {
 public :
 
-	Timer()
+    Timer() : _count(0)
 	{
 		rt.clear();
 		ut.clear();
 		st.clear();
-		_count = 0;
 	}
 
 	// Clear timer :

@@ -2,20 +2,20 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : Prime numbers
 //              Factors,
 // Needs list structures : stl ones for instance
-// Time-stamp: <06 Jun 06 15:03:59 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 15:03:59 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
-#ifndef _GIVARO_FACTORISATION_INL_
-#define _GIVARO_FACTORISATION_INL_
+#ifndef __GIVARO_factorisation_INL
+#define __GIVARO_factorisation_INL
 
 
-#include "givinteger.h"
-#include "givintprime.h"
-#include "givintfactor.h"
+#include "givaro/givinteger.h"
+#include "givaro/givintprime.h"
+#include "givaro/givintfactor.h"
 
 #include <iostream>
 #include <vector>
@@ -29,10 +29,10 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, const Rep& n) const
 
 
 template<class RandIter>
-template<class Array> 
-std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Rep& n) const 
+template<class Array>
+std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Rep& n) const
 {
-    
+
 //         // n = * Lf[i] ^ Lo[i]
 //         // But Lf[i] might not be prime (cf. factor probability)
     Rep nn,g,r,u;
@@ -45,9 +45,9 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
         nn = -n;
         o << "-";
     }
-    
+
     if (isleq(nn,1)) { Lf.push_back(nn); return IntegerDom::write(o,nn); }
-    
+
 
     while( isgt(nn,1) ) {
         primefactor(g,nn);
@@ -55,20 +55,20 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
 		o << " * ";
 	else
 		flag = 1;
-        
+
 	Lf.push_back(g);
         IntegerDom::write(o,g);
         c=0;r=0;
 
 	Rep::divexact(u, nn,g);
         for(;isZero(r); ++c) {
-		nn.copy(u); 
+		nn.copy(u);
 		Rep::divmod( u, r, nn,g );
         }
 	if (c>1) o << "^" << c;
     }
     return o;
-}    
+}
 
 
 // =================================================================== //
@@ -77,11 +77,11 @@ std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Re
 // #ifndef __ECC
 // template<class RandIter>
 // template< template<class> class Container> bool
-// IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const 
+// IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const
 // #else
 template<class RandIter>
 template<class Container1, class Container2> bool
-IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsigned long loops)  const 
+IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsigned long loops)  const
 //#endif
 {
         // n = * Lf[i] ^ Lo[i]
@@ -89,7 +89,7 @@ IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsign
     Rep nn,g,r,u;
     if (n<0) Rep::neg(nn,n); else nn=n;
     unsigned long c;
-    while(nn > 1) {        
+    while(nn > 1) {
         iffactorprime(g,nn,loops);
         if (g == 1) {
             factocomplete = false;
@@ -101,7 +101,7 @@ IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsign
         while(r == 0) {
                 //	nn = nn / g;
                 //	r = nn % g;
-            nn.copy(u); 
+            nn.copy(u);
             Rep::divmod( u, r, nn,g );
             c++;
         }
@@ -113,12 +113,12 @@ IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsign
 
 // #ifndef __ECC
 // template<class RandIter>
-// template< template<class> class Container> 
-//   void IntFactorDom<RandIter>::Erathostene(Container<Rep>& Lf, const Rep& p)  const 
+// template< template<class> class Container>
+//   void IntFactorDom<RandIter>::Erathostene(Container<Rep>& Lf, const Rep& p)  const
 // #else
 template<class RandIter>
-template<class Container> 
-void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const 
+template<class Container>
+void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const
 //#endif
 {
         // Deterministic algorithm
@@ -161,16 +161,16 @@ void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const
     if (!(IP[n]) && (n>1)) Lf.push_back(Rep(n));
     delete [] IP;
 }
- 
+
 
 // #ifndef __ECC
 // template<class RandIter>
-// template< template<class> class Container> 
-// void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const 
+// template< template<class> class Container>
+// void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const
 // #else
 template<class RandIter>
-template<class Container> 
-void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const 
+template<class Container>
+void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const
 //#endif
 {
         // big_factor is executed until
@@ -185,8 +185,8 @@ void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const
         r=0;
 	Rep::divexact(u, nn,g);
         while(r == 0) {
-		nn.copy(u); 
-		Rep::divmod( u, r, nn,g ); 
+		nn.copy(u);
+		Rep::divmod( u, r, nn,g );
         }
 	// gcc 3.3.3 (Debian 20040422) : internal compiler error !!!
         Lf.push_back(g);
@@ -198,7 +198,7 @@ void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const
 
 // #ifndef __ECC
 // template<class RandIter>
-// template< template<class> class Container, template<class> class Cont2> Container< typename IntFactorDom<RandIter>::Rep >&  IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const 
+// template< template<class> class Container, template<class> class Cont2> Container< typename IntFactorDom<RandIter>::Rep >&  IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const
 // {
 //     typename Cont2<Rep>::const_iterator li = Lf.begin();
 //     typename Cont2<unsigned long>::const_iterator lj = Le.begin();
@@ -207,7 +207,7 @@ void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const
 //     typename Container<Rep>::iterator lr;
 // #else
 template<class RandIter>
-template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<RandIter>::divisors( Container& L, const Cont2& Lf, const Cont3& Le)  const 
+template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<RandIter>::divisors( Container& L, const Cont2& Lf, const Cont3& Le)  const
 {
     typename Cont2::const_iterator li = Lf.begin();
     typename Cont3::const_iterator lj = Le.begin();
@@ -232,14 +232,14 @@ template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<Ran
 
 // #ifndef __ECC
 // template<class RandIter>
-// template< template<class> class Container> Container<typename IntFactorDom<RandIter>::Rep>& IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Rep& n)  const 
+// template< template<class> class Container> Container<typename IntFactorDom<RandIter>::Rep>& IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Rep& n)  const
 // {
 //     Container<Rep> Lf;
 //     Container<unsigned long> Le;
 // #else
 #include <vector>
 template<class RandIter>
-template<class Container> Container& IntFactorDom<RandIter>::divisors( Container& L, const Rep& n)  const 
+template<class Container> Container& IntFactorDom<RandIter>::divisors( Container& L, const Rep& n)  const
 {
     Container Lf;
     std::vector<unsigned long> Le;
@@ -249,7 +249,7 @@ template<class Container> Container& IntFactorDom<RandIter>::divisors( Container
 }
 
 template<class RandIter>
-typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const 
+typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
 {
   // average number of iterations < 13/8*sqrt( Pi*n/2)
   // Sometimes the factor isn't prime -- TO EXPLICIT
@@ -293,16 +293,16 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(RandIter& 
 
 inline void Add_Curve( const Integer& n, const Integer A, const Integer& ax, const Integer& az, Integer& cx, Integer& cz) {
     Integer t1,t2;
-//     t1 = ((ax+az)*(ax+az))%n; 
+//     t1 = ((ax+az)*(ax+az))%n;
 //     t2 = ((ax-az)*(ax-az))%n;
-    t1 = ax+az; 
+    t1 = ax+az;
     t1 *= t1;
     t1 %= n;
     t2 = ax-az;
     t2 *= t2;
     t2 %= n;
     cx = t1*t2;
-    cx %= n; 
+    cx %= n;
     t1 -= t2;
     cz = A;
     cz *= t1;
@@ -328,27 +328,27 @@ inline void one_Mul_Curve( const Integer& n, const Integer A, const Integer& mm,
     }
     while (! isZero(e)) {
         if (e<d) {
-            tmpx = bx; tmpz = bz; 
+            tmpx = bx; tmpz = bz;
             bz = ax;
-	    bz -= az;  
+	    bz -= az;
             t2 = tmpx;
 	    t2 += tmpz;
             bz *= t2;
             bz %= n;
-            
+
             t2 = ax;
 	    t2 += az;
             bx -= tmpz;
             t2 *= bx;
             t2 %= n;
-            
+
             bx = bz;
 	    bx += t2;
 	    bx *= bx;
 	    bx %= n;
             bx *= cz;
             bx %= n;
-            
+
 	    bz -= t2;
 	    bz *= bz;
 	    bz %= n;
@@ -357,14 +357,14 @@ inline void one_Mul_Curve( const Integer& n, const Integer A, const Integer& mm,
 
             d -= e;
         } else {
-            tmpx = ax; tmpz = az; 
+            tmpx = ax; tmpz = az;
             az = tmpx;
 	    az -= tmpz;
             t2 = bx;
 	    t2 += bz;
             az *= t2;
             az %= n;
-            
+
             t2 = bx;
 	    t2 -= bz;
             ax += tmpz;
@@ -377,20 +377,20 @@ inline void one_Mul_Curve( const Integer& n, const Integer A, const Integer& mm,
 	    ax %= n;
             ax *= cz;
             ax %= n;
-            
+
 	    az -= t2;
 	    az *= az;
 	    az %= n;
             az *= cx;
             az %= n;
-            
+
             e -= d;
         }
         cx = tmpx;
         cz = tmpz;
     }
-}        
-    
+}
+
 
 
 
@@ -407,9 +407,9 @@ inline void one_Mul_Curve2( const Integer& n, const Integer A, const Integer& mm
     }
     while (! isZero(e)) {
         if (e<d) {
-            tmpx = bx; tmpz = bz; 
-            t1 = ((ax-az)*(bx+bz))%n; 
-            t2 = ((ax+az)*(bx-bz))%n; 
+            tmpx = bx; tmpz = bz;
+            t1 = ((ax-az)*(bx+bz))%n;
+            t2 = ((ax+az)*(bx-bz))%n;
 //             bx = (cz*(((t1+t2)*(t1+t2))%n))%n;
 //             bz = (cx*(((t1-t2)*(t1-t2))%n))%n;
             t3 = t1+t2;
@@ -418,9 +418,9 @@ inline void one_Mul_Curve2( const Integer& n, const Integer A, const Integer& mm
             bz = (cx*(((t4)*(t4))%n))%n;
             d = d-e;
         } else {
-            tmpx = ax; tmpz = az; 
-            t1 = ((ax-az)*(bx+bz))%n; 
-            t2 = ((ax+az)*(bx-bz))%n; 
+            tmpx = ax; tmpz = az;
+            t1 = ((ax-az)*(bx+bz))%n;
+            t2 = ((ax+az)*(bx-bz))%n;
             t3 = t1+t2;
             t4 = t1-t2;
 //             ax = (cz*(((t1+t2)*(t1+t2))%n))%n;
@@ -434,8 +434,8 @@ inline void one_Mul_Curve2( const Integer& n, const Integer A, const Integer& mm
     }
     aax = ax;
     aaz = az;
-}        
-    
+}
+
 
 inline void Mul_Curve( const Integer& n, Integer& Ai, const Integer& mm, const Integer& nn, const Integer& B1, Integer& Xi, Integer& Zi) {
     Integer pow = nn, tXi, tZi;
@@ -457,7 +457,7 @@ inline void Mul_Curve( const Integer& n, Integer& Ai, const Integer& mm, const I
 // TODO : make it generic in regards to DOMAINLIKENESS
 // ======================================================================== //
 template<class RandIter>
-typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const 
+typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const
 {
     if (n<3) return g=n;
     if ( isprime(n,5) ) return g=n;
@@ -471,7 +471,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
     Rep r,a,asq,kg,kgg;
     for (unsigned long c=0; c<curves;++c)
         Z[c] = one;
-    
+
     Rep u,v, four, two;
     assign(two,2UL);
     this->gcd(g,u,v,two,n);
@@ -535,14 +535,14 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
             prime = ftm;
 //             prime = nextprime(prime);
         } else {
-            delete [] A; delete [] X; delete [] Z; 
-            return g=f; 
+            delete [] A; delete [] X; delete [] Z;
+            return g=f;
         }
     }
-    
+
     std::cerr << "*** Elliptic curves with " << curves << " curves, threshold " << B1 << " failed ***" << std::endl;
-    delete [] A; delete [] X; delete [] Z; 
+    delete [] A; delete [] X; delete [] Z;
     return neg(g,one);
 }
 
-#endif
+#endif // __GIVARO_factorisation_INL

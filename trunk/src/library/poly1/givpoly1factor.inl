@@ -2,7 +2,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro / Athapascan-1
 // Irreducibily test
@@ -10,23 +10,26 @@
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp : in LinBox
-// Time-stamp: <26 Feb 08 13:37:26 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <26 Feb 08 13:37:26 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
-#ifndef _GIV_POLY1_FACTO_INL_
-#define _GIV_POLY1_FACTO_INL_
+#ifndef __GIVARO_poly1_facto_INL
+#define __GIVARO_poly1_facto_INL
 #include <givaro/givpower.h>
+
+//!@todo use NTL if available ?
 
 // ---------------------------------------------------------------
 // Splits a polynomial into prime factors of same degree
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter>
-template< template<class, class> class Container, template <class> class Alloc > 
-inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor( 
+template< template<class, class> class Container, template <class> class Alloc >
+inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
     Container< Rep, Alloc<Rep> > & L
     , const Rep& G
     , Degree d
-    , Residu_t MOD) const {
+    , Residu_t MOD) const
+{
     Degree dG;degree(dG,G);
     if (dG == d)
         L.push_back(G);
@@ -122,7 +125,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter>
-template< template<class, class> class Container, template <class> class Alloc > 
+template< template<class, class> class Container, template <class> class Alloc >
 inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     Container< Rep, Alloc<Rep> > & L
     , const Rep& f
@@ -146,7 +149,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
             divin(P,G1);
         }
     }
-    degree(dP,P);    
+    degree(dP,P);
     if (dP > 0)
         L.push_back(P);
 // write(std::cerr << "DD: ", P) << std::endl;
@@ -158,14 +161,15 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
 
 template<class Domain, class Tag, class RandIter>
 template< template<class, class> class Container, template <class> class Alloc>
-inline void 
+inline void
 Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & Lf,
 			   Container< unsigned long, Alloc<unsigned long> > & Le,
 	       const Rep& P,
-	       Residu_t MOD)  const {
+	       Residu_t MOD)  const
+{
 // write(std::cerr << "CZ in: ", P) << std::endl;
     Degree dp; degree(dp,P);
-    size_t nb=dp.value()+1; 
+    size_t nb=dp.value()+1;
     Rep * g = new Rep[nb];
     sqrfree(nb,g,P);
 // std::cerr << "CZ sqrfree: " << nb << std::endl;
@@ -179,7 +183,7 @@ Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & L
 // for (typename Container< unsigned long, Alloc<unsigned long> >::const_iterator e=Le.begin(); e!=Le.end(); ++e)
 // std::cerr << " " << *e;
 // std::cerr << std::endl;
-        
+
     }
     ::delete [] g;
 }
@@ -219,14 +223,15 @@ template<class Domain, class Tag, class RandIter>
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::factor(
     Rep& W
     , const Rep& P
-    , Residu_t MOD)  const {
+    , Residu_t MOD)  const
+{
 // write(cerr << "In factor P:", P) << endl;
         // Square free ?
     Rep D; this->gcd(W,diff(D,P),P);
     Degree d, dP;
 // write(cerr << "In factor P':", D) << "(deg: " << degree(d,D) << ")" << endl;
 // write(cerr << "In factor P^P':", W) << "(deg: " << degree(d,W) << ")" << endl;
- 
+
     if (degree(d,W) > 0) return W;
         // Distinct degree free ?
     Rep Unit, G1; init(Unit, Degree(1));
@@ -249,4 +254,4 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
 }
 
 
-#endif 
+#endif // __GIVARO_poly1_facto_INL

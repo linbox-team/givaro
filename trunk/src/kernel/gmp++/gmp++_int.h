@@ -10,8 +10,8 @@
 // ========================================================================
 // Description:
 // Integer class definition based on Gmp (>V2.0 or 1.3.2)
-#ifndef _GMPplusplus_INTEGER_H_
-#define _GMPplusplus_INTEGER_H_
+#ifndef __GIVARO_GMPplusplus_integer_H
+#define __GIVARO_GMPplusplus_integer_H
 
 
 
@@ -801,5 +801,5 @@ protected:
 
 #include "gmp++/gmp++_int.inl"
 
-#endif
+#endif // __GIVARO_GMPplusplus_integer_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

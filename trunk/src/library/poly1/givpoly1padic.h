@@ -2,13 +2,13 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <11 Jun 10 14:43:52 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <11 Jun 10 14:43:52 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
-#ifndef _GIV_POLY1_P_ADIC_H_
-#define _GIV_POLY1_P_ADIC_H_
+#ifndef __GIVARO_poly1_p_adic_H
+#define __GIVARO_poly1_p_adic_H
 #include <givaro/givinteger.h>
 #include <givaro/givpoly1.h>
 #include <cmath>
@@ -22,7 +22,7 @@ template<class Domain>
 class Poly1PadicDom<Domain,Dense> : public Poly1Dom<Domain,Dense>, public IntegerDom {
     using Poly1Dom<Domain,Dense>::_domain;
     typedef Poly1Dom<Domain,Dense> Poly_t;
-    
+
     typedef typename Poly_t::Rep      Rep;
 public:
     typedef typename Poly_t::Element  Element;
@@ -35,11 +35,11 @@ public:
 
 
 
-    std::ostream& write( std::ostream& o, const pol_Element& p) { 
-        return Poly_t::write(o, p); 
+    std::ostream& write( std::ostream& o, const pol_Element& p) {
+        return Poly_t::write(o, p);
     }
-    
-            
+
+
 
 
         // Horner like evaluation of the polynomial for p = _domain.size()
@@ -97,14 +97,14 @@ public:
     vect& radix(vect& P, const IntegerDom::Element& E, long n = 0) {
         if (n < 1) n = logp(E,_domain.size()) + 1;
         if (n == 1) {
-                // Could also be 
+                // Could also be
                 // typename Domain::Element e;
                 // Poly_t::assign(P, Degree(0), _domain.init(e, E) );
                 // But Poly_t::init uses less temporaries
             return Poly_t::init(P, Degree(0), E );
         }
         IntegerDom::Element iq, ir;
-        vect Q; 
+        vect Q;
             long t = (n+1)/2;
             IntegerDom::Element q;
             IntegerDom::pow(q, _domain.size(), t);
@@ -116,7 +116,7 @@ public:
                 P.push_back(_domain.zero);
         P.insert(P.end(),Q.begin(),Q.end());
         return setdegree(P);
-    } 
+    }
 
 
         // vect is supposed to be a vector of doubles
@@ -130,7 +130,7 @@ public:
             return P;
         }
         double iq, ir;
-        vect Q; 
+        vect Q;
             long t = (n+1)/2;
             double q = std::pow(double(_domain.size()), double(t));
             iq = floor( E / q );
@@ -142,7 +142,7 @@ public:
                 P.push_back(_domain.zero);
         P.insert(P.end(),Q.begin(),Q.end());
         return setdegree(P);
-    } 
+    }
 
 
     template<class vect, class TT>
@@ -155,7 +155,7 @@ public:
             r = s;
         }
         return P;
-    } 
+    }
 
     template<class vect>
     vect& radixdirect(vect& P, const double& E, unsigned long n) {
@@ -167,8 +167,8 @@ public:
             r = s;
         }
         return P;
-    } 
+    }
 
 };
 
-#endif 
+#endif // __GIVARO_poly1_p_adic_H

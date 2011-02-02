@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro / Athapascan-1
 // Cyclotomic polynomials
-// Time-stamp: <15 Jul 08 10:40:47 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <15 Jul 08 10:40:47 Jean-Guillaume.Dumas@imag.fr>
 // =============================================================== //
-#ifndef _GIV_POLY1_CYCLO_INL_
-#define _GIV_POLY1_CYCLO_INL_
+#ifndef __GIVARO_poly1_cyclo_INL
+#define __GIVARO_poly1_cyclo_INL
 #include <givaro/givintfactor.h>
 
 // ---------------------------------------------------------------
@@ -32,7 +32,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::power_compo
 
 
 // ---------------------------------------------------------------
-// n th Cyclotomic polynomial 
+// n th Cyclotomic polynomial
 // ---------------------------------------------------------------
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic( Rep& P, long n) const
@@ -48,9 +48,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
     } else if (IF.isprime(n)) {
         init(P, Degree(n-1));
         for(size_t i=n-1;i--;)
-            _domain.assign(P[i], _domain.one); 
+            _domain.assign(P[i], _domain.one);
         return setdegree(P);
-    } 
+    }
     else {
         long q,f;
         q = n / 2;
@@ -65,10 +65,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
             if (q % f) {
                 Rep res;
                 power_compose(res, inter, f);
-                return div(P, res, inter); 
+                return div(P, res, inter);
             } else
                 return power_compose(P,inter,f);
-        } else { 
+        } else {
             if (q%2) {
                     // q odd
                 cyclotomic(P,q);
@@ -89,4 +89,4 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
     }
 }
 
-#endif
+#endif // __GIVARO_poly1_cyclo_INL

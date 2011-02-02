@@ -7,13 +7,16 @@
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas$
 // Modified by Pascal Giorgi 2002/04/24
-// $Id: givzpz16table1.inl,v 1.10 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpz16table1.inl,v 1.11 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 
 // ---------
 // -- normalized operations
 // ---------
+
+#ifndef __GIVARO_zpz16_table1_INL
+#define __GIVARO_zpz16_table1_INL
 
 #define __GIVARO_ZPZ16_LOG_MUL(r,p,a,b) \
   {(r)= _tab_mul[(a) + (b)]; }
@@ -543,3 +546,5 @@ inline std::ostream& ZpzDom<Log16>::write (std::ostream& s, const Rep a) const
   if (a >= _p) return s << '0';
   return s << _tab_rep2value[a]; //dpritcha
 }
+
+#endif // __GIVARO_zpz16_table1_INL

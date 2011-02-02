@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : Prime numbers
 //              Primality tests
-// Time-stamp: <29 Jun 05 14:11:07 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <29 Jun 05 14:11:07 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
-#ifndef __GIVARO__PRIMALITY_INL
-#define __GIVARO__PRIMALITY_INL
+#ifndef __GIVARO_primality_INL
+#define __GIVARO_primality_INL
 #include <math.h>
 #include "givaro/givintprime.h"
 
@@ -18,7 +18,7 @@
 // =================================================================== //
 
 // =================================================================== //
-// Primality tests 
+// Primality tests
 // =================================================================== //
 template<class RandIter> unsigned int IntPrimeDom::Miller(RandIter& g, const Integer& n) const
 {
@@ -41,7 +41,7 @@ template<class RandIter> unsigned int IntPrimeDom::Miller(RandIter& g, const Int
     return 0;
 }
 
-    
+
 template<class RandIter>
 IntPrimeDom::Rep& IntPrimeDom::test_Lehmann(RandIter& g, Rep& r, const Rep& n) const {
         // Monte Carlo algorithm
@@ -54,7 +54,7 @@ IntPrimeDom::Rep& IntPrimeDom::test_Lehmann(RandIter& g, Rep& r, const Rep& n) c
 }
 
 template<class RandIter>
-int IntPrimeDom::Lehmann(RandIter& g, const Rep& n)  const 
+int IntPrimeDom::Lehmann(RandIter& g, const Rep& n)  const
 {
     if (n < 2) return 0;
     if (n <= 3) return 1;
@@ -64,4 +64,4 @@ int IntPrimeDom::Lehmann(RandIter& g, const Rep& n)  const
         return 1;
     return 0;
 }
-#endif
+#endif // __GIVARO_primality_INL

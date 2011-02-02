@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro field Elements generator
 // Author : Giorgi Pascal   pascal.giorgi@ens-lyon.fr
 //==================================================================
 
-#ifndef _GIV_RANDITER_
-#define _GIV_RANDITER_
+#ifndef __GIVARO_randiter_H
+#define __GIVARO_randiter_H
 
 
 #include "givaro/givinteger.h"
@@ -39,19 +39,19 @@ template<class TT> class GFqDom;
 
 
 template <class Field , class Type> class GIV_randIter
-{ 
+{
   public:
-    
+
     /** @name Common Object Interface.
      * These methods are required of all LinBox random field Element generators.
      */
     //@{
-   
+
     /** Field Element type.
-     * The field Element must contain a default constructor, 
+     * The field Element must contain a default constructor,
      * a copy constructor, a destructor, and an assignment operator.
      */
-    typedef typename Field::Element Element;    
+    typedef typename Field::Element Element;
 
     /** Constructor from field, sampling size, and seed.
      * The random field Element iterator works in the field F, is seeded
@@ -62,20 +62,20 @@ template <class Field , class Type> class GIV_randIter
      * This implementation sets the sampling size to be no more than the
      * cardinality of the field.
      * @param F LinBox field archetype object in which to do arithmetic
-     * @param size constant integer reference of sample size from which to 
+     * @param size constant integer reference of sample size from which to
      *             sample (default = 0)
      * @param seed constant integer reference from which to seed random number
      *             generator (default = 0)
      */
     GIV_randIter(const  Field& F,
-		 const Type& size = 0, 
+		 const Type& size = 0,
 		 const Type& seed = 0)
             : _size(size), _givrand( GivRandom(seed) ), _field(F)
-      {	
+      {
 
 	Type cardinality    = Type( F.size() );
 	if ((_size > cardinality) || (_size == 0) )
-	  _size = cardinality; 
+	  _size = cardinality;
       }
 
     /** Copy constructor.
@@ -92,11 +92,11 @@ template <class Field , class Type> class GIV_randIter
 
     /** Destructor.
      * This destructs the random field Element generator object.
-     * In this implementation, this destroys the generator by deleting 
+     * In this implementation, this destroys the generator by deleting
      * the random generator object to which _randIter_ptr points.
      */
     ~GIV_randIter(void) {}
-    
+
     /** Assignment operator.
      * Assigns ALP_randIter object R to generator.
      * In this implementation, this means copying the generator to
@@ -114,7 +114,7 @@ template <class Field , class Type> class GIV_randIter
 
       return *this;
     }
- 
+
     /** Random field Element creator.
      * This returns a random field Element from the information supplied
      * at the creation of the generator.
@@ -122,37 +122,37 @@ template <class Field , class Type> class GIV_randIter
      */
     Element& operator() (void)
     {
-      // Create new random Elements     
+      // Create new random Elements
       long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
       Element* x=new Element;
       _field.assign(*x , tmp);
       return *x;
 
     } // Element& operator() (void)
-	
-    
+
+
     /** Random field Element creator with assignement.
      * This returns a random field Element from the information supplied
      * at the creation of the generator.
      * @return random field Element
-     */	
+     */
     Element& random(Element& elt) const
       {
-	// Create new random Elements     
+	// Create new random Elements
 	//atroce
 	//long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
 	//_field.assign(elt , tmp);
 	_field.random (_givrand, elt);
 	return elt;
-      
+
       } // Element& random(Element& )
-      
+
 
 
     //@} Common Object Iterface
-   
+
     /** @name Implementation-Specific Methods.
-     * These methods are not required of all 
+     * These methods are not required of all
      * \Ref{LinBox Random field Element generators}
      * and are included only for this implementation of the archetype.
      */
@@ -160,7 +160,7 @@ template <class Field , class Type> class GIV_randIter
 
     /// Default constructor
     GIV_randIter(void) : _size(0), _givrand(), _field() {}
-    
+
     //@}
 
  private:
@@ -171,10 +171,10 @@ template <class Field , class Type> class GIV_randIter
    /// Random generator
       GivRandom _givrand;
 
-   /// Field 	
-      Field _field;  
+   /// Field
+      Field _field;
 
   }; //  class GIV_randIter
 
 
-#endif
+#endif // __GIVARO_randiter_H

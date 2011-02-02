@@ -3,27 +3,27 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givstack.h,v 1.2 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givstack.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
-#ifndef _STACK_H_
-#define _STACK_H_
+#ifndef __GIVARO_stack_H
+#define __GIVARO_stack_H
 
 template <class THING>
 class Stack {
 public :
 inline Stack() ;
 inline ~Stack() ;
-	
+
 inline void push(const THING&) ;
 inline void pop() ;
 
 inline int isEmpty() const { return (ThePointer == NULL) ; }
 inline THING top() const ;
-	
-private : 
+
+private :
 struct inner_stack
   {
     THING thething ;
@@ -33,6 +33,6 @@ struct inner_stack
 
 #include "givaro/givstack.inl"
 
-#endif 
+#endif // __GIVARO_stack_H
 
-	
+

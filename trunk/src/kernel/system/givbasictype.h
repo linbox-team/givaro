@@ -3,13 +3,13 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givbasictype.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givbasictype.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-#ifndef _GIVARO_BASICTYPE_H_
-#define _GIVARO_BASICTYPE_H_
+#ifndef __GIVARO_basictype_H
+#define __GIVARO_basictype_H
 #include "givaro/givconfig.h"
 
 #include <stdlib.h> // for size_t
@@ -17,7 +17,7 @@
 #include <sys/types.h> // needed on MacOS X 10.5 for uint type
 
 // -- Neutral type: definition of zero and one
-class Neutral { 
+class Neutral {
 public:
   static Neutral zero;
   static Neutral one;
@@ -36,4 +36,4 @@ class givNoCopy {};
 // -- Used to call cstor with copy
 class givWithCopy {};
 
-#endif
+#endif // __GIVARO_basictype_H

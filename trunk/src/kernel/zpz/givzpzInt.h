@@ -6,13 +6,13 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.10 2011-02-02 13:45:03 jgdumas Exp $
+// $Id: givzpzInt.h,v 1.11 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 //
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number in arbitrary precision
-#ifndef _GIVARO_ZPZInteger_H_
-#define _GIVARO_ZPZInteger_H_
+#ifndef __GIVARO_zpz_int_H
+#define __GIVARO_zpz_int_H
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
@@ -208,7 +208,7 @@ protected:
 };
 
 
-#include "givzpzInt.inl"
+#include "givaro/givzpzInt.inl"
 
-#endif
+#endif // __GIVARO_zpz_int_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

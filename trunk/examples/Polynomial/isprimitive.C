@@ -16,7 +16,10 @@
 #include <givaro/givpoly1factor.h>
 #include <givaro/givtimer.h>
 
-int main(int argc, char** argv) {
+// using namespace std;
+
+int main(int argc, char** argv)
+{
   GFqDom<long>::Residu_t MOD;
   if (argc > 1)
 	  MOD = atoi(argv[1]);
@@ -36,7 +39,7 @@ int main(int argc, char** argv) {
         bool f = FD.is_prim_root(IXE, P );
         tim.stop();
 
-  F.write( FD.write( std::cout, P ) << " is " << (f?"":"not ") << "primitive in " ) << endl;
+  F.write( FD.write( std::cout, P ) << " is " << (f?"":"not ") << "primitive in " ) << std::endl;
 
       // std::cout << f << std::endl;
   std::cerr << tim << std::endl;
@@ -46,39 +49,31 @@ int main(int argc, char** argv) {
 
 
 
+#if 0
+bool f;
 
+Poly1FactorDom<GFqDom<long>, Dense>::element W,D;
+FD.gcd(W,FD.diff(D,P),P);
+Degree d, dP;
+if (FD.degree(d,W) > 0) return 0;
+// Distinct degree free ?
+Poly1FactorDom<GFqDom<long>, Dense>::element  Unit, G1;
+FD.init(Unit, Degree(1), F.one);
+W.copy(Unit);
+FD.degree(dP,P); Degree dPo = (dP/2);
 
+f = 1;
 
+for(Degree dp = 1; dp <= dPo; ++dp) {
+	FD.write(cout << "W: ", W) << endl ;
+	FD.powmod(W, D.copy(W), MOD, P);
+	FD.write(cout << "W^q: " , W) << endl ;
+	FD.gcd (G1, FD.sub(D,W,Unit), P) ;
+	FD.write(cout << "D: " , D) << endl ;
+	FD.write(cout << "G1: " , G1) << endl ;
+	if ( FD.degree(d,G1) > 0 ) { f = 0; break; }
+}
 
-
-
-
-
-
-//         bool f;
-
-//     Poly1FactorDom<GFqDom<long>, Dense>::element W,D;
-//     FD.gcd(W,FD.diff(D,P),P);
-//     Degree d, dP;
-//     if (FD.degree(d,W) > 0) return 0;
-//         // Distinct degree free ?
-//     Poly1FactorDom<GFqDom<long>, Dense>::element  Unit, G1;
-//     FD.init(Unit, Degree(1), F.one);
-//     W.copy(Unit);
-//     FD.degree(dP,P); Degree dPo = (dP/2);
-
-//     f = 1;
-
-//     for(Degree dp = 1; dp <= dPo; ++dp) {
-//         FD.write(cout << "W: ", W) << endl ;
-//         FD.powmod(W, D.copy(W), MOD, P);
-//         FD.write(cout << "W^q: " , W) << endl ;
-//         FD.gcd (G1, FD.sub(D,W,Unit), P) ;
-//         FD.write(cout << "D: " , D) << endl ;
-//         FD.write(cout << "G1: " , G1) << endl ;
-//         if ( FD.degree(d,G1) > 0 ) { f = 0; break; }
-//     }
-
-
+#endif
 
 

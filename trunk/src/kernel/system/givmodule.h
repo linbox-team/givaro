@@ -3,13 +3,13 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givmodule.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givmodule.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-#ifndef _MODULE_INIT_H_
-#define _MODULE_INIT_H_
+#ifndef __GIVARO_module_init_H
+#define __GIVARO_module_init_H
 
 // -------------------------------------------------------- Fwd declaration
 
@@ -70,7 +70,7 @@ static void InitApp(int* argc, char***argv);
 static void EndApp();
 friend class Givaro;
 
-private: 
+private:
   // - Internal data of a module
   int priority;
   InitAfter which;
@@ -99,4 +99,4 @@ private:
   friend class GivModule;
 };
 
-#endif
+#endif // __GIVARO_module_init_H

@@ -6,8 +6,11 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J-G. Dumas
-// $Id: givpoly1axpy.inl,v 1.5 2011-01-20 08:15:39 jgdumas Exp $
+// $Id: givpoly1axpy.inl,v 1.6 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+
+#ifndef __GIVARO_poly1axpy_INL
+#define __GIVARO_poly1axpy_INL
 
 // axpy, axmy, maxpy
 // J.G.D. 16.11.2006
@@ -129,4 +132,5 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep
 	this->maxpyin(r, a, x);
 	return this->negin(r);
 }
+#endif // __GIVARO_poly1axpy_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

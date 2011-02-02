@@ -3,11 +3,13 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givmatsparseops.inl,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givmatsparseops.inl,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+
+#error "this looks very much like dead code"
 
   // -- map of a unary operator, with operator()( Type_t& res )
   // res and u could be aliases if OP permits it
@@ -38,7 +40,7 @@ inline void MatrixDom<Domain,Sparse>::
 
   // -- Comparaizon
 template<class Domain>
-inline int MatrixDom<Domain,Sparse>::areEqual 
+inline int MatrixDom<Domain,Sparse>::areEqual
  ( const Rep& P, const Rep& Q) const
 {
   if (nrow(P) != nrow(Q)) return 0;
@@ -53,7 +55,7 @@ inline int MatrixDom<Domain,Sparse>::areEqual
 }
 
 template<class Domain>
-inline int MatrixDom<Domain,Sparse>::areNEqual 
+inline int MatrixDom<Domain,Sparse>::areNEqual
  ( const Rep& P, const Rep& Q) const
 {
   return !areEqual(P,Q);
@@ -67,13 +69,13 @@ inline int MatrixDom<Domain,Sparse>::iszero ( const Rep& P ) const
                       return 1; } // -- row souhld be 0
   size_t sz = P._data.size();
   if (sz == 0) return 1;
-  for(size_t i=0; i<sz; ++i) 
+  for(size_t i=0; i<sz; ++i)
     if (!_domain.iszero(P._data[i])) return 0;
   return 1;
 }
 
 template<class Domain>
-inline void MatrixDom<Domain,Sparse>::mulin 
+inline void MatrixDom<Domain,Sparse>::mulin
  ( Rep& res, const Type_t& u ) const
 {
   Curried2<MulOp<Domain> > op(_domain, u);
@@ -81,7 +83,7 @@ inline void MatrixDom<Domain,Sparse>::mulin
 }
 
 template<class Domain>
-inline void MatrixDom<Domain,Sparse>::mul   
+inline void MatrixDom<Domain,Sparse>::mul
  ( Rep& res, const Type_t& u, const Rep& v ) const
 {
   Curried1<MulOp<Domain> > op(_domain, u);
@@ -89,7 +91,7 @@ inline void MatrixDom<Domain,Sparse>::mul
 }
 
 template<class Domain>
-inline void MatrixDom<Domain,Sparse>::mul   
+inline void MatrixDom<Domain,Sparse>::mul
  ( Rep& res, const Rep& u, const Type_t& v ) const
 {
   Curried2<MulOp<Domain> > op(_domain, v);
@@ -110,29 +112,29 @@ inline void MatrixDom<Domain,Sparse>::neg ( Rep& R, const Rep& P ) const
 }
 
   // VD is the vector domain for res and u
-template<class Domain> 
-inline void MatrixDom<Domain,Sparse>::mul   
- ( VectorDom<Domain,Dense>::Rep& R, 
+template<class Domain>
+inline void MatrixDom<Domain,Sparse>::mul
+ ( VectorDom<Domain,Dense>::Rep& R,
    const Rep& M,
    const VectorDom<Domain,Dense>& VD,
    const VectorDom<Domain,Dense>::Rep& U ) const
 {
   Indice_t i,j;
-  Indice_t irow, erow; 
-  for (i = nrow(M); --i>=0;) 
+  Indice_t irow, erow;
+  for (i = nrow(M); --i>=0;)
   {
     // -- update the i-th row of R
     _domain.assign(R[i], _domain.zero);
-    irow = M._rows[i];   // - first index of the ith row 
-    erow = M._rows[i+1]; // - last index of the ith row 
-    for (; irow != erow; ++irow) 
+    irow = M._rows[i];   // - first index of the ith row
+    erow = M._rows[i+1]; // - last index of the ith row
+    for (; irow != erow; ++irow)
       _domain.axpyin(R[i], M._data[irow], U[M._index[irow]]);
   }
 }
 
 template<class Domain>
-inline void MatrixDom<Domain,Sparse>::multrans 
- ( typename VectorDom<Domain,Dense>::Rep& R, 
+inline void MatrixDom<Domain,Sparse>::multrans
+ ( typename VectorDom<Domain,Dense>::Rep& R,
    const Rep& M,
    const VectorDom<Domain,Dense>& VS,
    const typename VectorDom<Domain,Dense>::Rep& U ) const
@@ -177,7 +179,7 @@ void MatrixDom<Domain, Sparse>::compact
     for (j=0; j<ncols; ++j)
     {
       _domain.assign(val, Md(i,j));
-      if ( !_domain.iszero(val) ) 
+      if ( !_domain.iszero(val) )
       {
         Ms._data.reallocate(size+1);
         Ms._index.reallocate(size+1);
@@ -201,7 +203,7 @@ inline ostream& MatrixDom<Domain,Sparse>::write( ostream& sout ) const
 }
 
 template <class Domain>
-inline istream& MatrixDom<Domain,Sparse>::read( istream& sin ) 
+inline istream& MatrixDom<Domain,Sparse>::read( istream& sin )
 {
   char ch;
   sin >> std::ws >> ch;
@@ -221,7 +223,7 @@ inline istream& MatrixDom<Domain,Sparse>::read( istream& sin )
   // -- read dense:
   char name[7];
   sin >> std::ws; sin.read(name, 6); name[6] = (char)0;
-  if (strcmp(name, "Sparse") !=0) 
+  if (strcmp(name, "Sparse") !=0)
     GivError::throw_error(
       GivBadFormat("MatrixDom<Domain,Sparse>::read: syntax error no 'Sparse'"));
 

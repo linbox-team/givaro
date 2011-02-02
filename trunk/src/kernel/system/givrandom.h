@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : random generator
 // a la Linbox ...
-// Time-stamp: <13 Jul 07 14:40:27 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <13 Jul 07 14:40:27 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
-#ifndef __GIVARO_RTANDOM__H__
-#define __GIVARO_RTANDOM__H__
+#ifndef __GIVARO_random_H
+#define __GIVARO_random_H
 #include <givaro/givconfig.h>
 
 extern "C" {
@@ -34,31 +34,31 @@ class GivRandom {
 public:
     typedef GivRandom random_generator;
 
-    GivRandom(const unsigned long s = 0) 
+    GivRandom(const unsigned long s = 0)
             : _seed(s) {
         if (! s) {
 		struct timeval tp;
 		gettimeofday(&tp, 0) ;
 		_seed = (long)(tp.tv_usec);
 	}
-    }  
-     
+    }
+
     GivRandom(const GivRandom& R) : _seed(R._seed) {}
     GivRandom& operator= (const GivRandom& R) { _seed = R._seed; return *this; }
 
     unsigned long seed() const { return _seed; }
-    
+
 #if defined(__GIVARO_INT64)
     unsigned long operator() () const {
-        return _seed = (unsigned long)( 
-            (__GIVARO_INT64)_GIVRAN_MULTIPLYER_ 
+        return _seed = (unsigned long)(
+            (__GIVARO_INT64)_GIVRAN_MULTIPLYER_
             * (__GIVARO_INT64)_seed
             % (__GIVARO_INT64)_GIVRAN_MODULO_ );
     }
 #else
     unsigned long operator() () const {
-        return _seed = (unsigned long)( 
-            (unsigned long)_GIVRAN_MULTIPLYER_ 
+        return _seed = (unsigned long)(
+            (unsigned long)_GIVRAN_MULTIPLYER_
             * _seed
             % (unsigned long)_GIVRAN_MODULO_ );
     }
@@ -66,8 +66,8 @@ public:
 
     template<class XXX> XXX& operator() (XXX& x) const {
         return x = (XXX)this->operator() ();
-    }        
-    
+    }
+
 };
 
-#endif
+#endif // __GIVARO_random_H

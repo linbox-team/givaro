@@ -3,20 +3,20 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givhashtable.h,v 1.2 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givhashtable.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
 // Description:
 // - hash table
-#ifndef _HASHTABLE_H_
-#define _HASHTABLE_H_
+#ifndef __GIVARO_hashtable_H
+#define __GIVARO_hashtable_H
 
 // The class Key must have :
 // - default cstor
-// - operator== : (const Key&, const Key&) -> int 
-// - godel      : void -> int 
+// - operator== : (const Key&, const Key&) -> int
+// - godel      : void -> int
 
 // Generic Key for class T which can be cast to and int
 template<class T>
@@ -39,9 +39,9 @@ public:
    HashTable ( int n = 0 ) ;
    void allocate( int n ) ;
    ~HashTable ( ) ;
-   void freeing() ; 
+   void freeing() ;
 
-   // Insert and remove functions 
+   // Insert and remove functions
    void insert     ( const T& item, const Key& k) ;
    void insertLast ( const T& item, const Key& k) ;
    void insertFront( const T& item, const Key& k) ;
@@ -63,7 +63,7 @@ public: // ----- internal data structure
   int num ;
   struct _E {
     _E( const T& item, const Key& k)
-     : oneitem(item), key(k) {} ; 
+     : oneitem(item), key(k) {} ;
   public:
     T   oneitem ;
     Key key ;
@@ -74,27 +74,27 @@ public: // ----- internal data structure
   _E** tabE ;  // End of list
 
 
-public: 
+public:
   // Iterator of all item of a  HashTable :
   class Iterator {
   public:
-    Iterator ( HashTable<T,Key>& r) 
-      : ref(r) 
-    { 
+    Iterator ( HashTable<T,Key>& r)
+      : ref(r)
+    {
       // search the first non-void pointer in ref.tabH :
       for (e_curr =0; e_curr < ref.num ; e_curr++)
         if ((curr =ref.tabH[e_curr]) !=0) break ;
-    } ; 
+    } ;
 
     operator int() const { return !isend() ; } ;
-    int isend() const 
+    int isend() const
     {
       if (e_curr >= ref.num) return 1 ;
-      if (e_curr == ref.num-1) 
+      if (e_curr == ref.num-1)
         if (curr ==0) return 1 ;
-      return 0 ; 
+      return 0 ;
     }
-    void next() 
+    void next()
     {
        _E* tmp = curr->next ;
        if (tmp ==0) {
@@ -105,8 +105,8 @@ public:
             if (tmp !=0) break ;
          }
          if (i >= ref.num) { curr =0 ; e_curr = i ; }
-         else { curr = tmp ; e_curr = i ; } 
-       }  
+         else { curr = tmp ; e_curr = i ; }
+       }
        else curr = tmp ;
     } ;
     T curr_item() { return curr->oneitem ; } ;
@@ -120,18 +120,18 @@ public:
   // Iterator of all item for a same Key :
   class IteratorKey  {
   public:
-    IteratorKey ( HashTable<T,Key>& r, const Key& k ) 
-       : ref(r), key(k) 
-    { 
+    IteratorKey ( HashTable<T,Key>& r, const Key& k )
+       : ref(r), key(k)
+    {
       e_curr = key.godel() % r.num ;
       curr = ref.tabH[e_curr] ;
-    } ; 
+    } ;
     operator int() const { return !isend() ; } ;
     int isend() const { return curr == 0 ; }
-    void next() 
+    void next()
     {
        curr = curr->next ;
-       while ( curr != 0 ) 
+       while ( curr != 0 )
        {
           if (curr->key == key) break ;
           curr = curr->next ;
@@ -146,10 +146,10 @@ public:
     _E* curr ;
   } ;
 
-  
+
 
 } ;
 
 #include "givaro/givhashtable.inl"
 
-#endif
+#endif // __GIVARO_hashtable_H

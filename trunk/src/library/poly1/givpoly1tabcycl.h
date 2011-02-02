@@ -2,15 +2,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Time-stamp: <05 Apr 00 10:17:06 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
-// Tabulation of factors of cyclotomic polynomials 
+// Tabulation of factors of cyclotomic polynomials
 // of degree expo modulo mod
 // By vectors. P = v[0] + v[1] X + ... + v[n] X^n
-#ifndef __GIVARO_POLY1_CYCLO_TABLE_H_
-#define __GIVARO_POLY1_CYCLO_TABLE_H_
+#ifndef __GIVARO_poly1_cyclo_table_H
+#define __GIVARO_poly1_cyclo_table_H
 
 #include "givaro/givpoly1.h"
 #include "givaro/givpoly1factor.h"
@@ -24,7 +24,7 @@ public:
         typename Domain::Residu_t mod = _d.residu();
         table_0(mod, expo);
     }
-    
+
     Element& getcyclo(Element& res) const { return res = _Irreductible; }
     void set_random_irreducible(const Domain& _d, const long expo) {
         random_irreducible( _Irreductible, expo);
@@ -35,5 +35,5 @@ void table_50 (const typename Domain::Residu_t mod, const long expo) ;
 };
 
 #include "givaro/givpoly1tabcycl.inl"
-    
-#endif // __GIVARO_POLY1_CYCLO_TABLE_H_
+
+#endif // __GIVARO_poly1_cyclo_table_H

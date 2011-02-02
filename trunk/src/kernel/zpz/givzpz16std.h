@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.h,v 1.14 2011-02-02 13:45:03 jgdumas Exp $
+// $Id: givzpz16std.h,v 1.15 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -15,8 +15,8 @@
 //   Arithmetic on Z/pZ, with p a prime number less than 2^14
 //   Modulo typedef is a signed long number. In case it was modified
 //   then bezout algorithm must be changed (coefficient can be negative).
-#ifndef _GIVARO_ZPZ16STD_H_
-#define _GIVARO_ZPZ16STD_H_
+#ifndef __GIVARO_zpz16std_H
+#define __GIVARO_zpz16std_H
 
 
 /* Thierry -> JG: Constantes necessaires:
@@ -238,5 +238,5 @@ protected:
 
 #include "givaro/givzpz16std.inl"
 
-#endif
+#endif // __GIVARO_zpz16std_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

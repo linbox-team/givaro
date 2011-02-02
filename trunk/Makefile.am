@@ -6,7 +6,7 @@
 
 ACLOCAL_AMFLAGS = -I macros
 
-SUBDIRS=src macros tests docs examples
+SUBDIRS=src macros tests docs
 
 bin_SCRIPTS=givaro-config givaro-makefile
 

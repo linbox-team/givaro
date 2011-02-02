@@ -1,8 +1,11 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
+
+#ifndef __GIVARO_intrns_convert_INL
+#define __GIVARO_intrns_convert_INL
 
   // -- Computation of a mixed-radix representation of the residu.
 //#ifndef __ECC
@@ -18,8 +21,8 @@ inline void IntRNSsystem< Container, Alloc >::RnsToMixedRadix
 {
   size_t size = _primes.size();
   if (mixrad.size() < size) mixrad.resize( size );
-  
-  // -- Computation of  Ck 
+
+  // -- Computation of  Ck
   if (_ck.size()==0) ((IntRNSsystem*)this)->ComputeCk();
 
   // -- size-1 steps
@@ -40,10 +43,10 @@ inline void IntRNSsystem< Container, Alloc >::RnsToMixedRadix
      mod(mixrad[i],mulin(sub(tmp,  residu[i], tmp),_ck[i]) , _primes[i] );
 //  std::cerr << mixrad[i] << ";#mixrad" << std::endl;
   }
-  
+
 }
- 
-  
+
+
 
   // -- Convert a mixed radix representation to an Integer
 //#ifndef __ECC
@@ -51,7 +54,7 @@ template<template<class,class> class Container, template <class> class Alloc>
 //#else
 //template<class Container>
 //#endif
-inline void IntRNSsystem< Container, Alloc >::MixedRadixToRing( Element& res, const IntRNSsystem< Container, Alloc >::array& mixrad ) const 
+inline void IntRNSsystem< Container, Alloc >::MixedRadixToRing( Element& res, const IntRNSsystem< Container, Alloc >::array& mixrad ) const
 {
   size_t size = _primes.size();
 //  if (size != mixrad.size()) throw GivError("[IntRNSsystem::MixedRadixToRing]: bad size of input array");
@@ -74,25 +77,25 @@ inline void IntRNSsystem< Container, Alloc >::RingToRns( IntRNSsystem< Container
 {
   size_t size = _primes.size();
   if (rns.size() != size) rns.resize(size);
-  // -- may be faster using the recursive 
+  // -- may be faster using the recursive
   // tree algorithm a mod p_1...p_k/2, and a mod p_k/2+1...p_k
-  for (int i=0; i<size; i++) 
+  for (int i=0; i<size; i++)
       mod( rns[i], a, _primes[i]);
 //     rns[i] = mod(a, _primes[i]);
 }
 
   // Convert to an Integer:
 //#ifndef __ECC
-template<template<class, class> class Container, template <class> class Alloc> 
+template<template<class, class> class Container, template <class> class Alloc>
 template<class TT>
-inline void IntRNSsystem< Container, Alloc >::RnsToRing( external& I, const Container<TT, Alloc<TT> >& rns) const 
+inline void IntRNSsystem< Container, Alloc >::RnsToRing( external& I, const Container<TT, Alloc<TT> >& rns) const
 //#else
 //template<class Container> template<class ContTT>
-//inline void IntRNSsystem< Container >::RnsToRing( external& I, const ContTT& rns) const 
+//inline void IntRNSsystem< Container >::RnsToRing( external& I, const ContTT& rns) const
 //#endif
 {
   // - Computation of a mixed radix representation of this
-    
+
   typename IntRNSsystem< Container, Alloc >::array mixrad(_primes.size());
   RnsToMixedRadix( mixrad , rns );
 
@@ -101,3 +104,4 @@ inline void IntRNSsystem< Container, Alloc >::RnsToRing( external& I, const Cont
   return;
 }
 
+#endif // __GIVARO_intrns_convert_INL

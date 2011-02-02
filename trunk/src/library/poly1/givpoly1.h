@@ -3,14 +3,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1.h,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
-#ifndef _GIV_POLY1_H_
-#define _GIV_POLY1_H_
+#ifndef __GIVARO_poly1_H
+#define __GIVARO_poly1_H
 
 #include "givaro/giverror.h"
 #include "givaro/givarray0.h"
@@ -35,4 +35,4 @@ template<class Domain> class Poly1Dom<Domain,Sparse>;
 #include "givaro/givpoly1denseops.inl"
 // #include "givaro/givvectsparseops.inl"
 
-#endif
+#endif // __GIVARO_poly1_H

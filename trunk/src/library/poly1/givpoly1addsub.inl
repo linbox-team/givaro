@@ -3,14 +3,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1addsub.inl,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1addsub.inl,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 
-#ifndef __GIV__POLY__ADDSUB__inl__
-#define __GIV__POLY__ADDSUB__inl__
+#ifndef __GIVARO_poly_addsub_INL
+#define __GIVARO_poly_addsub_INL
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::addin (Rep& R, const Rep& P) const
@@ -18,8 +18,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::addin (Rep&
 //     this->write(this->write(std::cout, R) << " += ", P) << std::endl;
 
   size_t i;
-  size_t sP = P.size(); 
-  size_t sR = R.size(); 
+  size_t sP = P.size();
+  size_t sR = R.size();
   if (sP == 0) return R;
   if (sR == 0) { return assign(R,P); }
 //   if (sR == 0) { R.copy(P); return R; }
@@ -45,13 +45,13 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add(Rep& R,
   if (sQ == 0) { R.copy(P); return R; }
 // JGD 04.11.1999
 //   if (sP == sQ) {
-//     R.reallocate(sP); 
-//     _supportdomain.add(R,P,Q); 
-//     return; 
+//     R.reallocate(sP);
+//     _supportdomain.add(R,P,Q);
+//     return;
 //   }
   size_t i, max = sP < sQ ? sQ : sP;
   if (sR != max) R.reallocate(max);
-  if (sP < sQ) 
+  if (sP < sQ)
   {
     for (i=0; i<sP; ++i) _domain.add(R[i], P[i], Q[i]);
 //     for (; i<sQ; ++i) _domain.assign(R[i], Q[i]);
@@ -75,7 +75,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add
   size_t sP = P.size();
   if (sP == 0)  {
     R.reallocate(1);
-    _domain.assign(R[0],val); 
+    _domain.assign(R[0],val);
   }
   else {
     assign(R, P);
@@ -202,4 +202,4 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::neg (Rep& R
 }
 
 
-#endif
+#endif // __GIVARO_poly_addsub_INL

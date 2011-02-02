@@ -6,10 +6,10 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givrational.h,v 1.12 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givrational.h,v 1.13 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-#ifndef _RATIONAL_H_
-#define _RATIONAL_H_
+#ifndef __GIVARO_rational_H
+#define __GIVARO_rational_H
 
 #include "givaro/givinteger.h"
 #include "givaro/givmodule.h"
@@ -261,4 +261,4 @@ public:
     std::istream& read ( std::istream& i, Rep& n) const { return i >> n; }
     std::ostream& write( std::ostream& o, const Rep& n) const { return n.print(o); }
 };
-#endif
+#endif // __GIVARO_rational_H

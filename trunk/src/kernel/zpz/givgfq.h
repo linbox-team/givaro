@@ -12,8 +12,8 @@
 // Description:
 //   Arithmetic on GF(p^k), with p a prime number less than 2^15
 // ==========================================================================
-#ifndef _GIVARO_GFQ1_H_
-#define _GIVARO_GFQ1_H_
+#ifndef __GIVARO_gfq1_H
+#define __GIVARO_gfq1_H
 
 #include "givaro/givconfig.h"
 #include "givaro/givinteger.h"
@@ -330,5 +330,5 @@ public:
 
 #include "givaro/givgfq.inl"
 
-#endif
+#endif // __GIVARO_gfq1_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

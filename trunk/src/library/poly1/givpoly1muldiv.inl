@@ -6,8 +6,10 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.13 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givpoly1muldiv.inl,v 1.14 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+#ifndef __GIVARO_poly1_muldiv_INL
+#define __GIVARO_poly1_muldiv_INL
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
 
@@ -241,15 +243,18 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R,
 	return R;
 }
 
-
-// template <class Domain>
-// inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& R, const Rep& A) const {
-//     Rep tR; assign(tR,R);
-//     return mod(R,tR,A);
-// }
+#if 0
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& R, const Rep& A) const
+{
+	Rep tR; assign(tR,R);
+	return mod(R,tR,A);
+}
+#endif
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& A, const Rep& B) const {
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& A, const Rep& B) const
+{
 	// In place remainder
 	// A is written with next remainder in
 	// the division algorithm written at the end.
@@ -492,4 +497,5 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pmod
 	R.reallocate(degR.value()+1);
 	return setdegree(R);
 }
+#endif // __GIVARO_poly1_muldiv_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

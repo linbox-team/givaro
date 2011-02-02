@@ -3,15 +3,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givperf.h,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givperf.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 // - performance analysis
-#ifndef _GIV_PERF_H_
-#define _GIV_PERF_H_
+#ifndef __GIVARO_perf_H
+#define __GIVARO_perf_H
 
 #ifdef GIVARO_PERF
 #include <stddef>
@@ -20,14 +20,14 @@
 
 struct __CoutCounter {
   void (*print)(ostream&);
-  __CoutCounter( void (*prn)(ostream& ) ) : print(prn) 
+  __CoutCounter( void (*prn)(ostream& ) ) : print(prn)
   {
     cout << "New Counter" << endl;
   }
-  ~__CoutCounter( ) 
-  { 
+  ~__CoutCounter( )
+  {
     cout << "Destroy a counter" << endl;
-    (*print)(cout << endl); cout << endl; 
+    (*print)(cout << endl); cout << endl;
   }
 };
 
@@ -85,15 +85,15 @@ __CoutCounter _Giv_perf##Name<Type>::_coutcout= &_Giv_perf##Name<Type>::print;
 
 #else // #ifdef GIVARO_PERF
 
-#define GIVARO_PERF_DEFCLASS(N,T)	
+#define GIVARO_PERF_DEFCLASS(N,T)
 #define GIVARO_PERF_INEHERIT(N,T)
-#define GIVARO_PERF_CSTOR(Name,Type)  
-#define GIVARO_PERF_RECOPY(Name,Type) 
-#define GIVARO_PERF_DSTOR(Name,Type) 
+#define GIVARO_PERF_CSTOR(Name,Type)
+#define GIVARO_PERF_RECOPY(Name,Type)
+#define GIVARO_PERF_DSTOR(Name,Type)
 #define GIVARO_PERF_ASSIGN(Name,Type)
-#define GIVARO_PERF_DISPLAY(Name,Type)  
+#define GIVARO_PERF_DISPLAY(Name,Type)
 
 
 #endif
 
-#endif
+#endif // __GIVARO_perf_H

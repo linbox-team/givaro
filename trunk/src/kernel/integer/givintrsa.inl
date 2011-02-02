@@ -2,16 +2,16 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : Prime numbers
 //              RSA public-key cipher codes
 //              ECB mode (UNSECURE !!!)
-// Time-stamp: <07 May 09 13:44:00 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <07 May 09 13:44:00 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
-#ifndef _GIVARO_RSA_Public_KEY_
-#define _GIVARO_RSA_Public_KEY_
+#ifndef __GIVARO_rsa_public_key_INL
+#define __GIVARO_rsa_public_key_INL
 
 #include <iostream>
 #include <givaro/givinteger.h>
@@ -27,14 +27,14 @@ long IntRSADom<RandIter>::log(const Element& n, const long b = 10) const {
     long res = 0;
     for(Element p = n; p>=b; ++res, this->divin(p,b) ) {}
     return res;
-}   
-    
+}
+
 
 // =================================================================== //
 // Text conversions
 // =================================================================== //
 
-                
+
 template<class RandIter>
 std::ostream& IntRSADom<RandIter>::ecriture_str(std::ostream& o, const Element& n) const {
 
@@ -82,7 +82,7 @@ std::ostream& IntRSADom<RandIter>::ecriture_Int(std::ostream& o, const Element& 
 
 
 
-    
+
 // CBC mode enciphering
 template<class RandIter>
 std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) const {
@@ -92,7 +92,7 @@ std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) c
     o << generator.seed() << std::endl;
     Element ancien(generator());
     int imax = (_lm-1)<<3;
-    do { 
+    do {
         res = 0;
         for(int i=0; i<_lm-1; ++i) {
             x = in.get();
@@ -116,7 +116,7 @@ std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) c
         ancien = r;
     } while (! in.eof());
     return o;
-}           
+}
 
 // CBC mode deciphering
 template<class RandIter>
@@ -148,8 +148,8 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
         b %= _n;
 
         Element ancien( generator() );
-        
-        in >> tmp; 
+
+        in >> tmp;
         do {
             powmod(r, Integer(tmp)%p, _d, p);
             powmod(r2, Integer(tmp)%q, _d, q);
@@ -171,7 +171,7 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
             } else
                 ecriture_str(o, r2);
         } while (! in.eof());
-    } else {      
+    } else {
         Element ancien( generator() );
         in >> tmp;
         do {
@@ -186,9 +186,9 @@ std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
                 ecriture_str(o, r^ancien);
         } while (! in.eof());
     }
-    
+
     return o;
-}        
+}
 
 
 
@@ -203,13 +203,13 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_
         this->random(g,s,(psize>>1)-2);
         s += Integer(1)<<( (psize>>1)-2 );
     } else {
-        this->random(g,t,3); 
-        this->random(g,s,3); 
+        this->random(g,t,3);
+        this->random(g,s,3);
     }
     nextprimein( t );
     nextprimein( s );
-    
-    
+
+
 
     r = t<<1;
     ++r;
@@ -226,11 +226,11 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_
     q *= s;
     --q;
 
-    
+
         // 2rs
     r *= s;
     r <<= 1;
-    
+
     p = q+r;
     while( ! isprime(p,4) ) {
         p += r;
@@ -239,7 +239,7 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_
     return p;
 }
 
-    
+
 
 
 // =================================================================== //
@@ -261,7 +261,7 @@ void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, 
 
     strong_prime(g, psize, p);
     do  strong_prime(g, qsize, q); while (q == p);
-    
+
 
     Element phim; mul(phim, sub(d,p,IntFactorDom<RandIter>::one), sub(l,q,IntFactorDom<RandIter>::one));
     mul(m, p, q);
@@ -295,4 +295,4 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::point_break(Element&
     return u = _d;
 }
 
-#endif
+#endif // __GIVARO_rsa_public_key_INL

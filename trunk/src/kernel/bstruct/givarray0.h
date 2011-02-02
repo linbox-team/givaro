@@ -1,17 +1,17 @@
-// ========================================================================== 
+// ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/bstruct/givarray0.h,v $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givarray0.h,v 1.6 2010-11-16 10:45:02 jgdumas Exp $
-// ========================================================================== 
+// $Id: givarray0.h,v 1.7 2011-02-02 16:23:55 bboyer Exp $
+// ==========================================================================
 // Description:
 // Array of type T with reference mecanism.
-#ifndef _GIV_ARRAY0_H_
-#define _GIV_ARRAY0_H_
+#ifndef __GIVARO_array0_H
+#define __GIVARO_array0_H
 #include <stddef.h> // size_t
 
 #include "givaro/givaromm.h"
@@ -56,7 +56,7 @@ public :
   void allocate (size_t s);
 
   //-- Reallocation of an array of s Elements: if refcount>1
-  // then it is always a creation of new array + recopy 
+  // then it is always a creation of new array + recopy
   void reallocate (size_t s);
 
   //-- Physical copy operator: reallocate dest of the same size
@@ -76,7 +76,7 @@ public :
   //-- Return the physical size of the array (capacity)
   size_t phsize() const;
 
-  //-- Return the base ptr to the array 
+  //-- Return the base ptr to the array
   Type_t* baseptr();
   const Type_t* baseptr() const;
 
@@ -102,4 +102,4 @@ protected :  //--------------------- protected Internal representation
 
 #include "givaro/givarray0.inl"
 
-#endif
+#endif // __GIVARO_array0_H

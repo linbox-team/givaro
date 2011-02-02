@@ -5,14 +5,14 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.12 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givmontg32.h,v 1.13 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-#ifndef _GIVARO_MONTG32_H_
-#define _GIVARO_MONTG32_H_
+#ifndef __GIVARO_montg32_H
+#define __GIVARO_montg32_H
 //
-#include "givbasictype.h"
-#include "giverror.h"
-#include "giv_randiter.h"
+#include "givaro/givbasictype.h"
+#include "givaro/giverror.h"
+#include "givaro/giv_randiter.h"
 #include <math.h>
 
 
@@ -211,6 +211,6 @@ public:
 };
 
 
-#include "givmontg32.inl"
+#include "givaro/givmontg32.inl"
 
-#endif
+#endif //  __GIVARO_montg32_H

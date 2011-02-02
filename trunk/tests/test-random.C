@@ -418,8 +418,8 @@ int test5()
 {
 	Integer tata = 0 ;
 	size_t count = 0 ;
-#if (__GIVARO_SIZEOF_LONG==8) // BB : todo init to int64 (either 'long' (64) or 'long long' (32))
-	Integer toto(int64(15615486489765487));
+#if (__GIVARO_SIZEOF_LONG==8) // BB : todo init to int64_t (either 'long' (64) or 'long long' (32))
+	Integer toto(int64_t(15615486489765487));
 #else
 	Integer toto(15615486);
 #endif

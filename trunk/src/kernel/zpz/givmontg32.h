@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.13 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givmontg32.h,v 1.14 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 #ifndef __GIVARO_montg32_H
 #define __GIVARO_montg32_H
@@ -36,11 +36,11 @@ template<>
 class Montgomery<Std32> {
 public:
         // ----- Exported Types and constantes
-    typedef uint32 Residu_t;                    // - type to store residue
+    typedef uint32_t Residu_t;                    // - type to store residue
     enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
         // ----- Representation of Element of the domain Montgomery
-    typedef uint32 Rep;
-    typedef uint32 Element;
+    typedef uint32_t Rep;
+    typedef uint32_t Element;
 
         // ----- Constructor
     Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}
@@ -87,17 +87,17 @@ public:
     Rep& init( Rep& a, const float i) const;
 
     unsigned long int& convert(unsigned long int& r, const Rep a) const {
-	    uint32 ur;
+	    uint32_t ur;
 	    return r = (unsigned long)redc(ur,a);}
 
-    uint32& convert(uint32& r, const Rep a) const {
+    uint32_t& convert(uint32_t& r, const Rep a) const {
 	    unsigned long ur;
-	    return r = (uint32)convert(ur, a);
+	    return r = (uint32_t)convert(ur, a);
     }
 
-     int32& convert(int32& r, const Rep a) const {
+     int32_t& convert(int32_t& r, const Rep a) const {
 	    unsigned long ur;
-	    return r = (int32)convert(ur, a);
+	    return r = (int32_t)convert(ur, a);
     }
 
    long int& convert(long int& r, const Rep a) const {
@@ -176,10 +176,10 @@ public:
 
 protected:
         // -- based on modular inverse, d = a*u + b*v
-//   static const int32 gcdext ( int32& u, int32& v, const int32 a, const int32 b );
-    int32& gcdext (int32& d, int32& u, int32& v, const int32 a, const int32 b ) const;
-    int32& invext (int32& u, const int32 a, const int32 b ) const;
-    int32 invext(const int32 a, const int32 b ) const;
+//   static const int32_t gcdext ( int32_t& u, int32_t& v, const int32_t a, const int32_t b );
+    int32_t& gcdext (int32_t& d, int32_t& u, int32_t& v, const int32_t a, const int32_t b ) const;
+    int32_t& invext (int32_t& u, const int32_t a, const int32_t b ) const;
+    int32_t invext(const int32_t a, const int32_t b ) const;
 
 
 

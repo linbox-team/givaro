@@ -21,8 +21,8 @@ template<class TAG>
 class ZpzDom ;
 
 // -- Tag for arithmetic:
-class Std16 /*{public: typedef  int16 type;}*/ ; // -- standard arithmetic over 16bits representations.
-class Std32 /*{public: typedef int32 type;}*/ ; // -- standard arithmetic over 32bits representations.
+class Std16 /*{public: typedef  int16_t type;}*/ ; // -- standard arithmetic over 16bits representations.
+class Std32 /*{public: typedef int32_t type;}*/ ; // -- standard arithmetic over 32bits representations.
 
 class Log16 ; // -- log arithmetic over 16bits representations.
 

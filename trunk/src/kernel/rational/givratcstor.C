@@ -3,10 +3,10 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.7 2010-10-15 13:43:48 bboyer Exp $
+// $Id: givratcstor.C,v 1.8 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 // Description:
 
@@ -30,27 +30,27 @@ void Rational::SetReduce() { Rational::flags = Rational::Reduce ; }
 void Rational::SetNoReduce() { Rational::flags = Rational::NoReduce ; }
 
 // Explicit instanciation
-template double power(double x, unsigned int p) ; 
+template double power(double x, unsigned int p) ;
 
 
 
         struct ieee {
 #if HAVE_BIG_ENDIAN
-            uint64 negative:1;
-            uint64 exponent:11;
-            uint64 mantissa:52;
+            uint64_t negative:1;
+            uint64_t exponent:11;
+            uint64_t mantissa:52;
 #else
-            uint64 mantissa:52;
-            uint64 exponent:11;
-            uint64 negative:1;
-#endif                          
+            uint64_t mantissa:52;
+            uint64_t exponent:11;
+            uint64_t negative:1;
+#endif
         };
 
 Rational::Rational(double x) {
-    union { 
-        uint64 l; 
-        ieee u; 
-        double d; 
+    union {
+        uint64_t l;
+        ieee u;
+        double d;
     } t; // temp
 
     t.d = x;
@@ -83,23 +83,23 @@ Rational::Rational(Neutral n ) : den(Integer::one)
    if (n == Neutral::zero) {
       num = Integer::zero;
    }
-   else { // n = one 
+   else { // n = one
       num = Integer::one;
    }
 }
 
 //   ------------------------------ Rational(int n)
-Rational::Rational(int n ) : num(n), den(Integer::one) 
+Rational::Rational(int n ) : num(n), den(Integer::one)
 { }
 
 
 //   ------------------------------ Rational(long n)
-Rational::Rational(long n ) : num(n), den(Integer::one) 
+Rational::Rational(long n ) : num(n), den(Integer::one)
 { }
 
 
 //   ------------------------------ Rational(unsigned long n)
-Rational::Rational(unsigned long n ) : num(n), den(Integer::one) 
+Rational::Rational(unsigned long n ) : num(n), den(Integer::one)
 { }
 
 //   ------------------------------ Rational(unsigned long n, unsigned long d )
@@ -109,7 +109,7 @@ Rational::Rational(unsigned long n, unsigned long d )
     {
       throw GivMathDivZero("[Rational::Rational]: null denominator of the rational.") ;
     }
-  
+
   if (n == 0)
     {
       num = Integer::zero;
@@ -131,7 +131,7 @@ Rational::Rational(long n, long d )
     {
       throw GivMathDivZero("[Rational::Rational]: null denominator of the rational.") ;
     }
-  
+
   if (n == 0)
     {
       num = Integer::zero;
@@ -152,7 +152,7 @@ Rational::Rational(long n, long d )
 
 
 //   ------------------------------ Rational(const char* s )
-Rational::Rational(const char* s ) 
+Rational::Rational(const char* s )
 {
 #ifdef __GIVARO_OLD_SSTREAM__
   std::istrstream input (s) ;
@@ -186,7 +186,7 @@ Rational::Rational(const Integer &n, const Integer &d, int red)
     {
       throw GivMathDivZero( "[Rational::Rational]: null denominator of the rational.") ;
     }
-  
+
   if (isZero(n))
     {
       num = Integer::zero;
@@ -206,17 +206,17 @@ Rational::Rational(const Integer &n, const Integer &d, int red)
 }
 
 //   ------------------------------ Rational(const Rational &n)
-Rational::Rational(const Rational &r) : num(r.num), den(r.den) 
-{ } 
+Rational::Rational(const Rational &r) : num(r.num), den(r.den)
+{ }
 
-Rational::Rational( givNoInit ) : num(Integer::zero), den(Integer::one) 
-{ } 
+Rational::Rational( givNoInit ) : num(Integer::zero), den(Integer::one)
+{ }
 
 // ------ Initialization module:
 //GivModule Rational::Module (Rational::Init,
-//                            Rational::End, 
+//                            Rational::End,
 //                            InitAfter(Integer::Module),
-//                            "Rational package") ; 
+//                            "Rational package") ;
 void Rational::Init(int* , char***)
 {}
 

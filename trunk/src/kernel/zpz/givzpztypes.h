@@ -21,14 +21,14 @@
 template<class TAG> class ZpzDom;
 
 // -- Tag for arithmetic:
-struct Std16 { typedef int16 type;}; // -- standard arithmetic over 16bits representations.
-struct Std32 {typedef int32 type;}; // -- standard arithmetic over 32bits representations.
-struct Unsigned32 {typedef uint32  type;}; // -- standard arithmetic over 32bits representations.
+struct Std16 { typedef int16_t type;}; // -- standard arithmetic over 16bits representations.
+struct Std32 { typedef int32_t type;}; // -- standard arithmetic over 32bits representations.
+struct Unsigned32 {typedef uint32_t  type;}; // -- standard arithmetic over 32bits representations.
 
-struct Log16 { typedef int16 type;}; // -- log arithmetic over 16bits representations.
+struct Log16 { typedef int16_t type;}; // -- log arithmetic over 16bits representations.
 
 #ifndef __DONOTUSE_Givaro_SIXTYFOUR__
-struct Std64 { typedef int64 type;}; // -- standard arithmetic over 64bits representations.
+struct Std64 { typedef int64_t type;}; // -- standard arithmetic over 64bits representations.
 #endif
 
 

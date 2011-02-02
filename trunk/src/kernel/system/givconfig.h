@@ -3,10 +3,10 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.20 2011-01-31 09:37:56 jgdumas Exp $
+// $Id: givconfig.h,v 1.21 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 #ifndef _GIVARO_INTERNAL_CONFIG_H_
@@ -26,8 +26,8 @@
 //   as based classes for exceptions.
 // * GIVARO_HAVE_ANSI_LIBRARY:
 //   value: defined/undefined
-//   purpose: define it in order to use ANSI library utilities (except for 
-//   container) as allocation without throwing exception, new str stream, 
+//   purpose: define it in order to use ANSI library utilities (except for
+//   container) as allocation without throwing exception, new str stream,
 //   std header files...
 // * GIVARO_HAVE_LBLAS:
 //   value: defined/undefined
@@ -81,17 +81,17 @@
 # define GIVARO_BITS_PER_CHAR		SIZEOF_CHAR
 
 
-typedef signed    __GIVARO_INT8       int8;
-typedef signed    __GIVARO_INT16      int16;
-typedef signed 	  __GIVARO_INT32      int32;
-typedef unsigned  __GIVARO_INT8      uint8;
-typedef unsigned  __GIVARO_INT16     uint16;
-typedef unsigned  __GIVARO_INT32     uint32;
+typedef signed    __GIVARO_INT8      int8_t;
+typedef signed    __GIVARO_INT16     int16_t;
+typedef signed 	  __GIVARO_INT32     int32_t;
+typedef unsigned  __GIVARO_INT8      uint8_t;
+typedef unsigned  __GIVARO_INT16     uint16_t;
+typedef unsigned  __GIVARO_INT32     uint32_t;
 
 # if defined(__GIVARO_INT64)
-#   undef GIVARO_DONOTUSE_SIXTYFOUR 
-typedef signed __GIVARO_INT64 int64;
-typedef unsigned __GIVARO_INT64  uint64;
+#   undef GIVARO_DONOTUSE_SIXTYFOUR
+typedef signed    __GIVARO_INT64     int64_t;
+typedef unsigned  __GIVARO_INT64     uint64_t;
 # else
 #   undef GIVARO_USE_SIXTYFOUR
 #   define GIVARO_DONOTUSE_SIXTYFOUR 1
@@ -99,23 +99,23 @@ typedef unsigned __GIVARO_INT64  uint64;
 
 
 
-# define GIVARO_MAXUINT8		255U 		// 2^8-1
-# define GIVARO_MAXUINT16		65535U 		// 2^16-1
+# define GIVARO_MAXUINT8		255U 		    // 2^8-1
+# define GIVARO_MAXUINT16		65535U 		    // 2^16-1
 # define GIVARO_MAXUINT32		4294967295U 	// 2^32-1
 # define GIVARO_MAXULONG		4294967295U 	// 2^32-1
 
-
+//!@todo use \c INT8_MAX,... \c INT64_MAX
 
 // ==========================================================================
 // -- Code expansion depending on the previous defined macros
 
 
-// -- specialized template 
+// -- specialized template
 
 #ifdef GIVARO_HAVE_ANSI_SPECIALIZED
-#  define GIVARO_SPECIALIZED template<> 
+#  define GIVARO_SPECIALIZED template<>
 #else
-#  define GIVARO_SPECIALIZED 
+#  define GIVARO_SPECIALIZED
 #endif
 
 
@@ -195,7 +195,7 @@ typedef unsigned __GIVARO_INT64  uint64;
 
 // -- Define this macro to store a log of memory address
 // allocated during computation
-//#define GIVARO_MAPMEM 
+//#define GIVARO_MAPMEM
 
 // -- Define this variable to compute statistics about memory usage
 #ifndef GIVARO_STATMEM
@@ -335,6 +335,6 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
     typedef long long signed_type;
     typedef unsigned long long unsigned_type;
   };
-  #endif 
+  #endif
 
 #endif

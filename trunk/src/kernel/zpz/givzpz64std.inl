@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.18 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givzpz64std.inl,v 1.19 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 #ifndef __GIVARO_zpz64std_INL
 #define __GIVARO_zpz64std_INL
@@ -22,9 +22,9 @@
 #ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 
 // r = a*b
-#define __GIVARO_ZPZ64_N_MUL(r,p,a,b) ( r = (uint64)(a*b) % (uint64)p )
+#define __GIVARO_ZPZ64_N_MUL(r,p,a,b) ( r = (uint64_t)(a*b) % (uint64_t)p )
 // r *= a
-#define __GIVARO_ZPZ64_N_MULIN(r,p,a) (  r = (uint64)(r*a) % (uint64)p  )
+#define __GIVARO_ZPZ64_N_MULIN(r,p,a) (  r = (uint64_t)(r*a) % (uint64_t)p  )
 
 // r = a - b
 #define __GIVARO_ZPZ64_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
@@ -37,15 +37,15 @@
 #define __GIVARO_ZPZ64_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p);}
 
 // r <- a*b+c % p
-#define __GIVARO_ZPZ64_N_MULADD(r,p,a,b,c) ( r = (uint64)(a*b+c) % (uint64)p )
+#define __GIVARO_ZPZ64_N_MULADD(r,p,a,b,c) ( r = (uint64_t)(a*b+c) % (uint64_t)p )
 
-#define __GIVARO_ZPZ64_N_MULADDIN(r,p,a,b) ( r = (uint64)(a*b+r) % (uint64)p )
+#define __GIVARO_ZPZ64_N_MULADDIN(r,p,a,b) ( r = (uint64_t)(a*b+r) % (uint64_t)p )
 
 #define __GIVARO_ZPZ64_N_NEG(r,p,a) { r = (a == 0 ? 0 : p-a); }
 #define __GIVARO_ZPZ64_N_NEGIN(r,p) { r = (r == 0 ? 0 : p-r); }
 
 // a*b-c
-#define __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,c) ( r = (uint64)(a*b+p-c) % (uint64)p )
+#define __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,c) ( r = (uint64_t)(a*b+p-c) % (uint64_t)p )
 
 // r-a*b
 #define __GIVARO_ZPZ64_N_SUBMULIN(r,p,a,b) { \
@@ -57,46 +57,46 @@ inline ZpzDom<Std64>::Residu_t ZpzDom<Std64>::residu( ) const
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::mul (Rep& r, const Rep a, const Rep b) const
 {
-   int64 tmp;
-  __GIVARO_ZPZ64_N_MUL(tmp,(int64)_p,(int64)a,(int64)b);
+   int64_t tmp;
+  __GIVARO_ZPZ64_N_MUL(tmp,(int64_t)_p,(int64_t)a,(int64_t)b);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::neg (Rep& r, const Rep a) const
 {
-   int64 tmp;
-  __GIVARO_ZPZ64_N_NEG(tmp,(int64)_p,(int64)a);
+   int64_t tmp;
+  __GIVARO_ZPZ64_N_NEG(tmp,(int64_t)_p,(int64_t)a);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::inv (Rep& r, const Rep a) const
 {
-//    int64 d, u, v;
-   int64 u;
+//    int64_t d, u, v;
+   int64_t u;
   ZpzDom<Std64>::invext(u, a, _p);
   return r = (u<0)?(ZpzDom<Std64>::Rep)(u+_p):(ZpzDom<Std64>::Rep)u;
  }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::div (Rep& r, const Rep a, const Rep b) const
 {
-   int64 tmp;
-   int64 ib;
+   int64_t tmp;
+   int64_t ib;
   inv(ib, b);
-  __GIVARO_ZPZ64_N_MUL(tmp,(int64)_p,(int64)a,(int64)ib);
+  __GIVARO_ZPZ64_N_MUL(tmp,(int64_t)_p,(int64_t)a,(int64_t)ib);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::sub (Rep& r, const Rep a, const Rep b) const
 {
-   int64 tmp;
-  __GIVARO_ZPZ64_N_SUB(tmp,(int64)_p,(int64)a,(int64)b);
+   int64_t tmp;
+  __GIVARO_ZPZ64_N_SUB(tmp,(int64_t)_p,(int64_t)a,(int64_t)b);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::add (Rep& r, const Rep a, const Rep b) const
 {
-   int64 tmp;
-  __GIVARO_ZPZ64_N_ADD(tmp,(int64)_p,(int64)a,(int64)b);
+   int64_t tmp;
+  __GIVARO_ZPZ64_N_ADD(tmp,(int64_t)_p,(int64_t)a,(int64_t)b);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
@@ -104,8 +104,8 @@ inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::add (Rep& r, const Rep a, const Rep b)
 inline void ZpzDom<Std64>::mul (const size_t sz, Array r, constArray a, constArray b) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_MUL(tmp, (int64)_p,(int64)a[i], (int64)b[i]);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_MUL(tmp, (int64_t)_p,(int64_t)a[i], (int64_t)b[i]);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -113,8 +113,8 @@ inline void ZpzDom<Std64>::mul (const size_t sz, Array r, constArray a, constArr
 inline void ZpzDom<Std64>::mul (const size_t sz, Array r, constArray a, Rep b) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_MUL(tmp, (int64)_p, (int64)a[i], (int64)b);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_MUL(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -136,8 +136,8 @@ inline void ZpzDom<Std64>::div (const size_t sz, Array r, constArray a, Rep b) c
 inline void ZpzDom<Std64>::add (const size_t sz, Array r, constArray a, constArray b) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_ADD(tmp, (int64)_p, (int64)a[i], (int64)b[i]);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_ADD(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b[i]);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -145,8 +145,8 @@ inline void ZpzDom<Std64>::add (const size_t sz, Array r, constArray a, constArr
 inline void ZpzDom<Std64>::add (const size_t sz, Array r, constArray a, Rep b) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_ADD(tmp, (int64)_p, (int64)a[i], (int64)b);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_ADD(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -154,8 +154,8 @@ inline void ZpzDom<Std64>::add (const size_t sz, Array r, constArray a, Rep b) c
 inline void ZpzDom<Std64>::sub (const size_t sz, Array r, constArray a, constArray b) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_SUB(tmp, (int64)_p, (int64)a[i], (int64)b[i]);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_SUB(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b[i]);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -163,8 +163,8 @@ inline void ZpzDom<Std64>::sub (const size_t sz, Array r, constArray a, constArr
 inline void ZpzDom<Std64>::sub (const size_t sz, Array r, constArray a, Rep b) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_SUB(tmp, (int64)_p, (int64)a[i], (int64)b);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_SUB(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -172,8 +172,8 @@ inline void ZpzDom<Std64>::sub (const size_t sz, Array r, constArray a, Rep b) c
 inline void ZpzDom<Std64>::neg (const size_t sz, Array r, constArray a) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_NEG(tmp, (int64)_p, (int64)a[i]);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_NEG(tmp, (int64_t)_p, (int64_t)a[i]);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -181,8 +181,8 @@ inline void ZpzDom<Std64>::neg (const size_t sz, Array r, constArray a) const
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::mulin (Rep& r, const Rep a) const
 {
-   int64 tmp = (int64)r;
-  __GIVARO_ZPZ64_N_MULIN(tmp,(int64)_p, (int64)a);
+   int64_t tmp = (int64_t)r;
+  __GIVARO_ZPZ64_N_MULIN(tmp,(int64_t)_p, (int64_t)a);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
@@ -195,28 +195,28 @@ inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::divin (Rep& r, const Rep a) const
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::addin (Rep& r, const Rep a) const
 {
-   int64 tmp = (int64)r;
-  __GIVARO_ZPZ64_N_ADDIN(tmp,(int64)_p, (int64)a);
+   int64_t tmp = (int64_t)r;
+  __GIVARO_ZPZ64_N_ADDIN(tmp,(int64_t)_p, (int64_t)a);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::subin (Rep& r, const Rep a) const
 {
-   int64 tmp = (int64)r;
-  __GIVARO_ZPZ64_N_SUBIN(tmp,(int64)_p, (int64)a);
+   int64_t tmp = (int64_t)r;
+  __GIVARO_ZPZ64_N_SUBIN(tmp,(int64_t)_p, (int64_t)a);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::negin (Rep& r) const
 {
-  __GIVARO_ZPZ64_N_NEGIN(r,(int64)_p);
+  __GIVARO_ZPZ64_N_NEGIN(r,(int64_t)_p);
   return r;
 }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::invin (Rep& r) const
 {
-   int64 u;
+   int64_t u;
   ZpzDom<Std64>::invext(u, r, _p);
   return r = (u<0)?(ZpzDom<Std64>::Rep)(u+_p):(ZpzDom<Std64>::Rep)u;
 }
@@ -225,16 +225,16 @@ inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::invin (Rep& r) const
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::axpy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 {
-   int64 tmp;
-  __GIVARO_ZPZ64_N_MULADD(tmp, (int64)_p, (int64)a, (int64)b, (int64)c);
+   int64_t tmp;
+  __GIVARO_ZPZ64_N_MULADD(tmp, (int64_t)_p, (int64_t)a, (int64_t)b, (int64_t)c);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::axpyin
  (Rep& r, const Rep a, const Rep b) const
 {
-   int64 tmp = (int64)r;
-  __GIVARO_ZPZ64_N_MULADDIN(tmp, (int64)_p, (int64)a, (int64)b);
+   int64_t tmp = (int64_t)r;
+  __GIVARO_ZPZ64_N_MULADDIN(tmp, (int64_t)_p, (int64_t)a, (int64_t)b);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
@@ -243,8 +243,8 @@ inline void ZpzDom<Std64>::axpy
   (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp;
-		__GIVARO_ZPZ64_N_MULADD(tmp, (int64)_p, (int64)a[i], (int64)x[i], (int64)y[i]);
+		int64_t tmp;
+		__GIVARO_ZPZ64_N_MULADD(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i], (int64_t)y[i]);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -253,8 +253,8 @@ inline void ZpzDom<Std64>::axpyin
   (const size_t sz, Array r, constArray a, constArray x) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp = (int64)r[i];
-		__GIVARO_ZPZ64_N_MULADDIN(tmp, (int64)_p, (int64)a[i], (int64)x[i]);
+		int64_t tmp = (int64_t)r[i];
+		__GIVARO_ZPZ64_N_MULADDIN(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i]);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -262,8 +262,8 @@ inline void ZpzDom<Std64>::axpyin
 inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::axmy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 {
-   int64 tmp;
-  __GIVARO_ZPZ64_N_MULSUB(tmp, (int64)_p, (int64)a, (int64)b, (int64)c);
+   int64_t tmp;
+  __GIVARO_ZPZ64_N_MULSUB(tmp, (int64_t)_p, (int64_t)a, (int64_t)b, (int64_t)c);
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
@@ -271,8 +271,8 @@ inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::axmy
 inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::maxpy
  (Rep& r, const Rep a, const Rep b, const Rep c) const
 {
-   int64 tmp = (int64)c;
-  __GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64)_p, (int64)a, (int64)b );
+   int64_t tmp = (int64_t)c;
+  __GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64_t)_p, (int64_t)a, (int64_t)b );
   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
@@ -280,9 +280,9 @@ inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::maxpy
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::maxpy (Rep& r,
 						 const Rep a, const Rep b, const Rep c) const
 {
-	int64 tmp;
-	__GIVARO_ZPZ64_N_MUL(tmp, (int64)_p, (int64)a, (int64)b);
-	__GIVARO_ZPZ64_N_SUB(r, (int64)_p, (int64)c, tmp);
+	int64_t tmp;
+	__GIVARO_ZPZ64_N_MUL(tmp, (int64_t)_p, (int64_t)a, (int64_t)b);
+	__GIVARO_ZPZ64_N_SUB(r, (int64_t)_p, (int64_t)c, tmp);
 	return r;
 }
 #endif
@@ -290,10 +290,10 @@ inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::maxpy (Rep& r,
 // r -= a*b
 inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::maxpyin (Rep& r, const Rep a, const Rep b) const
 {
-  __GIVARO_ZPZ64_N_SUBMULIN(r, (int64)_p, (int64)a, (int64)b );
+  __GIVARO_ZPZ64_N_SUBMULIN(r, (int64_t)_p, (int64_t)a, (int64_t)b );
   return r;
-//    int64 tmp = (int64)r;
-//   __GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64)_p, (int64)a, (int64)b );
+//    int64_t tmp = (int64_t)r;
+//   __GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64_t)_p, (int64_t)a, (int64_t)b );
 //   return r = (ZpzDom<Std64>::Rep)tmp;
 }
 
@@ -308,8 +308,8 @@ inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::axmyin (Rep& r, const Rep a, const Re
 inline void ZpzDom<Std64>::axmy (const size_t sz, Array r, constArray a, constArray x, constArray y) const
 {
   for ( size_t i = sz; --i; ) {
-     int64 tmp;
-    __GIVARO_ZPZ64_N_MULSUB(tmp, (int64)_p, (int64)a[i], (int64)x[i], (int64)y[i]);
+     int64_t tmp;
+    __GIVARO_ZPZ64_N_MULSUB(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i], (int64_t)y[i]);
     r[i] = (ZpzDom<Std64>::Rep)tmp;
   }
 }
@@ -318,8 +318,8 @@ inline void ZpzDom<Std64>::axmy (const size_t sz, Array r, constArray a, constAr
 inline void ZpzDom<Std64>::maxpyin (const size_t sz, Array r, constArray a, constArray x) const
 {
 	for ( size_t i = sz; --i; ) {
-		int64 tmp = (int64)r[i];
-		__GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64)_p, (int64)a[i], (int64)x[i]);
+		int64_t tmp = (int64_t)r[i];
+		__GIVARO_ZPZ64_N_SUBMULIN(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i]);
 		r[i] = (ZpzDom<Std64>::Rep)tmp;
 	}
 }
@@ -358,16 +358,16 @@ inline void ZpzDom<Std64>::assign
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const unsigned long a ) const
-{ return r = (Rep)( a >= (uint64)_p ? a % (uint64)_p : a);
+{ return r = (Rep)( a >= (uint64_t)_p ? a % (uint64_t)_p : a);
 }
 
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long a ) const
 {
-  int64 sign; uint64 ua;
+  int64_t sign; uint64_t ua;
   if (a <0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
-  r = (ua >=_p) ? ua % (uint64)_p : ua;
+  r = (ua >=_p) ? ua % (uint64_t)_p : ua;
   if (r && (sign ==-1)) r = _p - r;
   return r;
 }
@@ -375,19 +375,19 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long a ) const
 
 inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const Integer& residu ) const
 {
-  int64 tr;
+  int64_t tr;
   if (residu <0) {
       // -a = b [p]
       // a = p-b [p]
-    if ( (-residu) >= (Integer)(_p) ) tr = int64( (-residu) % (Integer)_p) ;
-    else tr = int64(-residu);
+    if ( (-residu) >= (Integer)(_p) ) tr = int64_t( (-residu) % (Integer)_p) ;
+    else tr = int64_t(-residu);
     if (tr)
-      return r = (uint64)_p - (uint64)tr;
+      return r = (uint64_t)_p - (uint64_t)tr;
     else
       return r = zero;
   } else {
-      if (residu >= (Integer)_p ) tr =   int64(residu % (Integer)_p) ;
-    else tr = int64(residu);
+      if (residu >= (Integer)_p ) tr =   int64_t(residu % (Integer)_p) ;
+    else tr = int64_t(residu);
     return r = tr;
   }
 }
@@ -400,11 +400,11 @@ inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::init( Rep& a, const unsigned int i) c
 
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const unsigned long long a ) const
-{ return r = (Rep)( a >= (uint64)_p ? a % (uint64)_p : a);
+{ return r = (Rep)( a >= (uint64_t)_p ? a % (uint64_t)_p : a);
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const double a ) const
-{ return init(r, (int64)a);
+{ return init(r, (int64_t)a);
 }
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const float a ) const
@@ -415,10 +415,10 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const float a ) const
 
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long long a ) const
 {
-  int sign; uint64 ua;
+  int sign; uint64_t ua;
   if (a <0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
-  r = (ua >=_p) ? ua % (uint64)_p : ua;
+  r = (ua >=_p) ? ua % (uint64_t)_p : ua;
   if (r && (sign ==-1)) r = _p - r;
   return r;
 }
@@ -455,7 +455,7 @@ inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::random(RandIter& g, Rep& a, const Rep
 
 template< class RandIter >
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::random(RandIter& g, Rep& a, long b) const {
-	return init(a, g() %(uint64) b);
+	return init(a, g() %(uint64_t) b);
 }
 
 template< class RandIter >
@@ -472,7 +472,7 @@ inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a, co
 
 template< class RandIter >
 inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	while (isZero(init(a, g() %(uint64) b))) {};
+	while (isZero(init(a, g() %(uint64_t) b))) {};
 	return a;
 }
 
@@ -490,13 +490,13 @@ inline void ZpzDom<Std64>::dotprod
   ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
 {
   unsigned int stride = 1;
-  if ((int64)bound < Signed_Trait<Rep>::max() )
+  if ((int64_t)bound < Signed_Trait<Rep>::max() )
    stride = GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound);
   unsigned long dot = zero;
   if ((sz <10) && (sz <stride)) {
     for(  int i= sz; i--; )
       dot += a[i] * b[i];
-    if (dot > _p) r = (Rep)(dot % (uint64)_p);
+    if (dot > _p) r = (Rep)(dot % (uint64_t)_p);
     else r = (Rep)dot;
     return;
   }
@@ -520,7 +520,7 @@ inline void ZpzDom<Std64>::dotprod
         dot += a[0] * b[0];
         dot += a[1] * b[1];
       }
-    if (dot>(uint64)_p) dot %= (uint64)_p;
+    if (dot>(uint64_t)_p) dot %= (uint64_t)_p;
     i_begin += min_sz;
   } while (i_begin <sz);
   r = (Rep)dot;
@@ -533,20 +533,20 @@ inline void ZpzDom<Std64>::dotprod
 }
 
 
-  //  a -> r: int64 to double
+  //  a -> r: int64_t to double
 inline void
   ZpzDom<Std64>::i2d ( const size_t sz, double* r, constArray a ) const
 {
   for (size_t i=0; i<sz; ++i) r[i] = a[i];
 }
 
-  //  a -> r: double to int64
+  //  a -> r: double to int64_t
 inline void
   ZpzDom<Std64>::d2i ( const size_t sz, Array r, const double* a ) const
 {
   union d_2_l {
     double d;
-    int64 r[2];
+    int64_t r[2];
   };
 //  static const double offset = 4503599627370496.0; // 2^52
   double offset = 4503599627370496.0; // 2^52
@@ -556,7 +556,7 @@ inline void
       // - normalization: put fractional part at the end of the representation
       tmp.d = a[i] + offset;
       r[i] = tmp.r[1];
-      if (r[i] <(int64)_p) r[i] %= _p;
+      if (r[i] <(int64_t)_p) r[i] %= _p;
   }
   //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
   //    r[i] = (r[i] <_p ? r[i] : r[i]%_p);

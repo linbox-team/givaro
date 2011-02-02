@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.19 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givzpz64std.h,v 1.20 2011-02-02 17:16:43 bboyer Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -32,11 +32,11 @@ class ZpzDom<Std64>
 
 public:
 	// ----- Exported Types and constantes
-	typedef uint64 Residu_t;                    // - type to store residue
+	typedef uint64_t Residu_t;                    // - type to store residue
 	enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
 	// ----- Representation of Element of the domain ZpzDom
-	typedef int64 Rep;
-	typedef int64 Element;
+	typedef int64_t Rep;
+	typedef int64_t Element;
 
 
 	// ----- Representation of vector of the Element
@@ -176,10 +176,10 @@ public:
 	void dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
 	void dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
 
-	// ----- a -> r: uint64 to double
+	// ----- a -> r: uint64_t to double
 	void i2d ( const size_t sz, double* r, constArray a ) const;
 
-	// ----- a -> r % p: double to uint64 % p
+	// ----- a -> r % p: double to uint64_t % p
 	void d2i ( const size_t sz, Array r, const double* a ) const;
 
 	// --- IO methods
@@ -192,9 +192,9 @@ public:
 
 protected:
 	// -- based for modular inverse, d = a*u + b*v
-	//   static const int64 gcdext ( int64& u, int64& v, const int64 a, const int64 b );
-	int64& gcdext (int64& d, int64& u, int64& v, const int64 a, const int64 b ) const;
-	int64& invext (int64& u, const int64 a, const int64 b ) const;
+	//   static const int64_t gcdext ( int64_t& u, int64_t& v, const int64_t a, const int64_t b );
+	int64_t& gcdext (int64_t& d, int64_t& u, int64_t& v, const int64_t a, const int64_t b ) const;
+	int64_t& invext (int64_t& u, const int64_t a, const int64_t b ) const;
 
 protected:
 	// -- data representation of the domain:

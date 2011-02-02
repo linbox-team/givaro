@@ -3,15 +3,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: giverror.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: giverror.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
-// - error exception 
-#ifndef _GIVERROR_H_
-#define _GIVERROR_H_
+// - error exception
+#ifndef __GIVARO_error_H
+#define __GIVARO_error_H
 
 #include <iostream>
 
@@ -19,13 +19,13 @@
 // - Base class for execption handling in Givaro
 class GivError {
 public:
-  GivError(const char* msg =0 ) 
+  GivError(const char* msg =0 )
   : strg(msg) {};
 
   virtual ~GivError() ;
   // -- virtual print of the error message
   virtual std::ostream& print( std::ostream& o )  const;
-  
+
   // -- non virtual output operator
   friend std::ostream& operator<< (std::ostream& o, const GivError& E) ;
 
@@ -33,7 +33,7 @@ public:
   static void throw_error( const GivError& err );
 
 protected:
-  const char* strg;  
+  const char* strg;
 };
 
 class GivMathError : public GivError {
@@ -43,7 +43,7 @@ public:
   GivMathError(const char* msg = 0) : GivError(msg) { }
 };
 
-// -- Exception thrown in input of data structure 
+// -- Exception thrown in input of data structure
 class GivBadFormat : public GivError {
 public:
   virtual ~GivBadFormat();
@@ -58,4 +58,4 @@ public:
 
 
 
-#endif
+#endif // __GIVARO_error_H

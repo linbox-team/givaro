@@ -1,11 +1,14 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.11 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givmontg32.inl,v 1.12 2011-02-02 16:23:56 bboyer Exp $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // ==========================================================================
+
+#ifndef __GIVARO_mong32_INL
+#define __GIVARO_mong32_INL
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const {
         Element c0 = c & MASK32;	/* c mod B */
@@ -378,3 +381,5 @@ inline std::ostream& Montgomery<Std32>::write (std::ostream& s, const Rep a) con
     Rep tmp;
     return s << redcs(tmp,a);
 }
+
+#endif // __GIVARO_mong32_INL

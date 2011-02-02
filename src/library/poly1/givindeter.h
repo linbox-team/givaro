@@ -3,22 +3,22 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givindeter.h,v 1.5 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givindeter.h,v 1.6 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 // - indeterminates for polynomial manipulation
-#ifndef _INDETER_H_
-#define _INDETER_H_
+#ifndef __GIVARO_indeter_H
+#define __GIVARO_indeter_H
 
 #include <iostream>
 #include <string>
 
 class Indeter {
 public :
-     
+
   // -- Cstor: recopy the string
  Indeter(const std::string & x="") : name(x){}
   // -- Cstor: recopy the string
@@ -28,7 +28,7 @@ public :
 
   // -- Dstor
   ~Indeter(){}
- 
+
   // -- assignement
   Indeter& operator= (const Indeter& s);
 
@@ -39,7 +39,7 @@ public :
  // for multivariate polynomials.
  int compare(const Indeter& b)  const;
 
-  // -- methods	
+  // -- methods
   friend std::ostream& operator<< (std::ostream& o, const Indeter& X);
   friend std::istream& operator>> (std::istream& o, Indeter& X);
 
@@ -48,22 +48,22 @@ protected:
 };
 
   // Inline members functions :
-inline int operator==(const Indeter& i1, const Indeter &i2) 
+inline int operator==(const Indeter& i1, const Indeter &i2)
   { return i1.compare(i2) ==0; }
 
-inline int operator!=(const Indeter& i1, const Indeter &i2) 
+inline int operator!=(const Indeter& i1, const Indeter &i2)
   { return i1.compare(i2) !=0; }
 
-inline int operator<= (const Indeter& i1, const Indeter &i2)  
+inline int operator<= (const Indeter& i1, const Indeter &i2)
   { return i1.compare(i2) <=0; }
 
-inline int operator<  (const Indeter& i1, const Indeter &i2) 
+inline int operator<  (const Indeter& i1, const Indeter &i2)
   { return i1.compare(i2) <0; }
 
-inline int operator>= (const Indeter& i1, const Indeter &i2) 
+inline int operator>= (const Indeter& i1, const Indeter &i2)
   { return i1.compare(i2) >=0; }
 
 inline int operator>  (const Indeter& i1, const Indeter &i2)
   { return i1.compare(i2) >0; }
 
-#endif
+#endif // __GIVARO_indeter_H

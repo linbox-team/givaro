@@ -10,8 +10,8 @@
 // ==========================================================================
 // Description:
 //   Family of types for arithmetic over Zpz
-#ifndef _GIVARO_ZPZTYPES_H_
-#define _GIVARO_ZPZTYPES_H_
+#ifndef __GIVARO_zpztypes_H
+#define __GIVARO_zpztypes_H
 
 // ==========================================================================
 // --
@@ -32,4 +32,4 @@ struct Std64 { typedef int64 type;}; // -- standard arithmetic over 64bits repre
 #endif
 
 
-#endif
+#endif // __GIVARO_zpztypes_H

@@ -173,13 +173,13 @@ struct OMPTimer {
     friend std::ostream& operator<<(std::ostream& o, const OMPTimer& t) {
         return o << t._c << 's';
     }
-    
+
     OMPTimer& operator =(const OMPTimer& t) { _c = t._c; return *this; }
     OMPTimer& operator+=(const OMPTimer& t) { _c += t._c; return *this; }
     OMPTimer& operator-=(const OMPTimer& t) { _c -= t._c; return *this; }
-    OMPTimer  operator +(const OMPTimer& t) const { 
+    OMPTimer  operator +(const OMPTimer& t) const {
         OMPTimer r; r._c = _c + t._c; return r; }
-    OMPTimer  operator -(const OMPTimer& t) const { 
+    OMPTimer  operator -(const OMPTimer& t) const {
         OMPTimer r; r._c = _c - t._c; return r; }
     OMPTimer  operator -() { OMPTimer r; r._c = - _c; return r; }
 };

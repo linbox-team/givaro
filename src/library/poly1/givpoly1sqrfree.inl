@@ -3,20 +3,20 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1sqrfree.inl,v 1.8 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1sqrfree.inl,v 1.9 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
-
-using namespace std;
+#ifndef __GIVARO_poly1_sqrfree_INL
+#define __GIVARO_poly1_sqrfree_INL
 
 /** Sqrfree decomposition.
-Decompose P such that: P = Fact[0]^0 * Fact[1]^1 * ... * Fact[P.degree()]^(P.degree()), 
+Decompose P such that: P = Fact[0]^0 * Fact[1]^1 * ... * Fact[P.degree()]^(P.degree()),
 with Fact[0] the leading coefficient.
 The array Fact must be allocated before calling the function.
-The size of Fact must be degP+1 is all factors should be computed. 
+The size of Fact must be degP+1 is all factors should be computed.
 For more readeable version of the algorithm, see Geddes, p342.
 @param Nfact [in] the size of Fact
 @param Fact  [in] an array of dimension Nfact
@@ -59,7 +59,7 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
     diff(Z, W);
 // write(cout << "W':", Z) << endl;
     sub(Z, Y, Z);
-    while (!isZero(Z)) 
+    while (!isZero(Z))
     {
       gcd(Fact[count], W, Z);
 // write(cout << "L" << count << ":", Fact[count]) << endl;
@@ -67,11 +67,12 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
       div(C, W, Fact[count]); assign(W, C);
       div(Y, Z, Fact[count]);
       diff(Z, W);
-      sub(Z, Y, Z); 
+      sub(Z, Y, Z);
       if (++count > Nfact) return Nfact;
-    } 
+    }
   }
   assign(Fact[count], W);
 //write(cout << "L" << count << ":", Fact[count]) << endl;
   return Nfact = ++count;
-} 
+}
+#endif // __GIVARO_poly1_sqrfree_INL

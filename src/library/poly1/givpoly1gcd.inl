@@ -3,11 +3,13 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.10 2010-12-15 10:21:10 jgdumas Exp $
+// $Id: givpoly1gcd.inl,v 1.11 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+#ifndef __GIVARO_poly1_gcd_INL
+#define __GIVARO_poly1_gcd_INL
 // friend void bezout (const Poly1<T> &P,
 //                     const Poly1<T> &Q,
 //                     Poly1<T> &d,
@@ -18,19 +20,19 @@
 // u and v are the unique polynomisals such that :
 //   deg(u) <= deg(Q)-deg(d) and deg(v) <= deg(P) - deg(d)
 // friend Poly1<T> gcd (const Poly1<T> &P, const Poly1<T> &Q );
-// computes d = unitary gcd(P,Q) 
+// computes d = unitary gcd(P,Q)
 // ===========================================================================
 // A coder par PRS : cf Geddes page 283
-template <class Domain> 
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& G, const Rep& P, const Rep& Q) const
 {
 
-  Rep U,V; 
+  Rep U,V;
   Degree degU, degV;
   degree(degU,P); degree(degV,Q);
   if ((degU < 0) || (degV == 0)) return assign(G, Q);
   if ((degV < 0) || (degU == 0)) return assign(G, P);
-  
+
   if (degU >= degV) {
     assign(U, P);
     assign(V, Q);
@@ -47,15 +49,15 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   do {
 // write(cout << "gcd: U:", U) << endl;
 // write(cout << "gcd: V:", V) << endl;
-    mod( R, U, V); 
+    mod( R, U, V);
     setdegree(R);
     degree(degR, R);
 // write(cout << "mod: R:", R) << endl;
     if (degR < 0) break;
-    assign(U,V); 
-    assign(V,R); 
+    assign(U,V);
+    assign(V,R);
   } while (1);
-  
+
   degree(degV, V);
   G.logcopy(V);
 // JGD 15.12.1999
@@ -65,11 +67,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   return G;
 }
 
-template <class Domain> 
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& F, Rep& S0, Rep& T0, const Rep& A, const Rep& B) const
 {
   Type_t r0, r1, tt;
-  Rep G; 
+  Rep G;
   Degree degF, degG;
   degree(degF,A); degree(degG,B);
   if ((degF < 0) || (degG == 0)) {
@@ -84,8 +86,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
       assign(F, A);
       return mulin(F,tt);
   }
-  
-  
+
+
 //   if (degF >= degG) {
     assign(F, A);
     assign(G, B);
@@ -107,7 +109,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
   assign(S1,zero);
   assign(T0,zero);
   assign(T1, 0, _domain.inv(tt,r1) );
-  
+
   while ( ! isZero(G) ) {
       divmod(Q,R1,F,G);
  leadcoef(r1, R1); if (_domain.isZero(r1)) _domain.assign(r1,_domain.one);
@@ -116,14 +118,14 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& 
       mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); div(S1,TMP2,r1);
       mul(TMP,Q,T1); sub(TMP2,T0,TMP); assign(T0,T1); div(T1,TMP2,r1);
   }
-  
+
   return F;
 }
 
 
 // #include <typeinfo>
 
-template <class Domain> 
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Rep& S0, const Rep& A, const Rep& B) const
 {
 //     std::cerr << "BEG invmod of " << typeid(*this).name() << std::endl;
@@ -131,13 +133,13 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Re
 //        write(std::cout << "A:=", A) << ';' << std::endl;
 //        write(std::cout << "B:=", B) << ';' << std::endl;
   Type_t r0, r1, tt;
-  Rep F, G; 
+  Rep F, G;
   Degree degF, degG;
   degree(degF,A); degree(degG,B);
   if ((degF <= 0) || (degG <= 0) ) {
       return assign(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
   }
-  
+
     assign(F, A);
     assign(G, B);
 
@@ -155,11 +157,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Re
 
   assign(S0, 0, _domain.inv(tt,r0) );
   assign(S1,zero);
-  
-  while ( ! isZero(G) ) {      
+
+  while ( ! isZero(G) ) {
 //        write(std::cout << "F: ", F) << std::endl;
 //        write(std::cout << "G: ", G) << std::endl;
-      
+
       divmod(Q,R1,F,G);
 //       write(std::cout << "Q: ", Q) << std::endl;
 //       write(std::cout << "R: ", R1) << std::endl;
@@ -173,26 +175,26 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmod ( Re
 //       write(std::cout << "Gn: ", G) << std::endl;
       mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); div(S1,TMP2,r1);
 //       write(std::cout << "S: ", S1) << std::endl;
-  }  
+  }
 
 //       write(std::cout << "S: ", S0) << std::endl;
 //     std::cerr << "END invmod of " << typeid(*this).name() << std::endl;
   return S0;
 }
 
-template <class Domain> 
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodunit ( Rep& S0, const Rep& A, const Rep& B) const
 {
 //     std::cerr << "BEG invmodunit of " << typeid(*this).name() << std::endl;
 
   Type_t r0, r1, tt;
-  Rep F, G; 
+  Rep F, G;
   Degree degF, degG;
   degree(degF,A); degree(degG,B);
   if ((degF <= 0) || (degG <= 0) ) {
       return assign(S0, Degree(0), _domain.one);
   }
-  
+
 //   if (degF >= degG) {
     assign(F, A);
     assign(G, B);
@@ -206,11 +208,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodunit 
 
   assign(S0,one);
   assign(S1,zero);
-  
-  while ( ! isZero(G) ) {      
+
+  while ( ! isZero(G) ) {
 //       write(std::cout << "F: ", F) << std::endl;
 //       write(std::cout << "G: ", G) << std::endl;
-      
+
       divmod(Q,R1,F,G);
 //       write(std::cout << "Q: ", Q) << std::endl;
 //       write(std::cout << "R: ", R1) << std::endl;
@@ -221,26 +223,26 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodunit 
 //       write(std::cout << "Gn: ", G) << std::endl;
       mul(TMP,Q,S1); sub(TMP2,S0,TMP); assign(S0,S1); assign(S1,TMP2);
 //       write(std::cout << "S: ", S1) << std::endl;
-  }  
+  }
 //     std::cerr << "END invmodunit of " << typeid(*this).name() << std::endl;
 
   return S0;
 }
 
 
-template <class Domain> 
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& F, const Rep& A, const Rep& B) const
 {
 //     write(write(std::cerr << "A: ", A) << ", B: ", B) << std::endl;
-    
-  Rep G, S0, T0; 
+
+  Rep G, S0, T0;
   Degree degA, degB, degG;
   degree(degA,A); degree(degB,B);
   if (degA < 0) return assign(F, Degree(0), _domain.zero);
   if (degB < 0) return assign(F, Degree(0), _domain.zero);
   if (degB == 0) return assign(F, A);
   if (degA == 0) return assign(F, B);
-  
+
   if (degA >= degB) {
     assign(F, A);
     assign(G, B);
@@ -263,7 +265,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& 
   assign(S1,zero);
   assign(T0,zero);
   assign(T1, 0, _domain.inv(tt,r1) );
-  
+
   while ( ! isZero(G) ) {
       divmod(Q,R1,F,G);
  leadcoef(r1, R1); if (_domain.isZero(r1)) _domain.assign(r1,_domain.one);
@@ -285,11 +287,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& 
 //   write( write( write( write( write( std::cerr, G ) << " = ((", T1) << ") * (", A) << ")) + ((", S1) << ") * (", B) << "))" << std::endl;
 
   }
-  
+
   degree(degG, G);
 
 //     write(write(std::cerr << "S1: ", S1) << ", T1: ", T1) << std::endl;
-    
+
   if ( degG <= 0) {
 // If normalisation is needed
 //       if (degA >= degB) {
@@ -310,48 +312,21 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::lcm ( Rep& 
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #if 0
 // A coder par PRS : cf Geddes page 283
-template <class Domain> 
-void Poly1Dom<Domain,Dense>::gcd 
+template <class Domain>
+void Poly1Dom<Domain,Dense>::gcd
  ( Poly1<T> &d, Poly1<T> &u, Poly1<T> &v,
-   const Poly1<T> &P, const Poly1<T> &Q ) 
+   const Poly1<T> &P, const Poly1<T> &Q )
 {
   // computes d = unitary gcd(P,Q) and u,v such that :
   //   u*P+v*Q = d
   // u and v are the unique polynomisals such that :
   //   deg(u) <= deg(Q)-deg(d) and deg(v) <= deg(P) - deg(d)
- 
+
   // Auxilliary matrix : [oldu oldv] which is left multiplies by [0  1]
   //                     [newu newv]                             [1 -q]
-  // at each step. 
+  // at each step.
   // At the end, u = oldu, v = old v
 
   Rep A;
@@ -360,24 +335,24 @@ void Poly1Dom<Domain,Dense>::gcd
   Rep rem;
   int permuter;
 
-  if (degree(P) < degree(Q)) { 
-    assign(A, Q); 
-    assign(B, P); 
-    permuter = 1; 
+  if (degree(P) < degree(Q)) {
+    assign(A, Q);
+    assign(B, P);
+    permuter = 1;
   }
-  else { 
-    assign(A, P); 
-    assign(B, Q); 
-    permuter = 0; 
+  else {
+    assign(A, P);
+    assign(B, Q);
+    permuter = 0;
   }
 
   if (isZero(B) {
     Type_t inv_lcoeff_A;
-    if (isZero(A)) { 
-      _domain.assign(inv_lcoeff_A, _domain.one); 
+    if (isZero(A)) {
+      _domain.assign(inv_lcoeff_A, _domain.one);
     }
-    else { 
-      _domain.inv(inv_lcoeff_A, A[degree(A)]; 
+    else {
+      _domain.inv(inv_lcoeff_A, A[degree(A)];
     }
 
     d = A * inv_lcoeff_A;
@@ -386,8 +361,8 @@ void Poly1Dom<Domain,Dense>::gcd
     else { u = cste; v = Poly1<T>::Zero; }
   }
   else {
-    // -- On rend B unitaire 
-    T inv_lcoeff_B = csteT1 / B[B.degree()]; 
+    // -- On rend B unitaire
+    T inv_lcoeff_B = csteT1 / B[B.degree()];
     B = B * inv_lcoeff_B;
 
     Poly1<T> oldu(0, csteT1);
@@ -400,8 +375,8 @@ void Poly1Dom<Domain,Dense>::gcd
       Poly1<T>::divide(quot, rem, A, B);
       A = B;
       cont = !isZero(rem);
-      if (cont) { 
-        inv_lcoeff_B = csteT1/rem[rem.degree()]; 
+      if (cont) {
+        inv_lcoeff_B = csteT1/rem[rem.degree()];
         B = rem*inv_lcoeff_B;
 
         Poly1<T> tmpu = (oldu - quot*newu) * inv_lcoeff_B;
@@ -411,9 +386,9 @@ void Poly1Dom<Domain,Dense>::gcd
         newu = tmpu;
         newv = tmpv;
       }
-    } while (cont); 
+    } while (cont);
 
-    
+
     d = A;
 
     if (permuter) { u = newv; v = newu; }
@@ -426,20 +401,20 @@ void Poly1Dom<Domain,Dense>::gcd
          << "   P  =" << P << endl
          << "   Q  =" << Q << endl
          << "   d  =" << d  << endl
-         << "   u  =" << u << endl 
+         << "   u  =" << u << endl
          << "   v  =" << v << endl;
   }
-#endif  
+#endif
 }
 
 template <class T>
-Poly1<T>& Poly1<T>::gcd1 (Poly1<T>& G, Poly1<T>& u, Poly1<T>& v, 
-                          const Poly1<T>& P, const Poly1<T>& Q) 
+Poly1<T>& Poly1<T>::gcd1 (Poly1<T>& G, Poly1<T>& u, Poly1<T>& v,
+                          const Poly1<T>& P, const Poly1<T>& Q)
 { bezout(P,Q,G,u,v); return G;}
 
 
 template <class T>
-Poly1<T>& Poly1<T>::gcd1 (Poly1<T>& G, const Poly1<T> &P, const Poly1<T> &Q) 
+Poly1<T>& Poly1<T>::gcd1 (Poly1<T>& G, const Poly1<T> &P, const Poly1<T> &Q)
 {
   Poly1<T> A;
   Poly1<T> B;
@@ -464,7 +439,7 @@ Poly1<T>& Poly1<T>::gcd1 (Poly1<T>& G, const Poly1<T> &P, const Poly1<T> &Q)
 
 template<class T>
 inline const Poly1<T> prime_part(const Poly1<T>& P, const Poly1<T>& Q)
-{ 
+{
   Poly1<T> E,D;
   E = P;
   D = Q;
@@ -472,7 +447,7 @@ inline const Poly1<T> prime_part(const Poly1<T>& P, const Poly1<T>& Q)
   {
     E = E / D;
     D = gcd(E,D);
-  }  
+  }
   return E;
 }
 
@@ -488,3 +463,4 @@ inline void decomposition(const Poly1<T> &Q, Poly1<T> & prime_Q, Poly1<T> & divi
 }
 
 #endif // 0
+#endif // __GIVARO_poly1_gcd_INL

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.19 2011-02-02 13:45:03 jgdumas Exp $
+// $Id: givzpz32std.h,v 1.20 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -220,6 +220,6 @@ protected:
 
 #include "givaro/givzpz32std.inl"
 
-#endif
+#endif // __GIVARO_zpz32std_H
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

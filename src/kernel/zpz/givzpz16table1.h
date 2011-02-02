@@ -6,15 +6,15 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.14 2011-02-02 13:45:03 jgdumas Exp $
+// $Id: givzpz16table1.h,v 1.15 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 //
 // Description:
 //   Arithmetic on Z/pZ, with tabulation of operations.
-#ifndef _GIVARO_ZPZ16LOG_H_
-#define _GIVARO_ZPZ16LOG_H_
+#ifndef __GIVARO_zpz16log_H
+#define __GIVARO_zpz16log_H
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
@@ -231,4 +231,4 @@ protected:
 
 #include "givaro/givzpz16table1.inl"
 
-#endif
+#endif // __GIVARO_zpz16log_H

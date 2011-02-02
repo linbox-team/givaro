@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givpowers.h 
+// file: givpowers.h
 // Time-stamp: <20 Jan 11 11:22:23 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 
-#ifndef _GIVARO_POWER_H_
-#define _GIVARO_POWER_H_
+#ifndef __GIVARO_power_H
+#define __GIVARO_power_H
 
 // -------------------------------------------------------------
 // Powering
@@ -26,16 +26,16 @@ template<class TT, class UU> TT power(const TT n, const UU l) {
 
   while (p != 0) {
       if (p & 0x1) {
-          if (is_assg) 
+          if (is_assg)
               res *= puiss ;
-          else { 
-          is_assg = 1 ; 
-          res = puiss ; 
-          }   
+          else {
+          is_assg = 1 ;
+          res = puiss ;
+          }
       }
 //       if ((p >>= 1) != 0) puiss = puiss * puiss ;
       if ((p >>= 1) != 0) puiss *= puiss ;
-    
+
   }
   return res ;
 }
@@ -60,14 +60,14 @@ template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D&
       if (p & 0x1) {
           if (is_assg)
               F.mulin(res,puiss) ;
-          else { 
-          is_assg = 1 ; 
-          res = puiss ; 
+          else {
+          is_assg = 1 ;
+          res = puiss ;
           }
-      } 
+      }
       if ((p >>= 1) != 0) { F.mulin(puiss,puiss) ; }
 //       if ((p >>= 1) != 0) { F.mul(tmp,puiss,puiss) ; puiss = tmp; }
-  } 
+  }
   return res ;
 }
 
@@ -80,4 +80,4 @@ template<> double power<double>(const double a, const double e) {
 }
 */
 
-#endif
+#endif // __GIVARO_power_H

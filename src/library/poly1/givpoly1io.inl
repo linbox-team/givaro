@@ -3,12 +3,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1io.inl,v 1.6 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givpoly1io.inl,v 1.7 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
+#ifndef __GIVARO_poly1_io_INL
+#define __GIVARO_poly1_io_INL
 
 #include <iostream>
 
@@ -79,13 +81,13 @@ std::ostream& Poly1Dom<Domain,Dense>::write( std::ostream& o, const Rep& R) cons
                         if (! _domain.isOne(P[l])) {
                             _domain.write(o << "(",P[l]) << ")*";
                         }
-                        o << _x << "^" << l; 
+                        o << _x << "^" << l;
                     }
                 }
             }
             return o;
         }
-    } 
+    }
     return o << "0";
 }
 
@@ -101,3 +103,4 @@ std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i, Rep& P) const
         // i >> P[deg];
     return i;
 }
+#endif // __GIVARO_poly1_io_INL

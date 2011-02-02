@@ -3,16 +3,16 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id
 // ==========================================================================
 // Description:
 // definition of a reference to an object.
-// 
-#ifndef _GIV_ELEM_H_
-#define _GIV_ELEM_H_
+//
+#ifndef __GIVARO_Elem_H
+#define __GIVARO_Elem_H
 
 template<class T>
 struct ElemRef {
@@ -50,29 +50,29 @@ ostream& operator<< (ostream& o, const Pair<T1,T2>& p )
 
 template<class T1, class T2>
 istream& operator>> (istream& fin, Pair<T1,T2>& p )
-{ 
+{
   char ch;
   // Skip the first blanks:
   fin >> std::ws; fin.get(ch);
-  if (ch != '(') 
+  if (ch != '(')
     GivError::throw_error(
       GivBadFormat("operator>><Pair<T1,T2> >: syntax error no '('"));
-  
+
   // - read a T1 + ','
   fin >> std::ws >> p._val1;
   fin >> std::ws; fin.get(ch);
-  if (ch != ',') 
+  if (ch != ',')
     GivError::throw_error(
       GivBadFormat("operator>><Pair<T1,T2> >: syntax error no ','"));
 
   // - read a T1 + ')'
   fin >> p._val2;
   fin >> std::ws; fin.get(ch);
-  if (ch != ')') 
+  if (ch != ')')
     GivError::throw_error(
       GivBadFormat("operator>><Pair<T1,T2> >: syntax error no ')'"));
   return fin;
 }
 
 
-#endif
+#endif // __GIVARO_Elem_H

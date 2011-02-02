@@ -3,30 +3,32 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givhashtable.inl,v 1.2 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givhashtable.inl,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
 // Description:
 // - hash table implementation
 
+#ifndef __GIVARO_hashtable_INL
+#define __GIVARO_hashtable_INL
 
    // Size of the table :
 template<class T, class Key>
-HashTable<T,Key>::HashTable ( int n ) 
+HashTable<T,Key>::HashTable ( int n )
 {
   allocate(n) ;
 }
 
 template<class T, class Key>
-void HashTable<T,Key>::allocate( int n ) 
+void HashTable<T,Key>::allocate( int n )
 {
   num = n ;
   if (n ==0) {
     tabH = tabE = 0 ;
     return  ;
-  } 
+  }
   tabH = new _E*[n] ;
   tabE = new _E*[n] ;
   for (int i=0 ; i<num ; i++) tabH[i] = tabE[i] = 0 ;
@@ -39,13 +41,13 @@ HashTable<T,Key>::~HashTable()
 }
 
 template<class T, class Key>
-void HashTable<T,Key>::freeing() 
+void HashTable<T,Key>::freeing()
 {
   if (tabH ==0) return ;
-  for (int i=0 ; i<num ; i++) 
+  for (int i=0 ; i<num ; i++)
   {
     _E* curr = tabH[i] ;
-    while (curr !=0) 
+    while (curr !=0)
     {
       _E* tmp = curr->next ;
       delete curr ;
@@ -59,7 +61,7 @@ void HashTable<T,Key>::freeing()
 }
 
 template<class T, class Key>
-void HashTable<T,Key>::removeall ( ) 
+void HashTable<T,Key>::removeall ( )
 {
   if (tabH ==0) return ;
   int i ;
@@ -96,7 +98,7 @@ void HashTable<T,Key>::insertLast( const T& item, const Key& k )
     return ;
   }
   tabE[e]->next = cur ;
-  cur->pred = tabE[e] ; 
+  cur->pred = tabE[e] ;
   cur->next = 0 ;
   tabE[e] = cur ;
 }
@@ -122,14 +124,14 @@ void HashTable<T,Key>::insertFront( const T& item, const Key& k )
 
 // Remove entry with key k
 template<class T, class Key>
-void HashTable<T,Key>::remove ( const Key& k) 
+void HashTable<T,Key>::remove ( const Key& k)
 {
   if ((tabE ==0) || (tabH ==0)) return ;
   unsigned int e = ((unsigned long)k.godel()) % ((unsigned long)num) ;
   _E* cur = tabH[e] ;
   while (cur !=0)
   {
-    if (k == cur->key) 
+    if (k == cur->key)
     {
       if (cur->pred ==0) tabH[e] = cur->next ;
       else cur->pred->next = cur->next ;
@@ -142,14 +144,14 @@ void HashTable<T,Key>::remove ( const Key& k)
 }
 
 template<class T, class Key>
-int HashTable<T,Key>::get    ( T& item, const Key& k ) const 
+int HashTable<T,Key>::get    ( T& item, const Key& k ) const
 {
   if ((tabE ==0) || (tabH ==0)) return 0 ;
   unsigned int e = ((unsigned long)k.godel()) % ((unsigned long)num) ;
   _E* cur = tabH[e] ;
   while (cur !=0)
   {
-    if (k == cur->key) 
+    if (k == cur->key)
     {
       item = cur->oneitem ;
       return 1 ;
@@ -162,14 +164,14 @@ int HashTable<T,Key>::get    ( T& item, const Key& k ) const
 
 
 template<class T, class Key>
-int HashTable<T,Key>::getrmv ( T& item, const Key& k ) 
+int HashTable<T,Key>::getrmv ( T& item, const Key& k )
 {
   if ((tabE ==0) || (tabH ==0)) return 0 ;
   unsigned int e = ((unsigned long)k.godel()) % ((unsigned long)num) ;
   _E* cur = tabH[e] ;
   while (cur !=0)
   {
-    if (k == cur->key) 
+    if (k == cur->key)
     {
       item = cur->oneitem ;
       if (cur->pred ==0) tabH[e] = cur->next ;
@@ -186,7 +188,7 @@ int HashTable<T,Key>::getrmv ( T& item, const Key& k )
 
    // Returns the number of items of the same key :
 template<class T, class Key>
-int HashTable<T,Key>::num_item( const Key& k ) const 
+int HashTable<T,Key>::num_item( const Key& k ) const
 {
   if ((tabE ==0) || (tabH ==0)) return 0 ;
   int count = 0 ;
@@ -201,4 +203,4 @@ int HashTable<T,Key>::num_item( const Key& k ) const
 }
 
 
-
+#endif // __GIVARO_hashtable_INL

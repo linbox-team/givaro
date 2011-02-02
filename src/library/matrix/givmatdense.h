@@ -3,13 +3,17 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givmatdense.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givmatdense.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 // of matrix by blocks.
+//
+
+#error "dead code"
+
 #ifndef _GIV_MATRIX_DENSE_H_
 #define _GIV_MATRIX_DENSE_H_
 
@@ -37,7 +41,7 @@ public:
   // -- Self_t
   typedef          MatrixDom<Domain, Dense>                     Self_t;
 
-  //-- Dstor: 
+  //-- Dstor:
   ~MatrixDom() {}
 
   //-- Default cstor:
@@ -57,13 +61,13 @@ public:
   { r.allocate(0); }
 
   //-- access operators:
-  Type_t& operator() (Rep& r, Indice_t i, Indice_t j) const 
+  Type_t& operator() (Rep& r, Indice_t i, Indice_t j) const
   { return r(i,j); }
-  const Type_t& operator() (const Rep& r, Indice_t i, Indice_t j) const 
+  const Type_t& operator() (const Rep& r, Indice_t i, Indice_t j) const
   { return r(i,j); }
 
   //-- Assignment operator: physical copy
-  void assign (Rep& r, const Rep& a) 
+  void assign (Rep& r, const Rep& a)
   { r.copy(a); }
 
   // -- Comparaizon
@@ -87,14 +91,14 @@ public:
   void neg   ( Rep& res, const Rep& u ) const;
 
   // --- Mul Vect:
-  void mul   ( typename VectorDom<Domain,Dense>::Rep& res, const Rep& M, 
+  void mul   ( typename VectorDom<Domain,Dense>::Rep& res, const Rep& M,
                const VectorDom<Domain,Dense>& VD,
                const typename VectorDom<Domain,Dense>::Rep& u ) const;
-  void multrans ( typename VectorDom<Domain,Dense>::Rep& res, const Rep& M, 
+  void multrans ( typename VectorDom<Domain,Dense>::Rep& res, const Rep& M,
                   const VectorDom<Domain,Dense>& VS,
                   const typename VectorDom<Domain,Dense>::Rep& u ) const;
 
-  // -- axpy operations K-Space: 
+  // -- axpy operations K-Space:
   // r <- a*x+y
   void axpy  ( Rep& res, const Type_t& a, const Rep& x, const Rep& y )const;
   // r <- r+a*x
@@ -104,10 +108,10 @@ public:
   // r <- r-a*x
   void axmyin( Rep& res, const Type_t& a, const Type_t& x ) const;
 
-  // a*A*X + bY 
-  void axpy  ( Rep& res, const Type_t& a, const Rep& A, const Rep& X, 
+  // a*A*X + bY
+  void axpy  ( Rep& res, const Type_t& a, const Rep& A, const Rep& X,
                const Type_t& b, const Rep& Y ) const;
-  // A*X + Y 
+  // A*X + Y
   void axpy  ( Rep& res, const Rep& A, const Rep& X, const Rep& Y ) const;
 
   // -- Element wise operation:

@@ -2,16 +2,16 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Jan 11 15:53:22 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <19 Jan 11 15:53:22 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
 
 
-#ifndef _GIVARO_SQRTMOD_
-#define _GIVARO_SQRTMOD_
+#ifndef __GIVARO_sqrtmod_H
+#define __GIVARO_sqrtmod_H
 
 #include <iostream>
 #include "givaro/givinteger.h"
@@ -22,14 +22,14 @@
 #include "givaro/givpower.h"
 #include <math.h>
 
-template < class RandIter = GivRandom > 
+template < class RandIter = GivRandom >
 class IntSqrtModDom:public IntFactorDom < RandIter > {
 public:
     typedef IntFactorDom < RandIter > Father_t;
     typedef typename IntFactorDom < RandIter >::Rep Rep;
-    
+
     IntSqrtModDom (RandIter g = RandIter ()) : IntFactorDom < RandIter > (g) {}
-    
+
         // ======================================================== //
         // Modular Square root functions
         // ======================================================== //
@@ -37,7 +37,7 @@ public:
         std::vector < Rep > Lf;
         std::vector < unsigned long > Le;
         Father_t::set (Lf, Le, n);
-        
+
         typename std::vector < Rep >::const_iterator Lf_iter = Lf.begin ();
         typename std::vector < unsigned long >::const_iterator Le_iter = Le.begin ();
 
@@ -80,7 +80,7 @@ public:
 
         // p is supposed to be prime
     Rep & sqrootmodprime (Rep & x, const Rep & a, const Rep & p) const;
-    
+
         // p is supposed to be prime, modulo is taken mod p^k
     Rep & sqrootmodprimepower (Rep & x, const Rep & a, const Rep & p, const unsigned long k, const Rep &pk) const;
 
@@ -98,7 +98,7 @@ protected:
 
         // result is modulo 2^{k+1}
     Rep & sqroottwolinear(Rep & x, const Rep & a,const unsigned long k) const;
- 
+
         // ======================================================== //
         // Liftings
         // ======================================================== //
@@ -121,4 +121,4 @@ protected:
 
 #include "givaro/givintsqrootmod.inl"
 
-#endif
+#endif // __GIVARO_sqrtmod_H

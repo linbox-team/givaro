@@ -2,12 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <09 Jun 10 18:15:58 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <09 Jun 10 18:15:58 Jean-Guillaume.Dumas@imag.fr>
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
+#ifndef __GIVARO_poly1_crt_cstor_INL
+#define __GIVARO_poly1_crt_cstor_INL
 
 // -- free memory allocated in array !
 template<class Field>
@@ -24,14 +26,14 @@ Poly1CRT<Field>::Poly1CRT (const Poly1CRT<Field>& R)
  : _XIndet(R._XIndet),
    _F(R._F),
    _PolRing(R._PolRing),
-   _primes(R._primes), 
+   _primes(R._primes),
    _ck(R._ck)
 {}
 
 
   // -- Array of primes are given
 template<class Field>
-Poly1CRT<Field>::Poly1CRT( const Field& F, const Poly1CRT<Field>::array_T& inprimes, const Indeter& X) 
+Poly1CRT<Field>::Poly1CRT( const Field& F, const Poly1CRT<Field>::array_T& inprimes, const Indeter& X)
  : _XIndet(X),
    _F(F),
    _PolRing(F,X),
@@ -41,7 +43,7 @@ Poly1CRT<Field>::Poly1CRT( const Field& F, const Poly1CRT<Field>::array_T& inpri
    GIVARO_ASSERT( inprimes.size()>0, "[Poly1CRT<Field>::Poly1CRT] bad size of array");
 //    for(typename array_T::const_iterator it=_primes.begin(); it!=_primes.end();++it)
 //        _F.write(std::cout, *it) << std::endl;
-   
+
 }
 
   // -- Computes Ck , Ck = (\prod_{i=0}^{k-1} primes[i])^(-1) % primes[k],
@@ -77,14 +79,14 @@ void Poly1CRT<Field>::ComputeCk()
 
 //    for(typename array_E::const_iterator it=_ck.begin(); it!=_ck.end();++it)
 //        _PolRing.write(std::cout, *it) << std::endl;
-  
+
 }
 
 
 template<class Field>
 const typename Poly1CRT<Field>::array_T& Poly1CRT<Field>::Primes() const
-{ 
-  return _primes; 
+{
+  return _primes;
 }
 
 
@@ -109,3 +111,4 @@ const typename Poly1CRT<Field>::Element& Poly1CRT<Field>::reciprocal(const size_
   if (_ck.size() ==0) ((Poly1CRT<Field>*)this)->ComputeCk();
   return _ck[i];
 }
+#endif // __GIVARO_poly1_crt_cstor_INL

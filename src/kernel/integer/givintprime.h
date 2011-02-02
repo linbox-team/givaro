@@ -2,17 +2,17 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : Prime numbers
 //              Modular powering,
 //              Fermat numbers,
 //              Primality tests, Factorization :
 //                      (There are parameters to fix)
-// Time-stamp: <06 Jun 06 14:48:16 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 14:48:16 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
-#ifndef _GIVARO_INTEGERS_PRIME_H_
-#define _GIVARO_INTEGERS_PRIME_H_
+#ifndef __GIVARO_integers_prime_H
+#define __GIVARO_integers_prime_H
 
 #ifndef _GIVARO_ISPRIMETESTS_
 #define _GIVARO_ISPRIMETESTS_ 5
@@ -46,27 +46,27 @@ public:
 #define LOGMAX2 3031
 #define TABMAX2 65536
 // Bounds between big and small
-#define BOUNDARY_isprime TABMAX    
-#define BOUNDARY_2_isprime TABMAX2    
+#define BOUNDARY_isprime TABMAX
+#define BOUNDARY_2_isprime TABMAX2
 
 // =================================================================== //
-// Primality tests 
+// Primality tests
 // =================================================================== //
 class IntPrimeDom : public IntegerDom {
 public:
     IntPrimeDom() :  IntegerDom() {}
 
-    int isprime(const Rep& n, int r=_GIVARO_ISPRIMETESTS_) const 
+    int isprime(const Rep& n, int r=_GIVARO_ISPRIMETESTS_) const
         {
 /*
   return probab_prime(n);
 */
-//             return ((n)<BOUNDARY_isprime ?  isprime_Tabule(n) : 
-//                     (n)<BOUNDARY_2_isprime ? isprime_Tabule2(n) : 
+//             return ((n)<BOUNDARY_isprime ?  isprime_Tabule(n) :
+//                     (n)<BOUNDARY_2_isprime ? isprime_Tabule2(n) :
 //                     probab_prime(n));
             long l;
-            return (islt(n,BOUNDARY_isprime) ?  isprime_Tabule(convert(l,n)): 
-                    islt(n,BOUNDARY_2_isprime) ? isprime_Tabule2(convert(l,n)): 
+            return (islt(n,BOUNDARY_isprime) ?  isprime_Tabule(convert(l,n)):
+                    islt(n,BOUNDARY_2_isprime) ? isprime_Tabule2(convert(l,n)):
                     local_prime(n,r));
         }
 
@@ -97,9 +97,9 @@ public:
 
 private:
     static int IP[LOGMAX+5];  // -- table for Tabule
-    static const int * TP;    // -- shifted table 
+    static const int * TP;    // -- shifted table
     static int IP2[LOGMAX2+5]; // -- table for Tabule2
-    static const int * TP2;    // -- shifted table 
+    static const int * TP2;    // -- shifted table
 /*
   static int Tabule2(const Integer& p) ;
   static int Tabule(const Integer& p) ;
@@ -111,4 +111,4 @@ private:
 };
 
 #include "givaro/givintprime.inl"
-#endif
+#endif // __GIVARO_integers_prime_H

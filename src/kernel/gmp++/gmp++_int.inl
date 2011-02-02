@@ -7,9 +7,13 @@
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // Modified by: B. Boyer
-// $Id: gmp++_int.inl,v 1.19 2011-01-19 18:29:09 bboyer Exp $
+// $Id: gmp++_int.inl,v 1.20 2011-02-02 16:23:55 bboyer Exp $
 // ========================================================================
 // Description:
+//
+
+#ifndef __GIVARO_gmpxx_integer_INL
+#define __GIVARO_gmpxx_integer_INL
 
 #define GMP__ABS(l)     ((l) <0 ? -l : l)
 #define GMP__SGN(l)    ((l) <0 ? -1 : (l >0 ? 1 : 0))
@@ -553,6 +557,7 @@ inline Integer& Integer::nonzerorandom (Integer& r, const T& size)
 	return r;
 }
 
+#endif // __GIVARO_gmp++_integer_INL
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax
 /*  -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-  */

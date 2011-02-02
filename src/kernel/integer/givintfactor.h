@@ -11,8 +11,8 @@
 // Needs Container structures : stl ones for instance
 // Time-stamp: <29 Jun 05 14:12:09 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
-#ifndef _GIVARO_FACTORISATION_H_
-#define _GIVARO_FACTORISATION_H_
+#ifndef __GIVARO_factorisation_H
+#define __GIVARO_factorisation_H
 
 #include <iostream>
 #include "givaro/givinteger.h"
@@ -139,4 +139,4 @@ private:
 
 #include "givaro/givintfactor.inl"
 
-#endif
+#endif // __GIVARO_factorisation_H

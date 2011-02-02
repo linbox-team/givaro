@@ -3,15 +3,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givbits.h,v 1.2 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givbits.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
-// Description: 
+// Description:
 // - field of n bits, for any n
-#ifndef _BITS_H_
-#define _BITS_H_
+#ifndef __GIVARO_bits_H
+#define __GIVARO_bits_H
 
 #include <iostream>
 #include "givaro/givaromm.h"
@@ -28,19 +28,19 @@ public:
 
   // -- All binary operand must have same type:
   // <op>in are for inplace operator (this receives the result)
-  
+
   const Bits operator&( const Bits& A ) const ;
   Bits& andin( const Bits& A, const Bits B) ;
   Bits& operator&= (const Bits& A) ;
   //inline const Bits operator& (const Bits& A) const { return operator&(A) ; }
 
-  // -- Or 
+  // -- Or
   const Bits operator|( const Bits& A ) const ;
   Bits& orin( const Bits& A, const Bits B) ;
   Bits& operator|=( const Bits& A )  ;
   //inline const Bits operator| (const Bits& A) const { return operator|(A) ; }
 
-  // -- Or 
+  // -- Or
   const Bits operator^( const Bits& A ) const ;
   Bits& xorin( const Bits& A, const Bits B) ;
   Bits& operator^=( const Bits& A )  ;
@@ -61,12 +61,12 @@ public:
   // -- Returns the number of non zero bits :
   long numone() const ;
 
-  // -- Returns the index of non zero bits 
+  // -- Returns the index of non zero bits
   void indexofone( Array0<Bits::base>& ) const ;
 
   // -- Returns the length (in bit) of this :
   size_t length() const ;
-  
+
   // -- set to 0 all bits:
   void clear() ;
   // -- set to 0 the i-th bit
@@ -90,10 +90,10 @@ protected:
 private:
   static GivModule Module;
   friend class GivModule;
-  static void Init(int*, char***);  
+  static void Init(int*, char***);
   static void End();
 } ;
 
 #include "givaro/givbits.inl"
 
-#endif
+#endif // __GIVARO_bits_H

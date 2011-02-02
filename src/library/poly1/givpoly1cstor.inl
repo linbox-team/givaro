@@ -3,11 +3,13 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1cstor.inl,v 1.14 2010-12-16 09:05:31 jgdumas Exp $
+// $Id: givpoly1cstor.inl,v 1.15 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+#ifndef __GIVARO_poly1_cstor_INL
+#define __GIVARO_poly1_cstor_INL
 
 template<class Domain>
 inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X )
@@ -21,7 +23,7 @@ inline Poly1Dom<Domain,Dense>::Poly1Dom(const Self_t& P)
 
 template<class Domain>
 inline Poly1Dom<Domain,Dense>::~Poly1Dom()
-{ 
+{
 }
 
 
@@ -32,10 +34,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& 
 /*
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const Rep& Q ) const
-{ 
-  Degree degQ; 
+{
+  Degree degQ;
   degree(degQ,Q);
-  if (degQ <0) { 
+  if (degQ <0) {
     P.reallocate(0);
     return P;
   }
@@ -49,9 +51,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& 
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign( Rep& P, const Rep& Q ) const
 {
-  Degree degQ; 
+  Degree degQ;
   degree(degQ,Q);
-  if (degQ <0) { 
+  if (degQ <0) {
     P.reallocate(0);
     return P;
   }
@@ -64,16 +66,16 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign( Rep
 
 template<class Domain> template<class XXX>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const XXX& val ) const
-{ 
-    P.reallocate(1); 
+{
+    P.reallocate(1);
     _domain.init(P[0], val);
     return P;
 }
 
 
-template<class Domain> 
+template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(typename Poly1Dom<Domain,Dense>::Type_t & val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
-{ 
+{
     if (P.size())
         return _domain.assign(val, P[0]);
     else
@@ -82,7 +84,7 @@ inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(
 
 template<class Domain> template<class XXX>
 inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
-{ 
+{
     if (P.size())
         return _domain.convert(val, P[0]);
     else
@@ -91,7 +93,7 @@ inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const typename Poly1Dom<D
 
 template<class Domain> template<class UU, template<class XX> class Vect>
 inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
-{ 
+{
     val.resize( P.size() );
     typename Vect<UU>::iterator vit = val.begin();
     typename Rep::const_iterator        pit = P.begin();
@@ -104,9 +106,9 @@ inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& val, const typename 
 
 template<class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const Degree deg ) const
-{ 
-    P.reallocate(value(deg+1)); 
-    
+{
+    P.reallocate(value(deg+1));
+
     size_t sz = P.size();
     for (unsigned int i=0; i<sz-1; ++i)
         _domain.assign(P[i], _domain.zero);
@@ -123,10 +125,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
     for (int i=0; i<deg; ++i)
         _domain.assign(P[i], _domain.zero);
     _domain.init(P[deg], val);
-    
-    if (_domain.isZero(P[deg])) { 
+
+    if (_domain.isZero(P[deg])) {
         P.reallocate(0);
-    } 
+    }
     return P;
 }
 
@@ -136,7 +138,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign
  ( Rep& P, const Degree d, const Type_t& lcoeff ) const
 {
     long deg = value(d);
-    if (_domain.isZero(lcoeff)) { 
+    if (_domain.isZero(lcoeff)) {
         P.reallocate(0);
     } else {
         P.reallocate(deg+1);
@@ -147,3 +149,4 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign
     return P;
 }
 
+#endif // __GIVARO_poly1_cstor_INL

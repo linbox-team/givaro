@@ -2,7 +2,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // Time-stamp: <08 Feb 02 16:33:39 Jean-Guillaume.Dumas@imag.fr>
@@ -10,16 +10,16 @@
 // Description:
 //  Modular arithmetic for GIVARO. Here is defined arithmetic functions
 //  on rns representation with Givaro Integers.
-#ifndef _ARITHMODU_INTRNS_H
-#define _ARITHMODU_INTRNS_H
+#ifndef __GIVARO__arithmodu_intrns_H
+#define __GIVARO__arithmodu_intrns_H
 
 #include "givaro/givconfig.h"
 #include "givaro/givinteger.h"
 
   // ---------------------------------------------  class RNSsystem
-  // Structure which manages list of primes in order to do 
+  // Structure which manages list of primes in order to do
 
-//#ifndef __ECC
+// #ifndef __ECC
 template< template<class, class> class Container, template <class> class Alloc>
 class IntRNSsystem : public IntegerDom {
 public:
@@ -27,24 +27,24 @@ public:
 //     typedef Element   Modulo;
     typedef Element   external;
     typedef Container< Element, Alloc<Element> > array;
-    
 
-        // Default Cstor, Dstor/Cstor of recopy: 
+
+        // Default Cstor, Dstor/Cstor of recopy:
 	// -- free memory allocated in array !
     IntRNSsystem() : _primes(0), _prod(one), _ck(0) {}
-    ~IntRNSsystem(){} 
+    ~IntRNSsystem(){}
     IntRNSsystem(const IntRNSsystem& R) : _primes(R._primes), _prod(R._prod), _ck(R._primes) {}
- 
-        // -- Cstor with given primes 
+
+        // -- Cstor with given primes
     IntRNSsystem( const array& primes );
 
     template<class TT>
       IntRNSsystem( const Container< TT, Alloc<TT> > & primes );
 
         // -- Computation of a mixed-radix representation of the residus.
-//     void RnsToMixedRadix(array&  mixrad, const array&  residu) const; 
+//     void RnsToMixedRadix(array&  mixrad, const array&  residu) const;
     template<class TT>
-      void RnsToMixedRadix(array&  mixrad, const Container<TT, Alloc<TT> >&  residu) const; 
+      void RnsToMixedRadix(array&  mixrad, const Container<TT, Alloc<TT> >&  residu) const;
 
         // -- Convert a mixed radix representation to an external
     void MixedRadixToRing( external& res,  const array& mixrad ) const;
@@ -64,9 +64,9 @@ public:
     void fastRnsToRing( external& a, const array& residu ) const;
 
         // ------------- Access methods
- 
+
         // -- Returns the number of primes of this ctxt
-    int NumOfPrimes() const { return _primes.size(); } 
+    int NumOfPrimes() const { return _primes.size(); }
 
         // -- Returns a array to the begin of the array of primes
     const array& Primes() const;
@@ -90,7 +90,7 @@ protected:
 
     array  _primes; 	// - array of the relatively primes numbers
     Element _prod;      // - product of primes
-    array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes 
+    array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes
 
         // -- for fast conversion
     size_t _sizek;
@@ -98,6 +98,9 @@ protected:
     array  _qk;	// - cf algo Aho, Hopcroft & Ullman
     array  _u;	// - cf algo Aho, Hopcroft & Ullman
 };
+// #endif
+
+#if 0 // defined(__ECC)
 //#else
 /* template<class Container> */
 /* class IntRNSsystem : public IntegerDom { */
@@ -106,7 +109,7 @@ protected:
 /* //     typedef Element   Modulo; */
 /*     typedef Element   external; */
 /*     typedef Container array; */
-    
+
 
 /*         // Default Cstor, Dstor/Cstor of recopy:  */
 /* 	// -- free memory allocated in array ! */
@@ -143,7 +146,7 @@ protected:
 /*     void fastRnsToRing( external& a, const array& residu ) const; */
 
 /*         // ------------- Access methods */
- 
+
 /*         // -- Returns the number of primes of this ctxt */
 /*     int NumOfPrimes() const { return _primes.size(); }  */
 
@@ -178,9 +181,9 @@ protected:
 /*     array  _u;	// - cf algo Aho, Hopcroft & Ullman */
 /* }; */
 /* #endif */
-
+#endif
 
 #include "givaro/givintrns_cstor.inl"
 #include "givaro/givintrns_convert.inl"
 
-#endif
+#endif // __GIVARO__arithmodu_intrns_H

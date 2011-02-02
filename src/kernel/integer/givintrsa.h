@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : RSA scheme.
-// Time-stamp: <07 May 09 13:51:58 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <07 May 09 13:51:58 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
-#ifndef _GIVARO_RSA_
-#define _GIVARO_RSA_
+#ifndef __GIVARO_rsa_H
+#define __GIVARO_rsa_H
 
 #include <iostream>
 #include "givaro/givinteger.h"
@@ -50,7 +50,7 @@ public:
     IntRSADom(const long p, const long q, bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, p, q, _n, _e, _d); _lm = log(_n,1<<(8*sizeof(unsigned char))); }
     IntRSADom(const Element& n, const Element& e, const Element& d) : _n(n), _e(e), _d(d), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )  {}
     IntRSADom(const Element& n, const Element& e) : _n(n), _e(e), _d(0), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )  {}
-        
+
 // =================================================================== //
 // Accesses
 // =================================================================== //
@@ -60,7 +60,7 @@ public:
 
 // =================================================================== //
 // Text conversions
-// =================================================================== // 
+// =================================================================== //
     std::ostream& encipher(std::ostream&, std::istream&) const ;
     std::ostream& decipher(std::ostream&, std::istream&) ;
 
@@ -77,7 +77,7 @@ public:
 // [Strong Primes Are Easy to Find, J. Gordon, EUROCRYPT'84, LNCS 209
 // =================================================================== //
     Element& strong_prime(random_generator& g, long psize, Element& p) const;
-    
+
 // =================================================================== //
 // Here m = p*q
 // p and q are prime numbers of respective sizes psize, qsize
@@ -86,7 +86,7 @@ public:
 // =================================================================== //
     void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d, Element& p, Element& q) const ;
     void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d) const ;
-    
+
 // =================================================================== //
 // log[10]
 // =================================================================== //
@@ -94,7 +94,7 @@ public:
 
 // =================================================================== //
 // Text conversions
-// =================================================================== // 
+// =================================================================== //
     std::ostream& ecriture_str(std::ostream&, const Element&) const ;
     std::ostream& ecriture_str_last(std::ostream&, const Element&) const ;
     std::ostream& ecriture_Int(std::ostream&, const Element&) const ;
@@ -114,4 +114,4 @@ protected:
 
 #include "givaro/givintrsa.inl"
 
-#endif
+#endif // __GIVARO_rsa_H

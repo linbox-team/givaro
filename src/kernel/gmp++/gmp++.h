@@ -2,13 +2,13 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro version of gmp++.h
-// Time-stamp: <20 Oct 10 18:46:59 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <20 Oct 10 18:46:59 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
-#ifndef _GMPplusplus_H_
-#define _GMPplusplus_H_
+#ifndef __GIVARO_GMPplusplus_H
+#define __GIVARO_GMPplusplus_H
 #include <string.h>
 #include <limits.h>
 #include <climits> // required by gcc 4.3
@@ -39,4 +39,4 @@ extern "C" {
 
 #include <gmp++/gmp++_int.h>
 
-#endif
+#endif // __GIVARO_GMPplusplus_H

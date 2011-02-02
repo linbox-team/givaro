@@ -3,13 +3,16 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givmatsparse.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givmatsparse.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 // of matrix by blocks.
+
+#error "dead code"
+
 #ifndef _GIV_MATRIX_SPARSE_H_
 #define _GIV_MATRIX_SPARSE_H_
 
@@ -21,7 +24,7 @@
 // -- Matrix class: dense matrix
 // --
 template <class Domain>
-class MatrixDom<Domain, Sparse> 
+class MatrixDom<Domain, Sparse>
 {
   Domain _domain;
 
@@ -38,7 +41,7 @@ public:
   // -- Self_t
   typedef          MatrixDom<Domain, Sparse>			Self_t;
 
-  //-- Dstor: 
+  //-- Dstor:
   ~MatrixDom() {}
 
   //-- Default cstor:
@@ -60,7 +63,7 @@ public:
   { A.copy(B); }
 
   //-- Assignment operator: physical copy
-  void assign (Rep& r, const Rep& a) const  
+  void assign (Rep& r, const Rep& a) const
   { r.copy(a); }
 
   // -- Comparaizon
@@ -79,18 +82,18 @@ public:
   void mul   ( Rep& res, const Rep& u, const Type_t& v ) const;
 
   // VD is the vector domain for res and u
-  void mul      ( VectorDom<Domain,Dense>::Rep& res, 
+  void mul      ( VectorDom<Domain,Dense>::Rep& res,
                   const Rep& M,
                   const VectorDom<Domain,Dense>& VD,
                   const VectorDom<Domain,Dense>::Rep& u ) const;
-  void multrans ( typename VectorDom<Domain,Dense>::Rep& res, 
+  void multrans ( typename VectorDom<Domain,Dense>::Rep& res,
                   const Rep& M,
                   const VectorDom<Domain,Dense>& VS,
                   const typename VectorDom<Domain,Dense>::Rep& u ) const;
 
 
   void negin ( Rep& P ) const
-  {  
+  {
     size_t sz = P._data.size();
     for(size_t i=0; i<sz; ++i) _domain.negin(P._data[i]);
   }
@@ -112,9 +115,9 @@ public:
   ostream& write( ostream& s, const Rep& r ) const;
 
   // -- Compression method to compact a dense matrix to a sparse
-  // template<class StorageTag>, 
+  // template<class StorageTag>,
   void compact( Rep& Ms,
-                const MatrixDom<Domain, Dense>& MD, 
+                const MatrixDom<Domain, Dense>& MD,
                 const MatrixDom<Domain, Dense>::Rep& Md);
 };
 

@@ -2,12 +2,12 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givgfqext.h 
+// file: givgfqext.h
 // Time-stamp: <29 Sep 09 18:10:13 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
-// version: 
+// version:
 // author: Jean-Guillaume.Dumas
 // Description:
 //   Arithmetic on GF(p^k), with p a prime number less than 2^15
@@ -16,8 +16,8 @@
 //   See [JG Dumas, Q-adic Transform Revisited, ISSAC 2008]
 //   Main difference in interface is init/convert
 // ==========================================================================
-#ifndef _GIVARO_GFQ_EXTENSION_H_
-#define _GIVARO_GFQ_EXTENSION_H_
+#ifndef __GIVARO_gfq_extension_H
+#define __GIVARO_gfq_extension_H
 
 #include "givaro/givgfq.h"
 #include "givaro/givpower.h"
@@ -44,32 +44,32 @@ protected:
     UTT _maxn;	// Worst case Maximal number of multiplications
         	// without reduction
     UTT _degree;// exponent-1
-    UTT _pceil;	// smallest such that characteristic<2^_pceil, 
+    UTT _pceil;	// smallest such that characteristic<2^_pceil,
                 // used for fast for table indexing
     UTT _MODOUT;// Largest accepted double for init
-    
+
         // Conversion tables from exponent to double z-adic representation
     std::vector<double> _log2dbl;	// Exponent to double
     std::vector<UTT> 	_high2log;	// Half double to exponent
     std::vector<UTT> 	_low2log;	// Other half in Time-Memory Trade-Off
-   
+
 
 public:
     typedef GFqExtFast<TT> Self_t;
-    
+
     typedef Rep Element;
     typedef UTT Residu_t;
 
     typedef Rep* Array;
     typedef const Rep* constArray;
 
-    typedef GIV_randIter< GFqExtFast<TT> , Rep> RandIter; 
+    typedef GIV_randIter< GFqExtFast<TT> , Rep> RandIter;
 
     GFqExtFast(): Father_t(), balanced(false) {}
 
         // Extension MUST be a parameter of the constructor
     GFqExtFast( const UTT P, const UTT e) : Father_t(P,e),
-        _BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ), 
+        _BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ),
         _BASE(1 << _BITS),
         _MASK( _BASE - 1),
         _maxn( _BASE/(P-1)/(P-1)/e),
@@ -79,7 +79,7 @@ public:
 
         GIVARO_ASSERT(_maxn>0 , "[GFqExtFast]: field too large");
         builddoubletables();
-        
+
     }
 
     virtual ~GFqExtFast() {};
@@ -115,8 +115,8 @@ public:
         _high2log (F._high2log ), balanced(false) {
     }
 
-        // Accesses 
-    
+        // Accesses
+
     UTT bits() const { return _BITS;}
     UTT base() const { return _BASE;}
     UTT mask() const { return _MASK;}
@@ -124,18 +124,18 @@ public:
     UTT& characteristic(UTT& a) const { return a=this->_characteristic; }
     UTT characteristic() const { return this->_characteristic; }
     const bool balanced;
-            
+
     Rep& init( Rep& r, const unsigned long l) const {
         return Father_t::init(r,l);
     }
-    
-           
+
+
     using Father_t::init;
-    
-            
+
+
     virtual double& convert(double& d, const Rep a) const {
         return d=_log2dbl[a];
-    }        
+    }
 
     virtual float& convert(float& d, const Rep a) const {
         return d=(float)_log2dbl[a];
@@ -146,9 +146,9 @@ public:
             // Precondition : 0 <= d < _MODOUT
             // Can segfault if d is too large
             // WARNING WARNING WARNING WARNING
-        unsigned __GIVARO_INT64 rll( static_cast<__GIVARO_INT64>(d) ); 
+        unsigned __GIVARO_INT64 rll( static_cast<__GIVARO_INT64>(d) );
         unsigned __GIVARO_INT64 tll( static_cast<__GIVARO_INT64>(d/this->_dcharacteristic) );
-        UTT prec(0); 
+        UTT prec(0);
         UTT padl = (UTT)(rll - tll*this->_characteristic);
         if (padl == this->_characteristic) {
             padl -= this->_characteristic;
@@ -172,17 +172,17 @@ public:
             pad <<= _pceil;
             pad ^= prec;
         }
-        
+
         padl = this->_low2log[padl];
         pad = this->_high2log[pad];
         return this->addin(pad,padl);
     }
-    
+
     virtual Rep& init(Rep& pad, const float d) const {
         return init(pad, (double)d);
     }
-    
-           
+
+
 
 
 protected:
@@ -196,7 +196,7 @@ protected:
         _high2log.resize(powersize);
         _low2log.resize(powersize);
 
-       
+
 
         typedef typename Father_t::Element ZElem;
         Father_t Zp(this->_characteristic,1);
@@ -209,29 +209,29 @@ protected:
         xkmu = this->_pol2log[this->_characteristic];
             // This is X^{e-1}
         dom_power(xkmu,xkmu,this->_exponent-1,*this);
-        
-        
+
+
 
         typedef Poly1FactorDom< Father_t, Dense > PolDom;
         PolDom Pdom( Zp );
-        
+
         typedef Poly1PadicDom< Father_t, Dense > PadicDom;
         PadicDom PAD(Pdom);
-         
-        Father_t Z2B(2,_BITS); 
+
+        Father_t Z2B(2,_BITS);
         PolDom P2dom( Z2B );
-        PadicDom P2AD( P2dom );        
+        PadicDom P2AD( P2dom );
 
         std::vector<double>::iterator dblit = _log2dbl.begin();
         typename std::vector<UTT>::const_iterator polit = this->_log2pol.begin();
-        
+
 
         for( ; polit != this->_log2pol.end(); ++polit, ++dblit) {
-            
+
             std::vector<double> vect;
             std::deque<ZElem> low_ui;
 
-            P2AD.evaldirect( *dblit, 
+            P2AD.evaldirect( *dblit,
                              PAD.radixdirect(
                                  vect,
                                  (double)(*polit),
@@ -248,11 +248,11 @@ protected:
             Zp.init(prec, vect[0]);
             for(size_t i = 1; i<this->_exponent; ++i) {
                 Zp.init(cour, vect[i]);
-                Zp.axpy(tmp, mq, cour, prec);    
+                Zp.axpy(tmp, mq, cour, prec);
                 low_ui.push_back(tmp);
                 prec = cour;
             }
-            
+
             PAD.eval(tmp , low_ui );
             _low2log[binpolit] = this->_pol2log[tmp];
 
@@ -277,37 +277,37 @@ protected:
 
 public:
     typedef GFqExt<TT> Self_t;
-    
+
     typedef Rep Element;
     typedef UTT Residu_t;
 
     typedef Rep* Array;
     typedef const Rep* constArray;
 
-    typedef GIV_randIter< GFqExt<TT> , Rep> RandIter; 
+    typedef GIV_randIter< GFqExt<TT> , Rep> RandIter;
 
-    GFqExt(): DirectFather_t(), 
+    GFqExt(): DirectFather_t(),
               _fMODOUT(static_cast<double>(this->_MODOUT)) {}
 
-    GFqExt( const UTT P, const UTT e) : 
+    GFqExt( const UTT P, const UTT e) :
             DirectFather_t(P,e),
             _fMODOUT(static_cast<double>(this->_MODOUT)) {}
 
-    GFqExt( const GFqDom<TT>& F) : 
+    GFqExt( const GFqDom<TT>& F) :
             DirectFather_t(F),
             _fMODOUT(static_cast<double>(this->_MODOUT)) {}
 
     ~GFqExt() {}
 
     using Father_t::init;
-    
+
     virtual Rep& init(Rep& pad, const double d) const {
             // Defensive init
         const double tmp(fmod(d,this->_fMODOUT));
         return DirectFather_t::init(pad, (tmp>0.0)?tmp:(tmp+_fMODOUT) );
     }
 };
-    
 
 
-#endif
+
+#endif // __GIVARO_gfq_extension_H

@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J-G Dumas
-// Time-stamp: <06 May 10 13:47:28 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 May 10 13:47:28 Jean-Guillaume.Dumas@imag.fr>
 // Description: Polynomial Chinese Remaindering of degree 1
 // ==========================================================================
-#ifndef _GIVARO_Poly1_CRT_H
-#define _GIVARO_Poly1_CRT_H
+#ifndef __GIVARO_poly1_crt_H
+#define __GIVARO_poly1_crt_H
 #include <givaro/givpoly1.h>
 #include <givaro/givindeter.h>
 #include <vector>
@@ -26,25 +26,25 @@ public:
     typedef std::vector<Type_t> 			array_T;
     typedef std::vector<Element> 			array_E;
 
-        // Default Cstor, Dstor/Cstor of recopy: 
+        // Default Cstor, Dstor/Cstor of recopy:
     Poly1CRT() ;
-    ~Poly1CRT(); 
-    Poly1CRT( const Self_t& R); 
-    
+    ~Poly1CRT();
+    Poly1CRT( const Self_t& R);
+
         // -- Cstor with given residues so that irreds are (X-primes[i])
     Poly1CRT( const Field& F, const array_T& primes, const Indeter& X = Indeter() );
-    
+
         // -- Convert a Ring Element to a its RNS representation
         // with the "this" rns system.
     array_T& RingToRns( array_T& rns, const Element& a ) const;
-    
+
         // -- Convert a RNS representation to a RING Element
     Element& RnsToRing( Element& a, const array_T& rns );
 
         // ------------- Access methods
- 
+
         // -- Returns the number of primes of this ctxt
-    int size() const { return _primes.size(); } 
+    int size() const { return _primes.size(); }
 
         // -- Returns a array to the begin of the array of primes
     const array_T& Primes() const;
@@ -61,24 +61,24 @@ public:
     std::ostream& write( std::ostream& o ) const {
         return _PolRing.write(o << "CRT(") << ')';
     }
-    
+
     std::istream& read ( std::istream& i, Element& n) const {
         return _PolRing.read(i,n);
     }
-            
+
     std::ostream& write( std::ostream& o, const Element& n) const {
         return _PolRing.write(o,n);
     }
-    
+
     std::istream& read ( std::istream& i, Type_t& n) const {
         return _F.read(i,n);
     }
-            
+
     std::ostream& write( std::ostream& o, const Type_t& n) const {
         return _F.write(o,n);
     }
-    
-            
+
+
 
 protected:
         // -------------- Compute some fields of the structure :

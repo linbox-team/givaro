@@ -1,18 +1,18 @@
-// ========================================================================== 
+// ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/bstruct/givlist0.h,v $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givlist0.h,v 1.2 2009-09-17 14:28:22 jgdumas Exp $
-// ========================================================================== 
+// $Id: givlist0.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
+// ==========================================================================
 // Description:
 // List of type T with double link and various insert/get/rmv method.
 // Used reference counting on each node of the list.
-#ifndef _LIST0_H_
-#define _LIST0_H_
+#ifndef __GIVARO_list0_H
+#define __GIVARO_list0_H
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
@@ -35,13 +35,13 @@ public :
   // -- Physical copy operator
   List0<T>& copy(const List0<T>& p);
 
-  // -- Logical recopy operator 
+  // -- Logical recopy operator
   List0<T>& logcopy(const List0<T>& p);
-  
+
   // -- Logical recopy
   List0<T>& operator= (const List0<T>& p);
 
-  // -- Return 1 if the list is empty or 0 
+  // -- Return 1 if the list is empty or 0
   int is_empty() const;
 
   // -- Return the occuped size of the list
@@ -68,8 +68,8 @@ public:
       GivaroMM<T>::desallocate(item,1);
       GivaroMM<int>::desallocate(cnt,1);
     }
-    node* next; 
-    node* prev; 
+    node* next;
+    node* prev;
     T* item;
     int* cnt;     // reference counter on item
   };
@@ -98,4 +98,4 @@ protected :  // --------------------- Public Internal representation
 
 #include "givaro/givlist0.inl"
 
-#endif
+#endif // __GIVARO_list0_H

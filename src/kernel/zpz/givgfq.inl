@@ -12,8 +12,18 @@
 //           Modified 20 Mar 03 by Clement Pernet
 // Time-stamp: <09 Jul 08 08:47:17 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
+
+#ifndef __GIVARO_gfq_INL
+#define __GIVARO_gfq_INL
+
 #include <math.h>
 #include <givaro/givpoly1padic.h>
+#include <givaro/givinteger.h>
+#include <givaro/givintnumtheo.h>
+#include <givaro/givpower.h>
+
+#include <vector>
+
 
 // Warning : valid iff b != c
 #ifndef __GIVARO_COUNT__
@@ -911,19 +921,6 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& r, 
 
 
 
-// ==========================================================================
-// file: givgfq.C
-// Time-stamp: <20 Dec 99 11:18:32 Jean-Guillaume.Dumas@imag.fr>
-// ==========================================================================
-// #include "givgfq.h"
-#ifndef __GIVARO_GFQ_C__
-#define __GIVARO_GFQ_C__
-
-#include <givaro/givinteger.h>
-#include <givaro/givintnumtheo.h>
-#include <givaro/givpower.h>
-
-#include <vector>
 
 template<typename TT>
 inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
@@ -1121,7 +1118,5 @@ template<typename TT> long long GFqDom<TT>::_neg_call = 0;
 template<typename TT> long long GFqDom<TT>::_inv_call = 0;
 #endif
 
-#endif
-
-
+#endif // __GIVARO_gfq_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

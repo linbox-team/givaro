@@ -6,12 +6,12 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz.h,v 1.7 2011-02-02 13:45:03 jgdumas Exp $
+// $Id: givzpz.h,v 1.8 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 //   Family of arithmetics over Zpz
-#ifndef _GIVARO_ZPZ_H_
-#define _GIVARO_ZPZ_H_
+#ifndef __GIVARO_zpz_H
+#define __GIVARO_zpz_H
 
 // ==========================================================================
 // --
@@ -44,4 +44,4 @@ template<class TAG> class ZpzDom;
 
 #include "givaro/givzpzInt.h"
 
-#endif
+#endif // __GIVARO_zpz_H

@@ -6,12 +6,12 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1dense.h,v 1.28 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givpoly1dense.h,v 1.29 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description: univariate polynom over T
 // - we assume that T is a ring (0,1,+,*) with:
-#ifndef _GIV_POLY1_DENSE_H_
-#define _GIV_POLY1_DENSE_H_
+#ifndef __GIVARO_poly1_dense_H
+#define __GIVARO_poly1_dense_H
 
 #include <iostream>
 #include "givaro/givdegree.h"
@@ -312,4 +312,4 @@ public :
 
 }; //  ------------------------------- End Of The Class Poly1Dom<Type_t>
 
-#endif
+#endif // __GIVARO_poly1_dense_H

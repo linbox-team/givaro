@@ -1,4 +1,3 @@
-#include <givaro/givconfig.h>
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz64std.inl,v $
 // Copyright(c)'1994-2009 by The Givaro group
@@ -7,14 +6,20 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.inl,v 1.17 2011-02-01 17:59:25 jgdumas Exp $
+// $Id: givzpz64std.inl,v 1.18 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+#ifndef __GIVARO_zpz64std_INL
+#define __GIVARO_zpz64std_INL
+
 // Description:
 
 // ---------
 // -- normalized operations
 // ---------
 
+#include <givaro/givconfig.h>
+
+#ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 
 // r = a*b
 #define __GIVARO_ZPZ64_N_MUL(r,p,a,b) ( r = (uint64)(a*b) % (uint64)p )
@@ -616,4 +621,7 @@ inline Integer& ZpzDom<Std64>::write (Integer& r, const Rep a) const
 {
   return r = Integer(a);
 }
+
+#endif // __DONOTUSE_Givaro_SIXTYFOUR__
+#endif // __GIVARO_zpz64std_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

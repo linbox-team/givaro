@@ -3,26 +3,29 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givlist0.inl,v 1.2 2009-09-17 14:28:22 jgdumas Exp $
+// $Id: givlist0.inl,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
 // inline implementation of the List0 methods
 
+#ifndef __GIVARO_list0_INL
+#define __GIVARO_list0_INL
+
 template <class T>
-inline List0<T>::List0() 
+inline List0<T>::List0()
  : _head(0), _queue(0), _size(0)
 {}
 
 template <class T>
-inline List0<T>::List0( const List0<T>& l) 
+inline List0<T>::List0( const List0<T>& l)
  : _head(l._head), _queue(l._queue), _size(l._size)
 {
   node* curr = _head;
   while (curr !=0) {
     curr->cnt++ ;
-    curr = curr->next ; 
+    curr = curr->next ;
   }
 }
 
@@ -68,7 +71,7 @@ inline List0<T>& List0<T>::logcopy(const List0<T>& l)
   node* curr = _head;
   while (curr !=0) {
     curr->cnt++ ;
-    curr = curr->next ; 
+    curr = curr->next ;
   }
   return *this;
 }
@@ -92,9 +95,9 @@ void List0<T>::insertlast( const T& val)
   curr->cnt =  GivaroMM<int>::allocate(1); *(curr->cnt) = 1 ;
   curr->item = GivaroMM<T>::allocate(1);
   GivaroMM<T>::initone(curr->item, val);
-  curr->prev = _queue ; 
+  curr->prev = _queue ;
   curr->next = 0;
-  if (_queue !=0) _queue->next = curr ; 
+  if (_queue !=0) _queue->next = curr ;
   _queue = curr ;
   if (_head ==0) _head = curr ;
   _size++ ;
@@ -109,7 +112,7 @@ void List0<T>::insertfirst( const T& val)
   GivaroMM<T>::initone(curr->item, val);
   curr->prev = 0;
   curr->next = _head;
-  if (_head !=0) _head->prev = curr ; 
+  if (_head !=0) _head->prev = curr ;
   _head = curr ;
   if (_queue ==0) _queue = curr ;
   _size++ ;
@@ -132,7 +135,7 @@ int List0<T>::getfirst(T& val) const
 }
 
 template<class T>
-int List0<T>::getrmvlast(T& val) 
+int List0<T>::getrmvlast(T& val)
 {
   if (_queue ==0) return 0;
   node* curr = _queue;
@@ -149,7 +152,7 @@ int List0<T>::getrmvlast(T& val)
 }
 
 template<class T>
-int List0<T>::getrmvfirst(T& val) 
+int List0<T>::getrmvfirst(T& val)
 {
   if (_head ==0) return 0;
   node* curr = _head;
@@ -165,3 +168,4 @@ int List0<T>::getrmvfirst(T& val)
   return 1;
 }
 
+#endif // __GIVARO_list0_INL

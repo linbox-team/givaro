@@ -2,19 +2,19 @@
 // Copyright(c)'1994-2010 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givgfqkron.h 
+// file: givgfqkron.h
 // Time-stamp: <12 Apr 10 16:45:02 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
-// version: 
+// version:
 // author: Jean-Guillaume.Dumas
 // Description:
 //   Arithmetic on GF(p^k), with dynamic Kronecker substitution
 //   Precondition : k(p-1)^2 < word size
 // ==========================================================================
-#ifndef _GIVARO_GFQ_KRONECKER_H_
-#define _GIVARO_GFQ_KRONECKER_H_
+#ifndef __GIVARO_gfq_kronecker_H
+#define __GIVARO_gfq_kronecker_H
 
 #include "givaro/givgfq.h"
 #include "givaro/givpower.h"
@@ -30,14 +30,14 @@ protected:
 
 public:
     typedef GFqKronecker<TT,Ints> Self_t;
-    
+
     typedef Rep Element;
     typedef UTT Residu_t;
 
     typedef Rep* Array;
     typedef const Rep* constArray;
 
-    typedef GIV_randIter< Father_t , Rep> RandIter; 
+    typedef GIV_randIter< Father_t , Rep> RandIter;
 
     GFqKronecker(): Father_t() {}
 
@@ -48,8 +48,8 @@ public:
     }
 
         // Set shifts, returns maxn
-    Ints setShift(const Ints& i) { 
-        _SHIFTS=i; 
+    Ints setShift(const Ints& i) {
+        _SHIFTS=i;
         _sBASE = Ints(1); _sBASE <<=_SHIFTS;
         _sMASK = _sBASE - 1;
         return _sMAXN = _sBASE / _epmunsq;
@@ -64,7 +64,7 @@ public:
         _sMASK = _sBASE - 1;
         return _SHIFTS;
     }
-        
+
 
     virtual ~GFqKronecker() {};
 
@@ -85,19 +85,19 @@ public:
             r |= ( binpol & _pMASK);
         }
         return r;
-    }       
-    
-    
-    
+    }
+
+
+
     virtual Rep& init(Rep& a, const Ints r) const {
             // WARNING: This could be speeded up with a REDQ transform
-        
+
             // First Step lower part
             // 	from rd | ... | r1 | r0
             // 	to   a0|a1|...|ad
             // 	where ai = ri mod p
         Ints rs=r;
-        UTT binpolLOW = (UTT)( (rs & _sMASK) % this->_characteristic);        
+        UTT binpolLOW = (UTT)( (rs & _sMASK) % this->_characteristic);
         for(size_t i=1; i<this->_exponent; ++i) {
             binpolLOW <<= _pceil;
             rs >>= _SHIFTS;
@@ -118,9 +118,9 @@ public:
         return this->axpy(a, _bin2log[binpolHIGH], _Xk, _bin2log[binpolLOW]);
     }
 
-    
 
-    
+
+
 protected:
     std::ostream& polywrite(std::ostream& out, const Element& a, const Indeter In= "B") const {
         static ZpzDom<Integer> Zp(this->_characteristic);
@@ -147,17 +147,17 @@ protected:
         typename std::vector<UTT>::iterator binit = _log2bin.begin();
         typename std::vector<UTT>::const_iterator polit = this->_log2pol.begin();
         for( ; polit != this->_log2pol.end(); ++polit, ++binit) {
-            
+
             std::vector<unsigned long> vect;
             PAD.radixdirect( vect, (unsigned long)(*polit), this->_exponent);
-                
+
             *binit = vect[0];
             for(size_t i =1; i<this->_exponent; ++i) {
                 *binit <<= _pceil;
                 *binit += vect[i];
             }
         }
-        
+
         _bin2log.resize( 1<<(_pceil*this->_exponent) );
         for(size_t i=0; i<_log2bin.size(); ++i)
             _bin2log[ _log2bin[ i ] ] = i;
@@ -171,20 +171,20 @@ protected:
 //         polywrite(std::cerr << "Xk: ", _Xk) << std::endl;
     }
 
-           
- 
+
+
     UTT _SHIFTS;
     Ints _sBASE,_sMASK,_sMAXN;
 
     Ints _epmunsq;
     UTT _pceil,_pMASK,_degree;
-    
+
     std::vector<UTT> _log2bin;
     std::vector<UTT> _bin2log;
 
     Element _Xk;
 };
-    
 
 
-#endif
+
+#endif // __GIVARO_gfq_kronecker_H

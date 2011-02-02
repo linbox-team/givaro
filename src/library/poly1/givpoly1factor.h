@@ -2,17 +2,17 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Irreducibily test
 // Factorisations de  Polynomes dans Fp[X] :
 //      Distinct Degree
 //      Cantor-Zassenhaus
 //      Berlekamp: moved in LinBox
-// Time-stamp: <27 Jun 05 11:35:32 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <27 Jun 05 11:35:32 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
-#ifndef _GIV_POLY1_FACTO_H_
-#define _GIV_POLY1_FACTO_H_
+#ifndef __GIVARO_poly1_facto_H
+#define __GIVARO_poly1_facto_H
 #include <givaro/givrandom.h>
 #include <givaro/givpoly1.h>
 
@@ -47,7 +47,7 @@ void SplitFactor( Container< Rep, Alloc<Rep> > & L
         , const Rep& G
         , Degree d
         , Residu_t MOD)  const ;
-    
+
 template< template<class, class> class Container, template <class> class Alloc>
 void SplitFactor( Container< Rep, Alloc<Rep> > & L
         , const Rep& G
@@ -61,14 +61,14 @@ void SplitFactor( Container< Rep, Alloc<Rep> > & L
         , const Rep& G
         , Degree d
         , Residu_t MOD) const  ;
-    
+
     Rep& SplitFactor(
         Rep& R
         , const Rep& G
         , Degree d) const  {
         return SplitFactor(R,G,d,_domain.residu() );
     }
-    
+
 
 
 // ---------------------------------------------------------------
@@ -84,7 +84,7 @@ template< template<class, class> class Container, template <class> class Alloc>
 void DistinctDegreeFactor( Container< Rep, Alloc<Rep> > & L
         , const Rep& f)  const {
         DistinctDegreeFactor(L,f,_domain.residu());
-    }            
+    }
 
 // ---------------------------------------------------------------
 // Cantor-Zassenhaus Polynomial factorization over Z/pZ
@@ -112,14 +112,14 @@ void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
         Rep& W
         , const Rep& P
         , Residu_t MOD )  const ;
- 
+
     Rep& factor(
         Rep& W
         , const Rep& P )  const {
         return factor(W,P,_domain.residu());
     }
-    
-            
+
+
 // ---------------------------------------------------------------
 // Irreducibility test
 // ---------------------------------------------------------------
@@ -127,20 +127,20 @@ void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
     bool is_irreducible(
         const Rep& P
         , Residu_t MOD )  const ;
-    
+
     bool is_irreducible(const Rep& P )  const {
         return is_irreducible(P,_domain.residu());
     }
-    
+
     bool is_irreducible2(
         const Rep& P
         , Residu_t MOD )  const ;
-    
+
     bool is_irreducible2(const Rep& P )  const {
         return is_irreducible2(P,_domain.residu());
     }
-    
-            
+
+
 // ---------------------------------------------------------------
 // Irreducible polynomials
 // ---------------------------------------------------------------
@@ -159,12 +159,12 @@ void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
 // ---------------------------------------------------------------
 
     IntegerDom::Element order(const Rep& P, const Rep& F) const ;
-    
+
 
     bool is_prim_root( const Rep& P, const Rep& F) const ;
-    
+
     Rep& random_prim_root(Rep& P, Rep& R, Degree n) const ;
-    
+
 
     Rep& give_random_prim_root(Rep& R, const Rep& F) const ;
     Rep& give_prim_root(Rep& R, const Rep& F) const ;
@@ -173,6 +173,6 @@ void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
 
 
 
-#include "givaro/givpoly1factor.inl" 
-#include "givaro/givpoly1proot.inl" 
-#endif 
+#include "givaro/givpoly1factor.inl"
+#include "givaro/givpoly1proot.inl"
+#endif // __GIVARO_poly1_facto_H

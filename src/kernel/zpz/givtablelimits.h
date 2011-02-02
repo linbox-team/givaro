@@ -2,12 +2,12 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givadicqfq.h 
+// file: givadicqfq.h
 // Time-stamp: <11 Jun 07 19:18:31 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
-// version: 
+// version:
 // author: Jean-Guillaume.Dumas
 // Description:
 //   Zech extension fitting a small enough memory space
@@ -17,8 +17,8 @@
 // ISSAC'02: Proceedings of the 2002 International Symposium on Symbolic
 // and Algebraic Computation, Lille, France pp 63--74.
 // ==========================================================================
-#ifndef __GIVARO_TABLESIZE_MAX__
-#define __GIVARO_TABLESIZE_MAX__
+#ifndef __GIVARO_tablesize_MAX_H
+#define __GIVARO_tablesize_MAX_H
 
 
 #ifndef FF_TABLE_MAX
@@ -42,28 +42,28 @@
 #include <math.h>
 #include <stddef.h>
 
-  // ---------------------------------------------  class 
+  // ---------------------------------------------  class
 class AdicSize {
 public:
-    
+
     static size_t nmax53(const unsigned long P, const unsigned long e) {
         size_t i = 0;
         while (Primes16::ith(i) < P) ++i;
         return n_max_53[i][e-2];
-    }      
-    
+    }
+
     static size_t qmax53(const unsigned long P, const unsigned long e) {
         size_t i = 0;
         while (Primes16::ith(i) < P) ++i;
         return qadic_53[i][e-2];
     }
-        
+
     static size_t nmax64(const unsigned long P, const unsigned long e) {
         size_t i = 0;
         while (Primes16::ith(i) < P) ++i;
         return n_max_64[i][e-2];
     }
-    
+
     size_t qmax64(const unsigned long P, const unsigned long e) {
         size_t i = 0;
         while (Primes16::ith(i) < P) ++i;
@@ -76,14 +76,14 @@ public:
         tmp *= double(e);
         tmp *= double(nm);
         size_t k = ilogb(tmp);
-        return ( (53/(2*e-1))>k ? ++k : 0);        
+        return ( (53/(2*e-1))>k ? ++k : 0);
     }
-        
+
     static size_t twopmax53(const unsigned long P, const unsigned long e) {
         size_t k = 53/(2*e-1);
         return ( pow(2.0,double(k))>double(e*(P-1)*(P-1)) ? k: 0);
     }
-    
+
 private:
     static const size_t n_max_53[][_GIVARO_FF_MAXEXPONENT_];
     static const size_t n_max_64[][_GIVARO_FF_MAXEXPONENT_];
@@ -92,7 +92,4 @@ private:
 };
 
 
-
-
-
-#endif
+#endif // __GIVARO_tablesize_MAX_H

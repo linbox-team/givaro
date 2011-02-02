@@ -2,15 +2,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro / Athapascan-1
 // Irreducible polynomial finder
 // Primitive root finder
-// Time-stamp: <10 Jul 07 15:31:18 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <10 Jul 07 15:31:18 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
-#ifndef _GIVARO_POLY_PRIMITIVE_ROOT_
-#define _GIVARO_POLY_PRIMITIVE_ROOT_
+#ifndef __GIVARO_poly_primitive_root_INL
+#define __GIVARO_poly_primitive_root_INL
 
 // Reasonible cyclotomic polynomial size
 #define CYCLO_DEGREE_BOUND 1000
@@ -37,7 +37,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
     Residu_t MOD = _domain.residu();
 
         // Search for an irreducible BINOMIAL : X^n + a
-        // WARNING : Here we may have X^n + x, 
+        // WARNING : Here we may have X^n + x,
         // where a = representation of x, and sometimes a != x.
     for(Residu_t a=0; a<MOD; ++a) {
         _domain.assign(R[0],a);
@@ -66,7 +66,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
         // Search for a monic irreducible Polynomial
         // with random Elements
     do {
-        this->random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -84,7 +84,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
     Residu_t MOD = _domain.residu();
 
     do {
-        this->random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -108,7 +108,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
     Residu_t MOD = _domain.residu();
 
         // Search for an irreducible BINOMIAL : X^n + a
-        // WARNING : Here we may have X^n + x, 
+        // WARNING : Here we may have X^n + x,
         // where a = representation of x, and sometimes a != x.
     for(Residu_t a=0; a<MOD; ++a) {
         _domain.assign(R[0],a);
@@ -137,7 +137,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
         // Search for a monic irreducible Polynomial
         // with random Elements
     do {
-        this->random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -155,7 +155,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
     Residu_t MOD = _domain.residu();
 
         // Search for an irreducible BINOMIAL : X^n + a
-        // WARNING : Here we may have X^n + x, 
+        // WARNING : Here we may have X^n + x,
         // where a = representation of x, and sometimes a != x.
     for(Residu_t a=0; a<MOD; ++a) {
         _domain.assign(R[0],a);
@@ -180,7 +180,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Do
         // Search for a monic irreducible Polynomial
         // with random Elements
     do {
-        this->random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -201,25 +201,25 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
     Rep W,D; this->gcd(W,diff(D,P),P);
     Degree d, dP;
     if (degree(d,W) > 0) return 0;
-    IntFactorDom<> FD; 
-    
+    IntFactorDom<> FD;
+
     long n = degree(dP,P).value();
     IntFactorDom<>::Rep qn;
 
     FD.pow( qn, IntFactorDom<>::Rep(MOD), n);
     Rep Unit, G1; init(Unit, Degree(1));
     this->powmod(G1, Unit, qn, P);
-    if (degree(d, sub(D,G1,Unit)) >= 0) return 0;    
+    if (degree(d, sub(D,G1,Unit)) >= 0) return 0;
 
     std::vector<IntFactorDom<>::Rep> Lp; std::vector<unsigned long> Le;
     FD.set(Lp, Le, n );
     for( std::vector<IntFactorDom<>::Rep>::const_iterator p = Lp.begin(); p != Lp.end(); ++p) {
-        long ttmp; 
+        long ttmp;
         FD.pow( qn, IntFactorDom<>::Rep(MOD), n/FD.convert(ttmp,*p) );
         this->powmod(G1, Unit, qn, P);
-        if (degree(d, sub(D,G1,Unit)) < 0) return 0;    
+        if (degree(d, sub(D,G1,Unit)) < 0) return 0;
     }
-    
+
     return 1;
 }
 
@@ -228,7 +228,7 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
 
 // ---------------------------------------------------------------
 // Primitive Root over Z/pZ / F
-// returns 1 if P is a generator. 
+// returns 1 if P is a generator.
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter>
@@ -276,7 +276,7 @@ inline typename IntegerDom::Element Poly1FactorDom<Domain,Tag, RandIter>::order(
         isproot = 1;
         for(;(li != L.end()) && isproot; ++li)
             isproot = ( ! this->isOne(this->powmod(G, A, FD.div(g, qp , *li), F) ) );
-        
+
         if (isproot)
             return qp;
         else {
@@ -295,8 +295,8 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     Degree n; degree(n,F);
     Residu_t MOD = _domain.residu();
 //    this->write(std::cout << "Give Pr: ", F) << std::endl;
-    
-    
+
+
         // Search for a primitive BINOMIAL : X^i + a
     for(Degree di=1;di<n;++di) {
         init(R, di);
@@ -326,7 +326,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
         // Search for a primitive Polynomial
         // with random Elements
     do {
-        this->random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -341,11 +341,11 @@ template<class Domain, class Tag, class RandIter >
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::give_random_prim_root(Rep& R, const Rep& F)  const {
     Degree n; degree(n,F);
     Residu_t MOD = _domain.residu();
-    
+
         // Search for a primitive Polynomial
         // with random Elements
     do {
-        this->random( (RandIter&)_g, R, n); // must cast away const 
+        this->random( (RandIter&)_g, R, n); // must cast away const
         _domain.assign(R[n.value()],_domain.one);
         for(Residu_t a=0; a<MOD; ++a) {
             _domain.assign(R[0],a);
@@ -356,13 +356,13 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
 }
 
 
-template<class Domain, class Tag, class RandIter > 
+template<class Domain, class Tag, class RandIter >
 inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::random_prim_root(Rep& P, Rep& R, Degree n)  const {
         // P is irreducible
-        // R is a primitive root. i.e R generates (Z_p)/P. 
+        // R is a primitive root. i.e R generates (Z_p)/P.
         // returns R
     return give_prim_root(R, random_irreducible(P,n));
 }
 
 
-#endif 
+#endif // __GIVARO_poly_primitive_root_INL

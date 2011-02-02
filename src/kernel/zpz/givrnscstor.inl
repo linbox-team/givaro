@@ -3,12 +3,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gaut%ier
-// $Id: givrnscstor.inl,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givrnscstor.inl,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
+
+#ifndef __GIVARO_rns_cstor_INL
+#define __GIVARO_rns_cstor_INL
 
 // -- free memory allocated in array !
 template<class RING, class Domain>
@@ -22,14 +25,14 @@ RNSsystem<RING,Domain>::RNSsystem ()
 
 template<class RING, class Domain>
 RNSsystem<RING,Domain>::RNSsystem (const RNSsystem<RING,Domain>& R)
- : _primes(R._primes, givWithCopy()), 
+ : _primes(R._primes, givWithCopy()),
    _ck(R._ck, givWithCopy())
 {}
 
 
   // -- Array of primes are given
 template<class RING, class Domain>
-RNSsystem<RING,Domain>::RNSsystem( const RNSsystem<RING,Domain>::domains& inprimes) 
+RNSsystem<RING,Domain>::RNSsystem( const RNSsystem<RING,Domain>::domains& inprimes)
  : _primes(inprimes, givWithCopy()),
    _ck(0)
 {
@@ -61,8 +64,8 @@ void RNSsystem<RING,Domain>::ComputeCk()
 
 template<class RING, class Domain>
 const typename RNSsystem<RING,Domain>::domains& RNSsystem<RING,Domain>::Primes() const
-{ 
-  return _primes; 
+{
+  return _primes;
 }
 
 
@@ -87,3 +90,5 @@ const typename RNSsystem<RING,Domain>::modulo RNSsystem<RING,Domain>::reciprocal
   if (_ck.size() ==0) ((RNSsystem<RING,Domain>*)this)->ComputeCk();
   return _ck[i];
 }
+
+#endif // __GIVARO_rns_cstor_INL

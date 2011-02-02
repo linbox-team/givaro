@@ -6,8 +6,12 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32uns.inl,v 1.13 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpz32uns.inl,v 1.14 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+
+#ifndef __GIVARO_zpz32_uns_INL
+#define __GIVARO_zpz32_uns_INL
+
 // Description:
 
 // ---------
@@ -601,4 +605,7 @@ inline std::ostream& ZpzDom<Unsigned32>::write (std::ostream& s, const Rep a) co
 {
   return s << a;
 }
+
+#endif // __GIVARO_zpz32_uns_INL
+
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

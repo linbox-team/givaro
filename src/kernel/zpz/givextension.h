@@ -72,7 +72,7 @@ public:
 		/*     cerr << "Pol Cstor" << endl; */
 		unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
 		if (basedegree >= e) {
-			std::cerr << "WARNING : Try a direct extension field GFDom instead of a polynomial extension" << endl;
+			std::cerr << "WARNING : Try a direct extension field GFDom instead of a polynomial extension" << std::endl;
 			_bF = BaseField_t(p, 1);
 			_pD = Pol_t(_bF, Y);
 			_extension_order = _exponent;

@@ -6,8 +6,10 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.9 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givzpzInt.inl,v 1.10 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+#ifndef __GIVARO_zpz_int_INL
+#define __GIVARO_zpz_int_INL
 // Description:
 
 // ---------
@@ -527,4 +529,5 @@ inline std::ostream& ZpzDom<Integer>::write (std::ostream& s, const Rep& a) cons
 {
   return s << a;
 }
+#endif // __GIVARO_zpz_int_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

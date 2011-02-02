@@ -3,16 +3,16 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.11 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givcra.h,v 1.12 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
-//  Chinese Remainder Algorithm for 2 Elements. 
+//  Chinese Remainder Algorithm for 2 Elements.
 //  For any number of moduli see givrns.h
-#ifndef _CRA_H
-#define _CRA_H
+#ifndef __GIVARO_cra_H
+#define __GIVARO_cra_H
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"
@@ -26,7 +26,7 @@ struct ChineseRemainder {
 
         // Computes u = M^-1 in the domain
 	// Then C_12 = (M^-1 mod D)M
-    ChineseRemainder(const Ring& R, const RingElement& M, const Domain& D) 
+    ChineseRemainder(const Ring& R, const RingElement& M, const Domain& D)
             : _domain(D)  {
         DomainElement u;
         _domain.invin( _domain.init(u, M) );
@@ -36,7 +36,7 @@ struct ChineseRemainder {
 
 
 
-        // Computes res = A + ((e-A) mod D)*(M^-1 mod D)M 
+        // Computes res = A + ((e-A) mod D)*(M^-1 mod D)M
         // Then res mod M == A
         // And  res mod D == e
     RingElement & operator()( RingElement& res, const RingElement& A, const DomainElement& e) const {
@@ -64,7 +64,7 @@ struct ChineseRemainder<Ring, Domain, false>  {
 
         // Computes u = M^-1 in the domain
 	// Then C_12 = (M^-1 mod D)M
-    ChineseRemainder(const Ring& R, const RingElement& M, const Domain& D) 
+    ChineseRemainder(const Ring& R, const RingElement& M, const Domain& D)
             : _domain(D) {
         DomainElement u;
         _domain.invin( _domain.init(u, M) );
@@ -89,4 +89,4 @@ private:
 };
 
 
-#endif
+#endif // __GIVARO_cra_H

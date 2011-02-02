@@ -1,11 +1,11 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
-#ifndef __GIV__POLY1_DENSE_OPS_inl__
-#define __GIV__POLY1_DENSE_OPS_inl__
+#ifndef __GIVARO_poly1_dense_ops_INL
+#define __GIVARO_poly1_dense_ops_INL
 #include "givaro/givpoly1cstor.inl"
 #include "givaro/givpoly1misc.inl"
 #include "givaro/givpoly1addsub.inl"
@@ -17,4 +17,4 @@
 #include "givaro/givpoly1cyclo.inl"
 #include "givaro/givpoly1ratrecon.inl"
 
-#endif
+#endif // __GIVARO_poly1_dense_ops_INL

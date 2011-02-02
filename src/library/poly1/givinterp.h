@@ -3,14 +3,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givinterp.h,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givinterp.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
-#ifndef _INTERPOLATION_H
-#define _INTERPOLATION_H
+#ifndef __GIVARO_interpolation_H
+#define __GIVARO_interpolation_H
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"
@@ -21,7 +21,7 @@ template<class Domain, bool REDUCE = true>
 struct Interpolation : Poly1Dom<Domain,Dense>  {
     typedef std::vector< typename Domain::Element > Vect_t;
     typedef typename Poly1Dom<Domain, Dense>::Element Element;
-    
+
 
     Interpolation (const Domain& d, const Indeter& X = Indeter() ) : Poly1Dom<Domain,Dense>(d,X), Pi(this->one) {}
 
@@ -41,12 +41,12 @@ struct Interpolation : Poly1Dom<Domain,Dense>  {
             this->_domain.init(tmp);
                 // Adds the last evaluation
             for( typename Vect_t::reverse_iterator prev = DD.rbegin(), next = DD.rbegin(), point = Points.rbegin(); ++next != DD.rend(); ++prev, ++point)
-		// [x_i, ..., x_{n+1}] = ([x_i, ..., x_n] - [x_{i+1}, ..., x_{n+1}]) 
+		// [x_i, ..., x_{n+1}] = ([x_i, ..., x_n] - [x_{i+1}, ..., x_{n+1}])
                 //			 / ( x_i - x_{n+1} )
                 this->_domain.divin(
                     this->_domain.subin(*next, *prev),
                     this->_domain.sub(tmp, *point, x)
-                    );            
+                    );
         }
         Points.push_back(x);
 
@@ -70,4 +70,4 @@ private:
 
 
 
-#endif
+#endif // __GIVARO_interpolation_H

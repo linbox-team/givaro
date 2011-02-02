@@ -3,26 +3,26 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givrns.h,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
+// $Id: givrns.h,v 1.5 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 //  Modular arithmetic for GIVARO. Here is defined arithmetic functions
 //  on rns representation and interface between RNS and Integer,
 //  all is done via the Chinese Remainder Algorithm.
-#ifndef _ARITHMODU_H
-#define _ARITHMODU_H
+#ifndef __GIVARO_arithmodu_H
+#define __GIVARO_arithmodu_H
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"
 
     // ---------------------------------------------  class RNSsystem
-    // Structure which manages list of domains in order to 
+    // Structure which manages list of domains in order to
     // convert integer to/from RNS number system using
     // a mixed radix form.
-    // This class is parameterized by the type of Ring and of Domain 
+    // This class is parameterized by the type of Ring and of Domain
     // Ring should have:
     // - Ring( Modulo ) and Domain.init(Ring) conversions
     // - operator *= (Ring&, const Modulo&)
@@ -37,31 +37,31 @@ public:
     typedef Array0<modulo> array;
     typedef Array0<Domain> domains;
 
-        // Default Cstor, Dstor/Cstor of recopy: 
+        // Default Cstor, Dstor/Cstor of recopy:
     RNSsystem() ;
-    ~RNSsystem(); 
-    RNSsystem(const Self_t& R); 
-    
-        // -- Cstor with given primes 
+    ~RNSsystem();
+    RNSsystem(const Self_t& R);
+
+        // -- Cstor with given primes
     RNSsystem( const domains& primes );
-    
+
         // -- Computation of a mixed-radix representation of the residus.
-    void RnsToMixedRadix(array&  mixrad, const array&  residu) const; 
-    
+    void RnsToMixedRadix(array&  mixrad, const array&  residu) const;
+
         // -- Convert a mixed radix representation to an Integer
     void MixedRadixToRing( RING& res,  const array& mixrad ) const;
-    
+
         // -- Convert a Ring Element to a its RNS representation
         // with the "this" rns system.
     void RingToRns( array& rns, const RING& a ) const;
-    
+
         // -- Convert a RNS representation to a RING Element
     void RnsToRing( RING& a, const array& rns ) const;
 
         // ------------- Access methods
- 
+
         // -- Returns the number of primes of this ctxt
-    int size() const { return _primes.size(); } 
+    int size() const { return _primes.size(); }
 
         // -- Returns a array to the begin of the array of primes
     const domains& Primes() const;
@@ -77,10 +77,10 @@ protected:
     void ComputeCk();
 
     domains  _primes; 	// - array of the primes
-    array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes 
+    array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes
 };
 
 #include "givaro/givrnscstor.inl"
 #include "givaro/givrnsconvert.inl"
 
-#endif
+#endif // __GIVARO_arithmodu_H

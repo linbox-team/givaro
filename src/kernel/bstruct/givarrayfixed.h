@@ -1,17 +1,17 @@
-// ========================================================================== 
+// ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/bstruct/givarrayfixed.h,v $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givarrayfixed.h,v 1.4 2010-10-15 13:43:48 bboyer Exp $
-// ========================================================================== 
+// $Id: givarrayfixed.h,v 1.5 2011-02-02 16:23:55 bboyer Exp $
+// ==========================================================================
 // Description:
 // ArrayFixed of type T with fixed dimension
-#ifndef _GIV_ARRAY_FIXED_H_
-#define _GIV_ARRAY_FIXED_H_
+#ifndef __GIVARO_array_fixed_H
+#define __GIVARO_array_fixed_H
 #include <stddef.h> // size_t
 
 #include "givaro/givaromm.h"
@@ -28,7 +28,7 @@ public :
   typedef Type_t		*Iterator_t;
   typedef const Type_t		*constIterator_t;
 
-  //-- Default cstor: 
+  //-- Default cstor:
   ArrayFixed () {};
 
   //-- Recopy cstor : implicit
@@ -46,19 +46,19 @@ public :
   //-- Return the physical size of the array (capacity)
   size_t phsize() const { return SIZE; }
 
-  //-- Return the base ptr to the array 
+  //-- Return the base ptr to the array
   Type_t* baseptr() { return _data; }
   Type_t* const baseptr() const { return _data; }
 
   //-- Access to the ith Element:
-  const T& operator[] (Indice_t i)  const { 
+  const T& operator[] (Indice_t i)  const {
     GIVARO_ASSERT((i >=0)&&(i<SIZE), "[Array<T>::[]]: index out of bounds.");
-    return _data[i]; 
+    return _data[i];
   }
 
-  T& operator[] (Indice_t i) { 
+  T& operator[] (Indice_t i) {
     GIVARO_ASSERT((i >=0)&&(i<SIZE), "[Array<T>::[]]: index out of bounds.");
-    return _data[i]; 
+    return _data[i];
   }
 
   // -- Iterator
@@ -75,7 +75,7 @@ public :
 
 protected :  //--------------------- protected Internal representation
 private:
-  //-- assignement operator cannot be herited. 
+  //-- assignement operator cannot be herited.
   Self_t& operator= (const Self_t& p) {};
 };
 
@@ -93,9 +93,9 @@ struct __giv_map_less_ith<T, UNARYOP, 0> {
 template<class T, class UNARYOP, size_t ith>
 struct __giv_map_less_ith<T, UNARYOP, ith> {
   inline void operator()(  T* data, UNARYOP& opcode )
-  {  
-    opcode(data[ith]); 
-    __giv_map_less_ith<T,UNARYOP,ith-1>()(data, opcode); 
+  {
+    opcode(data[ith]);
+    __giv_map_less_ith<T,UNARYOP,ith-1>()(data, opcode);
   }
 };
 
@@ -111,8 +111,8 @@ struct __giv_map_less_ith_const<T,UNARYOP,0> {
 template<class T, class UNARYOP, size_t ith>
 struct __giv_map_less_ith_const<T,UNARYOP,ith> {
   inline void operator() (  const T* data, UNARYOP& opcode )
-  {  opcode(data[ith]); 
-     __giv_map_less_ith<T,UNARYOP,ith-1>(data, opcode); 
+  {  opcode(data[ith]);
+     __giv_map_less_ith<T,UNARYOP,ith-1>(data, opcode);
   }
 };
 
@@ -129,4 +129,4 @@ void ArrayFixed<T,SIZE>::map( UNARYOP& opcode ) const
 
 
 
-#endif
+#endif // __GIVARO_array_fixed_H

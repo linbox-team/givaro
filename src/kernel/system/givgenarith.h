@@ -6,12 +6,12 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givgenarith.h,v 1.4 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givgenarith.h,v 1.5 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 // Description:
 // Domain definition for basic type of the language.
-#ifndef _GENARITH_H_
-#define _GENARITH_H_
+#ifndef __GIVARO_genarith_H
+#define __GIVARO_genarith_H
 
 #include "givaro/givbasictype.h"
 
@@ -107,4 +107,4 @@ __GIVARO_SPEC_NAME(float, 'f')
 typedef BaseDomain<double>  DoubleDom;
 __GIVARO_SPEC_NAME(double, 'd')
 
-#endif
+#endif // __GIVARO_genarith_H

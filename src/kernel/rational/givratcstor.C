@@ -6,10 +6,11 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.8 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givratcstor.C,v 1.9 2011-02-04 14:50:07 bboyer Exp $
 // ==========================================================================
 // Description:
 
+#include <givaro/givconfig.h>
 #include "givaro/givrational.h"
 #include "givaro/giverror.h"
 #include "givaro/givpower.h"

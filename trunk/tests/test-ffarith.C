@@ -261,18 +261,15 @@ int main(int argc, char ** argv)
 // Maximal values
 
 	// prime modulo max over 15 bits
-	ZpzDom<Std16> Cmax(251);
-	JETESTE(Cmax,seed);
-	// prime modulo max over 15 bits
 	ZpzDom<Std16> CUmax(16381);
 	JETESTE(CUmax,seed);
 
 	// prime modulo max fully tabulated
-	ZpzDom<Log16> Lmax(251);
+	ZpzDom<Log16> Lmax(16381);
 	JETESTE(Lmax,seed);
 
 	// prime modulo max over 31 bits
-	ZpzDom<Std32> Zmax(32749);
+	ZpzDom<Std32> Zmax(46337);
 	JETESTE(Zmax,seed);
 
 	// prime modulo max over 32 bits
@@ -285,15 +282,15 @@ int main(int argc, char ** argv)
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// prime modulo max over 63 bits
-	ZpzDom<Std64> LLmax(2147483647ULL);
+	ZpzDom<Std64> LLmax(3037000493ULL);
 	JETESTE(LLmax,seed);
 #endif
 
 	// Zech log prime field with prime max
-	GFqDom<int> GFmax( 32749 );
+	GFqDom<int> GFmax( 65521UL );
 	JETESTE(GFmax,seed);
 
-	// Zech log prime field with prime max
+	// Zech log prime field with prime max (memory limited)
 	GFqDom<long long> GFLLmax( 4194301ULL );
 	JETESTE(GFLLmax,seed);
 

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32std.h,v 1.21 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givzpz32std.h,v 1.22 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -30,7 +30,7 @@
 // ==========================================================================
 // -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
-// - p max is 32749
+// - p max is 46337
 // ==========================================================================
 
 template<>

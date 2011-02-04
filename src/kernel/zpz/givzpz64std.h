@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz64std.h,v 1.20 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givzpz64std.h,v 1.21 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
 // Description:
 //   Arithmetic on Z/pZ, with p a prime number less than 2^64
@@ -49,7 +49,7 @@ public:
 
 	// ----- Constructor
 	ZpzDom() : zero(0), one(1), _p(0) {}
-	ZpzDom( Residu_t p, unsigned long e = 1) : zero(0), one(1), _p(p) {}
+	ZpzDom( Residu_t p, unsigned long = 1) : zero(0), one(1), _p(p) {}
 
 
 	Self_t& operator= (const Self_t& D) {

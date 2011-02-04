@@ -1,5 +1,5 @@
 // ==========================================================================
-// $Id: givmontg32.inl,v 1.13 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givmontg32.inl,v 1.14 2011-02-04 14:11:46 jgdumas Exp $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
@@ -223,7 +223,7 @@ inline int Montgomery<Std32>::isOne(const Rep a) const
 
 
 
-inline size_t Montgomery<Std32>::length(const Rep a) const
+inline size_t Montgomery<Std32>::length(const Rep) const
 { return Montgomery<Std32>::size_rep;}
 
 // ---------

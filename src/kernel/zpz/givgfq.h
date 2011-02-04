@@ -5,12 +5,12 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfq.h
-// Time-stamp: <30 Nov 10 16:43:14 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <04 Feb 11 13:42:23 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
 // Description:
-//   Arithmetic on GF(p^k), with p a prime number less than 2^15
+//   Arithmetic on GF(p^k), with p a prime number less than 2^16
 // ==========================================================================
 #ifndef __GIVARO_gfq1_H
 #define __GIVARO_gfq1_H

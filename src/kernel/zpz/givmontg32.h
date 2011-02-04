@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.14 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givmontg32.h,v 1.15 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
 #ifndef __GIVARO_montg32_H
 #define __GIVARO_montg32_H
@@ -45,7 +45,7 @@ public:
         // ----- Constructor
     Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}
 
-    Montgomery( Residu_t p, int expo = 1)
+    Montgomery( Residu_t p, int = 1)
         : _p(p), _Bp(B32%p), _B2p( (_Bp<<HALF_BITS32) % p), _B3p( (_B2p<<HALF_BITS32) % p), _nim( -Montgomery<Std32>::invext(_p,B32) ), _dp((double)p), zero(0UL), one( redcsal(_B2p) ) {}
 
     Montgomery( const Montgomery<Std32>& F)

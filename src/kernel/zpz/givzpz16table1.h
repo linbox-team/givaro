@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.16 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givzpz16table1.h,v 1.17 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -26,7 +26,7 @@
 // ==========================================================================
 // -- This class implement the standard arithmetic with Modulo Elements:
 // - The representation of an integer a in Zpz is the value a % p
-// - p max is 251
+// - p max is 16381
 // ==========================================================================
 
 template<>
@@ -46,8 +46,8 @@ public:
   typedef const Residu_t* constArray;
 
   // ----- Constantes
-  const Rep zero;
-  const Rep one;
+  const Residu_t zero;
+  const Residu_t one;
 
   // ----- Constructor /destor
   ZpzDom( Residu_t p = 2);
@@ -159,29 +159,29 @@ public:
    (const size_t sz, Array r, constArray a, constArray x) const;
 
   // -- axmy: r <- a * x - y mod p
-  void axmy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
+  Rep& axmy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
   void axmy
    (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
   // -- axmyin: r <- a * b - r  mod p
-  void axmyin (Rep& r, const Rep a, const Rep b) const;
+  Rep& axmyin (Rep& r, const Rep a, const Rep b) const;
   // void axmyin (const size_t sz, Array r, constArray a, constArray x) const;
 
   // -- maxpy: r <- c - a * b mod p
-  void maxpy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
+  Rep& maxpy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
   // -- maxpyin: r <- r - a * b mod p
-  void maxpyin (Rep& r, const Rep a, const Rep b) const;
+  Rep& maxpyin (Rep& r, const Rep a, const Rep b) const;
   void maxpyin (const size_t sz, Array r, constArray a, constArray x) const;
 
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
-  void reduceadd ( Rep& r, const size_t sz, constArray a ) const;
+  Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;
 
   // <- \prod_i a[i], return 1 if a.size() ==0,
-  void reducemul ( Rep& r, const size_t sz, constArray a ) const;
+  Rep& reducemul ( Rep& r, const size_t sz, constArray a ) const;
 
   // <- \sum_i a[i] * b[i]
-  void dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
-  void dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
+  Rep& dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
+  Rep& dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
 
   // ----- a -> r: uint16_t to double
   void i2d ( const size_t sz, double* r, constArray a ) const;

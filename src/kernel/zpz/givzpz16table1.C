@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.C,v 1.7 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givzpz16table1.C,v 1.8 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
 // Description:
 
@@ -28,6 +28,7 @@ ZpzDom<Log16>::ZpzDom( Residu_t p )
   _tab_value2rep[1] = 0;
 
   _pmone = _p -1;
+  int32_t fourp = ((int32_t)p) << 2, fourpmone= ((int32_t)_pmone)<<2;
 
   int not_found = 1;
   Residu_t accu = 1;
@@ -55,7 +56,7 @@ ZpzDom<Log16>::ZpzDom( Residu_t p )
     }
   }
   // -- Set the zero at position 2 * _p - 2 in table
-  _tab_value2rep[0] = 2*_pmone;
+  _tab_value2rep[0] = zero;
 
 //cout << "Generateur: " << seed << endl;
 /*cout << "Table: Value -> Rep" << endl;
@@ -68,18 +69,18 @@ for(i=0; i<_p; i++) {
 }
 */
   // -- Table for multiplication
-  _tab_mul = new Power_t[4*_p];
+  _tab_mul = new Power_t[fourp];
   for(j=0; j<_pmone; j++) _tab_mul[j] = j;
-  for(j=_pmone; j< (int32_t)2*_pmone; j++) _tab_mul[j] = j-_pmone;
-  for(j=2*_pmone; j<= (int32_t)4*_pmone; j++) _tab_mul[j] = 2*_pmone;
+  for(j=_pmone; j< (int32_t)zero; j++) _tab_mul[j] = j-_pmone;
+  for(j=zero; j<= fourpmone; j++) _tab_mul[j] = zero;
 
   // -- Table for division and neg:
   _tab_div = &_tab_mul[_pmone];
   _tab_neg = &_tab_mul[_pmone/2];
 
   // -- Table for 1+value
-  Power_t* tab_pone = new Power_t[4*_p];
-  _tab_addone = &tab_pone[(int32_t)(2*_pmone)];
+  Power_t* tab_pone = new Power_t[fourp];
+  _tab_addone = &tab_pone[(int32_t)(zero)];
 
 /* Pascal Giorgi 24/04/02
    Error between _tab_rep2value and _tab_value2rep
@@ -104,22 +105,22 @@ for(i=0; i<_p; i++) {
       _tab_addone[j] = _tab_value2rep[0];
 
   }
-  for(j=_pmone; j<=(int32_t)2*_pmone; j++)
+  for(j=_pmone; j<=(int32_t)zero; j++)
     _tab_addone[j] = 0;
-  for(j=(int32_t)-2*_pmone; j<(int32_t)(1-_pmone); j++)
+  for(j=(int32_t)-zero; j<(int32_t)(1-_pmone); j++)
     _tab_addone[j] = j;
 
-  _tab_addone[_pmone / 2] = 2*_pmone;
-  _tab_addone[-_pmone / 2] = 2*_pmone;
+  _tab_addone[_pmone / 2] = zero;
+  _tab_addone[-_pmone / 2] = zero;
 
 
   // -- Table for 1-value
-  Power_t* tab_mone = new Power_t[(int32_t)4*_p];
-  _tab_subone = &tab_mone[(int32_t)2*_pmone];
+  Power_t* tab_mone = new Power_t[fourp];
+  _tab_subone = &tab_mone[(int32_t)zero];
 
-  for(j=_pmone; j<=(int32_t)2*_pmone; j++)
+  for(j=_pmone; j<=(int32_t)zero; j++)
     _tab_subone[j] = 0;
-  for(j=-2*_pmone; j<(int32_t)(1-3*_pmone/2); j++)
+  for(j=-zero; j<(int32_t)(1-3*_pmone/2); j++)
     _tab_subone[j] = j+_pmone/2;
   for(j=-3*_pmone/2; j<(1-_pmone); j++)
     _tab_subone[j] = j-_pmone/2;
@@ -127,6 +128,7 @@ for(i=0; i<_p; i++) {
     _tab_subone[j] = _tab_addone[j + _pmone/2 + _pmone];
   for(j=_pmone/2; j<_pmone; j++)
     _tab_subone[j] = _tab_addone[j - _pmone/2];
+
   for(j=-_pmone/2; j<_pmone/2; j++)
     _tab_subone[j] = _tab_addone[j+_pmone/2];
 
@@ -173,8 +175,8 @@ ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
       delete [] _tab_value2rep;
       delete [] _tab_rep2value;
       delete [] _tab_mul;
-      delete [] (&_tab_addone[-2*_pmone]);
-      delete [] (&_tab_subone[-2*_pmone]);
+      delete [] (&_tab_addone[-zero]);
+      delete [] (&_tab_subone[-zero]);
       delete numRefs;
     }
   }
@@ -208,8 +210,8 @@ ZpzDom<Log16>::~ZpzDom()
     delete [] _tab_value2rep;
     delete [] _tab_rep2value;
     delete [] _tab_mul;
-    delete [] (&_tab_addone[-2*_pmone]);
-    delete [] (&_tab_subone[-2*_pmone]);
+    delete [] (&_tab_addone[-zero]);
+    delete [] (&_tab_subone[-zero]);
     delete numRefs;
   }
 }

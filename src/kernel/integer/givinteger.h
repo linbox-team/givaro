@@ -71,7 +71,7 @@ public:
 	{ return Integer::axpy(r,a,b,c); }
 	Rep& maxpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
 	{ return Integer::maxpy(r,a,b,c); }
-	Rep& maxpyin( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
+	Rep& maxpyin( Rep& r, const Rep& a, const Rep& b) const
 	{ return Integer::maxpyin(r,a,b); }
 	Rep& axmy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
 	{ return Integer::axmy(r,a,b,c); }

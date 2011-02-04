@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.21 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givconfig.h,v 1.22 2011-02-04 14:50:07 bboyer Exp $
 // ==========================================================================
 // Description: configuration file for Givaro
 #ifndef _GIVARO_INTERNAL_CONFIG_H_
@@ -74,13 +74,17 @@
 // ==========================================================================
 // -- Defines the basic integer arithmetics available on this machine
 #include <givaro-config.h>
+#ifdef __GIVARO_HAVE_STDINT_H
+#define __STDC_LIMIT_MACROS
+#include <stdint.h>
+#endif
 
 # define GIVARO_BITS_PER_LONGINT 	SIZEOF_LONG
 # define GIVARO_BITS_PER_INT		SIZEOF_INT
 # define GIVARO_BITS_PER_SHORTINT	SIZEOF_SHORT
 # define GIVARO_BITS_PER_CHAR		SIZEOF_CHAR
 
-
+#ifndef __GIVARO_HAVE_STDINT_H
 typedef signed    __GIVARO_INT8      int8_t;
 typedef signed    __GIVARO_INT16     int16_t;
 typedef signed 	  __GIVARO_INT32     int32_t;
@@ -96,15 +100,22 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #   undef GIVARO_USE_SIXTYFOUR
 #   define GIVARO_DONOTUSE_SIXTYFOUR 1
 # endif
+#endif
 
 
 
+#ifndef __GIVARO_HAVE_STDINT_H
 # define GIVARO_MAXUINT8		255U 		    // 2^8-1
 # define GIVARO_MAXUINT16		65535U 		    // 2^16-1
 # define GIVARO_MAXUINT32		4294967295U 	// 2^32-1
 # define GIVARO_MAXULONG		4294967295U 	// 2^32-1
+#else
+# define GIVARO_MAXUINT8		UINT8_MAX 	    // 2^8-1
+# define GIVARO_MAXUINT16		UINT16_MAX 		// 2^16-1
+# define GIVARO_MAXUINT32		UINT32_MAX 	    // 2^32-1
+# define GIVARO_MAXULONG		4294967295U 	//! @bug 2^32-1
+#endif
 
-//!@todo use \c INT8_MAX,... \c INT64_MAX
 
 // ==========================================================================
 // -- Code expansion depending on the previous defined macros

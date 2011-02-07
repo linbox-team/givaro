@@ -8,39 +8,43 @@ ACLOCAL_AMFLAGS = -I macros
 
 SUBDIRS=src macros tests docs
 
-bin_SCRIPTS=givaro-config givaro-makefile
-
 include_HEADERS=givaro-config.h
-
-EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt \
-		   givaro.doxy
-
-DISTCLEANFILES = src/kernel/system/givaro
-DISTCLEANFILES += src/kernel/bstruct/givaro
-DISTCLEANFILES += src/kernel/integer/givaro
-DISTCLEANFILES += src/kernel/memory/givaro
-DISTCLEANFILES += src/kernel/rational/givaro
-DISTCLEANFILES += src/kernel/zpz/givaro
-DISTCLEANFILES += src/kernel/gmp++/gmp++
-DISTCLEANFILES += src/library/matrix/givaro
-DISTCLEANFILES += src/library/poly1/givaro
-DISTCLEANFILES += src/library/tools/givaro
-DISTCLEANFILES += src/library/vector/givaro
-
-.PHONY: examples
-
-examples:
-	$(MAKE) && cd examples && $(MAKE) $(AM_MAKEFLAGS) examples
 
 docs:docs/givaro-html/index.html
 
 docs/givaro-html/index.html:
 	(cd docs; make docs)
 
-#docs_dev:docs/givaro-dev-html/index.html
+.PHONY:examples
 
-#doc/givaro-dev-html/index.html:
-#(cd docs; make docs_dev)
+examples:
+	(cd examples; make examples)
+
+
+bin_SCRIPTS=givaro-config givaro-makefile
+
+EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt \
+		   givaro.doxy
+
+DIST_SUBDIRS=examples
+
+DISTCLEANFILES = src/kernel/system/givaro   \
+				 src/kernel/bstruct/givaro  \
+				 src/kernel/integer/givaro  \
+				 src/kernel/memory/givaro   \
+				 src/kernel/rational/givaro \
+				 src/kernel/zpz/givaro      \
+				 src/kernel/gmp++/gmp++     \
+				 src/library/matrix/givaro  \
+				 src/library/poly1/givaro   \
+				 src/library/tools/givaro   \
+				 src/library/vector/givaro
+
+
+# docs_dev:docs/givaro-dev-html/index.html
+
+#  doc/givaro-dev-html/index.html:
+#  (cd docs; make docs_dev)
 
 
 

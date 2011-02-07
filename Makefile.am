@@ -26,7 +26,7 @@ bin_SCRIPTS=givaro-config givaro-makefile
 EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt \
 		   givaro.doxy
 
-DIST_SUBDIRS=examples
+DIST_SUBDIRS=examples ${SUBDIRS}
 
 DISTCLEANFILES = src/kernel/system/givaro   \
 				 src/kernel/bstruct/givaro  \

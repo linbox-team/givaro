@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // Description:
@@ -13,10 +13,10 @@
 // $Id: giviterator.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // It's a beta-beta version.
-#ifndef _GIV_ITERATOR_H_
-#define _GIV_ITERATOR_H_
+#ifndef __GIVARO_iterator_H
+#define __GIVARO_iterator_H
 
-// -- isUndefined trait iterator 
+// -- isUndefined trait iterator
 class isUndefinedIterator{};
 
 // --
@@ -24,24 +24,24 @@ class isUndefinedIterator{};
 // - operator++(), operator++(int), operator+=(int): increment
 // - operator*(): deference
 // --
-class isForwardIterator{}; 
+class isForwardIterator{};
 
 // --
 // -- BiDirectional iterator, should implement:
 // - operator-- operator--int), operator-=(int): decrement
 // --
-class isBidirectionalIterator: public isForwardIterator{}; 
+class isBidirectionalIterator: public isForwardIterator{};
 
 // --
-// -- Random iterator, should implement: 
+// -- Random iterator, should implement:
 // - operator()(int), operator[](int): random access
 // --
-class isRandomIterator: public isBidirectionalIterator{}; 
+class isRandomIterator: public isBidirectionalIterator{};
 
 
 // --
-// -- Iterator trait: each iterator typename should provide its 
-// -- categrory using this trait class.  
+// -- Iterator trait: each iterator typename should provide its
+// -- categrory using this trait class.
 // --
 template<class Iterator>
 struct IteratorTraits {
@@ -51,12 +51,12 @@ struct IteratorTraits {
 
 // --
 // -- A container of name OO should provide one of the previous iterators:
-// - * OO::Iterator: the name of the default iterator associated to OO. 
-// - * OO::Iterator OO::begin(): 
+// - * OO::Iterator: the name of the default iterator associated to OO.
+// - * OO::Iterator OO::begin():
 // -- Depending on the trait associated to OO::Iterator, OO class should
 // -- also provides the following interface:
 // - * [ForwardIteratorTrait, BidirectionalIteratorTrait]:
-// -   - OO::Iterator OO::end(): 
+// -   - OO::Iterator OO::end():
 // - * [RandomIteratorTrait]:
 // -   - size_t OO::bound(): return the number of Elements in the sequence
 // --
@@ -65,7 +65,7 @@ struct IteratorInterface {
   typedef isUndefinedIterator 			Category_t;	// - category of iterator
   typedef typename Container::Iterator_t 	Iterator_t;	// - type of iterator
   typedef typename Container::constIterator_t	constIterator_t;// - type of constiterator
-  typedef typename Container::Type_t 		Type_t; 	// - type of Element 
+  typedef typename Container::Type_t 		Type_t; 	// - type of Element
   typedef typename Container::Indice_t 		Indice_t;	// - type of indice for RndIter
 
   // -- other operations that should be defined in specialized trait classes:

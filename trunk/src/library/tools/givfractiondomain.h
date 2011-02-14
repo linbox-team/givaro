@@ -8,8 +8,8 @@
 // Author: J-G. Dumas
 // Description: fractions over a Ring domain
 // ===============================================================
-#ifndef _GIV_FRAC_Domain_H_
-#define _GIV_FRAC_Domain_H_
+#ifndef __GIVARO_frac_domain_H
+#define __GIVARO_frac_domain_H
 #include <givaro/givpower.h>
 
 #ifndef GIVABS

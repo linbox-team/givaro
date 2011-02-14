@@ -3,16 +3,16 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givarithmetics.h,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
 // ==========================================================================
 // Description:
 // - definition of standard arithmetics over Vector & Matrix
-#ifndef _GIV_ARITH_H_
-#define _GIV_ARITH_H_
-// 
+#ifndef __GIVARO_arithmethics_H
+#define __GIVARO_arithmethics_H
+//
 #include "givaro/givconfig.h"
 
 template<class Domain>
@@ -28,7 +28,7 @@ struct KSpace {
   // -- Cstor
   KSpace() : _domain(), _entry() {};
   KSpace(const Domain_t& D) : _domain(D), _entry() {};
-  KSpace(const Domain_t& D, size_t dim ) : _domain(D), _entry() 
+  KSpace(const Domain_t& D, size_t dim ) : _domain(D), _entry()
   {
     _domain.init(_entry, dim);
   };
@@ -47,11 +47,11 @@ struct KSpace {
 
   // -- arithmetic operators:
   Self_t& operator+= ( const Self_t& a ) {
-    _domain.addin( _entry, a._entry ); 
+    _domain.addin( _entry, a._entry );
     return *this;
   }
   Self_t& operator-= ( const Self_t& a ) {
-    _domain.subin( _entry, a._entry ); 
+    _domain.subin( _entry, a._entry );
     return *this;
   }
   Self_t& operator*= ( const Scalar_t& v ) {
@@ -63,13 +63,13 @@ struct KSpace {
   Self_t operator+ ( const Self_t& a ) const {
     KSpace<Domain> res(_domain);
     _domain.init( res._entry, _domain.dim(_entry) );
-    _domain.add( res._entry, _entry, a._entry ); 
+    _domain.add( res._entry, _entry, a._entry );
     return res;
   }
   Self_t operator- ( const Self_t& a ) const {
     KSpace<Domain> res(_domain);
     _domain.init( res._entry, _domain.dim(_entry) );
-    _domain.sub( res._entry, _entry, a._entry ); 
+    _domain.sub( res._entry, _entry, a._entry );
     return res;
   }
   Self_t operator* ( const Scalar_t& v ) const {
@@ -92,8 +92,8 @@ struct KSpace {
 
 // -- friend operator
 template<class Domain>
-KSpace<Domain> operator* 
-  ( const typename KSpace<Domain>::Scalar_t& v, const KSpace<Domain>& U ) 
+KSpace<Domain> operator*
+  ( const typename KSpace<Domain>::Scalar_t& v, const KSpace<Domain>& U )
 {
   typedef typename KSpace<Domain>::Scalar_t Scalar_t;
   typedef typename Domain::Domain_t SubDomain_t;      // domain of the scalar
@@ -105,12 +105,12 @@ KSpace<Domain> operator*
 }
 
 template<class Domain>
-inline void dotprod( 
-  typename Domain::Scalar_t& dot, 
-  const KSpace<Domain>& U, 
+inline void dotprod(
+  typename Domain::Scalar_t& dot,
+  const KSpace<Domain>& U,
   const KSpace<Domain>& V)
 {
-  U._domain.dot(dot, U._entry, V._entry); 
+  U._domain.dot(dot, U._entry, V._entry);
 }
 
 template<class Domain>

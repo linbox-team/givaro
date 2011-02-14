@@ -8,8 +8,8 @@
 // Author: J-G. Dumas
 // Description: Quotients over a Ring domain
 // ===============================================================
-#ifndef _GIV_Quotient_Domain_H_
-#define _GIV_Quotient_Domain_H_
+#ifndef __GIVARO_quotient_domain_H
+#define __GIVARO_quotient_domain_H
 #include <givaro/givpower.h>
 #ifndef GIVABS
 #define GIVABS(a) ((a)>0?(a):-(a))

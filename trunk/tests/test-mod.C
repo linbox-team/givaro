@@ -101,7 +101,7 @@ int test1( const T m, const U p)
 template< class T, class U>
 int test1bis( const T m, const U p)
 {/*{{{*/
-	double pi (p);
+	double pi = (double) p;
 	long int r =  ref_modulobis(m, p);
 	// if (r<0)  r += (IsNeg(p) )?(-p):(p); // r est dans [[0,p-1]]
 	const Integer M(m);

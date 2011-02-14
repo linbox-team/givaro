@@ -39,7 +39,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 	F.write(std::cerr );
         std::cerr << " (" << FIRSTINT << ',' << FIRSTFLOAT << ')';
 	std::cerr  << " : " << std::flush;
-        
+
 #endif
 
 
@@ -207,7 +207,8 @@ int TestField(const Field& F, const int seed)
     for(size_t i=0; i< NBITER; ++i) {
         typename Field::Element x;
         float d; do {
-            F.init(x, d = ch*drand48());
+		d = float(ch*drand48());
+            F.init(x,d );
         } while(F.isZero(x));
         int a; do {
             F.init(x, a = lrand48());
@@ -228,7 +229,7 @@ int main(int argc, char ** argv)
     Integer::seeding(seed);
 
 
-    
+
 
 
 	// modulo 13 over 16 bits

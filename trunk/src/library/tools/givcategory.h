@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givcategory.h,v 1.4 2009-09-17 14:28:23 jgdumas Exp $
@@ -11,12 +11,12 @@
 // Description:
 // - Definition of traits.
 // It's a beta-beta version
-#ifndef _GIV_CATEGORY_H_
-#define _GIV_CATEGORY_H_
+#ifndef __GIVARO_category_H
+#define __GIVARO_category_H
 
 
 // -- nothing
-class Undefined{}; 
+class Undefined{};
 
 
 // ==========================================================================
@@ -44,14 +44,14 @@ struct IsNotEqual { enum {val = !IsEqual<A,B>::val }; };
 // -- Characteristic for representation of vector and matrix
 // --
 // Sporadic is a Dense but may have quite a few zero Elements
-// Therefore some algorithms might be specialized and might 
+// Therefore some algorithms might be specialized and might
 // take advantage of this.
-class Sporadic{}; 
-class Dense : public Sporadic {}; 
-class Sparse{}; 
-// class Diagonal{}; typedef Diagonal Diag; 
-// class Toeplitz{}; 
-// class Hensel{}; 
+class Sporadic{};
+class Dense : public Sporadic {};
+class Sparse{};
+// class Diagonal{}; typedef Diagonal Diag;
+// class Toeplitz{};
+// class Hensel{};
 
 template<class CLASS>
 struct Sparsity_Trait {

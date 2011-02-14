@@ -2,15 +2,15 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Oct 10 19:03:23 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <19 Oct 10 19:03:23 Jean-Guillaume.Dumas@imag.fr>
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
 // ===============================================================
-#ifndef _GIV_HighOrder_H_
-#define _GIV_HighOrder_H_
+#ifndef __GIVARO_highorder_H
+#define __GIVARO_highorder_H
 
 #ifndef _GIVARO_HIGHORDER_THRESHOLD
 #define _GIVARO_HIGHORDER_THRESHOLD 30
@@ -26,7 +26,7 @@
 
 template<class Domain>
 struct HighOrder {
-    
+
        // -- Self_t
     typedef HighOrder<Domain>			Self_t;
 
@@ -42,10 +42,10 @@ struct HighOrder {
     typedef typename Ring_t::Element	Polynomial;
     typedef Frac<Ring_E, Ring_E>		Element;
     typedef Frac<Ring_E, Ring_E>		Rep;
-    
+
     typedef Domain				Domain_t;
     typedef typename Domain::Element	Type_t;
-    
+
     const Poly_t	_poldom;
     const Domain& _dom;
     const Trunc_t _truncdom;
@@ -84,9 +84,9 @@ struct HighOrder {
         Polynomial Tay;
         Degree dA; _poldom.degree(dA, Fra._den);
         this->taylor(Tay, Fra, dA);
-        return Fiduccia(F, Tay, Fra._den, a, b);    
+        return Fiduccia(F, Tay, Fra._den, a, b);
     }
-    
+
     Truncated& Fiduccia(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree a, Degree b) const {
 	  Degree dA; _poldom.degree(dA, FraDen);
 	  Polynomial Rev; _poldom.init(Rev,dA);
@@ -101,7 +101,7 @@ struct HighOrder {
     }
 
     Truncated& Fiduccia(Truncated& F, const Rep& Fra, Degree b) const {
-        return Fiduccia(F, Fra, b, b);    
+        return Fiduccia(F, Fra, b, b);
     }
 
 
@@ -110,44 +110,44 @@ struct HighOrder {
 
         GIVARO_STATE( Degree dq; _poldom.degree(dq, Q); );
         GIVARO_ASSERT( (dl.value()+shift) <= (dq.value()+1), " in dotproduct HighOrder dP: " << dl << ", dQ: " << dq << ", shift: " << shift );
-        
+
         _dom.assign(dp,_dom.zero);
-        for(long i=0;i<=dl.value();++i) 
+        for(long i=0;i<=dl.value();++i)
             _dom.axpyin(dp, P[i], Q[i+shift]);
-        
+
         return dp;
     }
-        
-            
+
+
 
     Truncated& FiducciaReversed(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree a, Degree b) const {
 
 	Degree dT; _poldom.degree(dT, Tay);
 //         std::cout << "a: " << a << ", b: " << b << ", dT: " << dT << std::endl;
-	if (b > dT) { 
+	if (b > dT) {
 	  Degree dA; _poldom.degree(dA, FraDen);
-	  
+
 	  Polynomial Xl; _poldom.init(Xl);
 	  Polynomial Xone; _poldom.init(Xone,Degree(1));
 	  QuotientDom<Poly_t> Qdom(_poldom, FraDen);
 	  Qdom.assign(Xone);
-          
+
 	  const long bonus = dT.value()-dA.value()+1;
-	  
+
           Degree dR(b-a);
-          Polynomial Res; _poldom.init(Res, dR); 
+          Polynomial Res; _poldom.init(Res, dR);
           long iterT=a.value();
           long iterR=0;
 
-          for( ; iterT < dT.value(); ++iterR,++iterT) 
+          for( ; iterT < dT.value(); ++iterR,++iterT)
               _dom.assign(Res[iterR],Tay[iterT]);
 
 	  dom_power(Xl, Xone, iterT-bonus, Qdom);
-	  
+
  	  Degree dl; _poldom.degree(dl, Xl);
           shifteddotproduct( Res[iterR], Xl, Tay, bonus);
-          
-          
+
+
           for( ++iterR; iterR<=dR.value(); ++iterR) {
               Qdom.mulin(Xl, Xone);
               shifteddotproduct( Res[iterR], Xl, Tay, bonus);
@@ -162,25 +162,25 @@ struct HighOrder {
     Truncated& FiducciaReversed(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree b) const {
         return FiducciaReversed(F, Tay, FraDen, b, b);
     }
-    
+
 
 //     Truncated& FiducciaReversed(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree b) const {
 // 	Degree dT; _poldom.degree(dT, Tay);
-// 	if (b > dT) { 
+// 	if (b > dT) {
 // 	  Degree dA; _poldom.degree(dA, FraDen);
-	  
+
 // 	  Polynomial Xl; _poldom.init(Xl);
 // 	  Polynomial Xone; _poldom.init(Xone,Degree(1));
 // 	  QuotientDom<Poly_t> Qdom(_poldom, FraDen);
 // 	  Qdom.assign(Xone);
-          
+
 // 	  const long bonus = dT.value()-dA.value()+1;
-	  
+
 // 	  dom_power(Xl, Xone, b.value()-bonus, Qdom);
-	  
+
 //  	  Degree dl; _poldom.degree(dl, Xl);
 
-//           Type_t Tl; _dom.init(Tl); 
+//           Type_t Tl; _dom.init(Tl);
 //           shifteddotproduct( Tl, Xl, Tay, bonus);
 
 // 	  return _truncdom.assign(F, Degree(b), Tl);
@@ -211,7 +211,7 @@ struct HighOrder {
             GivHOTimer.stop();
             std::cerr << "HighOrder_" << a << '^' << b << " : " << GivHOTimer << std::endl;
 #endif
-            
+
             Truncated A, B;
             _truncdom.assign(A, Fra._den);
             _truncdom.assign(B, Fra._num);
@@ -228,7 +228,7 @@ struct HighOrder {
         _truncdom.divin(Gam, k0);
         return Gam;
     }
-    
+
     Truncated& doubleorder(Truncated& Gam, Truncated& T, const Truncated& Gamp, const Truncated& Tp, const Truncated& S, const Truncated& TA, const Degree dA, const Degree ke) const {
 //         std::cerr << "Double order: " << ke << std::endl;
             // ke = 2^e
@@ -236,39 +236,39 @@ struct HighOrder {
         _truncdom.mul(AL, Tp, Gamp, ke-dA, ke-1);
         _truncdom.mulin(AL, ke-dA);
 //write(std::cout << "AL" << ke.value() << ":=", AL) << ';' << std::endl;
- 
+
  	_truncdom.mul(Gam, TA, AL, ke*2-dA, ke*2-1);
         _truncdom.negin(Gam);
         _truncdom.divin(Gam, ke*2-dA);
 //         _truncdom.setval(Gam);
 // write(std::cout << "Gam" << (ke*2-dA) << ":=", Gam) << ';' << std::endl;
 // std::cerr << "[G]_" << (ke*2-dA) << std::endl;
-        
+
         Truncated AH;
         _truncdom.mul(AH, Gam, S, 0, dA-1);
         _truncdom.mulin(AH,ke*2-dA);
 //write(std::cout << "AH" << ke.value() << ":=", AH) << ';' << std::endl;
- 
-	// Forget the last term 
+
+	// Forget the last term
  	_truncdom.truncin(AL, ke*2-dA*2+1, ke*2-dA-1);
-        _truncdom.add(T, AL, AH); 
+        _truncdom.add(T, AL, AH);
 // std::cerr << "[I]_" << (ke*2-dA*2+1) << '^' << (ke*2-1) << std::endl;
 
 // write(std::cout << "T" << (ke*2-dA) << ":=", T) << ';' << std::endl;
-        
+
         return Gam;
     }
-    
+
     std::vector<Truncated>& highorder(std::vector<Truncated>& Gam, std::vector<Truncated>& T, std::vector<Degree>& Deg, Polynomial& Tay, Degree& dT, Degree a, Degree order, const Polynomial& A, const Degree dA) const {
-        Gam.resize(0); T.resize(0); Deg.resize(0); 
+        Gam.resize(0); T.resize(0); Deg.resize(0);
         size_t e;
         for(e=0; (1UL<<e)<dA.value(); ++e) {}
         ++e; // 2^{e-2} < d <= 2^{e-1}
         size_t dt = (1UL<<e);
 
-        Degree k0 = 1UL<<e; 
+        Degree k0 = 1UL<<e;
         Deg.push_back(k0-dA);
-        
+
         Degree dif = order-a;
         dt = (dif.value()>dt? dif.value() : dt);
 // std::cout << "BEG HighOrder" << std::endl;
@@ -280,8 +280,8 @@ struct HighOrder {
 // std::cout << "b: " << order << std::endl;
 // std::cout << "dif: " << dif << std::endl;
 // std::cout << "dt: " << dt << std::endl;
-        
-        
+
+
         Rep Fra; Fra._num=_poldom.one; Fra._den=A;
         this->taylor(Tay, Fra, dt);
 // std::cerr << "[I]_" << 0 << '^' << dt << std::endl;
@@ -296,12 +296,12 @@ struct HighOrder {
 
         Truncated S; _truncdom.assign(S, Tay, Degree(0), dA-1);
 // write(std::cout << "S:=", S) << ';' << std::endl;
-        
+
 
         Truncated T0; _truncdom.assign(T0,Tay, k0-dA*2+1,k0-1);
  	T.push_back(T0);
 // write(std::cout << "T" << e << ":=", T0) << ';' << std::endl;
-        
+
         Truncated TA; _truncdom.assign(TA, A);
         size_t ordero2 = order.value()/2;
 
@@ -321,16 +321,16 @@ struct HighOrder {
         }
         return Gam;
     }
-    
+
     Truncated& Betta(Truncated& B, const Truncated& TB, const Truncated& TA, const Degree dA, const Degree a, const Polynomial& Tay, const Degree dT, const std::vector<Truncated>& Gam, const std::vector<Truncated>& T, const std::vector<Degree>& Deg) const {
 // this->write(std::cerr << "BEG Betta" << a << "TB: [", TB) << "]_" << a << std::endl;
 #ifdef GIVARO_HIGHORDER_TIMER
           Timer GivHOTimer; GivHOTimer.clear(); GivHOTimer.start();
 #endif
-   
+
           Degree a0=dA*2-1;
           a0 = (a0>a? 0 : a-a0);
-          Truncated S; 
+          Truncated S;
           this->Inverse(S, a0, a-1, TA, dA, Tay, dT, Gam, T, Deg);
           Truncated U;
           _truncdom.mul(U, S, TB, a-dA, a-1);
@@ -343,8 +343,8 @@ struct HighOrder {
           std::cerr << "Betta[" << dA << "]_" << a << " : " << GivHOTimer << std::endl;
 #endif
           return _truncdom.divin(B, a);
-    }     
-    
+    }
+
 
     Truncated& FracDevel(Truncated& F, const Truncated& TB, const Truncated& TA, const Degree dA, const Degree a, const Degree b, const Polynomial& Tay, const Degree dT, const std::vector<Truncated>& Gam, const std::vector<Truncated>& T, const std::vector<Degree>& Deg) const {
 // this->write(this->write(std::cerr << "BEG FracDevel" << a << '-' << b << ": [", TB) << " x ", TA)<< "]_" << a << '^' << b << std::endl;
@@ -373,7 +373,7 @@ struct HighOrder {
 
     Truncated& Inverse(Truncated& I, const Degree a, const Degree b, const Truncated& TA, const Degree dA, const Polynomial& Tay, const Degree dT, const std::vector<Truncated>& Gam, const std::vector<Truncated>& T, const std::vector<Degree>& Deg) const {
 // std::cerr << "[I]_" << a << '^' << b << std::endl;
-        
+
 // this->write(std::cerr << "BEG Inverse" << a << '-' << b << ": [", TA) << "]_" << a << '^' << b << std::endl;
         if (b <= dT) {
 // this->write(std::cerr << "END Inverse" << a << '-' << b << " b<" << dT << ": ", _truncdom.assign(I, Tay, a, b) ) << std::endl;
@@ -391,7 +391,7 @@ struct HighOrder {
             return _truncdom.mulin(I, a);
         }
     }
-    
+
 
     Truncated& Gamma(Truncated& G, const Degree a, const Truncated& TA, const Degree dA, const Polynomial& Tay, const Degree dT, const std::vector<Truncated>& Gam, const std::vector<Truncated>& T, const std::vector<Degree>& Deg) const {
 // std::cerr << "[G]_" << a << std::endl;
@@ -403,7 +403,7 @@ struct HighOrder {
                 if (Deg[i] > a) { --i; break; }
             }
             if (i>=Deg.size()) --i;
-            
+
             this->Betta(G, Gam[i], TA, dA, a-Deg[i], Tay, dT, Gam, T, Deg);
 // this->write(std::cerr << "END Gamma" << a << " B: [", G) << "]" << std::endl;
             return _truncdom.setval(G);
@@ -418,7 +418,7 @@ struct HighOrder {
             return _truncdom.divin(G, a);
         }
     }
-    
+
 
 
     std::ostream& write( std::ostream& o) const {
@@ -434,9 +434,9 @@ struct HighOrder {
         return _poldom.write(_poldom.write(o << '(',n._num) << ")/(", n._den) << ')';
     }
 
-    
-    
+
+
 };
 
-    
+
 #endif

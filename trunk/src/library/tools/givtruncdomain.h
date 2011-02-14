@@ -10,8 +10,8 @@
 // [Arne Storjohann, High-Order Lifting
 //  ISSAC'2002, pp. 246-254, ACM Press, July 2002].
 // ===============================================================
-#ifndef _GIV_Trunc_Domain_H_
-#define _GIV_Trunc_Domain_H_
+#ifndef __GIVARO_trunc_domain_H
+#define __GIVARO_trunc_domain_H
 #include <givaro/givpoly1dense.h>
 #include <bits/stl_pair.h>
 

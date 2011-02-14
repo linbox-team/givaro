@@ -95,7 +95,7 @@ std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) c
     do {
         res = 0;
         for(int i=0; i<_lm-1; ++i) {
-            x = in.get();
+            x = (unsigned char) in.get();
             if (in.eof()) {
                     // Adding zeroes at end of file
                 res <<= ( 8*(_lm-1-i) );

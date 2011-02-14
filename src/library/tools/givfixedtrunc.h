@@ -8,8 +8,8 @@
 // Author: J-G. Dumas
 // Description: Polynomials modulo X^{k+1}
 // ===============================================================
-#ifndef _GIV_Fixed_Trunc_Domain_H_
-#define _GIV_Fixed_Trunc_Domain_H_
+#ifndef __GIVARO_fixed_trunc_domain_H
+/bin/bash: q : commande introuvable
 #include <givaro/givtruncdomain.h>
 
 template <class Domain>

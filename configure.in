@@ -18,25 +18,60 @@ AM_MAINTAINER_MODE
 AM_DEP_TRACK
 AM_OUTPUT_DEPENDENCY_COMMANDS 
 
-# Give a sane default for CFLAGS and CXXFLAGS
-DEFAULT_CFLAGS="-g -O2 -Wall -Wextra -Wno-unused-parameter"
-#DEFAULT_CFLAGS+="-Wno-ignored-qualifiers"
-# the last one because we want to write a const member function : "const toto & member( args ) const" and the non-const one "toto & member (args)"... (for gcc>4.2.x)
-#DEFAULT_CFLAGS="${DEFAULT_CFLAGS} -Wextra"
-
-CFLAGS=${CFLAGS:-$DEFAULT_CFLAGS}
-CXXFLAGS=${CXXFLAGS:-$DEFAULT_CFLAGS}
-
 AM_ACLOCAL_INCLUDE(macros)
 
 # work around to fix the backward compatibility issue of automake 1.10 with 1.9 (pb with MKDIR_P)
 AC_SUBST([MKDIR_P])
 # AC_DISABLE_SHARED
 
-# check for programs
-AC_PROG_CC
-AC_PROG_CXX
+# Give a sane default for CFLAGS and CXXFLAGS
+# DEFAULT_CFLAGS="-g -O2 -Wall -Wextra -Wno-unused-parameter"
+#DEFAULT_CFLAGS+="-Wno-ignored-qualifiers"
+# the last one because we want to write a const member function : "const toto & member( args ) const" and the non-const one "toto & member (args)"... (for gcc>4.2.x)
+#DEFAULT_CFLAGS="${DEFAULT_CFLAGS} -Wextra"
+
+######################################################
+# Try and pass different flags according to compiler #
+######################################################
+
+AM_CONDITIONAL(CC_IS_INTL, [test "x${CXX}" = "xicpc"])
+# $ac_cv_c_compiler_gnu :
+AM_CONDITIONAL(CC_IS_GNOU, [test "x${CXX}" = "xg++" ])
+
+AC_SUBST([DEFAULT_CFLAGS])
+AC_SUBST([DEBUG_CFLAGS])
+AC_SUBST([TESTS_CFLAGS])
+
+# set default C-flags  (not CXXFLAGS)
+TESTS_CFLAGS="-O0"
+DEFAULT_CFLAGS="-O2"
+DEBUG_CFLAGS="-g -Wall"
+
+if  test "x${CXX}" = "xicpc"  ; then
+	DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wcheck"
+else 
+	if test "x${CXX}" = "xg++"  ; then
+	DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wextra -Wno-unused-parameter"
+else
+	AC_MSG_ERROR([please set environment variable 'CXX' to 'g++' or 'icpc'])
+	#note to me : CXX est défini plus bas mais...
+fi
+fi
+
+# CFLAGS=${CFLAGS:-$(DEFAULT_CFLAGS)}
+# CXXFLAGS="${DEFAULT_CFLAGS} ${DEBUG_CFLAGS}"
+DEFAULT_CFLAGS="${DEFAULT_CFLAGS} ${DEBUG_CFLAGS}"
+TESTS_CFLAGS="${TESTS_CFLAGS} ${DEBUG_CFLAGS}"
+
+# disable default -g -O2 CXXFLAGS
+: ${CXXFLAGS=""}
+
+# check for programs (
+# AC_PROG_CC([gcc icc])
+AC_PROG_CXX([g++ icpc])
 AC_HEADER_STDC
+
+
 
 # old ones
 AC_PROG_LIBTOOL
@@ -133,7 +168,7 @@ case 8 in
      ;;
 esac
 
-AC_DEFINE_UNQUOTED(INT8, $GIVARO_INT8, Canonical 8-bit data type)
+AC_DEFINE_UNQUOTED(INT8,  $GIVARO_INT8, Canonical 8-bit data type)
 AC_DEFINE_UNQUOTED(INT16, $GIVARO_INT16, Canonical 16-bit data type)
 AC_DEFINE_UNQUOTED(INT32, $GIVARO_INT32, Canonical 32-bit data type)
 AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)

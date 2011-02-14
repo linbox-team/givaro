@@ -258,7 +258,7 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axmy
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::maxpyin
   (Rep& r, const Rep a, const Rep b) const
 {
-    Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b); 
+    Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
     return this->subin(r,t);
 }
 
@@ -354,29 +354,44 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const long a ) const
   if (a <0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   r = (ua >_p) ? ua % _p : ua;
-  if (sign ==-1) r = _p - r;
+  if (sign ==-1) r = Rep(_p - r);
   return r = _tab_value2rep[r];
 }
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int a ) const
-{ return ZpzDom<Log16>::init( r, (long)a); }
+{
+   	return ZpzDom<Log16>::init( r, (long)a);
+}
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned long a ) const
-{ r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
+{
+   	r = ((a >_p) ? a % _p : a);
+   	return r= _tab_value2rep[r];
+}
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned int a ) const
-{ r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
+{
+	r = Rep((a >_p) ? a % _p : a);
+   	return r= _tab_value2rep[r];
+}
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const uint16_t a ) const
-{ r = (a >_p) ? a % _p : a; return r= _tab_value2rep[r];}
+{
+   	r = Rep((a >_p) ? a % _p : a);
+	return r= _tab_value2rep[r];
+}
 
 inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int16_t a ) const
-{ return ZpzDom<Log16>::init( r, (long)a); }
+{
+   	return ZpzDom<Log16>::init( r, (long)a);
+}
 
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const double i) const {
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const double i) const
+{
 	  return init(a,(long)i);
 }
-inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const float i) const {
+inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const float i) const
+{
 	  return init(a,(double)i);
 }
 
@@ -413,7 +428,7 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::dotprod
       dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
     if (dot > _p) return r = _tab_value2rep[(Rep)(dot % _p)];
     else return r = _tab_value2rep[dot];
-    
+
   }
   unsigned int i_begin=0;
   stride &= ~0x1;
@@ -423,7 +438,7 @@ inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::dotprod
       if (dot>_p) dot %= _p;
     }
     return r = _tab_value2rep[dot];
-    
+
   }
   do {
     size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);

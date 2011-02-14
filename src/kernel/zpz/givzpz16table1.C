@@ -14,131 +14,137 @@
 #include "givaro/givzpz16table1.h"
 
 
-ZpzDom<Log16>::ZpzDom( Residu_t p )
-  : zero(2*(p-1)), one(0), _p(p)
+ZpzDom<Log16>::ZpzDom( Residu_t p ) :
+       	zero(Rep(2*(p-1))), one(0), _p(p)
 {
-   int32_t i,j;
+	int32_t i,j;
 
-  // tab value: Domain -> Rep, or something very similar
-  _tab_value2rep = new Power_t[_p];
-  // tab power: Rep -> Domain
-  _tab_rep2value = new Residu_t[_p];
+	// tab value: Domain -> Rep, or something very similar
+	_tab_value2rep = new Power_t[_p];
+	// tab power: Rep -> Domain
+	_tab_rep2value = new Residu_t[_p];
 
-  _tab_rep2value[0] = 1;
-  _tab_value2rep[1] = 0;
+	_tab_rep2value[0] = 1;
+	_tab_value2rep[1] = 0;
 
-  _pmone = _p -1;
-  int32_t fourp = ((int32_t)p) << 2, fourpmone= ((int32_t)_pmone)<<2;
+	_pmone = Rep(_p -1);
+	int32_t fourp = ((int32_t)p) << 2, fourpmone= ((int32_t)_pmone)<<2;
 
-  int not_found = 1;
-  Residu_t accu = 1;
-  Residu_t seed =2;
+	int not_found = 1;
+	Residu_t accu = 1;
+	Residu_t seed =2;
 
-  // -- Find a generator of the multiplicative group
-  while (_p > 2 && not_found == 1)
-  {
-    for(i=1; i<_p; i++)
-    {
-      accu = (accu * seed) % _p;
-//cout << i << " :: " << accu << endl;
-      _tab_rep2value[i] = accu;
-      if (accu == 1) break;
-      _tab_value2rep[accu] = i;
-    }
-    if (accu != 1){
-      std::cerr << "attempted to build Log16 field with non-prime base "<<_p<<", halting\n";
-      return;
-    }
-    if (i ==_p-1) not_found = 0;
-    else {
-      do { seed = rand() % _p; } while ((seed ==0) && (seed !=1));
-//      if (seed < 0) seed += _p;
-    }
-  }
-  // -- Set the zero at position 2 * _p - 2 in table
-  _tab_value2rep[0] = zero;
+	// -- Find a generator of the multiplicative group
+	while (_p > 2 && not_found == 1)
+	{
+		for(i=1; i<_p; i++)
+		{
+			accu = Rep((accu * seed) % _p);
+			//cout << i << " :: " << accu << endl;
+			_tab_rep2value[i] = accu;
+			if (accu == 1)
+				break;
+			_tab_value2rep[accu] = Rep(i);
+		}
+		if (accu != 1){
+			std::cerr << "attempted to build Log16 field with non-prime base "<<_p<<", halting\n";
+			return;
+		}
+		if (i ==_p-1) not_found = 0;
+		else {
+			do {
+				seed = Rep(rand() % _p);
+			} while ((seed ==0) && (seed !=1));
+			//      if (seed < 0) seed += _p;
+		}
+	}
+	// -- Set the zero at position 2 * _p - 2 in table
+	_tab_value2rep[0] = zero;
 
-//cout << "Generateur: " << seed << endl;
-/*cout << "Table: Value -> Rep" << endl;
-for(i=0; i<_p; i++) {
-  cout << i << " -> " << _tab_value2rep[i] << endl;
-}
-cout << "\nTable: Rep -> Value" << endl;
-for(i=0; i<_p; i++) {
-  cout << i << " -> " << _tab_rep2value[i] << endl;
-}
-*/
-  // -- Table for multiplication
-  _tab_mul = new Power_t[fourp];
-  for(j=0; j<_pmone; j++) _tab_mul[j] = j;
-  for(j=_pmone; j< (int32_t)zero; j++) _tab_mul[j] = j-_pmone;
-  for(j=zero; j<= fourpmone; j++) _tab_mul[j] = zero;
+	//cout << "Generateur: " << seed << endl;
+	/*cout << "Table: Value -> Rep" << endl;
+	  for(i=0; i<_p; i++) {
+	  cout << i << " -> " << _tab_value2rep[i] << endl;
+	  }
+	  cout << "\nTable: Rep -> Value" << endl;
+	  for(i=0; i<_p; i++) {
+	  cout << i << " -> " << _tab_rep2value[i] << endl;
+	  }
+	  */
+	// -- Table for multiplication
+	_tab_mul = new Power_t[fourp];
+	for(j=0; j<_pmone; j++)
+		_tab_mul[j] = (Rep)j;
+	for(j=_pmone; j< (int32_t)zero; j++)
+	       	_tab_mul[j] = Rep(j-_pmone);
+	for(j=zero; j<= fourpmone; j++)
+		_tab_mul[j] = zero;
 
-  // -- Table for division and neg:
-  _tab_div = &_tab_mul[_pmone];
-  _tab_neg = &_tab_mul[_pmone/2];
+	// -- Table for division and neg:
+	_tab_div = &_tab_mul[_pmone];
+	_tab_neg = &_tab_mul[_pmone/2];
 
-  // -- Table for 1+value
-  Power_t* tab_pone = new Power_t[fourp];
-  _tab_addone = &tab_pone[(int32_t)(zero)];
+	// -- Table for 1+value
+	Power_t* tab_pone = new Power_t[fourp];
+	_tab_addone = &tab_pone[(int32_t)(zero)];
 
-/* Pascal Giorgi 24/04/02
-   Error between _tab_rep2value and _tab_value2rep
+	/* Pascal Giorgi 24/04/02
+	   Error between _tab_rep2value and _tab_value2rep
 
-   for(j=0; j<_pmone; j++)
-   _tab_addone[j] = _tab_rep2value[ 1 + _tab_value2rep[j] ];
-   for(j=1-_pmone; j<0; j++)
-   _tab_addone[j] = _tab_rep2value[ 1 + _tab_value2rep[j + _pmone] ];
+	   for(j=0; j<_pmone; j++)
+	   _tab_addone[j] = _tab_rep2value[ 1 + _tab_value2rep[j] ];
+	   for(j=1-_pmone; j<0; j++)
+	   _tab_addone[j] = _tab_rep2value[ 1 + _tab_value2rep[j + _pmone] ];
 
-   corrected by inversing the array
-*/
-  for(j=0; j<_pmone; j++){
-    if (_tab_rep2value[j] < _pmone)
-      _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j] ];
-    else
-      _tab_addone[j] = _tab_value2rep[0];
-  }
-  for(j=1-_pmone; j<0; j++){
-    if (_tab_rep2value[j+_pmone] < _pmone)
-      _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j + _pmone] ];
-    else
-      _tab_addone[j] = _tab_value2rep[0];
+	   corrected by inversing the array
+	   */
+	for(j=0; j<_pmone; j++){
+		if (_tab_rep2value[j] < _pmone)
+			_tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j] ];
+		else
+			_tab_addone[j] = _tab_value2rep[0];
+	}
+	for(j=1-_pmone; j<0; j++){
+		if (_tab_rep2value[j+_pmone] < _pmone)
+			_tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j + _pmone] ];
+		else
+			_tab_addone[j] = _tab_value2rep[0];
 
-  }
-  for(j=_pmone; j<=(int32_t)zero; j++)
-    _tab_addone[j] = 0;
-  for(j=(int32_t)-zero; j<(int32_t)(1-_pmone); j++)
-    _tab_addone[j] = j;
+	}
+	for(j=_pmone; j<=(int32_t)zero; j++)
+		_tab_addone[j] = 0;
+	for(j=(int32_t)-zero; j<(int32_t)(1-_pmone); j++)
+		_tab_addone[j] = (Rep)j;
 
-  _tab_addone[_pmone / 2] = zero;
-  _tab_addone[-_pmone / 2] = zero;
+	_tab_addone[_pmone / 2] = zero;
+	_tab_addone[-_pmone / 2] = zero;
 
 
-  // -- Table for 1-value
-  Power_t* tab_mone = new Power_t[fourp];
-  _tab_subone = &tab_mone[(int32_t)zero];
+	// -- Table for 1-value
+	Power_t* tab_mone = new Power_t[fourp];
+	_tab_subone = &tab_mone[(int32_t)zero];
 
-  for(j=_pmone; j<=(int32_t)zero; j++)
-    _tab_subone[j] = 0;
-  for(j=-zero; j<(int32_t)(1-3*_pmone/2); j++)
-    _tab_subone[j] = j+_pmone/2;
-  for(j=-3*_pmone/2; j<(1-_pmone); j++)
-    _tab_subone[j] = j-_pmone/2;
-  for(j=1-_pmone; j<(1-_pmone/2); j++)
-    _tab_subone[j] = _tab_addone[j + _pmone/2 + _pmone];
-  for(j=_pmone/2; j<_pmone; j++)
-    _tab_subone[j] = _tab_addone[j - _pmone/2];
+	for(j=_pmone; j<=(int32_t)zero; j++)
+		_tab_subone[j] = 0;
+	for(j=-zero; j<(int32_t)(1-3*_pmone/2); j++)
+		_tab_subone[j] = Rep(j+_pmone/2);
+	for(j=-3*_pmone/2; j<(1-_pmone); j++)
+		_tab_subone[j] = Rep(j-_pmone/2);
+	for(j=1-_pmone; j<(1-_pmone/2); j++)
+		_tab_subone[j] = _tab_addone[j + _pmone/2 + _pmone];
+	for(j=_pmone/2; j<_pmone; j++)
+		_tab_subone[j] = _tab_addone[j - _pmone/2];
 
-  for(j=-_pmone/2; j<_pmone/2; j++)
-    _tab_subone[j] = _tab_addone[j+_pmone/2];
+	for(j=-_pmone/2; j<_pmone/2; j++)
+		_tab_subone[j] = _tab_addone[j+_pmone/2];
 
-  numRefs = new int;
-  (*numRefs) = 1;
+	numRefs = new int;
+	(*numRefs) = 1;
 #ifdef REFC_DEBUG
-  std::cout << *(numRefs) << " Arefs, p="<<_p<<" \n";
+	std::cout << *(numRefs) << " Arefs, p="<<_p<<" \n";
 #endif
 
-  // -- temporary
+	// -- temporary
 }
 
 ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F)
@@ -224,3 +230,4 @@ void ZpzDom<Log16>::End()
 {
 }
 
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

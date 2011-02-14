@@ -634,12 +634,12 @@ public:
 	// -- Convert an Integer to a basic C++ type
 	// -- Cast operators
 	operator bool() const { return *this!=0UL; }
-	operator short() const { return (int) *this; }
-	operator unsigned short() const { return (unsigned int) *this; }
-	operator unsigned char() const { return (unsigned int) *this; }
+	operator short() const { return (short)(int) *this; }
+	operator unsigned short() const { return (unsigned short) (unsigned int) *this; }
+	operator unsigned char() const { return (unsigned char) (unsigned int) *this; }
 	operator unsigned int() const ;
 	operator int() const ;
-	operator signed char() const { return (int) *this; }
+	operator signed char() const { return (signed char) (int) *this; }
 	operator unsigned long() const ;
 	operator long() const ;
 #ifndef __GIVARO__DONOTUSE_longlong__

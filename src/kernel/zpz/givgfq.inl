@@ -610,7 +610,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
                 //tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
             else{
                 if (tr >= (TT)_characteristic )
-                    tr = (UTT)tr % _characteristic ;
+                    tr = double((UTT)tr % _characteristic) ;
             }
 
             if (tr)
@@ -623,7 +623,7 @@ inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu )
                     //tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
             else{
                 if (tr >= (TT)_characteristic )
-                    tr = (UTT)tr % _characteristic ;
+                    tr = double((UTT)tr % _characteristic) ;
             }
             return r = _pol2log[ (UTT)tr ];
         }

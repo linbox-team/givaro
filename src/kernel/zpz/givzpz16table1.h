@@ -67,10 +67,10 @@ public:
 
   // ----- Convert from Element to int
     int16_t& convert( int16_t& x , const Rep a) const {
-        return x = ((a >= _p)?0:_tab_rep2value[a]);
+        return x = Rep((a >= _p)?0:_tab_rep2value[a]);
     }
     uint16_t& convert( uint16_t& x , const Rep a) const {
-        return x = ((a >= _p)?0:_tab_rep2value[a]);
+        return x = Rep((a >= _p)?0:_tab_rep2value[a]);
     }
     unsigned long & convert( unsigned long& x , const Rep a) const {
         return x = ((a >= _p)?0:_tab_rep2value[a]);

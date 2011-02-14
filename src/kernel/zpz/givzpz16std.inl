@@ -16,6 +16,24 @@
 #ifndef __GIVARO_zpz16std_INL
 #define __GIVARO_zpz16std_INL
 
+#ifdef __INTEL_COMPILER
+// r = a - b
+//#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
+#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = Rep(a>=b? a-b: (p-b)+a) )
+
+// r -= a
+#define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r = Rep(r-a); r= Rep(r < 0 ? r+p : r);}
+
+// r = a+b
+#define __GIVARO_ZPZ16_N_ADD(r,p,a,b) { r = Rep(a+b); r= Rep(r < p ? r : r-p);}
+// r += a
+#define __GIVARO_ZPZ16_N_ADDIN(r,p,a) { r = Rep(r+a);  r= Rep(r < p ? r : r-p);}
+
+#define __GIVARO_ZPZ16_N_NEG(r,p,a) ( r = Rep(a == 0 ? 0 : p-a) )
+#define __GIVARO_ZPZ16_N_NEGIN(r,p) ( r = Rep(r == 0 ? 0 : p-r) )
+
+#else // not ICC
+
 // r = a - b
 //#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
 #define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = a>=b? a-b: (p-b)+a )
@@ -30,10 +48,13 @@
 
 #define __GIVARO_ZPZ16_N_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
 #define __GIVARO_ZPZ16_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
+#endif
 
 
 inline ZpzDom<Std16>::Residu_t ZpzDom<Std16>::residu( ) const
-{ return _p; }
+{
+	return _p;
+}
 
 inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::mul (Rep& r, const Rep a, const Rep b) const
 {
@@ -58,7 +79,7 @@ inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::inv (Rep& r, const Rep a) const
 inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::div (Rep& r, const Rep a, const Rep b) const
 {
    int32_t tmp;
-   int16_t ib;
+   Rep ib;
    inv(ib, b);
   __GIVARO_ZPZ32_N_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)ib);
   return r = (ZpzDom<Std16>::Rep)tmp;
@@ -223,7 +244,7 @@ inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::maxpy
 {
    int32_t tmp;
   __GIVARO_ZPZ32_N_MUL(tmp, (int32_t)_p, (int32_t)a, (int32_t)b);
-  return __GIVARO_ZPZ16_N_SUB(r, _p, c, (int16_t)tmp);
+  return __GIVARO_ZPZ16_N_SUB(r, _p, c, (Rep)tmp);
 }
 
 
@@ -313,25 +334,25 @@ inline  ZpzDom<Std16>::Rep&  ZpzDom<Std16>::init ( Rep& r, const long a ) const
   if (a <0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   r = (ua >=_p) ? ua % (uint16_t)_p : ua;
-  if (r && (sign ==-1)) r = _p - r;
+  if (r && (sign ==-1)) r = (Rep)(_p - r);
   return r;
 }
 
 inline ZpzDom<Std16>::Rep&  ZpzDom<Std16>::init ( Rep& r, const Integer& residu ) const
 {
-  int16_t tr;
+  Rep tr;
   if (residu <0) {
       // -a = b [p]
       // a = p-b [p]
-    if ( residu <= (Integer)(-_p) ) tr = int16_t( (-residu) % (uint16_t)_p) ;
-    else tr = int16_t(-residu);
+    if ( residu <= (Integer)(-_p) ) tr = Rep( (-residu) % (uint16_t)_p) ;
+    else tr = Rep(-residu);
     if (tr)
-      return r = (uint16_t)_p - (uint16_t)tr;
+      return r = Rep((uint16_t)_p - (uint16_t)tr);
     else
       return r = zero;
   } else {
-    if (residu >= (Integer)_p ) tr =   int16_t(residu % _p) ;
-    else tr = int16_t(residu);
+    if (residu >= (Integer)_p ) tr =   Rep(residu % _p) ;
+    else tr = Rep(residu);
     return r = (Rep)tr;
   }
 }
@@ -455,25 +476,29 @@ inline void
 
   //  a -> r: double to int16_t
 inline void
-  ZpzDom<Std16>::d2i ( const size_t sz, Array r, const double* a ) const
+ZpzDom<Std16>::d2i ( const size_t sz, Array r, const double* a ) const
 {
-  union d_2_l {
-    double d;
-    int32_t r[2];
-  };
-//  static const double offset = 4503599627370496.0; // 2^52
-  double offset = 4503599627370496.0; // 2^52
-  for (size_t i=0; i<sz; ++i)
-  {
-       d_2_l tmp;
-      // - normalization: put fractional part at the end of the representation
-      tmp.d = a[i] + offset;
-      r[i] = tmp.r[1];
-      if (r[i] <_p) r[i] %= _p;
-  }
-  //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
-  //    r[i] = (r[i] <_p ? r[i] : r[i]%_p);
-  //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]%_p);
+	union d_2_l {
+		double d;
+		int32_t r[2];
+	};
+	//  static const double offset = 4503599627370496.0; // 2^52
+	double offset = 4503599627370496.0; // 2^52
+	for (size_t i=0; i<sz; ++i)
+	{
+		d_2_l tmp;
+		// - normalization: put fractional part at the end of the representation
+		tmp.d = a[i] + offset;
+		r[i] = (Rep) tmp.r[1];
+#ifdef __INTEL_COMPILER
+		if (r[i] <_p) r[i] = Rep(r[i]%_p);
+#else
+		if (r[i] <_p) r[i] %= _p;
+#endif
+	}
+	//    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
+	//    r[i] = (r[i] <_p ? r[i] : r[i]%_p);
+	//    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]%_p);
 }
 
 

@@ -1,7 +1,7 @@
 # Copyright(c)'1994-2009 by The Givaro group
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
-# and abiding by the rules of distribution of free software. 
+# and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 all: $(EXTRA_PROGRAMS)
 
@@ -26,14 +26,17 @@ OPTLINKS=
 #OPTFLAGS+= -parallel -par_report1
 #OPTLINKS+= -parallel
 # icc for itanium2
-#OPTFLAGS+= -tpp2 -mcpu=itanium2 
+#OPTFLAGS+= -tpp2 -mcpu=itanium2
 
+AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
 
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 
 EXTRA_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field ChineseRemaindering GF128 GFirreducible
+
+CLEANFILES=$(EXTRA_PROGRAMS)
 
 GFirreducible_SOURCES=GFirreducible.C
 GF128_SOURCES=GF128.C

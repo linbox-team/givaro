@@ -122,12 +122,12 @@ public :
     static void SetNoReduce() ;
 
         // -- Cast operators
-    operator short() const { return (int) *this; }
-    operator unsigned short() const { return (unsigned int) *this; }
-    operator unsigned char() const { return (unsigned int) *this; }
+    operator short() const { return (short)(int) *this; }
+    operator unsigned short() const { return (unsigned short) (unsigned int) *this; }
+    operator unsigned char() const { return (unsigned char)(unsigned int) *this; }
     operator unsigned int() const { return (unsigned int) (this->num/this->den); }
     operator int() const  { return (int) (this->num/this->den); }
-    operator signed char() const { return (int) *this; }
+    operator signed char() const { return (signed char) (int) *this; }
     operator unsigned long() const { return (unsigned long) (this->num/this->den); }
     operator long() const { return (long) (this->num/this->den); }
 #ifndef __GIVARO__DONOTUSE_longlong__

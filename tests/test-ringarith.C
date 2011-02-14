@@ -143,8 +143,10 @@ int TestRing(const Ring& F, const int seed)
     srand48(seed);
     for(size_t i=0; i< NBITER; ++i) {
         typename Ring::Element x;
-        float d; do {
-            F.init(x, d = ch*drand48());
+        float d;
+       	do {
+		d = float(ch*drand48()) ;
+		F.init(x,d );
         } while(F.isZero(x));
         int a; do {
             F.init(x, a = lrand48());

@@ -537,7 +537,9 @@ inline void ZpzDom<Std64>::dotprod
 inline void
   ZpzDom<Std64>::i2d ( const size_t sz, double* r, constArray a ) const
 {
-  for (size_t i=0; i<sz; ++i) r[i] = a[i];
+  for (size_t i=0; i<sz; ++i)  {
+	  r[i] = (double) a[i];
+  }
 }
 
   //  a -> r: double to int64_t

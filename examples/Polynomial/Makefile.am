@@ -1,7 +1,7 @@
 # Copyright(c)'1994-2009 by The Givaro group
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
-# and abiding by the rules of distribution of free software. 
+# and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 all: $(EXTRA_PROGRAMS)
 INCLUDES=-I$(top_srcdir)
@@ -23,12 +23,14 @@ INCLUDES=-I$(top_srcdir)
 #OPTFLAGS+= -tpp2 -mcpu=itanium2
 
 
+AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/kernel/rational -I$(top_srcdir)/src/library/tools
 
 LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 
-EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT 
+EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT
+CLEANFILES=$(EXTRA_PROGRAMS)
 
 interpolate_SOURCES = interpolate.C
 isirred_SOURCES = isirred.C
@@ -41,5 +43,5 @@ PolynomialCRT_SOURCES =  PolynomialCRT.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@
-%:%.C 
+%:%.C
 	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)

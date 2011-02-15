@@ -34,17 +34,19 @@ EXTRA_PROGRAMS =   \
 TESTS =   \
 	   $(BASIC_TESTS)
 
-test_random_SOURCES= test-random.C
-test_ifactor_SOURCES= test-ifactor.C
-test_ffarith_SOURCES= test-ffarith.C
+test_random_SOURCES   = test-random.C
+test_ifactor_SOURCES  = test-ifactor.C
+test_ffarith_SOURCES  = test-ffarith.C
 test_ringarith_SOURCES= test-ringarith.C
-test_mod_SOURCES= test-mod.C
+test_mod_SOURCES      = test-mod.C
 test_modsqroot_SOURCES= test-modsqroot.C
-test_trunc_SOURCES= test-trunc.C
-test_integer_SOURCES= test-integer.C
+test_trunc_SOURCES    = test-trunc.C
+test_integer_SOURCES  = test-integer.C
+
 
 # for compilation of new tests
 GIVARO_BIN=@bindir@
-%:%.C
-	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)
-
+#  %:%.C
+#  $(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)
+.C:
+	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)  `$(GIVARO_BIN)/givaro-config --libs`

@@ -9,24 +9,24 @@ INCLUDES=-I$(top_srcdir)  ${GMP_VERSION}
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/bstruct
 
-pkginclude_HEADERS=\
+pkginclude_HEADERS=     \
 	StaticElement.h		\
-	givzpz.h		\
+	givzpz.h		    \
 	givzpztypes.h		\
-	givgfq.h		\
+	givgfq.h		    \
 	givzpz16std.h		\
 	givzpz32std.h		\
 	givzpz32uns.h		\
-	givzpzInt.h		\
+	givzpzInt.h		    \
 	givzpz64std.h		\
 	givprimes16.h		\
-	givrns.h		\
-	givcra.h		\
+	givrns.h		    \
+	givcra.h		    \
 	givzpz16table1.h	\
 	givmontg32.h		\
 	giv_randiter.h		\
 	givextension.h		\
-	givgfqext.h		\
+	givgfqext.h		    \
 	givtablelimits.h	\
 	givgfqkron.h		\
 	givzpz16std.inl		\
@@ -42,12 +42,12 @@ pkginclude_HEADERS=\
 
 noinst_LTLIBRARIES=libgivzpz.la
 
-libgivzpz_la_SOURCES=\
+libgivzpz_la_SOURCES=   \
 	givzpz16std.C		\
 	givzpz32std.C		\
 	givzpz32uns.C		\
 	givmontg32.C		\
-	givzpzInt.C		\
+	givzpzInt.C		    \
 	givzpz64std.C		\
 	givprimes16.C		\
 	givtablelimits.C	\

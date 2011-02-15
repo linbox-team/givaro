@@ -9,9 +9,9 @@ INCLUDES=-I$(top_srcdir)
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS= -I$(prefix)/include
 
-pkginclude_HEADERS=\
+pkginclude_HEADERS=     \
 	givcategory.h		\
-	givops.h		\
+	givops.h		    \
 	giviterator.h		\
 	givarithmetics.h	\
 	givfractiondomain.h	\

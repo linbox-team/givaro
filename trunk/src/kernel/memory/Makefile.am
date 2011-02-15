@@ -9,7 +9,7 @@ INCLUDES=-I$(top_srcdir)
 AM_CXXFLAGS=@DEFAULT_CFLAGS@
 AM_CPPFLAGS= -I$(top_srcdir)/src/kernel/system
 
-pkginclude_HEADERS=\
+pkginclude_HEADERS= \
 	givaromm.h     	\
 	givpointer.h   	\
 	givref_count.h

@@ -12,17 +12,17 @@ AM_CXXFLAGS=@DEFAULT_CFLAGS@
 AM_CPPFLAGS= -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/system
 
 pkgincludesub_HEADERS=\
-	gmp++.h		\
-	gmp++_int.h	\
-	gmp++_int.inl	\
-	gmp++.C		\
+	gmp++.h		      \
+	gmp++_int.h	      \
+	gmp++_int.inl	  \
+	gmp++.C		      \
 	gmp++_int.C
 
 #lib_LTLIBRARIES=libgmpxx.la
 noinst_LTLIBRARIES=libgmppp.la
 
 #libgmpxx_la_SOURCES=
-libgmppp_la_SOURCES=\
+libgmppp_la_SOURCES=    \
 	gmp++_int_div.C		\
 	gmp++_int_mod.C		\
 	gmp++_int_sub.C		\

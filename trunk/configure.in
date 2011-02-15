@@ -47,7 +47,16 @@ TESTS_CFLAGS="-O0"
 DEFAULT_CFLAGS="-O2"
 DEBUG_CFLAGS="-g -Wall"
 
-if  test "x${CXX}" = "xicpc"  ; then
+# disable default -g -O2 CXXFLAGS
+: ${CXXFLAGS=""}
+
+# check for programs (
+# AC_PROG_CC([gcc icc])
+AC_PROG_CXX([g++ icpc icc])
+AC_HEADER_STDC
+
+
+if  test "x${CXX}" = "xicpc" -o "x${CXX}" = "xicc"  ; then
 	DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wcheck"
 else 
 	if test "x${CXX}" = "xg++"  ; then
@@ -62,14 +71,6 @@ fi
 # CXXFLAGS="${DEFAULT_CFLAGS} ${DEBUG_CFLAGS}"
 DEFAULT_CFLAGS="${DEFAULT_CFLAGS} ${DEBUG_CFLAGS}"
 TESTS_CFLAGS="${TESTS_CFLAGS} ${DEBUG_CFLAGS}"
-
-# disable default -g -O2 CXXFLAGS
-: ${CXXFLAGS=""}
-
-# check for programs (
-# AC_PROG_CC([gcc icc])
-AC_PROG_CXX([g++ icpc])
-AC_HEADER_STDC
 
 
 

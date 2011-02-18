@@ -8,8 +8,8 @@
 // Authors: T. Gautier
 // $Id: givpoly1dense.h,v 1.29 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description: univariate polynom over T
-// - we assume that T is a ring (0,1,+,*) with:
+// Description: univariate polynomial over T
+// - we assume that T is a ring (0,1,+,*)
 #ifndef __GIVARO_poly1_dense_H
 #define __GIVARO_poly1_dense_H
 
@@ -183,6 +183,11 @@ public :
 
         // -- Returns the differentiate polynomial
     Rep& diff( Rep& P, const Rep& Q) const;
+
+        // -- Computes the reverse polynomial
+    Rep& reverse( Rep&, const Rep&) const;
+    Rep& reversein( Rep&) const;
+    
 
         // --
     std::istream& read ( std::istream& i );

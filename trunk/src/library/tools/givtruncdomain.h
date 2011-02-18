@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <20 Jan 11 09:48:37 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <18 Feb 11 16:04:19 Jean-Guillaume.Dumas@imag.fr>
 // Author: J-G. Dumas
 // Description: Pieces of polynomials as defined in
 // [Arne Storjohann, High-Order Lifting
@@ -45,6 +45,12 @@ public :
 		this->assign(zero,Father_t::zero);
 		this->assign(one,Father_t::one);
 	}
+
+    	const Father_t& getpoldomain() const
+        {
+            return static_cast<const Father_t&>(*this);
+        }
+    
 
 	Rep& init(Rep& p) const
 	{ Father_t::init(p.first); p.second=0; return p; }

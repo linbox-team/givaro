@@ -28,35 +28,39 @@ struct NewtonInterpGeom : TruncDom<Domain>  {
     typedef Polynomial Element;
     typedef typename TruncDom<Domain>::Element Truncated;
     typedef typename TruncDom<Domain>::Type_t Type_t;
-//     using typename TruncDom<Domain>::Type_t;
 
+private:
     Type_t _q;
     Type_t powerq;
-//     Vect_t _qi;
-//     Vect_t _ui;
+    Type_t _ui;
     Polynomial _qi;
-    Polynomial _ui;
     Polynomial _mui;
     Polynomial _wi;
     Polynomial _g2;
     bool flip;
     Degree _deg;
 
-    NewtonInterpGeom (const Domain& d, const Indeter& X = Indeter() ) : TruncDom<Domain>(d,X), powerq(d.one), flip(false), _deg(0) {
+public:
+        // Usage :
+        // Cstor + initialize with first evaluation (at 1)
+        // Then calls to operator(), will evaluate the blackbox at q^i
+        // Finally calls to Newton would yield the coefficients in the Newton basis
+        // While interpolator calls Newton, and then transforms to monomial basis
+
+    NewtonInterpGeom (const Domain& d, const Indeter& X = Indeter() ) : TruncDom<Domain>(d,X), powerq(d.one), _ui(d.one), flip(false), _deg(0) {
         d.generator(_q); // get a primitive root
     }
 
     template<typename BlackBox>
     void initialize (const BlackBox& bb) {
         _qi.resize(0);
-        _ui.resize(0);
         _mui.resize(0);
         _wi.resize(0);
         _g2.resize(0);
         this->_domain.assign(powerq, this->_domain.one);
+        this->_domain.assign(_ui, this->_domain.one);
         _deg = 0;
         _qi.push_back(this->_domain.one);
-        _ui.push_back(this->_domain.one);
         _mui.push_back(this->_domain.one);
         Type_t v0;
         bb(v0, this->_domain.one);
@@ -81,26 +85,18 @@ struct NewtonInterpGeom : TruncDom<Domain>  {
         this->_domain.negin(mui);
         _mui.push_back(mui);
 
-        this->_domain.mulin(ui, _ui.back() );
-        _ui.push_back(ui);
+        this->_domain.mulin(_ui, ui );
         
         Type_t vi;
         bb(vi, powerq);
 
         Type_t wi;
-//         this->_domain.write(std::cout << "vi :", vi) << std::endl;
-//         this->_domain.write(std::cout << "ui :", ui) << std::endl;
-        this->_domain.div(wi, vi, ui);
-//         this->_domain.write(std::cout << "wi :", wi) << std::endl;
+        this->_domain.div(wi, vi, _ui);
         _wi.push_back(wi);
         
         Type_t gi;
-//         this->_domain.write(std::cout << "qi :", qi) << std::endl;
-//         this->_domain.write(std::cout << "ui :", ui) << std::endl;
-        this->_domain.div(gi, qi, ui);
-//         this->_domain.write(std::cout << "gi :", gi) << std::endl;
+        this->_domain.div(gi, qi, _ui);
         if (flip) this->_domain.negin(gi);
-//         this->_domain.write(std::cout << "gi :", gi) << std::endl;
         _g2.push_back(gi);
 
         flip = !flip;
@@ -117,30 +113,13 @@ struct NewtonInterpGeom : TruncDom<Domain>  {
         this->assign(W, _wi); // truncated
         this->assign(QU,_g2); // truncated
 
-//         this->write(std::cout << "W : ", W) << std::endl;
-//         this->write(std::cout << "G2: ", QU) << std::endl;
-        
-        
-
+            // truncated multiplication
         this->mul(G, W, QU, 0, _deg);
-//         this->write(std::cout << "G : ", G) << std::endl;
-        
 
         this->convert(inter, G); // trunc to polynomial
 
-        for(size_t i=0; i<inter.size(); ++i) {
-//             this->_domain.write(std::cout << "BEF i[i]: ", inter[i]) << std::endl;
-//             this->_domain.write(std::cout << "    q[i]: ", _qi[i]) << std::endl;
-            this->_domain.divin(inter[i], _qi[i]);
-//             this->_domain.write(std::cout << "AFT i[i]: ", inter[i]) << std::endl;
-            
-        }
-            
-
-//         this->getpoldomain().write(std::cout << "qi: ", _qi) << std::endl;
-//         this->getpoldomain().write(std::cout << "ui: ", _ui) << std::endl;
-//         this->getpoldomain().write(std::cout << "wi: ", _wi) << std::endl;
-        
+        for(size_t i=0; i<inter.size(); ++i)
+            this->_domain.divin(inter[i], _qi[i]);        
 
         return inter;
     }
@@ -149,11 +128,12 @@ struct NewtonInterpGeom : TruncDom<Domain>  {
     Polynomial& interpolator(Polynomial& inter) {
         this->Newton(inter);
 
-        Polynomial mvi(_qi.size()), mwi(_qi.size()), mzi(_qi.size());
+        Type_t mvi;
+        Polynomial mwi(_qi.size()), mzi(_qi.size());
         for(size_t i=0; i<inter.size(); ++i) {
-            this->_domain.mul(mvi[i],inter[i],_qi[i]);
-            if (i & 1) this->_domain.negin(mvi[i]);
-            this->_domain.div(mwi[i], mvi[i], _mui[i]);
+            this->_domain.mul(mvi,inter[i],_qi[i]);
+            if (i & 1) this->_domain.negin(mvi);
+            this->_domain.div(mwi[i], mvi, _mui[i]);
             this->_domain.div(mzi[i], _mui[i], _qi[i]);
             if (i & 1) this->_domain.negin(mzi[i]);
         }
@@ -167,15 +147,14 @@ struct NewtonInterpGeom : TruncDom<Domain>  {
         this->assign(U, _mui); // truncated
         this->assign(W, mwi); // truncated
 
+            // Transposed multiplication (U has been reversed)
         this->mul(G, U, W, _deg, _deg * 2);
-
         this->divin(G,_deg);
 
         this->convert(inter, G); // trunc to polynomial
         
-        for(size_t i=0; i<inter.size(); ++i) {
+        for(size_t i=0; i<inter.size(); ++i)
             this->_domain.mulin(inter[i], mzi[i]);            
-        }
         
         return inter;
     }

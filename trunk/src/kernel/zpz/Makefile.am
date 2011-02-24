@@ -21,6 +21,7 @@ pkginclude_HEADERS=     \
 	givzpz64std.h		\
 	givprimes16.h		\
 	givrns.h		    \
+	givrnsfixed.h		    \
 	givcra.h		    \
 	givzpz16table1.h	\
 	givmontg32.h		\
@@ -34,6 +35,7 @@ pkginclude_HEADERS=     \
 	givzpz32uns.inl		\
 	givzpzInt.inl		\
 	givzpz64std.inl		\
+	givrnsfixed.inl		\
 	givrnscstor.inl		\
 	givrnsconvert.inl	\
 	givzpz16table1.inl	\

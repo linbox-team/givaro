@@ -56,17 +56,19 @@ void RNSsystem<RING,Domain>::RnsToMixedRadix
 
   // -- Convert a mixed radix representation to an Integer
 template<class RING, class Domain>
-void RNSsystem<RING,Domain>::MixedRadixToRing( RING& res, const RNSsystem<RING,Domain>::array& mixrad ) const
+RING& RNSsystem<RING,Domain>::MixedRadixToRing( RING& res, const RNSsystem<RING,Domain>::array& mixrad ) const
 {
   size_t size = _primes.size();
   if (size != mixrad.size())
     throw GivError("[RNSsystem::MixedRadixToRing]: bad size of input array");
   _primes[size-1].convert(res,mixrad[size-1]);
   RING tmp;
+  
   for (int i=size-2; i>=0; --i) {
     res *= _primes[i].characteristic();
     res += _primes[i].convert(tmp, mixrad[i]);
   }
+  return res;
 }
 
 
@@ -84,15 +86,14 @@ void RNSsystem<RING,Domain>::RingToRns( RNSsystem<RING,Domain>::array& rns , con
 
   // Convert to an Integer:
 template<class RING, class Domain>
-void RNSsystem<RING,Domain>::RnsToRing( RING& I, const RNSsystem<RING,Domain>::array& rns) const
+RING& RNSsystem<RING,Domain>::RnsToRing( RING& I, const RNSsystem<RING,Domain>::array& rns) const
 {
   // - Computation of a mixed radix representation of this
   typename RNSsystem<RING,Domain>::array mixrad(_primes.size());
   RnsToMixedRadix( mixrad , rns );
 
   // - Convert mixrad to an integer
-  MixedRadixToRing( I, mixrad ) ;
-  return;
+  return MixedRadixToRing( I, mixrad ) ;
 }
 
 #endif // __GIVARO_rns_convert_INL

@@ -4,10 +4,8 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
-/*! @file examples/FiniteField/ChineseRemaindering.C
- * @ingroup examples
- * @ingroup finitefields
- * @example examples/FiniteField/ChineseRemaindering.C
+/*! @file tests/test-crt.C
+ * @ingroup tests
  * @brief NO DOC
  */
 
@@ -59,18 +57,24 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
     Timer tim; tim.clear(); tim.start();
     CRT.RnsToRing( a, Moduli );
     tim.stop();
-    Field().write( std::cerr << tim << " using ") << std::endl;
+#ifdef GIVARO_DEBUG
+    Field(Primes.front()).write( std::cerr << tim << " using ") << std::endl;
+#endif
 
     if (Primes.size() < 50) {
         i = Primes.begin();
         e = Moduli.begin();
+#ifdef GIVARO_DEBUG
         for( ; i != Primes.end(); ++i, ++e)
             i->write(std::cout << a << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;
+#endif
     }
 
 
    Elements Verifs( Primes.size() );
    CRT.RingToRns( Verifs, a );
+
+#ifdef GIVARO_DEBUG
    typename Elements::const_iterator v = Verifs.begin();
    i = Primes.begin();
    e = Moduli.begin();
@@ -79,7 +83,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
            i->write( std::cerr << "incoherency within ") << std::endl;
            break;
        }
-
+#endif
 
 
    Integer p( generator() >>(argc>2?atoi(argv[2]):17) ), res;
@@ -90,9 +94,10 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
    ChineseRemainder<IntPrimeDom, Field> CRA(ID, M, F);
    CRA( res, a, el);
 
+#ifdef GIVARO_DEBUG
    std::cout << res << " mod " << M << " = " << a << ";"  << std::endl;
    std::cout << res << " mod " << F.characteristic() << " = " << F.convert(a, el) << ";"  << std::endl;
-
+#endif
 
    return  res;
 }
@@ -117,18 +122,28 @@ int main(int argc, char ** argv) {
     Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed));
     Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed));
 
-    if (a1 != a2) std::cerr << "ERROR a1 != a2" << std::endl;
-    if (a3 != a4) std::cerr << "ERROR a3 != a4" << std::endl;
-    if (a6 != a5) std::cerr << "ERROR a5 != a6" << std::endl;
-    if (a7 != a8) std::cerr << "ERROR a7 != a8" << std::endl;
-    if (a1 != a3) std::cerr << "ERROR a1 != a3" << std::endl;
-    if (a5 != a7) std::cerr << "ERROR a5 != a7" << std::endl;
-    if (a1 != a5) std::cerr << "ERROR a1 != a5" << std::endl;
+    bool success = true;
+    success &= (a1 == a2); 
+    if (! success) std::cerr << "ERROR a1 != a2" << std::endl;
+    success &= (a3 == a4); 
+    if (! success) std::cerr << "ERROR a3 != a4" << std::endl;
+    success &= (a6 == a5); 
+    if (! success) std::cerr << "ERROR a5 != a6" << std::endl;
+    success &= (a7 == a8); 
+    if (! success) std::cerr << "ERROR a7 != a8" << std::endl;
+    success &= (a1 == a3); 
+    if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
+    success &= (a5 == a7); 
+    if (! success) std::cerr << "ERROR a5 != a7" << std::endl;
+    success &= (a1 == a5); 
+    if (! success) std::cerr << "ERROR a1 != a5" << std::endl;
 
 
 
+#ifdef GIVARO_DEBUG
+    if (! success)
+        std::cerr << "Error: " << seed << std::endl;
+#endif
 
-
-
-    return 0;
+    return (! success);
 }

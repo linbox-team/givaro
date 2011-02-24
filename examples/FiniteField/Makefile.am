@@ -34,13 +34,12 @@ AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(to
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 
 
-EXTRA_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field ChineseRemaindering GF128 GFirreducible
+EXTRA_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field GF128 GFirreducible
 
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 GFirreducible_SOURCES=GFirreducible.C
 GF128_SOURCES=GF128.C
-ChineseRemaindering_SOURCES=ChineseRemaindering.C
 domain_to_operatorstyle_SOURCES=domain_to_operatorstyle.C
 all_field_SOURCES=all_field.C
 gfq_atomic_SOURCES=gfq_atomic.C

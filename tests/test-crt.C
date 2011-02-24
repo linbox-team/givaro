@@ -16,6 +16,7 @@
 #include <givaro/givgfq.h>
 #include <givaro/givcra.h>    // Chinese Remainder of two elements
 #include <givaro/givrns.h>    // Chinese Remainder of an array of elements
+#include <givaro/givrnsfixed.h>    // Chinese Remainder with fixed primes
 #include <givaro/givtimer.h>
 #include <givaro/givrandom.h>
 
@@ -36,49 +37,77 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
     typedef typename CRTSystem::array	Elements;
     typedef typename CRTSystem::ring	Ring;
 
+    typedef RNSsystemFixed<Integer>  CRTSystemFixed;
+    typedef typename RNSsystemFixed<Integer>::array  Prime_t;
+
     IntPrimeDom ID;
-    Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1);
+    Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1), b;
 
-    Domains Primes( argc>1 ? atoi(argv[1]):15);
+    Prime_t Primes( argc>1 ? atoi(argv[1]):15);
+    Domains PrimeDoms( Primes.size() );
     Elements Moduli( Primes.size() );
+    Prime_t ModuliInts( Primes.size() );
 
-    typename Domains::iterator i = Primes.begin();
+    typename Prime_t::iterator p = Primes.begin();
+    typename Domains::iterator i = PrimeDoms.begin();
     typename Elements::iterator e = Moduli.begin();
-    for(; i != Primes.end(); ++i, ++e) {
+    typename Prime_t::iterator m = ModuliInts.begin();
+    for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
         *i = Field( ID.nextprimein( a ) );
+        *p = a;
 //         i->random( generator, *e );
         i->init(*e,  generator() );
+        *m = *e;
         M *= a;
     }
 
-
-    CRTSystem CRT( Primes );
+    CRTSystem CRT( PrimeDoms );
 
     Timer tim; tim.clear(); tim.start();
     CRT.RnsToRing( a, Moduli );
     tim.stop();
 #ifdef GIVARO_DEBUG
-    Field(Primes.front()).write( std::cerr << tim << " using ") << std::endl;
+    Field(PrimeDoms.front()).write( std::cerr << tim << " using ") << std::endl;
 #endif
 
-    if (Primes.size() < 50) {
-        i = Primes.begin();
+    if (PrimeDoms.size() < 50) {
+        i = PrimeDoms.begin();
         e = Moduli.begin();
 #ifdef GIVARO_DEBUG
-        for( ; i != Primes.end(); ++i, ++e)
+        for( ; i != PrimeDoms.end(); ++i, ++e)
             i->write(std::cout << a << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;
 #endif
     }
 
+Timer timf; 
+    timf.clear(); timf.start();
+    CRTSystemFixed CRTFixed( Primes );
+    timf.stop();
+#ifdef GIVARO_DEBUG
+    std::cerr << "CRTFixed init : " << timf << std::endl;
+#endif
+
+    timf.clear(); timf.start();
+    CRTFixed.RnsToRing( b, ModuliInts );
+    timf.stop();
+#ifdef GIVARO_DEBUG
+    std::cerr << "CRTFixed : " << timf << std::endl;
+#endif
+
+#ifdef GIVARO_DEBUG
+    if (a != b)
+        std::cerr << "incoherency between normal : " << a 
+                  << " and fixed : " << b << std::endl;
+#endif
 
    Elements Verifs( Primes.size() );
    CRT.RingToRns( Verifs, a );
 
 #ifdef GIVARO_DEBUG
    typename Elements::const_iterator v = Verifs.begin();
-   i = Primes.begin();
+   i = PrimeDoms.begin();
    e = Moduli.begin();
-   for( ; i != Primes.end(); ++i, ++e, ++v)
+   for( ; i != PrimeDoms.end(); ++i, ++e, ++v)
        if (! i->areEqual(*e, *v) ) {
            i->write( std::cerr << "incoherency within ") << std::endl;
            break;
@@ -86,8 +115,8 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
 #endif
 
 
-   Integer p( generator() >>(argc>2?atoi(argv[2]):17) ), res;
-   Field F( ID.nextprimein(p) );
+   Integer pr( generator() >>(argc>2?atoi(argv[2]):17) ), res;
+   Field F( ID.nextprimein(pr) );
    typename Field::Element el;
    F.init(el, generator() );
 

@@ -187,7 +187,7 @@ template<class T>
 inline const T* Array0<T>::baseptr() const { return _d; }
 
 
-  // This foloowing functions directly access to protected
+  // This following functions directly access to protected
 template <class T>
 inline const T& Array0<T>::front () const
 {
@@ -202,6 +202,25 @@ inline T& Array0<T>::front ()
   GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
   return _d[0];
 }
+
+
+  // This following functions directly access to protected
+template <class T>
+inline const T& Array0<T>::back () const
+{
+  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
+  return _d[_size-1];
+}
+
+// Access operator : Write access
+template <class T>
+inline T& Array0<T>::back ()
+{
+  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
+  return _d[_size-1];
+}
+
+
 
 template <class T>
 inline const T& Array0<T>::operator[] (Indice_t i) const

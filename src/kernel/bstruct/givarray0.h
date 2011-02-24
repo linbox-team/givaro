@@ -85,6 +85,9 @@ public :
   T& operator[] (Indice_t i); //  { return _d[i]; } ;
   const T& front ()  const; //  { return _d[0]; }
   T& front (); //  { return _d[0]; } ;
+  const T& back ()  const; //  *(--end())
+  T& back (); //  *(--end())
+
   void write(Indice_t i, const Type_t& val);
   void read (Indice_t i, Type_t& val) const;
 

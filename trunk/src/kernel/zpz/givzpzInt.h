@@ -84,13 +84,11 @@ public:
   float& convert(float& r, const Rep& a ) const { return r = (float)a ;}
   double& convert(double& r, const Rep& a ) const { return r = (double)a ;}
   long int& convert(long int& r, const Rep& a) const { return r = (long int)a;}
-  unsigned long int& convert(unsigned long int& r, const Rep& a) const { return r = (unsigned long int)a;}
-    Integer& convert(Integer& i, const Rep& a) const {
-        unsigned long ur;
-        return i = (Integer)convert(ur, a);
-    }
-
-
+  unsigned long int& convert(unsigned long int& r, const Rep& a) const { return r = (unsigned long int)a;
+  }
+  Integer& convert(Integer& i, const Rep& a) const {
+      return i = a;
+  }
 
   // ----- Misc methods
   int isZero( const Rep& a ) const;

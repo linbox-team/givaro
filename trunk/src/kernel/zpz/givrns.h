@@ -17,6 +17,7 @@
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"
+#include "givaro/givarray0.h"
 
     // ---------------------------------------------  class RNSsystem
     // Structure which manages list of domains in order to
@@ -49,14 +50,14 @@ public:
     void RnsToMixedRadix(array&  mixrad, const array&  residu) const;
 
         // -- Convert a mixed radix representation to an Integer
-    void MixedRadixToRing( RING& res,  const array& mixrad ) const;
+    RING& MixedRadixToRing( RING& res,  const array& mixrad ) const;
 
         // -- Convert a Ring Element to a its RNS representation
         // with the "this" rns system.
     void RingToRns( array& rns, const RING& a ) const;
 
         // -- Convert a RNS representation to a RING Element
-    void RnsToRing( RING& a, const array& rns ) const;
+    RING& RnsToRing( RING& a, const array& rns ) const;
 
         // ------------- Access methods
 
@@ -72,6 +73,8 @@ public:
     const array& Reciprocals() const;
     const modulo reciprocal(const size_t i) const;
 
+        // -- Cstor with given primes
+    void setPrimes( const domains& primes );
 protected:
         // -------------- Compute some fields of the structure :
     void ComputeCk();

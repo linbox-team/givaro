@@ -29,6 +29,12 @@ RNSsystem<RING,Domain>::RNSsystem (const RNSsystem<RING,Domain>& R)
    _ck(R._ck, givWithCopy())
 {}
 
+template<class RING, class Domain>
+void RNSsystem<RING,Domain>::setPrimes (const RNSsystem<RING,Domain>::domains& inprimes) {
+    _primes.allocate(0);
+    _primes.copy( inprimes );
+    _ck.reallocate(0);
+}
 
   // -- Array of primes are given
 template<class RING, class Domain>

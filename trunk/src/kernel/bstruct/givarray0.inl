@@ -17,7 +17,8 @@
   // -- Default cstor : ctsor of s size array
 template<class T>
 inline void Array0<T>::build( size_t s, const T& t) {
-  GIVARO_ASSERT( s>=0, "[Array<T>::cstor(size_t)] must takes a >=0 parameter");
+// JGD 24.02.2011 : size_t is unsigned
+//  GIVARO_ASSERT( s>=0, "[Array<T>::cstor(size_t)] must takes a >=0 parameter");
   _psz = _size = s;
   if (s !=0) {
     _d = GivaroMM<T>::allocate(s);
@@ -105,7 +106,8 @@ inline void Array0<T>::allocate( size_t s )
 template<class T>
 inline void Array0<T>::reallocate( size_t s )
 {
-  GIVARO_ASSERT( s>=0, "[Array<T>::reallocate]: must takes a >=0 parameter");
+// JGD 24.02.2011 : size_t is unsigned
+//  GIVARO_ASSERT( s>=0, "[Array<T>::reallocate]: must takes a >=0 parameter");
   if (_cnt !=0) {
     if (*_cnt ==1) {
       if (_psz >=s) { _size = s; return; }
@@ -187,6 +189,21 @@ inline const T* Array0<T>::baseptr() const { return _d; }
 
   // This foloowing functions directly access to protected
 template <class T>
+inline const T& Array0<T>::front () const
+{
+  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
+  return _d[0];
+}
+
+// Access operator : Write access
+template <class T>
+inline T& Array0<T>::front ()
+{
+  GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
+  return _d[0];
+}
+
+template <class T>
 inline const T& Array0<T>::operator[] (Indice_t i) const
 {
   GIVARO_ASSERT(_size >0, "[Array<T>::[]]: try to access to an Element of null size Array0.");
@@ -202,6 +219,8 @@ inline T& Array0<T>::operator[] (Indice_t i)
   GIVARO_ASSERT((i >=0)&&(i<(Indice_t)_size), "[Array<T>]: index out of bounds.");
   return _d[i];
 }
+
+
 template <class T>
 inline void Array0<T>::write( Indice_t i, const T& val)
 {

@@ -50,7 +50,7 @@ public:
   const Residu_t one;
 
   // ----- Constructor /destor
-  ZpzDom( Residu_t p = 2);
+  ZpzDom( Residu_t p = 2 );
   ZpzDom( const ZpzDom<Log16>& F);
   ~ZpzDom();
 
@@ -221,6 +221,8 @@ protected:
   Power_t* _tab_neg;      // table for neg
   Power_t* _tab_addone;   // table for ei+1
   Power_t* _tab_subone;   // table for -(ei+1)
+  Power_t* _tab_mone;   // table for ei+1
+  Power_t* _tab_pone;   // table for -(ei+1)
   int* numRefs;
 
   static void Init();

@@ -85,8 +85,8 @@ ZpzDom<Log16>::ZpzDom( Residu_t p ) :
 	_tab_neg = &_tab_mul[_pmone/2];
 
 	// -- Table for 1+value
-	Power_t* tab_pone = new Power_t[fourp];
-	_tab_addone = &tab_pone[(int32_t)(zero)];
+	_tab_pone = new Power_t[fourp];
+	_tab_addone = &_tab_pone[(int32_t)(zero)];
 
 	/* Pascal Giorgi 24/04/02
 	   Error between _tab_rep2value and _tab_value2rep
@@ -121,8 +121,8 @@ ZpzDom<Log16>::ZpzDom( Residu_t p ) :
 
 
 	// -- Table for 1-value
-	Power_t* tab_mone = new Power_t[fourp];
-	_tab_subone = &tab_mone[(int32_t)zero];
+	_tab_mone = new Power_t[fourp];
+	_tab_subone = &_tab_mone[(int32_t)zero];
 
 	for(j=_pmone; j<=(int32_t)zero; j++)
 		_tab_subone[j] = 0;
@@ -140,7 +140,7 @@ ZpzDom<Log16>::ZpzDom( Residu_t p ) :
 
 	numRefs = new int;
 	(*numRefs) = 1;
-#ifdef REFC_DEBUG
+#ifdef GIVARO_DEBUG
 	std::cout << *(numRefs) << " Arefs, p="<<_p<<" \n";
 #endif
 
@@ -157,11 +157,13 @@ ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F)
   _tab_mul = F._tab_mul;
   _tab_div = F._tab_div;
   _tab_neg = F._tab_neg;
+  _tab_mone = F._tab_mone;
+  _tab_pone = F._tab_pone;
   _tab_addone = F._tab_addone;
   _tab_subone = F._tab_subone;
   numRefs = F.numRefs;
   (*numRefs)++;
-#ifdef REFC_DEBUG
+#ifdef GIVARO_DEBUG
   std::cout << *(numRefs) << " Brefs, p="<<_p<<" \n";
 #endif
 }
@@ -171,18 +173,21 @@ ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
 {
   if (this->numRefs) {
     (*(this->numRefs))--;
-#ifdef REFC_DEBUG
+#ifdef GIVARO_DEBUG
     std::cout << *(this->numRefs) << " Crefs, p="<<this->_p<<" \n";
 #endif
     if ((*(this->numRefs))==0) {
-#ifdef REFC_DEBUG
+#ifdef GIVARO_DEBUG
+      std::cout << "zero : " << zero << std::endl;  
       std::cout << "Ddestroying, p="<<residu()<<"\n";
 #endif
       delete [] _tab_value2rep;
       delete [] _tab_rep2value;
       delete [] _tab_mul;
-      delete [] (&_tab_addone[-zero]);
-      delete [] (&_tab_subone[-zero]);
+      delete [] _tab_mone;
+      delete [] _tab_pone;
+//       delete [] (&_tab_addone[-zero]);
+//       delete [] (&_tab_subone[-zero]);
       delete numRefs;
     }
   }
@@ -194,11 +199,13 @@ ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
   this->_tab_mul = F._tab_mul;
   this->_tab_div = F._tab_div;
   this->_tab_neg = F._tab_neg;
+  this->_tab_mone = F._tab_mone;
+  this->_tab_pone = F._tab_pone;
   this->_tab_addone = F._tab_addone;
   this->_tab_subone = F._tab_subone;
   this->numRefs = F.numRefs;
   (*(this->numRefs))++;
-#ifdef REFC_DEBUG
+#ifdef GIVARO_DEBUG
   std::cout << *(this->numRefs) << " Erefs, p = "<<this->_p<<"\n";
 #endif
 
@@ -210,14 +217,17 @@ ZpzDom<Log16>::~ZpzDom()
 {
   (*numRefs)--;
   if (*numRefs == 0) {
-#ifdef REFC_DEBUG
+#ifdef GIVARO_DEBUG
+    std::cout << "zero : " << zero << std::endl;  
     std::cout << "Fdestroying, p="<<residu()<<"\n";
 #endif
     delete [] _tab_value2rep;
     delete [] _tab_rep2value;
     delete [] _tab_mul;
-    delete [] (&_tab_addone[-zero]);
-    delete [] (&_tab_subone[-zero]);
+    delete [] _tab_mone;
+    delete [] _tab_pone;
+//     delete [] (&_tab_addone[-(int32_t)zero]);
+//     delete [] (&_tab_subone[-(int32_t)zero]);
     delete numRefs;
   }
 }

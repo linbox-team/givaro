@@ -321,6 +321,9 @@ int main(int argc, char ** argv)
 	ZpzDom<Log16> L2(2);
 	JETESTE(L2,seed);
 
+	ZpzDom<Log16> L2b( L2 );
+	JETESTE(L2b,seed);
+
 // Other Characteristics
 
 

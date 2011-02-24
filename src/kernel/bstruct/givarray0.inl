@@ -86,7 +86,8 @@ inline void Array0<T>::destroy( )
 template<class T>
 inline void Array0<T>::allocate( size_t s )
 {
-  GIVARO_ASSERT( s>=0, "[Array<T>::allocate]: must takes a >=0 parameter");
+// JGD 24.02.2011 : size_t is unsigned
+//  GIVARO_ASSERT( s>=0, "[Array<T>::allocate]: must takes a >=0 parameter");
   if (_cnt !=0) {
     if (((*_cnt) ==1) && (_psz >= s)) { _size = s; return; }
     this->destroy();

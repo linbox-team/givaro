@@ -130,6 +130,12 @@ inline void Array0<T>::reallocate( size_t s )
   _psz = _size = s;
 }
 
+template<class T>
+inline void Array0<T>::push_back( const T& a )
+{
+    this->reallocate(_size+1);
+    this->back() = a;
+}
 
   // Logical destructor: identical to free
 template<class T>

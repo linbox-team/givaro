@@ -2,9 +2,9 @@
 # Copyright(c)'1994-2009 by The Givaro group
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
-# and abiding by the rules of distribution of free software. 
+# and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
-# 
+#
 # Modified by Pascal Giorgi, 2003-12-03
 
 dnl LB_CHECK_GMP ([MINIMUM-VERSION [, ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
@@ -16,11 +16,11 @@ AC_DEFUN([LB_CHECK_GMP],
 
 AC_ARG_WITH(gmp,
 		[  --with-gmp= <path>|yes|no
-	   				   Use GMP library. 
+	   				   Use GMP library.
 					   If argument is no, you do not have the library installed on your machine.
 					   If argument is yes or <empty> that means the library is reachable with the standard
 					   search path "/usr" or "/usr/local"  (set as default).
-	 				   Otherwise you give the <path> to the directory which contain the library. 
+	 				   Otherwise you give the <path> to the directory which contain the library.
 		],
 		[if test "$withval" = yes ; then
 			GMP_HOME_PATH="/usr"
@@ -36,8 +36,8 @@ BACKUP_CXXFLAGS=${CXXFLAGS}
 BACKUP_LIBS=${LIBS}
 
 
-for GMP_HOME in ${GMP_HOME_PATH} 
-  do	
+for GMP_HOME in ${GMP_HOME_PATH}
+  do
 	if test "x$GMP_HOME" != "x/usr" -a "x$GMP_HOME" != "x/usr/local"; then
 		if test -r "$GMP_HOME/include/gmp.h" ; then
 			GMP_CFLAGS="-I${GMP_HOME}/include"
@@ -55,7 +55,7 @@ for GMP_HOME in ${GMP_HOME_PATH}
 		fi
 	else
 		GMP_CFLAGS=
-		GMP_LIBS="-lgmp"		
+		GMP_LIBS="-lgmp"
 	fi
 	AC_MSG_CHECKING(for GMP >= $min_gmp_version)
 	CXXFLAGS="${CXXFLAGS} ${GMP_CFLAGS}"
@@ -97,7 +97,7 @@ for GMP_HOME in ${GMP_HOME_PATH}
 				],[
 					dnl This should never happen
 					AC_MSG_RESULT(no)
-				])	
+				])
 			],[
 				AC_MSG_RESULT(no)
 				AC_DEFINE(GMP_VERSION_3,1,[Define if GMP is version 3.xxx])
@@ -108,7 +108,7 @@ for GMP_HOME in ${GMP_HOME_PATH}
 				AC_MSG_RESULT(no)
 			])
 			ifelse([$2], , :, [$2])
-		],[			
+		],[
 			AC_MSG_RESULT(problem)
 			echo "Sorry, your GMP version is too old. Disabling."
 			unset GMP_CFLAGS
@@ -121,14 +121,14 @@ for GMP_HOME in ${GMP_HOME_PATH}
 			echo "whether your GMP version is new enough. I am assuming it is."
 			AC_SUBST(GMP_CFLAGS)
 			AC_SUBST(GMP_LIBS)
-			AC_DEFINE(HAVE_GMP,1,[Define if GMP is installed])	
+			AC_DEFINE(HAVE_GMP,1,[Define if GMP is installed])
 			ifelse([$2], , :, [$2])
 		])
 	break
 	],[
 	AC_MSG_RESULT(not found)
 	unset GMP_CFLAGS
-	unset GMP_LIBS	
+	unset GMP_LIBS
 	ifelse([$3], , :, [$3])
 	])
 done

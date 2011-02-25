@@ -58,6 +58,8 @@ public :
   //-- Reallocation of an array of s Elements: if refcount>1
   // then it is always a creation of new array + recopy
   void reallocate (size_t s);
+  void resize (size_t s) { this->reallocate(s); }
+  void reserve (size_t s) { this->reallocate(s); this->reallocate(0); }
 
   //-- Physical copy operator: reallocate dest of the same size
   // as src (if necessary) and apply GivaroCopyItem<Array<T>,T> on each Element.
@@ -88,6 +90,9 @@ public :
   const T& back ()  const; //  *(--end())
   T& back (); //  *(--end())
 
+  //-- add one element at the end
+  void push_back( const T& a );
+  
   void write(Indice_t i, const Type_t& val);
   void read (Indice_t i, Type_t& val) const;
 

@@ -79,7 +79,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
 #endif
     }
 
-Timer timf; 
+	Timer timf;
     timf.clear(); timf.start();
     CRTSystemFixed CRTFixed( Primes );
     timf.stop();
@@ -94,11 +94,11 @@ Timer timf;
     std::cerr << "CRTFixed : " << timf << std::endl;
 #endif
 
-#ifdef GIVARO_DEBUG
+// #ifdef GIVARO_DEBUG
     if (a != b)
-        std::cerr << "incoherency between normal : " << a 
+        std::cerr << "incoherency between normal : " << a
                   << " and fixed : " << b << std::endl;
-#endif
+// #endif
 
    Elements Verifs( Primes.size() );
    CRT.RingToRns( Verifs, a );
@@ -152,19 +152,19 @@ int main(int argc, char ** argv) {
     Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed));
 
     bool success = true;
-    success &= (a1 == a2); 
+    success &= (a1 == a2);
     if (! success) std::cerr << "ERROR a1 != a2" << std::endl;
-    success &= (a3 == a4); 
+    success &= (a3 == a4);
     if (! success) std::cerr << "ERROR a3 != a4" << std::endl;
-    success &= (a6 == a5); 
+    success &= (a6 == a5);
     if (! success) std::cerr << "ERROR a5 != a6" << std::endl;
-    success &= (a7 == a8); 
+    success &= (a7 == a8);
     if (! success) std::cerr << "ERROR a7 != a8" << std::endl;
-    success &= (a1 == a3); 
+    success &= (a1 == a3);
     if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
-    success &= (a5 == a7); 
+    success &= (a5 == a7);
     if (! success) std::cerr << "ERROR a5 != a7" << std::endl;
-    success &= (a1 == a5); 
+    success &= (a1 == a5);
     if (! success) std::cerr << "ERROR a1 != a5" << std::endl;
 
 

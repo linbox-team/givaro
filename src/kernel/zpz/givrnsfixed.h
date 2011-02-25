@@ -3,19 +3,18 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <24 Feb 11 17:20:59 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <25 Feb 11 13:37:02 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm.
 #ifndef __GIVARO_arithmodu_fixedprimes_H
 #define __GIVARO_arithmodu_fixedprimes_H
 
-#include <vector>
 #include "givaro/givrns.h"
 #include "givaro/givrandom.h"
 #include "givaro/givintprime.h"
 #include "givaro/givzpzInt.h"
-
+#include <vector>
 
 template<class Ints>
 class RNSsystemFixed  {
@@ -34,7 +33,8 @@ public:
     RNSsystemFixed( const array& primes );
 
         // -- Convert a RNS representation to a Ints Element
-    Ints& RnsToRing( Ints& a, const array& rns ) const;
+    template<class smallIntVector>
+    Ints& RnsToRing( Ints& a, const smallIntVector& rns ) const;
 
         // ------------- Access methods
 
@@ -48,8 +48,10 @@ public:
 
 
 protected:
-    Ints& RnsToRingLeft( Ints& I, const array& residues, const int level, const int col ) const;
-    Ints& RnsToRingRight( Ints& I, const array& residues, const int level, const int col ) const;
+    template<class smallIntVector>
+    Ints& RnsToRingLeft( Ints& I, const smallIntVector& residues, const int level, const int col ) const;
+    template<class smallIntVector>
+    Ints& RnsToRingRight( Ints& I, const smallIntVector& residues, const int level, const int col ) const;
 
     tree  _primes; 	// - array of the primes and reciprocals
     RNS_t _RNS;		// - unbalanced recovery

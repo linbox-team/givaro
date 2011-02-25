@@ -3,19 +3,18 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <24 Feb 11 17:20:55 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <25 Feb 11 13:34:46 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm.
 #ifndef __GIVARO_arithmodu_fixedprimes_INL
 #define __GIVARO_arithmodu_fixedprimes_INL
 
-
-
-
+#include "givaro/givpower.h"
 
 template<class Ints>
-Ints& RNSsystemFixed<Ints>::RnsToRingLeft( Ints& I, const typename RNSsystemFixed<Ints>::array& residues, const int level, const int col ) const {
+template<class smallIntVector>
+Ints& RNSsystemFixed<Ints>::RnsToRingLeft( Ints& I, const smallIntVector& residues, const int level, const int col ) const {
     if (level) {
         int lowercol=col<<1, lowercolnext=lowercol+1;
         int lowerlevel=level-1;
@@ -35,7 +34,8 @@ Ints& RNSsystemFixed<Ints>::RnsToRingLeft( Ints& I, const typename RNSsystemFixe
 }
 
 template<class Ints>
-Ints& RNSsystemFixed<Ints>::RnsToRingRight( Ints& I, const typename RNSsystemFixed<Ints>::array& residues, const int level, const int col ) const {
+template<class smallIntVector>
+Ints& RNSsystemFixed<Ints>::RnsToRingRight( Ints& I, const smallIntVector& residues, const int level, const int col ) const {
     if (level) {
         int lowercol=col<<1, lowercolnext=lowercol+1;
         int lowerlevel=level-1;
@@ -56,7 +56,8 @@ Ints& RNSsystemFixed<Ints>::RnsToRingRight( Ints& I, const typename RNSsystemFix
 
   // Convert to an Ints:
 template<class Ints>
-Ints& RNSsystemFixed<Ints>::RnsToRing( Ints& I, const RNSsystemFixed<Ints>::array& rns) const
+template<class smallIntVector>
+Ints& RNSsystemFixed<Ints>::RnsToRing( Ints& I, const smallIntVector& rns) const
 {
     int ir = _RNS.Primes().size();
     typename RNS_t::array Reds( ir );
@@ -93,6 +94,7 @@ RNSsystemFixed<Ints>::RNSsystemFixed( const RNSsystemFixed<Ints>::array& inprime
  : _primes(0)
 {
    GIVARO_ASSERT( inprimes.size()>0, "[RNSsystemFixed<Ints>::RNSsystemFixed] bad size of array");
+   _primes.reserve( GIVINTLOG(inprimes.size()) );
    _primes.resize(1);
 
    for(typename array::const_iterator pit = inprimes.begin(); pit != inprimes.end(); ++pit) {
@@ -119,7 +121,7 @@ RNSsystemFixed<Ints>::RNSsystemFixed( const RNSsystemFixed<Ints>::array& inprime
 
 
 
-           array newlevel;
+           array newlevel(1); newlevel.resize(0);
            int s = _primes.back().size();
 
            Ints& p0(_primes[lastp][s-2]), & p1(_primes[lastp][s-1]);

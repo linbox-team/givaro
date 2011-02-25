@@ -160,7 +160,7 @@ public :
 	return o << T.realtime() << "s (" << ut << " cpu) [" << T.count() << "]";
 }
 
-#ifdef _OPENMP
+#if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H)
 #include <omp.h>
 struct OMPTimer {
     double _c;

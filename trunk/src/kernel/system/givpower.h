@@ -5,16 +5,26 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givpowers.h
-// Time-stamp: <20 Jan 11 11:22:23 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <25 Feb 11 13:34:07 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 
 #ifndef __GIVARO_power_H
 #define __GIVARO_power_H
 
 // -------------------------------------------------------------
+// Integer log
+// -------------------------------------------------------------
+template<typename T> inline unsigned GIVINTLOG(const T& a) {
+    unsigned l(0);
+    for(T v(a); v >>= 1; ++l) {}
+    return l;
+}
+
+
+
+// -------------------------------------------------------------
 // Powering
 // -------------------------------------------------------------
-
 template<class TT, class UU> TT power(const TT n, const UU l) {
   if (l == 0) return 1 ;
 

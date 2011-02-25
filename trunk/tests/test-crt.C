@@ -57,7 +57,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
         *p = a;
 //         i->random( generator, *e );
         i->init(*e,  generator() );
-        *m = *e;
+        i->convert(*m,*e);
         M *= a;
     }
 
@@ -70,16 +70,16 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
     Field(PrimeDoms.front()).write( std::cerr << tim << " using ") << std::endl;
 #endif
 
+#ifdef GIVARO_DEBUG
     if (PrimeDoms.size() < 50) {
         i = PrimeDoms.begin();
         e = Moduli.begin();
-#ifdef GIVARO_DEBUG
         for( ; i != PrimeDoms.end(); ++i, ++e)
             i->write(std::cout << a << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;
-#endif
     }
+#endif
 
-	Timer timf;
+    Timer timf;
     timf.clear(); timf.start();
     CRTSystemFixed CRTFixed( Primes );
     timf.stop();
@@ -138,7 +138,7 @@ int main(int argc, char ** argv) {
         // argv[2] : 2^{32-j} is size of primes
         // argv[3] : seed for generator
 
-    GivRandom seedor( argc>3 ? atoi(argv[3]):1234 );
+    GivRandom seedor( argc>3 ? atoi(argv[3]): BaseTimer::seed() );
     unsigned long seed = seedor.seed();
 
 

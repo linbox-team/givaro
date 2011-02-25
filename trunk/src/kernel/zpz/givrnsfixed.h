@@ -3,7 +3,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <25 Feb 11 13:37:02 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <25 Feb 11 13:53:54 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm.

@@ -3,7 +3,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <25 Feb 11 13:34:46 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <25 Feb 11 14:38:08 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm.
@@ -90,8 +90,7 @@ RNSsystemFixed<Ints>::RNSsystemFixed (const RNSsystemFixed<Ints>& R)
 
   // -- Array of primes are given
 template<class Ints>
-RNSsystemFixed<Ints>::RNSsystemFixed( const RNSsystemFixed<Ints>::array& inprimes)
- : _primes(0)
+RNSsystemFixed<Ints>::RNSsystemFixed( const RNSsystemFixed<Ints>::array& inprimes) : _primes(0)
 {
    GIVARO_ASSERT( inprimes.size()>0, "[RNSsystemFixed<Ints>::RNSsystemFixed] bad size of array");
    _primes.reserve( GIVINTLOG(inprimes.size()) );
@@ -121,7 +120,8 @@ RNSsystemFixed<Ints>::RNSsystemFixed( const RNSsystemFixed<Ints>::array& inprime
 
 
 
-           array newlevel(1); newlevel.resize(0);
+           array newlevel;
+           
            int s = _primes.back().size();
 
            Ints& p0(_primes[lastp][s-2]), & p1(_primes[lastp][s-1]);

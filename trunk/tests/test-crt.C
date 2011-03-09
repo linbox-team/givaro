@@ -95,9 +95,11 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator) {
 #endif
 
 // #ifdef GIVARO_DEBUG
-    if (a != b)
+    if (a != b) {
         std::cerr << "incoherency between normal : " << a
                   << " and fixed : " << b << std::endl;
+		return 0 ; // très peu probable que res=0 pour de vrai.
+	}
 // #endif
 
    Elements Verifs( Primes.size() );
@@ -150,6 +152,13 @@ int main(int argc, char ** argv) {
     Integer a6 = tmain<Field6>(argc, argv, GivRandom(seed));
     Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed));
     Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed));
+
+	if (!(a1 & a2 & a3 & a4 & a5 & a6 & a7 & a8)) {
+#ifdef GIVARO_DEBUG
+		std::cerr << "one test failed" << std::endl;
+#endif
+		return false ;
+	}
 
     bool success = true;
     success &= (a1 == a2);

@@ -121,12 +121,10 @@ void UserTimer::start()
 	struct rusage  tmp1 ;  // to getrusage (sys+user times)
 	getrusage (RUSAGE_SELF, &tmp1) ;
 	// user time
-	_t = _start_t = (double) tmp1.ru_utime.tv_sec +
-	((double) tmp1.ru_utime.tv_usec)/ (double)MSPSEC ;
-        
+	_t = _start_t = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ (double)MSPSEC ;
+
 #endif
 }
-
 
 // Stop timer
 void UserTimer::stop()
@@ -137,8 +135,7 @@ void UserTimer::stop()
 	struct rusage  tmp1 ;  // to getrusage (sys+user times)
 	getrusage (RUSAGE_SELF, &tmp1) ;
 	// user time
-	_t = (double) tmp1.ru_utime.tv_sec +
-	((double) tmp1.ru_utime.tv_usec)/ (double)MSPSEC - _start_t;
+	_t = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec) / (double) MSPSEC - _start_t;
 #endif
 }
 
@@ -147,13 +144,12 @@ void UserTimer::stop()
 void SysTimer::start()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
-	_t = _start_t = USER_TIME ;
+	_t = _start_t = USER_TIME ; //! @bug here.
 #else
 	struct rusage  tmp1 ;  // to getrusage (sys+user times)
 	getrusage (RUSAGE_SELF, &tmp1) ;
 	// user time
-	_t = _start_t = (double) tmp1.ru_stime.tv_sec +
-	((double) tmp1.ru_stime.tv_usec)/ (double)MSPSEC ;
+	_t = _start_t = (double) tmp1.ru_stime.tv_sec + ((double) tmp1.ru_stime.tv_usec)/ (double)MSPSEC ;
 #endif
 }
 
@@ -226,7 +222,7 @@ const Timer Timer::operator - (const Timer & T)  const
 	Tmp.ut = ut - T.ut ;
 	Tmp.st = st - T.st ;
 	Tmp.rt = rt - T.rt ;
-		Tmp._count = _count - T._count;
+	Tmp._count = _count - T._count;
 	return Tmp ;
 }
 
@@ -236,7 +232,7 @@ const Timer Timer::operator - ()
 	Tmp.ut = -ut ;
 	Tmp.st = -st ;
 	Tmp.rt = -rt ;
-		Tmp._count = - _count;
+	Tmp._count = - _count;
 	return Tmp ;
 }
 

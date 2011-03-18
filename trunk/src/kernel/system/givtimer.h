@@ -29,17 +29,17 @@
   */
 
 class BaseTimer {
-	public:
+public:
 	enum {
 		MSPSEC = 1000000  // microsecond per second
 	};
 
-    	BaseTimer() : _start_t(0.), _t(0.) {}
+	BaseTimer() : _start_t(0.), _t(0.) {}
 
 	// -- Clear timer :
 	inline void clear()
 	{
-		_t = 0;
+		_t = 0.0;
 	}
 
 	// -- total amount of second spent
@@ -77,6 +77,12 @@ public:
 	inline RealTimer(){};
 	void start();
 	void stop();
+	inline double elapsed()
+	{
+		stop();
+		return _t ; // time()
+	}
+
 };
 
 
@@ -86,6 +92,12 @@ public:
 	inline UserTimer() {};
 	void start();
 	void stop();
+	inline double elapsed()
+	{
+		stop();
+		return _t ; // time()
+	}
+
 };
 
 
@@ -95,36 +107,85 @@ public:
 	inline SysTimer() {};
 	void start();
 	void stop();
+	inline double elapsed()
+	{
+		stop();
+		return _t ; // time()
+	}
+
 };
 
 
 class Timer {
 public :
 
-    Timer() : _count(0)
+	Timer() : _count(0)
 	{
 		rt.clear();
 		ut.clear();
 		st.clear();
 	}
 
-	// Clear timer :
+	/*! Clear timer.
+	 * Everything reset to 0. This need not be called before the first
+	 * start since the constructor does it.
+	 */
 	void clear();
 
-	// Start timer
+	/*! Start timer.
+	 * Starts the timer.
+	 * If called after  another \c start() or a \c stop(), it sets the timer
+	 * to a totally fresh new start.
+	 */
 	void start();
 
-	// Stop timer
+	/*! Stop timer.
+	 * Stops the timer. The time since the previous \c start() is stored.
+	 * If called again, \c stop() will store the time since the previous \c
+	 * start() again, acting as a \c pause().
+	 * @pre \c start() should have been called before...
+	 */
 	void stop();
 
-	// total amount of second spent in user mode
+	/*! total amount of second spent in user mode.
+	 * @return the user time elapsed between the latest \c start() and the
+	 * latest \c stop().
+	 * @pre \c stop() is called before.
+	 */
 	double usertime() const { return ut.time(); }
 
-	// total amount of second spent in system mode
+	/*! total amount of second spent in system mode.
+	 * @return the system time elapsed between the latest \c start() and
+	 * the latest \c stop().
+	 * @pre \c stop() is called before.
+	 */
 	double systime () const { return st.time(); }
 
-	// real total amount of second spent.
+	/*! real total amount of second spent.
+	 * @return the real total time elapsed between the latest \c start()
+	 * and the latest \c stop().
+	 * @pre \c stop() is called before.
+	 */
 	double realtime () const { return rt.time(); }
+
+	/*! User mode time spent since start.
+	 * A call to \c stop() is useless.
+	 * @return elpased time (in seconds) since \c start() in user mode.
+	 */
+	double userElapsedTime()  { return ut.elapsed(); }
+
+	/*! System mode time spent since start.
+	 * A call to \c stop() is useless.
+	 * @return elpased time (in seconds) since \c start() in system mode.
+	 */
+	double sysElapsedTime ()  { return st.elapsed(); }
+
+	/*! real total amount of second spent since start.
+	 * A call to \c stop() is useless.
+	 * @return elpased time (in seconds) since \c start().
+	 */
+	double realElapsedTime () { return rt.elapsed(); }
+
 
 	// retourne une petite graine
 	// long seed() const { return RealTimer::seed(); }
@@ -146,14 +207,14 @@ public :
 		return _count;
 	}
 
-	private:
+private:
 	size_t _count; // how many
 	RealTimer rt;
 	UserTimer ut;
 	SysTimer  st;
 };
 
-	inline std::ostream &operator << (std::ostream &o, const Timer &T)
+inline std::ostream &operator << (std::ostream &o, const Timer &T)
 {
 	double ut = T.usertime();
 	if (ut < 0.0000000001) ut = 0;
@@ -163,25 +224,29 @@ public :
 #if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H)
 #include <omp.h>
 struct OMPTimer {
-    double _c;
-    void start() { _c = omp_get_wtime(); }
-    void stop() { _c = omp_get_wtime() - _c; }
-    void clear() { _c = 0.0; }
-    double realtime() { return _c; }
-    double usertime() { return _c; }
-    double time() const { return _c; }
-    friend std::ostream& operator<<(std::ostream& o, const OMPTimer& t) {
-        return o << t._c << 's';
-    }
+	double _c;
+	void start() { _c = omp_get_wtime(); }
+	void stop() { _c = omp_get_wtime() - _c; }
+	void clear() { _c = 0.0; }
+	double realtime() { return _c; }
+	double usertime() { return _c; }
+	double time() const { return _c; }
+	friend std::ostream& operator<<(std::ostream& o, const OMPTimer& t) {
+		return o << t._c << 's';
+	}
 
-    OMPTimer& operator =(const OMPTimer& t) { _c = t._c; return *this; }
-    OMPTimer& operator+=(const OMPTimer& t) { _c += t._c; return *this; }
-    OMPTimer& operator-=(const OMPTimer& t) { _c -= t._c; return *this; }
-    OMPTimer  operator +(const OMPTimer& t) const {
-        OMPTimer r; r._c = _c + t._c; return r; }
-    OMPTimer  operator -(const OMPTimer& t) const {
-        OMPTimer r; r._c = _c - t._c; return r; }
-    OMPTimer  operator -() { OMPTimer r; r._c = - _c; return r; }
+	OMPTimer& operator =(const OMPTimer& t) { _c = t._c; return *this; }
+	OMPTimer& operator+=(const OMPTimer& t) { _c += t._c; return *this; }
+	OMPTimer& operator-=(const OMPTimer& t) { _c -= t._c; return *this; }
+	OMPTimer  operator +(const OMPTimer& t) const
+	{
+		OMPTimer r; r._c = _c + t._c; return r;
+	}
+	OMPTimer  operator -(const OMPTimer& t) const
+	{
+		OMPTimer r; r._c = _c - t._c; return r;
+	}
+	OMPTimer  operator -() { OMPTimer r; r._c = - _c; return r; }
 };
 #endif
 

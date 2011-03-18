@@ -41,7 +41,7 @@ AC_SUBST([TESTS_CFLAGS])
 # Give a sane default for CFLAGS and CXXFLAGS
 # DEFAULT_CFLAGS="-g -O2 -Wall -Wextra -Wno-unused-parameter"
 TESTS_CFLAGS="-O0"
-DEFAULT_CFLAGS="-O2"
+DEFAULT_CFLAGS="-O2 -pipe"
 DEBUG_CFLAGS="-g -Wall"
 
 # disable default -g -O2 CXXFLAGS

@@ -141,6 +141,7 @@ inline void Array0<T>::push_back( const T& a )
 template<class T>
 inline Array0<T>::~Array0 ()
 {
+	// std::cout << "destroying array" << std::endl;
   this->destroy();
 }
 

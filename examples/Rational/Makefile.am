@@ -28,13 +28,13 @@ AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS)
 AM_CPPFLAGS += -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/kernel/rational -I$(top_srcdir)/src/library/tools -I$(top_srcdir)/src/library/poly1
 
 LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
+AM_LDFLAGS=-static
 
 
 EXTRA_PROGRAMS=iratrecon polydouble
 CLEANFILES=$(EXTRA_PROGRAMS)
 
-iratrecon_SOURCES = iratrecon.C
-
+iratrecon_SOURCES  = iratrecon.C
 polydouble_SOURCES = polydouble.C
 
 # for compilation of new examples

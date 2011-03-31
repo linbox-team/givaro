@@ -27,19 +27,20 @@ AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/kernel/rational -I$(top_srcdir)/src/library/tools
 
 LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
+AM_LDFLAGS=-static
 
 
 EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT
 CLEANFILES=$(EXTRA_PROGRAMS)
 
-interpolate_SOURCES = interpolate.C
-isirred_SOURCES = isirred.C
-isprimitive_SOURCES = isprimitive.C
-pol_arith_SOURCES = pol_arith.C
-trunc_arith_SOURCES = trunc_arith.C
-pol_eval_SOURCES = pol_eval.C
-pol_factor_SOURCES = pol_factor.C
-PolynomialCRT_SOURCES =  PolynomialCRT.C
+interpolate_SOURCES   = interpolate.C
+isirred_SOURCES       = isirred.C
+isprimitive_SOURCES   = isprimitive.C
+pol_arith_SOURCES     = pol_arith.C
+trunc_arith_SOURCES   = trunc_arith.C
+pol_eval_SOURCES      = pol_eval.C
+pol_factor_SOURCES    = pol_factor.C
+PolynomialCRT_SOURCES = PolynomialCRT.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@

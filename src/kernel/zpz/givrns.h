@@ -40,7 +40,7 @@ public:
 
         // Default Cstor, Dstor/Cstor of recopy:
     RNSsystem() ;
-    ~RNSsystem();
+    ~RNSsystem() ;
     RNSsystem(const Self_t& R);
 
         // -- Cstor with given primes

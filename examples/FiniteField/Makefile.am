@@ -32,21 +32,21 @@ AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
 
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
+AM_LDFLAGS=-static
 
 
 EXTRA_PROGRAMS=gfq_atomic Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field GF128 GFirreducible
-
 CLEANFILES=$(EXTRA_PROGRAMS)
 
-GFirreducible_SOURCES=GFirreducible.C
-GF128_SOURCES=GF128.C
-domain_to_operatorstyle_SOURCES=domain_to_operatorstyle.C
-all_field_SOURCES=all_field.C
-gfq_atomic_SOURCES=gfq_atomic.C
-Test_Extension_SOURCES=Test_Extension.C
-zpz_atomic_SOURCES=zpz_atomic.C
-ff_arith_SOURCES=ff_arith.C
-exponentiation_SOURCES=exponentiation.C
+GFirreducible_SOURCES           = GFirreducible.C
+GF128_SOURCES                   = GF128.C
+domain_to_operatorstyle_SOURCES = domain_to_operatorstyle.C
+all_field_SOURCES               = all_field.C
+gfq_atomic_SOURCES              = gfq_atomic.C
+Test_Extension_SOURCES          = Test_Extension.C
+zpz_atomic_SOURCES              = zpz_atomic.C
+ff_arith_SOURCES                = ff_arith.C
+exponentiation_SOURCES          = exponentiation.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@

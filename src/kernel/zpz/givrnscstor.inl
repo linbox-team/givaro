@@ -16,7 +16,8 @@
 // -- free memory allocated in array !
 template<class RING, class Domain>
 RNSsystem<RING,Domain>::~RNSsystem()
-{}
+{
+}
 
 template<class RING, class Domain>
 RNSsystem<RING,Domain>::RNSsystem ()

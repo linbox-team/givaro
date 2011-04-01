@@ -4,12 +4,11 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <15 Apr 10 14:28:48 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <01 Apr 11 11:38:28 Jean-Guillaume.Dumas@imag.fr>
 // Author: J-G. Dumas
 // Description: Polynomials modulo X^{k+1}
 // ===============================================================
 #ifndef __GIVARO_fixed_trunc_domain_H
-/bin/bash: q : commande introuvable
 #include <givaro/givtruncdomain.h>
 
 template <class Domain>

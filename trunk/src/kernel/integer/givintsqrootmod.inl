@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <20 Jan 11 11:02:30 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <22 Mar 11 15:05:39 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -64,9 +64,9 @@ IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
         puis = p; puis -= 9UL; puis >>= 4UL; 	// puis = (p-9)/16
         i *= d; i *= d;
         powmod(x, i, puis, p);			// (2d^2a)^{(p-9)/16}
-        i *= x; i *= x; --i;			// i=(2d^2x^2a-1) ; i^2 = -1
-
-        x *= d; x *= amp; x *= i;		// xda(i-1)
+        i *= x; i%=p; i *= x; i%=p; 		// i=2d^2x^2a ; i^2 = -1
+        --i;
+        x *= d; x%=p; x *= i; x%=p; x *= amp;	// xda(i-1)
         return x %= p;				// +/- x is a root
     }
 

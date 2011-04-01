@@ -3,7 +3,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <25 Feb 11 13:53:54 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <01 Apr 11 15:43:07 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm.
@@ -41,7 +41,7 @@ public:
         // -- Returns the number of primes of this ctxt
     int size() const { return _primes.size(); }
 
-        // -- Returns a array to the begin of the array of primes
+        // -- Returns a array to the beginning of the array of primes
     const tree& Primes() const;
         // -- Returns the ith primes of the rns system
     const Ints ith(const size_t i) const;

@@ -3,7 +3,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <25 Feb 11 14:38:08 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <08 Mar 11 16:23:50 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 // Description:
 //  Chinese Remainder Algorithm.
@@ -25,9 +25,7 @@ Ints& RNSsystemFixed<Ints>::RnsToRingLeft( Ints& I, const smallIntVector& residu
         I -= u0; 				// u1-u0
         I *= _primes[lowerlevel][lowercolnext];	// (u1-u0) * (p0(p0^{-1} mod p1))
         I += u0;				// (u1-u0)*M01+u0
-        Integer::modin(I, _primes[level][col]);// (u1-u0)*M01 +u0 mod p0p1, between 0 and p0p1-1
-        return I;
-//         return Integer::modin(I, _primes[level][col]);// (u1-u0)*M01 +u0 mod p0p1, between 0 and p0p1-1
+        return Integer::modin(I, _primes[level][col]);// (u1-u0)*M01 +u0 mod p0p1, between 0 and p0p1-1
     } else {
         return I=residues[col];
     }
@@ -45,8 +43,7 @@ Ints& RNSsystemFixed<Ints>::RnsToRingRight( Ints& I, const smallIntVector& resid
 
         I -= u0; 				// u1-u0
         I *= _primes[lowerlevel][lowercolnext];	// (u1-u0) * (p0(p0^{-1} mod p1))
-        I += u0;				// (u1-u0)*M01+u0
-        return I;
+        return I += u0;				// (u1-u0)*M01+u0
     } else {
         return I=residues[col];
     }

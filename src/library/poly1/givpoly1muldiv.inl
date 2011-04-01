@@ -368,6 +368,69 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep
 	return setdegree(Q);
 }
 
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmodin( Rep& Q, Rep& R, const Rep& B) const
+// returns Q such that A = B Q + R
+{
+	//     std::cerr << "BEG divmod of " << typeid(*this).name() << std::endl;
+	//     std::cerr << "BEG with _domain " << typeid(_domain).name() << std::endl;
+	Degree degB; degree(degB, B);
+#ifdef GIVARO_DEBUG
+	if (degB == Degree::deginfty)
+		GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
+#endif
+	Degree degA; degree(degA, R);
+	if (degA == Degree::deginfty) {
+		assign(R, zero);
+		return assign(Q, zero);
+	}
+	if (degB == 0) // cste
+	{
+		div(Q, R, B[0]);
+ 		assign(R, zero);
+                return Q;
+	}
+	//   write(std::cerr, A) << " of degA " << degA << std::endl;
+	//   write(std::cerr, B) << " of degB " << degB << std::endl;
+
+
+	// JGD 15.12.1999 :
+	//   if (degA ==0)
+	//   {
+	//     assign(R, zero);
+	//     return assign(Q, zero);
+	//   }
+	if (degB > degA) {
+		return assign(Q, zero);
+	}
+
+	long degQuo = value(degA-degB);
+	long degRem = value(degA);
+	Q.reallocate(degQuo+1);
+
+	// write(std::cerr << "A:=", A) << "; # of degA " << degA << std::endl;
+	// write(std::cerr << "B:=", B) << "; # of degB " << degB << std::endl;
+
+	for (long i=degQuo; i>=0; --i)
+	{
+		// == ld X^ (degRem-degQ)
+		_domain.div(Q[i], R[degRem], B[degB.value()]);
+		// _domain.write(std::cerr << "Q[" << i << "]:=", Q[i]) << ';' << std::endl;
+		//  std::cerr << "degB: " << degB << std::endl;
+		for (long j=0; degB>j; ++j) { // rem <- rem - ld*x^(degRem-degB)*B
+			_domain.maxpyin(R[j+i], Q[i], B[j]);
+		}
+		_domain.assign(R[degRem],_domain.zero) ; --degRem;
+		// write(std::cerr << "inR:=", R) << ';' << std::endl;
+	}
+	// write(std::cerr << "Q:=", Q) << "; # of degQ " << degQuo << std::endl;
+	// write(std::cerr << "R:=", R) << "; # of degR " << degRem << std::endl;
+	R.reallocate(degRem+1);
+	setdegree(R);
+	//     std::cerr << "END divmod of " << typeid(*this).name() << std::endl;
+	return setdegree(Q);
+}
+
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pdivmod

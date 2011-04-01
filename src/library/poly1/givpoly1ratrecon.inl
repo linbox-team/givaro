@@ -5,40 +5,93 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: J-G. Dumas
-// Time-stamp: <05 Oct 09 14:07:29 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <01 Apr 11 17:18:03 Jean-Guillaume.Dumas@imag.fr>
 // Description: generic rational fraction reconstruction
 // ===============================================================
 #ifndef __GIVARO_poly1_ratrecon_INL
 #define __GIVARO_poly1_ratrecon_INL
 
 template <class Domain>
-bool Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
+void Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
 
+  Degree degU, degV;
+  this->degree(degU,P); this->degree(degV,M);
+  if ((degU < dk) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return ; }
+  if ((degV < 0) || (degU == 0)) { this->assign(N,one); this->assign(D,one); return ; }
+
+  typename Poly1Dom<Domain,Dense>::Rep U;
+  this->assign(N, M);
+  this->assign(U, P);
+
+  Degree degN;
+  typename Poly1Dom<Domain,Dense>::Rep Q, D0;
+  this->assign(D0,this->zero);
+  this->assign(D,this->one);
+//   do {
+//       this->divmod(Q,N,V,U);
+
+//       this->assign(V,U);
+//       this->assign(U,N);
+//       this->maxpy(TMP2,Q,D,D0);
+//       this->assign(D0,D);
+//       this->assign(D,TMP2);
+//       this->degree(degN, N);
+//       if (degN <= dk) break;
+//   } while (degN>=0);
+
+  do {
+      this->divmodin(Q,N,U);
+      this->maxpyin(D0,Q,D);
+      this->degree(degN, N);
+      if ((degN <= dk) || (degN <0)) {
+          this->assign(D,D0);
+          break;
+      }
+
+      this->divmodin(Q,U,N);
+      this->maxpyin(D,Q,D0);
+
+      this->degree(degN, U);
+      if (degN <= dk) {
+          this->assign(N,U);
+          break;
+      }
+
+  } while (degN>=0);
+
+
+//   do {
+//       this->divmod(Q,N,V,U);
+//       this->maxpyin(D0,Q,D);
+//       this->degree(degN, N);
+//       if ((degN <= dk) || (degN <0)) {
+//           this->assign(D,D0);
+//           break;
+//       }
+//       this->assign(V,N);
+
+//       this->divmod(Q,N,U,V);
+//       this->maxpyin(D,Q,D0);
+
+//       this->degree(degN, N);
+//       if (degN <= dk) break;
+
+//       this->assign(U,N);
+//   } while (degN>=0);
+
+}
+
+
+template <class Domain>
+bool Poly1Dom<Domain,Dense>::ratreconcheck(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
   Degree degU, degV;
   this->degree(degU,P); this->degree(degV,M);
   if ((degU < dk) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return true; }
   if ((degV < 0) || (degU == 0)) { this->assign(N,one); this->assign(D,one); return false; }
+  
 
-  typename Poly1Dom<Domain,Dense>::Rep U, V;
-  this->assign(U, P);
-  this->assign(V, M);
+  ratrecon(N,D,P,M,dk);
 
-  Degree degN;
-  typename Poly1Dom<Domain,Dense>::Rep Q, TMP, TMP2, D0;
-  this->assign(D0,this->zero);
-  this->assign(D,this->one);
-  do {
-
-      this->divmod(Q,N,V,U);
-
-      this->assign(V,U);
-      this->assign(U,N);
-      this->maxpy(TMP2,Q,D,D0);
-      this->assign(D0,D);
-      this->assign(D,TMP2);
-      this->degree(degN, N);
-      if (degN <= dk) break;
-  } while (degN>=0);
 
   typename Poly1Dom<Domain,Dense>::Rep G;
   Degree degG;
@@ -50,6 +103,10 @@ bool Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, t
       this->divin(D, r);
       this->divin(N, r);
   }
+
   return true;
 }
+
+
+
 #endif // __GIVARO_poly1_ratrecon_INL

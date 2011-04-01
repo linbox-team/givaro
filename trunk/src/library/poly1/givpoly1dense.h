@@ -255,6 +255,10 @@ public :
 
         // A = q*B + r
     Rep& divmod( Rep& q, Rep& r, const Rep& a, const Rep& b ) const;
+    
+        // r <-- r - q*B ; d°(r) < d°(B)
+    Rep& divmodin( Rep& q, Rep& r, const Rep& b ) const;
+
 
         // m*A = q*B + r
     Rep& pdivmod( Rep& q, Rep& r, Type_t& m, const Rep& a, const Rep& b ) const;
@@ -275,7 +279,9 @@ public :
 
         // -- rational reconstruction
         // -- Builds N and D such that P * D = N mod M and degree(N) <= dk
-    bool ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk) const;
+    void ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk) const;
+    	// -- checks wether the reconstruction succeeded
+    bool ratreconcheck(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk) const;
 
         // -- misc
         // -- W <-- P^n

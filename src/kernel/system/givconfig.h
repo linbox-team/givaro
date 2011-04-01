@@ -183,7 +183,7 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #define GIVARO_ASSERT2(cond, msg1, msg2)
 #define GIVARO_REQUIRE(ignore, msg) ((void) 0)
 #define GIVARO_ENSURE(ignore, msg) ((void) 0)
-#define GIVARO_STATE(ignore, msg) ((void) 0)
+#define GIVARO_STATE(ignore) ((void) 0)
 
 #endif
 

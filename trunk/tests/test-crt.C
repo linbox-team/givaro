@@ -33,21 +33,21 @@ typedef ZpzDom<Integer>    Field8;
 template <typename Field>
 Integer tmain(int argc, char ** argv, const GivRandom& generator)
 {
-	typedef RNSsystem<Integer, Field >  CRTSystem;
-	typedef typename CRTSystem::domains	Domains;
-	typedef typename CRTSystem::array	Elements;
-	typedef typename CRTSystem::ring	Ring;
+	typedef RNSsystem<Integer, Field >      CRTSystem;
+	typedef typename CRTSystem::domains	  Domains;
+	typedef typename CRTSystem::array	 Elements;
+	typedef typename CRTSystem::ring	     Ring;
 
-	typedef RNSsystemFixed<Integer>  CRTSystemFixed;
-	typedef typename RNSsystemFixed<Integer>::array  Prime_t;
+	typedef RNSsystemFixed<Integer>    CRTSystemFixed;
+	typedef CRTSystemFixed::array             Prime_t;
 
 	IntPrimeDom ID;
 	Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1), b;
 
-	Prime_t Primes( argc>1 ? atoi(argv[1]):15);
-	Domains PrimeDoms( Primes.size() );
+	Prime_t  Primes( argc>1 ? atoi(argv[1]):15);
+	Domains  PrimeDoms( Primes.size() );
 	Elements Moduli( Primes.size() );
-	Prime_t ModuliInts( Primes.size() );
+	Prime_t  ModuliInts( Primes.size() );
 
 	typename Prime_t::iterator  p = Primes.begin();
 	typename Domains::iterator  i = PrimeDoms.begin();
@@ -56,7 +56,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 	for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
 		*i = Field( ID.nextprimein( a ) );
 		*p = a;
-		//         i->random( generator, *e );
+		// i->random( generator, *e );
 		i->init(*e,  generator() );
 		i->convert(*m,*e);
 		M *= a;

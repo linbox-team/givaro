@@ -80,6 +80,11 @@ Integer& Integer::div(Integer& res, const Integer& n1, const long n2)
 	return res;
 }
 
+
+Integer& Integer::div(Integer& res, const Integer& n1, const int n2) {
+	return div(res,n1,long(n2));
+}
+
 Integer& Integer::div(Integer& res, const Integer& n1, const unsigned long n2)
 {
 	if (isZero(n1)) return res = Integer::zero;

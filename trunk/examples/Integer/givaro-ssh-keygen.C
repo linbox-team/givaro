@@ -4,9 +4,13 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <21 Oct 10 10:20:21 Jean-Guillaume.Dumas@imag.fr>        //
+// Time-stamp: <05 Apr 11 17:28:53 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
 // Givaro replacement for ssh-keygen: generated keys use strong primes  //
+// Random generator is seeded by					 //
+//	- true randomness in file, e.g. 				 //
+//	  dd if=/dev/urandom of=.rand bs=1k count=16			 //
+//	- otherwise gettimeofday is used, see givrandom.h		 //
 // File formats are then managed by openssl and openssh, thus this file //
 // requires to be compiled with -lssl -lssh -lopenbsd-compat            //
 // Warning: Sometimes putting -lssh twice is required                   //
@@ -22,6 +26,7 @@
  * @brief NO DOC
  */
 #include <iostream>
+#include <fstream>
 #include <sys/stat.h>
 
 #include <openssl/rsa.h>
@@ -35,32 +40,36 @@ extern "C" {
 #include <givaro/givtimer.h>
 
 /* Strong pseudo-prime generation using Gordon's algorithm */
-void Givaro_keygen(Integer& n, Integer& e, Integer& d,
+template<class RandIter=GivRandom>
+struct Givaro_keygen {
+    void operator()(Integer& n, Integer& e, Integer& d,
                    Integer& p, Integer& q,
                    Integer& dmp1, Integer& dmq1,
-                   Integer& iqmp, long size) {
+                   Integer& iqmp, long size, unsigned long seed) {
 
-    IntRSADom<> IRD; IntRSADom<>::random_generator gen;
-
-    IRD.keys_gen(gen, (size>>1)+1, (size>>1)-1, n, e, d, p, q);
-
-    Integer phim,p1,q1; IRD.mul(phim, IRD.sub(p1,p,IRD.one), IRD.sub(q1,q,IRD.one));
-
-    Integer v, g;
-
-    IRD.mod(e, 65537, phim);
-    IRD.gcd(g,d,v,e,phim);
-
-    IRD.modin(d,phim);
-    if ( IRD.islt(d,IRD.zero) ) IRD.addin(d,phim);
-
-
-    IRD.mod(dmp1,d,p1);
-    IRD.mod(dmq1,d,q1);
-
-    IRD.gcd(g,iqmp,v,q,p);
-    if ( IRD.islt(iqmp,IRD.zero) ) IRD.addin(iqmp,p);
-
+        typename IntRSADom<RandIter>::random_generator gen(seed);
+        Integer::seeding(gen.seed());
+        IntRSADom<RandIter> IRD(false,gen); 
+        
+        IRD.keys_gen(gen, (size>>1)+1, (size>>1)-1, n, e, d, p, q);
+        
+        Integer phim,p1,q1; IRD.mul(phim, IRD.sub(p1,p,IRD.one), IRD.sub(q1,q,IRD.one));
+        
+        Integer v, g;
+        
+        IRD.mod(e, 65537, phim);
+        IRD.gcd(g,d,v,e,phim);
+        
+        IRD.modin(d,phim);
+        if ( IRD.islt(d,IRD.zero) ) IRD.addin(d,phim);
+        
+        
+        IRD.mod(dmp1,d,p1);
+        IRD.mod(dmq1,d,q1);
+        
+        IRD.gcd(g,iqmp,v,q,p);
+        if ( IRD.islt(iqmp,IRD.zero) ) IRD.addin(iqmp,p);
+    }
 };
 
 /* Converts a givaro integer to an openssl BIGNUM */
@@ -70,13 +79,13 @@ BIGNUM* Integer2BN(BIGNUM * n, const Integer& a) {
     return n;
 }
 
-int mymain(FILE* fileout, FILE* filepub, long s) {
-
+int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
+    
     RSA *rsa= new RSA();
 
     Integer in, ie, id, ip, iq, idmp1, idmq1, iiqmp;
     Timer tim;tim.clear();tim.start();
-    Givaro_keygen(in,ie,id,ip,iq,idmp1,idmq1,iiqmp, s);
+    Givaro_keygen<>()(in,ie,id,ip,iq,idmp1,idmq1,iiqmp, s, seed);
     tim.stop();
 
 /*
@@ -127,29 +136,72 @@ int mymain(FILE* fileout, FILE* filepub, long s) {
 
 }
 
+unsigned long seedfromfile(char * filename) {
+     std::ifstream filrand(filename);
+     unsigned long seed=0;
+     for(int i=0; i<sizeof(unsigned long); ++i) {
+         unsigned char t; filrand >> t;
+         seed <<= 8;
+         seed |= t;
+     }
+std::cerr << "Generated seed: " << seed << ", using " << filename << std::endl;
+     return seed;
+}
+
+    
+
+
 int main(int argc, char** argv)
 {
-    if ( (argc>4) || (
-        (argc>1) && (argv[1][0] == '-') ) ) {
-	std::cerr << "usage: " << argv[0]
-		  << " [size] [private-key-file] [public-key-file]"
-		  << std::endl;
-	return 1;
+    if (argc > 10) {
+        std::cerr << "Usage: givaro-ssh-keygen [-b bits] [-f private-key-file] [-p public-key-file] [-r randomness-file]" << std::endl;
+        return 0;
     }
-    long s =  argc>1? atoi(argv[1]) : 4096;
+
+    long s = 4096;
+    unsigned long seed = 0;
+    long files = 0;
+    std::string filprivname, filpubname;
+    
+ 
+    for (long i = 1; i < argc; i++) {
+        if (argv[i][0] == '-') {
+            switch(argv[i][1]) {
+                case 'b':; case 'B': {
+                    s = atoi(argv[++i]);
+                    break;
+                }
+                case 'f':; case 'F': {
+                    filprivname = std::string(argv[++i]);
+                    ++files;
+                    break;
+                }
+                case 'p':; case 'P': {
+                    filpubname = std::string(argv[++i]);
+                    ++files;
+                    break;
+                }
+                case 'r':; case 'R': {
+                    seed = seedfromfile(argv[++i]);
+                    break;
+                }
+            }
+        }
+    }
+   
 
     FILE * filpriv, *filpub;
-    if (argc>2) {
-        filpriv = fopen(argv[2],"w");
+    if (files > 1) {
+        filpriv = fopen(filprivname.c_str(),"w");
         if (argc>3) {
-            filpub = fopen(argv[3],"w");
-            mymain(filpriv,filpub,s);
+            filpub = fopen(filpubname.c_str(),"w");
+            mymain(filpriv,filpub,s,seed);
             fclose(filpub);
         } else
-            mymain(filpriv,stdout,s);
+            mymain(filpriv,stdout,s,seed);
         fclose(filpriv);
-        chmod(argv[2],(S_IRUSR|S_IWUSR));
+        chmod(filprivname.c_str(),(S_IRUSR|S_IWUSR));
     } else
-        mymain(stdout,stdout,s);
+        mymain(stdout,stdout,s,seed);
     return 0;
 }

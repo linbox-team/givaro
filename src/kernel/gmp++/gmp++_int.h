@@ -439,6 +439,7 @@ public:
 	 */
 	static Integer& div   (Integer& q, const Integer& n, const Integer& d);
 	static Integer& div   (Integer& q, const Integer& n, const long d);
+	static Integer& div   (Integer& q, const Integer& n, const int d);
 	static Integer& div   (Integer& q, const Integer& n, const unsigned long d);
 	/*! Division when \c d divides \c n.
 	 * @param q exact quotient

@@ -1,4 +1,4 @@
-# Copyright(c)'1994-2009 by The Givaro group
+# Copyright(c)'1994-2011 by The Givaro group
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software. 
@@ -6,7 +6,8 @@
 
 AC_PREREQ(2.61)
 
-AC_INIT([Givaro],[3.3.5],[Jean-Guillaume.Dumas@imag.fr],[givaro],[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
+AC_INIT([Givaro],[3.3.5],[Jean-Guillaume.Dumas@imag.fr],[givaro],
+		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
 AC_CONFIG_MACRO_DIR([macros]) #il le veut alors je le lui donne...
 AM_INIT_AUTOMAKE([1.8 gnu no-dependencies])
 AM_CONFIG_HEADER([config.h])
@@ -56,10 +57,10 @@ if  test "x${CXX}" = "xicpc" -o "x${CXX}" = "xicc"  ; then
    # DEBUG_CFLAGS="-fast"
 else 
 	if test "x${CXX}" = "xg++"  ; then
-	DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wextra -Wno-unused-parameter"
-else
-	AC_MSG_ERROR([please set environment variable 'CXX' to 'g++' or 'icpc'])
-fi
+		DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wextra -Wno-unused-parameter"
+	else
+		AC_MSG_ERROR([please set environment variable 'CXX' to 'g++' or 'icpc']) ;
+	fi
 fi
 
 # CFLAGS=${CFLAGS:-$(DEFAULT_CFLAGS)}

@@ -15,6 +15,7 @@ pkginclude_HEADERS=        \
 	givdegree.h			   \
 	givinterp.h			   \
 	givinterpgeom.h			   \
+	givinterpgeom-multip.h			   \
 	givpoly1dense.h		   \
 	givpoly1factor.h	   \
 	givpoly1padic.h		   \

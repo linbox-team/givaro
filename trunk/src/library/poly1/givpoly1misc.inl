@@ -302,7 +302,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorand
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::reverse( Rep& P, const Rep& Q) const {
 
-    this->setdegree(Q);
+//     this->setdegree(Q);
     P.resize(Q.size());
     std::reverse_copy(Q.begin(), Q.end(), P.begin());
     this->setdegree(P);

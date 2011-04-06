@@ -31,6 +31,7 @@ int main(int argc, char** argv)
 
 
     GivRandom generator;
+    Integer::seeding(generator.seed());
 
 
     tim.start();

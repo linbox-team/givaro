@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Oct 10 19:03:23 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <01 Apr 11 11:40:19 Jean-Guillaume.Dumas@imag.fr>
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
@@ -108,7 +108,7 @@ struct HighOrder {
     Type_t& shifteddotproduct(Type_t& dp, const Polynomial& P, const Polynomial& Q, const long shift) const {
         Degree dl; _poldom.degree(dl, P);
 
-        GIVARO_STATE( Degree dq; _poldom.degree(dq, Q); );
+        GIVARO_STATE( { Degree dq; _poldom.degree(dq, Q); } );
         GIVARO_ASSERT( (dl.value()+shift) <= (dq.value()+1), " in dotproduct HighOrder dP: " << dl << ", dQ: " << dq << ", shift: " << shift );
 
         _dom.assign(dp,_dom.zero);

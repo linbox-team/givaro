@@ -4,18 +4,18 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
-INCLUDES=-I$(top_srcdir)
+AM_CPPFLAGS=-I$(top_srcdir)
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS= -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory
+AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory
 
 pkginclude_HEADERS=        \
 	givindeter.h		   \
 	givpoly1.h			   \
 	givdegree.h			   \
 	givinterp.h			   \
-	givinterpgeom.h			   \
-	givinterpgeom-multip.h			   \
+	givinterpgeom.h		   \
+	givinterpgeom-multip.h \
 	givpoly1dense.h		   \
 	givpoly1factor.h	   \
 	givpoly1padic.h		   \

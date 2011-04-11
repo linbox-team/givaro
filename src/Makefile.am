@@ -4,9 +4,8 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
-INCLUDES=-I$(top_srcdir)
+AM_CPPFLAGS=-I$(top_srcdir)
 
-#  AM_CPPFLAGS=@DEFAULT_CFLAGS@
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 
 SUBDIRS=kernel library

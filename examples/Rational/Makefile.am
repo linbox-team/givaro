@@ -4,7 +4,7 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 all: $(EXTRA_PROGRAMS)
-INCLUDES=-I$(top_srcdir)
+AM_CPPFLAGS=-I$(top_srcdir)
 
 #OPTFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
 #OPTFLAGS+= -frerun-loop-opt -fexpensive-optimizations
@@ -24,7 +24,7 @@ INCLUDES=-I$(top_srcdir)
 
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS = $(OPTFLAGS) $(GMP_CFLAGS)
+AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS)
 AM_CPPFLAGS += -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/kernel/rational -I$(top_srcdir)/src/library/tools -I$(top_srcdir)/src/library/poly1
 
 LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
@@ -39,7 +39,5 @@ polydouble_SOURCES = polydouble.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@
-#  %:%.C
-#  $(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD)  $(shell $(GIVARO_BIN)/givaro-config --libs)
-.C:
-	$(CXX) $(OPTFLAGS) ${INCLUDES} $(AM_CPPFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)  `$(GIVARO_BIN)/givaro-config --libs`
+%:%.C
+	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)  `$(GIVARO_BIN)/givaro-config --libs`

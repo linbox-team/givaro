@@ -61,8 +61,8 @@
 // - xx: major version number
 // - yy: minor version number
 // - zz: revision number
-#define GIVARO_MAJOR_VERSION 03
-#define GIVARO_MINOR_VERSION 03
+#define GIVARO_MAJOR_VERSION    3
+#define GIVARO_MINOR_VERSION    3
 #define GIVARO_REVISION_VERSION 5
 #define GIVARO_VERSION 30305
 

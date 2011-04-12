@@ -36,7 +36,7 @@ if ("$answ" == "y") then
 	echo "Increment minor revision number ($vern -> $macro.$pminor.0) ? press '1' "
 	set pmacro = `echo $macro`
     @ pmacro ++
-	echo -n "Increment micro revision number ($vern -> $pmacro.0.0) ? press '2' "
+	echo -n "Increment macro revision number ($vern -> $pmacro.0.0) ? press '2' "
 	set increm = $<
 	switch ($increm)
 		case 0:
@@ -151,7 +151,7 @@ endif
 	# echo " ---> $newr"
 	# echo "s/GIVARO_VERSION ${revn}/GIVARO_VERSION ${newr}/" >> /tmp/verin.sed.$$
 	# sed -f /tmp/verin.sed.$$ $ver > /tmp/verin.$$
-	\rm -rf /tmp/verin.sed.$$
+	## \rm -rf /tmp/verin.sed.$$
 	# diff /tmp/verin.$$ $ver
 	# echo -n "Confirmation of incrementation ? "
 	# set answ = $<

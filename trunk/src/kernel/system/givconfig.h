@@ -64,7 +64,7 @@
 #define GIVARO_MAJOR_VERSION    3
 #define GIVARO_MINOR_VERSION    3
 #define GIVARO_REVISION_VERSION 5
-#define GIVARO_VERSION 30305
+#define GIVARO_VERSION          30305
 
 // -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)

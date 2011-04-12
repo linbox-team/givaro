@@ -2,39 +2,118 @@
 # Copyright(c)'1994-2009 by The Givaro group
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
-# and abiding by the rules of distribution of free software. 
+# and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
 
-set conf = configure.in
+set conf = configure.ac
 set mak = src/Makefile.am
 set ver = src/kernel/system/givconfig.h
 
-echo -n "Increment library version ? "
+echo -n "Increment library version ? (y/n)"
 set answ = $<
 if ("$answ" == "y") then
-	echo -n "`fgrep AC_INIT $conf`"
-	set vern = `fgrep AC_INIT $conf | cut -d',' -f2 | sed 's/ //g;s/\[//;s/\]//'`
+	#verbatim second argument of AC_INIT
+	set verb = `fgrep AC_INIT $conf | cut -d',' -f2`
+	# echo "$verb"
+	#removes spaces and brackets
+	set vern = `echo "$verb" | sed 's/ //g;s/\[//;s/\]//'`
+	# echo "$vern"
+	set line = `fgrep -n  AC_INIT $conf  | cut -d':' -f1`  #gets the line
+    set macro = `echo "$vern" | cut -d'.' -f1` #a version number is macro.minor.micro
+    set minor = `echo "$vern" | cut -d'.' -f2`
+	set micro = `echo "$vern" | cut -d'.' -f3`
+	# echo "$vern = $macro . $minor . $micro"
+	set tmpfile = `mktemp` #tempfile
+	set sedfile = `mktemp` #temp sed file
+	# echo "$tmpfile"
+	# echo "$sedfile"
+	set pmicro = `echo $micro`
+    @ pmicro ++
+	echo "Increment micro revision number ($vern -> $macro.$minor.$pmicro) ? press '0' "
+	set pminor = `echo $minor`
+    @ pminor ++
+	echo "Increment minor revision number ($vern -> $macro.$pminor.0) ? press '1' "
+	set pmacro = `echo $macro`
+    @ pmacro ++
+	echo -n "Increment micro revision number ($vern -> $pmacro.0.0) ? press '2' "
+	set increm = $<
+	switch ($increm)
+		case 0:
+			set newv = "[$macro.$minor.$pmicro]"
+			breaksw
+		case 1:
+			set newv = "[$macro.$pminor.0]"
+			breaksw
+		case 2:
+			set newv = "[$pmacro.0.0]"
+			breaksw
+		default:
+			set newv = "$verb"
+			echo "$increm read. Not incrementing anything."
+			breaksw
+	endsw
 
-	set num = `echo $vern | cut -d'.' -f3`
-	@ num ++
-	set newv = "`echo $vern | cut -d'.' -f1`.`echo $vern | cut -d'.' -f2`.$num"
-	echo " --> $newv"
-	echo "s/$vern/$newv/" | sed 's/\./\\\./g' > /tmp/confin.sed.$$
-	sed -f /tmp/confin.sed.$$ $conf > /tmp/confin.$$
-	\rm -rf /tmp/confin.sed.$$
-	diff /tmp/confin.$$ $conf
-	echo -n "Confirmation of incrementation ? "
-	set answ = $<
-	if ("$answ" == "y") then
-	    \mv -f /tmp/confin.$$ $conf
-	else
-	    \rm -f /tmp/confin.$$
+	#replacing [ ] and . with escaped version for sed would understand them as 'operators'
+	echo "$line s/$verb/$newv/" | sed 's/\./\\\./g;s/\[/\\\[/g;s/\]/\\\]/g' > $sedfile
+	sed -f $sedfile $conf > $tmpfile
+	#clean up
+	\rm -f $sedfile
+	#diff for changes
+	diff -u0 $conf $tmpfile
+	#if something was changed, confirm incrementation :
+    if ("$newv" != "$verb") then
+		echo -n "Confirmation of incrementation ? (yes/no)"
+		set answ = $<
+		if ("$answ" == "yes") then
+			\mv -f $tmpfile $conf
+		else
+			echo "$answ read. Not incrementing anything."
+			\rm -f $tmpfile
+		endif
+		#now change givconfig accordingly
+		echo -n "Incrementing givconfig revision accordingly"
+		set tmpfile = `mktemp` #tempfile
+		set sedfile = `mktemp` #tempfile
+		echo $tmpfile
+		echo $sedfile
+		switch ($increm)
+			case 0:
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION $pmicro/" > $sedfile
+                set decimalverion = `expr \( $macro \* 100 + $minor \) \* 100 + $pmicro`
+				echo $decimalverion
+				breaksw
+			case 1:
+				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    $pminor/"  > $sedfile
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/" >> $sedfile
+                set decimalverion = `expr \( $macro \* 100 + $pminor \) \* 100`
+				breaksw
+			case 2:
+				echo "s/GIVARO_MAJOR_VERSION.*/GIVARO_MAJOR_VERSION    $pmacro/" > $sedfile
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/" >> $sedfile
+				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    0/"  >> $sedfile
+                set decimalverion = `expr $pmacro \* 10000`
+				breaksw
+			default:
+				echo "Something abnormal happened"
+				breaksw
+		endsw
+		echo "s/GIVARO_VERSION.*/GIVARO_VERSION          $decimalverion/" >> $sedfile
+		sed -f $sedfile $ver > $tmpfile
+		\rm -r $sedfile
+		diff -u0 $ver $tmpfile
+		echo -n "Confirmation of incrementation ? (yes/no) "
+		set answ = $<
+		if ("$answ" == "yes") then
+			\mv -f $tmpfile $ver
+		else
+			\rm -f $tmpfile
+		endif
+
 	endif
 endif
 
-
-echo -n "Increment soname revision ? "
+echo -n "Increment soname revision ? (y/n)"
 set answ = $<
 if ("$answ" == "y") then
 	echo -n "`fgrep libgivaro_la_LDFLAGS $mak`"
@@ -46,7 +125,7 @@ if ("$answ" == "y") then
 	sed -f /tmp/makin.sed.$$ $mak > /tmp/makin.$$
 	\rm -rf /tmp/makin.sed.$$
 	diff /tmp/makin.$$ $mak
-	echo -n "Confirmation of incrementation ? "
+	echo -n "Confirmation of incrementation ? (y/n)"
 	set answ = $<
 	if ("$answ" == "y") then
 	    \mv -f /tmp/makin.$$ $mak
@@ -56,29 +135,29 @@ if ("$answ" == "y") then
 endif
 
 
-echo -n "Increment givconfig revision ? "
-set answ = $<
-if ("$answ" == "y") then
-	echo -n "`fgrep GIVARO_REVISION_VERSION $ver`"
-	set revn = `fgrep GIVARO_REVISION_VERSION $ver | awk '{print $3}'`
-	set newr = $revn
-	@ newr ++
-	echo " ---> $newr"
-	echo "s/GIVARO_REVISION_VERSION ${revn}/GIVARO_REVISION_VERSION ${newr}/" > /tmp/verin.sed.$$
-	echo -n "`fgrep GIVARO_VERSION $ver`"
-	set revn = `fgrep GIVARO_VERSION $ver | awk '{print $3}'`
-	set newr = $revn
-	@ newr ++
-	echo " ---> $newr"
-	echo "s/GIVARO_VERSION ${revn}/GIVARO_VERSION ${newr}/" >> /tmp/verin.sed.$$
-	sed -f /tmp/verin.sed.$$ $ver > /tmp/verin.$$
-	#\rm -rf /tmp/verin.sed.$$
-	diff /tmp/verin.$$ $ver
-	echo -n "Confirmation of incrementation ? "
-	set answ = $<
-	if ("$answ" == "y") then
-	    \mv -f /tmp/verin.$$ $ver
-	else
-	    \rm -f /tmp/verin.$$
-	endif
-endif
+# echo -n "Increment givconfig revision ? "
+# set answ = $<
+# if ("$answ" == "y") then
+	# echo -n "`fgrep GIVARO_REVISION_VERSION $ver`"
+	# set revn = `fgrep GIVARO_REVISION_VERSION $ver | awk '{print $3}'`
+	# set newr = $revn
+	# @ newr ++
+	# echo " ---> $newr"
+	# echo "s/GIVARO_REVISION_VERSION ${revn}/GIVARO_REVISION_VERSION ${newr}/" > /tmp/verin.sed.$$
+	# echo -n "`fgrep GIVARO_VERSION $ver`"
+	# set revn = `fgrep GIVARO_VERSION $ver | awk '{print $3}'`
+	# set newr = $revn
+	# @ newr ++
+	# echo " ---> $newr"
+	# echo "s/GIVARO_VERSION ${revn}/GIVARO_VERSION ${newr}/" >> /tmp/verin.sed.$$
+	# sed -f /tmp/verin.sed.$$ $ver > /tmp/verin.$$
+	\rm -rf /tmp/verin.sed.$$
+	# diff /tmp/verin.$$ $ver
+	# echo -n "Confirmation of incrementation ? "
+	# set answ = $<
+	# if ("$answ" == "y") then
+		# \mv -f /tmp/verin.$$ $ver
+	# else
+		# \rm -f /tmp/verin.$$
+	# endif
+# endif

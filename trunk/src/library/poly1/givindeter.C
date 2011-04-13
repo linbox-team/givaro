@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givindeter.C,v 1.5 2009-09-17 14:28:23 jgdumas Exp $
@@ -14,6 +14,7 @@
 #include <string.h>
 #include "givaro/givindeter.h"
 
+namespace Givaro {
 
 Indeter& Indeter::operator=( const Indeter& s )
 {
@@ -22,18 +23,19 @@ Indeter& Indeter::operator=( const Indeter& s )
 }
 
 int Indeter::compare(const Indeter& b)  const
-{ 
-  return name.compare(b.name); 
+{
+  return name.compare(b.name);
 }
 
-std::ostream& operator<< (std::ostream& o, const Indeter& X) 
-{ 
-//   return o << '[' << X.name.baseptr() << ']'; 
-  return o << X.name ; 
+std::ostream& operator<< (std::ostream& o, const Indeter& X)
+{
+//   return o << '[' << X.name.baseptr() << ']';
+  return o << X.name ;
 }
 
- std::istream& operator>> (std::istream& s_in, Indeter& X) 
- { 
+ std::istream& operator>> (std::istream& s_in, Indeter& X)
+ {
    return s_in>>X.name;
  }
 
+} // Givaro

@@ -18,6 +18,10 @@ using namespace std;
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
+
+
 
 int main(int argc, char ** argv)
 {

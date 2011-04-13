@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
 // $Id: givratmuldiv.C,v 1.7 2010-04-14 16:20:30 jgdumas Exp $
@@ -13,10 +13,12 @@
 #include "givaro/givrational.h"
 #include "givaro/giverror.h"
 
-// --------------------------------------- operator * 
+namespace Givaro {
+
+// --------------------------------------- operator *
 Rational Rational::operator * (const Rational& r) const
 {
-    
+
   if (isZero(r)) return Rational(0L) ;
   if (isZero(*this)) return Rational(0L) ;
   if (isOne(r)) return *this ;
@@ -33,12 +35,12 @@ Rational Rational::operator * (const Rational& r) const
   }
   Integer d1 = gcd(num, r.den);
   Integer d2 = gcd(den, r.num);
-  
+
   return Rational( (num / d1) * (r.num / d2), (den / d2) * (r.den / d1), 0 );
 }
 
 
-// --------------------------------------- operator *= 
+// --------------------------------------- operator *=
 Rational& Rational::operator *= (const Rational& r)
 {
 
@@ -56,7 +58,7 @@ Rational& Rational::operator *= (const Rational& r)
       den *= r.den;
       return *this;
   }
-  
+
   Integer d1 = gcd(num, r.den);
   Integer d2 = gcd(den, r.num);
 
@@ -64,13 +66,13 @@ Rational& Rational::operator *= (const Rational& r)
   num *= (r.num / d2);
   den /= d2;
   den *= (r.den / d1);
-  
+
   return *this;
 }
 
 
-// --------------------------------------- operator / 
-Rational Rational::operator / (const Rational& r) const 
+// --------------------------------------- operator /
+Rational Rational::operator / (const Rational& r) const
 {
   if ( isZero(r) ) {
      throw GivMathDivZero("*** division by zero, in operator / (const Rational&)") ;
@@ -80,16 +82,16 @@ Rational Rational::operator / (const Rational& r) const
   if (isOne(*this))  {
     if (sign(r) < 0)
       return Rational(r.den, r.num, 0) ;
-    else 
+    else
       return Rational(-r.den, -r.num, 0) ;
   }
 
-  if (absCompare(den, r.den) == 0) 
+  if (absCompare(den, r.den) == 0)
     return Rational(num, r.num) ;
 
   if (Rational::flags == Rational::NoReduce)
      return Rational( num*r.den, den*r.num, 0) ;
-  
+
   Integer d1 = gcd(num, r.num);
   Integer d2 = gcd(den, r.den);
   Integer resnum = (num / d1) * (r.den / d2);
@@ -101,8 +103,8 @@ Rational Rational::operator / (const Rational& r) const
   return Rational(resnum, resden, 0);
 }
 
-  
-// --------------------------------------- operator /= 
+
+// --------------------------------------- operator /=
 Rational& Rational::operator /= (const Rational& r)
 {
 // std::cerr << "   BEGIN divin: " << *this << " /= " << r << std::endl;
@@ -123,7 +125,7 @@ Rational& Rational::operator /= (const Rational& r)
 // std::cerr << "   DIVIN isone result: " << *this << std::endl;
       return *this;
   }
-  
+
   if (compare(this->den, r.den) == 0) {
       if (sign(r.num)<0) {
           Integer::neg(this->den,r.num);
@@ -148,7 +150,7 @@ Rational& Rational::operator /= (const Rational& r)
       }
       return *this;
   }
-  
+
   Integer d1 = gcd(this->num, r.num);
   Integer d2 = gcd(this->den, r.den);
 // std::cerr << "   d1: " << d1 << ", d2: " << d2 << std::endl;
@@ -160,17 +162,18 @@ Rational& Rational::operator /= (const Rational& r)
 
   this->den /= d2;
   this->den *= (r.num / d1);
-  
+
       //rden can't be neg
   if (sign(den) <0) {
           Integer::negin( this->num );
           Integer::negin( this->den );
   }
-  
+
 // std::cerr << "   num: " << num << ", den: " << den << std::endl;
 // std::cerr << "   DIVIN result: " << *this << std::endl;
 
   return *this;
 }
 
-  
+
+} // namespace Givaro

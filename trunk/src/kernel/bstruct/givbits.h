@@ -17,6 +17,8 @@
 #include "givaro/givaromm.h"
 #include "givaro/givarray0.h"
 
+namespace Givaro {
+
 class Bits {
 public:
   typedef unsigned long base ;
@@ -93,6 +95,8 @@ private:
   static void Init(int*, char***);
   static void End();
 } ;
+
+} // namespace Givaro
 
 #include "givaro/givbits.inl"
 

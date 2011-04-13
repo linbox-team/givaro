@@ -11,6 +11,7 @@
 
 #include "gmp++/gmp++.h"
 
+namespace Givaro {
 
 //-------------------------------------------------- operator *
 Integer& Integer::mulin(Integer& res, const Integer& n)
@@ -229,4 +230,7 @@ Integer Integer::operator * (const long l) const
   mpz_mul_si( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
   return res;
 }
+
+}
+
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -9,13 +9,14 @@
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
-// Description:
-//   Arithmetic on GF(p^k), with p a prime number less than 2^15
-//   WARNING : k strictly greater than 1
-//   Specialized for fast conversions to floating point numbers
-//   See [JG Dumas, Q-adic Transform Revisited, ISSAC 2008]
-//   Main difference in interface is init/convert
-// ==========================================================================
+
+/*! @brief   Arithmetic on GF(p^k), with p a prime number less than 2^15.
+ *   Specialized for fast conversions to floating point numbers.
+ *  Main difference in interface is init/convert.
+ * @bib  [JG Dumas, Q-adic Transform Revisited, ISSAC 2008]
+ *  @warning k strictly greater than 1
+ */
+
 #ifndef __GIVARO_gfq_extension_H
 #define __GIVARO_gfq_extension_H
 
@@ -24,6 +25,8 @@
 #include <limits>
 #include <vector>
 #include <deque>
+
+namespace Givaro {
 
 // init with preconditions, bad entry could segfault
 template<class TT> class GFqExtFast;
@@ -308,6 +311,6 @@ public:
     }
 };
 
-
+} // namespace Givaro
 
 #endif // __GIVARO_gfq_extension_H

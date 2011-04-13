@@ -16,6 +16,7 @@
 #ifndef __GIVARO_iterator_H
 #define __GIVARO_iterator_H
 
+namespace Givaro {
 // -- isUndefined trait iterator
 class isUndefinedIterator{};
 
@@ -80,5 +81,6 @@ struct IteratorInterface {
   // * static size_t bound(const Container& cc);
 };
 
+} // Givaro
 
 #endif

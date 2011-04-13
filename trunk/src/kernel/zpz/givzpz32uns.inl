@@ -52,6 +52,7 @@
 #define __GIVARO_ZPZ32_Uns_SUBMULIN(r,p,a,b) \
 { r = (a*b+p-r); r= (r<p ? r : r % p); __GIVARO_ZPZ32_Uns_NEGIN(r,p); }
 
+namespace Givaro {
 
 inline ZpzDom<Unsigned32>::ZpzDom( )
  : zero(0), one(1), _p(0), _dp(0.0)
@@ -605,6 +606,8 @@ inline std::ostream& ZpzDom<Unsigned32>::write (std::ostream& s, const Rep a) co
 {
   return s << a;
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_zpz32_uns_INL
 

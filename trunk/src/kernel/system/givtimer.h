@@ -21,7 +21,7 @@
 #define __GIVARO_timer_H
 
 #include <iostream>
-
+namespace Givaro {
 // class BaseTimer; class RealTimer; class SysTimer; class UserTimer;
 
 /** \brief base for class RealTimer; class SysTimer; class UserTimer;
@@ -250,6 +250,6 @@ struct OMPTimer {
 };
 #endif
 
-
+} // namespace Givaro
 
 #endif // __GIVARO_timer_H

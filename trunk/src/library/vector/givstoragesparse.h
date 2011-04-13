@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givstoragesparse.h,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
@@ -13,6 +13,10 @@
 #define _GIV_VECTOR_STORAGE_SPARSE_H_
 
 #include "givaro/givstorage.h"
+
+namespace Givaro {
+#warning "this file will probably not compile"
+
 
 
 // ==========================================================================
@@ -26,7 +30,7 @@ struct RetVectorStorage<T,Sparse> {
   typedef T             Type_t;
 
   // --
-  // -- Iterators 
+  // -- Iterators
   // --
   typedef typename Array0<T>::Indice_t 	  Indice_t;
   typedef typename Array0<T>::Iterator_t  Iterator_t;
@@ -34,18 +38,18 @@ struct RetVectorStorage<T,Sparse> {
   typedef typename Array0<Indice_t>::constIterator_t  IndiceIterator_t;
 
   // --
-  // -- wrapper for Array<(I1,I2)> == (Array<I1>,Array<I2>) 
+  // -- wrapper for Array<(I1,I2)> == (Array<I1>,Array<I2>)
   // --
-  struct Storage_t { 
+  struct Storage_t {
     size_t 		_dim;
-    Array0<Indice_t> 	_index;  
-    Array0<T>   	_data;  
+    Array0<Indice_t> 	_index;
+    Array0<T>   	_data;
 
     size_t dim() const { return _dim; }
     size_t size() const { return _index.size(); }
-    void allocate( size_t dim, size_t sz =0) 
+    void allocate( size_t dim, size_t sz =0)
       { _dim = dim; _index.allocate(sz); _data.allocate(sz); }
-    void reallocate( size_t dim, size_t sz =0) 
+    void reallocate( size_t dim, size_t sz =0)
       { _dim = dim; _index.reallocate(sz); _data.reallocate(sz); }
     Storage_t& copy (const Storage_t& V)
     {
@@ -76,5 +80,6 @@ struct RetVectorStorage<T,Sparse> {
 
 };
 
+} // Givaro
 
 #endif

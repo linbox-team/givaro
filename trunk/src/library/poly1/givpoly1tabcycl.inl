@@ -14,6 +14,9 @@
 
 #include "givaro/givpoly1tabcycl.h"
 
+
+namespace Givaro {
+
 template<class Domain, class Tag> inline void CyclotomicTable<Domain,Tag>::table_0 (const typename Domain::Residu_t mod, const long expo) {
   switch (mod) {
     case 2:
@@ -283,5 +286,6 @@ template<class Domain, class Tag> inline void CyclotomicTable<Domain,Tag>::table
   if (isZero(_Irreductible)) set_random_irreducible(_domain,expo);
 }
 
+} // Givaro
 
 #endif // __GIVARO_poly1_cyclo_table_INL

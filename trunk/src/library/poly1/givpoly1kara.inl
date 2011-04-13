@@ -14,6 +14,9 @@
 
 #define KARA_THRESHOLD 10
 
+
+namespace Givaro {
+
 template<class T>
 void Poly1<T>::stdmul(Array0<T>& R,
                          const Array0<T>& P, const Array0<T>& Q,
@@ -165,5 +168,6 @@ const Poly1<T> Karatsuba(const Poly1<T>& P, const Poly1<T>& Q)
    Poly1<T> PRes(P.variable(), degP+degQ, Res) ;
    delete [] Tmp1 ; delete [] PP ; delete [] Res ;
    return PRes ;
+}
 }
 #endif // __GIVARO_poly1_kara_INL

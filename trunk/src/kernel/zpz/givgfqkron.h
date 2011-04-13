@@ -9,10 +9,13 @@
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
-// Description:
-//   Arithmetic on GF(p^k), with dynamic Kronecker substitution
-//   Precondition : k(p-1)^2 < word size
-// ==========================================================================
+
+/*! @file zpz/givgfqkron.h
+ * @ingroup zpz
+ * @brief  Arithmetic on GF(p^k), with dynamic Kronecker substitution.
+ * @pre  k(p-1)^2 < word size
+ */
+
 #ifndef __GIVARO_gfq_kronecker_H
 #define __GIVARO_gfq_kronecker_H
 
@@ -21,6 +24,8 @@
 #include <limits>
 #include <vector>
 #include <deque>
+
+namespace Givaro {
 
 template<class TT, class Ints> struct GFqKronecker : public GFqDom<TT> {
 protected:
@@ -185,6 +190,6 @@ protected:
     Element _Xk;
 };
 
-
+} // namespace Givaro
 
 #endif // __GIVARO_gfq_kronecker_H

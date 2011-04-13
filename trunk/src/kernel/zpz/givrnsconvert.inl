@@ -12,6 +12,9 @@
 
 #ifndef __GIVARO_rns_convert_INL
 #define __GIVARO_rns_convert_INL
+
+namespace Givaro {
+
   // -- Computation of a mixed-radix representation of the residu.
 template<class RING, class Domain>
 void RNSsystem<RING,Domain>::RnsToMixedRadix
@@ -63,7 +66,7 @@ RING& RNSsystem<RING,Domain>::MixedRadixToRing( RING& res, const RNSsystem<RING,
     throw GivError("[RNSsystem::MixedRadixToRing]: bad size of input array");
   _primes[size-1].convert(res,mixrad[size-1]);
   RING tmp;
-  
+
   for (int i=size-2; i>=0; --i) {
     res *= _primes[i].characteristic();
     res += _primes[i].convert(tmp, mixrad[i]);
@@ -95,5 +98,7 @@ RING& RNSsystem<RING,Domain>::RnsToRing( RING& I, const RNSsystem<RING,Domain>::
   // - Convert mixrad to an integer
   return MixedRadixToRing( I, mixrad ) ;
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_rns_convert_INL

@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givmodule.C,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
@@ -19,7 +19,7 @@
 // then Init method of M2 is call after Init method of M1
 // (and in the reverse order for End methods). This leads
 // to a block oriented initialization mecanism, where each
-// module can be see as a block: the Init method is call 
+// module can be see as a block: the Init method is call
 // when enter into the block, and End when go out. Precedent
 // relationships are equivalent to block inclusion.
 
@@ -27,20 +27,21 @@
 #include "givaro/giverror.h"
 #include <iostream>
 
+namespace Givaro {
 
 InitAfter::InitAfter( const GivModule& MI )
- : M(&MI), priority(GivModule::UndefPriority) 
+ : M(&MI), priority(GivModule::UndefPriority)
 {}
 
 InitAfter::InitAfter(int p )
- : M(0), priority(p) 
+ : M(0), priority(p)
 {}
 
-int InitAfter::operator < ( const InitAfter& Mi ) const 
+int InitAfter::operator < ( const InitAfter& Mi ) const
 {
   int pThis = ( this->M ==0 ? priority : M->priority ) ;
   int pMi   = (  Mi.M  ==0  ? Mi.priority : Mi.M->priority ) ;
-  return (pThis < pMi) ; 
+  return (pThis < pMi) ;
 }
 
 
@@ -63,7 +64,7 @@ ObjectInit::ObjectInit( )
   cout << "[GivModule] ObjectInit::cstor curr:" << (void*)this << endl ;
 #endif
   // - link the new object:
-  _next = head; head = this ; 
+  _next = head; head = this ;
 #ifdef GIVARO_DEBUG
   cout << "[GivModule] ObjectInit::cstor " << (void*)head << endl ;
 #endif
@@ -75,19 +76,19 @@ GivModule::GivModule ( ptFuncInit init, ptFuncEnd end, const int p, const char* 
  : priority(UndefPriority), which(p), f_init(init), f_end(end), name(n)
 {
    All[counter++] = this ;
-} 
-  
+}
+
 GivModule::GivModule ( ptFuncInit init, ptFuncEnd end, const InitAfter& M, const char* n)
  : priority(UndefPriority), which(M), f_init(init), f_end(end), name(n)
 {
    All[counter++] = this ;
 }
-  
+
 void GivModule::SortGivModule()
 {
 #ifdef GIVARO_DEBUG
 {
-  for (int j=0; j<counter; j++) 
+  for (int j=0; j<counter; j++)
     cout << j << ':' << All[j]->which.priority << ' ' << All[j]->name << endl ;
   cout <<endl ;
 }
@@ -106,26 +107,26 @@ void GivModule::SortGivModule()
       SortedAll[curr] = curr ;
    }
   }
-  
+
   // - Set priority of modules
   int isundef ; // - ==1 if exists undef priority
-  int cpt = 0 ; // - count the number of tentative to resolve constraint 
-  do { 
+  int cpt = 0 ; // - count the number of tentative to resolve constraint
+  do {
     isundef = 0 ;
     for (curr=0; curr<counter; curr++)
       if (All[curr]->priority == GivModule::UndefPriority) {
-        if (All[curr]->which.M ==0) 
-          // -- Set the priority field with those of which 
+        if (All[curr]->which.M ==0)
+          // -- Set the priority field with those of which
           All[curr]->priority = All[curr]->which.priority+1 ;
         else {
-          // -- Set the priority field with the value pointed by which 
+          // -- Set the priority field with the value pointed by which
           All[curr]->priority = All[curr]->which.M->priority+1 ;
           if (All[curr]->priority == GivModule::UndefPriority) isundef = 1 ;
         }
       }
   } while ((isundef) && (cpt <= counter*counter));
-    
-  if (cpt > counter*counter) 
+
+  if (cpt > counter*counter)
     throw GivError("*** Can't resolve constraint of initialization of modules");
 
   // -- Sort Initialization Module by priority
@@ -180,7 +181,7 @@ void GivModule::InitApp(int* argc, char***argv)
 {
   // -- Computation of a topological sort from All[]
   SortGivModule() ;
- 
+
   // -- Initialization of the modules
   for (int i=0; i<counter; i++)
   {
@@ -197,16 +198,16 @@ void GivModule::InitApp(int* argc, char***argv)
   // -- Init of object:
   ObjectInit* curr = head;
 #ifdef GIVARO_DEBUG
-  cout << "[GivModule] ObjectInit::Head: " << (void*)head << endl; 
+  cout << "[GivModule] ObjectInit::Head: " << (void*)head << endl;
 #endif
   while (curr !=0) {
     curr->objinit();
-    curr = curr->_next;    
+    curr = curr->_next;
 #ifdef GIVARO_DEBUG
-    cout << "[GivModule] ObjectInit::next one: " << (void*)curr << endl; 
+    cout << "[GivModule] ObjectInit::next one: " << (void*)curr << endl;
 #endif
     if (curr ==head) break ; // -- on MacOS I can make circular list !!! (shared lib)
-  } 
+  }
 }
 
 void GivModule::EndApp()
@@ -224,3 +225,4 @@ void GivModule::EndApp()
   }
 }
 
+} // namespace Givaro

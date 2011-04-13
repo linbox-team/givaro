@@ -11,6 +11,7 @@
 #ifndef __GIVARO_poly1_cstor_INL
 #define __GIVARO_poly1_cstor_INL
 
+namespace Givaro {
 template<class Domain>
 inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X )
   : _domain(d), _x(X) ,zero(1,d.zero), one(1,d.one)
@@ -149,4 +150,5 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::assign
     return P;
 }
 
+} // Givaro
 #endif // __GIVARO_poly1_cstor_INL

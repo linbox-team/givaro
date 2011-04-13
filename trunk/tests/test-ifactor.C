@@ -13,6 +13,7 @@
 #define NB_ITERS 15
 //#define LOOPS 0
 
+using namespace Givaro;
 
 int test(const IntFactorDom<> & IP, const Integer & m)
 {

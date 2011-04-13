@@ -3,22 +3,25 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // $Id: gmp++_int_io.C,v 1.7 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
-// Description: 
+// Description:
 
 #include <iostream>
 #include <stdlib.h>
 #include "gmp++/gmp++.h"
 
-// Sortie nonsignee : 321321 meme si n = -321321, par exemple 
+
+namespace Givaro {
+
+// Sortie nonsignee : 321321 meme si n = -321321, par exemple
 std::ostream& absOutput(std::ostream &o, const Integer&n)
 {
   int base = 10;
-  
+
   unsigned long strSize = mpz_sizeinbase((mpz_ptr)&(n.gmp_rep), base) + 2;
   char *str = ::new char[strSize];
   mpz_get_str(str, base, (mpz_ptr)&(n.gmp_rep));
@@ -29,9 +32,9 @@ std::ostream& absOutput(std::ostream &o, const Integer&n)
   else o << str;
   delete [] str ;
   return o;
-} 
+}
 
-// Sortie signee : +321321 ou -321321, par exemple 
+// Sortie signee : +321321 ou -321321, par exemple
 std::ostream& Integer::print(std::ostream &o) const
 {
   int base = 10;
@@ -43,7 +46,7 @@ std::ostream& Integer::print(std::ostream &o) const
   o << str;
   delete [] str ;
   return o;
-} 
+}
 
 Integer::operator std::string () const {
     std::string s;
@@ -65,7 +68,7 @@ Integer::Integer(const std::vector<mp_limb_t>& v) {
 		prod = base = pow(base, (unsigned long)sizeof(mp_limb_t) );
 
 		std::vector<mp_limb_t>::const_iterator vi = v.begin();
-		for(++vi;vi != v.end();++vi) { 
+		for(++vi;vi != v.end();++vi) {
 			mpz_mul_ui( (mpz_ptr)&tmp.gmp_rep, (mpz_ptr)&prod.gmp_rep, *vi);
 	 		*this += tmp;
 			prod *= base;
@@ -148,6 +151,8 @@ std::istream& operator>> (std::istream& in, Integer& a)
          a = a * base[counter-1] + l ;
       }
    }
-   if (sign == -1) a = -a ;  
+   if (sign == -1) a = -a ;
    return in ;
+}
+
 }

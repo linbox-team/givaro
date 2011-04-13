@@ -9,6 +9,7 @@
 
 #include <givaro/givinteger.h>
 
+using namespace Givaro;
 
 #define SONT_EQ(a,b)\
 	if ( (a) != (b) ) { \

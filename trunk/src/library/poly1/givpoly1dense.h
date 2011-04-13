@@ -24,6 +24,8 @@
 #define __GIV_STANDARD_VECTOR std::vector
 #endif
 
+namespace Givaro {
+
 template < typename T, typename A=std::allocator<T> >
 class givvector : public __GIV_STANDARD_VECTOR<T,A> {
     typedef givvector<T,A>     Self_t;
@@ -187,7 +189,7 @@ public :
         // -- Computes the reverse polynomial
     Rep& reverse( Rep&, const Rep&) const;
     Rep& reversein( Rep&) const;
-    
+
 
         // --
     std::istream& read ( std::istream& i );
@@ -255,7 +257,7 @@ public :
 
         // A = q*B + r
     Rep& divmod( Rep& q, Rep& r, const Rep& a, const Rep& b ) const;
-    
+
         // r <-- r - q*B ; d°(r) < d°(B)
     Rep& divmodin( Rep& q, Rep& r, const Rep& b ) const;
 
@@ -322,5 +324,7 @@ public :
 
 
 }; //  ------------------------------- End Of The Class Poly1Dom<Type_t>
+
+} // Givaro
 
 #endif // __GIVARO_poly1_dense_H

@@ -15,6 +15,7 @@
 
 #include "givaro/givaromm.h"
 
+namespace Givaro {
 
 // ==================================================================== //
 
@@ -55,5 +56,7 @@ public:
   T& operator* () const { return *_data; }
   T* operator-> () const { return _data; }
 };
+
+} // namespace Givaro
 
 #endif // __GIVARO_pointer_H

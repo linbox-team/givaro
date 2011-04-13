@@ -16,7 +16,7 @@
 #include <givaro/givtimer.h>
 #include <givaro/givinit.h>         // Givaro initialization
 
-
+using namespace Givaro;
 
 int main(int argc, char** argv)
 {

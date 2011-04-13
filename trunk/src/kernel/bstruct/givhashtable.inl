@@ -13,7 +13,7 @@
 
 #ifndef __GIVARO_hashtable_INL
 #define __GIVARO_hashtable_INL
-
+namespace Givaro {
    // Size of the table :
 template<class T, class Key>
 HashTable<T,Key>::HashTable ( int n )
@@ -202,5 +202,6 @@ int HashTable<T,Key>::num_item( const Key& k ) const
   return count ;
 }
 
+} // namespace Givaro
 
 #endif // __GIVARO_hashtable_INL

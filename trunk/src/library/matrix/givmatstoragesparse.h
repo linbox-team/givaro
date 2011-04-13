@@ -18,6 +18,9 @@
 
 #include "givaro/givmatstorage.h"
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 
 // ==========================================================================
 // --
@@ -92,5 +95,5 @@ struct RetMatrixStorage<T,Sparse> {
 
 };
 
-
+} // Givaro
 #endif

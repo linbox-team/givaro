@@ -12,6 +12,8 @@
 
 #include "givaro/givpower.h"
 
+namespace Givaro {
+
 template<class Ints>
 template<class smallIntVector>
 Ints& RNSsystemFixed<Ints>::RnsToRingLeft( Ints& I, const smallIntVector& residues, const int level, const int col ) const {
@@ -118,7 +120,7 @@ RNSsystemFixed<Ints>::RNSsystemFixed( const RNSsystemFixed<Ints>::array& inprime
 
 
            array newlevel;
-           
+
            int s = _primes.back().size();
 
            Ints& p0(_primes[lastp][s-2]), & p1(_primes[lastp][s-1]);
@@ -169,6 +171,8 @@ const Ints RNSsystemFixed<Ints>::ith(const size_t i) const
 {
   return _primes.front()[i];
 }
+
+} // namespace Givaro
 
 #endif
 

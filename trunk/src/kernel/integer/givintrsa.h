@@ -18,12 +18,14 @@
 #include "givaro/givrandom.h"
 
 
-    // k = 2^16 + 1, is prime
+// k = 2^16 + 1, is prime
 #define SIMPLE_EXPONENT (Element( (1<<16)+1 ))
 
 // =================================================================== //
 // RSA public-key cipher codes
 // =================================================================== //
+
+namespace Givaro {
 
 template<class RandIter = GivRandom>
 class IntRSADom : public IntFactorDom<RandIter> {
@@ -111,6 +113,8 @@ protected:
     bool _fast_impl;
 
 };
+
+} // Givaro
 
 #include "givaro/givintrsa.inl"
 

@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givvectorsparse.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
@@ -11,21 +11,24 @@
 // Description:
 // Description of sparse vector over T with classic arithmetic operations
 // over T (vector x vector, vector x T, scalar product).
-// The storage for sparse vector are returned by 
+// The storage for sparse vector are returned by
 // - RetVectorStorage<T,Sparse>::Storage_t: that provide following
 // properties:
 // - iterator on the index domain iterates on increasing value
-// -  
+// -
 #ifndef _GIV_VECTOR_SPARSE_H_
 #define _GIV_VECTOR_SPARSE_H_
 
 #include "givaro/givvector.h"
 #include "givaro/givstoragesparse.h"
 #include "givaro/givelem.h"
+namespace Givaro {
+#warning "this file will probably not compile"
+
 
 
 template<class Domain>
-class VectorDom<Domain, Sparse> { 
+class VectorDom<Domain, Sparse> {
   Domain _domain;	// domain of the entries
 public :
   // -- Exported types
@@ -40,27 +43,27 @@ public :
 
   // -- Self_t
   typedef 	   VectorDom<Domain, Sparse> 	 		Self_t;
-  
-  // -- Dstor 
+
+  // -- Dstor
   ~VectorDom() {}
 
-  // -- Cstor of a new vector of size s Elements 
+  // -- Cstor of a new vector of size s Elements
   VectorDom( const Domain& D = Domain() ) : _domain(D) {}
 
   // -- Cstor of recopy
   VectorDom(const Self_t& V) : _domain(V._domain) {}
-  
-  int operator==( const VectorDom<Domain,Sparse>& BC) const 
+
+  int operator==( const VectorDom<Domain,Sparse>& BC) const
   { return _domain == BC._domain;}
-  int operator!=( const VectorDom<Domain,Sparse>& BC) const 
+  int operator!=( const VectorDom<Domain,Sparse>& BC) const
   { return _domain != BC._domain;}
 
-  // -- assignment operator: from a vector 
+  // -- assignment operator: from a vector
   void init ( Rep& r, size_t dim =0) const
   { r.allocate(dim,0); }
 
-  // -- assignment operator: from a vector 
-  void assign (Rep& r, const Rep& v) 
+  // -- assignment operator: from a vector
+  void assign (Rep& r, const Rep& v)
   {
     r.copy(v);
   }
@@ -92,13 +95,13 @@ public :
   void neg  ( Rep& res, const Rep& u ) const;
 
   // -- Compression method to compact a dense vector
-  void compact( Rep& u, const VectorDom<Domain, Dense>& VDom, 
+  void compact( Rep& u, const VectorDom<Domain, Dense>& VDom,
                 const typename VectorDom<Domain, Dense>::Rep& v ) const;
 
   // -- Compression method to compact a sparse vector
-  void compact( Rep& u, const VectorDom<Domain, Sparse>& VDom, 
+  void compact( Rep& u, const VectorDom<Domain, Sparse>& VDom,
                 const typename VectorDom<Domain, Sparse>::Rep& v ) const;
-  
+
   template<class UNOP>
   void map( Rep& r, const UNOP& op, const Rep& u) const;
 
@@ -114,7 +117,7 @@ public :
   istream& read ( istream& i, Rep& r ) const;
 
 
-  // -- Iteration over a sparse vector: 
+  // -- Iteration over a sparse vector:
   typedef typename RetVectorStorage<Type_t,Sparse>::Iterator_t 		Iterator_t;
   typedef typename RetVectorStorage<Type_t,Sparse>::constIterator_t 	constIterator_t;
   typedef typename RetVectorStorage<Type_t,Sparse>::IndiceIterator_t 	IndiceIterator_t;
@@ -127,4 +130,5 @@ public :
   IndiceIterator_t end_indice  ( const Rep& U ) const { return U.end_indice(); }
 };
 
+} //Givaro
 #endif

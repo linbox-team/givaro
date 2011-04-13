@@ -18,6 +18,9 @@
 #include "givaro/givarray0.h"
 #include "givaro/givelem.h"
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 
 // ==========================================================================
 // --
@@ -29,6 +32,8 @@
 // ==========================================================================
 
 template <class T, class StorageTag> class MatrixDom { };
+
+} // Givaro
 
 #include "givaro/givvector.h"
 #include "givaro/givmatstoragedense.h"

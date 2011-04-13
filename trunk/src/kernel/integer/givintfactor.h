@@ -25,6 +25,7 @@
 
 #define factor_second_primes(tmp,n) (tmp = isZero(mod(tmp,n,31))?31:( isZero(mod(tmp,n,29))?29: ( isZero(mod(tmp,n,37))?37: ( isZero(mod(tmp,n,41))?41:( isZero(mod(tmp,n,43))?43:  ( isZero(mod(tmp,n,71))?71:( isZero(mod(tmp,n,67))?67:( isZero(mod(tmp,n,61))?61:( isZero(mod(tmp,n,59))?59: ( isZero(mod(tmp,n,53))?53:( isZero(mod(tmp,n,47))?47: ( isZero(mod(tmp,n,97))?97: ( isZero(mod(tmp,n,89))?89:( isZero(mod(tmp,n,83))?83:( isZero(mod(tmp,n,79))?79:73)))))))))))))))
 
+namespace Givaro {
 
 // =================================================================== //
 // Set or Container of divisors, factors.
@@ -136,6 +137,8 @@ private:
     }
 
 };
+
+} // Givaro
 
 #include "givaro/givintfactor.inl"
 

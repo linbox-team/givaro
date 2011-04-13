@@ -7,6 +7,8 @@
 #ifndef __GIVARO_intrns_cstor_INL
 #define __GIVARO_intrns_cstor_INL
 
+namespace Givaro {
+
   // -- Array of primes are given
 //#ifndef __ECC
 //template<template<class> class Container>
@@ -142,5 +144,8 @@ inline const typename IntRNSsystem< Container, Alloc >::Element IntRNSsystem< Co
   if (_ck.size() ==0) ((IntRNSsystem< Container, Alloc >*)this)->ComputeCk();
   return _ck[i];
 }
+
+} // namespace Givaro
+
 
 #endif // __GIVARO_intrns_cstor_INL

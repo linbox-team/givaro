@@ -14,7 +14,7 @@
 #define __GIVARO_genarith_H
 
 #include "givaro/givbasictype.h"
-
+namespace Givaro {
 // -- give a name for /read/write
 template<class T>
 struct __givdom_trait_name { enum { val = '?' }; };
@@ -106,5 +106,7 @@ typedef BaseDomain<float>   FloatDom;
 __GIVARO_SPEC_NAME(float, 'f')
 typedef BaseDomain<double>  DoubleDom;
 __GIVARO_SPEC_NAME(double, 'd')
+
+} // namespace Givaro
 
 #endif // __GIVARO_genarith_H

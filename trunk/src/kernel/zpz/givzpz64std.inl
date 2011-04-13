@@ -51,6 +51,7 @@
 #define __GIVARO_ZPZ64_N_SUBMULIN(r,p,a,b) { \
     __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,r); __GIVARO_ZPZ64_N_NEGIN(r,p); }
 
+namespace Givaro {
 
 inline ZpzDom<Std64>::Residu_t ZpzDom<Std64>::residu( ) const
 { return _p; }
@@ -625,5 +626,8 @@ inline Integer& ZpzDom<Std64>::write (Integer& r, const Rep a) const
 }
 
 #endif // __DONOTUSE_Givaro_SIXTYFOUR__
+
+} // namespace Givaro
+
 #endif // __GIVARO_zpz64std_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

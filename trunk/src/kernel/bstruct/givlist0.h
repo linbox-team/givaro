@@ -8,14 +8,21 @@
 // Author: T. Gautier
 // $Id: givlist0.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
-// Description:
-// List of type T with double link and various insert/get/rmv method.
-// Used reference counting on each node of the list.
+
+/*! @file bstruct/givlist0.h
+ * @ingroup bstruct
+ * @brief List of type T with double link and various insert/get/rmv method.
+ * Used reference counting on each node of the list.
+ */
+
 #ifndef __GIVARO_list0_H
 #define __GIVARO_list0_H
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
+
+
+namespace Givaro {
 
 template <class T>
 class List0 {
@@ -95,6 +102,8 @@ protected :  // --------------------- Public Internal representation
   node*  _head;   // head of the list
   node*  _queue;  // queue of the list
 };
+
+} // namespace Givaro
 
 #include "givaro/givlist0.inl"
 

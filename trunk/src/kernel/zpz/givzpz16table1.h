@@ -10,9 +10,12 @@
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
-//
-// Description:
-//   Arithmetic on Z/pZ, with tabulation of operations.
+
+/*! @file zpz/givzpz16table1.h
+ * @ingroup zpz
+ * @brief  Arithmetic on Z/pZ, with tabulation of operations.
+ */
+
 #ifndef __GIVARO_zpz16log_H
 #define __GIVARO_zpz16log_H
 
@@ -22,12 +25,13 @@
 #include "givaro/givzpztypes.h"
 #include "givaro/giv_randiter.h"
 
+namespace Givaro {
 
-// ==========================================================================
-// -- This class implement the standard arithmetic with Modulo Elements:
-// - The representation of an integer a in Zpz is the value a % p
-// - p max is 16381
-// ==========================================================================
+/*! @brief This class implement the standard arithmetic with Modulo Elements.
+ * - The representation of an integer a in Zpz is the value a % p
+ * - p max is 16381
+ * .
+ */
 
 template<>
 class ZpzDom<Log16> {
@@ -230,6 +234,7 @@ protected:
 
 };
 
+} // namespace Givaro
 
 #include "givaro/givzpz16table1.inl"
 

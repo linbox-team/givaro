@@ -17,6 +17,7 @@
 #include <stddef>
 #include <iostream>
 
+namespace Givaro {
 
 struct __CoutCounter {
   void (*print)(ostream&);
@@ -31,12 +32,17 @@ struct __CoutCounter {
   }
 };
 
+} // namespace Givaro
 
-// --- Class that store a set of counters:
-// - _count_cstor: #cstor calls except the recopy constructor calls
-// - _count_cstor_recopy: #recopy cstor calls
-// - _count_assign: #assignment calls
-// - _count_dstor: #dstor calls
+
+namespace Givaro {
+/*! @brief Class that store a set of counters.
+ * - _count_cstor: \#cstor calls except the recopy constructor calls
+ * - _count_cstor_recopy: \#recopy cstor calls
+ * - _count_assign: \#assignment calls
+ * - _count_dstor: \#dstor calls
+ * *
+ */
 
 #define GIVARO_PERF_DEFCLASS(Name,Type)					\
 template<class Type>							\
@@ -82,8 +88,11 @@ __CoutCounter _Giv_perf##Name<Type>::_coutcout= &_Giv_perf##Name<Type>::print;
 
 #define GIVARO_PERF_DISPLAY(Name,Type)  _Giv_perf##Name<Type>::print(cout), cout << endl;
 
+} // namespace Givaro
 
 #else // #ifdef GIVARO_PERF
+
+// namespace Givaro {
 
 #define GIVARO_PERF_DEFCLASS(N,T)
 #define GIVARO_PERF_INEHERIT(N,T)
@@ -93,7 +102,9 @@ __CoutCounter _Giv_perf##Name<Type>::_coutcout= &_Giv_perf##Name<Type>::print;
 #define GIVARO_PERF_ASSIGN(Name,Type)
 #define GIVARO_PERF_DISPLAY(Name,Type)
 
+// } // namespace Givaro
 
 #endif
-
 #endif // __GIVARO_perf_H
+
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -11,10 +11,14 @@
  * @brief NO DOC
  */
 #include <iostream>
-using namespace std;
+
 #include <givaro/givinit.h>
 #include <givaro/givintfactor.h>
 #include <givaro/givtimer.h>
+
+using namespace std;
+using namespace Givaro;
+
 
 
 int main(int argc, char** argv)

@@ -3,11 +3,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id
 // ==========================================================================
+
+namespace Givaro {
+#warning "this file will probably not compile"
 
 
 
@@ -15,7 +18,7 @@ template<class Domain>
 template<class UNOP>
 inline void VectorDom<Domain,Sparse>::
   map( Rep& res, const UNOP& OP, const Rep& u ) const
-{ 
+{
   res.copy(u);
   size_t sz = res.size();
   for (size_t i=0; i<sz; ++i)
@@ -57,7 +60,7 @@ int VectorDom<Domain,Sparse>::iszero  ( const Rep& P ) const
 {
   size_t d;
   if ((d =dim(P)) == 0) return 1;
-  for (size_t i=0; i<d; ++i) 
+  for (size_t i=0; i<d; ++i)
     if (!_domain.iszero(P._data[i])) return 0;
   return 1;
 }
@@ -67,19 +70,19 @@ int VectorDom<Domain,Sparse>::iszero  ( const Rep& P ) const
 // -- Compression method to compact a dense vector
 // --
 template<class Domain>
-void VectorDom<Domain,Sparse>::compact ( 
-  Rep& u, 
-  const VectorDom<Domain, Dense>& VDom, 
+void VectorDom<Domain,Sparse>::compact (
+  Rep& u,
+  const VectorDom<Domain, Dense>& VDom,
   const typename VectorDom<Domain, Dense>::Rep& v ) const
 {
   size_t dim = VDom.dim(v);
-  u.allocate(dim, 0); 
+  u.allocate(dim, 0);
   Indice_t pos_next =0;
   for (size_t i=0; i< dim; ++i)
   {
     if ( !_domain.iszero(v[i]) ) {
       u.reallocate( dim, pos_next + 1 );
-      u._index[pos_next] = i; 
+      u._index[pos_next] = i;
       _domain.assign(u._data[pos_next], v[i]);
       ++pos_next;
     }
@@ -90,12 +93,12 @@ void VectorDom<Domain,Sparse>::compact (
 // -- Compression method to compact a sparse vector
 // --
 template<class Domain>
-void VectorDom<Domain,Sparse>::compact ( 
-  Rep& u, 
-  const VectorDom<Domain, Sparse>& VDom, 
+void VectorDom<Domain,Sparse>::compact (
+  Rep& u,
+  const VectorDom<Domain, Sparse>& VDom,
   const typename VectorDom<Domain, Sparse>::Rep& v ) const
 {
-  u.copy(v); 
+  u.copy(v);
 }
 
 
@@ -109,9 +112,9 @@ inline void VectorDom<Domain,Sparse>::dot
   for ( long i =op1size-1, j=op2size-1; (i >=0) && (j >=0); ) {
     long diff = op1._index[i] - op2._index[j];
     if (diff >0) --i;
-    else if (diff <0) --j; 
+    else if (diff <0) --j;
     else domain.axpy(res, op1._data[i--], op2._data[j--], res );
-  } 
+  }
 }
 
 template<class Domain>
@@ -127,19 +130,19 @@ inline void VectorDom<Domain,Sparse>::add
     if (diff <0) {
       res._index[curr] = op1._index[i];
       _domain.assign(res._data[curr],op1._data[i]);
-      ++i; 
+      ++i;
       if (!_domain.iszero(res._data[curr])) ++curr;
     }
     else if (diff >0) {
       res._index[curr] = op2._index[j];
       _domain.assign(res._data[curr],op2._data[j]);
-      ++j; 
+      ++j;
       if (!_domain.iszero(res._data[curr])) ++curr;
     }
     else {
       res._index[curr] = op1._index[i];
       _domain.add(res._data[curr], op1._data[i], op2._data[j]);
-      ++i; ++j; 
+      ++i; ++j;
       if (!_domain.iszero(res._data[curr])) ++curr;
     }
   }
@@ -209,40 +212,40 @@ inline void VectorDom<Domain,Sparse>::sub
 
 
 template<class Domain>
-inline void VectorDom<Domain,Sparse>::addin 
+inline void VectorDom<Domain,Sparse>::addin
  ( Rep& res, const Rep& u ) const
-{ Rep tmp; init( tmp ); add(tmp, res, u); assign(res, tmp); } 
+{ Rep tmp; init( tmp ); add(tmp, res, u); assign(res, tmp); }
 
 template<class Domain>
-inline void VectorDom<Domain,Sparse>::add 
+inline void VectorDom<Domain,Sparse>::add
  ( Rep& res, const Rep& u, const Type_t& val ) const
-{ 
+{
   Curried2<AddOp<Domain> > opcode(_domain, val);
   map( res, opcode, u);
 }
 
 template<class Domain>
 inline void VectorDom<Domain,Sparse>::add ( Rep& res, const Type_t& val, const Rep& v ) const
-{ 
+{
   Curried1<AddOp<Domain> > opcode(_domain, val);
   map( res, opcode, u);
 }
 
 template<class Domain>
-inline void VectorDom<Domain,Sparse>::subin 
+inline void VectorDom<Domain,Sparse>::subin
  ( Rep& res, const Rep& u ) const
-{ Rep tmp; init( tmp ); sub(tmp, res, u); assign(res, tmp); } 
+{ Rep tmp; init( tmp ); sub(tmp, res, u); assign(res, tmp); }
 
 template<class Domain>
 inline void VectorDom<Domain,Sparse>::sub ( Rep& res, const Rep& u, const Type_t& val ) const
-{ 
+{
   Curried2<SubOp<Domain> > opcode(_domain, val);
   map( res, opcode, u);
 }
 
 template<class Domain>
 inline void VectorDom<Domain,Sparse>::sub ( Rep& res, const Type_t& val, const Rep& v ) const
-{ 
+{
   Curried2<SubOp<Domain> > opcode(_domain, val);
   map( res, opcode, u);
 }
@@ -263,21 +266,21 @@ inline void VectorDom<Domain,Sparse>::neg ( Rep& res, const Rep& u ) const
 
 
 
-  
+
 // ==========================================================================
 //
-// -- Write the domain 
+// -- Write the domain
 template<class Domain>
 ostream& VectorDom<Domain, Sparse>::write( ostream& o ) const
 {
   return _domain.write(o << '(') << ",Sparse)";
 }
 
-// -- read the domain 
+// -- read the domain
 template<class Domain>
 istream& VectorDom<Domain, Sparse>::read( istream& sin )
 {
-  char ch; 
+  char ch;
   sin >> std::ws >> ch;
   if (ch != '(')
     GivError::throw_error(
@@ -349,30 +352,30 @@ istream&  VectorDom<Domain,Sparse>::read (istream& fin, Rep& V) const
 
   // -- Skip the first blanks:
   fin >> std::ws; fin.get(ch);
-  if (ch != '[') 
+  if (ch != '[')
     GivError::throw_error(
       GivBadFormat("VectorDom<Domain,Sparse>::read: syntax error no '['"));
 
   // -- Read the size of != 0 Element of the rep
-  size_t size; 
+  size_t size;
   fin >> std::ws >> size;
 
   // -- read ,
   fin >> std::ws; fin.get(ch);
-  if (ch != ',') 
+  if (ch != ',')
     GivError::throw_error(
       GivBadFormat("VectorDom<Domain,Sparse>::read: syntax error no ','"));
 
   // -- read [
   fin >> std::ws; fin.get(ch);
-  if (ch != '[') 
+  if (ch != '[')
     GivError::throw_error(
       GivBadFormat("VectorDom<Domain,Sparse>::read: syntax error no ']'"));
 
   // -- read the size pairs
-  size_t i; 
+  size_t i;
   V.allocate(size, size);
-  for (i=0; i<size-1; ++i) 
+  for (i=0; i<size-1; ++i)
   {
      Pair<Indice_t, Type_t> p;
      fin >> p;
@@ -381,7 +384,7 @@ istream&  VectorDom<Domain,Sparse>::read (istream& fin, Rep& V) const
 
      // -- read ,
      fin >> std::ws; fin.get(ch);
-     if (ch != ',') 
+     if (ch != ',')
        GivError::throw_error(
          GivBadFormat("VectorDom<Domain,Sparse>::read: syntax error no ','"));
   }
@@ -395,16 +398,18 @@ istream&  VectorDom<Domain,Sparse>::read (istream& fin, Rep& V) const
 
   // -- read ]
   fin >> std::ws; fin.get(ch);
-  if (ch != ']') 
+  if (ch != ']')
     GivError::throw_error(
       GivBadFormat("VectorDom<Domain,Sparse>::read: syntax error no ']'"));
 
   // -- read ]
 
-  // - read the last characters: 
+  // - read the last characters:
   fin >> std::ws; fin.get(ch);
-  if (ch != ']') 
+  if (ch != ']')
     GivError::throw_error(
       GivBadFormat("operator>><Vector<T,Sparse> >: syntax error no ']'"));
   return fin;
 }
+
+} // Givaro

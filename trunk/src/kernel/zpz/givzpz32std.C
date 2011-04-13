@@ -13,6 +13,8 @@
 #include <iostream>
 #include "givaro/givzpz32std.h"
 
+namespace Givaro {
+
   // Returns d, and u and v such that u a + v b = d;
 // JGD 04.11.1999
 // const int32_t ZpzDom<Std32>::gcdext
@@ -63,3 +65,4 @@ void ZpzDom<Std32>::End()
 {
 }
 
+} // namespace Givaro

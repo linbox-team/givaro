@@ -11,6 +11,8 @@
 #ifndef __GIVARO_module_init_H
 #define __GIVARO_module_init_H
 
+namespace Givaro {
+
 // -------------------------------------------------------- Fwd declaration
 
 class GivModule;
@@ -99,4 +101,5 @@ private:
   friend class GivModule;
 };
 
+} // namespace Givaro
 #endif // __GIVARO_module_init_H

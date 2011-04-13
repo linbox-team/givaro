@@ -15,6 +15,7 @@
 
 #include <iostream>
 
+namespace Givaro {
 // -- Degree type for polynomials
 //
 class Degree {
@@ -78,5 +79,6 @@ public:
 };
 
 inline long value(const Degree& d) { return d._deg; }
+} // Givaro
 
 #endif // __GIVARO_poly1degree_H

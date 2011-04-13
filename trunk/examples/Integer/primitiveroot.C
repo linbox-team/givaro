@@ -20,6 +20,10 @@
 #define TIMING 1
 #endif
 
+using namespace Givaro;
+
+
+
 int main(int argc, char** argv)
 {
   IntNumTheoDom<> IP;

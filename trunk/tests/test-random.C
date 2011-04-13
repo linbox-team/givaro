@@ -14,6 +14,7 @@
 #include <iostream>
 #include <givaro/givinteger.h>
 
+using namespace Givaro;
 //#define GIVARO_DEBUG
 using std::cout ; using std::endl;
 

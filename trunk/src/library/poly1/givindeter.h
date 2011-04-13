@@ -16,6 +16,8 @@
 #include <iostream>
 #include <string>
 
+namespace Givaro {
+
 class Indeter {
 public :
 
@@ -66,4 +68,5 @@ inline int operator>= (const Indeter& i1, const Indeter &i2)
 inline int operator>  (const Indeter& i1, const Indeter &i2)
   { return i1.compare(i2) >0; }
 
+  } // Givaro
 #endif // __GIVARO_indeter_H

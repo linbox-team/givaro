@@ -13,6 +13,7 @@
 
 #include "gmp++/gmp++.h"
 
+using namespace Givaro;
 #define _GIV_REPET 10
 
 int test_axpy_unit(const Integer & a, const Integer & b, const Integer & x)

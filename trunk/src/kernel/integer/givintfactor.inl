@@ -20,6 +20,8 @@
 #include <iostream>
 #include <vector>
 
+namespace Givaro {
+
 template<class RandIter>
 std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, const Rep& n) const
 {
@@ -544,5 +546,7 @@ typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(RandIter& 
     delete [] A; delete [] X; delete [] Z;
     return neg(g,one);
 }
+
+} // namespace Givaro {
 
 #endif // __GIVARO_factorisation_INL

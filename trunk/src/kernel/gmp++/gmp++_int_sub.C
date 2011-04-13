@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // $Id: gmp++_int_sub.C,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
@@ -11,25 +11,26 @@
 
 #include "gmp++/gmp++.h"
 
+namespace Givaro {
 
 //-------------------------------------------------- operator -
-Integer& Integer::subin(Integer& res, const Integer& n) 
+Integer& Integer::subin(Integer& res, const Integer& n)
 {
   if (isZero(n)) return res;
   if (isZero(res)) return res = - n;
   mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
   return res;
 }
-Integer& Integer::subin(Integer& res, const long n) 
+Integer& Integer::subin(Integer& res, const long n)
 {
   if (isZero(n)) return res;
   if (isZero(res)) return res = - n;
-  int sgn = GMP__SGN(n); 
+  int sgn = GMP__SGN(n);
   if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
   else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n);
   return res;
 }
-Integer& Integer::subin(Integer& res, const unsigned long n) 
+Integer& Integer::subin(Integer& res, const unsigned long n)
 {
   if (isZero(n)) return res;
   if (isZero(res)) return res = - n;
@@ -48,7 +49,7 @@ Integer& Integer::sub(Integer& res, const Integer& n1, const long n2)
 {
   if (isZero(n1)) return res = - n2;
   if (isZero(n2)) return res = n1;
-  int sgn = GMP__SGN(n2); 
+  int sgn = GMP__SGN(n2);
   if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
   else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, -n2);
   return res;
@@ -78,7 +79,7 @@ Integer& Integer::operator -= (const Integer& n)
 {
   if (isZero(n)) return *this;
   if (isZero(*this)) return logcpy(-n);
-//   Rep (res.gmp_rep)( MAX(SZ_REP(n.gmp_rep),SZ_REP(gmp_rep)) );  
+//   Rep (res.gmp_rep)( MAX(SZ_REP(n.gmp_rep),SZ_REP(gmp_rep)) );
   mpz_sub( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
   return *this;
 }
@@ -87,7 +88,7 @@ Integer& Integer::operator -= (const unsigned long l)
 {
   if (l==0) return *this;
   if (isZero(*this)) return logcpy(Integer(-l));
-//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );   
+//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
   mpz_sub_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
   return *this;
 }
@@ -108,30 +109,32 @@ Integer Integer::operator - (const Integer& n) const
 {
   if (isZero(n)) return *this;
   if (isZero(*this)) return -n;
-//   Rep (res.gmp_rep)( MAX(SZ_REP(n.gmp_rep),SZ_REP(gmp_rep)) );   
-  Integer res;   
+//   Rep (res.gmp_rep)( MAX(SZ_REP(n.gmp_rep),SZ_REP(gmp_rep)) );
+  Integer res;
   mpz_sub( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
   return res;
 }
 
-Integer Integer::operator - (const unsigned long l) const 
+Integer Integer::operator - (const unsigned long l) const
 {
   if (l==0) return *this;
   if (isZero(*this)) return Integer(-l);
-//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );   
-  Integer res;   
+//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
+  Integer res;
   mpz_sub_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
   return res;
 }
 
-Integer Integer::operator - (const long l) const 
+Integer Integer::operator - (const long l) const
 {
   if (l==0) return *this;
   if (isZero(*this)) return Integer(-l);
-//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );   
-  Integer res;   
+//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
+  Integer res;
   int sgn = GMP__SGN(l);
   if (sgn >0) mpz_sub_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
   else mpz_add_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, -l);
   return res;
+}
+
 }

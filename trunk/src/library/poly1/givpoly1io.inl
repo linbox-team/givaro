@@ -14,6 +14,7 @@
 
 #include <iostream>
 
+namespace Givaro {
   // --
 template<class Domain>
 std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& sin )
@@ -103,4 +104,5 @@ std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i, Rep& P) const
         // i >> P[deg];
     return i;
 }
+} // Givaro
 #endif // __GIVARO_poly1_io_INL

@@ -18,6 +18,7 @@
 #include <givaro/givpoly1factor.h>
 #include "givaro/givtablelimits.h"
 
+namespace Givaro {
 
 template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt e = 1) {
 	Rt f = 0;
@@ -476,6 +477,8 @@ private:
 	ExtensionField _field;
 
 }; //  class GIV_ExtensionrandIter
+
+} // namespace Givaro
 
 #endif //__GIVARO_extension_H
 

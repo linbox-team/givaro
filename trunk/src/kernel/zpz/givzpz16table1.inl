@@ -35,6 +35,7 @@
 #define __GIVARO_ZPZ16_LOG_MULSUB(r,p,a,b,c) \
 { __GIVARO_ZPZ16_LOG_MUL(r, p, a, b); __GIVARO_ZPZ16_LOG_SUB(r, p, r, c); }
 
+namespace Givaro {
 
 inline ZpzDom<Log16>::Residu_t ZpzDom<Log16>::residu( ) const
 { return _p; }
@@ -551,5 +552,7 @@ inline std::ostream& ZpzDom<Log16>::write (std::ostream& s, const Rep a) const
   if (a >= _p) return s << '0';
   return s << _tab_rep2value[a]; //dpritcha
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_zpz16_table1_INL

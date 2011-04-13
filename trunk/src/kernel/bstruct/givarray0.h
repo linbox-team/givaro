@@ -18,6 +18,8 @@
 #include "givaro/givperf.h"
 #include "givaro/giverror.h"
 
+namespace Givaro {
+
 GIVARO_PERF_DEFCLASS(Array0,T)
 
 template <class T>
@@ -113,6 +115,8 @@ protected :  //--------------------- protected Internal representation
 	size_t _psz;   // physical size of the array
 	T*  _d;        // ptr to the memory
 };
+
+} // namespace Givaro
 
 
 #include "givaro/givarray0.inl"

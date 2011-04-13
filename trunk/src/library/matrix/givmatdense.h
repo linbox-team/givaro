@@ -21,6 +21,9 @@
 #include "givaro/givmatstoragedense.h"
 
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 // --
 // -- Matrix class: dense matrix
 // --
@@ -145,5 +148,7 @@ public:
   istream& read ( istream& s, Rep& r ) const;
   ostream& write( ostream& s, const Rep& r ) const;
 };
+
+} // Givaro
 
 #endif

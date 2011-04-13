@@ -6,6 +6,7 @@
 
 #ifndef __GIVARO_poly1_dense_ops_INL
 #define __GIVARO_poly1_dense_ops_INL
+
 #include "givaro/givpoly1cstor.inl"
 #include "givaro/givpoly1misc.inl"
 #include "givaro/givpoly1addsub.inl"

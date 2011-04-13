@@ -15,6 +15,8 @@
 //
 #include "givaro/givconfig.h"
 
+namespace Givaro {
+
 template<class Domain>
 struct KSpace {
 
@@ -124,5 +126,7 @@ inline istream& operator>>(istream& sin,  KSpace<Domain>& U )
 {
   return U._domain.read(sin, U._entry);
 }
+
+} // Givaro
 
 #endif

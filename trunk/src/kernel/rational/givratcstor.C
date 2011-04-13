@@ -26,6 +26,8 @@
 #include <sstream>
 #endif
 
+namespace Givaro {
+
 Rational::ReduceFlag Rational::flags = Rational::Reduce ;
 void Rational::SetReduce() { Rational::flags = Rational::Reduce ; }
 void Rational::SetNoReduce() { Rational::flags = Rational::NoReduce ; }
@@ -224,3 +226,4 @@ void Rational::Init(int* , char***)
 void Rational::End()
 {}
 
+} // namespace Givaro

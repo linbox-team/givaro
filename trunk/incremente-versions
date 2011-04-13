@@ -168,7 +168,7 @@ if ("$answ" == "y") then
 		if ("$answ" == "yes") then
             \cp -p $mak $backupmake
 			\mv -f $tmpfile $mak
-             echo -n "Removing back-up for $conf, $mak and $ver ?"
+             echo -n "Removing back-up for $conf, $mak and $ver ? (y/n)"
              set remo = $<
              if ("$remo" == "y") then
 					 \rm -f $backupconf

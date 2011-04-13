@@ -19,6 +19,10 @@ using namespace std;
 #include <givaro/givintfactor.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
+
+
 int main(int argc, char** argv)
 {
     IntFactorDom<> IP;

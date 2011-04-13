@@ -13,6 +13,7 @@
 #include "givaro/givconfig.h"
 #include <iostream>
 
+namespace Givaro {
 
 // ==========================================================================
 // --
@@ -57,4 +58,5 @@ public:
   int run( int argc=0, char** argv=0);
 };
 
+} // namespace Givaro
 #endif // __GIVARO_init_H

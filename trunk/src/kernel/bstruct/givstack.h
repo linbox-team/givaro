@@ -11,6 +11,8 @@
 #ifndef __GIVARO_stack_H
 #define __GIVARO_stack_H
 
+namespace Givaro {
+
 template <class THING>
 class Stack {
 public :
@@ -30,6 +32,8 @@ struct inner_stack
     inner_stack * next ;
    } *ThePointer ;
 } ;
+
+} // Givaro
 
 #include "givaro/givstack.inl"
 

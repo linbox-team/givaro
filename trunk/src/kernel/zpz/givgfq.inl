@@ -215,7 +215,7 @@ if (((a1)==0) || ((a2)==0)) { (c)=(b); \
 
 #endif
 
-
+namespace Givaro {
 
 template<typename TT>
 inline typename GFqDom<TT>::Residu_t GFqDom<TT>::residu() const
@@ -1117,6 +1117,8 @@ template<typename TT> long long GFqDom<TT>::_sub_call = 0;
 template<typename TT> long long GFqDom<TT>::_neg_call = 0;
 template<typename TT> long long GFqDom<TT>::_inv_call = 0;
 #endif
+
+} // namespace Givaro
 
 #endif // __GIVARO_gfq_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

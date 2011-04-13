@@ -16,9 +16,10 @@
 #include "givaro/givconfig.h"
 #include "givaro/givinteger.h"
 
-  // ---------------------------------------------  class RNSsystem
-  // Structure which manages list of primes in order to do
+// ---------------------------------------------  class RNSsystem
+// Structure which manages list of primes in order to do
 
+namespace Givaro {
 // #ifndef __ECC
 template< template<class, class> class Container, template <class> class Alloc>
 class IntRNSsystem : public IntegerDom {
@@ -183,6 +184,7 @@ protected:
 /* #endif */
 #endif
 
+} // Givaro
 #include "givaro/givintrns_cstor.inl"
 #include "givaro/givintrns_convert.inl"
 

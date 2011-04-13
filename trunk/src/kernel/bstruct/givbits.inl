@@ -11,7 +11,7 @@
 
 #ifndef __GIVARO_bits_INL
 #define __GIVARO_bits_INL
-
+namespace Givaro {
   // -- Copy operators
 inline
 Bits& Bits::copy( const Bits& src )
@@ -26,5 +26,5 @@ inline Bits& Bits::operator= (const Bits& B) { return copy(B); }
 //-------------------------------------------------inline << operators
 inline std::ostream& operator<< (std::ostream& o, const Bits& a)
 { return a.print(o); }
-
+} // namespace Givaro
 #endif // __GIVARO_bits_INL

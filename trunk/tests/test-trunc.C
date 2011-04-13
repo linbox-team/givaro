@@ -1,7 +1,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
@@ -11,10 +11,11 @@
 #include <givaro/givpoly1.h>
 #include <givaro/givtruncdomain.h>
 
+using namespace Givaro;
 
 long long TTcount = 0;
 
-bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
+bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
@@ -22,7 +23,7 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.add (T, P, Q);
     V=T;
     DP.truncin(V,d1,d2);
@@ -48,7 +49,7 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     return true;
 }
 
-bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
+bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
@@ -56,7 +57,7 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-  
+
     DP.sub (T, P, Q);
     V=T;
     DP.truncin(V,d1,d2);
@@ -82,7 +83,7 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     return true;
 }
 
-bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2) 
+bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
@@ -90,7 +91,7 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-   
+
     DP.mul (T, P, Q);
     V=T;
     DP.truncin(V,d1,d2);
@@ -116,7 +117,7 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     return true;
 }
 
-bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
+bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
@@ -124,7 +125,7 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") * (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.axpy (T, P, Q, G);
     V=T;
     DP.truncin(V,d1,d2);
@@ -160,7 +161,7 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
     return true;
 }
 
-bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
+bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
@@ -168,7 +169,7 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.axmy (T, P, Q, G);
     V=T;
     DP.truncin(V,d1,d2);
@@ -202,7 +203,7 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
     return true;
 }
 
-bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2) 
+bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::Element& P, const TruncDom< GFqDom<int> >::Element& Q, const TruncDom< GFqDom<int> >::Element& G, size_t d1, size_t d2)
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
@@ -210,7 +211,7 @@ bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >:
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
-    
+
     DP.maxpy (T, P, Q, G);
     V=T;
     DP.truncin(V,d1,d2);
@@ -264,7 +265,7 @@ int main(int argc, char ** argv) {
 //                                 // deg leadcoeff (lead-1)coeff ... unitcoeff
     Q = P;
 
-    DP101.init( Q, Degree(0), 6UL ); 
+    DP101.init( Q, Degree(0), 6UL );
     DP101.init( monomial, Degree(4), 3UL);
     DP101.addin( Q, monomial) ;
     DP101.init( monomial, Degree(1), 75UL);
@@ -304,7 +305,7 @@ int main(int argc, char ** argv) {
     DP101.mulin( Q, Degree(3) ) ;
 
     DP101.add ( R, P, Q); // R = P*Q;
-    
+
 
 
 
@@ -379,7 +380,7 @@ int main(int argc, char ** argv) {
 
 
     GivRandom generator(seed);
-    
+
     for(size_t i=0; i<100; ++i) {
         long deg1 = generator() % 75;
         long deg2 = generator() % 85;

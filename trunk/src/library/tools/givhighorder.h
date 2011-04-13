@@ -24,6 +24,9 @@
 #include <givaro/givpower.h>
 #include <givaro/givquotientdomain.h>
 
+
+namespace Givaro {
+
 template<class Domain>
 struct HighOrder {
 
@@ -438,5 +441,6 @@ struct HighOrder {
 
 };
 
+} // Givaro
 
 #endif

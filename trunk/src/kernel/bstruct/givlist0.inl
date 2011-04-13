@@ -13,6 +13,8 @@
 #ifndef __GIVARO_list0_INL
 #define __GIVARO_list0_INL
 
+namespace Givaro {
+
 template <class T>
 inline List0<T>::List0()
  : _head(0), _queue(0), _size(0)
@@ -167,5 +169,7 @@ int List0<T>::getrmvfirst(T& val)
   --_size;
   return 1;
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_list0_INL

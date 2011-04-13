@@ -15,6 +15,10 @@
 #include <givaro/givgfq.h>
 #include <givaro/StaticElement.h>
 
+using namespace Givaro;
+
+
+
 // Finite Field with Domain style
 typedef GFqDom<long> Field;
 

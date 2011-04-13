@@ -17,6 +17,10 @@
 #include <givaro/givzpz.h>
 #include <givaro/StaticElement.h>
 
+using namespace Givaro;
+
+
+
 // Domain kind
 typedef ZpzDom<Unsigned32>	Field1;	typedef StaticElement< Field1 > Element1; 	template<> Field1 Element1::_domain(2);
 typedef GFqDom<long>		Field2;	typedef StaticElement< Field2 > Element2;	template<> Field2 Element2::_domain(2);

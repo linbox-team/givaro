@@ -11,6 +11,7 @@
 
 #include "gmp++/gmp++.h"
 
+namespace Givaro {
 //-------------------------------------------------- operator +
 Integer& Integer::addin(Integer& res, const Integer& n)
 {
@@ -115,4 +116,6 @@ Integer Integer::operator + (const long l) const
   if (sgn >0) mpz_add_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
   else mpz_sub_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, -l);
   return res;
+}
+
 }

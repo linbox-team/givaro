@@ -14,6 +14,10 @@
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
+
+
 //----------------------------------------------------------
 // Deterministic, non-polynomial (factor b-1 for the order),
 // test for primitive roots.

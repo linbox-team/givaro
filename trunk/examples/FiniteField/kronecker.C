@@ -19,6 +19,10 @@
 #include <givaro/givzpzInt.h>
 #include <givaro/givgfqkron.h>
 
+using namespace Givaro;
+
+
+
 int main(int argc, char ** argv) {
 
     unsigned long charac = (argc>1?atoi(argv[1]):3);

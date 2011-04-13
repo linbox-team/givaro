@@ -19,6 +19,10 @@
 // RSA, in CBC mode, deciphering of files
 
 
+using namespace Givaro;
+
+
+
 
 int main(int argc, char** argv)
 {

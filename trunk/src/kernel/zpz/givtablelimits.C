@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Time-stamp: <11 Jun 07 18:20:54 Jean-Guillaume.Dumas@imag.fr>
 // author: Jean-Guillaume.Dumas
@@ -16,6 +16,7 @@
 // ==========================================================================
 #include "givaro/givtablelimits.h"
 
+namespace Givaro {
 
 const size_t AdicSize::n_max_53[][_GIVARO_FF_MAXEXPONENT_] = {
 /* 2 */ {  104028, 517, 47, 11, 4, 2, 1},
@@ -540,4 +541,4 @@ const size_t AdicSize::qadic_64[][_GIVARO_FF_MAXEXPONENT_] = {
 /* 1129 */ {  2544769}
 };
 
-
+} // namespace Givaro

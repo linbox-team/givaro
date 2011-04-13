@@ -18,6 +18,10 @@
 #include <givaro/givmontg32.h>
 #include <givaro/givgfqext.h>
 
+using namespace Givaro;
+
+
+
 template<class Field>
 void TestField(const Field& F) {
     std::cerr << "Within " ;

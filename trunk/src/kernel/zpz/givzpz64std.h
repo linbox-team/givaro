@@ -8,10 +8,15 @@
 // Authors: T. Gautier
 // $Id: givzpz64std.h,v 1.21 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
-// Description:
-//   Arithmetic on Z/pZ, with p a prime number less than 2^64
-//   Modulo typedef is a signed long number. In case it was modified
-//   then bezout algorithm must be changed (coefficient can be negative).
+
+/*! @file zpz/givzpz64std.h
+ * @ingroup zpz
+ * @brief Description.
+ *   Arithmetic on Z/pZ, with p a prime number less than 2^64
+ *   Modulo typedef is a signed long number. In case it was modified
+ *   then Bézout algorithm must be changed (coefficient can be negative).
+ */
+
 #ifndef __GIVARO_zpz64std_H
 #define __GIVARO_zpz64std_H
 
@@ -19,11 +24,14 @@
 #include "givaro/giverror.h"
 #include "givaro/givzpztypes.h"
 
-// ==========================================================================
-// -- This class implement the standard arithmetic with Modulo Elements:
-// - The representation of an integer a in Zpz is the value a % p
-// - p max is 2147483647
-// ==========================================================================
+
+namespace Givaro {
+
+/*! @brief This class implement the standard arithmetic with Modulo Elements.
+ * - The representation of an integer a in Zpz is the value a % p
+ * - p max is 2147483647
+ * .
+ */
 
 template<>
 class ZpzDom<Std64>
@@ -204,6 +212,7 @@ protected:
 	static void End();
 };
 
+} // namespace Givaro
 
 #include "givaro/givzpz64std.inl"
 #endif // __GIVARO_zpz64std_H

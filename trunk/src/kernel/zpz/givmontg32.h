@@ -7,31 +7,37 @@
 // author: JG Dumas (from P. Zimmermann's Montgomery implementation)
 // $Id: givmontg32.h,v 1.15 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
+
+/*! @file zpz/givmontg32.h
+ * @ingroup zpz
+ * @brief NO DOC
+ */
+
 #ifndef __GIVARO_montg32_H
 #define __GIVARO_montg32_H
-//
+
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
 #include "givaro/giv_randiter.h"
 #include <math.h>
 
 
-// ==========================================================================
-// -- This class implement the standard arithmetic with Modulo Elements:
-//    Reduction is made through Montgomery's reduction
-//    Representation of a is by storing (aB).
-//    We must have p>2
-//    We must have (p-1)^2 + p*(B-1) < B^2,
-//    i.e. 2<p<=40504 for B=2^16
-// ==========================================================================
 
 #define B32 65536UL
 #define MASK32 65535UL
 #define HALF_BITS32 16
 
+namespace Givaro {
+
 template<class TYPE> class Montgomery;
 
 
+/*! @brief This class implements the standard arithmetic with Modulo Elements.
+ *   Reduction is made through Montgomery's reduction.
+ *   Representation of a is by storing (aB).
+ *   - We must have p>2
+ *   - We must have \f$(p-1)^2 + p(B-1) < B^2 \f$, i.e. \f$2<p \leq 40504\f$ for \f$B=2^16\f$.
+ */
 template<>
 class Montgomery<Std32> {
 public:
@@ -210,6 +216,8 @@ public:
     const Rep one;
 };
 
+
+} // namespace Givaro
 
 #include "givaro/givmontg32.inl"
 

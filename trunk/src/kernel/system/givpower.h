@@ -11,6 +11,8 @@
 #ifndef __GIVARO_power_H
 #define __GIVARO_power_H
 
+namespace Givaro {
+
 // -------------------------------------------------------------
 // Integer log
 // -------------------------------------------------------------
@@ -89,5 +91,7 @@ template<> double power<double>(const double a, const double e) {
    return pow(a,e);
 }
 */
+
+} // namespace Givaro
 
 #endif // __GIVARO_power_H

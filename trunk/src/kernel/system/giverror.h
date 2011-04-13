@@ -8,15 +8,19 @@
 // Authors: T. Gautier
 // $Id: giverror.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-// - error exception
+
+/*! @file system/giverror.h
+ * @ingroup system
+ * @brief error exception.
+ */
+
 #ifndef __GIVARO_error_H
 #define __GIVARO_error_H
 
 #include <iostream>
-
+namespace Givaro {
 // ------------------------------- GivError
-// - Base class for execption handling in Givaro
+// - Base class for exeception handling in Givaro
 class GivError {
 public:
   GivError(const char* msg =0 )
@@ -56,6 +60,6 @@ public:
   GivMathDivZero(const char* msg = 0) : GivError(msg) { }
 };
 
-
+} // namespace Givaro
 
 #endif // __GIVARO_error_H

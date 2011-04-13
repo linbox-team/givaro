@@ -8,9 +8,12 @@
 // Authors: JG Dumas
 // $Id: givzpzInt.h,v 1.11 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-//
-// Description:
-//   Arithmetic on Z/pZ, with p a prime number in arbitrary precision
+
+/*! @file zpz/givzpzInt.h
+ * @ingroup zpz
+ *  @brief Arithmetic on Z/pZ, with p a prime number in arbitrary precision.
+ */
+
 #ifndef __GIVARO_zpz_int_H
 #define __GIVARO_zpz_int_H
 
@@ -21,10 +24,12 @@
 #include "givaro/giv_randiter.h"
 
 
-// ==========================================================================
-// -- This class implement the standard arithmetic with Modulo Elements:
-// - The representation of an integer a in Zpz is the value a % p
-// ==========================================================================
+namespace Givaro {
+
+/*! @brief This class implement the standard arithmetic with Modulo Elements.
+ * - The representation of an integer a in Zpz is the value a % p
+ * .
+ */
 
 template<>
 class ZpzDom<Integer> {
@@ -205,6 +210,7 @@ protected:
     static void End();
 };
 
+} // namespace Givaro
 
 #include "givaro/givzpzInt.inl"
 

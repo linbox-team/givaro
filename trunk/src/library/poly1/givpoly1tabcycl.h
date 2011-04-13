@@ -15,6 +15,7 @@
 #include "givaro/givpoly1.h"
 #include "givaro/givpoly1factor.h"
 
+namespace Givaro {
 template<class Domain, class Tag>
 class CyclotomicTable : public Poly1FactorDom<Domain,Tag> {
     typedef typename Poly1FactorDom<Domain,Tag>::Element Element;
@@ -33,6 +34,7 @@ public:
 void table_0 (const typename Domain::Residu_t mod, const long expo) ;
 void table_50 (const typename Domain::Residu_t mod, const long expo) ;
 };
+} // Givaro
 
 #include "givaro/givpoly1tabcycl.inl"
 

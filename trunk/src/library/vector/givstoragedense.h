@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givstoragedense.h,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
@@ -14,18 +14,20 @@
 
 #include "givaro/givstorage.h"
 
+namespace Givaro {
+#warning "this file will probably not compile"
 
 // ==========================================================================
 // --
 // -- Specialization for dense representation, using Array0 of givaro
 // --
 // ==========================================================================
-template<class T> 
+template<class T>
 struct RetVectorStorage<T,Dense> {
-  typedef T		Type_t; 
+  typedef T		Type_t;
 
   // --
-  // -- Iterators 
+  // -- Iterators
   // --
   typedef typename Array0<T>::Indice_t 		Indice_t;
   typedef typename Array0<T>::Iterator_t 	Iterator_t;
@@ -54,5 +56,5 @@ struct RetVectorStorage<T,Dense> {
   };
 };
 
-
+} // Givaro
 #endif

@@ -20,6 +20,9 @@
 // =================================================================== //
 // Primality tests
 // =================================================================== //
+
+namespace Givaro {
+
 template<class RandIter> unsigned int IntPrimeDom::Miller(RandIter& g, const Integer& n) const
 {
         // Monte Carlo algorithm
@@ -64,4 +67,6 @@ int IntPrimeDom::Lehmann(RandIter& g, const Rep& n)  const
         return 1;
     return 0;
 }
+
+} // Givaro
 #endif // __GIVARO_primality_INL

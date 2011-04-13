@@ -21,6 +21,7 @@
 #include "givaro/givpoly1.h"
 #include <givaro/givtruncdomain.h>
 
+namespace Givaro {
 template<class Domain, bool REDUCE = true>
 struct NewtonInterpGeom : TruncDom<Domain>  {
     typedef std::vector< typename Domain::Element > Vect_t;
@@ -68,7 +69,7 @@ public:
         _g2.push_back(this->_domain.one);
         flip = true;
     }
-    
+
     template<typename BlackBox>
     void operator() (const BlackBox& bb) {
         Type_t qi;
@@ -76,24 +77,24 @@ public:
         _qi.push_back(qi);
 
         this->_domain.mulin(powerq, _q);
-        
+
         Type_t ui, mui;
         this->_domain.sub(ui, powerq, this->_domain.one);
-        
+
         this->_domain.mul(mui, powerq, _mui.back() );
         this->_domain.divin(mui, ui );
         this->_domain.negin(mui);
         _mui.push_back(mui);
 
         this->_domain.mulin(_ui, ui );
-        
+
         Type_t vi;
         bb(vi, powerq);
 
         Type_t wi;
         this->_domain.div(wi, vi, _ui);
         _wi.push_back(wi);
-        
+
         Type_t gi;
         this->_domain.div(gi, qi, _ui);
         if (flip) this->_domain.negin(gi);
@@ -102,7 +103,7 @@ public:
         flip = !flip;
         ++_deg;
     }
-    
+
 
 
     Polynomial& Newton(Polynomial& inter) {
@@ -119,7 +120,7 @@ public:
         this->convert(inter, G); // trunc to polynomial
 
         for(size_t i=0; i<inter.size(); ++i)
-            this->_domain.divin(inter[i], _qi[i]);        
+            this->_domain.divin(inter[i], _qi[i]);
 
         return inter;
     }
@@ -152,15 +153,16 @@ public:
         this->divin(G,_deg);
 
         this->convert(inter, G); // trunc to polynomial
-        
+
         for(size_t i=0; i<inter.size(); ++i)
-            this->_domain.mulin(inter[i], mzi[i]);            
-        
+            this->_domain.mulin(inter[i], mzi[i]);
+
         return inter;
     }
-    
+
 };
 
+} // Givaro
 
 
 #endif // __GIVARO_interpolation_at_geometric_points_H

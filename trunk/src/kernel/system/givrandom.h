@@ -8,6 +8,14 @@
 // a la Linbox ...
 // Time-stamp: <13 Jul 07 14:40:27 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
+
+/*! @file system/givrandom.h
+ * @ingroup system
+ * @brief NO DOC
+ * @bib Fishman, G.S. "Multiplicative congruential random
+ * number generators ..." Math. Comp. 54:331-344 (1990)
+ */
+
 #ifndef __GIVARO_random_H
 #define __GIVARO_random_H
 #include <givaro/givconfig.h>
@@ -17,9 +25,6 @@ extern "C" {
 # include <sys/resource.h>
 }
 
-// -----------------------------------------------------
-// Fishman, G.S. "Multiplicative congruential random
-// number generators ..." Math. Comp. 54:331-344 (1990)
 
 #if __GIVARO__DONOTUSE_longlong__
 #define _GIVRAN_MULTIPLYER_ 950706376UL
@@ -28,6 +33,8 @@ extern "C" {
 #define _GIVRAN_MULTIPLYER_ 950706376ULL
 #define _GIVRAN_MODULO_     2147483647ULL
 #endif
+
+namespace Givaro {
 
 class GivRandom {
     mutable unsigned long _seed;
@@ -70,4 +77,7 @@ public:
 
 };
 
+} // namespace Givaro
+
 #endif // __GIVARO_random_H
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

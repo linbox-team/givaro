@@ -13,6 +13,7 @@
 #include <iostream>
 #include "givaro/givzpz16table1.h"
 
+namespace Givaro {
 
 ZpzDom<Log16>::ZpzDom( Residu_t p ) :
        	zero(Rep(2*(p-1))), one(0), _p(p)
@@ -178,7 +179,7 @@ ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
 #endif
     if ((*(this->numRefs))==0) {
 #ifdef GIVARO_DEBUG
-      std::cout << "zero : " << zero << std::endl;  
+      std::cout << "zero : " << zero << std::endl;
       std::cout << "Ddestroying, p="<<residu()<<"\n";
 #endif
       delete [] _tab_value2rep;
@@ -218,7 +219,7 @@ ZpzDom<Log16>::~ZpzDom()
   (*numRefs)--;
   if (*numRefs == 0) {
 #ifdef GIVARO_DEBUG
-    std::cout << "zero : " << zero << std::endl;  
+    std::cout << "zero : " << zero << std::endl;
     std::cout << "Fdestroying, p="<<residu()<<"\n";
 #endif
     delete [] _tab_value2rep;
@@ -239,5 +240,7 @@ void ZpzDom<Log16>::Init()
 void ZpzDom<Log16>::End()
 {
 }
+
+} // namespace Givaro
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

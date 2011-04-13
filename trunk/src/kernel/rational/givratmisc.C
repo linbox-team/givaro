@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
 // $Id: givratmisc.C,v 1.5 2009-10-01 09:07:36 jgdumas Exp $
@@ -12,8 +12,10 @@
 
 #include "givaro/givrational.h"
 
-// 
-Rational& Rational::reduce() 
+namespace Givaro {
+
+//
+Rational& Rational::reduce()
 {
   Integer t = gcd(num, den);
   if (!isOne(t) )
@@ -23,7 +25,7 @@ Rational& Rational::reduce()
   }
   return *this;
 }
-	  
+
 const Integer trunc(const Rational &r)
 {
   return r.num / r.den;
@@ -46,7 +48,7 @@ const Integer ceil(const Rational &x)
   return q;
 }
 
-const Integer round(const Rational& x) 
+const Integer round(const Rational& x)
 {
   Integer q;
   Integer r;
@@ -76,10 +78,11 @@ const Rational pow (const Rational& x, const long y)
     r.num = pow(x.den, (long) -y);
     if (sign(r.den) < 0)
     {
-      r.num = -r.num ; 
+      r.num = -r.num ;
       r.den = -r.den ;
     }
   }
   return r;
 }
 
+} // namespace Givaro

@@ -54,6 +54,7 @@
 #define __GIVARO_ZPZInteger_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
 #define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
 
+namespace Givaro {
 
 inline ZpzDom<Integer>::Residu_t ZpzDom<Integer>::residu( ) const
 { return _p; }
@@ -63,15 +64,15 @@ inline ZpzDom<Integer>::Residu_t ZpzDom<Integer>::residu( ) const
  // ------------------------- Miscellaneous functions
 
 inline int ZpzDom<Integer>::isZero(const Rep& a) const
-{ return ::isZero(a); }
+{ return ::Givaro::isZero(a); }
 
 inline int ZpzDom<Integer>::isOne(const Rep& a) const
-{ return ::isOne(a); }
+{ return ::Givaro::isOne(a); }
 
 
 
 inline size_t ZpzDom<Integer>::length(const Rep& a) const
-{ return ::length(a);}
+{ return ::Givaro::length(a);}
 
 
 
@@ -114,7 +115,7 @@ inline ZpzDom<Integer>::Rep& ZpzDom<Integer>::inv (Rep& r, const Rep& a) const
 //  if (d == -1) negin(r);
 //  return r = (r<0)?r + _p:r;
 // JGD 03.06.2003
-	return ::inv(r,a,_p);
+	return ::Givaro::inv(r,a,_p);
 }
 
 inline ZpzDom<Integer>::Rep& ZpzDom<Integer>::div (Rep& r, const Rep& a, const Rep& b) const
@@ -224,7 +225,7 @@ inline ZpzDom<Integer>::Rep& ZpzDom<Integer>::invin (Rep& r) const
 //  return r = (u<0)?u + _p:u;
 // JGD 03.06.2003
    Rep t = r;
-   return ::inv(r,t,_p);
+   return ::Givaro::inv(r,t,_p);
 }
 
 inline ZpzDom<Integer>::Rep& ZpzDom<Integer>::axpy (Rep& r,
@@ -529,5 +530,8 @@ inline std::ostream& ZpzDom<Integer>::write (std::ostream& s, const Rep& a) cons
 {
   return s << a;
 }
+
+} // namespace Givaro
+
 #endif // __GIVARO_zpz_int_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

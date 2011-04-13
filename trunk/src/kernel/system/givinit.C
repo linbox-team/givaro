@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givinit.C,v 1.2 2009-09-17 14:28:23 jgdumas Exp $
@@ -25,6 +25,7 @@
 #  endif
 #endif
 
+namespace Givaro {
 
 void Givaro::DisplayVersion()
 {
@@ -33,7 +34,7 @@ void Givaro::DisplayVersion()
 
 void Givaro::DisplayVersion(std::ostream& o)
 {
- 
+
 o<<'\n' ;
 o<<"        /\\ \n" ;
 o<<"       /  \\    /\\      GIVARO : Parallel Algebraic Computing\n" ;
@@ -46,20 +47,20 @@ o<<" /       Givaro-3.0     \\  co-Authors:\n" ;
 o<<"/      (c) 1998-2002     \\    J-G. Dumas, P. Giorgi\n" ;
 o<<"--   -   -  -  -  --\n" ;
 o<< "version: " << Givaro::Version() << std::endl;
-} 
+}
 
 const char* Givaro::Version()
 {
-  static const char* Givaro_version ="$Revision: 1.2 $ for ""GIVAROSYS"; 
+  static const char* Givaro_version ="$Revision: 1.2 $ for ""GIVAROSYS";
   return Givaro_version;
 }
 
-void Givaro::Init(int* argc, char***argv) 
+void Givaro::Init(int* argc, char***argv)
 {
   GivModule::InitApp(argc, argv) ;
 }
 
-void Givaro::Init() 
+void Givaro::Init()
 {
   Givaro::Init(0,0) ;
 }
@@ -78,9 +79,9 @@ int GivaroAppli::run( int argc, char** argv)
 #if ( __profile__ == 1)
   OSErr err = ProfilerInit(collectDetailed, bestTimeBase, 100,10);
   if (err != noErr) {
-    cout << GivError("[Givaro::Init]: cannot initiliaze profile.");  
+    cout << GivError("[Givaro::Init]: cannot initiliaze profile.");
     return 0;
-  }  
+  }
   ProfilerSetStatus(true);
 #endif
 #endif
@@ -104,3 +105,5 @@ int GivaroAppli::run( int argc, char** argv)
 
   return res;
 }
+
+} // namespace Givaro

@@ -26,6 +26,9 @@
 #include <givaro/givrational.h>
 
 
+using namespace Givaro;
+
+
 typedef GFqDom<long> 		Field1;
 typedef ZpzDom<Std16>           Field2;
 typedef ZpzDom<Log16>           Field3;

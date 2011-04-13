@@ -8,6 +8,9 @@
 // Description: specialization for floating point dense matrix
 
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 // ==========================================================================
 // --
 // -- Specialization for dense representation of floating point
@@ -75,3 +78,4 @@ struct RetMatrixStorage<float,Dense> {
   };
 };
 
+} // Givaro

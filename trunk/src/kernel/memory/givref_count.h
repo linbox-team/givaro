@@ -15,6 +15,8 @@
 #define __GIVARO_ref_counter_H
 #include <stddef.h>
 
+namespace Givaro {
+
 class RefCounter {
 public:
    // Cstor and Dstor
@@ -36,4 +38,5 @@ protected:
   long counter ;
 } ;
 
+} // namespace Givaro
 #endif // __GIVARO_ref_counter_H

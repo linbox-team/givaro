@@ -14,6 +14,7 @@
 #ifndef __GIVARO_category_H
 #define __GIVARO_category_H
 
+namespace Givaro {
 
 // -- nothing
 class Undefined{};
@@ -75,5 +76,7 @@ struct StructFormat {
 template<class T, class Tag>
 StructFormat<T,Tag> Formatted( const T& val, Tag xx )
 { return StructFormat<T,Tag>(val); }
+
+} // Givaro
 
 #endif

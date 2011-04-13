@@ -34,6 +34,10 @@ using namespace std;
 #include <givaro/givinteger.h>
 
 
+using namespace Givaro;
+
+
+
 
 
 IntFactorDom<> IP;

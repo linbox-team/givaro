@@ -6,7 +6,7 @@
 
 AC_PREREQ(2.61)
 
-AC_INIT([Givaro],[3.3.6],[Jean-Guillaume.Dumas@imag.fr],[givaro],
+AC_INIT([Givaro],[3.4.0],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
 AC_CONFIG_MACRO_DIR([macros]) #il le veut alors je le lui donne...
 AC_CONFIG_AUX_DIR([build-aux])
@@ -79,6 +79,8 @@ AM_PROG_LIBTOOL
 LT_PREREQ([2.2])
 LT_INIT
 
+#check lib
+# AC_CHECK_LIB([givaro], [main])
 
 # Checks for header files.
 AC_HEADER_STDC

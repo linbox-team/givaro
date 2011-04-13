@@ -8,13 +8,17 @@
 // Authors: T. Gautier
 // Time-stamp: <02 Oct 07 16:43:17 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
-// Description:
-// - set of primes less than 2^16
+
+/*! @file zpz/givprimes16.h
+ * @ingroup zpz
+ * @brief  set of primes less than 2^16
+ */
+
 #ifndef __GIVARO_primes16_H
 #define __GIVARO_primes16_H
 
 #include <stddef.h>
-
+namespace Givaro {
   // ---------------------------------------------  class Primes16
 class Primes16  {
 public:
@@ -32,6 +36,6 @@ private:
 static const size_t _size;
 static const size_t  _primes[];
 };
-
+} // namespace Givaro
 
 #endif // __GIVARO_primes16_H

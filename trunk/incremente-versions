@@ -10,6 +10,10 @@ set conf = configure.ac
 set mak = src/Makefile.am
 set ver = src/kernel/system/givconfig.h
 
+		###################################
+		## INCREMENT THE LIBRARY VERSION ##
+		###################################
+
 echo -n "Increment library version ? (y/n)"
 set answ = $<
 if ("$answ" == "y") then
@@ -65,15 +69,23 @@ if ("$answ" == "y") then
     if ("$newv" != "$verb") then
 		echo -n "Confirmation of incrementation ? (yes/no)"
 		set answ = $<
+		set backupconf = $conf.back$$
 		if ("$answ" == "yes") then
+            \cp -p $conf $backupconf
+            echo "Back-up of $conf made in $backupconf. Now overwriting $conf."
 			\mv -f $tmpfile $conf
 		else
 			echo "$answ read. Not incrementing anything."
 			\rm -f $tmpfile
-            exit 0
+			exit 0
 		endif
-		#now change givconfig accordingly
-		echo -n "Incrementing givconfig revision accordingly"
+
+		#####################################
+		## INCREMENT THE GIVCONFIG VERSION ##
+		#####################################
+
+		echo -n "Incrementing givconfig revision accordingly."
+        set backupgiv = $ver.back$$
 		set tmpfile = `mktemp` #tempfile
 		set sedfile = `mktemp` #tempfile
 		# echo $tmpfile
@@ -84,14 +96,14 @@ if ("$answ" == "y") then
                 set decimalversion = `expr \( $macro \* 100 + $minor \) \* 100 + $pmicro`
 				breaksw
 			case 1:
-				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    $pminor/"  > $sedfile
-				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/" >> $sedfile
+				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    $pminor/"    > $sedfile
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/"      >> $sedfile
                 set decimalversion = `expr \( $macro \* 100 + $pminor \) \* 100`
 				breaksw
 			case 2:
-				echo "s/GIVARO_MAJOR_VERSION.*/GIVARO_MAJOR_VERSION    $pmacro/" > $sedfile
-				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/" >> $sedfile
-				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    0/"  >> $sedfile
+				echo "s/GIVARO_MAJOR_VERSION.*/GIVARO_MAJOR_VERSION    $pmacro/"    > $sedfile
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/"      >> $sedfile
+				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    0/"         >> $sedfile
                 set decimalversion = `expr $pmacro \* 10000`
 				breaksw
 			default:
@@ -106,14 +118,73 @@ if ("$answ" == "y") then
 		echo -n "Confirmation of incrementation ? (yes/no) "
 		set answ = $<
 		if ("$answ" == "yes") then
+            \cp -p $ver $backupgiv
 			\mv -f $tmpfile $ver
 		else
 			echo "$answ read. Not incrementing anything."
-			echo "*** WARNING *** you have incremented the version"
-			echo " in configure.ac   but not in givconfig.h \!\!\!"
+			echo " your old $conf is restored..."
 			\rm -f $tmpfile
-			#this is an error
-			exit 1
+			\mv -f $backupconf $conf
+			exit 0
+		endif
+
+		##################################
+		## INCREMENT THE SONAME VERSION ##
+		##################################
+
+		echo "Incrementing soname version now."
+        set backupmake = $mak.back$$
+		set infostring = `fgrep libgivaro_la_LDFLAGS $mak | awk  '{print $NF}'`
+		set cur = `echo $infostring | cut -d':' -f1`
+		set rev = `echo $infostring | cut -d':' -f2`
+		set age = `echo $infostring | cut -d':' -f3`
+		set pcur = `echo $cur`
+        @ pcur ++
+		set prev = `echo $rev`
+        @ prev ++
+		set page = `echo $age`
+        @ page ++
+		set tmpfile = `mktemp` #tempfile
+		set sedfile = `mktemp` #tempfile
+		switch ($increm)
+			case 0:
+				echo "s/${infostring}/${cur}:${prev}:${age}/" > $sedfile
+				breaksw
+			case 1:
+				echo "s/${infostring}/${pcur}:0:${page}/"     > $sedfile
+				breaksw
+			case 2:
+				echo "s/${infostring}/${pcur}:0:0/"           > $sedfile
+				breaksw
+			default:
+				echo "Something enourmously abnormal happened"
+				exit 1
+				breaksw
+		endsw
+		sed -f $sedfile $mak > $tmpfile
+		\rm -f $sedfile
+		diff -u0 $mak $tmpfile
+		echo -n "Confirmation of incrementation ? (yes/no) "
+		set answ = $<
+		if ("$answ" == "yes") then
+            \cp -p $mak $backupmake
+			\mv -f $tmpfile $mak
+             echo -n "Removing back-up for $conf, $mak and $ver ?"
+             set remo = $<
+             if ("$remo" == "y") then
+					 \rm -f $backupconf
+					 \rm -f $backupgiv
+					 \rm -f $backupmake
+             else
+				 echo "You can find them in $backupconf, $backupgiv and $backupmake."
+			 endif
+		else
+			echo "$answ read. Not incrementing anything."
+			echo " your old $conf and $ver are restored..."
+			\rm -f $tmpfile
+			\mv -f $backupconf $conf
+			\mv -f $backupgiv  $ver
+			exit 0
 		endif
 
 	endif
@@ -122,27 +193,27 @@ else
 	exit 0
 endif
 
-echo -n "Increment soname revision ? (y/n)"
-set answ = $<
-if ("$answ" == "y") then
-	echo -n "`fgrep libgivaro_la_LDFLAGS $mak`"
-	set revn = `fgrep libgivaro_la_LDFLAGS $mak | cut -d':' -f2`
-	set newr = $revn
-	@ newr ++
-	echo " ---> $newr"
-	echo "s/:${revn}:/:${newr}:/" > /tmp/makin.sed.$$
-	sed -f /tmp/makin.sed.$$ $mak > /tmp/makin.$$
-	\rm -rf /tmp/makin.sed.$$
-	diff /tmp/makin.$$ $mak
-	echo -n "Confirmation of incrementation ? (y/n)"
-	set answ = $<
-	if ("$answ" == "y") then
-	    \mv -f /tmp/makin.$$ $mak
-	else
-	    \rm -f /tmp/makin.$$
-        exit 0
-	endif
-endif
+# echo -n "Increment soname revision ? (y/n)"
+# set answ = $<
+# if ("$answ" == "y") then
+	# echo -n "`fgrep libgivaro_la_LDFLAGS $mak`"
+	# set revn = `fgrep libgivaro_la_LDFLAGS $mak | cut -d':' -f2`
+	# set newr = $revn
+	# @ newr ++
+	# echo " ---> $newr"
+	# echo "s/:${revn}:/:${newr}:/" > /tmp/makin.sed.$$
+	# sed -f /tmp/makin.sed.$$ $mak > /tmp/makin.$$
+	# \rm -rf /tmp/makin.sed.$$
+	# diff /tmp/makin.$$ $mak
+	# echo -n "Confirmation of incrementation ? (y/n)"
+	# set answ = $<
+	# if ("$answ" == "y") then
+		# \mv -f /tmp/makin.$$ $mak
+	# else
+		# \rm -f /tmp/makin.$$
+		# exit 0
+	# endif
+# endif
 
 exit 0
 

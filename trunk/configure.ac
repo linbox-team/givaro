@@ -1,7 +1,7 @@
 # Copyright(c)'1994-2011 by The Givaro group
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
-# and abiding by the rules of distribution of free software. 
+# and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
 AC_PREREQ(2.61)
@@ -9,6 +9,7 @@ AC_PREREQ(2.61)
 AC_INIT([Givaro],[3.3.5],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
 AC_CONFIG_MACRO_DIR([macros]) #il le veut alors je le lui donne...
+AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability])
 AM_CONFIG_HEADER([config.h])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
@@ -18,7 +19,7 @@ RM="$RM -f"
 
 AM_MAINTAINER_MODE
 AM_DEP_TRACK
-AM_OUTPUT_DEPENDENCY_COMMANDS 
+AM_OUTPUT_DEPENDENCY_COMMANDS
 
 AM_ACLOCAL_INCLUDE(macros)
 
@@ -42,8 +43,8 @@ AC_SUBST([TESTS_CFLAGS])
 # Give a sane default for CFLAGS and CXXFLAGS
 # DEFAULT_CFLAGS="-g -O2 -Wall -Wextra -Wno-unused-parameter"
 TESTS_CFLAGS="-O0"
-DEFAULT_CFLAGS="-O2 -pipe"
-DEBUG_CFLAGS="-g -Wall"
+DEFAULT_CFLAGS="-O2 -pipe" #those are CXXFLAGS
+DEBUG_CFLAGS="-g -Wall"    #those are CPPFLAGS
 
 # disable default -g -O2 CXXFLAGS
 : ${CXXFLAGS=""}
@@ -55,7 +56,7 @@ AC_PROG_CXX([g++ icpc icc])
 if  test "x${CXX}" = "xicpc" -o "x${CXX}" = "xicc"  ; then
 	DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wcheck"
    # DEBUG_CFLAGS="-fast"
-else 
+else
 	if test "x${CXX}" = "xg++"  ; then
 		DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wextra -Wno-unused-parameter"
 	else
@@ -63,8 +64,7 @@ else
 	fi
 fi
 
-# CFLAGS=${CFLAGS:-$(DEFAULT_CFLAGS)}
-# CXXFLAGS="${DEFAULT_CFLAGS} ${DEBUG_CFLAGS}"
+
 DEFAULT_CFLAGS="${DEFAULT_CFLAGS} ${DEBUG_CFLAGS}"
 TESTS_CFLAGS="${TESTS_CFLAGS} ${DEBUG_CFLAGS}"
 
@@ -104,7 +104,7 @@ AC_CHECK_SIZEOF(__int64, 64)
 # AC_TYPE_SIZE_T
 # AC_TYPE_INT8_T
 # AC_TYPE_INT16_T
-# AC_TYPE_INT32_T 
+# AC_TYPE_INT32_T
 # AC_TYPE_INT64_T
 # AC_TYPE_UINT8_T
 # AC_TYPE_UINT16_T
@@ -119,15 +119,15 @@ AC_C_BIGENDIAN(
 
 echo "Creating symbolic link for compilation"
 if test ! -L src/kernel/system/givaro  ; then ln -s . src/kernel/system/givaro  ; fi
-if test ! -L src/kernel/bstruct/givaro ; then ln -s . src/kernel/bstruct/givaro ; fi	
-if test ! -L src/kernel/integer/givaro ; then ln -s . src/kernel/integer/givaro ; fi	
-if test ! -L src/kernel/memory/givaro  ; then ln -s . src/kernel/memory/givaro  ; fi	
-if test ! -L src/kernel/rational/givaro; then ln -s . src/kernel/rational/givaro; fi	
+if test ! -L src/kernel/bstruct/givaro ; then ln -s . src/kernel/bstruct/givaro ; fi
+if test ! -L src/kernel/integer/givaro ; then ln -s . src/kernel/integer/givaro ; fi
+if test ! -L src/kernel/memory/givaro  ; then ln -s . src/kernel/memory/givaro  ; fi
+if test ! -L src/kernel/rational/givaro; then ln -s . src/kernel/rational/givaro; fi
 if test ! -L src/kernel/zpz/givaro     ; then ln -s . src/kernel/zpz/givaro     ; fi
 if test ! -L src/kernel/gmp++/gmp++    ; then ln -s . src/kernel/gmp++/gmp++    ; fi
 if test ! -L src/library/matrix/givaro ; then ln -s . src/library/matrix/givaro ; fi
-if test ! -L src/library/poly1/givaro  ; then ln -s . src/library/poly1/givaro  ; fi	
-if test ! -L src/library/tools/givaro  ; then ln -s . src/library/tools/givaro  ; fi	
+if test ! -L src/library/poly1/givaro  ; then ln -s . src/library/poly1/givaro  ; fi
+if test ! -L src/library/tools/givaro  ; then ln -s . src/library/tools/givaro  ; fi
 if test ! -L src/library/vector/givaro ; then ln -s . src/library/vector/givaro ; fi
 
 
@@ -221,7 +221,7 @@ src/kernel/memory/Makefile
 src/kernel/gmp++/Makefile
 src/kernel/integer/Makefile
 src/kernel/bstruct/Makefile
-src/kernel/rational/Makefile	
+src/kernel/rational/Makefile
 src/kernel/zpz/Makefile
 src/library/Makefile
 src/library/vector/Makefile

@@ -19,6 +19,7 @@
 #include <givaro/givintsqrootmod.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
 IntSqrtModDom<> ISM;
 
 bool TestSrqtMod(const Integer& z, const Integer& n) {
@@ -34,7 +35,7 @@ bool TestSrqtMod(const Integer& z, const Integer& n) {
         std::cerr << "a:= " << a << ';' << std::endl;
         std::cerr << "x:= " << x << ';' << std::endl;
         std::cerr << "r:= " << r << ';' << std::endl;
-        
+
         return false;
     }
 }
@@ -51,24 +52,24 @@ int main(int argc, char** argv) {
     pow(ThreeToHundred,Integer(3),100UL);
 
     for(int i=0; i<nbtests; ++i) {
-        
+
         Integer::random(a,sizes);
         Integer::nonzerorandom(n,sizes);
         while(n<=1) Integer::nonzerorandom(n,sizes);
 
         if (! TestSrqtMod(a,n)) ++failures;
-        
+
         n <<= (129);
         n *= ThreeToHundred;
 
-//         ISM.write(std::cerr, n) << std::endl;        
-        
-        if (! TestSrqtMod(a,n)) ++failures;        
-        
-        
+//         ISM.write(std::cerr, n) << std::endl;
+
+        if (! TestSrqtMod(a,n)) ++failures;
+
+
     }
-     
+
     if (failures > 0) std::cerr << "test-modsqroot: " << failures << " failures." << std::endl;
-    
+
     return failures;
 }

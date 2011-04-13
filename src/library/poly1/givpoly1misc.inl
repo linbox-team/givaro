@@ -15,6 +15,7 @@
 #ifndef __GIVARO_poly_misc_INL
 #define __GIVARO_poly_misc_INL
 
+namespace Givaro {
 template<class Domain>
 inline int Poly1Dom<Domain,Dense>::isZero (const Rep& P) const
 {
@@ -310,7 +311,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::reverse( Re
 }
 
 
-    
+
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::reversein( Rep& P) const {
     this->setdegree(P);
@@ -319,6 +320,6 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::reversein( 
     return P;
 }
 
-
+} // Givaro
 
 #endif // __GIVARO_poly_misc_INL

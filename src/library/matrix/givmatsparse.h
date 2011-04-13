@@ -20,6 +20,9 @@
 #include "givaro/givvector.h"
 #include "givaro/givmatstoragesparse.h"
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 // --
 // -- Matrix class: dense matrix
 // --
@@ -120,6 +123,8 @@ public:
                 const MatrixDom<Domain, Dense>& MD,
                 const MatrixDom<Domain, Dense>::Rep& Md);
 };
+
+} // Givaro
 
 //#include "givaro/givmatsparseops.inl"
 

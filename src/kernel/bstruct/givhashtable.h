@@ -8,15 +8,24 @@
 // Author: T. Gautier
 // $Id: givhashtable.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
-// Description:
-// - hash table
+/*! @file bstruct/givhashtable.h
+ * @ingroup bstruct
+ * @brief hash table
+ */
+
 #ifndef __GIVARO_hashtable_H
 #define __GIVARO_hashtable_H
 
-// The class Key must have :
-// - default cstor
-// - operator== : (const Key&, const Key&) -> int
-// - godel      : void -> int
+namespace Givaro {
+
+
+/*! @brief The class Key.
+ * must have :
+ * - default cstor
+ * - operator== : (const Key&, const Key&) -> int
+ * - godel      : void -> int
+ * .
+ */
 
 // Generic Key for class T which can be cast to and int
 template<class T>
@@ -149,6 +158,8 @@ public:
 
 
 } ;
+
+} // namespace Givaro
 
 #include "givaro/givhashtable.inl"
 

@@ -18,6 +18,9 @@
 #include "givaro/giverror.h"
 #include "givaro/givperf.h"
 
+namespace Givaro {
+
+
 template <class T, size_t SIZE>
 class ArrayFixed GIVARO_PERF_INEHERIT(ArrayFixed,T) {
   T  _data[SIZE];        // _data
@@ -127,6 +130,7 @@ template<class UNARYOP>
 void ArrayFixed<T,SIZE>::map( UNARYOP& opcode ) const
 { __giv_map_less_ith_const<T,UNARYOP,SIZE>()(_data, opcode); }
 
+} // namespace Givaro
 
 
 #endif // __GIVARO_array_fixed_H

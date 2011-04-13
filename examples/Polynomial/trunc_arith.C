@@ -17,6 +17,9 @@
 #include <givaro/givpoly1.h>
 #include <givaro/givtruncdomain.h>
 
+using namespace Givaro;
+
+
 
 long long TTcount = 0;
 

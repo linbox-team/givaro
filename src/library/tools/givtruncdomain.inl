@@ -16,6 +16,8 @@
 
 #include <givaro/givtruncdomain.h>
 
+namespace Givaro {
+
 template <class Domain>
 inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::truncin(Rep& p, const Degree& v, const Degree& d) const {
     Degree dP;degree(dP,p);
@@ -357,5 +359,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::mul( Rep& r, const Rep&
     }
     return r;
 }
+
+} // Givaro
 
 #endif

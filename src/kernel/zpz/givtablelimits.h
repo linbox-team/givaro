@@ -9,14 +9,18 @@
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
-// Description:
-//   Zech extension fitting a small enough memory space
-//   t-adic max sizes for BLAS based linear algebra over extension fields
-// see:
-// [Dumas, Gautier, Pernet 2002] Finite field linear algebra subroutines.
-// ISSAC'02: Proceedings of the 2002 International Symposium on Symbolic
-// and Algebraic Computation, Lille, France pp 63--74.
-// ==========================================================================
+
+/*! @file zpz/givtablelimits.h
+ * @ingroup zpz
+ * @brief  Zech extension.
+ * Zech extension fitting a small enough memory space
+ *   t-adic max sizes for BLAS based linear algebra over extension fields
+ * @bib
+ * -  [Dumas, Gautier, Pernet 2002] Finite field linear algebra subroutines.
+ *  ISSAC'02: Proceedings of the 2002 International Symposium on Symbolic
+ * and Algebraic Computation, Lille, France pp 63--74.
+ */
+
 #ifndef __GIVARO_tablesize_MAX_H
 #define __GIVARO_tablesize_MAX_H
 
@@ -39,8 +43,10 @@
 #include <vector>
 #include "givaro/givprimes16.h"
 
-#include <math.h>
+#include <cmath>
 #include <stddef.h>
+
+namespace Givaro {
 
   // ---------------------------------------------  class
 class AdicSize {
@@ -81,7 +87,7 @@ public:
 
     static size_t twopmax53(const unsigned long P, const unsigned long e) {
         size_t k = 53/(2*e-1);
-        return ( pow(2.0,double(k))>double(e*(P-1)*(P-1)) ? k: 0);
+        return ( std::pow((double)2.0,double(k))>double(e*(P-1)*(P-1)) ? k: 0);
     }
 
 private:
@@ -91,5 +97,6 @@ private:
     static const size_t qadic_64[][_GIVARO_FF_MAXEXPONENT_];
 };
 
+} // namespace Givaro
 
 #endif // __GIVARO_tablesize_MAX_H

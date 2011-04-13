@@ -11,6 +11,7 @@
 #ifndef __GIVARO_fixed_trunc_domain_H
 #include <givaro/givtruncdomain.h>
 
+namespace Givaro {
 template <class Domain>
 class FixedTruncDom : public TruncDom<Domain> {
 public :
@@ -238,6 +239,8 @@ public :
 	}
 
 };
+
+} // Givaro
 
 #endif
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

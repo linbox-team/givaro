@@ -13,6 +13,8 @@
 #ifndef __GIVARO_rns_cstor_INL
 #define __GIVARO_rns_cstor_INL
 
+namespace Givaro {
+
 // -- free memory allocated in array !
 template<class RING, class Domain>
 RNSsystem<RING,Domain>::~RNSsystem()
@@ -97,5 +99,7 @@ const typename RNSsystem<RING,Domain>::modulo RNSsystem<RING,Domain>::reciprocal
   if (_ck.size() ==0) ((RNSsystem<RING,Domain>*)this)->ComputeCk();
   return _ck[i];
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_rns_cstor_INL

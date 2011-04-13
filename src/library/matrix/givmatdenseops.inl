@@ -11,6 +11,9 @@
 
 #error "this looks very much like dead code"
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 template<class Domain>
 int MatrixDom<Domain,Dense>::areEqual ( const Rep& A, const Rep& B ) const
 {
@@ -517,6 +520,7 @@ istream& MatrixDom<Domain,Dense>::read (istream& sin, Rep& R) const
 				      GivBadFormat("MatrixDom<Domain,Dense>::read: syntax error no ']'"));
 	return sin;
 }
+} // Givaro
 
 //#include "givaro/givmatdenseops.f.spe"
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

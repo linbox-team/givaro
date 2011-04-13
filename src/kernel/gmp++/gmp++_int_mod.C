@@ -16,7 +16,7 @@
 #define GIVABS(a) ((a)>0?(a):-(a))
 #endif
 
-
+namespace Givaro {
 //-------------------------------------------------- operator /
 Integer& Integer::modin(Integer& res, const Integer& n)
 {
@@ -217,5 +217,6 @@ long long Integer::operator % (const long long l) const
 }
 #endif //__USE_64_bits__
 
+}
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax

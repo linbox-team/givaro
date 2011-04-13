@@ -1,16 +1,16 @@
 // Copyright(c)'1994-2011 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // -------------------------------------------------------------
 // Time-stamp: <06 Apr 11 17:42:23 Jean-Guillaume.Dumas@imag.fr>
-//                                                              
-// Interpolation at geometric points                            
-// see: Polynomial evaluation and interpolation on special sets 
-//      of points,                                              
-//      A. Bostan and E. Schost,                                
-//      Journal of Complexity 21(4): 420-446, 2005.             
+//
+// Interpolation at geometric points
+// see: Polynomial evaluation and interpolation on special sets
+//      of points,
+//      A. Bostan and E. Schost,
+//      Journal of Complexity 21(4): 420-446, 2005.
 // -------------------------------------------------------------
 
 #include <iostream>
@@ -22,6 +22,8 @@
 #include <givaro/givinterpgeom-multip.h>
 
 
+using namespace Givaro;
+
 #ifdef GIVARO_DEBUG
 long long TTcount = 0;
 #endif
@@ -30,19 +32,19 @@ struct BlackBoxPolynomial {
     typedef Poly1Dom<GFqDom<long>,Dense > PolDom_t;
     typedef PolDom_t::Element	    Polynomial;
     typedef PolDom_t::Type_t	    Type_t;
-    
+
     const PolDom_t& _PD;
     Polynomial _func;
-    
 
-    BlackBoxPolynomial(const PolDom_t& pold, Polynomial& P) 
-            : _PD(pold), _func(P) 
+
+    BlackBoxPolynomial(const PolDom_t& pold, Polynomial& P)
+            : _PD(pold), _func(P)
         {}
-    
+
     Type_t& operator()(Type_t& vi, const Type_t& xi) const {
         return _PD.eval(vi, _func, xi);
     }
-    
+
 };
 
 
@@ -52,15 +54,15 @@ struct BlackBoxVectorOfPolynomial {
     typedef PolDom_t::Type_t	    Type_t;
     typedef std::vector< Type_t > Vect_t;
     typedef std::vector< Polynomial > VectPoly_t;
-    
+
     const PolDom_t& _PD;
     VectPoly_t _func;
-    
 
-    BlackBoxVectorOfPolynomial(const PolDom_t& pold, VectPoly_t& P) 
-            : _PD(pold), _func(P) 
+
+    BlackBoxVectorOfPolynomial(const PolDom_t& pold, VectPoly_t& P)
+            : _PD(pold), _func(P)
         {}
-    
+
     Vect_t& operator()(Vect_t& vi, const Type_t& xi) const {
         vi.resize(_func.size());
         Vect_t::iterator iter_vi = vi.begin();
@@ -69,7 +71,7 @@ struct BlackBoxVectorOfPolynomial {
             _PD.eval(*iter_vi, *iter_func, xi);
         return vi;
     }
-    
+
 };
 
 
@@ -84,17 +86,17 @@ bool TestOneField(Interp& FD, RandIter& generator, size_t degmax) {
 #endif
 
     BlackBoxPolynomial TestBB(FD.getpoldomain(), prec);
-    
+
     FD.initialize(TestBB);
     for(size_t i=1; i<=degmax; ++i)
         FD(TestBB);
-        
+
 
     FD.interpolator(nouv);
 #ifdef GIVARO_DEBUG
     FD.getpoldomain().write(std::cout << "Nouveau: ", nouv) << std::endl;
-#endif 
-    
+#endif
+
     if (! FD.getpoldomain().areEqual(prec,nouv)) {
 #ifdef GIVARO_DEBUG
         std::cout << "ERREUR: Precedent != Nouveau"  << std::endl;
@@ -119,23 +121,23 @@ bool TestOneFieldVect(Interp& FD, RandIter& generator, size_t degmax, size_t num
         FD.getpoldomain().write(std::cout << "Precedent[" << i << "]: ", prec[i]) << std::endl;
 #endif
     }
-    
+
     BlackBoxVectorOfPolynomial TestBB(FD.getpoldomain(), prec);
-    
+
     FD.initialize(TestBB);
     for(size_t i=1; i<=degmax; ++i)
         FD(TestBB);
-        
+
 
     FD.interpolator(nouv);
-    
+
 #ifdef GIVARO_DEBUG
     for(size_t i=0; i< numpol; ++i)
         FD.getpoldomain().write(std::cout << "Nouveau[" << i << "]: ", nouv[i]) << std::endl;
-#endif 
-    
-    
-    
+#endif
+
+
+
     for(size_t i=0; i< numpol; ++i)
         if (! FD.getpoldomain().areEqual(prec[i],nouv[i])) {
 #ifdef GIVARO_DEBUG
@@ -181,7 +183,7 @@ int main(int argc, char ** argv) {
         for(size_t d=1; d<degmax ; ++d)
             for(size_t i=0; i<5; ++i)
                 success &= TestOneFieldVect(FDM, generator, d, p);
-    
+
 #ifdef GIVARO_DEBUG
     if (! success) {
         std::cerr << "Error: " << seed << std::endl;

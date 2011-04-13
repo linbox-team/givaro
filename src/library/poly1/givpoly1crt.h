@@ -14,6 +14,7 @@
 #include <givaro/givindeter.h>
 #include <vector>
 
+namespace Givaro {
 template<class Field>
 class Poly1CRT  {
     typedef Poly1CRT<Field> 			Self_t;
@@ -90,6 +91,7 @@ protected:
     array_T   _primes; 	// - array of the primes
     array_E       _ck;  // - Radix list reciprocals
 };
+} // Givaro
 
 #include "givaro/givpoly1crtcstor.inl"
 #include "givaro/givpoly1crtconvert.inl"

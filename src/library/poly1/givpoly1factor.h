@@ -16,6 +16,9 @@
 #include <givaro/givrandom.h>
 #include <givaro/givpoly1.h>
 
+
+namespace Givaro {
+
 // template<class Domain, class StorageTag> class Poly1FactorDom {};
 
 template<class Domain, class Tag, class RandIter = GivRandom>
@@ -171,7 +174,7 @@ void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
 
 };
 
-
+} // Givaro
 
 #include "givaro/givpoly1factor.inl"
 #include "givaro/givpoly1proot.inl"

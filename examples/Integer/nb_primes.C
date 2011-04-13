@@ -15,6 +15,10 @@
 #include "givaro/givtimer.h"
 
 
+using namespace Givaro;
+
+
+
 inline Integer GIVMAX(const Integer& a, const Integer& b) { return (a<b?b:a); }
 
 int main(int argc, char** argv)

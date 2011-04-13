@@ -22,6 +22,8 @@
 #include "givaro/givpower.h"
 #include <math.h>
 
+namespace Givaro {
+
 template < class RandIter = GivRandom >
 class IntSqrtModDom:public IntFactorDom < RandIter > {
 public:
@@ -117,7 +119,7 @@ protected:
 
 };
 
-
+} // Givaro
 
 #include "givaro/givintsqrootmod.inl"
 

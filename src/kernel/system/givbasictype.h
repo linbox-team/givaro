@@ -16,24 +16,28 @@
 
 #include <sys/types.h> // needed on MacOS X 10.5 for uint type
 
-// -- Neutral type: definition of zero and one
-class Neutral {
-public:
-  static Neutral zero;
-  static Neutral one;
-  inline operator int() const { return _val; }
-  inline int operator==( const Neutral& n) const { return _val==n._val; }
-  inline int operator!=( const Neutral& n) const { return _val!=n._val; }
-private:
-  Neutral( int val ) : _val(val) {};
-  int _val;
-};
+namespace Givaro {
 
-// -- Used to build no initialized object as static object
-class givNoInit {};
-// -- Used to call cstor without copy
-class givNoCopy {};
-// -- Used to call cstor with copy
-class givWithCopy {};
+	// -- Neutral type: definition of zero and one
+	class Neutral {
+		public:
+			static Neutral zero;
+			static Neutral one;
+			inline operator int() const { return _val; }
+			inline int operator==( const Neutral& n) const { return _val==n._val; }
+			inline int operator!=( const Neutral& n) const { return _val!=n._val; }
+		private:
+			Neutral( int val ) : _val(val) {};
+			int _val;
+	};
+
+	// -- Used to build no initialized object as static object
+	class givNoInit {};
+	// -- Used to call cstor without copy
+	class givNoCopy {};
+	// -- Used to call cstor with copy
+	class givWithCopy {};
+
+} // namespace Givaro
 
 #endif // __GIVARO_basictype_H

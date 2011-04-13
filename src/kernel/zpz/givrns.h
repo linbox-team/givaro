@@ -8,10 +8,15 @@
 // Authors: T. Gautier
 // $Id: givrns.h,v 1.5 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-//  Modular arithmetic for GIVARO. Here is defined arithmetic functions
-//  on rns representation and interface between RNS and Integer,
-//  all is done via the Chinese Remainder Algorithm.
+
+/*! @file zpz/givrns.h
+ * @ingroup zpz
+ * @brief  Modular arithmetic for GIVARO.
+ * Here is defined arithmetic functions
+ * on rns representation and interface between RNS and Integer,
+ *  all is done via the Chinese Remainder Algorithm.
+ */
+
 #ifndef __GIVARO_arithmodu_H
 #define __GIVARO_arithmodu_H
 
@@ -19,71 +24,78 @@
 #include "givaro/giverror.h"
 #include "givaro/givarray0.h"
 
-    // ---------------------------------------------  class RNSsystem
-    // Structure which manages list of domains in order to
-    // convert integer to/from RNS number system using
-    // a mixed radix form.
-    // This class is parameterized by the type of Ring and of Domain
-    // Ring should have:
-    // - Ring( Modulo ) and Domain.init(Ring) conversions
-    // - operator *= (Ring&, const Modulo&)
-    // - operator += (Ring&, const Modulo&)
+namespace Givaro {
 
-template<class RING, class Domain>
-class RNSsystem  {
-    typedef RNSsystem<RING, Domain> Self_t;
-public:
-    typedef RING   ring;
-    typedef typename Domain::Element modulo;
-    typedef Array0<modulo> array;
-    typedef Array0<Domain> domains;
+	/*! @brief class RNSsystem.
+	 * Structure which manages list of domains in order to convert integer
+	 * to/from RNS number system using a mixed radix form.  This class is
+	 * parameterized by the type of \c RING and of \c Domain.
+	 * The ring should have:
+	 * - Ring( Modulo ) and Domain.init(Ring) conversions
+	 * - operator *= (Ring&, const Modulo&)
+	 * - operator += (Ring&, const Modulo&)
+	 * .
+	 */
 
-        // Default Cstor, Dstor/Cstor of recopy:
-    RNSsystem() ;
-    ~RNSsystem() ;
-    RNSsystem(const Self_t& R);
+	template<class RING, class Domain>
+	class RNSsystem  {
+		typedef RNSsystem<RING, Domain> Self_t;
+	public:
+		typedef RING   ring;
+		typedef typename Domain::Element modulo;
+		typedef Array0<modulo> array;
+		typedef Array0<Domain> domains;
 
-        // -- Cstor with given primes
-    RNSsystem( const domains& primes );
+		// Default Cstor, Dstor/Cstor of recopy:
+		RNSsystem() ;
+		~RNSsystem() ;
+		RNSsystem(const Self_t& R);
 
-        // -- Computation of a mixed-radix representation of the residus.
-    void RnsToMixedRadix(array&  mixrad, const array&  residu) const;
+		// -- Cstor with given primes
+		RNSsystem( const domains& primes );
 
-        // -- Convert a mixed radix representation to an Integer
-    RING& MixedRadixToRing( RING& res,  const array& mixrad ) const;
+		// -- Computation of a mixed-radix representation of the residus.
+		void RnsToMixedRadix(array&  mixrad, const array&  residu) const;
 
-        // -- Convert a Ring Element to a its RNS representation
-        // with the "this" rns system.
-    void RingToRns( array& rns, const RING& a ) const;
+		// -- Convert a mixed radix representation to an Integer
+		RING& MixedRadixToRing( RING& res,  const array& mixrad ) const;
 
-        // -- Convert a RNS representation to a RING Element
-    RING& RnsToRing( RING& a, const array& rns ) const;
+		// -- Convert a Ring Element to a its RNS representation
+		// with the "this" rns system.
+		void RingToRns( array& rns, const RING& a ) const;
 
-        // ------------- Access methods
+		// -- Convert a RNS representation to a RING Element
+		RING& RnsToRing( RING& a, const array& rns ) const;
 
-        // -- Returns the number of primes of this ctxt
-    int size() const { return _primes.size(); }
+		// ------------- Access methods
 
-        // -- Returns a array to the begin of the array of primes
-    const domains& Primes() const;
-        // -- Returns the ith primes of the rns system
-    const Domain ith(const size_t i) const;
+		// -- Returns the number of primes of this ctxt
+		int size() const { return _primes.size(); }
 
-        // -- Returns an array of the reciprocal ck = (\prod_{j=0..k-1)p_j)^(-1) [pk]
-    const array& Reciprocals() const;
-    const modulo reciprocal(const size_t i) const;
+		// -- Returns a array to the begin of the array of primes
+		const domains& Primes() const;
+		// -- Returns the ith primes of the rns system
+		const Domain ith(const size_t i) const;
 
-        // -- Cstor with given primes
-    void setPrimes( const domains& primes );
-protected:
-        // -------------- Compute some fields of the structure :
-    void ComputeCk();
+		//! -- Returns an array of the reciprocal \f$ck = \left(\prod_{j=0..k-1}p_j\right)^{-1} \mod pk\f$
+		const array& Reciprocals() const;
+		const modulo reciprocal(const size_t i) const;
 
-    domains  _primes; 	// - array of the primes
-    array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes
-};
+		// -- Cstor with given primes
+		void setPrimes( const domains& primes );
+	protected:
+		// -------------- Compute some fields of the structure :
+		void ComputeCk();
+
+		domains  _primes; 	// - array of the primes
+		array  _ck;     	// - reciprocals, _ck[0] = 1, same size as _primes
+	};
+
+} // namespace Givaro
 
 #include "givaro/givrnscstor.inl"
 #include "givaro/givrnsconvert.inl"
 
 #endif // __GIVARO_arithmodu_H
+
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

@@ -10,6 +10,8 @@
 #ifndef __GIVARO_mong32_INL
 #define __GIVARO_mong32_INL
 
+namespace Givaro {
+
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const
 {
         Element c0 = c & MASK32;	/* c mod B */
@@ -63,6 +65,8 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const
 	return (r>_p?r-=_p:r);
 }
 
+} // namespace Givaro
+
 // r = a*b
 #define __GIVARO_MONTG32_MUL(r,p,a,b) (redc(r,a*b))
 // r *= a
@@ -89,6 +93,7 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const
 #define __GIVARO_MONTG32_NEG(r,p,a) (r = (a == 0 ? 0 : p-a))
 #define __GIVARO_MONTG32_NEGIN(r,p) (r = (r == 0 ? 0 : p-r))
 
+namespace Givaro {
 
 inline Montgomery<Std32>::Residu_t Montgomery<Std32>::residu( ) const
 { return _p; }
@@ -396,5 +401,7 @@ inline std::ostream& Montgomery<Std32>::write (std::ostream& s, const Rep a) con
     Rep tmp;
     return s << redcs(tmp,a);
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_mong32_INL

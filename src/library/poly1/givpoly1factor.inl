@@ -18,6 +18,9 @@
 
 //!@todo use NTL if available ?
 
+
+namespace Givaro {
+
 // ---------------------------------------------------------------
 // Splits a polynomial into prime factors of same degree
 // ---------------------------------------------------------------
@@ -252,6 +255,8 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     }
     return W.copy(P);
 }
+
+} // Givaro
 
 
 #endif // __GIVARO_poly1_facto_INL

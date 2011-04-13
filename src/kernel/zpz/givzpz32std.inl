@@ -49,6 +49,8 @@
 #define __GIVARO_ZPZ32_N_SUBMULIN(r,p,a,b) { \
     __GIVARO_ZPZ32_N_MULSUB(r,p,a,b,r); __GIVARO_ZPZ32_N_NEGIN(r,p); }
 
+namespace Givaro {
+
 inline ZpzDom<Std32>::Residu_t ZpzDom<Std32>::residu( ) const
 { return _p; }
 
@@ -554,6 +556,8 @@ inline std::ostream& ZpzDom<Std32>::write (std::ostream& s, const Rep a) const
 {
   return s << a;
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_zpz32std_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -3,7 +3,7 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givvector.h,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
@@ -22,6 +22,10 @@
 #include "givaro/giviterator.h"
 #include "givaro/givops.h"
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
+
 
 // ==========================================================================
 // --
@@ -34,6 +38,8 @@ template<class Domain, class StorageTag> class VectorDom {};
 
 template<class Domain> class VectorDom<Domain,Dense>;
 template<class Domain> class VectorDom<Domain,Sparse>;
+
+} // Givaro
 
 #include "givaro/givvectorsparse.h"
 #include "givaro/givvectordense.h"

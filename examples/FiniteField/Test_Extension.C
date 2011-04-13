@@ -14,6 +14,10 @@ using namespace std;
 #include "givaro/givpoly1.h"
 #include "givaro/givextension.h"
 
+using namespace Givaro;
+
+
+
 
 template<class FField>
 void FaireEssai(const FField & F) {

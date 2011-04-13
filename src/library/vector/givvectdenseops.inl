@@ -3,11 +3,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id
 // ==========================================================================
+namespace Givaro {
+#warning "this file will probably not compile"
+
 
   // -- map of a unary operator, with operator()( Type_t& res )
   // res and u could be aliases if OP permits it
@@ -25,7 +28,7 @@ template<class Domain>
 template<class BINOP>
 inline void VectorDom<Domain,Dense>::
   map( Rep& res, const BINOP& OP, const Rep& u, const Rep& v ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)) && (dim(u) == dim(v)), "Bad size");
   size_t sz = dim(res);
   for (size_t i=0; i<sz; ++i)
@@ -36,7 +39,7 @@ template<class Domain>
 template<class UNOP>
 inline void VectorDom<Domain,Dense>::
   map( Rep& res, UNOP& OP, const Rep& u ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
   size_t sz = dim(u);
   for (size_t i=0; i<sz; ++i)
@@ -75,7 +78,7 @@ inline void VectorDom<Domain,Dense>::mul
 // --- add
 template<class Domain>
 inline void VectorDom<Domain,Dense>::addin( Rep& res, const Rep& u ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
   AddOp<Domain> opcode( _domain );
   map( res, opcode, u );
@@ -84,7 +87,7 @@ inline void VectorDom<Domain,Dense>::addin( Rep& res, const Rep& u ) const
 template<class Domain>
 inline void VectorDom<Domain,Dense>::add
  ( Rep& res, const Rep& u, const Rep& v ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)) && (dim(u) == dim(v)), "Bad size");
   AddOp<Domain> opcode (_domain);
   map( res, opcode, u, v);
@@ -93,7 +96,7 @@ inline void VectorDom<Domain,Dense>::add
 template<class Domain>
 inline void VectorDom<Domain,Dense>::add
  ( Rep& res, const Rep& u, const Type_t& val ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
   Curried2<AddOp<Domain> > opcode(_domain, (Type_t&)val);
   map( res, opcode, u);
@@ -102,14 +105,14 @@ inline void VectorDom<Domain,Dense>::add
 template<class Domain>
 inline void VectorDom<Domain,Dense>::add
  ( Rep& res, const Type_t& val, const Rep& v ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(v)), "Bad size");
   Curried1<AddOp<Domain> > opcode(_domain, val);
   map( res, opcode, v);
 }
 
 template<class Domain>
-inline void VectorDom<Domain,Dense>::add 
+inline void VectorDom<Domain,Dense>::add
  ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u, const Rep& v ) const
 {
   GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
@@ -119,7 +122,7 @@ inline void VectorDom<Domain,Dense>::add
 }
 
 template<class Domain>
-inline void VectorDom<Domain,Dense>::add 
+inline void VectorDom<Domain,Dense>::add
 ( Rep& res, const Rep& v, const VectorDom<Domain,Sparse>::Rep& u ) const
 {
   GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
@@ -129,7 +132,7 @@ inline void VectorDom<Domain,Dense>::add
 }
 
 template<class Domain>
-inline void VectorDom<Domain,Dense>::addin 
+inline void VectorDom<Domain,Dense>::addin
  ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u ) const
 {
   GIVARO_ASSERT((dim(res) == u.dim()), "Bad size");
@@ -149,7 +152,7 @@ inline void VectorDom<Domain,Dense>::addin
 // --- sub
 template<class Domain>
 inline void VectorDom<Domain,Dense>::subin( Rep& res, const Rep& u ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
   SubOp<Domain> opcode ( _domain );
   map( res, opcode, u );
@@ -157,7 +160,7 @@ inline void VectorDom<Domain,Dense>::subin( Rep& res, const Rep& u ) const
 
 template<class Domain>
 inline void VectorDom<Domain,Dense>::sub( Rep& res, const Rep& u, const Rep& v ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == dim(u)), "Bad size");
   SubOp<Domain> opcode ( _domain );
   map( res, opcode, u, v);
@@ -165,7 +168,7 @@ inline void VectorDom<Domain,Dense>::sub( Rep& res, const Rep& u, const Rep& v )
 
 template<class Domain>
 inline void VectorDom<Domain,Dense>::sub( Rep& res, const Rep& u, const Type_t& val ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
   Curried2<SubOp<Domain> > opcode( _domain, (Type_t&)val);
   map( res, opcode, u);
@@ -173,14 +176,14 @@ inline void VectorDom<Domain,Dense>::sub( Rep& res, const Rep& u, const Type_t& 
 
 template<class Domain>
 inline void VectorDom<Domain,Dense>::sub( Rep& res, const Type_t& val, const Rep& v ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(v)), "Bad size");
   Curried1<SubOp<Domain> > opcode( _domain, val);
   map( res, opcode, v);
 }
 
 template<class Domain>
-inline void VectorDom<Domain,Dense>::subin 
+inline void VectorDom<Domain,Dense>::subin
  ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u ) const
 {
   GIVARO_ASSERT((dim(res) == u.dim()), "Bad size");
@@ -196,17 +199,17 @@ inline void VectorDom<Domain,Dense>::subin
 }
 
 template<class Domain>
-inline void VectorDom<Domain,Dense>::sub 
+inline void VectorDom<Domain,Dense>::sub
  ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u, const Rep& v ) const
 {
   GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
   // -- here assume : subdomains of res, u and v are equal
-  neg(res, v); 
+  neg(res, v);
   addin(res, u);
 }
 
 template<class Domain>
-inline void VectorDom<Domain,Dense>::sub 
+inline void VectorDom<Domain,Dense>::sub
  ( Rep& res, const Rep& v, const VectorDom<Domain,Sparse>::Rep& u ) const
 {
   GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
@@ -221,56 +224,56 @@ inline void VectorDom<Domain,Dense>::sub
 // --- neg
 template<class Domain>
 inline void VectorDom<Domain,Dense>::negin( Rep& res ) const
-{ 
+{
   NegOp<Domain> opcode ( _domain );
   map( res, opcode, res );
 }
 
 template<class Domain>
 inline void VectorDom<Domain,Dense>::neg( Rep& res, const Rep& u ) const
-{ 
+{
   GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
   NegOp<Domain> opcode ( _domain );
   map( res, opcode, u );
 }
 
 template<class Domain>
-void VectorDom<Domain,Dense>::axpy   
+void VectorDom<Domain,Dense>::axpy
  ( Rep& res, const Type_t& a, const Rep& x, const Rep& y ) const
 {
   GIVARO_ASSERT((dim(res) == dim(x)) && (dim(x) == dim(y)), "Bad size");
   size_t sz = dim(res);
-  for ( size_t i=0; i<sz; ++i ) 
+  for ( size_t i=0; i<sz; ++i )
    _domain.axpy(res[i], a, x[i], y[i]);
 }
 
 template<class Domain>
-void VectorDom<Domain,Dense>::axpyin 
+void VectorDom<Domain,Dense>::axpyin
  ( Rep& res, const Type_t& a, const Rep& x ) const
 {
   GIVARO_ASSERT((dim(res) == dim(x)), "Bad size");
   size_t sz = dim(res);
-  for ( size_t i=0; i<sz; ++i ) 
+  for ( size_t i=0; i<sz; ++i )
    _domain.axpyin(res[i], a, x[i]);
 }
 
 template<class Domain>
-void VectorDom<Domain,Dense>::axmy   
+void VectorDom<Domain,Dense>::axmy
  ( Rep& res, const Type_t& a, const Rep& x, const Rep& y ) const
 {
   GIVARO_ASSERT((dim(res) == dim(x)) && (dim(x) == dim(y)), "Bad size");
   size_t sz = dim(res);
-  for ( size_t i=0; i<sz; ++i ) 
+  for ( size_t i=0; i<sz; ++i )
    _domain.axmy(res[i], a, x[i], y[i]);
 }
 
 template<class Domain>
-void VectorDom<Domain,Dense>::axmyin 
+void VectorDom<Domain,Dense>::axmyin
  ( Rep& res, const Type_t& a, const Rep& x ) const
 {
   GIVARO_ASSERT((dim(res) == dim(x)), "Bad size");
   size_t sz = dim(res);
-  for ( size_t i=0; i<sz; ++i ) 
+  for ( size_t i=0; i<sz; ++i )
    _domain.axmyin(res[i], a, x[i]);
 }
 
@@ -331,7 +334,7 @@ inline void VectorDom<Domain,Dense>::dot
 
 // ==========================================================================
 //
-// -- Write the domain 
+// -- Write the domain
 //
 template<class Domain>
 ostream& VectorDom<Domain, Dense>::write( ostream& o ) const
@@ -339,11 +342,11 @@ ostream& VectorDom<Domain, Dense>::write( ostream& o ) const
   return _domain.write(o << "(") << ",Dense)";
 }
 
-// -- read the domain 
+// -- read the domain
 template<class Domain>
 istream& VectorDom<Domain, Dense>::read( istream& sin )
 {
-  char ch; 
+  char ch;
   sin >> std::ws >> ch;
   if (ch != '(')
     GivError::throw_error(
@@ -406,7 +409,7 @@ istream&  VectorDom<Domain,Dense>::read (istream& fin, Rep& A) const
 
   // -- Skip the first "white":
   fin >> std::ws; fin.get(ch);
-  if (ch != '[') 
+  if (ch != '[')
     GivError::throw_error(
       GivBadFormat("VectorDom<Domain,Dense>::read: syntax error no '['"));
 
@@ -420,7 +423,7 @@ istream&  VectorDom<Domain,Dense>::read (istream& fin, Rep& A) const
   rep[0] = Tmp;
   while (ch != ']')
   {
-    if (ch != ',') 
+    if (ch != ',')
       GivError::throw_error(
         GivBadFormat("VectorDom<T,Dense>::read: syntax error no ','"));
     i++;
@@ -434,5 +437,5 @@ istream&  VectorDom<Domain,Dense>::read (istream& fin, Rep& A) const
   A.logcopy( rep );
   return fin;
 }
-
+} // Givaro
 #include "givaro/givvectdensespe.inl"

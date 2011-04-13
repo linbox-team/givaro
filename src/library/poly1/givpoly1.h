@@ -18,6 +18,7 @@
 #include "givaro/giviterator.h"
 #include "givaro/givops.h"
 
+namespace Givaro {
 
 // ==========================================================================
 // --
@@ -28,6 +29,8 @@ template<class Domain, class StorageTag> class Poly1Dom;
 
 template<class Domain> class Poly1Dom<Domain,Dense>;
 template<class Domain> class Poly1Dom<Domain,Sparse>;
+
+} // Givaro
 
 #include "givaro/givpoly1dense.h"
 // #include "givaro/givvectorsparse.h"

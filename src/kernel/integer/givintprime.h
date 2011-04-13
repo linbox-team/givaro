@@ -20,6 +20,7 @@
 
 #include "givaro/givinteger.h"
 
+namespace Givaro {
 
 // =================================================================== //
 // Fermat numbers
@@ -110,5 +111,6 @@ private:
 */
 };
 
+} // Givaro
 #include "givaro/givintprime.inl"
 #endif // __GIVARO_integers_prime_H

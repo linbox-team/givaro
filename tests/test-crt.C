@@ -20,6 +20,7 @@
 #include <givaro/givtimer.h>
 #include <givaro/givrandom.h>
 
+using namespace Givaro;
 
 typedef GFqDom<long>       Field1;
 typedef ZpzDom<Std16>      Field2;
@@ -138,7 +139,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 
 int main(int argc, char ** argv)
 {
-	Givaro::Init();
+	::Givaro::Givaro::Init();
 	// argv[1] : number of primes
 	// argv[2] : 2^{32-j} is size of primes
 	// argv[3] : seed for generator
@@ -186,7 +187,7 @@ int main(int argc, char ** argv)
 		std::cerr << "Error: " << seed << std::endl;
 #endif
 
-	Givaro::End();
+	::Givaro::Givaro::End();
 	return (! success);
 }
 

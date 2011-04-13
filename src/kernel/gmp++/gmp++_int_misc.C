@@ -3,19 +3,20 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // $Id: gmp++_int_misc.C,v 1.16 2010-12-16 16:54:38 jgdumas Exp $
 // ==========================================================================
-// Description: 
+// Description:
 
 #include <iostream>
 #include <math.h>
 #include "gmp++/gmp++.h"
 
+namespace Givaro {
 //-------------------------------------------fact (unsigned long l)
-Integer fact ( unsigned long l) 
+Integer fact ( unsigned long l)
 {
   Integer Res ;
   mpz_fac_ui( (mpz_ptr)&(Res.gmp_rep), l ) ;
@@ -52,7 +53,7 @@ Integer sqrtrem(const Integer &a, Integer& r)
 bool root(Integer& q, const Integer &a, unsigned int n)
 {
     return (bool)mpz_root ((mpz_ptr)&(q.gmp_rep),
-                           (mpz_ptr)&(a.gmp_rep), 
+                           (mpz_ptr)&(a.gmp_rep),
                            n);
 }
 
@@ -60,12 +61,12 @@ void swap(Integer& a, Integer& b) {
     return mpz_swap( (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep));
 }
 
-    
+
 // Natural logarithm of a
 // log(2) being close to 0.69314718055994531
 double naturallog(const Integer& a) {
   signed long int exp;
-  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) ); 
+  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) );
   return (double)exp*0.69314718055994531+log(d);
 }
 
@@ -95,8 +96,8 @@ long logp(const Integer& a, const Integer& p) {
 // 1/log(2) being close to 1.44269504088896341
 double logtwo(const Integer& a) {
   signed long int exp;
-  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) ); 
-  return (double)exp+log(d)*1.44269504088896341; 
+  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) );
+  return (double)exp+log(d)*1.44269504088896341;
 }
 
 //------------------------------------------GMP isprime
@@ -130,7 +131,7 @@ int probab_prime(const Integer &p, int r)
 }
 
 // ==========================================================================
-// Computes and returns the Jacobi and Legendre symbols (u/v) of the integers u and v.  
+// Computes and returns the Jacobi and Legendre symbols (u/v) of the integers u and v.
 // The algorithm used is Gmp's.
 int jacobi(const Integer& u, const Integer& v)
 {
@@ -145,18 +146,18 @@ int legendre(const Integer& u, const Integer& v)
 
 
 //--------------------------------------------Integer::operator <<   // shift left
-Integer Integer::operator << (int l) const 
+Integer Integer::operator << (int l) const
 { return this->operator<<( (unsigned long)l ); }
-Integer Integer::operator << (unsigned int l) const 
+Integer Integer::operator << (unsigned int l) const
 { return this->operator<<( (unsigned long)l ); }
-Integer Integer::operator << (long l) const 
+Integer Integer::operator << (long l) const
 { return this->operator<<( (unsigned long)l ); }
 
-Integer Integer::operator << (unsigned long l) const 
-{ 
+Integer Integer::operator << (unsigned long l) const
+{
 	Integer tmp;
 	mpz_mul_2exp((mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-	return tmp; 
+	return tmp;
 }
 
 
@@ -171,39 +172,39 @@ Integer Integer::operator >> (unsigned int l) const
 { return this->operator>>( (unsigned long)l ); }
 
 Integer Integer::operator >> (unsigned long l) const
-{ 
+{
 	Integer tmp;
 	mpz_tdiv_q_2exp( (mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-	return tmp; 
+	return tmp;
 }
 
 //--------------------------------------------Integer::operator <<=   // shift left
-Integer& Integer::operator <<= (int l) 
+Integer& Integer::operator <<= (int l)
 { return this->operator<<= ( (unsigned long)l ); }
-Integer& Integer::operator <<=  (unsigned int l) 
+Integer& Integer::operator <<=  (unsigned int l)
 { return this->operator<<= ( (unsigned long)l ); }
-Integer& Integer::operator <<= (long l) 
+Integer& Integer::operator <<= (long l)
 { return this->operator<<= ( (unsigned long)l ); }
 
 Integer& Integer::operator <<= (unsigned long l)
-{ 
+{
 	mpz_mul_2exp((mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-	return *this; 
+	return *this;
 }
 
 
 //--------------------------------------------Integer::operator >>=   // shift right
 Integer& Integer::operator >>= (int l)
 { return this->operator>>= ( (unsigned long)l ); }
-Integer& Integer::operator >>= (long l) 
+Integer& Integer::operator >>= (long l)
 { return this->operator>>= ( (unsigned long)l ); }
-Integer& Integer::operator >>= (unsigned int l) 
+Integer& Integer::operator >>= (unsigned int l)
 { return this->operator>>= ( (unsigned long)l ); }
 
-Integer& Integer::operator >>= (unsigned long l) 
-{ 
+Integer& Integer::operator >>= (unsigned long l)
+{
 	mpz_tdiv_q_2exp( (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-	return *this; 
+	return *this;
 }
 
 //------------------------------------------- Bit logic
@@ -277,7 +278,7 @@ Integer::operator unsigned long long() const {
 	return tmp += low;
 }
 Integer::operator long long() const {
-	unsigned long long tmp = (unsigned long long)(*this); 
+	unsigned long long tmp = (unsigned long long)(*this);
 	return (long long)tmp;
 }
 #endif
@@ -288,4 +289,4 @@ Integer::operator double() const {
 Integer::operator float() const {
 	return (float)mpz_get_d ( (mpz_srcptr)&gmp_rep);
 }
-
+}

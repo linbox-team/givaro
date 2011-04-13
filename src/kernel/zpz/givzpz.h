@@ -8,8 +8,12 @@
 // Authors: T. Gautier
 // $Id: givzpz.h,v 1.8 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-//   Family of arithmetics over Zpz
+
+/*!@file zpz/givzpz.h
+ * @ingroup zpz
+ * @brief   Family of arithmetics over Zpz (\f$\mathbf{Z}/p\mathbf{Z}\f$).
+ */
+
 #ifndef __GIVARO_zpz_H
 #define __GIVARO_zpz_H
 
@@ -18,7 +22,9 @@
 // ==========================================================================
 #include <givaro/givconfig.h>
 
-template<class TAG> class ZpzDom;
+namespace Givaro {
+	template<class TAG> class ZpzDom;
+}
 
 #include "givaro/givzpztypes.h"
 

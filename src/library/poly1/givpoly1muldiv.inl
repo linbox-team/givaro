@@ -13,6 +13,7 @@
 #include "givaro/givpower.h"
 #include "givaro/giverror.h"
 
+namespace Givaro {
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::shiftin ( Rep& R, int s) const
@@ -144,7 +145,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
 {
 	return this->mul(R,P,val);
 }
+} // Givaro
+
 #include <typeinfo>
+
+namespace Givaro {
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& R, const Type_t& u) const
@@ -560,5 +565,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pmod
 	R.reallocate(degR.value()+1);
 	return setdegree(R);
 }
+
+} // Givaro
 #endif // __GIVARO_poly1_muldiv_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

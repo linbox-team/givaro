@@ -10,11 +10,12 @@
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
-//
-// Description:
-//   Arithmetic on Z/pZ, with p a prime number less than 2^14
-//   Modulo typedef is a signed long number. In case it was modified
-//   then bezout algorithm must be changed (coefficient can be negative).
+/*! @file zpz/givzpz16std.h
+ * @ingroup zpz
+ * @brief   Arithmetic on Z/pZ, with p a prime number less than 2^14.
+ *   Modulo typedef is a signed long number. In case it was modified
+ *   then Bézout algorithm must be changed (coefficient can be negative).
+ */
 #ifndef __GIVARO_zpz16std_H
 #define __GIVARO_zpz16std_H
 
@@ -54,15 +55,16 @@ typedef unsigned int    uint32_t;
  * GivBadFormat( " ... " )
  */
 #include "givaro/giverror.h"
-#include "givaro/givzpz16std.h"
+// #include "givaro/givzpz16std.h"
 #include "givaro/givzpz32std.h"
 #include "givaro/giv_randiter.h"
 
-// ==========================================================================
-// -- This class implement the standard arithmetic with Modulo Elements:
-// - The representation of an integer a in Zpz is the value a % p
-// ==========================================================================
+namespace Givaro {
 
+/*! @brief This class implement the standard arithmetic with Modulo Elements.
+ * - The representation of an integer a in Zpz is the value a % p
+ * .
+ */
 template<>
 class ZpzDom<Std16> {
 public:
@@ -235,6 +237,7 @@ protected:
 	static void End();
 };
 
+} // namespace Givaro
 
 #include "givaro/givzpz16std.inl"
 

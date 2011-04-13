@@ -25,6 +25,7 @@
 #include <givaro/givpoly1factor.h>
 #include <givaro/givpoly1cyclo.inl>
 
+namespace Givaro {
 // ---------------------------------------------------------------
 // Monic irreducible polynomial of degree n over Z/pZ
 // having 2, 3 nonzero terms or dividing a cyclotomic polynomial
@@ -364,5 +365,6 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
     return give_prim_root(R, random_irreducible(P,n));
 }
 
+} // Givaro
 
 #endif // __GIVARO_poly_primitive_root_INL

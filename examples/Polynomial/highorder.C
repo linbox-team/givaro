@@ -19,6 +19,10 @@
 #include <givaro/givtruncdomain.h>
 #include <givaro/givhighorder.h>
 
+using namespace Givaro;
+
+
+
 
 typedef GFqDom<int> Field;
 typedef Poly1Dom< Field, Dense> Polys;

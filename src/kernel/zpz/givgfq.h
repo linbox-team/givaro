@@ -9,9 +9,12 @@
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
-// Description:
-//   Arithmetic on GF(p^k), with p a prime number less than 2^16
-// ==========================================================================
+
+/*! @file zpz/givgfq.h
+ * @ingroup zpz
+ * @brief   Arithmetic on GF(p^k), with p a prime number less than 2^16.
+ */
+
 #ifndef __GIVARO_gfq1_H
 #define __GIVARO_gfq1_H
 
@@ -21,6 +24,8 @@
 #include <vector>
 #include "givaro/giv_randiter.h"
 #include "givaro/givpoly1factor.h"
+
+namespace Givaro {
 
 // ------------------------------------------------- class GFqDom
 template<class TT> class GFqDom {
@@ -327,6 +332,7 @@ public:
 	static void End();
 };
 
+} // namespace Givaro
 
 #include "givaro/givgfq.inl"
 

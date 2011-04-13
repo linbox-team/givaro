@@ -7,6 +7,8 @@
 #ifndef __GIVARO_intrns_convert_INL
 #define __GIVARO_intrns_convert_INL
 
+namespace Givaro {
+
   // -- Computation of a mixed-radix representation of the residu.
 //#ifndef __ECC
 template<template<class, class> class Container, template <class> class Alloc>
@@ -103,5 +105,7 @@ inline void IntRNSsystem< Container, Alloc >::RnsToRing( external& I, const Cont
   MixedRadixToRing( I, mixrad ) ;
   return;
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_intrns_convert_INL

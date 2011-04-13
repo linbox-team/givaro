@@ -13,6 +13,8 @@
 #include <givaro/givgfqext.h>
 #include <givaro/givextension.h>
 
+using namespace Givaro;
+
 #define TESTE_EG( a, b ) \
 if (!F.areEqual((a),(b))) {\
 	std::cout << F.write(std::cout,a) << "!=" << F.write(std::cout,b) << " failed (at line " <<  __LINE__ << ")" << std::endl; \

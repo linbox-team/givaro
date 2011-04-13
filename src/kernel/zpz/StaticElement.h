@@ -7,16 +7,22 @@
 // -----------------------------------------------------------------
 // Time-stamp: <19 Dec 06 10:55:08 Jean-Guillaume.Dumas@imag.fr>
 // -----------------------------------------------------------------
-// file: StaticElement.h
 // author: Jean-Guillaume.Dumas
 // date: 2004
 //==================================================================
+
+/*! @file zpz/taticElement.h
+ * @ingroup zpz
+ * @brief NO DOC
+ */
 
 #ifndef __GIVARO_static_element_H
 #define __GIVARO_static_element_H
 
 #include <iostream>
 #include <gmp++/gmp++.h>
+
+namespace Givaro {
 
 template <class Domain>
 class StaticElement {
@@ -142,4 +148,7 @@ public:
     }
 
 };
+
+} // namespace Givaro
+
 #endif // __GIVARO_static_element_H

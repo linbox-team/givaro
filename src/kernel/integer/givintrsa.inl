@@ -18,6 +18,8 @@
 #include <givaro/givrandom.h>
 #include <givaro/givintrsa.h>
 
+namespace Givaro {
+
 // =================================================================== //
 // log[10]
 // =================================================================== //
@@ -295,4 +297,5 @@ typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::point_break(Element&
     return u = _d;
 }
 
+} // namespace Givaro
 #endif // __GIVARO_rsa_public_key_INL

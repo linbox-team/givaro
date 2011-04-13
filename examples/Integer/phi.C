@@ -17,6 +17,10 @@
 // Euler's phi function (totient)
 //
 
+using namespace Givaro;
+
+
+
 int main(int argc, char** argv)
 {
   IntNumTheoDom<> IP;

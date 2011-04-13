@@ -15,6 +15,10 @@
 #include <givaro/givtimer.h>
 #include <math.h>
 
+using namespace Givaro;
+
+
+
 //  Polynomial-time generation of primitive roots
 //  L is number of loops of Pollard partial factorization of n-1
 //  10,000,000 gives at least 1-2^{-40} probability of success

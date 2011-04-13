@@ -20,6 +20,7 @@
 #include "givaro/givintrns.h"
 #include "givaro/givpower.h"
 
+namespace Givaro {
 
 // =================================================================== //
 // Euler's phi function
@@ -607,4 +608,5 @@ typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_base(Rep 
         return z;
 }
 
+} // namespace Givaro {
 #endif // __GIVARO_numtheo_INL

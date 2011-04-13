@@ -15,7 +15,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
 
-
+namespace Givaro {
 
 template<class TAG>
 class ZpzDom ;
@@ -32,11 +32,10 @@ template<> class ZpzDom<Log16>;
 template<class TT> class GFqDom;
 
 /** Random field Element generator.
-    This class defines a field Element generator for all givaro field (Gfq and Zpz)
-    throught a template argument as a field.
-    The random generator used is the givrandom.
-   */
-
+ *   This class defines a field Element generator for all givaro field (Gfq and Zpz)
+ *   throught a template argument as a field.
+ *   The random generator used is the givrandom.
+ */
 
 template <class Field , class Type> class GIV_randIter
 {
@@ -176,5 +175,6 @@ template <class Field , class Type> class GIV_randIter
 
   }; //  class GIV_randIter
 
+} // namespace Givaro
 
 #endif // __GIVARO_randiter_H

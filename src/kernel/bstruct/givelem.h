@@ -14,6 +14,9 @@
 #ifndef __GIVARO_Elem_H
 #define __GIVARO_Elem_H
 
+namespace Givaro {
+
+
 template<class T>
 struct ElemRef {
   typedef T Type_t;
@@ -74,5 +77,6 @@ istream& operator>> (istream& fin, Pair<T1,T2>& p )
   return fin;
 }
 
+} // namespace Givaro
 
 #endif // __GIVARO_Elem_H

@@ -14,6 +14,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givmodule.h"
 
+namespace Givaro {
 
 // ----------------------------------- Functions Rational
 
@@ -96,13 +97,13 @@ public :
 
     friend const Rational pow (const Rational& n, unsigned int l) {
         Rational r;
-        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l);
+        r.num = ::Givaro::pow(n.num, l); r.den =  ::Givaro::pow(n.den, l);
         return r;
     }
 
     friend const Rational pow (const Rational& n, unsigned long l) {
         Rational r;
-        r.num = ::pow(n.num, l); r.den = ::pow(n.den, l);
+        r.num =  ::Givaro::pow(n.num, l); r.den =  ::Givaro::pow(n.den, l);
         return r;
     }
 
@@ -222,8 +223,8 @@ public:
     Rep& invin( Rep& r ) const { std::swap(r.num,r.den); return r; }
 
         // - return n^l
-    Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r = ::pow(n, l); }
-    Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r = ::pow(n, l); }
+    Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r =  ::Givaro::pow(n, l); }
+    Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r =  ::Givaro::pow(n, l); }
 
 
         // - Rational number reconstruction
@@ -231,13 +232,13 @@ public:
         return r = Rational(f,m,k,recurs);
     }
     Rep& ratrecon(Rep& r, const Integer& f, const Integer& m, bool recurs=true) const {
-        return r = Rational(f,m,::sqrt(m),recurs);
+        return r = Rational(f,m, ::Givaro::sqrt(m),recurs);
     }
 
 
         // - Misc
-    size_t length (const Rep& a) const { return ::length(a); }
-    int sign    (const Rep& a) const { return ::sign(a); }
+    size_t length (const Rep& a) const { return  ::Givaro::length(a); }
+    int sign    (const Rep& a) const { return  ::Givaro::sign(a); }
     int isOne   (const Rep& a) const { return compare(a, one) ==0; }
     int isZero  (const Rep& a) const { return compare(a, zero) ==0; }
     int areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
@@ -261,4 +262,7 @@ public:
     std::istream& read ( std::istream& i, Rep& n) const { return i >> n; }
     std::ostream& write( std::ostream& o, const Rep& n) const { return n.print(o); }
 };
+
+} //namespace Givaro
+
 #endif // __GIVARO_rational_H

@@ -11,6 +11,7 @@
 #ifndef __GIVARO_poly1_crt_convert_INL
 #define __GIVARO_poly1_crt_convert_INL
 
+namespace Givaro {
   // Converts a Polynomial to a RNS representation (which is given by this)
 template<class Field>
 typename Poly1CRT<Field>::array_T& Poly1CRT<Field>::RingToRns( typename Poly1CRT<Field>::array_T& rns , const typename Poly1CRT<Field>::Element& a) const {
@@ -20,12 +21,16 @@ typename Poly1CRT<Field>::array_T& Poly1CRT<Field>::RingToRns( typename Poly1CRT
         _PolRing.eval(rns[i], a, _primes[i]);
     return rns;
 }
+} // Givaro
 
 #ifdef  GIVARO_CRT_EARLY_TERMINATION
 #ifndef GIVARO_CRT_EARLY_TERMINATION_THRESHOLD
 #define GIVARO_CRT_EARLY_TERMINATION_THRESHOLD 4
 #endif
 #endif
+
+
+namespace Givaro {
 
   // Converts an array of field residues to a Polynomial
 template<class Field>
@@ -63,4 +68,5 @@ typename Poly1CRT<Field>::Element& Poly1CRT<Field>::RnsToRing(typename Poly1CRT<
     return I;
 }
 
+} // Givaro
 #endif // __GIVARO_poly1_crt_convert_INL

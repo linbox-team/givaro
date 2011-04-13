@@ -14,6 +14,8 @@
 
 #include <givaro/givtimer.h>
 
+namespace Givaro {
+
 template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
 IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
                                          const Rep & a,
@@ -375,5 +377,7 @@ IntSqrtModDom<RandIter>::sqrootmodtwolift (Rep & x,
 
     return Integer::axpyin(x,h,pk1);
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_sqrootmod_INL

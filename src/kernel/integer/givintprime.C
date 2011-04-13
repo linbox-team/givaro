@@ -2,14 +2,14 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro : Prime numbers
 //              Modular powering,
 //              Fermat numbers,
 //              Primality tests, Factorization one by one :
 //                      (There are parameters to fix)
-// Time-stamp: <06 Jun 06 15:21:09 Jean-Guillaume.Dumas@imag.fr> 
+// Time-stamp: <06 Jun 06 15:21:09 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 #include <math.h>
 #include "givaro/givintprime.h"
@@ -19,6 +19,8 @@
 // Fermat numbers
 // =================================================================== //
 
+namespace Givaro {
+
 FermatDom::Rep& FermatDom::fermat(Rep& f,  const long  n ) const
 {
         // fermat(n) = 2^(2^n) + 1
@@ -27,7 +29,7 @@ FermatDom::Rep& FermatDom::fermat(Rep& f,  const long  n ) const
     pow(f,z, 1 << n);
     return addin(f,one);
 }
-   
+
 int FermatDom::pepin (const long n) const
 {
         // Fermat number primality test
@@ -45,7 +47,7 @@ int FermatDom::pepin (const long n) const
 
 
 // =================================================================== //
-// Primality tests 
+// Primality tests
 // =================================================================== //
 IntPrimeDom::Rep& IntPrimeDom::nextprimein(Rep& n, int r)  const {
     if (isleq( n,1)) return n=2;
@@ -69,13 +71,13 @@ IntPrimeDom::Rep& IntPrimeDom::nextprime(Rep& n, const Rep& p, int r)  const {
         add(n,p,2);
     while (! isprime(n,r) )
         addin(n,2);
-    
+
     return n;
 }
 
 IntPrimeDom::Rep& IntPrimeDom::prevprimein(Rep& n, int r)  const {
     if (isleq( n,2)) return n=2;
-    Rep tmp; 
+    Rep tmp;
     mod(tmp, n, 2UL);
     if (isZero(tmp) )
         subin(n,1);
@@ -182,7 +184,7 @@ static const unsigned short primes[] =
 #endif
 
 
-unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const 
+unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
 {
   unsigned long int prime;
   unsigned long int n, n2;
@@ -213,22 +215,22 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
           return 0;
       }
   }
-  
-  
+
+
   Integer u2;
-  
+
   for (i = 1; primes[i] != 0; i++)
     {
         u2 = u;
         prime = primes[i];
-        
+
         rem = u2 % prime;
         if (rem == 0)		/* divisable by this prime? */
 	{
             Integer::divmod(q,rem,u2,prime * prime);
             if (rem != 0)
                 return 0;	/* prime divides exactly once, reject */
-            
+
             swap (q, u2);
             for (n = 2;;++n)
 	    {
@@ -237,10 +239,10 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
                     break;
                 swap (q, u2);
 	    }
-            
+
             if ((n & 1) == 0 && usize < 0)
                 return 0;	/* even multiplicity with negative U, reject */
-            
+
             if (n > 0) {
                 if (GIVABS(u2) == 1) {
                     q = Integer(prime);
@@ -251,7 +253,7 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
             }
 	}
     }
-  
+
       /* We found no factors above; have to check all values of n.  */
   unsigned long int nth;
   for (nth = (usize < 0 ? 3 : 2);; ++nth)
@@ -262,10 +264,12 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
       if (exact) {
           if (isprime(q))
               return nth;
-          else 
+          else
               return 0;
       }
       if (GIVABS(q) < SMALLEST_OMITTED_PRIME)
           return 0;
   }
 }
+
+} // Givaro

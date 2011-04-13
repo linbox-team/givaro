@@ -1,12 +1,16 @@
-// Copyright(c)'1994-2011 by The Givaro group 
+// Copyright(c)'1994-2011 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Time-stamp: <01 Apr 11 15:43:07 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
-// Description:
-//  Chinese Remainder Algorithm.
+
+/*! @file zpz/givrnsfixed.h
+ * @ingroup zpz
+ * @brief Chinese Remainder Algorithm.
+ */
+
 #ifndef __GIVARO_arithmodu_fixedprimes_H
 #define __GIVARO_arithmodu_fixedprimes_H
 
@@ -16,6 +20,11 @@
 #include "givaro/givzpzInt.h"
 #include <vector>
 
+namespace Givaro {
+
+
+	/*! @brief NO DOC
+	 */
 template<class Ints>
 class RNSsystemFixed  {
     typedef RNSsystemFixed<Ints> Self_t;
@@ -56,6 +65,8 @@ protected:
     tree  _primes; 	// - array of the primes and reciprocals
     RNS_t _RNS;		// - unbalanced recovery
 };
+
+} // namespace Givaro
 
 #include "givaro/givrnsfixed.inl"
 

@@ -18,6 +18,9 @@
 
 #include "givaro/givcategory.h"
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 // ==========================================================================
 // --
 // -- RetMatrixStorage<T, StorageTag>:
@@ -43,6 +46,6 @@ struct RetMatrix2Storage {
   typedef Undefined ViewTag_t;
 };
 
-
+} // Givaro
 
 #endif

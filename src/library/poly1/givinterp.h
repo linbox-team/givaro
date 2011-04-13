@@ -16,6 +16,7 @@
 #include "givaro/giverror.h"
 #include "givaro/givpoly1.h"
 
+namespace Givaro {
 
 template<class Domain, bool REDUCE = true>
 struct Interpolation : Poly1Dom<Domain,Dense>  {
@@ -68,6 +69,6 @@ private:
     Vect_t Points, DD;
 };
 
-
+} // Givaro
 
 #endif // __GIVARO_interpolation_H

@@ -12,6 +12,8 @@
 #define __GIVARO_poly1_cyclo_INL
 #include <givaro/givintfactor.h>
 
+namespace Givaro {
+
 // ---------------------------------------------------------------
 // Composition by a power of X
 // ---------------------------------------------------------------
@@ -88,5 +90,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
         }
     }
 }
+
+} // Givaro
 
 #endif // __GIVARO_poly1_cyclo_INL

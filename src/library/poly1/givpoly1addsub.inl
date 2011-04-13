@@ -12,6 +12,7 @@
 #ifndef __GIVARO_poly_addsub_INL
 #define __GIVARO_poly_addsub_INL
 
+namespace Givaro {
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::addin (Rep& R, const Rep& P) const
 {
@@ -201,5 +202,6 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::neg (Rep& R
   return R;
 }
 
+} // Givaro
 
 #endif // __GIVARO_poly_addsub_INL

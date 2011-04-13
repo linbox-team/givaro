@@ -10,11 +10,13 @@
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
-//
-// Description:
-//   Arithmetic on Z/pZ, with p a prime number less than 2^32
-//   Modulo typedef is a signed long number. In case it was modified
-//   then bezout algorithm must be changed (coefficient can be negative).
+
+/*! @file zpz/givzps32std.h
+ * @ingroup zpz
+ * @brief Arithmetic on Z/pZ, with p a prime number less than 2^32.
+ *   Modulo typedef is a signed long number. In case it was modified
+ *   then Bézout algorithm must be changed (coefficient can be negative).
+ */
 
 #ifndef __GIVARO_zpz32std_H
 #define __GIVARO_zpz32std_H
@@ -27,11 +29,12 @@
 #include <math.h>
 
 
-// ==========================================================================
-// -- This class implement the standard arithmetic with Modulo Elements:
-// - The representation of an integer a in Zpz is the value a % p
-// - p max is 46337
-// ==========================================================================
+namespace Givaro {
+/*! @brief This class implement the standard arithmetic with Modulo Elements.
+ * - The representation of an integer a in Zpz is the value a % p
+ * - p max is 46337
+ * .
+ */
 
 template<>
 class ZpzDom<Std32> {
@@ -217,6 +220,9 @@ protected:
     static void Init();
     static void End();
 };
+
+} // namespace Givaro
+
 
 #include "givaro/givzpz32std.inl"
 

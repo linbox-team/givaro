@@ -25,7 +25,7 @@
 #include "givaro/giverror.h"
 #endif
 
-
+namespace Givaro {
 
 // ==================================================================== //
 
@@ -313,7 +313,7 @@ inline void GivaroMM<TYPE>::initialize(GivaroMM<TYPE>::ptType bloc, const size_t
 { for (size_t i=0; i<s; i++) bloc[i] = V; }\
 inline void GivaroMM<TYPE>::destroy(GivaroMM<TYPE>::ptType bloc, const size_t s){}
 
-/*
+#if 0
    GIVARO_MM_SPECIALIZED(char)
    GIVARO_MM_SPECIALIZED(short)
    GIVARO_MM_SPECIALIZED(int)
@@ -337,7 +337,9 @@ inline void GivaroMM<TYPE>::destroy(GivaroMM<TYPE>::ptType bloc, const size_t s)
    GIVARO_MM_SPECIALIZED(unsigned short*)
    GIVARO_MM_SPECIALIZED(unsigned int*)
    GIVARO_MM_SPECIALIZED(unsigned long*)
-   */
+#endif
+
+} // namespace Givaro
 
 #endif // __GIVARO_mm_H
 

@@ -16,6 +16,10 @@
 #include <givaro/givzpz.h>
 #include <givaro/givgfq.h>
 
+using namespace Givaro;
+
+
+
 int main(int argc, char ** argv) {
 
  {

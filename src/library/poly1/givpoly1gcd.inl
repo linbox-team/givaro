@@ -10,11 +10,17 @@
 // ==========================================================================
 #ifndef __GIVARO_poly1_gcd_INL
 #define __GIVARO_poly1_gcd_INL
-// friend void bezout (const Poly1<T> &P,
-//                     const Poly1<T> &Q,
-//                     Poly1<T> &d,
-//                     Poly1<T> &u,
-//                     Poly1<T> &v);
+
+
+namespace Givaro {
+
+#if 0
+friend void bezout (const Poly1<T> &P,
+					const Poly1<T> &Q,
+					Poly1<T> &d,
+					Poly1<T> &u,
+					Poly1<T> &v);
+#endif
 // computes d = unitary gcd(P,Q) and u,v such that :
 //   u*P+v*Q = d
 // u and v are the unique polynomisals such that :
@@ -463,4 +469,6 @@ inline void decomposition(const Poly1<T> &Q, Poly1<T> & prime_Q, Poly1<T> & divi
 }
 
 #endif // 0
+
+} // GIVARO
 #endif // __GIVARO_poly1_gcd_INL

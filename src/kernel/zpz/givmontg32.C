@@ -12,7 +12,7 @@
 
 #include <iostream>
 #include "givaro/givmontg32.h"
-
+namespace Givaro {
   // Returns d, and u and v such that u a + v b = d;
 // JGD 04.11.1999
 // const int32_t Montgomery<Std32>::gcdext
@@ -72,4 +72,4 @@ void Montgomery<Std32>::Init()
 void Montgomery<Std32>::End()
 {
 }
-
+} // namespace Givaro

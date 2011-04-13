@@ -12,6 +12,8 @@
 #ifndef __GIVARO_stack_INL
 #define __GIVARO_stack_INL
 
+namespace Givaro {
+
 template <class THING>
 Stack<THING>::~Stack()
 { }
@@ -51,5 +53,8 @@ THING Stack<THING>::top() const
 {
   return ThePointer->thething ;
 }
+
+} // namespace Givaro
+
 
 #endif // __GIVARO_stack_INL

@@ -17,6 +17,10 @@
 #include <givaro/givgfq.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
+
+
 int main(int argc, char** argv)
 {
     GFqDom<long> GF128(2, 7);

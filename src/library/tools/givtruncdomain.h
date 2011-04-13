@@ -15,6 +15,9 @@
 #include <givaro/givpoly1dense.h>
 #include <bits/stl_pair.h>
 
+
+namespace Givaro {
+
 template <class Domain>
 class TruncDom : public Poly1Dom<Domain,Dense> {
 public :
@@ -50,7 +53,7 @@ public :
         {
             return static_cast<const Father_t&>(*this);
         }
-    
+
 
 	Rep& init(Rep& p) const
 	{ Father_t::init(p.first); p.second=0; return p; }
@@ -413,6 +416,8 @@ public :
 
 
 };
+
+} // Givaro
 
 #include "givaro/givtruncdomain.inl"
 

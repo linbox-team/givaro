@@ -22,6 +22,7 @@
 #include <givaro/givtruncdomain.h>
 #include <vector>
 
+namespace Givaro {
 template<class Domain, bool REDUCE = true>
 struct NewtonInterpGeomMultip : TruncDom<Domain>  {
     typedef std::vector< typename Domain::Element > Vect_t;
@@ -68,16 +69,16 @@ public:
         bb(v0, this->_domain.one);
 
         _wi.resize(v0.size());
-        
+
         typename Vect_t::const_iterator iter_v0 = v0.begin();
-        for(typename VectPoly_t::iterator iter_wi = _wi.begin(); 
+        for(typename VectPoly_t::iterator iter_wi = _wi.begin();
             iter_wi != _wi.end(); ++iter_wi, ++iter_v0)
             iter_wi->push_back(*iter_v0);
 
         _g2.push_back(this->_domain.one);
         flip = true;
     }
-    
+
     template<typename BlackBox>
     void operator() (const BlackBox& bb) {
         Type_t qi;
@@ -85,17 +86,17 @@ public:
         _qi.push_back(qi);
 
         this->_domain.mulin(powerq, _q);
-        
+
         Type_t ui, mui;
         this->_domain.sub(ui, powerq, this->_domain.one);
-        
+
         this->_domain.mul(mui, powerq, _mui.back() );
         this->_domain.divin(mui, ui );
         this->_domain.negin(mui);
         _mui.push_back(mui);
 
         this->_domain.mulin(_ui, ui );
-        
+
         Vect_t vi;
         bb(vi, powerq);
 
@@ -106,7 +107,7 @@ public:
             this->_domain.div(wi, *iter_vi, _ui);
             iter_wi->push_back(wi);
         }
-        
+
         Type_t gi;
         this->_domain.div(gi, qi, _ui);
         if (flip) this->_domain.negin(gi);
@@ -115,7 +116,7 @@ public:
         flip = !flip;
         ++_deg;
     }
-    
+
 
 
     VectPoly_t& Newton(VectPoly_t& inter) {
@@ -131,14 +132,14 @@ public:
             Truncated G,W;
             this->getpoldomain().setdegree(*iter_wi);
             this->assign(W, *iter_wi); // truncated
-        
+
                 // truncated multiplication
             this->mul(G, W, QU, 0, _deg);
 
             this->convert(*iter_inter, G); // trunc to polynomial
-            
+
             for(size_t i=0; i<iter_inter->size(); ++i)
-                this->_domain.divin((*iter_inter)[i], _qi[i]); 
+                this->_domain.divin((*iter_inter)[i], _qi[i]);
         }
 
         return inter;
@@ -156,7 +157,7 @@ public:
 
         typename VectPoly_t::iterator iter_inter = inter.begin();
         for( ; iter_inter != inter.end(); ++iter_inter) {
-        
+
             Type_t mvi;
             Polynomial mwi(_qi.size()), mzi(_qi.size());
             for(size_t i=0; i<iter_inter->size(); ++i) {
@@ -166,27 +167,28 @@ public:
                 this->_domain.div(mzi[i], _mui[i], _qi[i]);
                 if (i & 1) this->_domain.negin(mzi[i]);
             }
-            
+
             this->getpoldomain().setdegree( mwi);
-            
+
             Truncated G,W;
             this->assign(W, mwi); // truncated
-            
+
                 // Transposed multiplication (U has been reversed)
             this->mul(G, U, W, _deg, _deg * 2);
             this->divin(G,_deg);
-            
+
             this->convert(*iter_inter, G); // trunc to polynomial
-            
+
             for(size_t i=0; i<iter_inter->size(); ++i)
-                this->_domain.mulin( (*iter_inter)[i], mzi[i]);            
+                this->_domain.mulin( (*iter_inter)[i], mzi[i]);
         }
-        
+
         return inter;
     }
-    
+
 };
 
+} // Givaro
 
 
 #endif // __GIVARO_multiple_interpolation_at_geometric_points_H

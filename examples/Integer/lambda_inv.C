@@ -14,6 +14,10 @@
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
+
+
 // Lambda function : order of a primitive invertible
 //                (invertible Element of maximal orbit size)
 //

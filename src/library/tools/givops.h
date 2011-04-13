@@ -16,6 +16,7 @@
 #include "givaro/givconfig.h"
 #include "givaro/giviterator.h"
 
+namespace Givaro {
 template<class Domain>
 struct BaseOP {
   typedef typename 	Domain::Rep 	Type_t;
@@ -139,5 +140,6 @@ struct Curried2 : public OP {
   void operator()(Type_t& v1) { OP::operator()(v1, _val); }
 };
 
+} // Givaro
 
 #endif

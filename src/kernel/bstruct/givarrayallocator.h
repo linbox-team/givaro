@@ -11,10 +11,16 @@
 #ifndef __GIVARO_array_allocator_H
 #define __GIVARO_array_allocator_H
 
-// -- ArrayAllocator: class for allocation of arrays. Should have
-// - allocate(size_n)
-// - reallocate(size_n)
-// - destroy
+namespace Givaro {
+
+
+/*! @brief ArrayAllocator: class for allocation of arrays.
+ * Should have
+ * - allocate(size_n)
+ * - reallocate(size_n)
+ * - destroy
+ * .
+ */
 template<class T, class Tag>
 class ArrayAllocatort { };
 
@@ -23,5 +29,8 @@ class ArrayAllocatort { };
 class Array0Tag {};
 template<class T, Array0Tag>
 class ArrayAllocatort : public Array0<T> {};
+
+} // namespace Givaro
+
 
 #endif // __GIVARO_array_allocator_H

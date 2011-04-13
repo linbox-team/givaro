@@ -39,6 +39,8 @@ extern "C" {
 #include <givaro/givintrsa.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
 /* Strong pseudo-prime generation using Gordon's algorithm */
 template<class RandIter=GivRandom>
 struct Givaro_keygen {
@@ -49,24 +51,24 @@ struct Givaro_keygen {
 
         typename IntRSADom<RandIter>::random_generator gen(seed);
         Integer::seeding(gen.seed());
-        IntRSADom<RandIter> IRD(false,gen); 
-        
+        IntRSADom<RandIter> IRD(false,gen);
+
         IRD.keys_gen(gen, (size>>1)+1, (size>>1)-1, n, e, d, p, q);
-        
+
         Integer phim,p1,q1; IRD.mul(phim, IRD.sub(p1,p,IRD.one), IRD.sub(q1,q,IRD.one));
-        
+
         Integer v, g;
-        
+
         IRD.mod(e, 65537, phim);
         IRD.gcd(g,d,v,e,phim);
-        
+
         IRD.modin(d,phim);
         if ( IRD.islt(d,IRD.zero) ) IRD.addin(d,phim);
-        
-        
+
+
         IRD.mod(dmp1,d,p1);
         IRD.mod(dmq1,d,q1);
-        
+
         IRD.gcd(g,iqmp,v,q,p);
         if ( IRD.islt(iqmp,IRD.zero) ) IRD.addin(iqmp,p);
     }
@@ -80,7 +82,7 @@ BIGNUM* Integer2BN(BIGNUM * n, const Integer& a) {
 }
 
 int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
-    
+
     RSA *rsa= new RSA();
 
     Integer in, ie, id, ip, iq, idmp1, idmq1, iiqmp;
@@ -148,7 +150,7 @@ std::cerr << "Generated seed: " << seed << ", using " << filename << std::endl;
      return seed;
 }
 
-    
+
 
 
 int main(int argc, char** argv)
@@ -162,8 +164,8 @@ int main(int argc, char** argv)
     unsigned long seed = 0;
     long files = 0;
     std::string filprivname, filpubname;
-    
- 
+
+
     for (long i = 1; i < argc; i++) {
         if (argv[i][0] == '-') {
             switch(argv[i][1]) {
@@ -188,7 +190,7 @@ int main(int argc, char** argv)
             }
         }
     }
-   
+
 
     FILE * filpriv, *filpub;
     if (files > 1) {

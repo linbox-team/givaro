@@ -16,6 +16,10 @@
 #include <givaro/givrandom.h>
 #include <givaro/givgfq.h>
 
+using namespace Givaro;
+
+
+
 #ifndef GIVMIN
 #define GIVMIN(a,b) (((a)<(b))?(a):(b))
 #endif

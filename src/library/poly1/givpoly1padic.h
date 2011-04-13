@@ -14,9 +14,9 @@
 #include <cmath>
 #include <iostream>
 
+namespace Givaro {
+
 template<class Domain, class Tag=Dense> class Poly1PadicDom;
-
-
 
 template<class Domain>
 class Poly1PadicDom<Domain,Dense> : public Poly1Dom<Domain,Dense>, public IntegerDom {
@@ -171,4 +171,5 @@ public:
 
 };
 
+} // Givaro
 #endif // __GIVARO_poly1_p_adic_H

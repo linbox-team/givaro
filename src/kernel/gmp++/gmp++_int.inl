@@ -21,6 +21,8 @@
 #include <cassert>
 #include <givaro/givtimer.h>
 
+namespace Givaro {
+
 //-----------------------------~Integer()
 inline Integer::~Integer() {  mpz_clear((mpz_ptr)&gmp_rep) ; }
 
@@ -555,6 +557,8 @@ inline Integer& Integer::nonzerorandom (Integer& r, const T& size)
 {
 	while (isZero(Integer::random<U,T>(r,size))) {} ;
 	return r;
+}
+
 }
 
 #endif // __GIVARO_gmp++_integer_INL

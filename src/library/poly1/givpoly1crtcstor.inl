@@ -11,6 +11,7 @@
 #ifndef __GIVARO_poly1_crt_cstor_INL
 #define __GIVARO_poly1_crt_cstor_INL
 
+namespace Givaro {
 // -- free memory allocated in array !
 template<class Field>
 Poly1CRT<Field>::~Poly1CRT()
@@ -111,4 +112,5 @@ const typename Poly1CRT<Field>::Element& Poly1CRT<Field>::reciprocal(const size_
   if (_ck.size() ==0) ((Poly1CRT<Field>*)this)->ComputeCk();
   return _ck[i];
 }
+} // Givaro
 #endif // __GIVARO_poly1_crt_cstor_INL

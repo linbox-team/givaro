@@ -8,15 +8,21 @@
 // Authors: T. Gautier
 // $Id: givcra.h,v 1.12 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-//  Chinese Remainder Algorithm for 2 Elements.
-//  For any number of moduli see givrns.h
+
+/*!@file zpz/givcra.h
+ * @ingroup zpz
+ * @brief  Chinese Remainder Algorithm for 2 Elements.
+ * @sa
+ * For any number of moduli see zpz/givrns.h or zpz/givrnsfixed.h
+ */
+
 #ifndef __GIVARO_cra_H
 #define __GIVARO_cra_H
 
 #include "givaro/givconfig.h"
 #include "givaro/giverror.h"
 
+namespace Givaro {
 
 template<class Ring, class Domain, bool REDUCE = true>
 struct ChineseRemainder {
@@ -88,5 +94,5 @@ private:
     RingElement C_12;
 };
 
-
+} // namespace Givaro
 #endif // __GIVARO_cra_H

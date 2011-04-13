@@ -20,6 +20,10 @@
 
 using namespace std;
 
+using namespace Givaro;
+
+
+
 
 int main(int argc, char** argv)
 {

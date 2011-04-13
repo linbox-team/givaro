@@ -19,6 +19,10 @@
 #include <givaro/givintsqrootmod.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
+
+
 // Algorithm 3.34 (Square Root Mod p) of
 // Handbook of Applied Cryptography
 // by Menezes, van Oorschot, Vanstone

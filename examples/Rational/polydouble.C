@@ -17,6 +17,8 @@
 #include <givaro/givtimer.h>
 #include <givaro/givinit.h>         // Givaro initialization
 
+using namespace Givaro;
+
 typedef Poly1Dom< RationalDom, Dense>::Element RatPoly;
 typedef std::vector<double> DoublePoly;
 

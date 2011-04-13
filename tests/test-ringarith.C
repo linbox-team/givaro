@@ -16,6 +16,7 @@
 #include <givaro/givpoly1.h>
 
 #include <givaro/givinteger.h>
+using namespace Givaro;
 
 #define TESTE_EG( a, b ) \
 if (!F.areEqual((a),(b))) {\

@@ -15,6 +15,9 @@
 #include <givaro/givpower.h>
 #include <givaro/givtimer.h>
 
+using namespace Givaro;
+
+
 // Modular exponentiation
 // argv[1] : a
 // argv[2] : e

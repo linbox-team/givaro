@@ -11,6 +11,9 @@
 #ifndef __GIVARO_poly1_ratrecon_INL
 #define __GIVARO_poly1_ratrecon_INL
 
+
+namespace Givaro {
+
 template <class Domain>
 void Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
 
@@ -88,7 +91,7 @@ bool Poly1Dom<Domain,Dense>::ratreconcheck(typename Poly1Dom<Domain,Dense>::Rep&
   this->degree(degU,P); this->degree(degV,M);
   if ((degU < dk) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return true; }
   if ((degV < 0) || (degU == 0)) { this->assign(N,one); this->assign(D,one); return false; }
-  
+
 
   ratrecon(N,D,P,M,dk);
 
@@ -107,6 +110,6 @@ bool Poly1Dom<Domain,Dense>::ratreconcheck(typename Poly1Dom<Domain,Dense>::Rep&
   return true;
 }
 
-
+} // Givaro
 
 #endif // __GIVARO_poly1_ratrecon_INL

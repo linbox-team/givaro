@@ -18,6 +18,9 @@
 
 #include "givaro/givmatstorage.h"
 
+namespace Givaro {
+#warning "this file will probably not compile"
+
 
 // ==========================================================================
 // --
@@ -64,6 +67,8 @@ struct RetMatrixStorage<T,Dense> {
     Indice_t ncol() const { return _ncol; }
   };
 };
+
+} // givaro
 
 #ifdef GIVARO_USE_SPECIALISED
 #ifdef GIVARO_HAVE_LBLAS // -- specialization

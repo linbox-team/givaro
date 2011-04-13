@@ -12,6 +12,7 @@
 #ifndef __GIVARO_poly1_sqrfree_INL
 #define __GIVARO_poly1_sqrfree_INL
 
+namespace Givaro {
 /** Sqrfree decomposition.
 Decompose P such that: P = Fact[0]^0 * Fact[1]^1 * ... * Fact[P.degree()]^(P.degree()),
 with Fact[0] the leading coefficient.
@@ -75,4 +76,6 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
 //write(cout << "L" << count << ":", Fact[count]) << endl;
   return Nfact = ++count;
 }
+} // Givaro
+
 #endif // __GIVARO_poly1_sqrfree_INL

@@ -3,16 +3,17 @@
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
-// and abiding by the rules of distribution of free software. 
+// and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
 // $Id: gmp++_int_gcd.C,v 1.4 2011-01-18 17:49:06 jgdumas Exp $
 // ==========================================================================
-// Description: 
+// Description:
 //
 
 #include "gmp++/gmp++.h"
 
+namespace Givaro {
 // ==========================================================================
 // Computes and returns the lcm of the two integers a and b.
 Integer lcm(const Integer& a, const Integer& b) {
@@ -62,7 +63,7 @@ Integer  gcd (const Integer& a, const Integer& b, Integer& u, Integer& v)
 {
   v = 1; // v must not be 0 to be computed.
   Integer Res(Integer::one);
-  mpz_gcdext( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&(u.gmp_rep), (mpz_ptr)&(v.gmp_rep), 
+  mpz_gcdext( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&(u.gmp_rep), (mpz_ptr)&(v.gmp_rep),
               (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep) ) ;
   if (Res.priv_sign() < 0) { Integer::negin(u); Integer::negin(v); return Integer::negin(Res);}
 //   { u = -u ; v = -v ; return -Res;}
@@ -72,23 +73,24 @@ Integer  gcd (const Integer& a, const Integer& b, Integer& u, Integer& v)
 Integer&  gcd (Integer& g, const Integer& a, const Integer& b, Integer& u, Integer& v)
 {
   v = 1; // v must not be 0 to be computed.
-  mpz_gcdext( (mpz_ptr)&(g.gmp_rep), (mpz_ptr)&(u.gmp_rep), (mpz_ptr)&(v.gmp_rep), 
+  mpz_gcdext( (mpz_ptr)&(g.gmp_rep), (mpz_ptr)&(u.gmp_rep), (mpz_ptr)&(v.gmp_rep),
               (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep) ) ;
   if (g.priv_sign() < 0) { Integer::negin(u); Integer::negin(v); return Integer::negin(g);}
   return g;
 }
 
 
-Integer pp( const Integer& P, const Integer& Q ) 
+Integer pp( const Integer& P, const Integer& Q )
 {
-  Integer U = P ; 
-  Integer V = gcd(P,Q) ; 
+  Integer U = P ;
+  Integer V = gcd(P,Q) ;
   // -- computes the prime part U of g relatively to U
-  while ( V != Integer::one ) 
+  while ( V != Integer::one )
   {
     U = U / V ;
     V = gcd( U,V) ;
-  } 
+  }
   return U ;
 }
 
+}

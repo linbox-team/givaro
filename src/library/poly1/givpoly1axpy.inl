@@ -12,6 +12,8 @@
 #ifndef __GIVARO_poly1axpy_INL
 #define __GIVARO_poly1axpy_INL
 
+namespace Givaro {
+
 // axpy, axmy, maxpy
 // J.G.D. 16.11.2006
 // A lot can be done to optimize those
@@ -132,5 +134,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::axmyin (Rep
 	this->maxpyin(r, a, x);
 	return this->negin(r);
 }
+
+} // Givaro
+
 #endif // __GIVARO_poly1axpy_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

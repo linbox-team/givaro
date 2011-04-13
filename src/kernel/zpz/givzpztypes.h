@@ -8,8 +8,12 @@
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
 // ==========================================================================
-// Description:
-//   Family of types for arithmetic over Zpz
+
+/*! @file zpz/givzpztypes.h
+ * @ingroup zpz
+ * @brief  Family of types for arithmetic over Zpz.
+ */
+
 #ifndef __GIVARO_zpztypes_H
 #define __GIVARO_zpztypes_H
 
@@ -17,6 +21,8 @@
 // --
 // ==========================================================================
 #include <givaro/givconfig.h>
+
+namespace Givaro {
 
 template<class TAG> class ZpzDom;
 
@@ -31,5 +37,6 @@ struct Log16 { typedef int16_t type;}; // -- log arithmetic over 16bits represen
 struct Std64 { typedef int64_t type;}; // -- standard arithmetic over 64bits representations.
 #endif
 
+}
 
 #endif // __GIVARO_zpztypes_H

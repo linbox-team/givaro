@@ -14,6 +14,9 @@
 #include <givaro/givgfq.h>
 #include <givaro/givpoly1.h>
 
+using namespace Givaro;
+
+
 int main(int argc, char ** argv) {
 
  {

@@ -31,6 +31,7 @@ extern "C" {
 #include <iostream>
 #include "givaro/givtimer.h"
 
+namespace Givaro {
 
 // Return a value to initialize random generator
 long BaseTimer::seed()
@@ -245,3 +246,4 @@ const Timer Timer::operator + (const Timer & T)  const
 	Tmp._count = _count + T._count;
 	return Tmp ;
 }
+} // namespace Givaro

@@ -19,6 +19,7 @@
 #include "givaro/givintfactor.h"
 #include "givaro/givrandom.h"
 
+namespace Givaro {
 template<class RandIter = GivRandom>
 class IntNumTheoDom : public IntFactorDom<RandIter> {
 public:
@@ -90,7 +91,7 @@ short mobius(const Container<Rep, Alloc<Rep> >& lpow) const ;
 short mobius(const Rep& a) const;
 };
 
-
+} // givaro
 #include "givaro/givintnumtheo.inl"
 
 #endif // __GIVARO_numtheory_H

@@ -11,6 +11,9 @@
 // Description:
 
 #include "gmp++/gmp++.h"
+
+namespace Givaro {
+
 int isperfectpower(const Integer& n)
 {
 	return mpz_perfect_power_p((mpz_ptr)&(n.gmp_rep));
@@ -85,4 +88,6 @@ Integer powmod(const Integer& n, const Integer& e, const Integer& m)
   if (e < 0)  return Integer::zero;
   Integer Res;
   return powmod(Res, n, e, m);
+}
+
 }

@@ -50,6 +50,8 @@
 #define __GIVARO_ZPZ16_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
 #endif
 
+namespace Givaro {
+
 
 inline ZpzDom<Std16>::Residu_t ZpzDom<Std16>::residu( ) const
 {
@@ -548,6 +550,8 @@ inline std::ostream& ZpzDom<Std16>::write (std::ostream& s, const Rep a) const
 {
   return s << a;
 }
+
+} // namespace Givaro
 
 #endif // __GIVARO_zpz16std_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

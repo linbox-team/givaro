@@ -14,7 +14,7 @@
 long long TTcount = 0;
 #endif
 
-
+using namespace Givaro;
 
 #define TEST_EQ( F, a, b ) \
 if (!F.areEqual((a),(b))) {\
@@ -26,12 +26,12 @@ template<class PDomain>
 int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
 
 //     std::cout << "Start: " << d << std::endl;
-    
+
 
     typename PDomain::Element P,Q,R,S,M,A,B, G;
     PolDom.random(generator, M, (d << 1) + 2);
 
-    Degree dG; 
+    Degree dG;
     do {
         PolDom.random(generator, Q, d);
         PolDom.getdomain().assign(Q[Q.size()-1], PolDom.getdomain().one);
@@ -44,7 +44,7 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
         PolDom.degree(dG, G);
     } while( dG > 0);
 
-    
+
     PolDom.invmod(R,Q,M);
 // PolDom.write(std::cout << "R1:= ", R) << ';' << std::endl;
     PolDom.mulin(R, P);
@@ -57,7 +57,7 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
     PolDom.leadcoef(lc, B);
     PolDom.divin(A, lc);
     PolDom.divin(B, lc);
-    
+
     PolDom.invmod(S,B,M);
 // PolDom.write(std::cout << "S1:= ", S) << ';' << std::endl;
     PolDom.mulin(S, A);
@@ -74,7 +74,7 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
 //     PolDom.write(std::cout << "B:= ", B) << ';' << std::endl;
 //     PolDom.write( PolDom.write(std::cout << "P/Q: ", P) << "/", Q) << std::endl;
 //     PolDom.write( PolDom.write(std::cout << "A/B: ", A) << "/", B) << std::endl;
-    
+
 
 //     TEST_EQ(PolDom, A, P);
 //     TEST_EQ(PolDom, B, Q);
@@ -84,10 +84,10 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
     ++TTcount;
 #endif
     return 0;
-    
+
 }
-    
-    
+
+
 
 
 int main(int argc, char ** argv)
@@ -104,12 +104,12 @@ int main(int argc, char ** argv)
     typedef Poly1Dom< Field, Dense > PolyZpz;
     typedef FracDom<PolyZpz> FracZpz;
     typedef Poly1Dom< FracZpz, Dense > PolyFracZpz;
-   
+
     Field F101(101);
     Field F2(2);
     Field F65521(65521);
     bool success = true;
-    
+
     {
         PolyZpz PZ(F101,"X");
         for(size_t j=0; j<4; ++j)
@@ -122,7 +122,7 @@ int main(int argc, char ** argv)
                 success &= (! TestRR(PFZ, generator, i) );
 
     }
-    
+
     {
         PolyZpz PZ(F2,"X");
         for(size_t j=0; j<4; ++j)
@@ -135,7 +135,7 @@ int main(int argc, char ** argv)
                 success &= (! TestRR(PFZ, generator, i) );
 
     }
-    
+
     {
         PolyZpz PZ(F65521,"X");
         for(size_t j=0; j<5; ++j)
@@ -147,7 +147,7 @@ int main(int argc, char ** argv)
                 success &= (! TestRR(PFZ, generator, i) );
 
     }
-    
+
 
 
 

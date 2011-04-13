@@ -24,8 +24,8 @@ BASIC_TESTS =          \
 		test-trunc     \
 		test-crt       \
 		test-geom      \
-		test-integer	\
-                test-ratrecon 
+		test-integer   \
+        test-ratrecon
 
 CLEANFILES =           \
 		$(BASIC_TESTS)
@@ -47,7 +47,7 @@ test_trunc_SOURCES    = test-trunc.C
 test_crt_SOURCES      = test-crt.C
 test_geom_SOURCES     = test-geom.C
 test_integer_SOURCES  = test-integer.C
-test_ratrecon_SOURCES  = test-ratrecon.C
+test_ratrecon_SOURCES = test-ratrecon.C
 
 
 # for compilation of new tests

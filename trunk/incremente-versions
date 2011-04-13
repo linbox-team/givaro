@@ -6,9 +6,9 @@
 # see the COPYRIGHT file for more details.
 
 
-set conf= configure.ac
-set mak = src/Makefile.am
-set ver = src/kernel/system/givconfig.h
+set conf = configure.ac
+set mak  = src/Makefile.am
+set ver  = src/kernel/system/givconfig.h
 
 		###################################
 		## INCREMENT THE LIBRARY VERSION ##
@@ -54,7 +54,7 @@ if ("$answ" == "y") then
 			breaksw
 		default:
 			set newv = "$verb"
-			echo "$increm read. Not incrementing anything."
+			echo "'$increm' was read. Not incrementing anything."
 			breaksw
 	endsw
 	# replacing [ ] and . with escaped version for sed would understand them as 'operators'.
@@ -76,7 +76,7 @@ if ("$answ" == "y") then
             echo "Back-up of $conf made in $backupconf. Now overwriting $conf."
 			\mv -f $tmpfile $conf
 		else
-			echo "$answ read. Not incrementing anything."
+			echo "'$answ' was read. Not incrementing anything."
 			\rm -f $tmpfile
 			exit 0
 		endif
@@ -120,7 +120,7 @@ if ("$answ" == "y") then
             \cp -p $ver $backupgiv
 			\mv -f $tmpfile $ver
 		else
-			echo "$answ read. Not incrementing anything."
+			echo "'$answ' was read. Not incrementing anything."
 			echo " your old $conf is restored..."
 			\rm -f $tmpfile
 			\mv -f $backupconf $conf
@@ -178,7 +178,7 @@ if ("$answ" == "y") then
 				 echo "You can find them in $backupconf, $backupgiv and $backupmake."
 			 endif
 		else
-			echo "$answ read. Not incrementing anything."
+			echo "'$answ' was read. Not incrementing anything."
 			echo " your old $conf and $ver are restored..."
 			\rm -f $tmpfile
 			\mv -f $backupconf $conf
@@ -188,7 +188,7 @@ if ("$answ" == "y") then
 
 	endif
 else
-	echo "$answ read. Not incrementing anything."
+	echo "'$answ' was read. Not incrementing anything."
 	exit 0
 endif
 

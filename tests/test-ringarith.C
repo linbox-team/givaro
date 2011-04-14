@@ -30,22 +30,45 @@ if (TestRing( (a), (s)) ) {\
 	return -1 ; \
 }
 
+#define JEPOLTESTE( a, s ) \
+if (TestPolRing( (a), (s) ) ) {\
+	std::cout << #a << " failed !" << std::endl;\
+	return -1 ; \
+}
+
 #define JEONETESTE( F, a, x ) \
 if (TestOneRing(F,a,x)) {\
 	std::cout << #a << " failed !" << std::endl;\
 	return -1 ; \
 }
 
-template<class Ring>
-int TestOneRing(const Ring& F, const int FIRSTINT, const float FIRSTFLOAT)
+
+template<class R, class T1, class T2>
+struct InitOrAssign {
+    void operator()(const R& r, T1& t1, const T2& t2) {
+        r.init(t1,t2);
+    }
+};
+
+
+template<class R, class T>
+struct InitOrAssign<R,T,T> {
+    void operator()(const R& r, T& t1, const T& t2) {
+        r.assign(t1,t2);
+    }
+};
+    
+
+
+
+template<class Ring, class T1, class T2>
+int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
 {/*{{{*/
 #ifdef GIVARO_DEBUG
 	std::cerr << "testing " ;
 	F.write(std::cerr );
 	std::cerr  << " : " << std::flush;
 #endif
-
-
 
 	typename Ring::Element a, b, c, d,a_,b_,c_,d_;
 	typename Ring::Element e,e_;
@@ -58,8 +81,10 @@ int TestOneRing(const Ring& F, const int FIRSTINT, const float FIRSTFLOAT)
 //         F.write(std::cerr << "1: ", F.one) << std::endl;
         TESTE_EG(a, F.one);
 
-	F.init(a, FIRSTINT);
-	F.init(b, FIRSTFLOAT);
+	InitOrAssign<Ring,typename Ring::Element,T1>()(F, a, FIRSTINT);
+        InitOrAssign<Ring,typename Ring::Element,T2>()(F, b, FIRSTFLOAT);
+//       F.init(a, FIRSTINT);
+// 	F.init(b, FIRSTFLOAT);
 
 	F.init(c);            // empty constructor
 	F.init(d);            // empty constructor
@@ -84,6 +109,13 @@ int TestOneRing(const Ring& F, const int FIRSTINT, const float FIRSTFLOAT)
 	F.subin(d,c);
 
 	TESTE_EG(d_,d);
+
+	F.axpy(d, a, b, c); // d = a*b + c;
+        F.init(d_);
+        F.assign(d_,c);
+        F.axpyin(d_,a,b);
+        TESTE_EG(d_, d);
+        
 
 	F.sub(d,a,b); // d = a -b
 	F.add(c,a,b); // c = a+b
@@ -152,7 +184,34 @@ int TestRing(const Ring& F, const int seed)
         int a; do {
             F.init(x, a = lrand48());
         } while(F.isZero(x));
-        JEONETESTE(F,a,d);
+        JEONETESTE(F,x,d);
+    }
+    return 0;
+}/*}}}*/
+
+#define DEGMAX 75
+#define NBITERD 10
+
+template<class Ring>
+int TestPolRing(const Ring& F, const int seed)
+{/*{{{*/
+    GivRandom generator(seed);
+    srand48(seed);
+
+    for(size_t i=0; i< NBITERD; ++i) {
+        int d1 = lrand48() % DEGMAX;
+        int d2 = lrand48() % DEGMAX;
+#ifdef GIVARO_DEBUG
+        std::cout << d1 << ' ' << d2 << ' ';
+#endif
+        typename Ring::Element x, d;
+        do {
+            F.random(generator, x, Degree(d1));
+        } while(F.isZero(x));
+        do {
+            F.random(generator, d, Degree(d2));
+        } while(F.isZero(x));
+        JEONETESTE(F,x,d);
     }
     return 0;
 }/*}}}*/
@@ -263,30 +322,43 @@ int main(int argc, char ** argv)
 
 
         Poly1Dom< ZpzDom<Std16>, Dense > CP13(C13, "X");
-	JETESTE(CP13,seed);
+	JETESTE(CP13,seed); JEPOLTESTE(CP13,seed);
         Poly1Dom< ZpzDom<Std32>, Dense > ZP13(Z13, "X");
-	JETESTE(ZP13,seed);
+	JETESTE(ZP13,seed); JEPOLTESTE(ZP13,seed);
+
         Poly1Dom< ZpzDom<Unsigned32>, Dense > UP13(U13, "X");
-	JETESTE(UP13,seed);
+	JETESTE(UP13,seed); JEPOLTESTE(UP13,seed);
+
         Poly1Dom< ZpzDom<Std64>, Dense > LLP13(LL13, "X");
-	JETESTE(LLP13,seed);
+	JETESTE(LLP13,seed); JEPOLTESTE(LLP13,seed);
+
         Poly1Dom< ZpzDom<Integer>, Dense > IntZP13(IntZ13, "X");
-	JETESTE(IntZP13,seed);
+	JETESTE(IntZP13,seed); JEPOLTESTE(IntZP13,seed);
+
 
 
         Poly1Dom< ZpzDom<Std16>, Dense > CP75(C75, "X");
-	JETESTE(CP75,seed);
+	JEPOLTESTE(CP75,seed);
+
         Poly1Dom< ZpzDom<Std32>, Dense > ZP75(Z75, "X");
-	JETESTE(ZP75,seed);
+	JEPOLTESTE(ZP75,seed);
+
         Poly1Dom< ZpzDom<Unsigned32>, Dense > UP75(U75, "X");
-	JETESTE(UP75,seed);
+	JEPOLTESTE(UP75,seed);
+
         Poly1Dom< ZpzDom<Std64>, Dense > LLP75(LL75, "X");
-	JETESTE(LLP75,seed);
+	JEPOLTESTE(LLP75,seed);
+
         Poly1Dom< ZpzDom<Integer>, Dense > IntZP75(IntZ75, "X");
-	JETESTE(IntZP75,seed);
+	JEPOLTESTE(IntZP75,seed);
 
 
 
+        Poly1Dom< Poly1Dom< ZpzDom<Integer>, Dense >, Dense> IntZPP75(IntZP75, "Y");
+	JEPOLTESTE(IntZPP75,seed);
+
+        Poly1Dom< Poly1Dom< Poly1Dom< ZpzDom<Integer>, Dense >, Dense>, Dense > IntZPPP75(IntZPP75, "Z");
+	JEPOLTESTE(IntZPPP75,seed);
 
 #ifdef GIVARO_DEBUG
 	std::cerr << std::endl ;

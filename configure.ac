@@ -27,6 +27,13 @@ AM_ACLOCAL_INCLUDE(macros)
 AC_SUBST([MKDIR_P])
 # AC_DISABLE_SHARED
 
+AC_LANG([C++])
+
+AC_DEBUG
+# AC_FULL_DEBUG
+AC_WARNINGS
+
+
 
 ######################################################
 # Try and pass different flags according to compiler #
@@ -36,6 +43,14 @@ AC_SUBST([MKDIR_P])
 # $ac_cv_c_compiler_gnu :
 # AM_CONDITIONAL(CC_IS_GNOU, [test "x${CXX}" = "xg++" ])
 
+# disable default -g -O2 CXXFLAGS
+: ${CXXFLAGS=""}
+
+#set CXX
+AC_PROG_CXX
+
+AC_COMPILER_NAME
+
 AC_SUBST([DEFAULT_CFLAGS])
 AC_SUBST([DEBUG_CFLAGS])
 AC_SUBST([TESTS_CFLAGS])
@@ -43,24 +58,34 @@ AC_SUBST([TESTS_CFLAGS])
 # Give a sane default for CFLAGS and CXXFLAGS
 # DEFAULT_CFLAGS="-g -O2 -Wall -Wextra -Wno-unused-parameter"
 TESTS_CFLAGS="-O0"
-DEFAULT_CFLAGS="-O2 -pipe" #those are CXXFLAGS
-DEBUG_CFLAGS="-g -Wall"    #those are CPPFLAGS
+DEBUG_CFLAGS=""    #those are CPPFLAGS
+DEFAULT_CFLAGS="-pipe -Wall"
 
-# disable default -g -O2 CXXFLAGS
-: ${CXXFLAGS=""}
-
-#set CXX
-AC_PROG_CC([gcc icc])
-AC_PROG_CXX([g++ icpc icc])
-
-if  test "x${CXX}" = "xicpc" -o "x${CXX}" = "xicc"  ; then
-	DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wcheck"
-   # DEBUG_CFLAGS="-fast"
+if test "x$DBG" = "xyes" ; then
+	DEFAULT_CFLAGS="-O0 ${DEFAULT_CFLAGS} -g -pg" #those are CXXFLAGS
+	DEBUG_CFLAGS="${DEBUG_CFLAGS} -DDEBUG -D_LB_DEBUG"
 else
-	if test "x${CXX}" = "xg++"  ; then
-		DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wextra -Wno-unused-parameter"
+	DEFAULT_CFLAGS="-O2 ${DEFAULT_CFLAGS} -DNDEBUG -U_LB_DEBUG"
+fi
+
+
+
+if test "x$WARN" = "xyes" ; then
+	# if  test "x${CXX}" = "xicpc" -o "x${CXX}" = "xicc"  ; then
+	if test "x${CCNAM}" = "xicc" ; then
+		DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wcheck"
+		# DEBUG_CFLAGS="-fast"
 	else
-		AC_MSG_ERROR([please set environment variable 'CXX' to 'g++' or 'icpc']) ;
+		if test "x${CCNAM}" = "xgcc"  ; then
+			DEBUG_CFLAGS="${DEBUG_CFLAGS} -Wextra -Wno-unused-parameter"
+		else
+			echo
+			echo "*******************************************************"
+			echo "unsupported compiler ($CCNAM). Please file a bug."
+			echo "*******************************************************"
+			echo
+			DEBUG_CFLAGS="${DEBUG_CFLAGS}"
+		fi
 	fi
 fi
 
@@ -193,7 +218,6 @@ AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 #esac
 
 # Feature checks
-AC_LANG([C++])
 
 LB_CHECK_GMP(,,[
 echo '*******************************************************************************'

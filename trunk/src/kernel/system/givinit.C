@@ -27,12 +27,12 @@
 
 namespace Givaro {
 
-void Givaro::DisplayVersion()
+void GivaroMain::DisplayVersion()
 {
-  Givaro::DisplayVersion( std::cout ) ;
+  GivaroMain::DisplayVersion( std::cout ) ;
 }
 
-void Givaro::DisplayVersion(std::ostream& o)
+void GivaroMain::DisplayVersion(std::ostream& o)
 {
 
 o<<'\n' ;
@@ -46,27 +46,27 @@ o<<"  /    (c) 1987-1998   \\    Th. Gautier, J.L. Roch, M.Samama, G.Villard\n" 
 o<<" /       Givaro-3.0     \\  co-Authors:\n" ;
 o<<"/      (c) 1998-2002     \\    J-G. Dumas, P. Giorgi\n" ;
 o<<"--   -   -  -  -  --\n" ;
-o<< "version: " << Givaro::Version() << std::endl;
+o<< "version: " << GivaroMain::Version() << std::endl;
 }
 
-const char* Givaro::Version()
+const char* GivaroMain::Version()
 {
   static const char* Givaro_version ="$Revision: 1.2 $ for ""GIVAROSYS";
   return Givaro_version;
 }
 
-void Givaro::Init(int* argc, char***argv)
+void GivaroMain::Init(int* argc, char***argv)
 {
   GivModule::InitApp(argc, argv) ;
 }
 
-void Givaro::Init()
+void GivaroMain::Init()
 {
-  Givaro::Init(0,0) ;
+  GivaroMain::Init(0,0) ;
 }
 
   // End of Givaro kernel :
-void Givaro::End()
+void GivaroMain::End()
 {
   GivModule::EndApp() ;
 }
@@ -87,9 +87,9 @@ int GivaroAppli::run( int argc, char** argv)
 #endif
   // -- call main function
   try {
-    Givaro::Init(&argc, &argv);
+    GivaroMain::Init(&argc, &argv);
     res = main(argc,argv);
-    Givaro::End();
+    GivaroMain::End();
   }
   catch (GivError E) { std::cout << E << std::endl; }
   catch (...) { std::cout << "[GivaroAppli::run]: an error has occurred." << std::endl; }

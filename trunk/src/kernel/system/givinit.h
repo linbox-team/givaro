@@ -23,7 +23,7 @@ namespace Givaro {
 //     * init the memory manager
 //     * init all other modules
 
-class Givaro {
+class GivaroMain {
 public:
   //- Init of Givaro kernel :
 static void Init(int* argc, char*** argv) ;
@@ -45,7 +45,7 @@ static void DisplayVersion();
 // --
 // -- Main application class
 // -- Could be not used
-class GivaroAppli : public Givaro {
+class GivaroAppli : public GivaroMain {
 public:
   //- Cstor, destor
   GivaroAppli() {};

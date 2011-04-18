@@ -70,7 +70,7 @@ private:
   // - Call by the Givaro::Init and Givaro::End functions
 static void InitApp(int* argc, char***argv);
 static void EndApp();
-friend class Givaro;
+friend class GivaroMain;
 
 private:
   // - Internal data of a module

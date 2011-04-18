@@ -139,7 +139,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 
 int main(int argc, char ** argv)
 {
-	::Givaro::Givaro::Init();
+	::Givaro::GivaroMain::Init();
 	// argv[1] : number of primes
 	// argv[2] : 2^{32-j} is size of primes
 	// argv[3] : seed for generator
@@ -187,7 +187,7 @@ int main(int argc, char ** argv)
 		std::cerr << "Error: " << seed << std::endl;
 #endif
 
-	::Givaro::Givaro::End();
+	::Givaro::GivaroMain::End();
 	return (! success);
 }
 

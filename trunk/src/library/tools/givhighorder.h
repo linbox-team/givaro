@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <01 Apr 11 11:40:19 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Apr 11 16:37:12 Jean-Guillaume.Dumas@imag.fr>
 // Author: J-G. Dumas
 // Description: Storjohann's high-order lifting
 // Reference:   A. Storjohann. High-order lifting. ISSAC 2002.
@@ -93,7 +93,7 @@ struct HighOrder {
     Truncated& Fiduccia(Truncated& F, const Polynomial& Tay, const Polynomial& FraDen, Degree a, Degree b) const {
 	  Degree dA; _poldom.degree(dA, FraDen);
 	  Polynomial Rev; _poldom.init(Rev,dA);
-	  for(size_t i=0;i<dA.value();++i)
+	  for(int i=0;i<dA.value();++i)
             _dom.div(Rev[i],(FraDen)[dA.value()-i],FraDen.front());
           _dom.assign(Rev[dA.value()],_dom.one);
           return FiducciaReversed(F, Tay, Rev, a, b);
@@ -265,9 +265,9 @@ struct HighOrder {
     std::vector<Truncated>& highorder(std::vector<Truncated>& Gam, std::vector<Truncated>& T, std::vector<Degree>& Deg, Polynomial& Tay, Degree& dT, Degree a, Degree order, const Polynomial& A, const Degree dA) const {
         Gam.resize(0); T.resize(0); Deg.resize(0);
         size_t e;
-        for(e=0; (1UL<<e)<dA.value(); ++e) {}
+        for(e=0; (1L<<e)<dA.value(); ++e) {}
         ++e; // 2^{e-2} < d <= 2^{e-1}
-        size_t dt = (1UL<<e);
+        int dt = (1UL<<e);
 
         Degree k0 = 1UL<<e;
         Deg.push_back(k0-dA);

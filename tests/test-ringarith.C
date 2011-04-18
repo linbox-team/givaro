@@ -18,9 +18,14 @@
 #include <givaro/givinteger.h>
 using namespace Givaro;
 
+#ifdef GIVARO_DEBUG
+long long TTcount = 0;
+#endif
+
+
 #define TESTE_EG( a, b ) \
 if (!F.areEqual((a),(b))) {\
-	std::cout << F.write(std::cout,a) << "!=" << F.write(std::cout,b) << " failed (at line " <<  __LINE__ << ")" << std::endl; \
+	F.write( F.write(std::cout,a) << "!=",b) << " failed (at line " <<  __LINE__ << ")" << std::endl; \
 	return(-1); \
 }
 
@@ -161,6 +166,7 @@ int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
 #ifdef GIVARO_DEBUG
 	F.write(std::cerr );
 	std::cerr  << " done." << std::endl;
+        ++TTcount;
 #endif
 	return 0 ;
 
@@ -361,12 +367,8 @@ int main(int argc, char ** argv)
 	JEPOLTESTE(IntZPPP75,seed);
 
 #ifdef GIVARO_DEBUG
-	std::cerr << std::endl ;
+        std::cerr << std::endl << "Success:" << TTcount << std::endl;
 #endif
-
-
-
-
 
 	return 0;
 }/*}}}*/

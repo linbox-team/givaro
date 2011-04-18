@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <05 Apr 11 17:28:53 Jean-Guillaume.Dumas@imag.fr>        //
+// Time-stamp: <15 Apr 11 09:09:19 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
 // Givaro replacement for ssh-keygen: generated keys use strong primes  //
 // Random generator is seeded by					 //
@@ -150,14 +150,14 @@ std::cerr << "Generated seed: " << seed << ", using " << filename << std::endl;
      return seed;
 }
 
-
-
+void usage() {
+    std::cerr << "Usage: givaro-ssh-keygen [-b bits] [-f private-key-file] [-p public-key-file] [-r randomness-file]" << std::endl;
+}
 
 int main(int argc, char** argv)
 {
     if (argc > 10) {
-        std::cerr << "Usage: givaro-ssh-keygen [-b bits] [-f private-key-file] [-p public-key-file] [-r randomness-file]" << std::endl;
-        return 0;
+        usage(); return 0;
     }
 
     long s = 4096;
@@ -167,8 +167,12 @@ int main(int argc, char** argv)
 
 
     for (long i = 1; i < argc; i++) {
+        
         if (argv[i][0] == '-') {
             switch(argv[i][1]) {
+                case 'h':; case 'H': {
+                    usage(); return 0;
+                }
                 case 'b':; case 'B': {
                     s = atoi(argv[++i]);
                     break;

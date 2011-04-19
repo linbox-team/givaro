@@ -8,7 +8,7 @@ AC_PREREQ(2.61)
 
 AC_INIT([Givaro],[3.4.0],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
-AC_CONFIG_MACRO_DIR([macros]) #il le veut alors je le lui donne...
+AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability])
 AM_CONFIG_HEADER([config.h])
@@ -25,7 +25,6 @@ AM_ACLOCAL_INCLUDE(macros)
 
 # work around to fix the backward compatibility issue of automake 1.10 with 1.9 (pb with MKDIR_P)
 AC_SUBST([MKDIR_P])
-# AC_DISABLE_SHARED
 
 AC_LANG([C++])
 
@@ -33,15 +32,12 @@ AC_DEBUG
 # AC_FULL_DEBUG
 AC_WARNINGS
 
-
+# CFLAGS=${CFLAGS:-$DEFAULT_CFLAGS}
+# CXXFLAGS=${CXXFLAGS:-$DEFAULT_CXXFLAGS}
 
 ######################################################
 # Try and pass different flags according to compiler #
 ######################################################
-
-# AM_CONDITIONAL(CC_IS_INTL, [test "x${CXX}" = "xicpc" -o "x${CXX}" = "xicc"])
-# $ac_cv_c_compiler_gnu :
-# AM_CONDITIONAL(CC_IS_GNOU, [test "x${CXX}" = "xg++" ])
 
 # disable default -g -O2 CXXFLAGS
 : ${CXXFLAGS=""}
@@ -55,10 +51,8 @@ AC_SUBST([DEFAULT_CFLAGS])
 AC_SUBST([DEBUG_CFLAGS])
 AC_SUBST([TESTS_CFLAGS])
 
-# Give a sane default for CFLAGS and CXXFLAGS
-# DEFAULT_CFLAGS="-g -O2 -Wall -Wextra -Wno-unused-parameter"
 TESTS_CFLAGS="-O0"
-DEBUG_CFLAGS=""    #those are CPPFLAGS
+DEBUG_CFLAGS=""  #those are CPPFLAGS
 DEFAULT_CFLAGS="-pipe -Wall"
 
 if test "x$DBG" = "xyes" ; then
@@ -95,8 +89,6 @@ TESTS_CFLAGS="${TESTS_CFLAGS} ${DEBUG_CFLAGS}"
 
 
 AC_HEADER_STDC
-
-# old ones
 AC_PROG_LIBTOOL
 AM_PROG_LIBTOOL
 
@@ -219,6 +211,7 @@ AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 
 # Feature checks
 
+AC_LANG_CPLUSPLUS
 LB_CHECK_GMP(,,[
 echo '*******************************************************************************'
 echo ' ERROR: GMP not found!'

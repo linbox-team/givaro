@@ -1,0 +1,90 @@
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software.
+// see the COPYRIGHT file for more details.
+/*! @file examples/Polynomial/pol_eval.C
+ * @ingroup examples
+ * @ingroup polynomials
+ * @example examples/Polynomial/pol_eval.C
+ * @brief NO DOC
+ */
+
+#include <iostream>
+#include <stdlib.h>
+#include <givaro/givgfq.h>
+#include <givaro/givpoly1factor.h>
+#include <givaro/givtimer.h>
+
+using namespace Givaro;
+
+
+using namespace std;
+
+
+int main(int argc, char** argv)
+{
+  GFqDom<long>::Residu_t MOD;
+  if (argc > 1)
+	  MOD = atoi(argv[1]);
+  else
+	  std::cin >> MOD;
+  unsigned long expo = 1;
+  if (argc > 2) expo = atoi(argv[2]);
+
+  GFqDom<long> F(MOD, expo);
+
+  Poly1FactorDom<GFqDom<long>, Dense> FD(F,Indeter("X"));
+  Poly1FactorDom<GFqDom<long>, Dense>::Element P;
+  FD.read( cin, P );
+  GFqDom<long>::Element res, val;
+  F.read( cin, val );
+
+        Timer tim; tim.clear(); tim.start();
+        FD.eval(res, P, val );
+        tim.stop();
+
+  F.write( F.write( FD.write( cout, P ) << " is ", res ) << " at ", val) << endl;
+  std::cerr << tim << std::endl;
+
+  return 0;
+}
+
+
+
+
+#if 0
+
+
+
+
+
+
+
+		bool f;
+
+	Poly1FactorDom<GFqDom<long>, Dense>::Element W,D;
+	FD.gcd(W,FD.diff(D,P),P);
+	Degree d, dP;
+	if (FD.degree(d,W) > 0) return 0;
+		// Distinct degree free ?
+	Poly1FactorDom<GFqDom<long>, Dense>::Element  Unit, G1;
+	FD.init(Unit, Degree(1), F.one);
+	W.copy(Unit);
+	FD.degree(dP,P); Degree dPo = (dP/2);
+
+	f = 1;
+
+	for(Degree dp = 1; dp <= dPo; ++dp) {
+		FD.write(cout << "W: ", W) << endl ;
+		FD.powmod(W, D.copy(W), MOD, P);
+		FD.write(cout << "W^q: " , W) << endl ;
+		FD.gcd (G1, FD.sub(D,W,Unit), P) ;
+		FD.write(cout << "D: " , D) << endl ;
+		FD.write(cout << "G1: " , G1) << endl ;
+		if ( FD.degree(d,G1) > 0 ) { f = 0; break; }
+	}
+
+
+#endif
+

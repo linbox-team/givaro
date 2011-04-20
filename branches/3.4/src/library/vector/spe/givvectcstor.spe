@@ -1,0 +1,113 @@
+// ==========================================================================
+// $Source: /var/lib/cvs/Givaro/src/library/vector/spe/givvectcstor.spe,v $
+// Copyright(c)'1994-2009 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software. 
+// see the COPYRIGHT file for more details.
+// Authors: T. Gautier
+// $Id: givvectcstor.spe,v 1.3 2009-09-17 14:28:23 jgdumas Exp $
+// ==========================================================================
+
+// - inherited from Array0
+template<>
+inline Vector<Zpz>::~Vector () 
+{} 
+
+template<>
+inline Vector<Zpz>::Vector (size_t sz, Zpz::Modulo_t m ) 
+ : _array(sz), _modulus(m) 
+{} 
+
+template<>
+inline Vector<Zpz>::Vector (size_t sz, const Zpz& val) 
+ : _array(sz), _modulus(val.modulus())
+{
+  for (size_t i=0; i<sz; i++) _array[i] = val.residu();
+} 
+
+template<>
+inline Vector<Zpz>::Vector(const Vector<Zpz>& V, givWithCopy xx )
+ : _array(V.size()), modulus(0)
+{
+  size_t sz = V.size();
+  for (size_t i=0; i<sz; i++) _array[i] = V[i].residu();
+  if (sz !=0) _modulus = V[0].modulus();
+}
+
+template<>
+inline Vector<Zpz>::Vector
+ (const Vector<Zpz::Modulo_t>& V, Zpz::Modulo_t m, givWithCopy xx )
+ : _array(V._array, xx), _modulus(m)
+{ }
+
+template<>
+inline Vector<Zpz>::Vector
+ (const Vector<Zpz::Modulo_t>& V, Zpz::Modulo_t m, givNoCopy xx )
+ : _array(V._array, xx), _modulus(m)
+{ }
+
+
+template<>
+inline Vector<Zpz>::Vector(const Array0<Zpz>& A, givWithCopy xx )
+ : _array(A.size()), _modulus(0)
+{
+  size_t sz = A.size();
+  for (size_t i=0; i<sz; i++) _array[i] = A[i].residu();
+  if (sz !=0) _modulus = A[0].modulus();
+}
+
+template<>
+inline Vector<Zpz>::Vector
+ (const Array0<Zpz::Modulo_t>& A, Zpz::Modulo_t m, givWithCopy xx )
+ : _array(A, xx), _modulus(m)
+{}
+
+template<>
+inline Vector<Zpz>::Vector
+ (const Array0<Zpz::Modulo_t>& A, Zpz::Modulo_t m, givNoCopy xx )
+ : _array(A, xx), _modulus(m)
+{}
+
+
+template<>
+template<class View1>
+inline Vector<Zpz>::Vector(const Vector<Zpz>& V, View1 view1)
+ : _array(view1.size())
+{
+  typename View1::constIterator_t iter = view1.begin();
+  size_t i, sz = view1.size(); 
+  for (i=0; i<sz; ++i, ++iter) _array[i] = V[*iter];
+}
+
+template<>
+template<class View1>
+inline Vector<Zpz>::Vector(const Array0<Zpz>& V, View1 view1)
+ : _array(view1.size())
+{
+  typename View1::constIterator_t iter = view1.begin();
+  size_t i, sz = view1.size(); 
+  for (i=0; i<sz; ++i, ++iter) _array[i] = V[*iter];
+}
+
+template<>
+template<class View1>
+inline Vector<Zpz>::Vector(const SubVector<Zpz, View1>& V)
+ : _array(V.size())
+{
+  typename SubVector<T, View1>::constIterator_t iter = V.begin();
+  size_t i, sz = V.size();
+  for (i=0; i<sz; ++i) _array[i] = *iter++;
+}
+
+template<>
+template<class View1, class View2>
+inline Vector<Zpz>::Vector(const SubVector<Zpz, View1>& V, View2 view2)
+ : _array(view2.size())
+{
+  typedef CompViewResult<View1,View2> ViewRes;
+  SubVector<Zpz, ViewRes> Tmp (V, view2);
+  typename SubVector<Zpz, ViewRes>::constIterator_t iter = Tmp.begin();
+  size_t i, sz = view2.size();
+  for (i=0; i<sz; ++i) _array[i] = *iter++;
+}

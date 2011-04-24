@@ -36,6 +36,11 @@ extern "C" {
 }
 #endif
 
+#ifdef NDEBUG
+#ifdef DEBUG
+#error "NDEBUG and DEBUG both defined"
+#endif
+#endif
 
 #include <gmp++/gmp++_int.h>
 

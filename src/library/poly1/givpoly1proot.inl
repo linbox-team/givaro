@@ -26,6 +26,333 @@
 #include <givaro/givpoly1cyclo.inl>
 
 namespace Givaro {
+
+	////////////////////////////////////////////
+	// BINOM
+	////////////////////////////////////////////
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, Residue MOD) const
+	{
+		for(Residue a=0; a<MOD; ++a) {
+			_domain.assign(R[0],a);
+			if (is_irreducible(R))
+				return true;
+		}
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, bool MOD) const
+	{
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, Residue MOD, Element IXE) const
+	{
+		for(Residu_t a=0; a<MOD; ++a) {
+			_domain.assign(R[0],a);
+			if (is_irreducible(R) && (is_prim_root(IXE,R) ))
+				return true;
+		}
+
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, bool MOD, Element IXE) const
+	{
+		return false;
+	}
+
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
+	{
+		for(Residu_t a=0; a<MOD; ++a) {
+			_domain.assign(R[0],a);
+			if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
+				return true;
+		}
+
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial2 (Element& R, Degree n, bool MOD, Element IXE) const
+	{
+		return false;
+	}
+
+	////////////////////////////////////////////
+	// TRINOM
+	////////////////////////////////////////////
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, Residue MOD) const
+	{
+
+		for(long d=1;d<=(n.value()/2);++d) {
+			for(Residu_t b=0; b<MOD; ++b) {
+				_domain.assign(R[d],b);
+				for(Residu_t a=1; a<MOD; ++a) {
+					_domain.assign(R[0],a);
+					if (is_irreducible(R))
+						return true;
+				}
+			}
+			// _domain.assign(R[0],_domain.zero);
+			// JGD 21.10.02
+			_domain.assign(R[d],_domain.zero);
+		}
+		return false ;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, bool MOD) const
+	{
+
+		_domain.assign(R[0],_domain.one);
+		for(long d=1;d<=(n.value()/2);++d) {
+			_domain.assign(R[d],_domain.one);
+			if (is_irreducible(R))
+				return true;
+			_domain.assign(R[d],_domain.zero);
+		}
+		return false ;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, Residue MOD, Element IXE) const
+	{
+		for(long d=2;d<=(n.value()/2);++d) {
+			for(Residu_t b=0; b<MOD; ++b) {
+				_domain.assign(R[d],b);
+				for(Residu_t a=1; a<MOD; ++a) {
+					_domain.assign(R[0],a);
+					if (is_irreducible(R) && (is_prim_root(IXE,R) ))
+						return true;
+				}
+			}
+			// _domain.assign(R[0],_domain.zero);
+			// JGD 21.10.02
+			_domain.assign(R[d],_domain.zero);
+		}
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, bool MOD, Element IXE) const
+	{
+
+		_domain.assign(R[0],_domain.one);
+		for(long d=2;d<=(n.value()/2);++d) {
+			_domain.assign(R[d],_domain.one);
+			if (is_irreducible(R) && (is_prim_root(IXE,R) ))
+				return true;
+			_domain.assign(R[d],_domain.zero);
+		}
+		return false ;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
+	{
+		for(long d=2;d<n.value();++d) {
+			for(Residu_t b=0; b<MOD; ++b) {
+				_domain.assign(R[d],b);
+				for(Residu_t a=1; a<MOD; ++a) {
+					_domain.assign(R[0],a);
+					if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
+						return true;
+				}
+			}
+			_domain.assign(R[0],_domain.zero);
+		}
+		return false;
+
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial2 (Element& R, Degree n, bool MOD, Element IXE) const
+	{
+
+		_domain.assign(R[0],_domain.one);
+		for(long d=2;d<=n.value();++d) {
+			_domain.assign(R[d],_domain.one);
+			if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
+				return true;
+			_domain.assign(R[d],_domain.zero);
+		}
+		return false ;
+	}
+
+	////////////////////////////////////////////
+	// RANDOM
+	////////////////////////////////////////////
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD) const
+	{
+#ifdef DEBUG
+		int no_inf_loop = n.value()/2+5 ;
+#endif
+
+		do {
+			this->random( (RandIter&)_g, R, n); // must cast away const
+			_domain.assign(R[n.value()],_domain.one);
+			for(Residu_t a=0; a<MOD; ++a) {
+				_domain.assign(R[0],a);
+				if (is_irreducible(R))
+					return true;
+			}
+		}
+#ifdef DEBUG
+		while(--no_inf_loop);
+#else
+		while(1);
+#endif
+
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, bool MOD) const
+	{
+#ifdef DEBUG
+		int no_inf_loop = n.value()/2+5 ;
+#endif
+
+		do {
+			this->random( (RandIter&)_g, R, n); // must cast away const
+			_domain.assign(R[n.value()],_domain.one);
+			_domain.assign(R[0],_domain.one);
+			if (is_irreducible(R))
+				return true;
+		}
+#ifdef DEBUG
+		while(--no_inf_loop);
+#else
+		while(1);
+#endif
+
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD, Element IXE) const
+	{
+#ifdef DEBUG
+		int no_inf_loop = n.value()/2+5 ;
+#endif
+		do {
+			this->random( (RandIter&)_g, R, n); // must cast away const
+			_domain.assign(R[n.value()],_domain.one);
+			for(Residu_t a=0; a<MOD; ++a) {
+				_domain.assign(R[0],a);
+				if (is_irreducible(R) && (is_prim_root(IXE,R) ))
+					return true;
+			}
+		}
+#ifdef DEBUG
+		while(--no_inf_loop);
+#else
+		while(1);
+#endif
+
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, bool MOD, Element IXE) const
+	{
+#ifdef DEBUG
+		int no_inf_loop = n.value()/2+5 ;
+#endif
+
+		do {
+			this->random( (RandIter&)_g, R, n); // must cast away const
+			_domain.assign(R[n.value()],_domain.one);
+			_domain.assign(R[0],_domain.one);
+			if (is_irreducible(R) && (is_prim_root(IXE,R) ))
+				return true;
+		}
+#ifdef DEBUG
+		while(--no_inf_loop);
+#else
+		while(1);
+#endif
+
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	template<class Residue>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
+	{
+#ifdef DEBUG
+		int no_inf_loop = n.value()/2+5 ;
+#endif
+		do {
+			this->random( (RandIter&)_g, R, n); // must cast away const
+			_domain.assign(R[n.value()],_domain.one);
+			for(Residu_t a=0; a<MOD; ++a) {
+				_domain.assign(R[0],a);
+				if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
+					return true;
+			}
+		}
+#ifdef DEBUG
+		while(--no_inf_loop);
+#else
+		while(1);
+#endif
+
+		return false;
+	}
+
+	template<class Domain, class Tag, class RandIter >
+	// template<>
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial2 (Element& R, Degree n, bool MOD, Element IXE) const
+	{
+#ifdef DEBUG
+		int no_inf_loop = n.value()/2+5 ;
+#endif
+		do {
+			this->random( (RandIter&)_g, R, n); // must cast away const
+			_domain.assign(R[n.value()],_domain.one);
+			_domain.assign(R[0],_domain.one);
+			if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
+				return true;
+		}
+#ifdef DEBUG
+		while(--no_inf_loop);
+#else
+		while(1);
+#endif
+		return false;
+
+	}
+
+	////////////////////////////////////////////
+
+
 	// ---------------------------------------------------------------
 	// Monic irreducible polynomial of degree n over Z/pZ
 	// having 2, 3 nonzero terms or dividing a cyclotomic polynomial
@@ -36,46 +363,34 @@ namespace Givaro {
 	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::creux_random_irreducible (Element& R, Degree n) const
 	{
 		init(R, n);
+
 		Residu_t MOD = _domain.residu();
+
 
 		// Search for an irreducible BINOMIAL : X^n + a
 		// WARNING : Here we may have X^n + x,
 		// where a = representation of x, and sometimes a != x.
-		for(Residu_t a=0; a<MOD; ++a) {
-			_domain.assign(R[0],a);
-			if (is_irreducible(R))
-				return R;
-		}
+		if (find_irred_binomial(R,n,MOD))
+		    return R ;
+
 		// Search for an irreducible TRINOMIAL : X^n + b*X^i + a
 		// Precondition : n >= 2
+		assert(n.value()>=2);
 		// WARNING : same warning as for the binomial.
 		// JGD 21.10.02
 		// for(Residu_t d=2;d<n.value();++d)
-		for(long d=1;d<=(n.value()/2);++d) {
-			for(Residu_t b=0; b<MOD; ++b) {
-				_domain.assign(R[d],b);
-				for(Residu_t a=1; a<MOD; ++a) {
-					_domain.assign(R[0],a);
-					if (is_irreducible(R))
-						return R;
-				}
-			}
-			// _domain.assign(R[0],_domain.zero);
-			// JGD 21.10.02
-			_domain.assign(R[d],_domain.zero);
-		}
+
+		if (find_irred_trinomial(R,n,MOD))
+			return R ;
 
 		// Search for a monic irreducible Polynomial
 		// with random Elements
-		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
-			_domain.assign(R[n.value()],_domain.one);
-			for(Residu_t a=0; a<MOD; ++a) {
-				_domain.assign(R[0],a);
-				if (is_irreducible(R))
-					return R;
-			}
-		} while(1);
+
+		if (find_irred_randomial(R,n,MOD))
+			return R ;
+		else
+			throw "could not find a random polynomial" ;
+
 	}
 
 	template<class Domain, class Tag, class RandIter >
@@ -86,15 +401,11 @@ namespace Givaro {
 		init(R, n);
 		Residu_t MOD = _domain.residu();
 
-		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
-			_domain.assign(R[n.value()],_domain.one);
-			for(Residu_t a=0; a<MOD; ++a) {
-				_domain.assign(R[0],a);
-				if (is_irreducible(R))
-					return R;
-			}
-		} while(1);
+		if (find_irred_randomial(R,n,MOD))
+			return R ;
+		else
+			throw "could not find a random polynomial" ;
+
 	}
 
 
@@ -114,41 +425,31 @@ namespace Givaro {
 		// Search for an irreducible BINOMIAL : X^n + a
 		// WARNING : Here we may have X^n + x,
 		// where a = representation of x, and sometimes a != x.
-		for(Residu_t a=0; a<MOD; ++a) {
-			_domain.assign(R[0],a);
-			if (is_irreducible(R) && (is_prim_root(IXE,R) ))
-				return R;
-		}
+
+		if (find_irred_binomial(R,n,MOD,IXE))
+		    return R ;
+
 		// Search for an irreducible TRINOMIAL : X^n + b*X^i + a
 		// Precondition : n >= 2
+		assert(n.value()>=2);
 		// WARNING : same warning as for the binomial.
 		// // JGD 21.10.02
 		// for(unsigned long d=2;d<n.value();++d)
-		for(long d=2;d<=(n.value()/2);++d) {
-			for(Residu_t b=0; b<MOD; ++b) {
-				_domain.assign(R[d],b);
-				for(Residu_t a=1; a<MOD; ++a) {
-					_domain.assign(R[0],a);
-					if (is_irreducible(R) && (is_prim_root(IXE,R) ))
-						return R;
-				}
-			}
-			// _domain.assign(R[0],_domain.zero);
-			// JGD 21.10.02
-			_domain.assign(R[d],_domain.zero);
-		}
+
+		if (find_irred_trinomial(R,n,MOD,IXE))
+			return R ;
+
 
 		// Search for a monic irreducible Polynomial
 		// with random Elements
-		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
-			_domain.assign(R[n.value()],_domain.one);
-			for(Residu_t a=0; a<MOD; ++a) {
-				_domain.assign(R[0],a);
-				if (is_irreducible(R) && (is_prim_root(IXE,R) ))
-					return R;
-			}
-		} while(1);
+
+
+		if (find_irred_randomial(R,n,MOD,IXE))
+			return R ;
+		else
+			throw "could not find a random polynomial" ;
+
+
 	}
 
 	template<class Domain, class Tag, class RandIter >
@@ -162,37 +463,29 @@ namespace Givaro {
 		// Search for an irreducible BINOMIAL : X^n + a
 		// WARNING : Here we may have X^n + x,
 		// where a = representation of x, and sometimes a != x.
-		for(Residu_t a=0; a<MOD; ++a) {
-			_domain.assign(R[0],a);
-			if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
-				return R;
-		}
+
+		if (find_irred_binomial2(R,n,MOD,IXE))
+			return R ;
+
 		// Search for an irreducible TRINOMIAL : X^n + b*X^i + a
 		// Precondition : n >= 2
+		assert(n.value()>=2);
 		// WARNING : same warning as for the binomial.
-		for(Residu_t d=2;d<n.value();++d) {
-			for(Residu_t b=0; b<MOD; ++b) {
-				_domain.assign(R[d],b);
-				for(Residu_t a=1; a<MOD; ++a) {
-					_domain.assign(R[0],a);
-					if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
-						return R;
-				}
-			}
-			_domain.assign(R[0],_domain.zero);
-		}
+
+		if (find_irred_trinomial2(R,n,MOD,IXE))
+			return R ;
+
+
 
 		// Search for a monic irreducible Polynomial
 		// with random Elements
-		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
-			_domain.assign(R[n.value()],_domain.one);
-			for(Residu_t a=0; a<MOD; ++a) {
-				_domain.assign(R[0],a);
-				if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
-					return R;
-			}
-		} while(1);
+
+		if (find_irred_randomial2(R,n,MOD,IXE))
+			return R ;
+		else
+			throw "could not find a random polynomial" ;
+
+
 	}
 	// ---------------------------------------------------------------
 	// Irreducibility tests

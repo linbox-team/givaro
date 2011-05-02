@@ -36,28 +36,30 @@ template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt e = 1) {
 template<class BFT = GFqDom<long>  >
 class Extension {
 public:
-	typedef Extension<BFT> Self_t;
-	typedef BFT BaseField_t;
-	typedef typename BFT::Element BFElement;
-	typedef typename Signed_Trait<BFElement>::unsigned_type Residu_t;
+	typedef          Extension<BFT>                            Self_t;
+	typedef          BFT                                  BaseField_t;
+	typedef typename BFT::Element                           BFElement;
+	typedef typename Signed_Trait<BFElement>::unsigned_type  Residu_t;
 
-	typedef Poly1FactorDom< BFT, Dense > Pol_t;
-	typedef typename Pol_t::Element PolElement;
+	typedef          Poly1FactorDom< BFT, Dense >               Pol_t;
+	typedef typename Pol_t::Element                        PolElement;
 
 protected:
 
-	BaseField_t _bF;
-	Pol_t _pD;
-	PolElement _irred;
-	Residu_t _characteristic;
-	Residu_t _exponent;
+	BaseField_t           _bF;
+	Pol_t                 _pD;
+	PolElement         _irred;
+	Residu_t  _characteristic;
+	Residu_t        _exponent;
 	Residu_t _extension_order;
-	Integer _cardinality;
+	Integer      _cardinality;
 
 public:
 
 	bool extension_type () const
-	{ return true; }
+	{
+	       	return true;
+	}
 
 	typedef PolElement Element;
 
@@ -68,7 +70,10 @@ public:
 
 
 	Extension ( const Residu_t p, const Residu_t e = 1, const Indeter Y="Y") :
-	       	_bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p ), _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) ) , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_pD.zero), one (_pD.one)
+		_bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p )
+		, _exponent ( e ) , _extension_order( e/FF_EXPONENT_MAX(p,e) )
+		, _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_pD.zero)
+		, one (_pD.one)
 	{
 		/*     cerr << "Pol Cstor" << endl; */
 		unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
@@ -82,7 +87,10 @@ public:
 	}
 
 	Extension ( const BaseField_t& bF, const Residu_t ex = 1, const Indeter Y="Y") :
-	       	_bF( bF ), _pD( _bF, Y  ), _characteristic( bF.characteristic() ), _exponent( ex + bF.exponent() ), _extension_order( ex ), _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) ), zero (_pD.zero), one (_pD.one)
+	       	_bF( bF ), _pD( _bF, Y  ), _characteristic( bF.characteristic() )
+		, _exponent( ex + bF.exponent() ), _extension_order( ex )
+		, _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) )
+		, zero (_pD.zero), one (_pD.one)
 	{
 		if (_cardinality < (1<<20) )
 			_pD.creux_random_irreducible( _irred, (unsigned long)(ex));
@@ -91,7 +99,10 @@ public:
 	}
 
 	Extension ( const Self_t& eF) :
-	       	_bF( eF._bF ), _pD( eF._pD ), _irred( eF._irred ), _characteristic( eF._characteristic ), _exponent( eF._exponent ) , _extension_order( eF._extension_order ), _cardinality( eF._cardinality ), zero (_pD.zero), one (_pD.one)
+	       	_bF( eF._bF ), _pD( eF._pD ), _irred( eF._irred )
+		, _characteristic( eF._characteristic ), _exponent( eF._exponent )
+		, _extension_order( eF._extension_order ), _cardinality( eF._cardinality )
+		, zero (_pD.zero), one (_pD.one)
        	{ }
 
 	Self_t & operator=(const Self_t& eF)
@@ -254,26 +265,42 @@ public:
 
 
 	template<class RandIter> Element& random(RandIter& g, Element& r) const
-	{ return _pD.random(g,r,Degree(_exponent-1)); }
+	{
+	       	return _pD.random(g,r,Degree(_exponent-1));
+	}
 	template<class RandIter> Element& random(RandIter& g, Element& r, long s) const
-	{ return _pD.random(g,r,(s>=_exponent?_exponent-1:s)); }
+	{
+	       	return _pD.random(g,r,(s>=_exponent?_exponent-1:s));
+	}
 	template<class RandIter> Element& random(RandIter& g, Element& r, const Element& b) const
-	{  return _pD.random(g,r,b.size()); }
+	{
+	      	return _pD.random(g,r,b.size());
+	}
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r) const
-	{ return _pD.nonzerorandom(g,r,Degree(_exponent-1)); }
+	{
+	       	return _pD.nonzerorandom(g,r,Degree(_exponent-1));
+	}
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, long s) const
-	{ return _pD.nonzerorandom(g,r,(s>=_exponent?_exponent-1:s)); }
+	{
+	       	return _pD.nonzerorandom(g,r,(s>=_exponent?_exponent-1:s));
+	}
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, const Element& b) const
-	{  return _pD.nonzerorandom(g,r,b.size()); }
+	{
+	      	return _pD.nonzerorandom(g,r,b.size());
+	}
 
 
 
 
 	Integer &cardinality (Integer &c) const
-	{ return c=_cardinality; }
+	{
+	       	return c=_cardinality;
+	}
 
 	Integer &characteristic (Integer &c) const
-	{ return c=_characteristic; }
+	{
+	       	return c=_characteristic;
+	}
 
 	Residu_t characteristic() const
 	{
@@ -482,4 +509,5 @@ private:
 
 #endif //__GIVARO_extension_H
 
+/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -49,18 +49,15 @@ int main (int argc, char * * argv) {
         F121.write(std::cout << "This is the field with 121 elements: ") << std::endl;
     }
 
-/*
-
         // This is the field with 11^2=121 éléments
         // Using a polynomial representation
-        // And an alternative field, works only with Givaro > 3.5.0
+        // And an alternative field, works only with Givaro >= 3.5.0
     {
         
         ZpzDom<Std64> F11(11);
         Extension< ZpzDom<Std64>  > F121(F11, 2);
         F121.write(std::cout << "This is the field with 121 elements: ") << std::endl;
     }
-*/
 
 
     return 0;

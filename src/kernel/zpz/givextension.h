@@ -33,6 +33,24 @@ template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt e = 1) {
 
 #define EXTENSION(q,expo) ( NEED_POLYNOMIAL_REPRESENTATION((q),(expo)) ? Extension<>((q), (expo)) : GFqDom<long>((q), (expo)) )
 
+
+template<typename Field> unsigned long Exponent_Trait(const Field& F) {
+    return 1;
+}
+ 
+
+template<> unsigned long Exponent_Trait(const GFqDom<long>& F) {
+    return F.exponent();
+}
+
+template<typename BaseField> class Extension;
+
+template<typename BaseField>
+unsigned long Exponent_Trait(const Extension<BaseField>& F) {
+    return F.exponent();
+}
+
+
 template<class BFT = GFqDom<long>  >
 class Extension {
 public:
@@ -88,7 +106,7 @@ public:
 
 	Extension ( const BaseField_t& bF, const Residu_t ex = 1, const Indeter Y="Y") :
 	       	_bF( bF ), _pD( _bF, Y  ), _characteristic( bF.characteristic() )
-		, _exponent( ex + bF.exponent() ), _extension_order( ex )
+		, _exponent( ex + Exponent_Trait(bF) ), _extension_order( ex )
 		, _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) )
 		, zero (_pD.zero), one (_pD.one)
 	{

@@ -1,0 +1,72 @@
+# Copyright(c)'2010 by The Givaro group
+# This file is part of Givaro.
+# Givaro is governed by the CeCILL-B license under French law
+# and abiding by the rules of distribution of free software.
+# see the COPYRIGHT file for more details.
+
+
+if GIVARO_BUILD_DOC
+USE_TARGETS = docs
+INSTALL_TARGETS = install-doc
+endif
+docdir=$(GIVARO_DOC_PATH)
+
+#man1_MANS = givaro-config.1
+
+all all-local: $(USE_TARGETS)
+
+install install-data-local: $(INSTALL_TARGETS)
+
+docs:
+	sed -i 's/^\\version.*/\\version\ $(VERSION)/' mainpage.doxy
+	if test -d givaro-html ; then echo exists; else mkdir givaro-html ; fi
+	cp ../INSTALL givaro-html/
+	cp ../COPYING givaro-html/
+	cp ../AUTHORS givaro-html/
+	doxygen Doxyfile
+
+#  if test -d givaro-dev-html ; then echo exists; else mkdir givaro-dev-html ; fi
+#  cp index-dev.html givaro-dev-html/index.html
+#  cp tutorial.html givaro-html/
+#  cp install-dist.html givaro-html/
+#  cp install-dev.html givaro-html/
+
+docs_dev:
+	make docs
+	cp ../INSTALL givaro-dev-html/
+	cp ../COPYING givaro-dev-html/
+	cp ../AUTHORS givaro-dev-html/
+	doxygen DoxyfileDev
+
+#  cp tutorial.html givaro-dev-html/
+#  cp install-dist.html givaro-dev-html/
+#  cp install-dev.html givaro-dev-html/
+
+
+
+install-doc:
+	mkdir $(docdir)
+	cp -r givaro-html $(docdir)/givaro-html
+	cp -r givaro-dev-html $(docdir)/givaro-dev-html
+	cp givaro.html $(docdir)/givaro.html
+
+EXTRA_DIST= \
+			Doxyfile            \
+			DoxyfileDev         \
+			mainpage.doxy
+# \
+#			doc.doxy            \
+#			tutorial.doxy       \
+#			givaro.html         \
+#			givaro-config.1 \
+#tutorial.html       \
+#	install-dev.html    \
+#	index-dev.html      \
+#	install-dist.html
+
+
+clean-local :
+	rm -rf givaro-html
+	rm -rf givaro-dev-html
+
+

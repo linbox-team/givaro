@@ -35,7 +35,7 @@ LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=gfq_atomic GaloisField Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field GF128 GFirreducible
+EXTRA_PROGRAMS=gfq_atomic GaloisFields Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field GF128 GFirreducible
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 GFirreducible_SOURCES           = GFirreducible.C
@@ -43,7 +43,7 @@ GF128_SOURCES                   = GF128.C
 domain_to_operatorstyle_SOURCES = domain_to_operatorstyle.C
 all_field_SOURCES               = all_field.C
 gfq_atomic_SOURCES              = gfq_atomic.C
-GaloisField_SOURCES             = GaloisField.C
+GaloisFields_SOURCES             = GaloisFields.C
 Test_Extension_SOURCES          = Test_Extension.C
 zpz_atomic_SOURCES              = zpz_atomic.C
 ff_arith_SOURCES                = ff_arith.C

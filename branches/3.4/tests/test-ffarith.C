@@ -231,8 +231,9 @@ int main(int argc, char ** argv)
     Integer::seeding(seed);
 
 
-
-
+#ifdef NDEBUG
+    assert(0);
+#endif
 
 	// modulo 13 over 16 bits
 	ZpzDom<Std16> C13(13);

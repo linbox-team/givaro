@@ -37,7 +37,7 @@ template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt e = 1) {
 template<typename Field> unsigned long Exponent_Trait(const Field& F) {
     return 1;
 }
- 
+
 
 template<> unsigned long Exponent_Trait(const GFqDom<long>& F) {
     return F.exponent();
@@ -313,6 +313,11 @@ public:
 	Integer &cardinality (Integer &c) const
 	{
 	       	return c=_cardinality;
+	}
+
+	Residu_t cardinality() const
+	{
+		return _cardinality ;
 	}
 
 	Integer &characteristic (Integer &c) const

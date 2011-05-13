@@ -27,14 +27,14 @@ Integer fact ( unsigned long l)
 Integer& sqrt(Integer& q, const Integer &a)
 {
   mpz_sqrt( (mpz_ptr)&(q.gmp_rep),
-              (mpz_ptr)&(a.gmp_rep)) ;
+              (mpz_srcptr)&(a.gmp_rep)) ;
   return q;
 }
 
 Integer& sqrtrem(Integer& q, const Integer &a, Integer& r)
 {
   mpz_sqrtrem( (mpz_ptr)&(q.gmp_rep),
-              (mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(a.gmp_rep)) ;
+              (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(a.gmp_rep)) ;
   return q;
 }
 
@@ -53,7 +53,7 @@ Integer sqrtrem(const Integer &a, Integer& r)
 bool root(Integer& q, const Integer &a, unsigned int n)
 {
     return (bool)mpz_root ((mpz_ptr)&(q.gmp_rep),
-                           (mpz_ptr)&(a.gmp_rep),
+                           (mpz_srcptr)&(a.gmp_rep),
                            n);
 }
 
@@ -66,7 +66,7 @@ void swap(Integer& a, Integer& b) {
 // log(2) being close to 0.69314718055994531
 double naturallog(const Integer& a) {
   signed long int exp;
-  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) );
+  double d = mpz_get_d_2exp( &exp, (mpz_srcptr)&(a.gmp_rep) );
   return (double)exp*0.69314718055994531+log(d);
 }
 
@@ -96,7 +96,7 @@ long logp(const Integer& a, const Integer& p) {
 // 1/log(2) being close to 1.44269504088896341
 double logtwo(const Integer& a) {
   signed long int exp;
-  double d = mpz_get_d_2exp( &exp, (mpz_ptr)&(a.gmp_rep) );
+  double d = mpz_get_d_2exp( &exp, (mpz_srcptr)&(a.gmp_rep) );
   return (double)exp+log(d)*1.44269504088896341;
 }
 
@@ -107,27 +107,27 @@ double logtwo(const Integer& a) {
 
 Integer& nextprime(Integer& r, const Integer &p)
 {
-  mpz_nextprime ((mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(p.gmp_rep)) ;
+  mpz_nextprime ((mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep)) ;
   return r;
 }
 
 // Copied and adapted from mpz/nextprime.c
 Integer& prevprime(Integer& r, const Integer &p)
 {
-   mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(p.gmp_rep), 1L );
-   while( !mpz_probab_prime_p ( (mpz_ptr)&(p.gmp_rep), 5 ) )
-   mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_ptr)&(p.gmp_rep), 1L );
+   mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1L );
+   while( !mpz_probab_prime_p ( (mpz_srcptr)&(p.gmp_rep), 5 ) )
+   mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1L );
    return r;
 }
 
 int probab_prime(const Integer &p)
 {
-  return mpz_probab_prime_p ((mpz_ptr)&(p.gmp_rep),1) ;
+  return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),1) ;
 }
 
 int probab_prime(const Integer &p, int r)
 {
-  return mpz_probab_prime_p ((mpz_ptr)&(p.gmp_rep),r) ;
+  return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),r) ;
 }
 
 // ==========================================================================
@@ -135,12 +135,12 @@ int probab_prime(const Integer &p, int r)
 // The algorithm used is Gmp's.
 int jacobi(const Integer& u, const Integer& v)
 {
-  return mpz_jacobi ((mpz_ptr)&(u.gmp_rep),(mpz_ptr)&(v.gmp_rep)) ;
+  return mpz_jacobi ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
 }
 
 int legendre(const Integer& u, const Integer& v)
 {
-  return mpz_legendre ((mpz_ptr)&(u.gmp_rep),(mpz_ptr)&(v.gmp_rep)) ;
+  return mpz_legendre ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
 }
 
 
@@ -221,17 +221,17 @@ Integer& Integer::operator >>= (unsigned long l)
         return res &= a;
     }
     unsigned long Integer::operator^ (const unsigned long& a) const {   // XOR
-        return mpz_get_ui((mpz_ptr)&(gmp_rep)) ^ a;
+        return mpz_get_ui((mpz_srcptr)&(gmp_rep)) ^ a;
     }
     unsigned long Integer::operator| (const unsigned long& a) const {   // OR
-        return mpz_get_ui((mpz_ptr)&(gmp_rep)) | a;
+        return mpz_get_ui((mpz_srcptr)&(gmp_rep)) | a;
     }
     unsigned long Integer::operator& (const unsigned long& a) const {   // AND
-        return mpz_get_ui((mpz_ptr)&(gmp_rep)) & a;
+        return mpz_get_ui((mpz_srcptr)&(gmp_rep)) & a;
     }
     Integer Integer::operator~ () const {   // 1 complement
         Integer res;
-        mpz_com( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&(gmp_rep));
+        mpz_com( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&(gmp_rep));
         return res;
     }
     Integer& Integer::operator^= (const Integer& a) {   // XOR
@@ -251,10 +251,10 @@ Integer& Integer::operator >>= (unsigned long l)
 //------------------------------------------- convert method
 //------------------------------------------- casting method
 Integer::operator int() const {
-	return mpz_get_si ( (mpz_srcptr)&gmp_rep);
+	return int (mpz_get_si ( (mpz_srcptr)&gmp_rep));
 }
 Integer::operator unsigned int() const {
-	return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
+	return (unsigned int) mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 }
 Integer::operator long() const {
 	return mpz_get_si ( (mpz_srcptr)&gmp_rep);
@@ -271,7 +271,7 @@ Integer::operator unsigned long long() const {
 	unsigned long high = (unsigned long)(rem);
 	unsigned long long tmp = high;
 //	tmp <<= CHAR_BIT*sizeof(unsigned long int) ;
-	cbtuli >>= 1;
+	cbtuli = short (cbtuli >> 1);
 	tmp <<= cbtuli ;
         tmp <<= cbtuli ;
 

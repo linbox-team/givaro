@@ -16,7 +16,6 @@
 #ifndef __GIVARO_zpz16std_INL
 #define __GIVARO_zpz16std_INL
 
-#ifdef __INTEL_COMPILER
 // r = a - b
 //#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
 #define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = Rep(a>=b? a-b: (p-b)+a) )
@@ -32,23 +31,6 @@
 #define __GIVARO_ZPZ16_N_NEG(r,p,a) ( r = Rep(a == 0 ? 0 : p-a) )
 #define __GIVARO_ZPZ16_N_NEGIN(r,p) ( r = Rep(r == 0 ? 0 : p-r) )
 
-#else // not ICC
-
-// r = a - b
-//#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
-#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = a>=b? a-b: (p-b)+a )
-
-// r -= a
-#define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r -= a; r= (r < 0 ? r+p : r);}
-
-// r = a+b
-#define __GIVARO_ZPZ16_N_ADD(r,p,a,b) { r = (a+b); r= (r < p ? r : r-p);}
-// r += a
-#define __GIVARO_ZPZ16_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p);}
-
-#define __GIVARO_ZPZ16_N_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
-#define __GIVARO_ZPZ16_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
-#endif
 
 namespace Givaro {
 
@@ -372,7 +354,8 @@ namespace Givaro {
 				return r = Rep((uint16_t)_p - (uint16_t)tr);
 			else
 				return r = zero;
-		} else {
+		}
+		else {
 			if (residu >= (Integer)_p ) tr =   Rep(residu % _p) ;
 			else tr = Rep(residu);
 			return r = (Rep)tr;
@@ -467,10 +450,10 @@ namespace Givaro {
 	{
 		unsigned int stride = 1;
 		if ((unsigned long)bound < GIVARO_MAXUINT16)
-			stride = GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound);
+			stride = (unsigned int) (GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound));
 		unsigned long dot = zero;
 		if ((sz <10) && (sz <stride)) {
-			for(  int i= sz; i--; )
+			for(  size_t i= sz; i--; )
 				dot += a[i] * b[i];
 			if (dot > _p) r = (Rep)(dot % (uint16_t)_p);
 			else r = (Rep)dot;
@@ -479,7 +462,7 @@ namespace Givaro {
 		unsigned int i_begin=0;
 		stride &= ~0x1;
 		if (stride ==0) {
-			for(  int i= sz; i--; ) {
+			for(  size_t i = sz; i--; ) {
 				dot += a[i] * b[i];
 				if (dot>_p) dot %= _p;
 			}
@@ -488,8 +471,11 @@ namespace Givaro {
 		}
 		do {
 			size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
-			if ((min_sz & 0x1) !=0)
-			{ min_sz--; i_begin++; dot += a++[min_sz] * b++[min_sz]; }
+			if ((min_sz & 0x1) !=0) {
+				min_sz--;
+				i_begin++;
+				dot += a++[min_sz] * b++[min_sz];
+			}
 			if (min_sz > 1)
 				for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b )
 				{
@@ -497,7 +483,7 @@ namespace Givaro {
 					dot += a[1] * b[1];
 				}
 			if (dot>_p) dot %= (uint16_t)_p;
-			i_begin += min_sz;
+			i_begin += (unsigned int) min_sz;
 		} while (i_begin <sz);
 		r = (Rep)dot;
 	}
@@ -532,11 +518,8 @@ namespace Givaro {
 			// - normalization: put fractional part at the end of the representation
 			tmp.d = a[i] + offset;
 			r[i] = (Rep) tmp.r[1];
-#ifdef __INTEL_COMPILER
-			if (r[i] <_p) r[i] = Rep(r[i]%_p);
-#else
-			if (r[i] <_p) r[i] %= _p;
-#endif
+			if (r[i] <_p)
+				r[i] = Rep(r[i]%_p);
 		}
 		//    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
 		//    r[i] = (r[i] <_p ? r[i] : r[i]%_p);

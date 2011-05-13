@@ -21,7 +21,7 @@ namespace Givaro {
 
 class Bits {
 public:
-  typedef unsigned long base ;
+  typedef size_t base ;
 
   Bits () ;
   Bits (const size_t n) ; // -- n is the number of bits reclaimed
@@ -80,6 +80,7 @@ public:
   // -- returns the i-th bit
   int  get(const int i) const ;
   int  operator[] (const int i) const ;
+  int  operator[] (const size_t i) const ;
 
   // -- IO/methods
   std::ostream& print( std::ostream& o ) const ;

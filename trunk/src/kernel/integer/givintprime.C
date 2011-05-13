@@ -192,7 +192,7 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
   unsigned long int rem;
   Integer t(u);
   int exact;
-  int usize = u.size();
+  int usize = int(u.size());
 
   if (usize == 0)
     return 1;			/* consider 0 a perfect power */
@@ -210,7 +210,7 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
   if (n2 >0) {
       if (t == 1) {
           q = 2;
-          return n2;
+          return (unsigned int) (n2);
       } else {
           return 0;
       }
@@ -246,7 +246,7 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
             if (n > 0) {
                 if (GIVABS(u2) == 1) {
                     q = Integer(prime);
-                    return n;
+                    return (unsigned int) (n);
                 } else {
                     return 0;
                 }
@@ -260,10 +260,10 @@ unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
   {
       if (! isprime (nth))
           continue;
-      exact = root (q, u2, nth);
+      exact = root (q, u2, (unsigned int)nth);
       if (exact) {
           if (isprime(q))
-              return nth;
+              return (unsigned int)nth;
           else
               return 0;
       }

@@ -33,27 +33,30 @@ int32_t& ZpzDom<Std32>::gcdext
         t1 = u1 - q * v1; t2 = u2 - q * v2; t3 = u3 - q * v3;
         u1 = v1; u2 = v2; u3 = v3; v1 = t1; v2 = t2; v3 = t3;
      }
-   u = u1;
-   v = u2;
-   return d=u3;
+   u = int32_t(u1);
+   v = int32_t(u2);
+   return d=int32_t(u3);
 //    return u3;
 }
 
 int32_t& ZpzDom<Std32>::invext
   ( int32_t& u, const int32_t a, const int32_t b ) const
 {
-     long u3;
-     long v1,v3;
-    u = 1; u3 = a;
-    v1 = 0; v3 = b;
-    while (v3 != 0)
-    {
-	 long q, t1, t3;
-	q = u3 / v3;
-	t1 = u - q * v1; t3 = u3 - q * v3;
-	u = v1; u3 = v3; v1 = t1; v3 = t3;
-    }
-    return (u3<0?u=-u:u);
+	long u3;
+	long v1,v3;
+	u = 1; u3 = a;
+	v1 = 0; v3 = b;
+	while (v3 != 0)
+	{
+		long q, t1, t3;
+		q = u3 / v3;
+		t1 = u - q * v1; t3 = u3 - q * v3;
+		u = int32_t(v1);
+		u3 = v3;
+		v1 = t1;
+		v3 = t3;
+	}
+	return (u3<0?u=-u:u);
 }
 
 

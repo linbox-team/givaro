@@ -22,7 +22,7 @@ namespace Givaro {
 	{
 		if (isZero(res)) return res;
 		//   mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
-		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
+		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n.gmp_rep );
 		return res;
 	}
 	Integer& Integer::modin(Integer& res, const unsigned long n)
@@ -52,7 +52,7 @@ namespace Givaro {
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		// mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
-		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
+		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
 		assert(!(res<0) && (res<GMP__ABS(n2)));
 		return res;
 	}
@@ -64,9 +64,9 @@ namespace Givaro {
 		// if (sgn <0) return res = - res;
 
 		if (n2>0)
-			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&n1.gmp_rep, n2);
 		else
-			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, -n2);
+			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&n1.gmp_rep, -n2);
 
 		assert(!(res<0) && (res<GMP__ABS(n2)));
 		return res;
@@ -75,7 +75,7 @@ namespace Givaro {
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
-		mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
+		mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
 		assert(!(res<0) && (res<n2));
 		return res;
 	}
@@ -84,7 +84,7 @@ namespace Givaro {
 	Integer& Integer::operator %= (const Integer& n)
 	{
 		if (isZero(*this)) return *this;
-		mpz_tdiv_r( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+		mpz_tdiv_r( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
 		// mpz_mod( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
 		return *this;
 	}
@@ -125,7 +125,7 @@ namespace Givaro {
 	{
 		if (isZero(*this)) return Integer::zero;
 		Integer res;
-		mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+		mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
 
 		// std::cout << res << ',' << n << ',' << *this << std::endl;
 		assert((res<GIVABS(n)) && (res> -GIVABS(n)) && (res.priv_sign()*(*this).priv_sign()>=0)) ;
@@ -150,7 +150,7 @@ namespace Givaro {
 		if (isZero(*this)) return 0UL;
 		bool isneg = (*this)<0 ;
 		//CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
-		unsigned long res = mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
+		unsigned long res = mpz_tdiv_ui( (mpz_srcptr)&gmp_rep, l);
 #ifdef DEBUG
 		Integer toto = res;
 		if (isneg) toto = -(long)res ;
@@ -204,7 +204,7 @@ namespace Givaro {
 		if (isZero(*this)) return 0LL;
 		Integer Res(Integer::one);
 		Integer Divisor(l);
-		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
+		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
 		return (unsigned long long)( Res );
 	}
 
@@ -213,7 +213,7 @@ namespace Givaro {
 		if (isZero(*this)) return 0LL;
 		Integer Res(Integer::one);
 		Integer Divisor(l);
-		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
+		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
 		return (long long)( Res );
 	}
 #endif //__USE_64_bits__

@@ -125,7 +125,8 @@ const size_t BlocFreeList::TabSize[] = { // -- array of different sizes of bloc 
 
 inline int BlocFreeList::search_binary( size_t sz )
 {
-	if (sz <= 32) return sz-1;
+	if (sz <= 32)
+		return int(sz-1);
 	int max = BlocFreeList::lenTables-1; // -- last element in TabSize
 	if (sz > BlocFreeList::TabSize[max])
 		throw GivError("[GivaroMM]: unable to allocate this size of memory");
@@ -134,7 +135,7 @@ inline int BlocFreeList::search_binary( size_t sz )
 	unsigned int curr;
 	med = 8; // may be value < TabSize[8]
 	do {
-		curr = BlocFreeList::TabSize[med];
+		curr = (unsigned int) BlocFreeList::TabSize[med];
 		if (curr == sz) return med;
 		if (curr < sz) { min = med; }
 		else { max = med; }

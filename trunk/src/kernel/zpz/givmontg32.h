@@ -51,8 +51,16 @@ public:
         // ----- Constructor
     Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}
 
-    Montgomery( Residu_t p, int = 1)
-        : _p(p), _Bp(B32%p), _B2p( (_Bp<<HALF_BITS32) % p), _B3p( (_B2p<<HALF_BITS32) % p), _nim( -Montgomery<Std32>::invext(_p,B32) ), _dp((double)p), zero(0UL), one( redcsal(_B2p) ) {}
+    Montgomery( Residu_t p, int = 1) :
+		_p(p),
+		_Bp(B32%p),
+		_B2p( (_Bp<<HALF_BITS32) % p),
+		_B3p( (_B2p<<HALF_BITS32) % p),
+		_nim( -Montgomery<Std32>::invext(_p,B32) ),
+		_dp((double)p),
+		zero(0UL),
+		one( (Element) redcsal(Element(_B2p)) )
+	{}
 
     Montgomery( const Montgomery<Std32>& F)
         : _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim),_dp(F._dp), zero(0UL), one(F.one) { }

@@ -91,7 +91,7 @@ public:
 		BlocFreeList* tmp;
 		if ((sz <= 32) && ((tmp=BlocFreeList::TabFree[index =sz-1]) !=0)) {
 			BlocFreeList::TabFree[index] = tmp->u.nextfree;
-			tmp->u.index = index;
+			tmp->u.index = (int)index;
 #ifdef GIVARO_STATMEM
 			tablog[index] ++; logalloc += BlocFreeList::TabSize[index];
 #endif
@@ -166,7 +166,7 @@ public:
 		int index;
 		BlocFreeList* tmp;
 		size_t sz = s + sizeof(long);
-		if ((sz <= 32) && ((tmp=BlocFreeList::TabFree[index =sz-1]) !=0)) {
+		if ((sz <= 32) && ((tmp=BlocFreeList::TabFree[index =int(sz-1)]) !=0)) {
 			BlocFreeList::TabFree[index] = tmp->u.nextfree;
 			tmp->u.index = index;
 #ifdef GIVARO_STATMEM
@@ -235,7 +235,7 @@ public:
 		if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
 			throw GivError("[GivMMRefCount::incrc]: bad pointer.");
 #endif
-		return ++(bp->data[0]);
+		return int(++(bp->data[0]));
 	}
 	inline static int decrc(void* p)
 	{
@@ -245,7 +245,7 @@ public:
 		if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
 			throw GivError("[GivMMRefCount::incrc]: bad pointer.");
 #endif
-		return --(bp->data[0]);
+		return int(--(bp->data[0]));
 	}
 	inline static int getrc(void* p)
 	{
@@ -255,7 +255,7 @@ public:
 		if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
 			throw GivError("[GivMMRefCount::incrc]: bad pointer.");
 #endif
-		return (bp->data[0]);
+		return int(bp->data[0]);
 	}
 };
 

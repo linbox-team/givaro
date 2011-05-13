@@ -20,7 +20,7 @@ Integer& Integer::divin(Integer& res, const Integer& n)
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
 	if (isZero(res)) return res;
-	mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
+	mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n.gmp_rep );
 	return res;
 }
 
@@ -58,7 +58,7 @@ Integer& Integer::div(Integer& res, const Integer& n1, const Integer& n2)
 	//  if (isZero(n2)) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
-	mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
+	mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
 	return res;
 }
 
@@ -69,7 +69,7 @@ Integer& Integer::div(Integer& res, const Integer& n1, const long n2)
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
 	int sgn = GMP__SGN(n2);
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
+	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, GMP__ABS(n2));
 	if (sgn <0) return res = -res;
 
 	// if (n2>0)
@@ -92,7 +92,7 @@ Integer& Integer::div(Integer& res, const Integer& n1, const unsigned long n2)
 	//  if (isZero(n2)) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
+	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
 	return res;
 }
 
@@ -103,7 +103,7 @@ Integer& Integer::divexact  (Integer& q, const Integer& n1, const Integer& n2)
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
 	mpz_divexact( (mpz_ptr)&(q.gmp_rep),
-		      (mpz_ptr)&(n1.gmp_rep), (mpz_ptr)&(n2.gmp_rep)) ;
+		      (mpz_srcptr)&(n1.gmp_rep), (mpz_srcptr)&(n2.gmp_rep)) ;
 	return q;
 }
 
@@ -115,7 +115,7 @@ Integer  Integer::divexact  (const Integer& n1, const Integer& n2)
 	//  }
 	Integer q;
 	mpz_divexact( (mpz_ptr)&(q.gmp_rep),
-		      (mpz_ptr)&(n1.gmp_rep), (mpz_ptr)&(n2.gmp_rep)) ;
+		      (mpz_srcptr)&(n1.gmp_rep), (mpz_srcptr)&(n2.gmp_rep)) ;
 	return q;
 }
 
@@ -126,7 +126,7 @@ Integer& Integer::operator /= (const Integer& n)
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
 	if (isZero(*this)) return *this;
-	mpz_tdiv_q( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+	mpz_tdiv_q( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
 	return *this;
 }
 
@@ -160,7 +160,7 @@ Integer Integer::operator / (const Integer& n) const
 	//  }
 	if (isZero(*this)) return Integer::zero;
 	Integer res;
-	mpz_tdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+	mpz_tdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
 
 	// if (n>0)
 		// mpz_fdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
@@ -177,7 +177,7 @@ Integer Integer::operator / (const unsigned long l) const
 	//  }
 	if (isZero(*this)) return Integer::zero;
 	Integer res;
-	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l);
+	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
 
 	return res;
 }
@@ -190,7 +190,7 @@ Integer Integer::operator / (const long l) const
 	if (isZero(*this)) return Integer::zero;
 	Integer res;
 	int sgn = GMP__SGN(l);
-	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
+	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, GMP__ABS(l));
 	if (sgn <0) return negin(res);
 	// if (l>0)
 		// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l) ;
@@ -209,7 +209,7 @@ Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer
 	//  }
 
 	mpz_tdiv_qr( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
-		     (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep));
+		     (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
 	// if (a>0)
 		// mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
 				// (mpz_ptr)&(a.gmp_rep), b);
@@ -233,7 +233,7 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 	//  }
 	// int sgn = GMP__SGN(b);
 	r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
-			   (mpz_ptr)&(a.gmp_rep), GMP__ABS(b));
+			   (mpz_srcptr)&(a.gmp_rep), GMP__ABS(b));
 	// if (sgn <0) return negin(q);
 	// if (a>0)
 		// mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
@@ -257,7 +257,7 @@ Integer& Integer::divmod(Integer& q, unsigned long& r, const Integer& a, const u
 	//    GivMathDivZero("[Integer::divide]: division by zero");
 	//  }
 	r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
-			   (mpz_ptr)&(a.gmp_rep), b);
+			   (mpz_srcptr)&(a.gmp_rep), b);
 
 	if (a<0 && r) {
 		subin(q,(long)1) ;

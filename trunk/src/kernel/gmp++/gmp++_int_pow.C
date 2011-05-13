@@ -16,7 +16,7 @@ namespace Givaro {
 
 int isperfectpower(const Integer& n)
 {
-	return mpz_perfect_power_p((mpz_ptr)&(n.gmp_rep));
+	return mpz_perfect_power_p((mpz_srcptr)&(n.gmp_rep));
 }
 
 Integer& pow(Integer& Res, const unsigned long n, const unsigned long p)
@@ -26,7 +26,7 @@ Integer& pow(Integer& Res, const unsigned long n, const unsigned long p)
 }
 Integer& pow(Integer& Res, const Integer& n, const unsigned long p)
 {
-__gmpz_pow_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&n.gmp_rep, p);
+__gmpz_pow_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p);
   return Res;
 }
 
@@ -51,7 +51,7 @@ Integer pow(const Integer& n, const long l)
 
 Integer& powmod(Integer& Res, const Integer& n, const unsigned long p, const Integer& m)
 {
-  mpz_powm_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&n.gmp_rep, p, (mpz_ptr)&m.gmp_rep);
+  mpz_powm_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p, (mpz_srcptr)&m.gmp_rep);
   return Res;
 }
 
@@ -79,7 +79,7 @@ Integer powmod(const Integer& n, const long e, const Integer& m)
 
 Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m)
 {
-  mpz_powm( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&n.gmp_rep, (mpz_ptr)&e.gmp_rep, (mpz_ptr)&m.gmp_rep);
+  mpz_powm( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, (mpz_srcptr)&e.gmp_rep, (mpz_srcptr)&m.gmp_rep);
   return Res;
 }
 Integer powmod(const Integer& n, const Integer& e, const Integer& m)

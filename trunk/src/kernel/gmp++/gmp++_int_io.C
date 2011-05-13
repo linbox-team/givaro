@@ -22,9 +22,9 @@ std::ostream& absOutput(std::ostream &o, const Integer&n)
 {
   int base = 10;
 
-  unsigned long strSize = mpz_sizeinbase((mpz_ptr)&(n.gmp_rep), base) + 2;
+  unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(n.gmp_rep), base) + 2;
   char *str = ::new char[strSize];
-  mpz_get_str(str, base, (mpz_ptr)&(n.gmp_rep));
+  mpz_get_str(str, base, (mpz_srcptr)&(n.gmp_rep));
   if (sign(n) < 0) {
       char *str1 = &(str[1]) ;
       o << str1;
@@ -38,9 +38,9 @@ std::ostream& absOutput(std::ostream &o, const Integer&n)
 std::ostream& Integer::print(std::ostream &o) const
 {
   int base = 10;
-  unsigned long strSize = mpz_sizeinbase((mpz_ptr)&(gmp_rep), base) + 2;
+  unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
   char *str = new char[strSize];
-  mpz_get_str(str, base, (mpz_ptr)&(gmp_rep));
+  mpz_get_str(str, base, (mpz_srcptr)&(gmp_rep));
 // JGD 08.11.1999 : temporaire
 //   if (sign(*this) > 0) o << '+' ;
   o << str;
@@ -50,9 +50,9 @@ std::ostream& Integer::print(std::ostream &o) const
 
 Integer::operator std::string () const {
     std::string s;
-    unsigned long strSize = mpz_sizeinbase((mpz_ptr)&(gmp_rep), 10) + 2;
+    unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), 10) + 2;
     char *str = new char[strSize + 2];
-    mpz_get_str(str, 10, (mpz_ptr)&(gmp_rep));
+    mpz_get_str(str, 10, (mpz_srcptr)&(gmp_rep));
     s = std::string(str);
     delete [] str ;
     return s;
@@ -79,10 +79,11 @@ Integer::Integer(const std::vector<mp_limb_t>& v) {
 }
 
 Integer::operator std::vector<mp_limb_t> () const {
-        size_t s = mpz_size( (mpz_ptr)&(gmp_rep) );
+        size_t s = mpz_size( (mpz_srcptr)&(gmp_rep) );
         std::vector<mp_limb_t> v(s);
         std::vector<mp_limb_t>::iterator vi = v.begin();
-        for(mp_size_t i = 0;vi != v.end();++vi, ++i) *vi = mpz_getlimbn( (mpz_ptr)& (gmp_rep) ,i);
+        for(mp_size_t i = 0;vi != v.end();++vi, ++i)
+			*vi = mpz_getlimbn( (mpz_srcptr)& (gmp_rep) ,i);
         return v;
 }
 

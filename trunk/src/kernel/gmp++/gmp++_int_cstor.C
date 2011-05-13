@@ -30,7 +30,7 @@ Integer::Integer(const char *s)
 Integer& Integer::copy(const Integer &n)
 {
   if (this == &n) return *this;
-  mpz_set ( (mpz_ptr)&gmp_rep, (mpz_ptr)&(n.gmp_rep)) ;
+  mpz_set ( (mpz_ptr)&gmp_rep, (mpz_srcptr)&(n.gmp_rep)) ;
   return *this ;
 }
 

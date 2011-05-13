@@ -59,7 +59,7 @@ public:
 		_nim( -Montgomery<Std32>::invext(_p,B32) ),
 		_dp((double)p),
 		zero(0UL),
-		one( (Element) redcsal(Element(_B2p)) )
+		one(  redcsal( _B2p ) )
 	{}
 
     Montgomery( const Montgomery<Std32>& F)

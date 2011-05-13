@@ -354,7 +354,7 @@ namespace Givaro {
 		int sign; unsigned long ua;
 		if (a <0) { sign =-1; ua = -a;}
 		else { ua = a; sign =1; }
-		r = (ua >=_p) ? ua % (uint32_t)_p : ua;
+		r = Rep((ua >=_p) ? ua % (uint32_t)_p : ua);
 		if (r && (sign ==-1)) r = _p - r;
 		return r;
 	}
@@ -368,13 +368,13 @@ namespace Givaro {
 			if ( residu <= (Integer)(-_p) ) tr = long( (-residu) % _p) ;
 			else tr = long(-residu);
 			if (tr)
-				return r = _p - (unsigned long)tr;
+				return r = Rep(_p - (unsigned long)tr);
 			else
 				return r = zero;
 		} else {
 			if (residu >= (Integer)_p ) tr =   long(residu % _p) ;
 			else tr = long(residu);
-			return r = tr;
+			return r = Rep(tr);
 		}
 	}
 

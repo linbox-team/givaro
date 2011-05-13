@@ -453,10 +453,10 @@ namespace Givaro {
 	{
 		unsigned int stride = 1;
 		if ((unsigned long)bound < GIVARO_MAXUINT16)
-			stride = GIVARO_MAXUINT32/((unsigned long)bound * (unsigned long)bound);
+			stride = (unsigned int) ( GIVARO_MAXUINT32/((unsigned long)bound * (unsigned long)bound) );
 		uint32_t dot = zero;
 		if ((sz <10) && (sz <stride)) {
-			for(  int i= sz-1; i>=0; --i)
+			for(  size_t i= sz; i--; )
 				dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
 			if (dot > _p) return r = _tab_value2rep[(Rep)(dot % _p)];
 			else return r = _tab_value2rep[dot];
@@ -465,7 +465,7 @@ namespace Givaro {
 		unsigned int i_begin=0;
 		stride &= ~0x1;
 		if (stride ==0) {
-			for(  int i= sz-1; i>0; --i) {
+			for(  size_t i= sz-1; i>0; --i) {
 				dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
 				if (dot>_p) dot %= _p;
 			}
@@ -485,7 +485,7 @@ namespace Givaro {
 					dot += _tab_rep2value[a[1]] * _tab_rep2value[b[1]];
 				}
 			if (dot>_p) dot %= _p;
-			i_begin += min_sz;
+			i_begin += (unsigned int) min_sz;
 		} while (i_begin <sz);
 		return r = _tab_value2rep[dot];
 	}

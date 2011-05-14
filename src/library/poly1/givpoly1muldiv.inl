@@ -310,12 +310,13 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R,
 // #include <typeinfo>
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep& Q, Rep& R, const Rep& A, const Rep& B) const
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep& Q, Rep& R, const Rep& A,  const Rep& B) const
 // returns Q such that A = B Q + R
 {
 	//     std::cerr << "BEG divmod of " << typeid(*this).name() << std::endl;
 	//     std::cerr << "BEG with _domain " << typeid(_domain).name() << std::endl;
-	Degree degB; degree(degB, B);
+	Degree degB;
+	degree(degB, B);
 #ifdef GIVARO_DEBUG
 	if (degB == Degree::deginfty)
 		GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));

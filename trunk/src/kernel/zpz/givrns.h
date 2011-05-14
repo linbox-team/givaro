@@ -55,7 +55,7 @@ namespace Givaro {
 		RNSsystem( const domains& primes );
 
 		// -- Computation of a mixed-radix representation of the residus.
-		void RnsToMixedRadix(array&  mixrad, const array&  residu) const;
+		void RnsToMixedRadix(array&  mixrad, const array&  residu) ;
 
 		// -- Convert a mixed radix representation to an Integer
 		RING& MixedRadixToRing( RING& res,  const array& mixrad ) const;
@@ -65,7 +65,7 @@ namespace Givaro {
 		void RingToRns( array& rns, const RING& a ) const;
 
 		// -- Convert a RNS representation to a RING Element
-		RING& RnsToRing( RING& a, const array& rns ) const;
+		RING& RnsToRing( RING& a, const array& rns ) ;
 
 		// ------------- Access methods
 

@@ -93,7 +93,7 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
 int main(int argc, char ** argv)
 {
 
-    int seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
+    int seed = int(argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif

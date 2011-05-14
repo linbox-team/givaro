@@ -132,19 +132,19 @@ namespace Givaro {
 		// Irreducibility test
 		// ---------------------------------------------------------------
 
-		bool is_irreducible(
-				    const Rep& P
+		bool is_irreducible( const Rep& P
 				    , Residu_t MOD )  const ;
 
-		bool is_irreducible(const Rep& P )  const {
+		bool is_irreducible( const Rep& P )  const
+		{
 			return is_irreducible(P,_domain.residu());
 		}
 
-		bool is_irreducible2(
-				     const Rep& P
+		bool is_irreducible2( const Rep& P
 				     , Residu_t MOD )  const ;
 
-		bool is_irreducible2(const Rep& P )  const {
+		bool is_irreducible2( const Rep& P )  const
+		{
 			return is_irreducible2(P,_domain.residu());
 		}
 

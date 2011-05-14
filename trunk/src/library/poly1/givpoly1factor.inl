@@ -198,22 +198,23 @@ Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & L
 // ---------------------------------------------------------------
 
 template<class Domain, class Tag, class RandIter>
-inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible(
-    const Rep& P
-    , Residu_t MOD ) const  {
-   Rep W,D; this->gcd(W,diff(D,P),P);
-    Degree d, dP;
-    if (degree(d,W) > 0) return 0;
-        // Distinct degree free ?
-    Rep Unit, G1; init(Unit, Degree(1));
-    W.copy(Unit);
-    degree(dP,P); Degree dPo = (dP/2);
-    for(Degree dp = 1; dp <= dPo; ++dp) {
-        this->powmod(W, D.copy(W), MOD, P);
-        this->gcd (G1, sub(D,W,Unit), P) ;
-        if ( degree(d,G1) > 0 ) return 0;
-    }
-    return 1;
+inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible( const Rep& P
+								  , Residu_t MOD ) const
+{
+	Rep W,D;
+	this->gcd(W,diff(D,P),P);
+	Degree d, dP;
+	if (degree(d,W) > 0) return 0;
+	// Distinct degree free ?
+	Rep Unit, G1; init(Unit, Degree(1));
+	W.copy(Unit);
+	degree(dP,P); Degree dPo = (dP/2);
+	for(Degree dp = 1; dp <= dPo; ++dp) {
+		this->powmod(W, D.copy(W), MOD, P);
+		this->gcd (G1, sub(D,W,Unit), P) ;
+		if ( degree(d,G1) > 0 ) return 0;
+	}
+	return 1;
 }
 
 
@@ -260,3 +261,6 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
 
 
 #endif // __GIVARO_poly1_facto_INL
+
+/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

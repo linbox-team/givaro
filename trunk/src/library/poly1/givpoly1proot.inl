@@ -492,8 +492,7 @@ namespace Givaro {
 	// ---------------------------------------------------------------
 
 	template<class Domain, class Tag, class RandIter>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
-									  const Rep& P
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2( const Rep& P
 									  , Residu_t MOD ) const
 	{
 		// Square free ?
@@ -534,7 +533,8 @@ namespace Givaro {
 	bool Poly1FactorDom<Domain,Tag, RandIter>::is_prim_root( const Rep& P, const Rep& F)  const
 	{
 		bool isproot = 0;
-		Rep A, G; mod(A,P,F);
+		Rep A, G;
+		mod(A,P,F);
 		Degree d;
 		if ( degree(d, this->gcd(G,A,F)) == 0) {
 			Residu_t MOD = _domain.residu();

@@ -80,7 +80,7 @@ public:
 	Rep access( const Rep a ) const { return a; }
 
 
-	// ----- Access to the modulus
+	// ----- Initialisation
 	Rep& init( Rep& a ) const;
 	void init( const size_t, Array a, constArray b ) const;
 	Rep& init( Rep& a, const long i) const ;

@@ -60,13 +60,13 @@ static ObjectInit* head = 0;
 ObjectInit::ObjectInit( )
 {
 #ifdef GIVARO_DEBUG
-  cout << "[GivModule] ObjectInit::cstor " << (void*)head << endl ;
-  cout << "[GivModule] ObjectInit::cstor curr:" << (void*)this << endl ;
+  std::cout << "[GivModule] ObjectInit::cstor " << (void*)head << std::endl ;
+  std::cout << "[GivModule] ObjectInit::cstor curr:" << (void*)this << std::endl ;
 #endif
   // - link the new object:
   _next = head; head = this ;
 #ifdef GIVARO_DEBUG
-  cout << "[GivModule] ObjectInit::cstor " << (void*)head << endl ;
+  std::cout << "[GivModule] ObjectInit::cstor " << (void*)head << std::endl ;
 #endif
 }
 
@@ -89,8 +89,8 @@ void GivModule::SortGivModule()
 #ifdef GIVARO_DEBUG
 {
   for (int j=0; j<counter; j++)
-    cout << j << ':' << All[j]->which.priority << ' ' << All[j]->name << endl ;
-  cout <<endl ;
+    std::cout << j << ':' << All[j]->which.priority << ' ' << All[j]->name << std::endl ;
+  std::cout <<std::endl ;
 }
 #endif
 
@@ -136,7 +136,7 @@ void GivModule::SortGivModule()
   {
      GivModule* currM = All[curr] ;
 #ifdef GIVARO_DEBUG
-cout << " Search for : " << currM->name << endl ;
+std::cout << " Search for : " << currM->name << std::endl ;
 #endif
 
      // -- Search the first GivModule with strict less priority
@@ -145,7 +145,7 @@ cout << " Search for : " << currM->name << endl ;
        if ( currM->priority < All[SortedAll[k]]->priority) break ;
 
 #ifdef GIVARO_DEBUG
-cout << currM->name << " inserted at : " << k << endl ;
+std::cout << currM->name << " inserted at : " << k << std::endl ;
 #endif
 
     // -- either k == curr, and this is inserted at position curr
@@ -159,16 +159,16 @@ cout << currM->name << " inserted at : " << k << endl ;
     }
 #ifdef GIVARO_DEBUG
 {
-for (int j=0; j<=curr; j++) cout << All[SortedAll[j]]->name << ',' ;
-cout <<endl << endl ;
+for (int j=0; j<=curr; j++) std::cout << All[SortedAll[j]]->name << ',' ;
+std::cout <<std::endl << std::endl ;
 }
 #endif
   }
 
 #ifdef GIVARO_DEBUG
 {
-  for (int j=0; j<counter; j++) cout << j << ':' << All[SortedAll[j]]->name << endl ;
-  cout <<endl ;
+  for (int j=0; j<counter; j++) std::cout << j << ':' << All[SortedAll[j]]->name << std::endl ;
+  std::cout <<std::endl ;
 }
 #endif
 }
@@ -187,24 +187,24 @@ void GivModule::InitApp(int* argc, char***argv)
   {
 	 GivModule* curr = All[SortedAll[i]] ;
 #ifdef GIVARO_DEBUG
-	 if (curr->name !=0) cout << curr->name << " initializing..."  ;
+	 if (curr->name !=0) std::cout << curr->name << " initializing..."  ;
 #endif
 	 if (curr->f_init !=0) curr->f_init(argc, argv) ;
 #ifdef GIVARO_DEBUG
-	 if (curr->name !=0) cout << "done !" << endl ;
+	 if (curr->name !=0) std::cout << "done !" << std::endl ;
 #endif
   }
 
   // -- Init of object:
   ObjectInit* curr = head;
 #ifdef GIVARO_DEBUG
-  cout << "[GivModule] ObjectInit::Head: " << (void*)head << endl;
+  std::cout << "[GivModule] ObjectInit::Head: " << (void*)head << std::endl;
 #endif
   while (curr !=0) {
     curr->objinit();
     curr = curr->_next;
 #ifdef GIVARO_DEBUG
-    cout << "[GivModule] ObjectInit::next one: " << (void*)curr << endl;
+    std::cout << "[GivModule] ObjectInit::next one: " << (void*)curr << std::endl;
 #endif
     if (curr ==head) break ; // -- on MacOS I can make circular list !!! (shared lib)
   }
@@ -216,11 +216,11 @@ void GivModule::EndApp()
   {
 	 GivModule* curr = All[SortedAll[i]] ;
 #ifdef GIVARO_DEBUG
-	 if (curr->name !=0) cout << curr->name << " freeing..."  ;
+	 if (curr->name !=0) std::cout << curr->name << " freeing..."  ;
 #endif
 	 if (curr->f_end !=0) curr->f_end() ;
 #ifdef GIVARO_DEBUG
-	 if (curr->name !=0) cout << "done !" << endl ;
+	 if (curr->name !=0) std::cout << "done !" << std::endl ;
 #endif
   }
 }

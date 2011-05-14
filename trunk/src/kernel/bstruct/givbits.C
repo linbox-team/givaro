@@ -212,7 +212,7 @@ size_t Bits::length() const
 int Bits::operator[] (const int i) const
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::operator[]");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::operator[]");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::operator[]");
   int quo = QUO(i);
   int rem = REM(i);
   return int((rep[quo] & Table2pow[rem]) >> rem);
@@ -220,7 +220,7 @@ int Bits::operator[] (const int i) const
 
 int Bits::operator[] (const size_t i) const
 {
-  GIVARO_ASSERT( i>=0, "invalide index in Bits::operator[]");
+  // GIVARO_ASSERT( i>=0, "invalide index in Bits::operator[]");
   GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::operator[]");
   int quo = QUO(int(i));
   int rem = REM(int(i));
@@ -231,7 +231,7 @@ int Bits::operator[] (const size_t i) const
 int Bits::get (const int i) const
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::get");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::get");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::get");
   int quo = QUO(i);
   int rem = REM(i);
   return int((rep[quo] & Table2pow[rem]) >> rem);
@@ -248,7 +248,7 @@ void Bits::set()
 void Bits::set(const int i)
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::set");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::set");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::set");
   int quo = QUO(i);
   int rem = REM(i);
   rep[quo] |= Table2pow[rem];
@@ -265,7 +265,7 @@ void Bits::clear()
 void Bits::clear(const int i)
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::clear");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::clear");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::clear");
   int quo = QUO(i);
   int rem = REM(i);
   rep[quo] ^= !(Table2pow[rem]); // is the true not ?

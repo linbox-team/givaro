@@ -30,7 +30,8 @@ LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT
+EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder
+
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 interpolate_SOURCES   = interpolate.C
@@ -41,6 +42,7 @@ trunc_arith_SOURCES   = trunc_arith.C
 pol_eval_SOURCES      = pol_eval.C
 pol_factor_SOURCES    = pol_factor.C
 PolynomialCRT_SOURCES = PolynomialCRT.C
+highorder_SOURCES     = highorder.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@

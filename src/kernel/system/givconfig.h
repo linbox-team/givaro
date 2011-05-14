@@ -177,13 +177,14 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 
 #define GIVARO_REQUIRE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro required: ", msg)
 #define GIVARO_ENSURE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro ensured: ", msg)
-#define GIVARO_STATE(expression) expression
+#define GIVARO_STATE(expression)  expression
 #else
 #define GIVARO_ASSERT(cond, msg)
 #define GIVARO_ASSERT2(cond, msg1, msg2)
 #define GIVARO_REQUIRE(ignore, msg) ((void) 0)
 #define GIVARO_ENSURE(ignore, msg) ((void) 0)
-#define GIVARO_STATE(ignore) ((void) 0)
+// #define GIVARO_STATE(expression) do { (expression) } while (0)
+#define GIVARO_STATE(ignore)  ((void) 0)
 
 #endif
 

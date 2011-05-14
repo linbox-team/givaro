@@ -111,7 +111,7 @@ struct HighOrder {
     Type_t& shifteddotproduct(Type_t& dp, const Polynomial& P, const Polynomial& Q, const long shift) const {
         Degree dl; _poldom.degree(dl, P);
 
-        GIVARO_STATE( { Degree dq; _poldom.degree(dq, Q); } );
+        GIVARO_STATE( Degree dq; _poldom.degree(dq, Q);  );
         GIVARO_ASSERT( (dl.value()+shift) <= (dq.value()+1), " in dotproduct HighOrder dP: " << dl << ", dQ: " << dq << ", shift: " << shift );
 
         _dom.assign(dp,_dom.zero);
@@ -267,13 +267,13 @@ struct HighOrder {
         size_t e;
         for(e=0; (1L<<e)<dA.value(); ++e) {}
         ++e; // 2^{e-2} < d <= 2^{e-1}
-        int dt = (1UL<<e);
+        int dt = int (1UL<<e);
 
         Degree k0 = 1UL<<e;
         Deg.push_back(k0-dA);
 
         Degree dif = order-a;
-        dt = (dif.value()>dt? dif.value() : dt);
+        dt = int(dif.value()>dt? dif.value() : dt);
 // std::cout << "BEG HighOrder" << std::endl;
 // std::cout << "d: " << dA << std::endl;
 // std::cout << "e: " << e << std::endl;

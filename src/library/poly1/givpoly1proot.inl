@@ -208,7 +208,7 @@ namespace Givaro {
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD) const
 	{
 #ifdef DEBUG
-		int no_inf_loop = n.value()/2+5 ;
+		int no_inf_loop =(int) n.value()/2+5 ;
 #endif
 
 		do {
@@ -258,7 +258,7 @@ namespace Givaro {
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
 #ifdef DEBUG
-		int no_inf_loop = n.value()/2+5 ;
+		int no_inf_loop = (int)n.value()/2+5 ;
 #endif
 		do {
 			this->random( (RandIter&)_g, R, n); // must cast away const

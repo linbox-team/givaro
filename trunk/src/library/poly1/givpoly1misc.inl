@@ -142,7 +142,8 @@ namespace Givaro {
 	template <class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Type_t& res, const Rep& P, const Type_t& val) const
 	{
-		typename Domain::Element tmp; _domain.init(tmp);
+		typename Domain::Element tmp;
+		_domain.init(tmp,0UL);
 		Degree dP ; degree(dP, P);
 		if (dP == Degree::deginfty) _domain.assign(res, _domain.zero);
 		else {
@@ -179,7 +180,7 @@ namespace Givaro {
 		Rep tmp;
 		assign(W,one);
 		unsigned int p;
-		p = (n < 0 ? -n : n); // cannot treats the case of <0 exponent
+		p = (unsigned int) (n < 0 ? -n : n); // cannot treats the case of <0 exponent
 		while (p != 0) {
 			if (p & 0x1) {
 				mul( tmp, W, puiss2);
@@ -253,7 +254,7 @@ namespace Givaro {
 		typename Domain::Element tmp;
 		while (_domain.isZero(g.random(tmp))) ;
 		r[d.value()] = tmp;
-		for (int i=d.value(); i--;)
+		for (int i=(int)d.value(); i--;)
 			g.random(r[i]);
 		return r;
 	}

@@ -172,7 +172,7 @@ int test2bis(Integer & M, Integer & P)
 template< class T, class U>
 int test3( const T m, const U p)
 {/*{{{*/
-	int pi (p);
+	int pi = int(p);
 	long int q = m / p;
 	const Integer M(m);
 	const Integer P(p);

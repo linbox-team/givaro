@@ -43,7 +43,7 @@ public:
 
         // -- Convert a RNS representation to a Ints Element
     template<class smallIntVector>
-    Ints& RnsToRing( Ints& a, const smallIntVector& rns ) const;
+    Ints& RnsToRing( Ints& a, const smallIntVector& rns ) ;
 
         // ------------- Access methods
 
@@ -58,9 +58,9 @@ public:
 
 protected:
     template<class smallIntVector>
-    Ints& RnsToRingLeft( Ints& I, const smallIntVector& residues, const int level, const int col ) const;
+    Ints& RnsToRingLeft( Ints& I, const smallIntVector& residues, const int level, const int col ) ;
     template<class smallIntVector>
-    Ints& RnsToRingRight( Ints& I, const smallIntVector& residues, const int level, const int col ) const;
+    Ints& RnsToRingRight( Ints& I, const smallIntVector& residues, const int level, const int col ) ;
 
     tree  _primes; 	// - array of the primes and reciprocals
     RNS_t _RNS;		// - unbalanced recovery

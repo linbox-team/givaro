@@ -105,10 +105,14 @@ public:
 	}
 
 	Extension ( const BaseField_t& bF, const Residu_t ex = 1, const Indeter Y="Y") :
-	       	_bF( bF ), _pD( _bF, Y  ), _characteristic( bF.characteristic() )
-		, _exponent( ex + Exponent_Trait(bF) ), _extension_order( ex )
-		, _cardinality( pow( Integer(bF.cardinality()), (unsigned long)(ex) ) )
-		, zero (_pD.zero), one (_pD.one)
+	       	_bF( bF )
+		, _pD( _bF, Y  )
+		, _characteristic(  (Residu_t) bF.characteristic() )
+		, _exponent(        (Residu_t)(ex + (Residu_t)Exponent_Trait(bF)) )
+		, _extension_order( (Residu_t)( ex ) )
+		, _cardinality(     (Integer) pow( Integer(bF.cardinality()) , (unsigned long)(ex) ) )
+		, zero(             (Element)(_pD.zero))
+		, one (             (Element)(_pD.one))
 	{
 		if (_cardinality < (1<<20) )
 			_pD.creux_random_irreducible( _irred, (unsigned long)(ex));

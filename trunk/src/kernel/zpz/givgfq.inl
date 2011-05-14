@@ -689,14 +689,15 @@ namespace Givaro {
 						// -a = b [p]
 						// a = p-b [p]
 						if ( residu <= (Integer)(-_characteristic) ) tr =  (-residu) % (UTT)_characteristic ;
-						else tr = long(-residu);
+						else
+							tr = UTT(-residu);
 						if (tr)
 							return r = _pol2log[ _characteristic - (UTT)tr ];
 						else
 							return r = zero;
 					} else {
 						if (residu >= (Integer)_characteristic ) tr =  residu % (UTT)_characteristic ;
-						else tr = long(residu);
+						else tr = UTT(residu);
 						return r = _pol2log[ tr ];
 					}
 				}

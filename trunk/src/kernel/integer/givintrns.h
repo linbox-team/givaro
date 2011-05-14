@@ -45,21 +45,21 @@ public:
         // -- Computation of a mixed-radix representation of the residus.
 //     void RnsToMixedRadix(array&  mixrad, const array&  residu) const;
     template<class TT>
-      void RnsToMixedRadix(array&  mixrad, const Container<TT, Alloc<TT> >&  residu) const;
+      void RnsToMixedRadix(array&  mixrad, const Container<TT, Alloc<TT> >&  residu) ;
 
         // -- Convert a mixed radix representation to an external
     void MixedRadixToRing( external& res,  const array& mixrad ) const;
 
         // -- Convert an Ring Element to a its representation
         // with the "this" rns system.
-    void RingToRns( array& residu, const external& a ) const;
+    void RingToRns( array& residu, const external& a ) ;
 
         // -- Fast conversion: requires pre-computation (first time it was called)
     void fastRingToRns( array& residu, const external& a ) const;
 
         // -- Convert a representation to an external Element
     template<class TT>
-      void RnsToRing( external& a, const Container<TT, Alloc<TT> >& residu ) const;
+      void RnsToRing( external& a, const Container<TT, Alloc<TT> >& residu ) ;
 
         // -- Fast conversion: requires pre-computation (first time it was called)
     void fastRnsToRing( external& a, const array& residu ) const;

@@ -41,7 +41,7 @@ std::ostream& operator<< (std::ostream& o, const DoublePoly& v) {
 
 int main(int argc, char** argv)
 {
-    srandom(BaseTimer::seed() );
+    srandom((unsigned int)BaseTimer::seed() );
 
 
     Integer f,m,k;

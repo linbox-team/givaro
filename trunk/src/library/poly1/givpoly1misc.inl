@@ -147,8 +147,8 @@ namespace Givaro {
 		if (dP == Degree::deginfty) _domain.assign(res, _domain.zero);
 		else {
 			_domain.assign(res, P[dP.value()]);
-			for (int i = dP.value(); i>0; --i)
-				_domain.assign(res,_domain.axpy(tmp, res, val, P[i-1]));
+			for (int i = (int)dP.value(); i--; )
+				_domain.assign(res,_domain.axpy(tmp, res, val, P[i]));
 		}
 		return res;
 	}

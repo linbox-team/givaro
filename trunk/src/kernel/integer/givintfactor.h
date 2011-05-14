@@ -59,7 +59,7 @@ namespace Givaro {
 			if (isOne(gcd(r,n,PROD_first_primes)))
 				if (isOne(gcd(r,n,PROD_second_primes))) {
 #ifdef GIVARO_LENSTRA
-					return Lenstra((RandIter&)_g, r, n);
+					return Lenstra((const RandIter&)_g, r, n);
 #else
 					return Pollard((const RandIter&)_g, r, n, loops);
 #endif

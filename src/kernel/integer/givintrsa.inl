@@ -123,8 +123,8 @@ namespace Givaro {
 	// CBC mode deciphering
 	template<class RandIter>
 	std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in) {
-		double length = (double) _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
-		char * tmp = new char[(long)length+2];
+		double Length = (double) _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
+		char * tmp = new char[(long)Length+2];
 		Element r;
 		unsigned long seed; in >> seed;
 		GivRandom generator(seed);

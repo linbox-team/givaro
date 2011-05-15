@@ -427,21 +427,21 @@ namespace Givaro {
 		return init(a,(double)i);
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const Integer& residu ) const
+	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const Integer& Residu ) const
 	{
 		int16_t tr;
-		if (residu <0) {
+		if (Residu <0) {
 			// -a = b [p]
 			// a = p-b [p]
-			if ( residu <= (Integer)(-_p) ) tr = int16_t( (-residu) % _p) ;
-			else tr = int16_t(-residu);
+			if ( Residu <= (Integer)(-_p) ) tr = int16_t( (-Residu) % _p) ;
+			else tr = int16_t(-Residu);
 			if (tr)
 				return r = _tab_value2rep[ _p - (uint16_t)tr ];
 			else
 				return r = zero;
 		} else {
-			if (residu >= (Integer)_p ) tr =   int16_t(residu % _p) ;
-			else tr = int16_t(residu);
+			if (Residu >= (Integer)_p ) tr =   int16_t(Residu % _p) ;
+			else tr = int16_t(Residu);
 			return r = _tab_value2rep[tr];
 		}
 	}

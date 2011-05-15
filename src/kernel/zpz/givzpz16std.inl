@@ -342,22 +342,22 @@ namespace Givaro {
 		return r;
 	}
 
-	inline ZpzDom<Std16>::Rep&  ZpzDom<Std16>::init ( Rep& r, const Integer& residu ) const
+	inline ZpzDom<Std16>::Rep&  ZpzDom<Std16>::init ( Rep& r, const Integer& Residu ) const
 	{
 		Rep tr;
-		if (residu <0) {
+		if (Residu <0) {
 			// -a = b [p]
 			// a = p-b [p]
-			if ( residu <= (Integer)(-_p) ) tr = Rep( (-residu) % (uint16_t)_p) ;
-			else tr = Rep(-residu);
+			if ( Residu <= (Integer)(-_p) ) tr = Rep( (-Residu) % (uint16_t)_p) ;
+			else tr = Rep(-Residu);
 			if (tr)
 				return r = Rep((uint16_t)_p - (uint16_t)tr);
 			else
 				return r = zero;
 		}
 		else {
-			if (residu >= (Integer)_p ) tr =   Rep(residu % _p) ;
-			else tr = Rep(residu);
+			if (Residu >= (Integer)_p ) tr =   Rep(Residu % _p) ;
+			else tr = Rep(Residu);
 			return r = (Rep)tr;
 		}
 	}

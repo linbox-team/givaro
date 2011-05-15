@@ -66,41 +66,41 @@ namespace Givaro {
 
 
 	template<class Domain> template<class XXX>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const XXX& val ) const
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const XXX& Val ) const
 	{
 		P.reallocate(1);
-		_domain.init(P[0], val);
+		_domain.init(P[0], Val);
 		return P;
 	}
 
 
 	template<class Domain>
-	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(typename Poly1Dom<Domain,Dense>::Type_t & val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
+	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(typename Poly1Dom<Domain,Dense>::Type_t & Val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
 	{
 		if (P.size())
-			return _domain.assign(val, P[0]);
+			return _domain.assign(Val, P[0]);
 		else
-			return _domain.init(val, 0UL);
+			return _domain.init(Val, 0UL);
 	}
 
 	template<class Domain> template<class XXX>
-	inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
+	inline XXX& Poly1Dom<Domain,Dense>::convert( XXX& Val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
 	{
 		if (P.size())
-			return _domain.convert(val, P[0]);
+			return _domain.convert(Val, P[0]);
 		else
-			return _domain.convert(val, 0UL);
+			return _domain.convert(Val, 0UL);
 	}
 
 	template<class Domain> template<class UU, template<class XX> class Vect>
-	inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
+	inline Vect<UU>& Poly1Dom<Domain,Dense>::convert( Vect<UU>& Val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
 	{
-		val.resize( P.size() );
-		typename Vect<UU>::iterator vit = val.begin();
+		Val.resize( P.size() );
+		typename Vect<UU>::iterator vit = Val.begin();
 		typename Rep::const_iterator        pit = P.begin();
 		for ( ; pit != P.end(); ++pit, ++vit)
 			_domain.convert(*vit, *pit);
-		return val;
+		return Val;
 	}
 
 
@@ -119,13 +119,13 @@ namespace Givaro {
 
 	template<class Domain> template<class XXX>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init
-	( Rep& P, const Degree d, const XXX& val ) const
+	( Rep& P, const Degree d, const XXX& Val ) const
 	{
 		long deg = value(d);
 		P.reallocate(deg+1);
 		for (int i=0; i<deg; ++i)
 			_domain.assign(P[i], _domain.zero);
-		_domain.init(P[deg], val);
+		_domain.init(P[deg], Val);
 
 		if (_domain.isZero(P[deg])) {
 			P.reallocate(0);

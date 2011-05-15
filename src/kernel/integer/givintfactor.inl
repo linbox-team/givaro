@@ -136,10 +136,10 @@ namespace Givaro {
 				n >>= 1;
 			while (!(n & 0x1));
 		}
-		short * IP = new short[n+1];
+		short * Ip = new short[n+1];
 		int i;
 		for(int ii=n+1;ii--;)
-			IP[ii] = 0L;
+			Ip[ii] = 0L;
 		i=3;
 		int j, ii;
 		Rep sq;
@@ -147,7 +147,7 @@ namespace Givaro {
 			ii= i << 1;
 			j = i+ii;
 			while (j<=n) {
-				IP[j] = 1L;
+				Ip[j] = 1L;
 				j+=ii;
 			}
 			if ((j-ii) == n) {
@@ -157,11 +157,11 @@ namespace Givaro {
 				while (!(n%i));
 			}
 			j = i+1;
-			while (IP[++j]) { j++;}
+			while (Ip[++j]) { j++;}
 			i = j;
 		}
-		if (!(IP[n]) && (n>1)) Lf.push_back(Rep(n));
-		delete [] IP;
+		if (!(Ip[n]) && (n>1)) Lf.push_back(Rep(n));
+		delete [] Ip;
 	}
 
 

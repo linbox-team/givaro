@@ -31,7 +31,7 @@ protected :
 	Rep _modulo;
 
 public :
-	QuotientDom (const RingDom& R, const Element& mod ) : Ring_t(R), _modulo(mod) {}
+	QuotientDom (const RingDom& R, const Element& Mod ) : Ring_t(R), _modulo(Mod) {}
 	QuotientDom (const Self_t& F) : Ring_t(static_cast<const Ring_t&>(F)), _modulo(F._modulo) {}
 
 	Rep& init(Rep& a) const

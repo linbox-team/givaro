@@ -389,25 +389,25 @@ namespace Givaro {
 		return r;
 	}
 
-	inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::init ( Rep& r, const Integer& residu ) const
+	inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::init ( Rep& r, const Integer& Residu ) const
 	{
 		long tr;
-		if (residu <0) {
+		if (Residu <0) {
 			// -a = b [p]
 			// a = p-b [p]
-			if ( residu <= (Integer)(-_p) )
-				tr = long( (-residu) % _p) ;
+			if ( Residu <= (Integer)(-_p) )
+				tr = long( (-Residu) % _p) ;
 			else
-				tr = long(-residu);
+				tr = long(-Residu);
 			if (tr)
 				return r = Rep( _p - (unsigned long)tr );
 			else
 				return r = zero;
 		} else {
-			if (residu >= (Integer)_p )
-				tr =   long(residu % _p) ;
+			if (Residu >= (Integer)_p )
+				tr =   long(Residu % _p) ;
 			else
-				tr = long(residu);
+				tr = long(Residu);
 			return r = Rep(tr);
 		}
 	}

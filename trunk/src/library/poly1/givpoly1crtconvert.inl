@@ -15,9 +15,9 @@ namespace Givaro {
   // Converts a Polynomial to a RNS representation (which is given by this)
 template<class Field>
 typename Poly1CRT<Field>::array_T& Poly1CRT<Field>::RingToRns( typename Poly1CRT<Field>::array_T& rns , const typename Poly1CRT<Field>::Element& a) const {
-    size_t size = _primes.size();
-    if (rns.size() != size) rns.resize(size);
-    for (size_t i=0; i<size; i++)
+    size_t Size = _primes.size();
+    if (rns.size() != Size) rns.resize(Size);
+    for (size_t i=0; i<Size; i++)
         _PolRing.eval(rns[i], a, _primes[i]);
     return rns;
 }
@@ -36,13 +36,13 @@ namespace Givaro {
 template<class Field>
 typename Poly1CRT<Field>::Element& Poly1CRT<Field>::RnsToRing(typename Poly1CRT<Field>::Element& I, const typename Poly1CRT<Field>::array_T& rns) {
     this->ComputeCk();
-    size_t size = _primes.size();
+    size_t Size = _primes.size();
     _PolRing.assign(I, Degree(0), rns[0]);
 #ifdef  GIVARO_CRT_EARLY_TERMINATION
     size_t EarlyTerm = 0;
 #endif
 // _PolRing.write(std::cerr<< "R[0]: ", I) <<std::endl;
-    for(size_t i=1; i<size; ++i) {
+    for(size_t i=1; i<Size; ++i) {
         Type_t addon;
         _PolRing.eval(addon, I, _primes[i]);
 

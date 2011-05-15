@@ -54,13 +54,13 @@ void Poly1CRT<Field>::ComputeCk()
 {
   if (_ck.size() !=0) return; // -- already computed
 
-  size_t size = _primes.size();
-  _ck.resize(size+1);
+  size_t Size = _primes.size();
+  _ck.resize(Size+1);
   Element irred; _PolRing.init(irred, Degree(1));
   Element prod; _PolRing.init(prod, Degree(0));
 // Never used
 //   _PolRing.assign(_ck[0], prod);
-  for (size_t k=1; k < size; ++k) {
+  for (size_t k=1; k < Size; ++k) {
       _F.assign(irred[0], _primes[k-1]);
       _F.negin(irred[0]);
 //       _PolRing.write(std::cerr<< "irred["<<k<<"]: ", irred) <<std::endl;
@@ -74,9 +74,9 @@ void Poly1CRT<Field>::ComputeCk()
       _PolRing.mul(_ck[k],prod,invC);
 //       _PolRing.write(std::cerr<< "mul["<<k<<"]: ", _ck[k]) <<std::endl;
   }
-  _F.assign(irred[0], _primes[size-1]);
+  _F.assign(irred[0], _primes[Size-1]);
   _F.negin(irred[0]);
-  _PolRing.mul(_ck[size], prod, irred);
+  _PolRing.mul(_ck[Size], prod, irred);
 
 //    for(typename array_E::const_iterator it=_ck.begin(); it!=_ck.end();++it)
 //        _PolRing.write(std::cout, *it) << std::endl;

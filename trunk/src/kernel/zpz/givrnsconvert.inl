@@ -21,17 +21,17 @@ void RNSsystem<RING,Domain>::RnsToMixedRadix
   (RNSsystem<RING,Domain>::array& mixrad, const RNSsystem<RING,Domain>::array& residu)
 {
   int j;
-  int i=0,size = (int)_primes.size();
-  if ((int)mixrad.size() < size) mixrad.reallocate( size );
+  int i=0,Size = (int)_primes.size();
+  if ((int)mixrad.size() < Size) mixrad.reallocate( Size );
 
   // -- Computation of  Ck
   if (_ck.size()==0) ((RNSsystem*)this)->ComputeCk();
 
-  // -- size-1 steps
+  // -- Size-1 steps
   modulo t2, t3, t4, tmp;
   _primes[0].assign(mixrad[0],residu[0]);
 //_primes[0].write(std::cout << "mixrad0 = ", mixrad[0]) << std::endl;
-  for (i=1; i < (int)size; ++i)
+  for (i=1; i < (int)Size; ++i)
   {  // - computes pp_i = r_0 + r_1*p_0 + ... + r_{i-1} \prod_{j<i-2} p_j [p_i]
      // Horner scheme
 
@@ -61,17 +61,17 @@ void RNSsystem<RING,Domain>::RnsToMixedRadix
 template<class RING, class Domain>
 RING& RNSsystem<RING,Domain>::MixedRadixToRing( RING& res, const RNSsystem<RING,Domain>::array& mixrad ) const
 {
-  size_t size = _primes.size();
-  if (!size)
+  size_t Size = _primes.size();
+  if (!Size)
 	  GivError("_primes is empty");
-  if (size != mixrad.size())
+  if (Size != mixrad.size())
     throw GivError("[RNSsystem::MixedRadixToRing]: bad size of input array");
-  _primes[int(size-1)].convert(res,mixrad[int(size-1)]);
+  _primes[int(Size-1)].convert(res,mixrad[int(Size-1)]);
   RING tmp;
-  if( size  == 1 )
+  if( Size  == 1 )
 	  return res;
 
-  for (int i=int(size-1); i--; ) {
+  for (int i=int(Size-1); i--; ) {
     res *= _primes[i].characteristic();
     res += _primes[i].convert(tmp, mixrad[i]);
   }
@@ -83,11 +83,11 @@ RING& RNSsystem<RING,Domain>::MixedRadixToRing( RING& res, const RNSsystem<RING,
 template<class RING, class Domain>
 void RNSsystem<RING,Domain>::RingToRns( RNSsystem<RING,Domain>::array& rns , const RING& a) const
 {
-  int size = (int) _primes.size();
-  if ((int)rns.size() != size) rns.reallocate(size);
+  int Size = (int) _primes.size();
+  if ((int)rns.size() != Size) rns.reallocate(Size);
   // -- may be faster using the recursive
   // tree algorithm a mod p_1...p_k/2, and a mod p_k/2+1...p_k
-  for (int i=0; i<size; i++)
+  for (int i=0; i<Size; i++)
       _primes[i].init(rns[i], a);
 }
 

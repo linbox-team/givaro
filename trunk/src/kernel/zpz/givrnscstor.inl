@@ -56,11 +56,11 @@ namespace Givaro {
 		if (_ck.size() !=0) return; // -- already computed
 
 		// - reallocation of a new array :
-		int size = (int) _primes.size();
-		_ck.reallocate(size);
+		int Size = (int) _primes.size();
+		_ck.reallocate(Size);
 		//  _ck[0] = Neutral::zero; // -- undefined and never used
 
-		for (int k=1; k < size; ++k)
+		for (int k=1; k < Size; ++k)
 		{
 			modulo prod, tmp;
 			_primes[k].init(prod, _primes[0].characteristic());

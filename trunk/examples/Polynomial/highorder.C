@@ -232,12 +232,12 @@ int main(int argc, char ** argv) {
 
 
     for(long i=0; i<numb; ++i) {
-        long deg1 = generator() % ((66*tttn)/100);
-        long deg2 = generator() % ((65*tttn)/100);
+        long Deg1 = generator() % ((66*tttn)/100);
+        long Deg2 = generator() % ((65*tttn)/100);
         long v1 = generator() % ((19195*tttn)/100);
         long v2 = v1 + (generator() % ((45*tttn)/100));
-        DP101.random(generator, P, Degree(deg1) );
-        DP101.random(generator, Q, Degree(deg2) );
+        DP101.random(generator, P, Degree(Deg1) );
+        DP101.random(generator, Q, Degree(Deg2) );
         success &= TestFracDevel(HO101, P, Q, v1, v2);
     }
 

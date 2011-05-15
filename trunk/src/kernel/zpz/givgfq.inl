@@ -603,9 +603,9 @@ namespace Givaro {
 
 
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double Residu ) const
 				{
-					double tr = residu ;
+					double tr = Residu ;
 					if (tr <0) {
 						// -a = b [p]  <==>  a = p-b [p]
 						tr = -tr;
@@ -634,17 +634,17 @@ namespace Givaro {
 				}
 
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const float residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const float Residu ) const
 				{
-					return init(r, static_cast<double>(residu));
+					return init(r, static_cast<double>(Residu));
 				}
 
 
 
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int Residu ) const
 				{
-					int tr = residu ;
+					int tr = Residu ;
 					if (tr <0) {
 						// -a = b [p]
 						// a = p-b [p]
@@ -663,9 +663,9 @@ namespace Givaro {
 					}
 				}
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long Residu ) const
 				{
-					long tr = residu ;
+					long tr = Residu ;
 					if (tr <0) {
 						// -a = b [p]
 						// a = p-b [p]
@@ -682,55 +682,55 @@ namespace Givaro {
 				}
 
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Integer residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Integer Residu ) const
 				{
 					UTT tr;
-					if (residu <0) {
+					if (Residu <0) {
 						// -a = b [p]
 						// a = p-b [p]
-						if ( residu <= (Integer)(-_characteristic) ) tr =  (-residu) % (UTT)_characteristic ;
+						if ( Residu <= (Integer)(-_characteristic) ) tr =  (-Residu) % (UTT)_characteristic ;
 						else
-							tr = UTT(-residu);
+							tr = UTT(-Residu);
 						if (tr)
 							return r = _pol2log[ _characteristic - (UTT)tr ];
 						else
 							return r = zero;
 					} else {
-						if (residu >= (Integer)_characteristic ) tr =  residu % (UTT)_characteristic ;
-						else tr = UTT(residu);
+						if (Residu >= (Integer)_characteristic ) tr =  Residu % (UTT)_characteristic ;
+						else tr = UTT(Residu);
 						return r = _pol2log[ tr ];
 					}
 				}
 
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long Residu ) const
 				{
-					unsigned long tr = residu ;
+					unsigned long tr = Residu ;
 					if (tr >= _characteristic ) tr = tr % _characteristic ;
 					return r = _pol2log[ tr ];
 				}
 
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned int residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned int Residu ) const
 				{
-					unsigned int tr = residu ;
+					unsigned int tr = Residu ;
 					if (tr >= _characteristic ) tr = tr % _characteristic ;
 					return r = _pol2log[ tr ];
 				}
 
 #ifndef __GIVARO__DONOTUSE_longlong__
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long long residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long long Residu ) const
 				{
-					unsigned long long tr = residu ;
+					unsigned long long tr = Residu ;
 					if (tr >= _characteristic ) tr = tr % _characteristic ;
 					return r = _pol2log[ tr ];
 				}
 
 				template<typename TT>
-				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long residu ) const
+				inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long Residu ) const
 				{
-					long long tr = residu ;
+					long long tr = Residu ;
 					if (tr <0) {
 						// -a = b [p]
 						// a = p-b [p]

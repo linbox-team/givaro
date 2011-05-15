@@ -102,19 +102,19 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
 }
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, const Rep& Q, const Degree& val, const Degree& deg) const
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, const Rep& Q, const Degree& Val, const Degree& deg) const
 {
 	size_t sR = R.size();
 	size_t sP = P.size();
 	size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
-	size_t newS = value(deg-val)+1;
+	size_t newS = value(deg-Val)+1;
 	if (sR != newS) R.reallocate(sR = newS);
 	for(typename Rep::iterator ri=R.begin(); ri!= R.end(); ++ri)
 		*ri = _domain.zero;
 
 	for(size_t i=0; i<sR; ++i) {
-		long k=i+val.value();
+		long k=i+Val.value();
 		size_t j=0;
 		if (static_cast<size_t>(k)>=sQ) {
 			j=k;
@@ -130,20 +130,20 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
-( Rep& R, const Rep& P, const Type_t& val ) const
+( Rep& R, const Rep& P, const Type_t& Val ) const
 {
 	typename Rep::const_iterator ip = P.begin();
 	R.resize(P.size());
 	for(typename Rep::iterator ir = R.begin(); ir != R.end(); ++ir, ++ip)
-		this->_domain.mul(*ir, *ip, val);
+		this->_domain.mul(*ir, *ip, Val);
 	return R;
 }
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
-( Rep& R, const Type_t& val, const Rep& P ) const
+( Rep& R, const Type_t& Val, const Rep& P ) const
 {
-	return this->mul(R,P,val);
+	return this->mul(R,P,Val);
 }
 } // Givaro
 

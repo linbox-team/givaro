@@ -140,7 +140,7 @@ namespace Givaro {
 
 	// Horner's scheme for evaluation
 	template <class Domain>
-	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Type_t& res, const Rep& P, const Type_t& val) const
+	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Type_t& res, const Rep& P, const Type_t& Val) const
 	{
 		typename Domain::Element tmp;
 		_domain.init(tmp,0UL);
@@ -149,7 +149,7 @@ namespace Givaro {
 		else {
 			_domain.assign(res, P[dP.value()]);
 			for (int i = (int)dP.value(); i--; )
-				_domain.assign(res,_domain.axpy(tmp, res, val, P[i]));
+				_domain.assign(res,_domain.axpy(tmp, res, Val, P[i]));
 		}
 		return res;
 	}
@@ -205,10 +205,10 @@ namespace Givaro {
 		Rep puiss, tmp;
 		mod(puiss, P, U);
 		assign(W,one);
-		IntegerDom::Element n,q,r,deux,zero;
+		IntegerDom::Element n,q,r,deux,Zero;
 		ID.init(deux,2);
-		ID.init(zero,0UL);
-		if (ID.islt(pwr,zero) )
+		ID.init(Zero,0UL);
+		if (ID.islt(pwr,Zero) )
 			ID.neg(n,pwr);
 		else
 			ID.init(n,pwr);

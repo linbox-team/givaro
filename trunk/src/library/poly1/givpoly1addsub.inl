@@ -71,32 +71,32 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add(Rep& R,
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add
- (Rep& R, const Rep& P, const Type_t& val) const
+ (Rep& R, const Rep& P, const Type_t& Val) const
 {
   size_t sP = P.size();
   if (sP == 0)  {
     R.reallocate(1);
-    _domain.assign(R[0],val);
+    _domain.assign(R[0],Val);
   }
   else {
     assign(R, P);
-    _domain.add(R[0],P[0],val);
+    _domain.add(R[0],P[0],Val);
   }
 return R;
 }
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add
- (Rep& R, const Type_t& val, const Rep& P) const
+ (Rep& R, const Type_t& Val, const Rep& P) const
 {
   size_t sP = P.size();
   if (sP == 0)  {
     R.reallocate(1);
-    _domain.assign(R[0],val);
+    _domain.assign(R[0],Val);
   }
   else {
     assign(R, P);
-    _domain.add(R[0],val, P[0]);
+    _domain.add(R[0],Val, P[0]);
   }
 return R;
 }
@@ -151,32 +151,32 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sub(Rep& R,
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sub
- (Rep& R, const Rep& P, const Type_t& val) const
+ (Rep& R, const Rep& P, const Type_t& Val) const
 {
   size_t sP = P.size();
   if (sP == 0)  {
     R.reallocate(1);
-    _domain.neg(R[0],val);
+    _domain.neg(R[0],Val);
   }
   else {
     assign(R, P);
-    _domain.sub(R[0],P[0],val);
+    _domain.sub(R[0],P[0],Val);
   }
   return R;
 }
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sub
- (Rep& R, const Type_t& val, const Rep& P) const
+ (Rep& R, const Type_t& Val, const Rep& P) const
 {
   size_t sP = P.size();
   if (sP == 0)  {
     R.reallocate(1);
-    _domain.neg(R[0],val);
+    _domain.neg(R[0],Val);
   }
   else {
     neg(R, P);
-    _domain.add(R[0],val, P[0]);
+    _domain.add(R[0],Val, P[0]);
   }
   return R;
 }

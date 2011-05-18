@@ -19,7 +19,7 @@
 #include "givaro/givelem.h"
 
 namespace Givaro {
-#warning "this file will probably not compile"
+#pragma message "#warning this file will probably not compile"
 
 
 // ==========================================================================

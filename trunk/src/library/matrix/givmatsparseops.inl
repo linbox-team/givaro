@@ -12,7 +12,7 @@
 #error "this looks very much like dead code"
 
 namespace Givaro {
-#warning "this file will probably not compile"
+#pragma message "#warning this file will probably not compile"
 
   // -- map of a unary operator, with operator()( Type_t& res )
   // res and u could be aliases if OP permits it

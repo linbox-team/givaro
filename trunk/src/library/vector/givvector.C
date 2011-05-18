@@ -7,7 +7,7 @@
 #include "givaro/givaro_generic.h"
 #include "givaro/givvector.h"
 namespace Givaro {
-#warning "this file will probably not compile"
+#pragma message "#warning this file will probably not compile"
 
 }// Givaro
 

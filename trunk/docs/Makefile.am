@@ -15,7 +15,7 @@ docdir=$(GIVARO_DOC_PATH)
 
 all all-local: $(USE_TARGETS)
 
-install install-data-local: $(INSTALL_TARGETS)
+install install-data-local: $(USE_TARGETS) $(INSTALL_TARGETS)
 
 docs:
 	sed -i 's/^\\version.*/\\version\ $(VERSION)/' mainpage.doxy

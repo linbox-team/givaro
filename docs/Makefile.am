@@ -20,6 +20,7 @@ install install-data-local: $(INSTALL_TARGETS)
 docs:
 	sed -i 's/^\\version.*/\\version\ $(VERSION)/' mainpage.doxy
 	if test -d givaro-html ; then echo exists; else mkdir givaro-html ; fi
+	if test -d givaro-dev-html ; then echo exists; else mkdir givaro-dev-html ; fi
 	cp ../INSTALL givaro-html/
 	cp ../COPYING givaro-html/
 	cp ../AUTHORS givaro-html/
@@ -53,7 +54,8 @@ install-doc:
 EXTRA_DIST= \
 			Doxyfile            \
 			DoxyfileDev         \
-			mainpage.doxy
+			mainpage.doxy \
+			givaro.html
 # \
 #			doc.doxy            \
 #			tutorial.doxy       \

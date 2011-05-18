@@ -45,10 +45,10 @@ docs_dev:
 
 
 install-doc:
-	mkdir $(docdir)
-	cp -r givaro-html $(docdir)/givaro-html
-	cp -r givaro-dev-html $(docdir)/givaro-dev-html
-	cp givaro.html $(docdir)/givaro.html
+	mkdir -p               $(DESTDIR)/$(docdir)
+	cp -rp givaro-html     $(DESTDIR)/$(docdir)/givaro-html
+	cp -rp givaro-dev-html $(DESTDIR)/$(docdir)/givaro-dev-html
+	cp -p givaro.html      $(DESTDIR)/$(docdir)/givaro.html
 
 EXTRA_DIST= \
 			Doxyfile            \

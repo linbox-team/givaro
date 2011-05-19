@@ -28,10 +28,13 @@ AC_SUBST([MKDIR_P])
 
 AC_LANG([C++])
 
+echo "-----------------------------------------------"
+
 AC_DEBUG
 AC_PROFILE
 AC_WARNINGS
 
+echo "-----------------------------------------------"
 # CFLAGS=${CFLAGS:-$DEFAULT_CFLAGS}
 # CXXFLAGS=${CXXFLAGS:-$DEFAULT_CXXFLAGS}
 
@@ -101,6 +104,8 @@ AM_PROG_LIBTOOL
 # newer libtool...
 LT_PREREQ([2.2])
 LT_INIT
+
+echo "-----------------------------------------------"
 
 #check lib
 # AC_CHECK_LIB([givaro], [main])
@@ -215,9 +220,13 @@ AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 #    ;;
 #esac
 
+echo "-----------------------------------------------"
 # Feature checks
 
 AC_LANG_CPLUSPLUS
+
+echo "-----------------------------------------------"
+
 LB_CHECK_GMP(,,[
 echo '*******************************************************************************'
 echo ' ERROR: GMP not found!'
@@ -235,6 +244,7 @@ CXXFLAGS="${GMP_CFLAGS} ${CXXFLAGS}"
 LIBS="${GMP_LIBS}"
 AC_SUBST(CXXFLAGS)
 
+echo "-----------------------------------------------"
 AC_CONFIG_FILES([
 Makefile
 givaro-config

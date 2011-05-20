@@ -11,6 +11,7 @@
  * @test tests integer.h fucntions not tested elsewhere.
  */
 
+#include <stdlib.h>
 #include "gmp++/gmp++.h"
 
 using namespace Givaro;
@@ -169,16 +170,105 @@ int test_mul()
 	return res ;
 }
 
+#include <typeinfo>
+#include <iostream>
+
+
+template<typename UnsignedBaseType>
+int test_cast_unit(const UnsignedBaseType& t, const Integer& a, const Integer& b) {
+#ifdef GIVARO_DEBUG
+    std::cerr << "TYPE: " << typeid(t).name() << std::endl;
+#endif
+
+    Integer it(t), iu=t, iv=Integer(t);
+
+    if ( (UnsignedBaseType)it != t) return -1;
+    if ( (UnsignedBaseType)iu != t) return -2;
+    if ( (UnsignedBaseType)iv != t) return -3;
+    
+    UnsignedBaseType at( (UnsignedBaseType)a ), bt( (UnsignedBaseType) b );
+    
+    if ( (UnsignedBaseType) (at * bt) != (UnsignedBaseType)(a*b) ) {
+#ifdef GIVARO_DEBUG
+        std::cerr << "a: " << a << std::endl;
+        std::cerr << "b: " << b << std::endl;
+        std::cerr << "a*b: " << (a*b) << std::endl;
+        std::cerr << "(a*b)t: " << ( (UnsignedBaseType)(a*b) ) << std::endl;
+        std::cerr << "at: " << at << std::endl;
+        std::cerr << "bt: " << bt << std::endl;
+        std::cerr << "at*bt: " << ( at * bt ) << std::endl;
+        std::cerr << "(at*bt)t: " << (UnsignedBaseType)( at * bt ) << std::endl;
+#endif
+        return -10;
+    }
+    
+    return 0;
+}
+
+int test_cast_unit(const Integer& a, const Integer& b) {
+    int res = 0;
+    res = test_cast_unit( (bool) Integer::random<false>(), a, b);
+		if (res) return res ;
+    res = test_cast_unit( (unsigned short) Integer::random<false>(), a, b);
+		if (res) return res ;
+    res = test_cast_unit( (unsigned char) Integer::random<false>(), a, b);
+		if (res) return res ;
+    res = test_cast_unit( (unsigned int) Integer::random<false>(), a, b);
+		if (res) return res ;
+    res = test_cast_unit( (unsigned long) Integer::random<false>(), a, b);
+		if (res) return res ;
+
+    return 0;
+}
+
+
+int test_cast() {
+	Integer a,b ;
+	int res = 0 ;
+	int repet = _GIV_REPET ;
+	while (--repet) {
+		/* axpy */
+		a = Integer::random<false>();
+		b = Integer::random<false>();
+		res = test_cast_unit(a,b);
+		if (res) return res ;
+
+		a = 0 ;
+		res = test_cast_unit(a,b);
+		if (res) return res ;
+
+		a = Integer::random<false>();
+		b = 0 ;
+		res = test_cast_unit(a,b);
+		if (res) return res ;
+
+	}
+
+	return res ;
+}
+    
+    
+
 //! @todo test gcd...
 
-int main ()
+int main (int argc, char ** argv)
 {
+    unsigned long seed = (argc>1?atoi(argv[1]):BaseTimer::seed ());
+#ifdef GIVARO_DEBUG
+    std::cerr << "Seed: " << seed << std::endl;
+#endif
+    Integer::seeding (seed);
+
 	int res = 0 ;
 	res = test_axpy();
 	if (res)
 		return res ;
 
 	res = test_mul();
+	if (res)
+		return res ;
+
+	res = test_cast();
 	if (res)
 		return res ;
 

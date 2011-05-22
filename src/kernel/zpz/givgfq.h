@@ -124,7 +124,15 @@ public:
 	// Access to the modulus, characteristic, size, exponent
 	UTT residu() const;
 	UTT characteristic() const;
-	Integer& characteristic(Integer& p) const{return p=characteristic();}
+	Integer& characteristic(Integer& p) const
+	{
+		return p=characteristic();
+	}
+	unsigned long& characteristic(unsigned long& p) const
+	{
+		return p=(unsigned long)_characteristic;
+	}
+
 	UTT cardinality() const;
 	UTT size() const;
 	UTT exponent() const;

@@ -334,6 +334,11 @@ public:
 		return _characteristic;
 	}
 
+	unsigned long & characteristic(unsigned long & c) const
+	{
+		return c = (unsigned long) _characteristic;
+	}
+
 	Residu_t exponent() const
 	{
 		return _exponent;

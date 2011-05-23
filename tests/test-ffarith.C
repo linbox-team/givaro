@@ -346,6 +346,15 @@ int main(int argc, char ** argv)
 	ZpzDom<Integer> IntZ13(13);
 	JETESTE(IntZ13,seed);
 
+        // Zech log finite field with 256 elements
+        // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
+        std::vector< GFqDom<long>::Residu_t > Irred(9);
+        Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
+        Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
+        Irred[8] = 1;
+        GFqDom<long> GF256(2,8, Irred); 
+        JETESTE(GF256,seed);
+    
 	// Zech log finite field with 5^4 elements
 	GFqDom<int> GF625( 5, 4 );
 	JETESTE(GF625,seed);

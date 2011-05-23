@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfq.h
-// Time-stamp: <04 Feb 11 13:42:23 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <23 May 11 09:52:37 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -73,8 +73,13 @@ public:
 
 	GFqDom(): zero(0), one(1), _log2pol(0), _pol2log(0),_plus1(0) {}
 
+        // Automatic construction
 	GFqDom( const UTT P, const UTT e = 1);
 
+        // Construction with prescribed irreducible polynomial
+        //   coefficients of the vector should be integers-like
+        //   there will be a call to Z/pZ.init to build the 
+        //   representation of the irreducible polynomial
 	GFqDom( const UTT P, const UTT e, const std::vector<UTT>& modPoly);
 
 	GFqDom( const GFqDom<TT>& F)

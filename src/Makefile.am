@@ -8,6 +8,8 @@ AM_CPPFLAGS=-I$(top_srcdir)
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 
+AM_LDFLAGS=$(LDFLAGS)
+
 SUBDIRS=kernel library
 
 lib_LTLIBRARIES= libgivaro.la

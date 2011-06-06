@@ -177,7 +177,7 @@ int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
 template<class Ring>
 int TestRing(const Ring& F, const int seed)
 {/*{{{*/
-    long ch = F.characteristic();
+    long ch = (long) F.characteristic();
     JEONETESTE(F,7UL,-29.3);
     srand48(seed);
     for(size_t i=0; i< NBITER; ++i) {

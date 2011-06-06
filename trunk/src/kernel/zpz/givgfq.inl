@@ -31,7 +31,7 @@
 #define _GIVARO_GFQ_ADD(c, a, b, mun, plun) { if ((b)==0) (c)=(a); else if ((a)==0) (c)=(b); else { \
 	(c) = (a)-(b); \
 	(c) = ((c)>0)?(c):(c)+ (mun); \
-	(c) = (plun)[(UTT)(c)]; \
+	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(b); \
 		(c) = ((c)>0)?(c):(c)+(mun); \
@@ -46,7 +46,7 @@
 	(c) = (b)-(a)-(mo); \
 	(c) = ((c)>0)?(c):(c)+(mun); \
 	(c) = ((c)>0)?(c):(c)+ (mun); \
-	(c) = (plun)[(UTT)(c)]; \
+	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(a); \
 		(c) = ((c)>0)?(c):(c)+(mun); \
@@ -55,7 +55,7 @@
 	(c) = (c)-(b)-(mo); \
 	(c) = ((c)>0)?(c):(c)+(mun); \
 	(c) = ((c)>0)?(c):(c)+ (mun); \
-	(c) = (plun)[(UTT)(c)]; \
+	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(b); \
 		(c) = ((c)>0)?(c)-(mo):(c)+(mo); \
@@ -86,7 +86,7 @@
 		(c) = ((  (c)=((a) << 1) - (mun)        )>0)?(c):(c) + (mun); \
 	} else { \
 		(c) = ((    (c) = ((a) << 1)-(b)-(mun)             )<0)?(c)+(mun):(c); \
-		if (  (c) = (plun)[(UTT)(((c)>0)?(c):(c)+(mun))]     ) { \
+		if (  (c) = (plun)[(UT)(((c)>0)?(c):(c)+(mun))]     ) { \
 			(c) = ((    (c) = (c)+(b)         )>0)?(c):(c)+(mun); } \
 	}\
 }
@@ -98,7 +98,7 @@
 		(c) = ((    (c)=(a1)+(a2) - (mun)       )>0)?(c):(c) + (mun); \
 	} else { \
 		(c) = ((    (c) = (a1)+(a2)-(b)-(mun)        )<0)?(c)+(mun):(c); \
-		if (( (c) = (plun)[(UTT)( ((c)>0)?(c):(c)+(mun)   )])  ) { \
+		if (( (c) = (plun)[(UT)( ((c)>0)?(c):(c)+(mun)   )])  ) { \
 			(c) = ((    (c) = (c)+(b)        )>0)?(c):(c)+(mun); }\
 	}\
 }
@@ -112,7 +112,7 @@
 	} else { \
 		(c) = ((    (c) = (a1)+(a2)-(b)-(mun) - (mo)       )<0)?(c)+(mun):(c); \
 		(c) = (c)<0?(c)+(mun):(c); \
-		if ( (c) = (plun)[(UTT)( ((c)>0)?(c):(c)+(mun)   )]  ) { \
+		if ( (c) = (plun)[(UT)( ((c)>0)?(c):(c)+(mun)   )]  ) { \
 			(c) = ((    (c) = (c)+(b)        )>0)?(c):(c)+(mun); }\
 	}\
 }
@@ -127,7 +127,7 @@
 #define _GIVARO_GFQ_ADD(c, a, b, mun, plun) { ++_add_call; if ((b)==0) (c)=(a); else if ((a)==0) (c)=(b); else { \
 	(c) = (a)-(b); \
 	(c) = ((c)>0)?(c):(c)+ (mun); \
-	(c) = (plun)[(UTT)(c)]; \
+	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(b); \
 		(c) = ((c)>0)?(c):(c)+(mun); \
@@ -142,7 +142,7 @@
 	(c) = (b)-(a)-(mo); \
 	(c) = ((c)>0)?(c):(c)+(mun); \
 	(c) = ((c)>0)?(c):(c)+ (mun); \
-	(c) = (plun)[(UTT)(c)]; \
+	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(a); \
 		(c) = ((c)>0)?(c):(c)+(mun); \
@@ -151,7 +151,7 @@
 	(c) = (c)-(b)-(mo); \
 	(c) = ((c)>0)?(c):(c)+(mun); \
 	(c) = ((c)>0)?(c):(c)+ (mun); \
-	(c) = (plun)[(UTT)(c)]; \
+	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(b); \
 		(c) = ((c)>0)?(c)-(mo):(c)+(mo); \
@@ -181,7 +181,7 @@
 		(c) = ((  (c)=((a) << 1) - (mun)        )>0)?(c):(c) + (mun); \
 		++_mul_count; } else { \
 			(c) = ((    (c) = ((a) << 1)-(b)-(mun)             )<0)?(c)+(mun):(c); \
-			if (  (c) = (plun)[(UTT)(((c)>0)?(c):(c)+(mun))]     ) { \
+			if (  (c) = (plun)[(UT)(((c)>0)?(c):(c)+(mun))]     ) { \
 				(c) = ((    (c) = (c)+(b)         )>0)?(c):(c)+(mun); } \
 			++_mul_count; ++_add_count;      }\
 }
@@ -193,7 +193,7 @@
 		(c) = ((    (c)=(a1)+(a2) - (mun)       )>0)?(c):(c) + (mun); \
 		++_mul_count; } else { \
 			(c) = ((    (c) = (a1)+(a2)-(b)-(mun)        )<0)?(c)+(mun):(c); \
-			if ( (c) = (plun)[(UTT)( ((c)>0)?(c):(c)+(mun)   )]  ) { \
+			if ( (c) = (plun)[(UT)( ((c)>0)?(c):(c)+(mun)   )]  ) { \
 				(c) = ((    (c) = (c)+(b)        )>0)?(c):(c)+(mun); }\
 			++_mul_count; ++_add_count;      }\
 }
@@ -207,7 +207,7 @@
 		++_mul_count; ++_neg_count;      } else { \
 			(c) = ((    (c) = (a1)+(a2)-(b)-(mun) - (mo)       )<0)?(c)+(mun):(c); \
 			(c) = (c)<0?(c)+(mun):(c); \
-			if ( (c) = (plun)[(UTT)( ((c)>0)?(c):(c)+(mun)   )]  ) { \
+			if ( (c) = (plun)[(UT)( ((c)>0)?(c):(c)+(mun)   )]  ) { \
 				(c) = ((    (c) = (c)+(b)        )>0)?(c):(c)+(mun); }\
 			++_mul_count; ++_sub_count;      }\
 }
@@ -373,7 +373,8 @@ namespace Givaro {
     {
         Rep tmp = r;
         _GIVARO_GFQ_MULADD((r),a,b,tmp, (GFqDom<TT>::_qm1), (GFqDom<TT>::_plus1)) ;
-        return r; }
+        return r;
+	}
 
         // r <- r-a*b
     template<typename TT>
@@ -630,7 +631,7 @@ namespace Givaro {
             }
 
             if (tr)
-                return r = _pol2log[ _characteristic - (UTT)tr ];
+                return r = _pol2log[ UT(_characteristic - (UTT)tr) ];
             else
                 return r = zero;
         } else {
@@ -641,7 +642,7 @@ namespace Givaro {
                 if (tr >= (TT)_characteristic )
                     tr = double((UTT)tr % _characteristic) ;
             }
-            return r = _pol2log[ (UTT)tr ];
+            return r = _pol2log[ (UT)tr ];
         }
     }
 
@@ -662,9 +663,9 @@ namespace Givaro {
                 // a = p-b [p]
             tr = -tr;
             if (tr >= (int)_characteristic )
-                tr =(int)( (unsigned int)tr % _characteristic ) ;
+                tr =(int)( (UT)tr % _characteristic ) ;
             if (tr)
-                return r = _pol2log[ _characteristic - (unsigned int)tr ];
+                return r = _pol2log[(UT) _characteristic - (UT)tr ];
             else
                 return r = zero;
         }
@@ -718,7 +719,8 @@ namespace Givaro {
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long Residu ) const
     {
         unsigned long tr = Residu ;
-        if (tr >= _characteristic ) tr = tr % _characteristic ;
+        if (tr >= _characteristic )
+			tr =tr %  (unsigned long) _characteristic ;
         return r = _pol2log[ tr ];
     }
 
@@ -776,19 +778,19 @@ namespace Givaro {
     template<typename TT>
     inline double& GFqDom<TT>::convert (double& r, const Rep a) const
     {
-        return r = (double)_log2pol[ (UTT)a] ;
+        return r = (double)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
     inline float& GFqDom<TT>::convert (float& r, const Rep a) const
     {
-        return r = (float)_log2pol[ (UTT)a] ;
+        return r = (float)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
     inline std::ostream& GFqDom<TT>::write (std::ostream& o, const Rep a) const
     {
-        return o << _log2pol[ (UTT)a] ;
+        return o << _log2pol[ (UT)a] ;
     }
 
 
@@ -808,25 +810,25 @@ namespace Givaro {
     template<typename TT>
     inline int& GFqDom<TT>::convert (int& r, const Rep a) const
     {
-        return r = (int)_log2pol[ (UTT)a] ;
+        return r = (int)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
     inline unsigned int& GFqDom<TT>::convert (unsigned int& r, const Rep a) const
     {
-        return r = (unsigned int)_log2pol[ (UTT)a] ;
+        return r = (unsigned int)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
     inline TT GFqDom<TT>::convert (const Rep a) const
     {
-        return (TT)_log2pol[ (UTT)a] ;
+        return (TT)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
     inline Integer& GFqDom<TT>::convert (Integer& r, const Rep a) const
     {
-        return r = (Integer)_log2pol[ (UTT)a] ;
+        return r = (Integer)_log2pol[ (UT)a] ;
     }
 
 
@@ -969,9 +971,9 @@ namespace Givaro {
         , _q( one + 1 )
         , _qm1 ( one )
         , _qm1o2(  (P==2)?  (one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
-        , _log2pol( _q )
-        , _pol2log( _q )
-        , _plus1( _q )
+        , _log2pol((UT) _q )
+        , _pol2log( (UT)_q )
+        , _plus1( (UT)_q )
         , _dcharacteristic( (double)P )
     {
 
@@ -987,7 +989,7 @@ namespace Givaro {
             UTT accu = 1;
             for(UTT i=1; i<P; i++) {
                 accu = (accu * seed) % P;
-                _log2pol[i] = accu;
+                _log2pol[(UT)i] = accu;
             }
         } else {
                 // Fisrt compute an irreductible polynomial F over Z/pZ of degree e
@@ -1012,12 +1014,12 @@ namespace Givaro {
                 // F is irreducible of degree e over Zp
                 // with X as a primitive polynomial
 #ifndef GIVARO_RANDOM_IRREDUCTIBLE_PRIMITIVE_ROOT
-            Pdom.ixe_irreducible(F, Degree(e));
+            Pdom.ixe_irreducible(F, Degree((long)e));
                 //         Pdom.init(G, Degree(1), Zp.one);
                 //         Pdom.assign(G, Degree(1), Zp.one);
             Pdom.init(G, Degree(1));
 #else
-            Pdom.random_irreducible(F, Degree(e));
+            Pdom.random_irreducible(F, Degree((long)e));
             Pdom.give_random_prim_root(G,F);
 #endif
 
@@ -1032,10 +1034,10 @@ namespace Givaro {
             for (UTT i = 2; i < _qm1; ++i) {
                 Pdom.mulin(H, G);
                 Pdom.modin(H, F);
-                PAD.eval(_log2pol[i], H);
+                PAD.eval(_log2pol[(UT)i], H);
             }
 
-            _log2pol[_qm1] = 1;
+            _log2pol[(UT)_qm1] = 1;
 
         }
 
@@ -1043,7 +1045,7 @@ namespace Givaro {
 
             // pol2log[ j ] = i such that log2pol[i] = j
         for (UTT i = 0; i < _q; ++i)
-            _pol2log[ _log2pol[i] ] = i;
+            _pol2log[ (UT)_log2pol[(UT)i] ] = i;
 
             // plus1[i] = k such that G^i + 1 = G^k
             // WARNING : in the plus1 table, we now pre-substract (_q - 1)
@@ -1051,17 +1053,17 @@ namespace Givaro {
 
         UTT a,b,r;
         for (UTT i = 1; i < _q; ++i) {
-            a = _log2pol[i];
+            a = _log2pol[(UT)i];
             r = a % P;
             if (r == (P - 1))
                 b = a - r;
             else
                 b = a + 1;
                 // WARNING : in the plus1 table we pre-substract (_q - 1)
-            _plus1[i] = _pol2log[b] - _qm1;
+            _plus1[(UT)i] = _pol2log[(UT)b] - _qm1;
         }
             // -1 + 1 == 0
-        _plus1[_qm1o2] = 0;
+        _plus1[(UT)_qm1o2] = 0;
     }
 
         // Dan Roche 6-15-04, adapted my/ported back to Givaro

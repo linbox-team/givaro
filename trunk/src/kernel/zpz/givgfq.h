@@ -32,6 +32,7 @@ template<class TT> class GFqDom {
 protected:
 	typedef typename Signed_Trait<TT>::unsigned_type UTT;
 	typedef TT Rep;
+	typedef typename std::vector<UTT>::size_type  UT  ;
 public:
 	Rep zero;
 	Rep one;
@@ -78,7 +79,7 @@ public:
 
         // Construction with prescribed irreducible polynomial
         //   coefficients of the vector should be integers-like
-        //   there will be a call to Z/pZ.init to build the 
+        //   there will be a call to Z/pZ.init to build the
         //   representation of the irreducible polynomial
 	GFqDom( const UTT P, const UTT e, const std::vector<UTT>& modPoly);
 

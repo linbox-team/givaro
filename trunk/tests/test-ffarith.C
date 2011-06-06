@@ -203,7 +203,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 template<class Field>
 int TestField(const Field& F, const int seed)
 {/*{{{*/
-    long ch = F.characteristic();
+    long ch = (long) F.characteristic();
     JEONETESTE(F,7UL,-29.3);
     srand48(seed);
     for(size_t i=0; i< NBITER; ++i) {
@@ -352,9 +352,9 @@ int main(int argc, char ** argv)
         Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
         Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
         Irred[8] = 1;
-        GFqDom<long> GF256(2,8, Irred); 
+        GFqDom<long> GF256(2,8, Irred);
         JETESTE(GF256,seed);
-    
+
 	// Zech log finite field with 5^4 elements
 	GFqDom<int> GF625( 5, 4 );
 	JETESTE(GF625,seed);

@@ -235,13 +235,25 @@ namespace Givaro {
     { return g=1; }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Residu_t GFqDom<TT>::sage_generator() const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::indeterminate(Rep& X) const
     {
         if (exponent()>1) {
-            return _pol2log[_characteristic];
+            return X=_pol2log[_characteristic];
         } else {
-            return one;
+            return X=one;
         }
+    }
+
+    template<typename TT>
+    inline typename GFqDom<TT>::Rep GFqDom<TT>::indeterminate() const
+    {
+        Rep X; return indeterminate(X);
+    }
+
+    template<typename TT>
+    inline typename GFqDom<TT>::Rep GFqDom<TT>::sage_generator() const
+    {
+        return indeterminate();
     }
 
     template<typename TT>

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfq.h
-// Time-stamp: <23 May 11 09:52:37 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <06 Jun 11 13:50:24 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -145,11 +145,15 @@ public:
 	Rep& generator(Rep&) const;
 	// p-adic representation of the used generator
 	UTT generator() const;
-	// an integer representation of the polynomial
+	// p-adic representation of the used irreducible polynomial
+	UTT irreducible() const;
+
+	// the internal representation of the polynomial X
 	// where the indeterminate is replaced by the characteristic
 	// This has no meaning if exponent is 1
-	UTT sage_generator() const;
-	UTT irreducible() const;
+	Rep sage_generator() const;
+	Rep indeterminate() const;
+	Rep& indeterminate(Rep&) const;
 
 	// Initialization of Elements
 	Rep& init( Rep&) const;

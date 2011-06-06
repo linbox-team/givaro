@@ -30,7 +30,7 @@ template<typename T> inline unsigned GIVINTLOG(const T& a) {
 template<class TT, class UU> TT power(const TT n, const UU l) {
   if (l == 0) return 1 ;
 
-  unsigned long p = l ;
+  unsigned long p = (unsigned long) l ;
   short is_assg = 0 ;
 
   TT res = TT(1) ;

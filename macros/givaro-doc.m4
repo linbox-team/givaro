@@ -39,10 +39,15 @@ export PATH=$DOXYGEN_PATH
 	echo "the source tarball from http://www.stack.nl/~dimitri/doxygen/"
 	exit -1
 }
+AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND,     true)
 AC_MSG_RESULT(yes)
 AM_CONDITIONAL(GIVARO_BUILD_DOC, true)
 ],
 [
+AS_IF([(doxygen --version) < /dev/null > /dev/null 2>&1],
+[AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND,  true)],
+[AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND, false)]
+)
 AC_MSG_RESULT(no)
 AM_CONDITIONAL(GIVARO_BUILD_DOC, false)
 ])

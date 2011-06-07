@@ -130,7 +130,7 @@ namespace Givaro {
             , _characteristic(  (Residu_t) _bF.characteristic() )
             , _extension_order( (Residu_t) _pD.degree(Irred).value() )
             , _exponent(        (Residu_t)( _extension_order + (Residu_t)Exponent_Trait(_bF)) )
-            , _cardinality(     (Integer) pow( Integer(_bF.cardinality()) , _extension_order ) )
+            , _cardinality(     (Integer) pow( Integer(_bF.cardinality()) , (unsigned long)_extension_order ) )
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
             {

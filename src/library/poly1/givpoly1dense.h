@@ -92,6 +92,13 @@ namespace Givaro {
 		}
 
 
+            friend std::ostream& operator<<(std::ostream& out, const Self_t& V) {
+                out << '[';
+                for(typename Self_t::const_iterator it=V.begin(); it!= V.end(); ++it) 
+                    out << *it << ' ';
+                return out << ']';
+            }         
+
 	};
 
 	//  -------------------------------------------- Class Poly1Dom<Domain>

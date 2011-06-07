@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfq.h
-// Time-stamp: <06 Jun 11 13:50:24 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <07 Jun 11 14:40:16 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -79,9 +79,10 @@ public:
 
         // Construction with prescribed irreducible polynomial
         //   coefficients of the vector should be integers-like
-        //   there will be a call to Z/pZ.init to build the
+        //   there will be a call to this->init to build the 
         //   representation of the irreducible polynomial
-	GFqDom( const UTT P, const UTT e, const std::vector<UTT>& modPoly);
+    	template<typename Vector>
+    	GFqDom(const UTT P, const UTT e, const Vector& modPoly);
 
 	GFqDom( const GFqDom<TT>& F)
 	{
@@ -170,6 +171,7 @@ public:
 	Rep& init( Rep&, const unsigned long long) const ;
 #endif
 	Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
+
 	// Initialization of a polynomial
 	template<typename val_t, template<class,class> class Vector,template <class> class Alloc>
 	Rep& init( Rep&, const Vector<val_t,Alloc<val_t> >&);

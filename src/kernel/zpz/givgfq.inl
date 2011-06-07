@@ -17,12 +17,10 @@
 #define __GIVARO_gfq_INL
 
 #include <math.h>
-#include <givaro/givpoly1padic.h>
 #include <givaro/givinteger.h>
 #include <givaro/givintnumtheo.h>
 #include <givaro/givpower.h>
-
-#include <vector>
+#include <givaro/givpoly1padic.h>
 
 
 // Warning : valid iff b != c
@@ -1071,7 +1069,8 @@ namespace Givaro {
         // This constructor takes a vector of ints that represent the polynomial
         // to use (for modular arithmetic on the extension field).
     template<typename TT>
-    inline GFqDom<TT>::GFqDom(const UTT P, const UTT e, const std::vector<UTT>& modPoly):
+    template<typename Vector>
+    inline GFqDom<TT>::GFqDom(const UTT P, const UTT e, const Vector& modPoly):
             zero(0)
         , one (power(P,e) - 1  )
         , _characteristic(P)
@@ -1132,8 +1131,6 @@ namespace Givaro {
 
         _plus1[_qm1o2] = 0;
     }
-
-
 
 
     template<typename TT> inline void GFqDom<TT>::Init() {}

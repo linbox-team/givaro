@@ -94,6 +94,12 @@ namespace Givaro {
 		return deg = (Degree) (sz-1);
 	}
 
+	template <class Domain>
+	inline Degree Poly1Dom<Domain,Dense>::degree(const Rep& P) const
+	{
+            Degree d; return degree(d,P);
+	}
+
 
 	template<class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::leadcoef (Type_t& c, const Rep& P) const

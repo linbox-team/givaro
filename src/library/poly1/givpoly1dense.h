@@ -235,6 +235,7 @@ namespace Givaro {
 
 		// -- Returns the degree of polynomial
 		Degree& degree(Degree& d, const Rep& P) const;
+		Degree degree(const Rep& P) const;
 
 		// -- Returns the valuation of polynomial
 		Degree& val(Degree& d, const Rep& P) const;

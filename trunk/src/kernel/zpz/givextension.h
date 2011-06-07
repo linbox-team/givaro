@@ -89,7 +89,7 @@ namespace Givaro {
 
 	Extension ( const Residu_t p, const Residu_t e = 1, const Indeter Y="Y") :
 		_bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p )
-            , _extension_order( e/FF_EXPONENT_MAX(p,e) ), _exponent ( e ) 
+            , _extension_order( e/FF_EXPONENT_MAX(p,e) ), _exponent ( e )
             , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_pD.zero)
             , one (_pD.one)
             {
@@ -104,7 +104,7 @@ namespace Givaro {
 		_pD.creux_random_irreducible( _irred, _extension_order );
             }
 
-    	
+
 
 	Extension ( const BaseField_t& bF, const Residu_t ex = 1, const Indeter Y="Y") :
 	       	_bF( bF )
@@ -116,14 +116,15 @@ namespace Givaro {
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
             {
+				Degree eo ((long int)_extension_order);
 		if (_cardinality < (1<<20) )
-                    _pD.creux_random_irreducible( _irred, _extension_order);
+                    _pD.creux_random_irreducible( _irred, eo);
 		else
-                    _pD.random_irreducible( _irred, _extension_order);
+                    _pD.random_irreducible( _irred,  eo);
             }
 
 
-        Extension ( const Pol_t& polydomain, const PolElement& Irred) : 
+        Extension ( const Pol_t& polydomain, const PolElement& Irred) :
                 _bF( polydomain.getdomain() )
             , _pD( polydomain )
             , _irred( Irred )
@@ -136,9 +137,9 @@ namespace Givaro {
             {
                 if (polydomain.isOne(_irred)) {
                     if (_cardinality < (1<<20) )
-                        _pD.creux_random_irreducible( _irred, _extension_order);
+                        _pD.creux_random_irreducible( _irred,  (Degree) _extension_order);
                     else
-                        _pD.random_irreducible( _irred, _extension_order);
+                        _pD.random_irreducible( _irred,  (Degree) _extension_order);
                 }
             }
 
@@ -372,7 +373,7 @@ namespace Givaro {
 		return _extension_order;
             }
 
-    	PolElement& irreducible(PolElement& P) const 
+    	PolElement& irreducible(PolElement& P) const
             {
                 return _pD.assign(P, _irred);
             }

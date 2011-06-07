@@ -27,8 +27,8 @@ AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS)
 AM_CPPFLAGS += -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/bstruct
 
-LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
-AM_LDFLAGS=-static $(LDFLAGS)
+LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
+AM_LDFLAGS=-static
 
 EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi lambda lambda_inv iexponentiation RSA_decipher  RSA_encipher  ispower probable_primroot ProbLucas ModularSquareRoot
 
@@ -63,4 +63,4 @@ iexponentiation_SOURCES    = iexponentiation.C
 # for compilation of new examples
 GIVARO_BIN=@bindir@
 %:%.C
-	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)  $(AM_LDFLAGS)  `$(GIVARO_BIN)/givaro-config --libs`
+	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)  `$(GIVARO_BIN)/givaro-config --libs`

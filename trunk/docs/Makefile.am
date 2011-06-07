@@ -9,6 +9,7 @@ if GIVARO_BUILD_DOC
 USE_TARGETS = docs
 INSTALL_TARGETS = install-doc
 endif
+
 docdir=$(GIVARO_DOC_PATH)
 
 #man1_MANS = givaro-config.1
@@ -17,6 +18,7 @@ all all-local: $(USE_TARGETS)
 
 install install-data-local: $(USE_TARGETS) $(INSTALL_TARGETS)
 
+if GIVARO_DOXYGEN_FOUND
 docs:
 	sed -i 's/^\\version.*/\\version\ $(VERSION)/' mainpage.doxy
 	if test -d givaro-html ; then echo exists; else mkdir givaro-html ; fi
@@ -50,6 +52,16 @@ install-doc:
 	cp -rp givaro-html     $(DESTDIR)/$(docdir)/givaro-html
 	cp -rp givaro-dev-html $(DESTDIR)/$(docdir)/givaro-dev-html
 	cp -p givaro.html      $(DESTDIR)/$(docdir)/givaro.html
+
+else
+
+docs:
+	@echo
+	@echo "*** ERROR ***"
+	@echo "you need doxygen to build documentation"
+	@echo
+
+endif
 
 EXTRA_DIST= \
 			Doxyfile            \

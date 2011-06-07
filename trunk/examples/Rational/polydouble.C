@@ -22,15 +22,6 @@ using namespace Givaro;
 typedef Poly1Dom< RationalDom, Dense>::Element RatPoly;
 typedef std::vector<double> DoublePoly;
 
-std::ostream& operator<< (std::ostream& o, const RatPoly& v) {
-    o << "Poly (s [v_1, ..,  v_s]) : ";
-    o << v.size() << " [";
-    for(size_t i=0; i<v.size(); ++i) {
-        o << ' ' << v[i];
-    }
-    return o << ']';
-}
-
 std::ostream& operator<< (std::ostream& o, const DoublePoly& v) {
     o << '[';
     for(size_t i=0; i<v.size(); ++i) {

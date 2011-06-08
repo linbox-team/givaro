@@ -178,7 +178,7 @@ if ("$answ" == "y") then
 
 		echo "Incrementing soname version now."
         set backupmake = $mak.back$$
-		set infostring = `fgrep libgivaro_la_LDFLAGS $mak | awk  '{print $NF}'`
+		set infostring = `grep "libgivaro_la_LDFLAGS.*version-info" $mak | awk  '{print $NF}'`
 		set cur = `echo $infostring | cut -d':' -f1`
 		set rev = `echo $infostring | cut -d':' -f2`
 		set age = `echo $infostring | cut -d':' -f3`

@@ -21,3 +21,4 @@ libgivaro_la_LIBADD= \
 
 # soname of libgivaro
 libgivaro_la_LDFLAGS = -version-info 2:3:2
+libgivaro_la_LDFLAGS+=$(LDFLAGS)

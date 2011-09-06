@@ -15,7 +15,8 @@ test -z "$srcdir" && srcdir=.
 
 PKG_NAME="Givaro Library"
 
-(test -f $srcdir/configure.ac ) || {
+(test -f $srcdir/configure.ac  \
+	&& test -f $srcdir//src/kernel/integer/givinteger.h ) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level "\`$PKG_NAME\'" directory"
     exit 1
@@ -88,7 +89,7 @@ if test -z "$*"; then
 fi
 
 case $CC in
-*xlc | *xlc\ * | *lcc | *lcc\ *) am_opt=--include-deps;;
+	*xlc | *xlc\ * | *lcc | *lcc\ *) am_opt=--include-deps;;
 esac
 
 for coin in `find . -name configure.ac -print`
@@ -129,8 +130,8 @@ do
 	test -r $dr/aclocal.m4 && chmod u+w $dr/aclocal.m4
       fi
       if grep "^AC_PROG_LIBTOOL" configure.ac >/dev/null; then
-	echo "Running libtoolize..."
-	$LIBTOOLIZE --force --copy
+			echo "Running libtoolize..."
+			$LIBTOOLIZE --force --copy
       fi
       echo "Running aclocal $aclocalinclude ..."
       aclocal $aclocalinclude
@@ -139,7 +140,7 @@ do
 	autoheader
       fi
       echo "Running automake --gnu $am_opt ..."
-      automake --add-missing --gnu $am_opt
+      automake -c --add-missing --gnu $am_opt
       echo "Running autoconf ..."
       autoconf
     )
@@ -155,7 +156,7 @@ cd "$ORIGDIR"
 if test x$NOCONFIGURE = x; then
   echo Running $srcdir/configure $conf_flags "$@" ...
   $srcdir/configure $conf_flags "$@" \
-  && echo Now type \`make install\' to compile $PROJECT  || exit 1
+	  && echo "Now type \`make install' to compile $PROJECT"  || exit 1
 else
   echo Skipping configure process.
 fi

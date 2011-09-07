@@ -44,9 +44,9 @@ namespace Givaro {
 	Integer& 	inv (Integer& u, const Integer& a, const Integer& b);
 	Integer& 	invin (Integer& u, const Integer& b);
 	Integer 	gcd (const Integer& a, const Integer& b);
-	Integer 	gcd (const Integer& a, const Integer& b, Integer& u, Integer& v);
+	Integer 	gcd (Integer& u, Integer& v,const Integer& a, const Integer& b);
 	Integer& 	gcd (Integer& g, const Integer& a, const Integer& b);
-	Integer& 	gcd (Integer& g, const Integer& a, const Integer& b, Integer& u, Integer& v);
+	Integer& 	gcd (Integer& g, Integer& u, Integer& v, const Integer& a, const Integer& b);
 	Integer 	pp( const Integer& P, const Integer& Q );
 	Integer& 	lcm (Integer& g, const Integer& a, const Integer& b);
 	Integer 	lcm (const Integer& a, const Integer& b);
@@ -536,11 +536,11 @@ namespace Givaro {
 		/*! @name Arithmetic functions */
 		//@{
 		friend Integer gcd (const Integer& a, const Integer& b);
-		friend Integer gcd (const Integer& a, const Integer& b,
-				    Integer& u, Integer& v);
+		friend Integer gcd ( Integer& u, Integer& v,
+				     const Integer& a, const Integer& b);
 		friend Integer& gcd (Integer& g, const Integer& a, const Integer& b);
-		friend Integer& gcd (Integer& g, const Integer& a, const Integer& b,
-				     Integer& u, Integer& v);
+		friend Integer& gcd (Integer& g, Integer& u, Integer& v,
+				     const Integer& a, const Integer& b);
 		// modular inverses
 		friend Integer& inv (Integer& u, const Integer& a, const Integer& b);
 		friend Integer& invin (Integer& u, const Integer& b);

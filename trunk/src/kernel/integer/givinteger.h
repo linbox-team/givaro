@@ -176,7 +176,7 @@ namespace Givaro {
 		// -- extended gcd  q = gcd(a,b) = u*a+v*b;
 		Rep& gcd( Rep& g, Rep& u, Rep& v, const Rep& a, const Rep& b ) const
 		{
-			return ::Givaro::gcd(g, a, b, u, v);
+			return ::Givaro::gcd(g, u, v, a, b);
 		}
 		Rep& gcd( Rep& g, const Rep& a, const Rep& b ) const
 		{

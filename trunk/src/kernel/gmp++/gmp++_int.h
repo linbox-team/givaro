@@ -96,7 +96,6 @@ namespace Givaro {
 	std::ostream& 	absOutput (std::ostream &o, const Integer& n);
 	void 		importWords(Integer&, size_t, int, int, int, size_t, const void*);
 
-
 	//------------------------------------------------------ Class Integer
 	/*! @ingroup integers
 	 * This is the Integer class.
@@ -529,6 +528,23 @@ namespace Givaro {
 #endif
 		template<class XXX>
 		Integer& operator  %=(const XXX& n) { return this->operator %= ( (Integer)n ); }
+
+		/*! @name rounding function
+		 * these are the same as the STL ones, except for the signature.
+		 * @param res the result
+		 * @param n the numerator
+		 * @param d the demominator
+		 */
+		static Integer&         ceil (Integer & res, const Integer &n, const Integer & d); // same as std::ceil (n/d)
+		static Integer&         floor(Integer & res, const Integer &n, const Integer & d); // same as std::floor(n/d)
+		static Integer&         trunc(Integer & res, const Integer &n, const Integer & d); // same as std::trunc(n/d)
+		static Integer         ceil (const Integer &n, const Integer & d); // same as std::ceil (n/d)
+		static Integer         floor(const Integer &n, const Integer & d); // same as std::floor(n/d)
+		static Integer         trunc(const Integer &n, const Integer & d); // same as std::trunc(n/d)
+
+
+
+
 		//@}
 
 

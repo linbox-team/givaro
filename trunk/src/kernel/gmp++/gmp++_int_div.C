@@ -267,6 +267,57 @@ Integer& Integer::divmod(Integer& q, unsigned long& r, const Integer& a, const u
 	return q;
 }
 
+Integer& Integer::ceil(Integer& q, const Integer & n, const Integer & d)
+{
+	mpz_cdiv_q( (mpz_ptr)&(q.gmp_rep),
+		    (mpz_srcptr)&(n.gmp_rep),
+		    (mpz_srcptr)&(d.gmp_rep));
+	return q ;
+}
+
+Integer& Integer::floor(Integer& q, const Integer & n, const Integer & d)
+{
+	mpz_fdiv_q( (mpz_ptr)&(q.gmp_rep),
+		    (mpz_srcptr)&(n.gmp_rep),
+		    (mpz_srcptr)&(d.gmp_rep));
+	return q ;
+}
+
+Integer& Integer::trunc(Integer& q, const Integer & n, const Integer & d)
+{
+	mpz_tdiv_q( (mpz_ptr)&(q.gmp_rep),
+		    (mpz_srcptr)&(n.gmp_rep),
+		    (mpz_srcptr)&(d.gmp_rep));
+	return q ;
+}
+
+Integer Integer::ceil( const Integer & n, const Integer & d)
+{
+	Integer q;
+	mpz_cdiv_q( (mpz_ptr)&(q.gmp_rep),
+		    (mpz_srcptr)&(n.gmp_rep),
+		    (mpz_srcptr)&(d.gmp_rep));
+	return q ;
+}
+
+Integer Integer::floor(const Integer & n, const Integer & d)
+{
+	Integer q;
+	mpz_fdiv_q( (mpz_ptr)&(q.gmp_rep),
+		    (mpz_srcptr)&(n.gmp_rep),
+		    (mpz_srcptr)&(d.gmp_rep));
+	return q ;
+}
+
+Integer Integer::trunc(const Integer & n, const Integer & d)
+{
+	Integer q;
+	mpz_tdiv_q( (mpz_ptr)&(q.gmp_rep),
+		    (mpz_srcptr)&(n.gmp_rep),
+		    (mpz_srcptr)&(d.gmp_rep));
+	return q ;
+}
+
 }
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

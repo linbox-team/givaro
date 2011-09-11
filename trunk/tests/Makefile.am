@@ -49,6 +49,7 @@ test_crt_SOURCES      = test-crt.C
 test_geom_SOURCES     = test-geom.C
 test_integer_SOURCES  = test-integer.C
 test_ratrecon_SOURCES = test-ratrecon.C
+test_conversion_SOURCES = test-conversion.C
 
 
 # for compilation of new tests

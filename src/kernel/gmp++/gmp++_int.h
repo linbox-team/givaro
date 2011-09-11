@@ -279,7 +279,9 @@ namespace Givaro {
 		Integer& operator += (const unsigned long n);
 		Integer& operator += (const long n);
 		template<class XXX>
-		Integer& operator +=(const XXX& n) { return this->operator += ( (Integer)n ); }
+		Integer& operator +=(const XXX& n) {
+			return this->operator += ( (Integer)n );
+		}
 
 		/*! operator \c -.
 		 * @return <code> (*this)-n</code>
@@ -296,7 +298,9 @@ namespace Givaro {
 		Integer& operator -= (const unsigned long n);
 		Integer& operator -= (const long n);
 		template<class XXX>
-		Integer& operator -=(const XXX& n) { return this->operator -= ( (Integer)n ); }
+		Integer& operator -=(const XXX& n) {
+			return this->operator -= ( (Integer)n );
+		}
 
 		/*! Opposite.
 		 * \return <code>-(*this)</code>.
@@ -318,7 +322,9 @@ namespace Givaro {
 		Integer& operator *= (const unsigned long n);
 		Integer& operator *= (const long n);
 		template<class XXX>
-		Integer& operator *=(const XXX& n) { return this->operator *= ( (Integer)n ); }
+		Integer& operator *=(const XXX& n) {
+			return this->operator *= ( (Integer)n );
+		}
 		//@}
 
 		/*! @name fused add-multiply
@@ -469,7 +475,9 @@ namespace Givaro {
 		Integer& operator /= (const unsigned long d);
 		Integer& operator /= (const long          d);
 		template<class XXX>
-		Integer& operator /=(const XXX& d) { return this->operator /= ( (Integer)d ); }
+		Integer& operator /=(const XXX& d) {
+			return this->operator /= ( (Integer)d );
+		}
 
 		/*!  Function \c mod (inplace).
 		 * \f$ r \gets r \mod n\f$
@@ -509,9 +517,15 @@ namespace Givaro {
 		long     operator % (const unsigned long n) const;
 		long     operator % (const long n) const;
 		double   operator % (const double n) const;
-		short    operator % (const unsigned short n) const { return (short) ( this->operator % ( (unsigned long)n ) ); }
+		short    operator % (const unsigned short n) const
+		{
+			return (short) ( this->operator % ( (unsigned long)n ) );
+		}
 		template<class XXX>
-		XXX      operator %(const XXX& n) const { return (XXX)this->operator % ( Integer(n) ); }
+		XXX      operator %(const XXX& n) const
+		{
+			return (XXX)this->operator % ( Integer(n) );
+		}
 
 		/*! Modulo operator (inplace).
 		 * @param n modulus
@@ -521,13 +535,19 @@ namespace Givaro {
 		Integer&  operator %= (const unsigned long n);
 		Integer&  operator %= (const long n);
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		Integer&  operator %= (const long long n) { return *this %= (Integer)n; }
-		Integer&  operator %= (const unsigned long long n) { return *this %= (Integer)n; }
+		Integer&  operator %= (const long long n) {
+			return *this %= (Integer)n;
+		}
+		Integer&  operator %= (const unsigned long long n) {
+			return *this %= (Integer)n;
+		}
 		long long operator % (const long long n) const;
 		unsigned long long operator % (const unsigned long long n) const;
 #endif
 		template<class XXX>
-		Integer& operator  %=(const XXX& n) { return this->operator %= ( (Integer)n ); }
+		Integer& operator  %=(const XXX& n) {
+			return this->operator %= ( (Integer)n );
+		}
 
 		/*! @name rounding function
 		 * these are the same as the STL ones, except for the signature.
@@ -535,12 +555,12 @@ namespace Givaro {
 		 * @param n the numerator
 		 * @param d the demominator
 		 */
-		static Integer&         ceil (Integer & res, const Integer &n, const Integer & d); // same as std::ceil (n/d)
-		static Integer&         floor(Integer & res, const Integer &n, const Integer & d); // same as std::floor(n/d)
-		static Integer&         trunc(Integer & res, const Integer &n, const Integer & d); // same as std::trunc(n/d)
-		static Integer         ceil (const Integer &n, const Integer & d); // same as std::ceil (n/d)
-		static Integer         floor(const Integer &n, const Integer & d); // same as std::floor(n/d)
-		static Integer         trunc(const Integer &n, const Integer & d); // same as std::trunc(n/d)
+		static Integer&   ceil (Integer & res, const Integer &n, const Integer & d); // same as std::ceil (n/d)
+		static Integer&   floor(Integer & res, const Integer &n, const Integer & d); // same as std::floor(n/d)
+		static Integer&   trunc(Integer & res, const Integer &n, const Integer & d); // same as std::trunc(n/d)
+		static Integer    ceil (const Integer &n, const Integer & d); // same as std::ceil (n/d)
+		static Integer    floor(const Integer &n, const Integer & d); // same as std::floor(n/d)
+		static Integer    trunc(const Integer &n, const Integer & d); // same as std::trunc(n/d)
 
 
 
@@ -570,23 +590,47 @@ namespace Givaro {
 		friend Integer& pow(Integer& Res, const Integer& n, const long l);
 		friend Integer& pow(Integer& Res, const unsigned long n, const unsigned long l);
 		friend Integer& pow(Integer& Res, const Integer& n, const unsigned long l);
-		friend Integer& pow(Integer& Res, const Integer& n, const int l) { return pow(Res, n, (long)l ); }
-		friend Integer& pow(Integer& Res, const Integer& n, const unsigned int l) { return pow(Res, n, (unsigned long)l ); }
+		friend Integer& pow(Integer& Res, const Integer& n, const int l)
+		{
+			return pow(Res, n, (long)l );
+		}
+		friend Integer& pow(Integer& Res, const Integer& n, const unsigned int l)
+		{
+			return pow(Res, n, (unsigned long)l );
+		}
 		friend Integer pow(const Integer& n, const long l);
 		friend Integer pow(const Integer& n, const unsigned long l);
-		friend Integer pow(const Integer& n, const int l) { return pow(n, (long)l ); }
-		friend Integer pow(const Integer& n, const unsigned int l) { return pow(n, (unsigned long)l ); }
+		friend Integer pow(const Integer& n, const int l)
+		{
+			return pow(n, (long)l );
+		}
+		friend Integer pow(const Integer& n, const unsigned int l)
+		{
+			return pow(n, (unsigned long)l );
+		}
 
 		// - return n^e % m
 		friend Integer& powmod(Integer& Res, const Integer& n, const unsigned long e, const Integer& m);
 		friend Integer& powmod(Integer& Res, const Integer& n, const long e, const Integer& m);
-		friend Integer& powmod(Integer& Res, const Integer& n, const unsigned int e, const Integer& m) { return powmod(Res, n, (unsigned long)e, m); }
-		friend Integer& powmod(Integer& Res, const Integer& n, const int e, const Integer& m)  { return powmod(Res, n, (long)e, m); }
+		friend Integer& powmod(Integer& Res, const Integer& n, const unsigned int e, const Integer& m)
+		{
+			return powmod(Res, n, (unsigned long)e, m);
+		}
+		friend Integer& powmod(Integer& Res, const Integer& n, const int e, const Integer& m)
+		{
+			return powmod(Res, n, (long)e, m);
+		}
 		friend Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m);
 		friend Integer powmod(const Integer& n, const unsigned long e, const Integer& m);
 		friend Integer powmod(const Integer& n, const long e, const Integer& m);
-		friend Integer powmod(const Integer& n, const unsigned int e, const Integer& m) { return powmod(n, (unsigned long)e, m); }
-		friend Integer powmod(const Integer& n, const int e, const Integer& m)  { return powmod(n, (long)e, m); }
+		friend Integer powmod(const Integer& n, const unsigned int e, const Integer& m)
+		{
+			return powmod(n, (unsigned long)e, m);
+		}
+		friend Integer powmod(const Integer& n, const int e, const Integer& m)
+		{
+			return powmod(n, (long)e, m);
+		}
 		friend Integer powmod(const Integer& n, const Integer& e, const Integer& m);
 
 		friend Integer fact ( unsigned long l);
@@ -623,14 +667,20 @@ namespace Givaro {
 		friend int jacobi(const Integer& u, const Integer& v) ;
 		friend int legendre(const Integer& u, const Integer& v) ;
 
-		Integer& operator++() { return *this+=1UL; } // prefix
+		Integer& operator++()
+		{
+			return *this+=1UL;
+		} // prefix
 		Integer operator++(int)
 		{ // postfix
 			Integer tmp = *this ;
 			++*this;
 			return tmp;
 		}
-		Integer& operator--() { return *this-=1UL; } // prefix
+		Integer& operator--()
+		{
+			return *this-=1UL;
+		} // prefix
 		Integer operator--(int)
 		{// postfix
 			Integer tmp = *this ;
@@ -651,13 +701,28 @@ namespace Givaro {
 
 		// -- Convert an Integer to a basic C++ type
 		// -- Cast operators
-		operator bool() const { return *this!=0UL; }
-		operator short() const { return (short)(int) *this; }
-		operator unsigned short() const { return (unsigned short) (unsigned int) *this; }
-		operator unsigned char() const { return (unsigned char) (unsigned int) *this; }
+		operator bool() const
+		{
+			return *this!=0UL;
+		}
+		operator short() const
+		{
+			return (short)(int) *this;
+		}
+		operator unsigned short() const
+		{
+			return (unsigned short) (unsigned int) *this;
+		}
+		operator unsigned char() const
+		{
+			return (unsigned char) (unsigned int) *this;
+		}
 		operator unsigned int() const ;
 		operator int() const ;
-		operator signed char() const { return (signed char) (int) *this; }
+		operator signed char() const
+		{
+			return (signed char) (int) *this;
+		}
 		operator unsigned long() const ;
 		operator long() const ;
 #ifndef __GIVARO__DONOTUSE_longlong__
@@ -689,50 +754,72 @@ namespace Givaro {
 		template<bool U>
 		static Integer& random_lessthan (Integer& r, const Integer & m);
 		static Integer& random_lessthan (Integer& r, const Integer & m)
-		{return random_lessthan<true>(r,m);}
+		{
+			return random_lessthan<true>(r,m);
+		}
 		template<bool U>
 		static Integer& random_lessthan_2exp (Integer& r, const unsigned long & m);
 		static Integer& random_lessthan_2exp (Integer& r, const unsigned long & m)
-		{ return random_lessthan_2exp<true>(r,m);}
+		{
+			return random_lessthan_2exp<true>(r,m);
+		}
 		template<bool U>
 		static Integer random_lessthan_2exp (const unsigned long & m);
 		static Integer random_lessthan_2exp (const unsigned long & m)
-		{ return random_lessthan_2exp<true>(m);}
+		{
+			return random_lessthan_2exp<true>(m);
+		}
 		template<bool U>
 		static Integer& random_lessthan (Integer& r, const unsigned long & m) ;
 		static Integer& random_lessthan (Integer& r, const unsigned long & m)
-		{ return random_lessthan<true>(r,m);}
+		{
+			return random_lessthan<true>(r,m);
+		}
 		template<bool U,class T>
 		static Integer random_lessthan (const T & m);
 		template<class T>
 		static Integer random_lessthan (const T & m)
-		{ return random_lessthan<true>(m);}
+		{
+			return random_lessthan<true>(m);
+		}
 
 
 		/*  random = */
 		template<bool U>
 		static Integer& random_exact (Integer& r, const Integer & s) ;
 		static Integer& random_exact (Integer& r, const Integer & s)
-		{ return random_exact<true>(r,s); }
+		{
+			return random_exact<true>(r,s);
+		}
 		template<bool U>
 		static Integer& random_exact_2exp (Integer& r, const unsigned long int & m) ;
 		static Integer& random_exact_2exp (Integer& r, const unsigned long int & m)
-		{return random_exact_2exp<true>(r,m);}
+		{
+			return random_exact_2exp<true>(r,m);
+		}
 		template<bool U>
 		static Integer& random_exact (Integer& r, const unsigned long int & m)  ;
 		static Integer& random_exact (Integer& r, const unsigned long int & m)
-		{return random_exact<true>(r,m);}
+		{
+			return random_exact<true>(r,m);
+		}
 		template<bool U,class T>
 		static Integer& random_exact (Integer& r, const T & m)
-		{ return random_exact<U>(r,static_cast<unsigned long int>(m)); }
+		{
+			return random_exact<U>(r,static_cast<unsigned long int>(m));
+		}
 		template<class T>
 		static Integer& random_exact (Integer& r, const T & m)
-		{ return random_exact(r,static_cast<unsigned long int>(m)); }
+		{
+			return random_exact(r,static_cast<unsigned long int>(m));
+		}
 		template<bool U,class T>
 		static Integer random_exact (const T & s) ;
 		template<class T>
 		static Integer random_exact (const T & s)
-		{ return random_exact<true>(s) ; }
+		{
+			return random_exact<true>(s) ;
+		}
 
 		/*  random <.< */
 		static Integer& random_between (Integer& r, const Integer& m, const Integer&M) ;
@@ -744,11 +831,15 @@ namespace Givaro {
 
 		template<class R>
 		static Integer random_between (const R & m, const R & M)
-		{ return random_between(static_cast<unsigned long int>(m), static_cast<unsigned long int>(M)); }
+		{
+			return random_between(static_cast<unsigned long int>(m), static_cast<unsigned long int>(M));
+		}
 
 		template<class R>
 		static Integer & random_between (Integer &r, const R & m, const R & M)
-		{ return random_between(r,static_cast<unsigned long int>(m), static_cast<unsigned long int>(M)); }
+		{
+			return random_between(r,static_cast<unsigned long int>(m), static_cast<unsigned long int>(M));
+		}
 
 
 		// useful functions :
@@ -756,12 +847,16 @@ namespace Givaro {
 		static Integer& random (Integer& r, const T & m) ;
 		template<class T>
 		static Integer& random (Integer& r, const T & m)
-		{return random<true>(r,m);}
+		{
+			return random<true>(r,m);
+		}
 		template<bool U,class T>
 		static Integer random(const T & sz) ;
 		template<class T>
 		static Integer random(const T & sz)
-		{ return random<true>(sz);}
+		{
+			return random<true>(sz);
+		}
 		template<bool U>
 		static Integer random();
 		static Integer random();
@@ -771,10 +866,14 @@ namespace Givaro {
 		static Integer& nonzerorandom (Integer& r, const T& size) ;
 		template<class T>
 		static Integer nonzerorandom(const T & sz)
-		{ return nonzerorandom<true>(sz); }
+		{
+			return nonzerorandom<true>(sz);
+		}
 		template<class T>
 		static Integer& nonzerorandom (Integer& r, const T& size)
-		{ return nonzerorandom<true>(r,size); }
+		{
+			return nonzerorandom<true>(r,size);
+		}
 		static Integer nonzerorandom()
 		{
 			Integer rez = Integer::nonzerorandom(sizeof(mp_limb_t)*8) ;
@@ -796,9 +895,15 @@ namespace Givaro {
 		std::ostream& print( std::ostream& o ) const;
 		//@}
 
-		int sign() const {return priv_sign(); } // but figure out the friend sign()
+		int sign() const
+		{
+			return priv_sign();
+		} // but figure out the friend sign()
 
-		mpz_ptr get_mpz() {return (mpz_ptr)&gmp_rep;}
+		mpz_ptr get_mpz()
+		{
+			return (mpz_ptr)&gmp_rep;
+		}
 
 	protected:
 
@@ -807,8 +912,13 @@ namespace Givaro {
 		Rep gmp_rep;
 
 		int priv_sign() const;
-		//mpz_ptr get_mpz() {return (mpz_ptr)&gmp_rep;}
-		const Rep* get_rep() const { return &gmp_rep; }
+		//mpz_ptr get_mpz()
+		//{ return (mpz_ptr)&gmp_rep; }
+
+		const Rep* get_rep() const
+		{
+			return &gmp_rep;
+		}
 
 		// -- Creates a new Integer from a size sz and a array of unsigned long d
 		Integer(unsigned long* d, long size);

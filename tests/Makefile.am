@@ -25,7 +25,8 @@ BASIC_TESTS =          \
 		test-crt       \
 		test-geom      \
 		test-integer   \
-        test-ratrecon
+		test-conversion \
+		test-ratrecon
 
 CLEANFILES =           \
 		$(BASIC_TESTS)

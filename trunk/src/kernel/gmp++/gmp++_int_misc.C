@@ -311,21 +311,20 @@ namespace Givaro {
 		Integer rem;
 		short cbtuli = CHAR_BIT*sizeof(unsigned long int);
 		mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), cbtuli );
-		unsigned long high = (unsigned long)(rem);
-		unsigned long long tmp = high;
+		unsigned long long tmp = (unsigned long)(rem);
 		//	tmp <<= CHAR_BIT*sizeof(unsigned long int) ;
-		cbtuli = short (cbtuli >> 1);
+		cbtuli >>= 1;                
 		tmp <<= cbtuli ;
 		tmp <<= cbtuli ;
 
-		return tmp += low;
+		return tmp |= low;
 	}
 	Integer::operator long long() const
 	{
-		unsigned long long tmp = (unsigned long long)(*this);
-		if ( (*this)<0)
-			tmp = -tmp ;
-		return (long long)tmp;
+		long long tmp = (unsigned long long)(*this);
+//                 if (*this < 0) tmp = -tmp;
+//                 return tmp;
+		return ((*this)<0)? -tmp: tmp;
 	}
 #endif
 

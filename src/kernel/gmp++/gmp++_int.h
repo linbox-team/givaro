@@ -701,6 +701,7 @@ namespace Givaro {
 
 		// -- Convert an Integer to a basic C++ type
 		// -- Cast operators
+                // -- Cast towards unsigned consider only the absolute value
 		operator bool() const
 		{
 			return *this!=0UL;

@@ -24,7 +24,9 @@
 namespace Givaro {
 
 	//-----------------------------~Integer()
-	inline Integer::~Integer() {  mpz_clear((mpz_ptr)&gmp_rep) ;
+	inline Integer::~Integer()
+	{
+		mpz_clear((mpz_ptr)&gmp_rep) ;
 	}
 
 	//-------------------------------Integer(const Integer &n)
@@ -48,23 +50,33 @@ namespace Givaro {
 	}
 
 	//-----------------------------Integer(int n)
-	inline Integer::Integer(int n) { mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
+	inline Integer::Integer(int n)
+	{
+		mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
 	}
 
 	//-----------------------------Integer(uint n)
-	inline Integer::Integer(unsigned char n) { mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
+	inline Integer::Integer(unsigned char n)
+	{
+		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
 	//-----------------------------Integer(uint n)
-	inline Integer::Integer(unsigned int n) { mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
+	inline Integer::Integer(unsigned int n)
+	{
+		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
 	//-----------------------------Integer(long n)
-	inline Integer::Integer(long n) { mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
+	inline Integer::Integer(long n)
+	{
+		mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
 	}
 
 	//-----------------------------Integer(unsigned long n)
-	inline Integer::Integer(unsigned long n) { mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
+	inline Integer::Integer(unsigned long n)
+	{
+		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
@@ -91,7 +103,9 @@ namespace Givaro {
 
 
 	//-----------------------------Integer(double)
-	inline Integer::Integer(double d) { mpz_init_set_d((mpz_ptr)&gmp_rep, d) ;
+	inline Integer::Integer(double d)
+	{
+		mpz_init_set_d((mpz_ptr)&gmp_rep, d) ;
 	}
 
 
@@ -593,7 +607,11 @@ namespace Givaro {
 		return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(unsigned long);
 	}
 
-	inline Integer abs(const Integer &n) { if (sign(n) >= 0) return n; return -n;
+	inline Integer abs(const Integer &n)
+	{
+		if (sign(n) >= 0)
+			return n;
+		return -n;
 	}
 
 	inline size_t Integer::size() const
@@ -632,11 +650,16 @@ namespace Givaro {
 	/* ********************** */
 	/* seeding, initialising  */
 	/* ********************** */
+#ifdef __GMP_PLUSPLUS__
 	inline gmp_randclass& Integer::randstate()
 	{
 		static gmp_randclass randstate(gmp_randinit_default);
 		return static_cast<gmp_randclass&>(randstate);
 	}
+#else
+#error "not implemented"
+#error "please include gmp++/gmp++.h very high in your inlcude list"
+#endif
 
 	inline void Integer::seeding(unsigned long  s)
 	{

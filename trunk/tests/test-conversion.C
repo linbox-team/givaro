@@ -1,4 +1,4 @@
-// Copyright(c)'2010 by The Givaro group
+// Copyright(c)'2011 by The Givaro group
 // This file is part of Givaro.
 // written by BB
 // Givaro is governed by the CeCILL-B license under French law

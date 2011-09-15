@@ -13,8 +13,6 @@
 #ifndef __GIVARO_GMPplusplus_integer_H
 #define __GIVARO_GMPplusplus_integer_H
 
-
-
 /*! @file kernel/gmp++/gmp++_int.h
  * @ingroup integers
  * Core gmp++_int.h.
@@ -122,6 +120,12 @@ namespace Givaro {
 		Integer(long long n);
 		Integer(unsigned long long n);
 #endif
+		//! Creates a new Integer.
+		/*! @param sz size
+		 * @param d array
+		 */
+		Integer(unsigned long* d, long sz);
+
 		Integer(double d);
 		Integer(const char *s);
 		Integer(const Integer& n);
@@ -747,7 +751,7 @@ namespace Givaro {
 #ifdef __GMP_PLUSPLUS__
 		static gmp_randclass& randstate();
 #else
-		static __gmp_randstate_struct intializerandstate();
+		static __gmp_randstate_struct initializerandstate();
 		static __gmp_randstate_struct* randstate();
 #endif
 		static bool RandBool()  ;
@@ -901,7 +905,7 @@ namespace Givaro {
 			return priv_sign();
 		} // but figure out the friend sign()
 
-		mpz_ptr get_mpz()
+		mpz_ptr get_mpz() const
 		{
 			return (mpz_ptr)&gmp_rep;
 		}
@@ -921,8 +925,6 @@ namespace Givaro {
 			return &gmp_rep;
 		}
 
-		// -- Creates a new Integer from a size sz and a array of unsigned long d
-		Integer(unsigned long* d, long size);
 
 	}; //----------------------------------------------- End of Class Integer
 

@@ -558,6 +558,13 @@ namespace Givaro {
 	inline int isZero(const Integer& a)
 	{
 		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
+		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) == 0) ; // BB which one is faster ?
+	}
+
+	inline int nonZero(const Integer& a)
+	{
+		return mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
+		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) != 0) ; // BB which one is faster ?
 	}
 
 	inline int isZero(const short int a)

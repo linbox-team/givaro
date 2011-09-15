@@ -79,6 +79,7 @@ namespace Givaro {
 	void 		swap(Integer& , Integer&);
 	int 		sign   (const Integer& a);
 	int 		isZero (const Integer& a);
+	int 		nonZero (const Integer& a);
 	int 		isOne  (const Integer& a);
 	int 		isperfectpower  (const Integer& );
 	Integer 	abs(const Integer& n);
@@ -659,6 +660,7 @@ namespace Givaro {
 
 		friend inline int sign   (const Integer& a);
 		friend inline int isZero (const Integer& a);
+		friend inline int nonZero (const Integer& a);
 		friend inline int isOne  (const Integer& a);
 		friend int isperfectpower  (const Integer& );
 

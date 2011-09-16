@@ -34,6 +34,7 @@ libgmppp_la_SOURCES=            \
 	gmp++_rat_io.C		\
 	gmp++_int_mul.C		\
 	gmp++_int_add.C		\
+	gmp++_rat_add.C		\
 	gmp++_int_cstor.C	\
 	gmp++_rat_cstor.C	\
 	gmp++_int_misc.C	\

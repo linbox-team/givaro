@@ -9,6 +9,8 @@
 // $Id: gmp++_int_div.C,v 1.9 2011-01-06 18:02:37 bboyer Exp $
 // ==========================================================================
 
+#ifndef __GIVARO_gmpxx_gmpxx_int_div_C
+#define __GIVARO_gmpxx_gmpxx_int_div_C
 #include "gmp++/gmp++.h"
 
 namespace Givaro {
@@ -318,6 +320,45 @@ Integer Integer::trunc(const Integer & n, const Integer & d)
 	return q ;
 }
 
+
+	// -- operator /
+	 Integer operator / (const int l, const Integer& n)
+	{
+		return Integer(l)/n;
+	}
+	 Integer operator / (const long l, const Integer& n)
+	{
+		return Integer(l)/n;
+	}
+	 Integer operator / (const Integer& n, const int l)
+	{
+		return n / (long)l;
+	}
+	 Integer operator / (const Integer& n, const unsigned int l)
+	{
+		return n / (unsigned long)l;
+	}
+
+	 Integer& operator /= (Integer& n, const int l)
+	{
+		if (l>=0)
+			return n /= (unsigned long)l;
+		else
+			return  n = -(n / (unsigned long)-l);
+	}
+	 Integer& operator /= (Integer& n, const long l)
+	{
+		return n /= (unsigned long)l;
+	}
+	 Integer& operator /= (Integer& n, const unsigned int l)
+	{
+		return n /= (unsigned long)l;
+	}
+
+
 }
+
+#endif // __GIVARO_gmpxx_gmpxx_int_div_C
+
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

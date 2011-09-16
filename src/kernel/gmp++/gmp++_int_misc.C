@@ -10,6 +10,9 @@
 // ==========================================================================
 // Description:
 
+#ifndef __GIVARO_gmpxx_gmpxx_int_misc_C
+#define __GIVARO_gmpxx_gmpxx_int_misc_C
+
 #include <iostream>
 #include <math.h>
 #include "gmp++/gmp++.h"
@@ -313,7 +316,7 @@ namespace Givaro {
 		mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), cbtuli );
 		unsigned long long tmp = (unsigned long)(rem);
 		//	tmp <<= CHAR_BIT*sizeof(unsigned long int) ;
-		cbtuli >>= 1;                
+		cbtuli /= 2;
 		tmp <<= cbtuli ;
 		tmp <<= cbtuli ;
 
@@ -336,6 +339,44 @@ namespace Givaro {
 	{
 		return (float)mpz_get_d ( (mpz_srcptr)&gmp_rep);
 	}
+
+	unsigned long length(const Integer& a)
+	{
+		return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(unsigned long);
+	}
+
+	Integer abs(const Integer &n)
+	{
+		if (sign(n) >= 0)
+			return n;
+		return -n;
+	}
+
+	size_t Integer::size() const
+	{
+		return  mpz_size( (mpz_srcptr)&gmp_rep ) ;
+	}
+
+	size_t Integer::size_in_base(int BASE) const
+	{
+		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, BASE);
+	}
+
+	size_t Integer::bitsize() const
+	{
+		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, 2);
+	}
+
+	unsigned long Integer::operator[](size_t i) const
+	{
+		if ( mpz_size( (mpz_srcptr)&gmp_rep ) > i)
+			return mpz_getlimbn( (mpz_srcptr)&gmp_rep, i);
+		else
+			return 0;
+	}
+
 }
+
+#endif // __GIVARO_gmpxx_gmpxx_int_misc_C
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

@@ -10,6 +10,9 @@
 // $Id: gmp++_int_mod.C,v 1.17 2010-12-22 13:47:45 jgdumas Exp $
 // ==========================================================================
 
+#ifndef __GIVARO_gmpxx_gmpxx_int_mod_C
+#define __GIVARO_gmpxx_gmpxx_int_mod_C
+
 #include "gmp++/gmp++.h"
 
 #ifndef GIVABS
@@ -218,6 +221,37 @@ namespace Givaro {
 	}
 #endif //__USE_64_bits__
 
+	// -- operator %
+	 Integer operator % (const int l, const Integer& n)
+	{
+		return Integer(l) % n;
+	}
+	 Integer operator % (const long l, const Integer& n)
+	{
+		return Integer(l) % n;
+	}
+	 Integer operator % (const Integer& n, const int l)
+	{
+		return n % (long)l;
+	}
+	 Integer operator % (const Integer& n, const unsigned int l)
+	{
+		return n % (unsigned long)l;
+	}
+
+	 Integer& operator %= (Integer& n, const int l)
+	{
+		return n %= (long)l;
+	}
+	 Integer& operator %= (Integer& n, const unsigned int l)
+	{
+		return n %= (unsigned long)l;
+	}
+
+
 }
+
+
+#endif __GIVARO_gmpxx_gmpxx_int_mod_C
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax

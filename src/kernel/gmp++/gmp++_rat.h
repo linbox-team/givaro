@@ -91,24 +91,39 @@ namespace Givaro
 				  enum reduceFlag = NoReduce) ;
 			Rationel( long int n, int d,
 				  enum reduceFlag = NoReduce) ;
+			Rationel( long unsigned int n, int d,
+				  enum reduceFlag = NoReduce) ;
+
 			Rationel( int n, unsigned int d,
 				  enum reduceFlag = NoReduce) ;
 			Rationel( int n, long int d,
 				  enum reduceFlag = NoReduce) ;
+			Rationel( int n, unsigned long int d,
+				  enum reduceFlag = NoReduce) ;
+
+			Rationel( unsigned int n, unsigned int d,
+				  enum reduceFlag = NoReduce);
 			Rationel( unsigned int n, long int d,
+				  enum reduceFlag = NoReduce) ;
+			Rationel( unsigned int n, unsigned long int d,
+				  enum reduceFlag = NoReduce);
+
+			Rationel( unsigned long int n, unsigned int d,
 				  enum reduceFlag = NoReduce) ;
 			Rationel( long int n, unsigned int d,
 				  enum reduceFlag = NoReduce) ;
+
+
 			Rationel( long int n, long int d,
 				  enum reduceFlag = NoReduce) ;
-			Rationel( unsigned int n, unsigned int d,
-				  enum reduceFlag = NoReduce);
+			Rationel( unsigned long int n, long int d,
+				  enum reduceFlag = NoReduce) ;
+			Rationel( long int n, unsigned long int d,
+				  enum reduceFlag = NoReduce) ;
+
 			Rationel( unsigned long int n, unsigned long int d,
 				  enum reduceFlag = NoReduce) ;
-			Rationel( unsigned long int n, unsigned int d,
-				  enum reduceFlag = NoReduce) ;
-			Rationel( unsigned int n, unsigned long int d,
-				  enum reduceFlag = NoReduce) ;
+
 			template<class T>
 			Rationel( Integer & n, T d,
 				  enum reduceFlag = NoReduce) ;
@@ -145,8 +160,22 @@ namespace Givaro
 
 			// ADD
 
-			Rationel& addin(Rationel& res, const Rationel& n);
-			Rationel& addin(Rationel& res, const Integer& n) ;
+			static Rationel& addin(Rationel& res, const Rationel& n);
+			static Rationel& addin(Rationel& res, const Integer& n) ;
+
+			// SUB
+			static Rationel& negin (Rationel& res)
+			{
+				mpq_neg((mpq_ptr)res.get_mpq(),
+					(mpq_ptr)res.get_mpq());
+				return res ;
+			}
+			Rationel& negin ()
+			{
+				mpq_neg((mpq_ptr)&gmp_rep,(mpq_ptr)&gmp_rep);
+				return *this;
+			}
+
 
 			// Conversions/Casts (gmp++_rat_cast.C)
 			operator std::string() const ;

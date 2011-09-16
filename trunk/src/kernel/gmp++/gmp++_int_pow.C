@@ -10,6 +10,9 @@
 // ==========================================================================
 // Description:
 
+#ifndef __GIVARO_gmpxx_gmpxx_int_pow_C
+#define __GIVARO_gmpxx_gmpxx_int_pow_C
+
 #include "gmp++/gmp++.h"
 
 namespace Givaro {
@@ -91,3 +94,5 @@ Integer powmod(const Integer& n, const Integer& e, const Integer& m)
 }
 
 }
+#endif // __GIVARO_gmpxx_gmpxx_int_pow_C
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

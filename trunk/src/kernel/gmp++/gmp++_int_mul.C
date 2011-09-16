@@ -9,6 +9,8 @@
 // $Id: gmp++_int_mul.C,v 1.11 2011-01-20 08:19:15 jgdumas Exp $
 // ==========================================================================
 
+#ifndef __GIVARO_gmpxx_gmpxx_int_mul_C
+#define __GIVARO_gmpxx_gmpxx_int_mul_C
 #include "gmp++/gmp++.h"
 
 namespace Givaro {
@@ -231,6 +233,69 @@ Integer Integer::operator * (const long l) const
   return res;
 }
 
-}
+	// -- operator *
+	 Integer operator * (const int l, const Integer& n)
+	{
+		return n * (long)l;
+	}
+	 Integer operator * (const unsigned int l, const Integer& n)
+	{
+		return n * (unsigned long)l;
+	}
+	 Integer operator * (const long l, const Integer& n)
+	{
+		return n * l;
+	}
+	 Integer operator * (const unsigned long l, const Integer& n)
+	{
+		return n * l;
+	}
+	 Integer operator * (const Integer& n, const int l)
+	{
+		return n * (long)l;
+	}
+	 Integer operator * (const Integer& n, const unsigned int l)
+	{
+		return n * (unsigned long)l;
+	}
 
+	 Integer& operator *= (Integer& n, const int l)
+	{
+		return n *= (long)l;
+	}
+	 Integer& operator *= (Integer& n, const unsigned int l)
+	{
+		return n *= (unsigned long)l;
+	}
+
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
+	 Integer operator * (const Integer& n, const long long l)
+	{
+		return n * (Integer)l;
+	}
+	 Integer operator * (const Integer& n, const unsigned long long l)
+	{
+		return n * (Integer)l;
+	}
+	 Integer operator * (const long long l, const Integer& n)
+	{
+		return n*l;
+	}
+	 Integer operator * (const unsigned long long l, const Integer& n)
+	{
+		return n*l;
+	}
+	 Integer& operator *= (Integer& n, const long long l)
+	{
+		return n *= (Integer)l;
+	}
+	 Integer& operator *= (Integer& n, const unsigned long long l)
+	{
+		return n *= (Integer)l;
+	}
+#endif
+
+
+}
+#endif // __GIVARO_gmpxx_gmpxx_int_mul_C
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

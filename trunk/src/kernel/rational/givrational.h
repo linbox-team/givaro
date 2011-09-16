@@ -10,7 +10,7 @@
 // ==========================================================================
 #ifndef __GIVARO_rational_H
 #define __GIVARO_rational_H
-#define __GIVARO_GMPplusplus_rational_H
+// #define __GIVARO_GMPplusplus_rational_H
 
 #include "givaro/givinteger.h"
 #include "givaro/givmodule.h"

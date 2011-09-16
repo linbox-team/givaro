@@ -10,9 +10,15 @@
 // ==========================================================================
 // Description:
 
+#ifndef __GIVARO_gmpxx_gmpxx_int_io_C
+#define __GIVARO_gmpxx_gmpxx_int_io_C
+
 #include <iostream>
 #include <stdlib.h>
 #include "gmp++/gmp++.h"
+#ifndef __GIVARO_GMP_NO_CXX
+#include <sstream>
+#endif
 
 
 namespace Givaro {
@@ -37,6 +43,7 @@ namespace Givaro {
 	// Sortie signee : +321321 ou -321321, par exemple
 	std::ostream& Integer::print(std::ostream &o) const
 	{
+#ifdef __GIVARO_GMP_NO_CXX
 		int base = 10;
 		unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
 		char *str = new char[strSize];
@@ -46,17 +53,26 @@ namespace Givaro {
 		o << str;
 		delete [] str ;
 		return o;
+#else
+		return o << (mpz_srcptr)&gmp_rep;
+#endif
 	}
 
 	Integer::operator std::string () const
 	{
+
+#ifdef __GIVARO_GMP_NO_CXX
 		std::string s;
 		unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), 10) + 2;
 		char *str = new char[strSize + 2];
 		mpz_get_str(str, 10, (mpz_srcptr)&(gmp_rep));
 		s = std::string(str);
 		delete [] str ;
-		return s;
+#else
+		std::ostringstream o ;
+		print(o);
+		return o.str();
+#endif
 	}
 
 	Integer::Integer(const std::vector<mp_limb_t>& v)
@@ -155,6 +171,14 @@ namespace Givaro {
 		return in ;
 	}
 
+	//-------------------------------------------------inline >> & << operators
+	std::ostream& operator<< (std::ostream& o, const Integer& a)
+	{
+		return a.print(o);
+	}
+
 }
+
+#endif // __GIVARO_gmpxx_gmpxx_int_io_C
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

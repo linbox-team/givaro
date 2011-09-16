@@ -22,6 +22,9 @@
 #include <list>
 #include <string>
 
+#ifndef __GIVARO_GMPplusplus_H
+#warning "you should include <gmp++/gmp++.h> before <gmp++/gmp++_int.h> (or prepare for the worse)"
+#endif
 
 #ifdef __USE_64_bits__
 #    define __USE_GMPPLUSPLUS_SIXTYFOUR__

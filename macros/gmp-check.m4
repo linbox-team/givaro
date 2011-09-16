@@ -88,7 +88,9 @@ for GMP_HOME in ${GMP_HOME_PATH}
 				],[
 					AC_MSG_RESULT(yes)
 					GMP_VERSION=""
+					GMP_LIBS="${GMP_LIBS} -lgmpxx"
 					AC_SUBST(GMP_VERSION)
+					AC_SUBST(GMP_LIBS)
 				],[
 					AC_MSG_RESULT(no)
 					AC_DEFINE(GMP_NO_CXX,1,[Define if GMP has no <gmpxx.h>])

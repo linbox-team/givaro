@@ -150,12 +150,13 @@ namespace Givaro
 	}
 
 	/*
-	 *  cast | I   U   L  UL
+	 *
+	 *  d\n  | I   U   L  UL
 	 *  -----------------------
-	 *  I    | si  si  si ??
+	 *  I    | si  si  si ui
 	 *  U    | si  ui  si ui
-	 *  L    | si  si  si ??
-	 *  UL   | ??  ui  ?? ui
+	 *  L    | si  si  ?? ??
+	 *  UL   | si  ui  ?? ui
 	 */
 
 	// castable to long int/long int
@@ -165,7 +166,10 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (long int)d);
+		if (d < 0)
+			mpq_set_si((mpq_ptr)&gmp_rep,(long int)-n, (long unsigned int)-d);
+		else
+			mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (long unsigned int)d);
 		if (red == Reduce)
 			reduce();
 
@@ -179,7 +183,10 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (long int)d);
+		if (d < 0)
+			mpq_set_si((mpq_ptr)&gmp_rep,(long int)-n, (unsigned long int)-d);
+		else
+			mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (unsigned long int)d);
 		if (red == Reduce)
 			reduce();
 
@@ -193,7 +200,29 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,n, (long int)d);
+		if (d < 0)
+			mpq_set_si((mpq_ptr)&gmp_rep,-n, (long unsigned int)-d);
+		else
+			mpq_set_si((mpq_ptr)&gmp_rep,n, (long unsigned int)d);
+		if (red == Reduce)
+			reduce();
+
+		num = mpq_numref((mpq_ptr)&gmp_rep) ;
+		den = mpq_denref((mpq_ptr)&gmp_rep) ;
+
+	}
+
+	Rationel::Rationel( long unsigned int n, int d,
+			    enum reduceFlag red)
+	{
+		assert(nonZero(d));
+		mpq_init((mpq_ptr)&gmp_rep);
+		if (d < 0) {
+			mpq_set_ui((mpq_ptr)&gmp_rep,n, (long unsigned int)-d);
+			negin(*this);
+		}
+		else
+			mpq_set_ui((mpq_ptr)&gmp_rep,n, (long unsigned int)d);
 		if (red == Reduce)
 			reduce();
 
@@ -207,7 +236,7 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (long int)d);
+		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (long unsigned int)d);
 		if (red == Reduce)
 			reduce();
 
@@ -221,7 +250,24 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, d);
+		if (d < 0 )
+			mpq_set_si((mpq_ptr)&gmp_rep,(long int)-n, (long unsigned int)-d);
+		else
+			mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (long unsigned int)d);
+		if (red == Reduce)
+			reduce();
+
+		num = mpq_numref((mpq_ptr)&gmp_rep) ;
+		den = mpq_denref((mpq_ptr)&gmp_rep) ;
+
+	}
+
+	Rationel::Rationel( int n, unsigned long int d,
+			    enum reduceFlag red)
+	{
+		assert(nonZero(d));
+		mpq_init((mpq_ptr)&gmp_rep);
+		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (long unsigned int)d);
 		if (red == Reduce)
 			reduce();
 
@@ -231,12 +277,12 @@ namespace Givaro
 	}
 
 	// U
-	Rationel::Rationel( unsigned int n, long int d,
+	Rationel::Rationel( unsigned int n, unsigned int d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, d);
+		mpq_set_ui((mpq_ptr)&gmp_rep,(long unsigned int)n, (long unsigned int)d);
 		if (red == Reduce)
 			reduce();
 
@@ -244,12 +290,57 @@ namespace Givaro
 		den = mpq_denref((mpq_ptr)&gmp_rep) ;
 
 	}
+
+	Rationel::Rationel( unsigned int n, long unsigned int d,
+			    enum reduceFlag red)
+	{
+		assert(nonZero(d));
+		mpq_init((mpq_ptr)&gmp_rep);
+		mpq_set_ui((mpq_ptr)&gmp_rep,(long unsigned int)n, d);
+		if (red == Reduce)
+			reduce();
+
+		num = mpq_numref((mpq_ptr)&gmp_rep) ;
+		den = mpq_denref((mpq_ptr)&gmp_rep) ;
+
+	}
+
+	Rationel::Rationel( unsigned int n, long int d,
+			    enum reduceFlag red)
+	{
+		assert(nonZero(d));
+		mpq_init((mpq_ptr)&gmp_rep);
+		if (d < 0) {
+			mpq_set_si((mpq_ptr)&gmp_rep,(long unsigned int)-n, (long unsigned int)-d);
+		}
+		if (red == Reduce)
+			reduce();
+
+		num = mpq_numref((mpq_ptr)&gmp_rep) ;
+		den = mpq_denref((mpq_ptr)&gmp_rep) ;
+
+	}
+
 	Rationel::Rationel( long int n, unsigned int d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep, n, (long int)d);
+		mpq_set_si((mpq_ptr)&gmp_rep, n, (long unsigned int)d);
+		if (red == Reduce)
+			reduce();
+
+		num = mpq_numref((mpq_ptr)&gmp_rep) ;
+		den = mpq_denref((mpq_ptr)&gmp_rep) ;
+
+	}
+
+	Rationel::Rationel( unsigned long int n, unsigned int d,
+			    enum reduceFlag red)
+	{
+		assert(nonZero(d));
+		mpq_init((mpq_ptr)&gmp_rep);
+		mpq_set_ui((mpq_ptr)&gmp_rep, n, (long unsigned int)d);
 		if (red == Reduce)
 			reduce();
 
@@ -264,7 +355,11 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep, n, d);
+		if (d < 0)
+			mpq_set_si((mpq_ptr)&gmp_rep, -n, (long unsigned int)-d);
+		else
+			mpq_set_si((mpq_ptr)&gmp_rep, n, (long unsigned int)d);
+
 		if (red == Reduce)
 			reduce();
 
@@ -273,15 +368,33 @@ namespace Givaro
 
 	}
 
-
-	// castable to unsigned long int/unsigned long int
-	// U
-	Rationel::Rationel( unsigned int n, unsigned int d,
+	Rationel::Rationel( long int n, unsigned long int d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_ui((mpq_ptr)&gmp_rep,(unsigned long int)n, (unsigned long int)d);
+		mpq_set_si((mpq_ptr)&gmp_rep, n, d);
+
+		if (red == Reduce)
+			reduce();
+
+		num = mpq_numref((mpq_ptr)&gmp_rep) ;
+		den = mpq_denref((mpq_ptr)&gmp_rep) ;
+
+	}
+
+	Rationel::Rationel( unsigned long int n, long int d,
+			    enum reduceFlag red)
+	{
+		assert(nonZero(d));
+		mpq_init((mpq_ptr)&gmp_rep);
+		if (d < 0) {
+			mpq_set_ui((mpq_ptr)&gmp_rep, (unsigned long int)n, (unsigned long int)-d);
+			negin(*this);
+		}
+		else
+			mpq_set_ui((mpq_ptr)&gmp_rep, (unsigned long int)n, (unsigned long int)d);
+
 		if (red == Reduce)
 			reduce();
 
@@ -305,33 +418,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( unsigned long int n, unsigned int d,
-			    enum reduceFlag red)
-	{
-		assert(nonZero(d));
-		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_ui((mpq_ptr)&gmp_rep,n, (unsigned long int)d);
-		if (red == Reduce)
-			reduce();
 
-		num = mpq_numref((mpq_ptr)&gmp_rep) ;
-		den = mpq_denref((mpq_ptr)&gmp_rep) ;
-
-	}
-
-	Rationel::Rationel( unsigned int n, unsigned long int d,
-			    enum reduceFlag red)
-	{
-		assert(nonZero(d));
-		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_ui((mpq_ptr)&gmp_rep,(unsigned long)n, d);
-		if (red == Reduce)
-			reduce();
-
-		num = mpq_numref((mpq_ptr)&gmp_rep) ;
-		den = mpq_denref((mpq_ptr)&gmp_rep) ;
-
-	}
 
 
 }

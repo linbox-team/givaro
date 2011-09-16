@@ -76,8 +76,7 @@ namespace Givaro {
 	// Entree au format de la sortie
 	std::istream& operator>> (std::istream& inp, Rationel& a)
 	{
-		mpq_inp_str((mpq_ptr)a.get_mpq(),reinterpret_cast<FILE*>(&inp),10);
-		return inp ;
+		return inp >>  (mpq_ptr)a.get_mpq();
 	}
 
 	std::ostream& operator<< (std::ostream& outp, const Rationel& a)

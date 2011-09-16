@@ -8,6 +8,7 @@
 
 #include <gmp++/gmp++_rat.h>
 #include <iostream>
+#include <sstream>
 
 using namespace Givaro ;
 
@@ -28,6 +29,10 @@ int main()
 	Rationel J(1UL,2L);
 	Rationel K(a,b);
 	Rationel L(a,1);
+	std::istringstream s ;
+	s.str("4/5");
+	Rationel M ;
+	s >> M ;
 	std::cout << A << std::endl;
 	std::cout << B << std::endl;
 	std::cout << C << std::endl;
@@ -41,7 +46,8 @@ int main()
 	std::cout << J << std::endl;
 	std::cout << K << std::endl;
 	std::cout << L << std::endl;
-	// std::cout << M << std::endl;
+	std::cout << M << std::endl;
+
 
 	return 0 ;
 }

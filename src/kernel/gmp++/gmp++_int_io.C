@@ -105,8 +105,9 @@ namespace Givaro {
 	}
 
 	// Entree au format de la sortie
-	std::istream& operator>> (std::istream& in, Integer& a)
+	std::istream& operator>> (std::istream& inp, Integer& a)
 	{
+#ifdef __GIVARO_GMP_NO_CXX
 		static long base[10] = {
 			10,
 			100,
@@ -118,9 +119,9 @@ namespace Givaro {
 			100000000,
 			1000000000
 		} ;
-		if (!in) return in ;
+		if (!inp) return inp ;
 		// eat white
-		in >> std::ws  ;
+		inp >> std::ws  ;
 
 		// Base : 10^9, we read by packet of length 9
 		// the char.
@@ -133,20 +134,20 @@ namespace Givaro {
 		int sign = 1 ;
 
 		// find a sign:
-		in.get(ch) ;
+		inp.get(ch) ;
 		if ((ch != '+') && (ch != '-') && !((ch >= '0') && (ch <= '9')))
 		{
 			std::cerr << "Bad integer format: found: "<< ch ;
 			std::cerr << ", in place of '+' '-' or a digit"<< std::endl ;
-			return in ;
+			return inp ;
 		}
 		switch (ch) {
 		case '+' : break ;
 		case '-' : sign = -1 ; break ;
-		default  : in.putback(ch) ; break ;
+		default  : inp.putback(ch) ; break ;
 		}
 		// eat white
-		in >> std::ws  ;
+		inp >> std::ws  ;
 
 		int noend = 1 ;
 		while (noend)
@@ -155,10 +156,10 @@ namespace Givaro {
 
 			// Read 9 digits or less
 			while ((noend) && (counter < 9)) {
-				in.get(ch) ;
-				if (in.eof()) { noend = 0 ; }
+				inp.get(ch) ;
+				if (inp.eof()) { noend = 0 ; }
 				else if ((ch >= '0') && (ch <= '9')) Tmp[counter++] = ch ;
-				else { noend = 0 ;  in.putback(ch) ; }
+				else { noend = 0 ;  inp.putback(ch) ; }
 			}
 			if (counter >0) {
 				long l ;
@@ -168,7 +169,10 @@ namespace Givaro {
 			}
 		}
 		if (sign == -1) a = -a ;
-		return in ;
+		return inp ;
+#else
+		return inp >>  (mpz_ptr)a.get_mpz();
+#endif
 	}
 
 	//-------------------------------------------------inline >> & << operators

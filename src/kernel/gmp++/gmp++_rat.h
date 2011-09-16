@@ -236,7 +236,7 @@ namespace Givaro
 				// (( (mpq_ptr)&f.gmp_rep )->_mp_num ) =  (mpz_srcptr) n.get_mpz_const() ;
 				// mpz_t a ;
 				// mpz_init(a);
-				__mpz_struct* a = mpq_numref( (mpq_ptr)&f.gmp_rep );
+				mpz_ptr a = mpq_numref( (mpq_ptr)&f.gmp_rep );
 				a = (mpz_ptr) n.get_mpz_const() ;
 			}
 

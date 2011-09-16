@@ -15,6 +15,7 @@ pkgincludesub_HEADERS=\
 	gmp++.h       \
 	gmp++_int.h   \
 	gmp++_rat.h   \
+	gmp++_rat.inl   \
 	gmp++.C       \
 	gmp++_int.C   \
 	gmp++_int_rand.inl	\

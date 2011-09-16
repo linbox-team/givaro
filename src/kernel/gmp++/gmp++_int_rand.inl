@@ -14,6 +14,9 @@
 #ifndef __GIVARO_gmpxx_gmpxx_int_rand_INL
 #define __GIVARO_gmpxx_gmpxx_int_rand_INL
 
+#include <givaro/givtimer.h>
+#include <assert.h>
+
 namespace Givaro {
 	//-----------------------------------------------------
 	//----------------------- Random integers -------------

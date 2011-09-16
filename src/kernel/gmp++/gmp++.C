@@ -8,6 +8,6 @@
 #define __GMPplusplus_C__
 
 #include "gmp++_int.C"
-// #include "gmp++_rat.C"
+#include "gmp++_rat.C"
 
 #endif

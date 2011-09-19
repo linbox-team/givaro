@@ -27,9 +27,9 @@ Integer& Integer::mulin(Integer& res, const long n)
 {
   if (isZero(n)) return res = Integer::zero;
   if (isZero(res)) return res;
-//   int sgn = GMP__SGN(n);
-  // int sgn = GMP__SGN(n);
-  // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
+//   int sgn = sign(n);
+  // int sgn = sign(n);
+  // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, abs(n));
 //   if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
   // if (sgn <0) return res = -res;
   mpz_mul_si( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
@@ -54,8 +54,8 @@ Integer& Integer::mul(Integer& res, const Integer& n1, const long n2)
 {
   if (isZero(n1)) return res = Integer::zero;
   if (isZero(n2)) return res = Integer::zero;
-  // int sgn = GMP__SGN(n2);
-  // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
+  // int sgn = sign(n2);
+  // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, abs(n2));
   // if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
   // if (sgn <0) return res = -res;
   mpz_mul_si( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
@@ -190,8 +190,8 @@ Integer& Integer::operator *= (const long l)
   if (l==0) return *this =Integer::zero;
   if (isZero(*this)) return *this;
 //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
-  // int sgn = GMP__SGN(l);
-  // mpz_mul_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
+  // int sgn = sign(l);
+  // mpz_mul_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, abs(l));
   // if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
   mpz_mul_si( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
   return *this;
@@ -224,8 +224,8 @@ Integer Integer::operator * (const long l) const
   if (isZero(*this)) return Integer::zero;
 //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
   Integer res;
-  // int sgn = GMP__SGN(l);
-  // mpz_mul_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
+  // int sgn = sign(l);
+  // mpz_mul_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, abs(l));
 //   if (sgn <0) (res.gmp_rep).size = -(res.gmp_rep).size;
 //   return Integer((res.gmp_rep));
   // if (sgn <0) mpz_neg( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&(res.gmp_rep) );

@@ -12,6 +12,7 @@
 #ifndef __GIVARO_gmpxx_gmpxx_int_div_C
 #define __GIVARO_gmpxx_gmpxx_int_div_C
 #include "gmp++/gmp++.h"
+#include <cstdlib>
 
 namespace Givaro {
 
@@ -32,8 +33,8 @@ Integer& Integer::divin(Integer& res, const long n)
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
 	if (isZero(res)) return res;
-	int sgn = GMP__SGN(n);
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
+	int sgn = Givaro::sign(n);
+	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, std::abs(n));
 	if (sgn <0) return res = -res;
 	// if (n<0)
 	// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
@@ -70,8 +71,8 @@ Integer& Integer::div(Integer& res, const Integer& n1, const long n2)
 	//  if (isZero(n2)) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
-	int sgn = GMP__SGN(n2);
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, GMP__ABS(n2));
+	int sgn = Givaro::sign(n2);
+	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, std::abs(n2));
 	if (sgn <0) return res = -res;
 
 	// if (n2>0)
@@ -148,8 +149,8 @@ Integer& Integer::operator /= (const long l)
 	//    GivMathDivZero("[Integer::/]: division by zero");
 	//  }
 	if (isZero(*this)) return *this;
-	int sgn = GMP__SGN(l);
-	mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
+	int sgn = Givaro::sign(l);
+	mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
 	if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep));
 	return *this;
 }
@@ -191,8 +192,8 @@ Integer Integer::operator / (const long l) const
 	//  }
 	if (isZero(*this)) return Integer::zero;
 	Integer res;
-	int sgn = GMP__SGN(l);
-	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, GMP__ABS(l));
+	int sgn = Givaro::sign(l);
+	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, std::abs(l));
 	if (sgn <0) return negin(res);
 	// if (l>0)
 		// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l) ;
@@ -233,9 +234,9 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 	//  if (isZero(b)) {
 	//    GivMathDivZero("[Integer::divide]: division by zero");
 	//  }
-	// int sgn = GMP__SGN(b);
+	// int sgn = sign(b);
 	r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
-			   (mpz_srcptr)&(a.gmp_rep), GMP__ABS(b));
+			   (mpz_srcptr)&(a.gmp_rep), std::abs(b));
 	// if (sgn <0) return negin(q);
 	// if (a>0)
 		// mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r

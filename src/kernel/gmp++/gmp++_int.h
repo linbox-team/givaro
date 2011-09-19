@@ -1082,19 +1082,19 @@ namespace Givaro {
 		static inline int sign (const long  int a)
 	{
 		if (a == 0) return 0 ;
-		return (a<0)?-1:-1 ;
+		return (a<0)?-1:1 ;
 	}
 		static inline int sign (const int a)
 	{
 		if (a == 0) return 0 ;
-		return (a<0)?-1:-1 ;
+		return (a<0)?-1:1 ;
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 	static inline int sign (const long long a)
 	{
 		if (a == 0) return 0 ;
-		return (a<0)?-1:-1 ;
+		return (a<0)?-1:1 ;
 	}
 #endif
 } // Givaro

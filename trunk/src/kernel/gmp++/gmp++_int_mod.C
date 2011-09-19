@@ -14,6 +14,7 @@
 #define __GIVARO_gmpxx_gmpxx_int_mod_C
 
 #include "gmp++/gmp++.h"
+#include <cstdlib>
 
 #ifndef GIVABS
 #define GIVABS(a) ((a)>0?(a):-(a))
@@ -38,8 +39,8 @@ namespace Givaro {
 	Integer& Integer::modin(Integer& res, const long n)
 	{
 		if (isZero(res)) return res;
-		// int sgn = GMP__SGN(n);
-		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, GMP__ABS(n));
+		// int sgn = sign(n);
+		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, abs(n));
 		// if (sgn <0) return res = -res;
 
 		if (n>0)
@@ -56,14 +57,14 @@ namespace Givaro {
 		if (isZero(n1)) return res = Integer::zero;
 		// mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
 		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
-		assert(!(res<0) && (res<GMP__ABS(n2)));
+		assert(!(res<0) && (res<abs(n2)));
 		return res;
 	}
 	Integer& Integer::mod(Integer& res, const Integer& n1, const long n2)
 	{
 		if (isZero(n1)) return res = Integer::zero;
-		// int sgn = GMP__SGN(n2);
-		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, GMP__ABS(n2));
+		// int sgn = sign(n2);
+		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, abs(n2));
 		// if (sgn <0) return res = - res;
 
 		if (n2>0)
@@ -71,7 +72,7 @@ namespace Givaro {
 		else
 			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&n1.gmp_rep, -n2);
 
-		assert(!(res<0) && (res<GMP__ABS(n2)));
+		assert(!(res<0) && (res<std::abs(n2)));
 		return res;
 	}
 	Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
@@ -114,8 +115,8 @@ namespace Givaro {
 #ifdef DEBUG
 		int sgn_this = (*this>0)?1:-1;
 #endif
-		int sgn = GMP__SGN(l);
-		mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, GMP__ABS(l));
+		int sgn = Givaro::sign(l);
+		mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
 		if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
 
 #ifdef DEBUG
@@ -252,6 +253,6 @@ namespace Givaro {
 }
 
 
-#endif __GIVARO_gmpxx_gmpxx_int_mod_C
+#endif // __GIVARO_gmpxx_gmpxx_int_mod_C
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax

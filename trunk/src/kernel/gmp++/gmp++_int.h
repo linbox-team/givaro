@@ -72,6 +72,11 @@ namespace Givaro {
 	Integer 	powmod(const Integer& n, const Integer& e, const Integer& m);
 	// (FILE inline)
 	int 		sign   (const Integer& a);
+// #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
+	// int             sign   (const long long int );
+// #endif
+	// int             sign   (const long int );
+	// int             sign   (const int );
 	// (FILE gmp++_int_compare.C)
 	int 		isZero (const Integer& a);
 	int 		compare(const Integer& a, const Integer& b);
@@ -1074,6 +1079,24 @@ namespace Givaro {
 
 	}; //----------------------------------------------- End of Class Integer
 
+		static inline int sign (const long  int a)
+	{
+		if (a == 0) return 0 ;
+		return (a<0)?-1:-1 ;
+	}
+		static inline int sign (const int a)
+	{
+		if (a == 0) return 0 ;
+		return (a<0)?-1:-1 ;
+	}
+
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
+	static inline int sign (const long long a)
+	{
+		if (a == 0) return 0 ;
+		return (a<0)?-1:-1 ;
+	}
+#endif
 } // Givaro
 
 // only template code is inlined

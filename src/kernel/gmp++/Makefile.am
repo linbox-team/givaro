@@ -64,8 +64,7 @@ libgmppp_la_SOURCES+=            \
 	gmp++_rat_cstor.C	\
 	gmp++_int_misc.C	\
 	gmp++_rat_misc.C	\
-	gmp++_int_pow.C      \
-	gmp++_int_lib.C
+	gmp++_int_pow.C
 
 endif
 

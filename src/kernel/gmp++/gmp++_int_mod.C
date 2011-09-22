@@ -13,7 +13,9 @@
 #ifndef __GIVARO_gmpxx_gmpxx_int_mod_C
 #define __GIVARO_gmpxx_gmpxx_int_mod_C
 
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 #include <cstdlib>
 
 #ifndef GIVABS

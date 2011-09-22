@@ -16,7 +16,10 @@
 #ifndef __GIVARO_gmpxx_gmpxx_int_compare_C
 #define __GIVARO_gmpxx_gmpxx_int_compare_C
 
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
+#include <cstdlib>
 
 namespace Givaro {
 
@@ -30,40 +33,210 @@ namespace Givaro {
 		return mpz_cmp ( (mpz_srcptr)&a.gmp_rep, (mpz_srcptr)&b.gmp_rep );
 	}
 
+	// absCompare
 	/*! Compare the norm of two integers.
 	 * @param a integer
 	 * @param b integer
 	 * @return \c 1 if \f$|a| > |b|\f$, \c 0 if \f$|a| = |b|\f$ and \p -1 otherwise.
 	 */
+	//@{
 	int absCompare(const Integer &a, const Integer &b)
 	{
 		return mpz_cmpabs( (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
 	}
 
+	int absCompare(const Integer &a, const double b)
+	{
+		return mpz_cmpabs_d( (mpz_srcptr)&(a.gmp_rep), b);
+	}
+
+	int absCompare(const Integer &a, const float b)
+	{
+		return mpz_cmpabs_d( (mpz_srcptr)&(a.gmp_rep), (double)b);
+	}
+
+	int absCompare(const Integer &a, const unsigned long b)
+	{
+		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), b);
+	}
+
+	int absCompare(const Integer &a, const unsigned b)
+	{
+		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (unsigned long)b);
+	}
+
+	int absCompare(const Integer &a, const long int b)
+	{
+		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (unsigned long) std::abs(b));
+	}
+
+	int absCompare(const Integer &a, const int b)
+	{
+		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (unsigned long) std::abs(b));
+	}
+	//@}
+
+	// Operator !=
+
+	/*! operator != (not equal)
+	 * @param l integer
+	 * @return \c 1 iff l == this
+	 */
+	//@{
+	int Integer::operator != (const Integer & l) const
+	{
+		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) != 0;
+	}
+
+	int Integer::operator != (const double l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) != 0;
+	}
+
+	int Integer::operator != (const float l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) != 0;
+	}
+
 	int Integer::operator != (const int l) const
 	{
-		return mpz_cmp_si ( (mpz_srcptr)&gmp_rep, l ) != 0;
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
+	}
+
+	int Integer::operator != (const unsigned l) const
+	{
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) != 0;
 	}
 
 	int Integer::operator != (const long l) const
 	{
-		return mpz_cmp_si ( (mpz_srcptr)&gmp_rep, l ) != 0;
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
 	}
 
-	//unsigned long ops added by Dan Roche, 6-26-04
 	int Integer::operator != (const unsigned long l) const
 	{
-		return mpz_cmp_ui ( (mpz_srcptr)&gmp_rep, l ) != 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) != 0;
 	}
 
-	int Integer::operator > (const unsigned long l) const
+	//-------------------------------------------------inline comparaison operators
+	int operator != (double l, const Integer& n)
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
+		return n.operator != (l);
 	}
 
-	int Integer::operator < (const unsigned long l) const
+	int operator != (float l, const Integer& n)
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
+		return n.operator != (l);
+	}
+
+	int operator != (int l, const Integer& n)
+	{
+		return n.operator != (l);
+	}
+
+	int operator != (long l, const Integer& n)
+	{
+		return n.operator != (l);
+	}
+
+	int operator != (unsigned long l, const Integer& n)
+	{
+		return n.operator != (l);
+	}
+
+	int operator != (unsigned l, const Integer& n)
+	{
+		return n.operator != (l);
+	}
+
+	//@}
+
+	//@{
+	int Integer::operator == (const Integer & l) const
+	{
+		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) == 0;
+	}
+
+	int Integer::operator == (const double l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) == 0;
+	}
+
+	int Integer::operator == (const float l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) == 0;
+	}
+
+	int Integer::operator == (const int l) const
+	{
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
+	}
+
+	int Integer::operator == (const unsigned l) const
+	{
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) == 0;
+	}
+
+	int Integer::operator == (const long l) const
+	{
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
+	}
+
+	int Integer::operator == (const unsigned long l) const
+	{
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) == 0;
+	}
+
+	//-------------------------------------------------inline comparaison operators
+	int operator == (double l, const Integer& n)
+	{
+		return n.operator == (l);
+	}
+
+	int operator == (float l, const Integer& n)
+	{
+		return n.operator == (l);
+	}
+
+	int operator == (int l, const Integer& n)
+	{
+		return n.operator == (l);
+	}
+
+	int operator == (long l, const Integer& n)
+	{
+		return n.operator == (l);
+	}
+
+	int operator == (unsigned long l, const Integer& n)
+	{
+		return n.operator == (l);
+	}
+
+	int operator == (unsigned l, const Integer& n)
+	{
+		return n.operator == (l);
+	}
+
+	//@}
+
+
+
+	// Operator >
+	//@{
+	int Integer::operator > (const Integer & l) const
+	{
+		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) > 0;
+	}
+
+	int Integer::operator > (const double l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) > 0;
+	}
+
+	int Integer::operator > (const float l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) > 0;
 	}
 
 	int Integer::operator > (const int l) const
@@ -71,9 +244,77 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
+	int Integer::operator > (const unsigned l) const
+	{
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) > 0;
+	}
+
 	int Integer::operator > (const long l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
+	}
+
+	int Integer::operator > (const unsigned long l) const
+	{
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
+	}
+
+	//-------------------------------------------------inline comparaison operators
+	int operator > (double l, const Integer& n)
+	{
+		return n.operator < (l);
+	}
+
+	int operator > (float l, const Integer& n)
+	{
+		return n.operator < (l);
+	}
+
+	int operator > (int l, const Integer& n)
+	{
+		return n.operator < (l);
+	}
+
+	int operator > (long l, const Integer& n)
+	{
+		return n.operator < (l);
+	}
+
+	int operator > (unsigned long l, const Integer& n)
+	{
+		return n.operator < (l);
+	}
+
+	int operator > (unsigned l, const Integer& n)
+	{
+		return n.operator < (l);
+	}
+
+	// Operator <
+	//@{
+	int Integer::operator < (const Integer & l) const
+	{
+		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) < 0;
+	}
+
+	int Integer::operator < (const double l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) < 0;
+	}
+
+	int Integer::operator < (const float l) const
+	{
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float) l) < 0;
+	}
+
+	int Integer::operator < (const unsigned l) const
+	{
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) < 0;
+	}
+
+	int Integer::operator < (const unsigned long l) const
+	{
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
 	int Integer::operator < (const int l) const
@@ -87,221 +328,223 @@ namespace Givaro {
 	}
 
 	//-------------------------------------------------inline comparaison operators
-	int operator != (const Integer& a , const Integer& b)
+	int operator < (double l, const Integer& n)
 	{
-		return compare(a,b) != 0;
+		return n.operator > (l);
 	}
 
-	 int operator != (int l, const Integer& n)
+	int operator < (float l, const Integer& n)
 	{
-		return n.operator != (l);
+		return n.operator > (l);
 	}
 
-	 int operator != (long l, const Integer& n)
+	int operator < (int l, const Integer& n)
 	{
-		return n.operator != (l);
+		return n.operator > (l);
 	}
 
-	 int operator != (unsigned long l, const Integer& n)
+	int operator < (long l, const Integer& n)
 	{
-		return n.operator != (l);
+		return n.operator > (l);
 	}
 
-	 int operator == (const Integer& a, const Integer& b)
+	int operator < (unsigned long l, const Integer& n)
 	{
-		return compare(a,b) == 0;
+		return n.operator > (l);
 	}
 
-	 int operator == (int l, const Integer& n)
+	int operator < (unsigned l, const Integer& n)
 	{
-		return (! (n.operator != (l)));
+		return n.operator > (l);
 	}
 
-	 int operator == (long l, const Integer& n)
+	// Operator >=
+	//@{
+	int Integer::operator >= (const Integer & l) const
 	{
-		return (! (n.operator != (l)));
+		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) >= 0;
 	}
 
-	 int operator == (unsigned long l, const Integer& n)
+	int Integer::operator >= (const double l) const
 	{
-		return (! (n.operator != (l)));
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) >= 0;
 	}
 
-	 int operator == (const Integer& n, unsigned long l)
+	int Integer::operator >= (const float l) const
 	{
-		return (! (n.operator != (l)));
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) >= 0;
 	}
 
-	 int operator == (const Integer& n, int l)
+	int Integer::operator >= (const int l) const
 	{
-		return (! (n.operator != (l)));
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
-	 int operator == (const Integer& n, long l)
+	int Integer::operator >= (const unsigned l) const
 	{
-		return (! (n.operator != (l)));
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) >= 0;
 	}
 
-	 int operator < (const Integer& a , const Integer& b)
+	int Integer::operator >= (const long l) const
 	{
-		return compare(a,b) < 0;
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
-	 int operator < (const int l, const Integer& n)
+	int Integer::operator >= (const unsigned long l) const
 	{
-		return n > l;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
-	 int operator < (const long l, const Integer& n)
+	//-------------------------------------------------inline comparaison operators
+	int operator >= (double l, const Integer& n)
 	{
-		return n > l;
+		return n.operator <= (l);
 	}
 
-	 int operator < (const unsigned long l, const Integer& n)
+	int operator >= (float l, const Integer& n)
 	{
-		return n > l;
+		return n.operator <= (l);
 	}
 
-	 int operator <= (const Integer& n, unsigned long l)
+	int operator >= (int l, const Integer& n)
 	{
-		return (! (n > l) );
+		return n.operator <= (l);
 	}
 
-	 int operator <= (unsigned long l, const Integer& n)
+	int operator >= (long l, const Integer& n)
 	{
-		return (! (n < l) );
+		return n.operator <= (l);
 	}
 
-	 int operator >= (unsigned long l, const Integer& n)
+	int operator >= (unsigned long l, const Integer& n)
 	{
-		return (! (n < l) );
+		return n.operator <= (l);
 	}
 
-	 int operator >= (const Integer& n, unsigned long l)
+	int operator >= (unsigned l, const Integer& n)
 	{
-		return (! (n < l) );
+		return n.operator <= (l);
 	}
 
-	 int operator > (int l, const Integer& n)
+	// Operator <=
+	//@{
+	int Integer::operator <= (const Integer & l) const
 	{
-		return n < l;
+		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) <= 0;
 	}
 
-	 int operator > (long l, const Integer& n)
+	int Integer::operator <= (const double l) const
 	{
-		return n < l;
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) <= 0;
 	}
 
-	 int operator > (unsigned long l, const Integer& n)
+	int Integer::operator <= (const float l) const
 	{
-		return n < l;
+		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float) l) <= 0;
 	}
 
-	 int operator >  (const Integer& a , const Integer& b)
+	int Integer::operator <= (const unsigned l) const
 	{
-		return compare(a,b) > 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) <= 0;
 	}
 
-	 int operator <= (const Integer& a, const Integer& b)
+	int Integer::operator <= (const unsigned long l) const
 	{
-		return compare(a,b) <= 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
-	 int operator <= (const Integer& n, int l)
+	int Integer::operator <= (const int l) const
 	{
-		return (! (n > l) );
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
-	 int operator <= (const Integer& n, long l)
+	int Integer::operator <= (const long l) const
 	{
-		return (! (n > l) );
+		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
-	 int operator <= (int l, const Integer& n)
+	//-------------------------------------------------inline comparaison operators
+	int operator <= (double l, const Integer& n)
 	{
-		return (! (n < l) );
+		return n.operator >= (l);
 	}
 
-	 int operator <= (long l, const Integer& n)
+	int operator <= (float l, const Integer& n)
 	{
-		return (! (n < l) );
+		return n.operator >= (l);
 	}
 
-	 int operator >= (const Integer& a, const Integer& b)
+	int operator <= (int l, const Integer& n)
 	{
-		return compare(a,b) >= 0;
+		return n.operator >= (l);
 	}
 
-	 int operator >= (int l, const Integer& n)
+	int operator <= (long l, const Integer& n)
 	{
-		return (! (n > l) );
+		return n.operator >= (l);
 	}
 
-	 int operator >= (long l, const Integer& n)
+	int operator <= (unsigned long l, const Integer& n)
 	{
-		return (! (n > l) );
+		return n.operator >= (l);
 	}
 
-	 int operator >= (const Integer& n, int l)
+	int operator <= (unsigned l, const Integer& n)
 	{
-		return (! (n < l) );
+		return n.operator >= (l);
 	}
 
-	 int operator >= (const Integer& n, long l)
-	{
-		return (! (n < l) );
-	}
 
-	 // compare to 1 and 0
-	  int isOne(const Integer& a)
+
+	// compare to 1 and 0
+	int isOne(const Integer& a)
 	{
 		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 1UL);
 	}
 
-	 int isZero(const Integer& a)
-	{
-		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
-		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) == 0) ; // BB which one is faster ?
-	}
-
-	 int nonZero(const Integer& a)
+	int nonZero(const Integer& a)
 	{
 		return mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
 		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) != 0) ; // BB which one is faster ?
 	}
 
-	 int isZero(const short int a)
+	int isZero(const Integer& a)
+	{
+		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
+		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) == 0) ; // BB which one is faster ?
+	}
+	int isZero(const short int a)
 	{
 		return a ==0;
 	}
-	 int isZero(const int a)
+	int isZero(const int a)
 	{
 		return a ==0;
 	}
-	 int isZero(const long a)
+	int isZero(const long a)
 	{
 		return a ==0;
 	}
-	 int isZero(const unsigned short int a)
+	int isZero(const unsigned short int a)
 	{
 		return a ==0;
 	}
-	 int isZero(const unsigned int a)
+	int isZero(const unsigned int a)
 	{
 		return a ==0;
 	}
-	 int isZero(const unsigned long a)
+	int isZero(const unsigned long a)
 	{
 		return a ==0UL;
 	}
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #if 1 /*  use of C++0x long long integer constant */
-	 int isZero(const unsigned long long a)
+	int isZero(const unsigned long long a)
 	{
 		return a ==0ULL;
 	}
 #endif
-	 int isZero(const long long a)
+	int isZero(const long long a)
 	{
 		return a ==0LL;
 	}

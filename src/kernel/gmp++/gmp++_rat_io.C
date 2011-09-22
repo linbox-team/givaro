@@ -15,7 +15,9 @@
 #include <iostream>
 #include <stdlib.h>
 #include <sstream>
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 
 namespace Givaro {
 

@@ -14,7 +14,9 @@
 #ifndef __GIVARO_gmpxx_gmpxx_int_gcd_C
 #define __GIVARO_gmpxx_gmpxx_int_gcd_C
 
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 
 namespace Givaro {
 	// ==========================================================================

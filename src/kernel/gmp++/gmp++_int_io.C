@@ -15,7 +15,9 @@
 
 #include <iostream>
 #include <stdlib.h>
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 #ifndef __GIVARO_GMP_NO_CXX
 #include <sstream>
 #endif

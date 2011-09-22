@@ -11,7 +11,9 @@
 #ifndef __GMPplusplus_rat_misc_C__
 #define __GMPplusplus_rat_misc_C__
 #include <iostream>
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 
 namespace Givaro
 {

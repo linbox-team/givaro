@@ -16,7 +16,9 @@
 #ifndef __GIVARO_gmpxx_gmpxx_rat_compare_C
 #define __GIVARO_gmpxx_gmpxx_rat_compare_C
 
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 
 #if 0
 namespace Givaro {

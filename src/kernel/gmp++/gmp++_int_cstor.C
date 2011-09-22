@@ -11,14 +11,12 @@
 #ifndef __GMPplusplus_CSTOR_C__
 #define __GMPplusplus_CSTOR_C__
 #include <iostream>
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 
 
 namespace Givaro {
-	//------------------------------------- predefined null and one
-	const Integer Integer::zero(0UL);
-	const Integer Integer::one(1UL);
-
 	//-----------------------------~Integer()
 	Integer::~Integer()
 	{

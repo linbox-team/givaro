@@ -15,7 +15,9 @@
 
 #include <iostream>
 #include <math.h>
+#ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
+#endif
 
 namespace Givaro {
 	//-------------------------------------------fact (unsigned long l)

@@ -105,3 +105,22 @@ dnl GCC ?
 				])
 ])
 
+dnl compile library or make it mostly inlined headers ?
+
+AC_DEFUN([AC_INLINE],
+[AC_MSG_CHECKING([whether to inline or not most of the code ?])
+  AC_ARG_ENABLE(inline,
+[AC_HELP_STRING([--enable-inline],  [enable inlining most of the code])],
+      USE_INLINE=$enableval,
+      USE_INLINE=no)
+  AC_MSG_RESULT([$USE_INLINE])
+  AM_CONDITIONAL(GIVARO_INLINE_ALL, [test $USE_INLINE = yes])
+  AC_SUBST(GIVARO_INLINE_ALL)
+  AC_DEFINE(INLINE_ALL,1,[Define if you want most code inlined])
+  dnl  DBG=$USE_DEBUG
+  dnl  AC_SUBST(DBG)dnl
+]
+)
+
+
+

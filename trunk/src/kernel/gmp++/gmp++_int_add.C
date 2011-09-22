@@ -9,10 +9,13 @@
 // $Id: gmp++_int_add.C,v 1.5 2010-12-20 12:09:37 bboyer Exp $
 // ==========================================================================
 
-#include "gmp++/gmp++.h"
-
 #ifndef __GIVARO_gmpxx_gmpxx_int_add_C
 #define __GIVARO_gmpxx_gmpxx_int_add_C
+
+#ifndef __GIVARO_INLINE_ALL
+#include "gmp++/gmp++.h"
+#endif
+
 
 namespace Givaro {
 	//-------------------------------------------------- operator +

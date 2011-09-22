@@ -6,7 +6,7 @@
 #ifndef __GMPplusplus_RATIONAL_C__
 #define __GMPplusplus_RATIONAL_C__
 
-#include "gmp++/gmp++.h"
+// #include "gmp++/gmp++.h"
 
 #include "gmp++_rat_cstor.C"
 #include "gmp++_rat_add.C"

@@ -33,6 +33,7 @@ echo "-----------------------------------------------"
 AC_DEBUG
 AC_PROFILE
 AC_WARNINGS
+AC_INLINE
 
 echo "-----------------------------------------------"
 # CFLAGS=${CFLAGS:-$DEFAULT_CFLAGS}

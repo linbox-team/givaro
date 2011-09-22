@@ -14,6 +14,15 @@
 #include <climits> // required by gcc 4.3
 #include <givaro-config.h>
 
+
+#define __GIVARO_INLINE_ALL 1
+
+#ifdef __GIVARO_INLINE_ALL
+#define giv_all_inlined inline
+#else
+#define giv_all_inlined
+#endif
+
 #ifndef __GIVARO__DONOTUSE_longlong__
 #define __USE_64_bits__
 #endif

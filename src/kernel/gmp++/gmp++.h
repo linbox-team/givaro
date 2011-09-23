@@ -15,8 +15,6 @@
 #include <givaro-config.h>
 
 
-#define __GIVARO_INLINE_ALL 1
-
 #ifdef __GIVARO_INLINE_ALL
 #define giv_all_inlined inline
 #else

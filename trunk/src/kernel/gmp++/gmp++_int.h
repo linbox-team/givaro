@@ -180,14 +180,14 @@ namespace Givaro {
 
 		giv_all_inlined friend int compare(const Integer& a, const Integer& b);
 		giv_all_inlined friend int absCompare(const Integer& a, const Integer& b);
-		giv_all_inlined friend int 		absCompare(const Integer& a, const double d);
-		giv_all_inlined friend int 		absCompare(const Integer& a, const float d);
-		giv_all_inlined friend int 		absCompare(const Integer& a, const unsigned long u);
-		giv_all_inlined friend int 		absCompare(const Integer& a, const unsigned u);
-		giv_all_inlined friend int 		absCompare(const Integer& a, const long int u);
-		giv_all_inlined friend int 		absCompare(const Integer& a, const int u);
+		giv_all_inlined friend int absCompare(const Integer& a, const double d);
+		giv_all_inlined friend int absCompare(const Integer& a, const float d);
+		giv_all_inlined friend int absCompare(const Integer& a, const unsigned long u);
+		giv_all_inlined friend int absCompare(const Integer& a, const unsigned u);
+		giv_all_inlined friend int absCompare(const Integer& a, const long int u);
+		giv_all_inlined friend int absCompare(const Integer& a, const int u);
 		template<class T>
-		giv_all_inlined friend int             absCompare( const T a,  const Integer & b) ;
+		giv_all_inlined friend int absCompare( const T a,  const Integer & b) ;
 
 
 		giv_all_inlined int operator >= (const Integer & l) const;

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfq.h
-// Time-stamp: <07 Jun 11 14:40:16 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <08 Oct 11 09:38:59 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -43,7 +43,10 @@ protected:
 	UTT _q;			// p^k
 	UTT _qm1;			// p^k-1
 	UTT _qm1o2;			// (p^k-1)/2
+public:
+        Rep mone;
 
+protected:
 	// G is a generator of GF(q)
 	// p is GF(q)'s characteristic
 	// log2pol[ i ] = G^i(p)
@@ -72,7 +75,7 @@ public:
 	typedef Rep* Array;
 	typedef const Rep* constArray;
 
-	GFqDom(): zero(0), one(1), _log2pol(0), _pol2log(0),_plus1(0) {}
+	GFqDom(): zero(0), one(1), mone(-1), _log2pol(0), _pol2log(0),_plus1(0) {}
 
         // Automatic construction
 	GFqDom( const UTT P, const UTT e = 1);
@@ -88,6 +91,7 @@ public:
 	{
 		zero = F.zero;
 		one = F.one;
+                mone = F.mone;
 		_characteristic = F._characteristic;
 		_dcharacteristic = F._dcharacteristic;
 		_exponent = F._exponent;
@@ -113,6 +117,7 @@ public:
 	{
 		this->zero = F.zero;
 		this->one = F.one;
+		this->mone = F.mone;
 		this->_characteristic = F._characteristic;
 		this->_dcharacteristic = F._dcharacteristic;
 		this->_exponent = F._exponent;

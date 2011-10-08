@@ -183,8 +183,8 @@ protected:
     UTT _SHIFTS;
     Ints _sBASE,_sMASK,_sMAXN;
 
-    Ints _epmunsq;
     UTT _pceil,_pMASK,_degree;
+    Ints _epmunsq;
 
     std::vector<UTT> _log2bin;
     std::vector<UTT> _bin2log;

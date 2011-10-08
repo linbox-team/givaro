@@ -77,7 +77,9 @@
 // -- Defines the basic integer arithmetics available on this machine
 #include <givaro-config.h>
 #ifdef __GIVARO_HAVE_STDINT_H
+#ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS
+#endif
 #include <stdint.h>
 #ifndef INT64_MAX
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"

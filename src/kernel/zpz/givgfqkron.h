@@ -19,6 +19,8 @@
 #ifndef __GIVARO_gfq_kronecker_H
 #define __GIVARO_gfq_kronecker_H
 
+#include "givaro/givzpz.h"
+#include "givaro/givzpzInt.h"
 #include "givaro/givgfq.h"
 #include "givaro/givpower.h"
 #include <limits>

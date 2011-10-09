@@ -18,6 +18,7 @@ namespace Givaro
 	//------------------------------------- predefined null and one
 	const Integer Integer::zero(0UL);
 	const Integer Integer::one(1UL);
+	const Integer Integer::mone(-1L);
 } // Givaro
 #endif
 

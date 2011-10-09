@@ -94,10 +94,10 @@ namespace Givaro {
 
             friend std::ostream& operator<<(std::ostream& out, const Self_t& V) {
                 out << '[';
-                for(typename Self_t::const_iterator it=V.begin(); it!= V.end(); ++it) 
+                for(typename Self_t::const_iterator it=V.begin(); it!= V.end(); ++it)
                     out << *it << ' ';
                 return out << ']';
-            }         
+            }
 
 	};
 
@@ -177,6 +177,7 @@ namespace Givaro {
 		// -- Constantes
 		Rep zero;
 		Rep one;
+		Rep mone;
 
 		// -- Init polynomial
 		Rep& init(Rep& a) const;

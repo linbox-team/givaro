@@ -54,13 +54,20 @@ public:
 	// ----- Constantes
 	const Rep zero;
 	const Rep one;
+	const Rep mone;
 
 	// ----- Constructor
-	ZpzDom() : zero(0), one(1), _p(0) {}
-	ZpzDom( Residu_t p, unsigned long = 1) : zero(0), one(1), _p(p) {}
+	ZpzDom() : zero(0), one(1), mone(-1), _p(0) {}
+	ZpzDom( Residu_t p, unsigned long = 1) : zero(0), one(1), mone(p-1), _p(p) {}
 
 
-	Self_t& operator= (const Self_t& D) {
+	Self_t& operator= (const Self_t& D)
+	{
+	  assign(const_cast<Element&>(one),D.one);
+	  assign(const_cast<Element&>(zero),D.zero);
+	  assign(const_cast<Element&>(mone),D.mone);
+
+
 		this->_p = D._p;
 		return *this;
 	}

@@ -49,11 +49,7 @@ public:
   typedef Residu_t* Array;
   typedef const Residu_t* constArray;
 
-  // ----- Constantes
-  const Residu_t zero;
-  const Residu_t one;
-
-  // ----- Constructor /destor
+   // ----- Constructor /destor
   ZpzDom( Residu_t p = 2 );
   ZpzDom( const ZpzDom<Log16>& F);
   ~ZpzDom();
@@ -231,6 +227,12 @@ protected:
 
   static void Init();
   static void End();
+public:
+ // ----- Constantes
+  const Element zero;
+  const Element one;
+  const Element mone;
+
 
 };
 

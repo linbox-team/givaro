@@ -55,11 +55,11 @@
 namespace Givaro {
 
 	inline ZpzDom<Unsigned32>::ZpzDom( ) :
-		zero(0), one(1), mone(-1), _p(0), _dp(0.0)
+		zero(0), one(1), mone(0), _p(0), _dp(0.0)
 	{}
 
 	inline ZpzDom<Unsigned32>::ZpzDom( Residu_t p ) :
-		zero(0), one(1), mone(p-1),_p(p), _dp((double)p)
+		zero(0), one(1), mone(Rep(p-1)),_p(p), _dp((double)p)
 
 	{}
 

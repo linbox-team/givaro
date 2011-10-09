@@ -97,7 +97,7 @@ namespace Givaro {
 		Rationel abs(const Rationel& f)
 		{
 			Rationel absf ;
-			mpq_abs((mpq_ptr)absf.get_mpq(),(mpq_srcptr)f.get_mpq());
+			mpq_abs((mpq_ptr)absf.get_mpq(),(mpq_srcptr)f.get_mpq_const());
 			return absf ;
 		}
 }

@@ -10,6 +10,9 @@
 // ==========================================================================
 // Description:
 
+#ifndef __GIVARO_zpz_givzpz16std_C
+#define __GIVARO_zpz_givzpz16std_C
+
 #include <iostream>
 #include "givaro/givzpz16std.h"
 
@@ -72,5 +75,7 @@ namespace Givaro {
 	}
 
 } // namespace Givaro
+
+#endif
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

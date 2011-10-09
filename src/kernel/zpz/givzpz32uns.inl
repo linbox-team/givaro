@@ -54,12 +54,12 @@
 
 namespace Givaro {
 
-	inline ZpzDom<Unsigned32>::ZpzDom( )
-	: zero(0), one(1), _p(0), _dp(0.0)
+	inline ZpzDom<Unsigned32>::ZpzDom( ) :
+		zero(0), one(1), mone(-1), _p(0), _dp(0.0)
 	{}
 
-	inline ZpzDom<Unsigned32>::ZpzDom( Residu_t p )
-	: zero(0), one(1), _p(p), _dp((double)p)
+	inline ZpzDom<Unsigned32>::ZpzDom( Residu_t p ) :
+		zero(0), one(1), mone(p-1),_p(p), _dp((double)p)
 
 	{}
 
@@ -68,8 +68,8 @@ namespace Givaro {
 		return _p;
 	}
 
-	inline ZpzDom<Unsigned32>::ZpzDom(const ZpzDom<Unsigned32>& F)
-	: zero(0), one(1), _p(F._p), _dp(F._dp)
+	inline ZpzDom<Unsigned32>::ZpzDom(const ZpzDom<Unsigned32>& F) :
+		zero(F.zero), one(F.one), mone(F.mone), _p(F._p), _dp(F._dp)
 	{ }
 
 	inline ZpzDom<Unsigned32>::Rep& ZpzDom<Unsigned32>::mul (Rep& r, const Rep a, const Rep b) const

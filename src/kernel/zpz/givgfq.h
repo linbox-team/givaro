@@ -82,7 +82,7 @@ public:
 
         // Construction with prescribed irreducible polynomial
         //   coefficients of the vector should be integers-like
-        //   there will be a call to this->init to build the 
+        //   there will be a call to this->init to build the
         //   representation of the irreducible polynomial
     	template<typename Vector>
     	GFqDom(const UTT P, const UTT e, const Vector& modPoly);

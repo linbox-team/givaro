@@ -16,7 +16,7 @@
 namespace Givaro {
 
 ZpzDom<Log16>::ZpzDom( Residu_t p ) :
-       	zero(Rep(2*(p-1))), one(0), _p(p)
+	_p(p),_pmone(Rep(p-1)),zero(Rep(_pmone << 1)), one(0),mone(Rep(_pmone>>1))
 {
 	int32_t i,j;
 
@@ -28,7 +28,6 @@ ZpzDom<Log16>::ZpzDom( Residu_t p ) :
 	_tab_rep2value[0] = 1;
 	_tab_value2rep[1] = 0;
 
-	_pmone = Rep(_p -1);
 	int32_t fourp = ((int32_t)p) << 2, fourpmone= ((int32_t)_pmone)<<2;
 
 	int not_found = 1;
@@ -148,21 +147,22 @@ ZpzDom<Log16>::ZpzDom( Residu_t p ) :
 	// -- temporary
 }
 
-ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F)
-  : zero(F.zero), one(F.one)
+ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F) :
+	_p ( F._p),
+	_pmone ( F._pmone),
+	_tab_value2rep ( F._tab_value2rep),
+	_tab_rep2value ( F._tab_rep2value),
+	_tab_mul ( F._tab_mul),
+	_tab_div ( F._tab_div),
+	_tab_neg ( F._tab_neg),
+	_tab_addone ( F._tab_addone),
+	_tab_subone ( F._tab_subone),
+	_tab_mone ( F._tab_mone),
+	_tab_pone ( F._tab_pone),
+	numRefs ( F.numRefs),
+
+	zero(F.zero), one(F.one),mone(F.mone)
 {
-  _p = F._p;
-  _pmone = F._pmone;
-  _tab_value2rep = F._tab_value2rep;
-  _tab_rep2value = F._tab_rep2value;
-  _tab_mul = F._tab_mul;
-  _tab_div = F._tab_div;
-  _tab_neg = F._tab_neg;
-  _tab_mone = F._tab_mone;
-  _tab_pone = F._tab_pone;
-  _tab_addone = F._tab_addone;
-  _tab_subone = F._tab_subone;
-  numRefs = F.numRefs;
   (*numRefs)++;
 #ifdef GIVARO_DEBUG
   std::cout << *(numRefs) << " Brefs, p="<<_p<<" \n";
@@ -172,6 +172,12 @@ ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F)
 
 ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
 {
+
+	F.assign(const_cast<Element&>(one),F.one);
+	F.assign(const_cast<Element&>(zero),F.zero);
+	F.assign(const_cast<Element&>(mone),F.mone);
+
+
   if (this->numRefs) {
     (*(this->numRefs))--;
 #ifdef GIVARO_DEBUG

@@ -210,7 +210,8 @@ namespace Givaro
 		/*! Retrieve the GMP representation of a Rationel.
 		 * @return a pointer to this representation.
 		 */
-		giv_all_inlined mpq_ptr get_mpq()     const ;
+		giv_all_inlined mpq_ptr get_mpq()     ;
+		giv_all_inlined mpq_srcptr get_mpq_const()     const ;
 		/*! Retrieve the GMP representation of the denominator of a Rationel.
 		 * @return a pointer to this denominator (integer).
 		 */

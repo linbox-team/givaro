@@ -51,6 +51,7 @@ public:
   // ----- Constantes
   const Rep zero;
   const Rep one;
+  const Rep mone;
 
   // ----- Constructor
   ZpzDom();
@@ -60,10 +61,16 @@ public:
   int operator==( const ZpzDom<Unsigned32>& BC) const { return _p == BC._p;}
   int operator!=( const ZpzDom<Unsigned32>& BC) const { return _p != BC._p;}
 
-  ZpzDom<Unsigned32>& operator=( const ZpzDom<Unsigned32>& F) {
-      this->_p = F._p;
-      this->_dp = F._dp;
-      return *this;
+  ZpzDom<Unsigned32>& operator=( const ZpzDom<Unsigned32>& F)
+  {
+	  F.assign(const_cast<Element&>(one),F.one);
+	  F.assign(const_cast<Element&>(zero),F.zero);
+	  F.assign(const_cast<Element&>(mone),F.mone);
+
+
+	  this->_p = F._p;
+	  this->_dp = F._dp;
+	  return *this;
   }
 
   // ----- Access to the modulus

@@ -53,16 +53,17 @@ public:
   // ----- Constantes
   const Rep zero;
   const Rep one;
+  const Rep mone;
 
   // ----- Constructor
   ZpzDom()
-	  : zero(0), one(1), _p(0), _dp(0.0) {}
+	  : zero(0), one(1), mone(-1), _p(0), _dp(0.0) {}
 
   ZpzDom( Residu_t p )
-	  : zero(0), one(1), _p(p), _dp((double)p) {}
+	  : zero(0), one(1), mone(p-1), _p(p), _dp((double)p) {}
 
   ZpzDom( const ZpzDom<Std32>& F)
-	  : zero(0), one(1), _p(F._p), _dp(F._dp) {}
+	  : zero(F.zero), one(F.one), mone(F.mone), _p(F._p), _dp(F._dp) {}
 
 
 
@@ -70,10 +71,15 @@ public:
   int operator==( const ZpzDom<Std32>& BC) const { return _p == BC._p;}
   int operator!=( const ZpzDom<Std32>& BC) const { return _p != BC._p;}
 
-  ZpzDom<Std32>& operator=( const ZpzDom<Std32>& F) {
-      this->_p = F._p;
-      this->_dp = F._dp;
-      return *this;
+  ZpzDom<Std32>& operator=( const ZpzDom<Std32>& F)
+  {
+	  F.assign(const_cast<Element&>(one),F.one);
+	  F.assign(const_cast<Element&>(zero),F.zero);
+	  F.assign(const_cast<Element&>(mone),F.mone);
+
+	  this->_p = F._p;
+	  this->_dp = F._dp;
+	  return *this;
   }
 
   // ----- Access to the modulus

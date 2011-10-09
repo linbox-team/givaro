@@ -49,7 +49,7 @@ namespace Givaro {
 		typedef uint32_t Element;
 
 		// ----- Constructor
-		Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL) {}
+		Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL), mone(_p-one) {}
 
 		Montgomery( Residu_t p, int = 1) :
 			_p(  (Residu_t)  p),
@@ -59,11 +59,12 @@ namespace Givaro {
 			_nim((Residu_t)  -Montgomery<Std32>::invext(_p,B32) ),
 			_dp( (double)    p),
 			zero((Residu_t)  0UL),
-			one( (Residu_t)  redcsal( _B2p ) )
+			one( (Residu_t)  redcsal( _B2p ) ),
+			mone( _p - one )
 		{}
 
 		Montgomery( const Montgomery<Std32>& F)
-		: _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim),_dp(F._dp), zero(0UL), one(F.one)
+		: _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim),_dp(F._dp), zero(0UL), one(F.one),mone(F.mone)
 		{ }
 
 
@@ -80,6 +81,9 @@ namespace Givaro {
 			this->_B3p = F._B3p;
 			this->_nim = F._nim;
 			this->_dp = F._dp;
+			assign(const_cast<Element&>(one),F.one);
+			assign(const_cast<Element&>(mone),F.mone);
+			assign(const_cast<Element&>(zero),F.zero);
 			return *this;
 		}
 
@@ -239,6 +243,7 @@ namespace Givaro {
 					// ----- Constantes
 					const Rep zero;
 					const Rep one;
+					const Rep mone;
 	};
 
 

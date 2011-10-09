@@ -46,7 +46,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 
 
 
-	typename Field::Element a, b, c, d,a_,b_,c_,d_;
+	typename Field::Element a, b, c, d,a_,b_,c_,d_,ma;
 	typename Field::Element e,e_;
 
         F.init(a, 0UL);
@@ -56,6 +56,8 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 //         F.write(std::cerr << "a: ", a) << std::endl;
 //         F.write(std::cerr << "1: ", F.one) << std::endl;
         TESTE_EG(a, F.one);
+	F.init(ma,-1L);
+        TESTE_EG(ma, F.mone);
 
 	F.init(a, FIRSTINT);
 	F.init(b, FIRSTFLOAT);

@@ -10,6 +10,9 @@
 // ==========================================================================
 // Description:
 
+#ifndef __GIVARO_zpz_givmontg32_C
+#define __GIVARO_zpz_givmontg32_C
+
 #include <iostream>
 #include "givaro/givmontg32.h"
 namespace Givaro {
@@ -75,3 +78,5 @@ void Montgomery<Std32>::End()
 {
 }
 } // namespace Givaro
+
+#endif

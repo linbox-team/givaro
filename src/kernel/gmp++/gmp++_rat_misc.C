@@ -31,10 +31,15 @@ namespace Givaro
 		return n;
 	}
 
-	mpq_ptr Rationel::get_mpq() const
+	mpq_ptr Rationel::get_mpq()
 	{
 		return (mpq_ptr)&gmp_rep;
 	}
+	mpq_srcptr Rationel::get_mpq_const() const
+	{
+		return (mpq_srcptr)&gmp_rep;
+	}
+
 
 	mpz_ptr Rationel::get_mpq_den() const
 	{

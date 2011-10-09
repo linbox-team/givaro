@@ -13,13 +13,16 @@
 
 namespace Givaro {
 	template<class Domain>
-	inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X )
-	: _domain(d), _x(X) ,zero(1,d.zero), one(1,d.one), mone(1,d.mone)
+	inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X ) :
+		_domain(d), _x(X)
+		, zero(1,d.zero), one(1,d.one)
+		, mone(1,d.mone)
 	{}
 
 	template<class Domain>
-	inline Poly1Dom<Domain,Dense>::Poly1Dom(const Self_t& P)
-	: _domain(P._domain), _x(P._x) ,zero(P.zero), one(P.one),mone(P.mone)
+	inline Poly1Dom<Domain,Dense>::Poly1Dom(const Self_t& P) :
+		_domain(P._domain), _x(P._x)
+		,zero(P.zero), one(P.one),mone(P.mone)
 	{}
 
 	template<class Domain>

@@ -15,7 +15,7 @@ using namespace Givaro;
 int main (int argc, char * * argv) {
     unsigned long q = (argc>1?atoi(argv[1]):13);
     unsigned long expo = (argc>2?atoi(argv[2]):8);
-    
+
     {
             // This is the field with 11^2=121 elements
             // Using a generator representation and tables
@@ -25,11 +25,11 @@ int main (int argc, char * * argv) {
         GFqDom<long>::Element primroot; F1.generator(primroot);
         F1.write(std::cout << " represented as indexes with respect to the generator: ", primroot) << std::endl;
         std::cout << " represented as indexes with respect to the generator: " << F1.generator() << std::endl;
-        
+
     }
-    
+
     {
-            // This is the field with q^expo elements using the best 
+            // This is the field with q^expo elements using the best
             // possible base field
 
         std::cout << "Exponent max for zech logs " << q << '^' << expo << " : " << FF_EXPONENT_MAX(q,expo) << std::endl;
@@ -45,7 +45,7 @@ int main (int argc, char * * argv) {
             Fqe.write(std::cout << "This is the field with " << q << '^' << expo << " elements: ") << std::endl;
         }
     }
-    
+
 
         // This is the field with 11^2=121 elements
         // Using a polynomial representation
@@ -59,19 +59,19 @@ int main (int argc, char * * argv) {
         // Using a polynomial representation
         // And an alternative field, works only with Givaro >= 3.4.1
     {
-        
+
         ZpzDom<Std64> F11(11);
         Extension< ZpzDom<Std64> > F121(F11, 2);
         F121.write(std::cout << "This is the field with 121 elements: ") << ", using: " << F121.irreducible() << " as irreducible polynomial" << std::endl;
-        
-        
+
+
     }
 
         // This is the field with 11^2=121 elements
         // Using a polynomial representation
         // And an alternative field, works only with Givaro >= 3.4.1
     {
-        
+
         ZpzDom<Std64> F11(11);
         Poly1Dom< ZpzDom<Std64>, Dense > PolF11(F11,"Z");
         Poly1Dom< ZpzDom<Std64>, Dense >::Element Irred;
@@ -80,8 +80,8 @@ int main (int argc, char * * argv) {
         F11.assign(Irred[1],F11.one); // Irred is Y^2+Y+1
         Extension< ZpzDom<Std64> > F121(PolF11, Irred);
         F121.write(std::cout << "This is the field with 121 elements: ") << ", using: " << F121.irreducible() << " as irreducible polynomial" << std::endl;
-        
-        
+
+
     }
 
 
@@ -102,9 +102,9 @@ int main (int argc, char * * argv) {
         F256.write(std::cout << "This is the field with 256 elements: ") << ", using: " << F256.irreducible() << " as irreducible polynomial" << std::endl;
 
         std::cout << " this field is generated (in 2-adic) by: " << F256.generator() << std::endl;
-        
+
         std::cout << " in this field the indeterminate is represented by: " << F256.sage_generator() << std::endl;
-        
+
         {
             GFqDom<long>::Element a, b, c;
             givvector<long> Av(8); // A := X^7+X^6+X^3+X
@@ -113,24 +113,24 @@ int main (int argc, char * * argv) {
             givvector<long> Bv(8); // B:=X^6+X^4+X+1;
             Bv[0]=1; Bv[1]=1; Bv[2]=0; Bv[3]=0;
             Bv[4]=1; Bv[5]=0; Bv[6]=1; Bv[7]=0;
-            
+
             F256.init(a, Av); F256.init(b, Bv);
-            
+
             F256.mul(c,a,b);
             F256.write( std::cout, a) << '*';
             F256.write( std::cout, b) << '=';
             F256.write( std::cout, c) << std::endl;
-            
-            
+
+
             F256.add(c,a,b);
-            F256.write( F256.write( F256.write( 
+            F256.write( F256.write( F256.write(
                 std::cout, a) << '+', b) << '=' , c ) << std::endl;
         }
-        
+
         {
             GFqDom<long>::Element a, b, c, x;
             x = F256.sage_generator();
-            
+
             F256.add(a,x,F256.one); 	// X+1
             F256.mulin(a,x);
             F256.mulin(a,x);
@@ -142,7 +142,7 @@ int main (int argc, char * * argv) {
             F256.mulin(a,x); 		// (((X+1)X^3+1)X^2+1)X
 
 
-            F256.mul(b,x,x); 
+            F256.mul(b,x,x);
             F256.addin(b,F256.one); 	// X^2+1
             F256.mulin(b,x);
             F256.mulin(b,x);
@@ -155,37 +155,37 @@ int main (int argc, char * * argv) {
             F256.write( std::cout, a) << '*';
             F256.write( std::cout, b) << '=';
             F256.write( std::cout, c) << std::endl;
-            
-            
-            F256.add(c,a,b);
-            F256.write( F256.write( F256.write( 
-                std::cout, a) << '+', b) << '=' , c ) << std::endl;
-        }
-        
-        {
-            ZpzDom<Std16> F2(2);
-            Poly1PadicDom< ZpzDom<Std16> > P2(F2,"X");
-            
-            givvector<long> vect202; P2.radixdirect(vect202, 202, 8);
-            givvector<long> vect83; P2.radixdirect(vect83, 83, 8);
-            
-            givvector< unsigned long > Irred; P2.radixdirect(Irred, 283, 9);
-            GFqDom<long> F256(2,8, Irred);
-            
-            
-            GFqDom<long>::Element a, b, c;
-            F256.init(a, vect202); F256.init(b, vect83);
-            
-            F256.mul(c,a,b);
-            F256.write( std::cout, a) << '*';
-            F256.write( std::cout, b) << '=';
-            F256.write( std::cout, c) << std::endl;
-            
-            
+
+
             F256.add(c,a,b);
             F256.write( F256.write( F256.write(
                 std::cout, a) << '+', b) << '=' , c ) << std::endl;
-            
+        }
+
+        {
+            ZpzDom<Std16> F2(2);
+            Poly1PadicDom< ZpzDom<Std16> > P2(F2,"X");
+
+            givvector<long> vect202; P2.radixdirect(vect202, 202, 8);
+            givvector<long> vect83; P2.radixdirect(vect83, 83, 8);
+
+            givvector< unsigned long > Irred2; P2.radixdirect(Irred2, 283, 9);
+            GFqDom<long> F256_(2,8, Irred2);
+
+
+            GFqDom<long>::Element a, b, c;
+            F256_.init(a, vect202); F256_.init(b, vect83);
+
+            F256_.mul(c,a,b);
+            F256_.write( std::cout, a) << '*';
+            F256_.write( std::cout, b) << '=';
+            F256_.write( std::cout, c) << std::endl;
+
+
+            F256_.add(c,a,b);
+            F256_.write( F256_.write( F256_.write(
+                std::cout, a) << '+', b) << '=' , c ) << std::endl;
+
         }
 
     }

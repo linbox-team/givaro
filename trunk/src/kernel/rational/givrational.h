@@ -62,7 +62,7 @@ public :
         // Predefined cstes
     static const Rational zero ;
     static const Rational one ;
-    static const Rational mone ;
+    static const Rational mOne ;
 
         // Logical and physical copies
     Rational& operator = (const Rational& );
@@ -176,15 +176,15 @@ public:
     typedef Rational Rep;
 
         // -- Cstor
-    RationalDom() : one(1), mone(-one), zero(0) {}
-    template<class X> RationalDom(const X& x) : one(1), mone(-one),zero(0) {}
+    RationalDom() : one(1), mOne(-one), zero(0) {}
+    template<class X> RationalDom(const X& x) : one(1), mOne(-one),zero(0) {}
 
     int operator==( const RationalDom& ) const { return 1;}
     int operator!=( const RationalDom& ) const { return 0;}
 
         // -- Constants
     const Rational one;
-    const Rational mone;
+    const Rational mOne;
     const Rational zero;
 
     unsigned long characteristic() const { return 0UL; }

@@ -16,7 +16,7 @@
 namespace Givaro {
 
 ZpzDom<Log16>::ZpzDom( Residu_t p ) :
-	_p(p),_pmone(Rep(p-1)),zero(Rep(_pmone << 1)), one(0),mone(Rep(_pmone>>1))
+	_p(p),_pmone(Rep(p-1)),zero(Rep(_pmone << 1)), one(0),mOne(Rep(_pmone>>1))
 {
 	int32_t i,j;
 
@@ -161,7 +161,7 @@ ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F) :
 	_tab_pone ( F._tab_pone),
 	numRefs ( F.numRefs),
 
-	zero(F.zero), one(F.one),mone(F.mone)
+	zero(F.zero), one(F.one),mOne(F.mOne)
 {
   (*numRefs)++;
 #ifdef GIVARO_DEBUG
@@ -175,7 +175,7 @@ ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
 
 	F.assign(const_cast<Element&>(one),F.one);
 	F.assign(const_cast<Element&>(zero),F.zero);
-	F.assign(const_cast<Element&>(mone),F.mone);
+	F.assign(const_cast<Element&>(mOne),F.mOne);
 
 
   if (this->numRefs) {

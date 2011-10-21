@@ -41,10 +41,10 @@ DISTCLEANFILES = src/kernel/system/givaro   \
 				 src/library/vector/givaro
 
 
-# docs_dev:docs/givaro-dev-html/index.html
+docs_dev:docs/givaro-dev-html/index.html
 
-#  doc/givaro-dev-html/index.html:
-#  (cd docs; make docs_dev)
+docs/givaro-dev-html/index.html:
+	(cd docs; make docs_dev)
 
-VERSION=3.5.0
+VERSION=3.6.0
 

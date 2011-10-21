@@ -44,7 +44,7 @@ protected:
 	UTT _qm1;			// p^k-1
 	UTT _qm1o2;			// (p^k-1)/2
 public:
-        Rep mone;
+        Rep mOne;
 
 protected:
 	// G is a generator of GF(q)
@@ -75,7 +75,7 @@ public:
 	typedef Rep* Array;
 	typedef const Rep* constArray;
 
-	GFqDom(): zero(0), one(1), mone(-1), _log2pol(0), _pol2log(0),_plus1(0) {}
+	GFqDom(): zero(0), one(1), mOne(-1), _log2pol(0), _pol2log(0),_plus1(0) {}
 
         // Automatic construction
 	GFqDom( const UTT P, const UTT e = 1);
@@ -91,7 +91,7 @@ public:
 	{
 		zero = F.zero;
 		one = F.one;
-                mone = F.mone;
+                mOne = F.mOne;
 		_characteristic = F._characteristic;
 		_dcharacteristic = F._dcharacteristic;
 		_exponent = F._exponent;
@@ -117,7 +117,7 @@ public:
 	{
 		this->zero = F.zero;
 		this->one = F.one;
-		this->mone = F.mone;
+		this->mOne = F.mOne;
 		this->_characteristic = F._characteristic;
 		this->_dcharacteristic = F._dcharacteristic;
 		this->_exponent = F._exponent;

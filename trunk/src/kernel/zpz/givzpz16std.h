@@ -82,12 +82,12 @@ public:
 	// ----- Constantes
 	const Rep zero;
 	const Rep one;
-	const Rep mone;
+	const Rep mOne;
 
 	// ----- Constructor
-	ZpzDom() : zero(0), one(1), mone(-1), _p(0) {}
-	ZpzDom( Residu_t p ) : zero(0), one(1), mone(Rep(p-1)), _p(p) {}
-	ZpzDom( const ZpzDom<Std16>& F) : zero(F.zero), one(F.one), mone(F.mone), _p(F._p) {}
+	ZpzDom() : zero(0), one(1), mOne(-1), _p(0) {}
+	ZpzDom( Residu_t p ) : zero(0), one(1), mOne(Rep(p-1)), _p(p) {}
+	ZpzDom( const ZpzDom<Std16>& F) : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
 
 
 	int operator==( const ZpzDom<Std16>& BC) const { return _p == BC._p;}
@@ -98,7 +98,7 @@ public:
 
 		F.assign(const_cast<Element&>(one),F.one);
 		F.assign(const_cast<Element&>(zero),F.zero);
-		F.assign(const_cast<Element&>(mone),F.mone);
+		F.assign(const_cast<Element&>(mOne),F.mOne);
 
 		this->_p = F._p;
 		return *this;

@@ -216,9 +216,9 @@ int main()
 	unsigned long int M(m);
 	unsigned long int P(p);
 
-        Integer mone(-1);
+        Integer mOne(-1);
             // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
-        assert(mpz_tdiv_ui( (mpz_ptr)&mone, 3) == 1);
+        assert(mpz_tdiv_ui( (mpz_ptr)&mOne, 3) == 1);
 
 	// Integer r ;
 	// Integer a = -6 ;

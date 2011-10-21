@@ -231,7 +231,7 @@ public:
  // ----- Constantes
   const Element zero;
   const Element one;
-  const Element mone;
+  const Element mOne;
 
 
 };

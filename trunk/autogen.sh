@@ -7,16 +7,31 @@
 
 # Run this to generate all the initial makefiles, etc.
 
-echo "$0 $*" > autogen.status
+
+# Recover command line, with double-quotes
+CMDLINE=""
+for arg in "$@"
+do
+    WHO="`echo $arg | cut -d'=' -f1`"
+    WHAT="`echo $arg | cut -s -d'=' -f2`"
+    if test "x$WHAT" = "x"; then
+    	CMDLINE="$CMDLINE $WHO"
+    else
+	CMDLINE="$CMDLINE $WHO=\"$WHAT\""
+    fi
+done
+
+echo  "$0 $CMDLINE" > autogen.status
 chmod +x autogen.status
 
+# Starts configuring
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
 PKG_NAME="Givaro Library"
 
 (test -f $srcdir/configure.ac  \
-	&& test -f $srcdir//src/kernel/integer/givinteger.h ) || {
+	&& test -f $srcdir/src/kernel/integer/givinteger.h ) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level "\`$PKG_NAME\'" directory"
     exit 1
@@ -41,9 +56,18 @@ LIBTOOL=glibtool
 LIBTOOLIZE=glibtoolize
 }
 
+
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
 	echo
 	echo "You must have autoconf installed to compile $PROJECT."
+	echo "Download the appropriate package for your distribution,"
+	echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
+	DIE=1
+}
+
+(automake --version) < /dev/null > /dev/null 2>&1 || {
+	echo
+	echo "You must have automake installed to compile $PROJECT."
 	echo "Download the appropriate package for your distribution,"
 	echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
 	DIE=1
@@ -61,8 +85,8 @@ LIBTOOLIZE=glibtoolize
   ($LIBTOOL --version) < /dev/null > /dev/null 2>&1 || {
     echo
     echo "**Error**: You must have \`libtool' installed to compile $PROJECT."
-    echo "Get ftp://ftp.gnu.org/pub/gnu/libtool-1.2d.tar.gz"
-    echo "(or a newer version if it is available)"
+     echo "Download the appropriate package for your distribution,"
+     echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
     DIE=1
   }
 }
@@ -72,8 +96,8 @@ grep "^AM_GNU_GETTEXT" configure.ac >/dev/null && {
   (gettext --version) < /dev/null > /dev/null 2>&1 || {
     echo
     echo "**Error**: You must have \`gettext' installed to compile $PROJECT."
-    echo "Get ftp://alpha.gnu.org/gnu/gettext-0.10.35.tar.gz"
-    echo "(or a newer version if it is available)"
+    echo "Download the appropriate package for your distribution,"
+    echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
     DIE=1
   }
 }
@@ -148,7 +172,6 @@ do
 done
 
 conf_flags="--enable-maintainer-mode"
-#--enable-compile-warnings
 #--enable-iso-c
 
 cd "$ORIGDIR"

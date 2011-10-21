@@ -51,7 +51,7 @@ public:
   // ----- Constantes
   const Rep zero;
   const Rep one;
-  const Rep mone;
+  const Rep mOne;
 
   // ----- Constructor
   ZpzDom();
@@ -65,7 +65,7 @@ public:
   {
 	  F.assign(const_cast<Element&>(one),F.one);
 	  F.assign(const_cast<Element&>(zero),F.zero);
-	  F.assign(const_cast<Element&>(mone),F.mone);
+	  F.assign(const_cast<Element&>(mOne),F.mOne);
 
 
 	  this->_p = F._p;

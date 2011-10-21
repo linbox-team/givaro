@@ -227,7 +227,7 @@ void Rational::End()
 {}
 
 const Rational Rational::one (1UL) ;
-const Rational Rational::mone(-1L) ;
+const Rational Rational::mOne(-1L) ;
 const Rational Rational::zero(0UL) ;
 } // namespace Givaro
 

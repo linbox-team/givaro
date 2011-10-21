@@ -161,7 +161,7 @@ namespace Givaro {
 		static const Integer zero ;
 		//! one
 		static const Integer one ;
-		static const Integer mone ;
+		static const Integer mOne ;
 
 
 		// -- Assignment and copy operators

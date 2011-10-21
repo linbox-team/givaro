@@ -25,8 +25,8 @@ namespace Givaro {
 		typedef Rep Element;
 
 
-		IntegerDom() : one(1UL), mone(-1L), zero(0UL) {}
-		IntegerDom(const IntegerDom&) : one(1UL), mone(-1L), zero(0UL) {}
+		IntegerDom() : one(1UL), mOne(-1L), zero(0UL) {}
+		IntegerDom(const IntegerDom&) : one(1UL), mOne(-1L), zero(0UL) {}
 
 		int operator==( const IntegerDom&) const
 		{
@@ -39,7 +39,7 @@ namespace Givaro {
 
 		// -- Constants:
 		const Integer one;
-		const Integer mone;
+		const Integer mOne;
 		const Integer zero;
 
 		// -- assignement

@@ -57,7 +57,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 //         F.write(std::cerr << "1: ", F.one) << std::endl;
         TESTE_EG(a, F.one);
 	F.init(ma,-1L);
-        TESTE_EG(ma, F.mone);
+        TESTE_EG(ma, F.mOne);
 
 	F.init(a, FIRSTINT);
 	F.init(b, FIRSTFLOAT);

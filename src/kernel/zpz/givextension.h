@@ -83,7 +83,7 @@ namespace Givaro {
 
 	Element zero;
 	Element one;
-	Element mone;
+	Element mOne;
 
 	Extension() {}
 
@@ -92,7 +92,7 @@ namespace Givaro {
 		_bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p )
             , _extension_order( e/FF_EXPONENT_MAX(p,e) ), _exponent ( e )
             , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_pD.zero)
-            , one (_pD.one), mone(_pD.mone)
+            , one (_pD.one), mOne(_pD.mOne)
             {
                     /*     cerr << "Pol Cstor" << endl; */
 		unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
@@ -116,7 +116,7 @@ namespace Givaro {
             , _cardinality(     (Integer) pow( Integer(bF.cardinality()) , (unsigned long)(ex) ) )
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
-            , mone (             (Element)(_pD.mone))
+            , mOne (             (Element)(_pD.mOne))
             {
 				Degree eo ((long int)_extension_order);
 		if (_cardinality < (1<<20) )
@@ -136,7 +136,7 @@ namespace Givaro {
             , _cardinality(     (Integer) pow( Integer(_bF.cardinality()) , (unsigned long)_extension_order ) )
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
-            , mone (             (Element)(_pD.mone))
+            , mOne (             (Element)(_pD.mOne))
             {
                 if (polydomain.isOne(_irred)) {
                     if (_cardinality < (1<<20) )
@@ -151,7 +151,7 @@ namespace Givaro {
             , _characteristic( eF._characteristic )
             , _extension_order( eF._extension_order )
             , _exponent( eF._exponent ), _cardinality( eF._cardinality )
-            , zero (_pD.zero), one (_pD.one), mone (_pD.mone)
+            , zero (_pD.zero), one (_pD.one), mOne (_pD.mOne)
             { }
 
 	Self_t & operator=(const Self_t& eF)
@@ -166,7 +166,7 @@ namespace Givaro {
 			_cardinality = eF._cardinality;
 			zero = eF.zero;
 			one = eF.one;
-			mone = eF.mone;
+			mOne = eF.mOne;
 		}
 		return *this;
 	}

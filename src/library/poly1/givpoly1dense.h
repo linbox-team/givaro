@@ -177,7 +177,7 @@ namespace Givaro {
 		// -- Constantes
 		Rep zero;
 		Rep one;
-		Rep mone;
+		Rep mOne;
 
 		// -- Init polynomial
 		Rep& init(Rep& a) const;

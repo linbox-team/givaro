@@ -34,22 +34,22 @@ public :
 	typedef          Storage_t                Element;
 
 
-	Storage_t zero, one,mone;
+	Storage_t zero, one,mOne;
 
 	TruncDom (const Domain& d, const Indeter& X = Indeter() ) : Father_t(d,X) {
 		this->assign(zero,Father_t::zero);
 		this->assign(one,Father_t::one);
-		this->assign(mone,Father_t::mone);
+		this->assign(mOne,Father_t::mOne);
 	}
 	TruncDom (const Self_t& t) : Father_t(static_cast<const Father_t&>(t)) {
 		this->assign(zero,Father_t::zero);
 		this->assign(one,Father_t::one);
-		this->assign(mone,Father_t::mone);
+		this->assign(mOne,Father_t::mOne);
 	}
 	TruncDom (const Father_t& t) : Father_t(t) {
 		this->assign(zero,Father_t::zero);
 		this->assign(one,Father_t::one);
-		this->assign(mone,Father_t::mone);
+		this->assign(mOne,Father_t::mOne);
 	}
 
     	const Father_t& getpoldomain() const

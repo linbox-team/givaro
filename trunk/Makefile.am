@@ -40,6 +40,10 @@ DISTCLEANFILES = src/kernel/system/givaro   \
 				 src/library/tools/givaro   \
 				 src/library/vector/givaro
 
+uninstall-hook:
+	(test -d "$(includedir)/givaro" && rmdir "$(includedir)/givaro") || true
+	(test -d "$(includedir)/gmp++" && rmdir "$(includedir)/gmp++") || true
+
 
 docs_dev:docs/givaro-dev-html/index.html
 

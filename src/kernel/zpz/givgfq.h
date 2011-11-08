@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfq.h
-// Time-stamp: <08 Oct 11 09:38:59 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <08 Nov 11 15:07:32 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -39,10 +39,10 @@ public:
 protected:
 	UTT _characteristic;	// Field Characteristic (p)
 	UTT _exponent;		// Extension degree (k)
-	UTT _irred;			// Irreducible polynomial in p-adic
+	UTT _irred;		// Irreducible polynomial in p-adic
 	UTT _q;			// p^k
-	UTT _qm1;			// p^k-1
-	UTT _qm1o2;			// (p^k-1)/2
+	UTT _qm1;		// p^k-1
+	UTT _qm1o2;		// (p^k-1)/2
 public:
         Rep mOne;
 
@@ -55,6 +55,10 @@ protected:
 	std::vector<UTT> _log2pol;
 	std::vector<UTT> _pol2log;
 	std::vector<TT> _plus1;
+  
+    	UTT zech2padic(UTT x) { return _log2pol[x]; };
+    	UTT padic2zech(UTT x) { return _pol2log[x]; };
+
 
 	// Floating point representations
 	double _dcharacteristic;

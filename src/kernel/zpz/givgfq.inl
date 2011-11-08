@@ -265,6 +265,7 @@ namespace Givaro {
     { return _q; }
 
 
+
 	// ------------------------- Miscellaneous functions
 
     template<typename TT>

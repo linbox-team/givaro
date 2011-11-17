@@ -101,6 +101,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
 	return setdegree(R);
 }
 
+
+// Compute truncated mul: only the coefficients inside the degree interval, included
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, const Rep& Q, const Degree& Val, const Degree& deg) const
 {
@@ -130,24 +132,24 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
-( Rep& R, const Rep& P, const Type_t& Val ) const
+( Rep& R, const Rep& P, const Type_t& u ) const
 {
 	typename Rep::const_iterator ip = P.begin();
 	R.resize(P.size());
 	for(typename Rep::iterator ir = R.begin(); ir != R.end(); ++ir, ++ip)
-		this->_domain.mul(*ir, *ip, Val);
+		this->_domain.mul(*ir, *ip, u);
 	return R;
 }
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul
-( Rep& R, const Type_t& Val, const Rep& P ) const
+( Rep& R, const Type_t& u, const Rep& P ) const
 {
-	return this->mul(R,P,Val);
+	return this->mul(R,P,u);
 }
 } // Givaro
 
-#include <typeinfo>
+//#include <typeinfo>
 
 namespace Givaro {
 

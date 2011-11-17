@@ -102,6 +102,46 @@ return R;
 }
 
 template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep& R, const typename Rep::iterator Rbeg, const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
+{
+    // R larger than P
+    typename Rep::iterator ri=Rbeg;
+    typename Rep::const_iterator pi=Pbeg;
+    for( ; pi != Pend; ++pi, ++ri) _domain.subin(*ri,*pi);
+    return R;
+}
+
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep& R, const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
+{
+    
+    // P larger than R
+    size_t sP = Pend-Pbeg;
+    size_t sR = R.size();
+    Rep tmp; tmp.reallocate(sP);
+    size_t i;
+    typename Rep::const_iterator pi=Pbeg;
+    for (i=0; i<sR; ++i, ++pi) _domain.sub(tmp[i], R[i], *pi);
+    for (; pi != Pend; ++i, ++pi) _domain.neg(tmp[i], *pi);
+    setdegree(tmp);
+    R.copy(tmp);
+    return R;
+}
+
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep& R, const typename Rep::iterator Rbeg, const typename Rep::iterator Rend, const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const{
+  size_t sP = Pend-Pbeg;
+  size_t sR = Rend-Rbeg;
+  if (sP == 0) return R;
+  if (sR < sP) {
+      return subin(R, P, Pbeg, Pend);
+  }
+  else {
+      return subin(R, Rbeg, P, Pbeg, Pend);
+  }
+}
+
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep& R, const Rep& P) const
 {
   size_t sP = P.size();
@@ -110,16 +150,12 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep&
   if (sR == 0) { return neg(R,P); }
 //   if (sR == sP){ _supportdomain.subin(R,P); return; }
   if (sR < sP) {
-    size_t i;
-    Rep tmp; tmp.reallocate(sP);
-    for (i=0; i<sR; ++i) _domain.sub(tmp[i], R[i], P[i]);
-    for (; i<sP; ++i) _domain.neg(tmp[i], P[i]);
-    R.logcopy(tmp);
+      return setdegree( subin(R, P, P.begin(), P.end()) );
   }
   else {
-    for (size_t i=0; i<sP; ++i) _domain.subin(R[i], P[i]);
+//     for (size_t i=0; i<sP; ++i) _domain.subin(R[i], P[i]);
+      return setdegree( subin(R, R.begin(), P, P.begin(), P.end()) );
   }
-return R;
 }
 
 template <class Domain>

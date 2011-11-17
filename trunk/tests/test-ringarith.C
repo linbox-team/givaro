@@ -195,8 +195,12 @@ int TestRing(const Ring& F, const int seed)
     return 0;
 }/*}}}*/
 
+#ifndef DEGMAX
 #define DEGMAX 75
+#endif
+#ifndef NBITERD
 #define NBITERD 10
+#endif
 
 template<class Ring>
 int TestPolRing(const Ring& F, const int seed)

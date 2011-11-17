@@ -393,6 +393,30 @@ namespace Givaro {
 		size_t& sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const;
 
 
+        protected:
+            typedef typename Rep::iterator RepIterator;
+            typedef typename Rep::const_iterator RepConstIterator;
+            Rep& mul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+                      const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+                      const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
+            Rep& stdmul( Rep& R, const Rep& P, const Rep& Q) const;
+            
+            Rep& stdmul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+                      const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+                      const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
+            Rep& karamul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+                      const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+                      const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
+
+
+            Rep& subin (Rep& R, 
+                        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;    
+            
+            Rep& subin (Rep& R, const RepIterator Rbeg, 
+                        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;
+            Rep& subin (Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+                        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;
+
 	}; //  ------------------------------- End Of The Class Poly1Dom<Type_t>
 
 } // Givaro

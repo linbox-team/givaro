@@ -12,162 +12,157 @@
 #ifndef __GIVARO_poly1_kara_INL
 #define __GIVARO_poly1_kara_INL
 
-#define KARA_THRESHOLD 10
-
-
 namespace Givaro {
 
-template<class T>
-void Poly1<T>::stdmul(Array0<T>& R,
-                         const Array0<T>& P, const Array0<T>& Q,
-                         Degree tP, Degree tQ)
+#ifndef KARA_THRESHOLD
+#define KARA_THRESHOLD 50
+#endif
+
+#ifndef GIVMIN
+#define GIVMIN(a,b) ((a)<(b)?(a):(b))
+#endif
+
+// forces standard multiplication
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-   int i,j ;
-   for (i=0 ; i <= tP+tQ ; i++) R[i] = T(zero) ;
-   for (i=0 ; i <= tP ; i++)
-     for (j=0 ; j <= tQ ; j++)
-           R[i+j] += P[i]*Q[j] ;
+	size_t sR = R.size();
+	size_t sP = P.size();
+	size_t sQ = Q.size();
+	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
+	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
+
+ 	stdmul(R, R.begin(), R.end(),
+            P, P.begin(), P.end(),
+            Q, Q.begin(), Q.end());
+        
+        return setdegree(R);
 }
 
-  // Tailles requises par les entrees.
-  // P  : polynome de degre tP
-  // Q  :   "       "       tQ
-  // R  :   "       "       tP+tQ
-  // Tmp1 : "       "       2*([1+max(tP,tQ)] div 2)
-  // Tmp2 : "       "       ([1+max(tP,tQ)] div 2)
-  // Au sein de l'algo :
-  // P0 :   "       "       k <= tP
-  // P1 :   "       "       tP - k <= k
-  // Q0 :   "       "       k <= tQ
-  // Q1 :   "       "       tQ - k <= k
-template<class T>
-void Poly1<T>::karatsuba(Array0<T>& P, const Array0<T>& Q,
-                Array0<T>& R, Array0<T>& Tmp1,
-                Degree tP, Degree tQ)
+// forces FIRST recursive level with Karatsuba multiplication
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-   if ((tP <=KARA_THRESHOLD) || (tQ <=KARA_THRESHOLD))
-    {
-      Poly1<T>::stdmul(P, Q, R, tP, tQ) ;
-      return ;
-    }
+	size_t sR = R.size();
+	size_t sP = P.size();
+	size_t sQ = Q.size();
+	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
+	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
 
-   Degree k ;
-   if (tQ <= tP)
-    {
-       int i ;
-       k = tP/2 ;
-       if (tQ <= k)
-        {
-//cout << "heheh : tP:" << tP << " tQ: " << tQ << endl  ;
-          Poly1<T>::karatsuba(P, Q, R, Tmp1, k, tQ) ;
-          Poly1<T>::karatsuba(P+k+1, Q, Tmp1, P, tP-k-1, tQ) ;
-          for (i=0 ; i <= tP+tQ-k-1 ; i++) R[i+k+1] += Tmp1[i] ;
-          return ;
-        }
-       // Debut des tableaux :
-       T* R00 = R ;
-       T* R01 = R + k + 1 ;
-       T* R0 = R ;
-       T* R1 = R + 2*k + 2 ;
-       T* P0 = P ;
-       T* P1 = P + k+1 ;
-       const T* Q0 = Q ;
-       const T* Q1 = Q + k+1 ;
-
-       // P1-P0 -> R00
-       for (i=0 ; i < tP-k ; i++)     R00[i] = P1[i] - P0[i] ;
-       for (i=tP-k ; i <= k ; i++)    R00[i] = -P0[i] ;
-
-       // Q0-Q1 -> R01, degQ0 = k > degQ1 = tQ-k
-       for (i=0 ; i < tQ-k ; i++)     R01[i] = Q0[i] - Q1[i] ;
-       for (i=tQ-k ; i <= k ; i++)    R01[i] = Q0[i] ;
-
-       // Recursive calls
-       _karatsuba(R00, R01, Tmp1, R1, k, k) ;
-       _karatsuba(P0,  Q0,  R0,   R1, k, k) ;
-       _karatsuba(P1,  Q1,  R1,   P0, tP-k-1, tQ-k-1) ;
-
-       // Merge des termes
-       // Correction des termes du milieu:
-       for (i=0 ; i <=2*k ; i++) Tmp1[i] += R0[i] ;
-       for (i=0 ; i <=tP+tQ-2*k-2 ; i++) Tmp1[i] += R1[i] ;
-
-       // Mis a jour du resultat
-       R[2*k+1] = T(zero) ;
-       for (i=0 ; i <=2*k ; i++) R[i+k+1] += Tmp1[i] ;
-    }
-   else
-    {
-       int i ;
-       k = tQ/2 ;
-       if (tP <= k)
-        {
-//cout << "heheh : tP:" << tP << " tQ: " << tQ << endl  ;
-          _karatsuba(P, Q, R, Tmp1, tP, k) ;
-          _karatsuba(P, Q+k+1, Tmp1, P, tP, tQ-k-1) ;
-          for (i=0 ; i <= tP+tQ-k-1 ; i++) R[i+k+1] += Tmp1[i] ;
-          return ;
-        }
-       // Debut des tableaux :
-       T* R00 = R ;
-       T* R01 = R + k + 1 ;
-       T* R0 = R ;
-       T* R1 = R + 2*k + 2 ;
-       T* P0 = P ;
-       T* P1 = P + k+1 ;
-       const T* Q0 = Q ;
-       const T* Q1 = Q + k+1 ;
-
-       // P1-P0 -> R00
-       for (i=0 ; i < tP-k ; i++)     R00[i] = P1[i] - P0[i] ;
-       for (i=tP-k ; i <= k ; i++)    R00[i] = -P0[i] ;
-
-       // Q0-Q1 -> R01, degQ0 = k > degQ1 = tQ-k
-       for (i=0 ; i < tQ-k ; i++)     R01[i] = Q0[i] - Q1[i] ;
-       for (i=tQ-k ; i <= k ; i++)    R01[i] = Q0[i] ;
-
-       // Recursive calls
-       _karatsuba(R00, R01, Tmp1, R1, k, k) ;
-       _karatsuba(P0,  Q0,  R0,   R1, k, k) ;
-       _karatsuba(P1,  Q1,  R1,   P0, tP-k-1, tQ-k-1) ;
-
-       // Merge des termes
-       // Correction des termes du milieu:
-       for (i=0 ; i <=2*k ; i++) Tmp1[i] += R0[i] ;
-       for (i=0 ; i <=tP+tQ-2*k-2 ; i++) Tmp1[i] += R1[i] ;
-
-       // Mis a jour du resultat
-       R[2*k+1] = T(zero) ;
-       for (i=0 ; i <=2*k ; i++) R[i+k+1] += Tmp1[i] ;
-    }
+ 	karamul(R, R.begin(), R.end(),
+            P, P.begin(), P.end(),
+            Q, Q.begin(), Q.end());
+        
+        return setdegree(R);
 }
 
-template<class T>
-const Poly1<T> Karatsuba(const Poly1<T>& P, const Poly1<T>& Q)
-{
-   Degree degP = P.degree() ;
-   Degree degQ = Q.degree() ;
+// Generic mul with choices between standard and Karatsuba multiplication
+// Multiplies between the iterator bounds.
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( 
+    Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, 
+    const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const {
 
-   T* Res = new T[degP+degQ+1];
-   T* PP  = new T[degP+1];
-   T* Tmp1, *Tmp2 ;
-   if (degQ <= degP)
-    {
-        Tmp1 = new T[degP+1];
-//        Tmp2 = new T[degP+1];
-    }
-   else
-    {
-        Tmp1 = new T[degQ+1];
-//        Tmp2 = new T[degQ+1];
-    }
-   int i ;
-   for (i=0 ; i<= degQ+degP ; i++) Res[i] = T(zero) ;
-   for (i=0 ; i<= degP ; i++) PP[i] = P[i] ;
-   _karatsuba(PP, Q.baseptr(), Res, Tmp1, degP, degQ) ;
-   Poly1<T> PRes(P.variable(), degP+degQ, Res) ;
-   delete [] Tmp1 ; delete [] PP ; delete [] Res ;
-   return PRes ;
+    if ( ( (Pend-Pbeg)> KARA_THRESHOLD ) &&
+         ( (Qend-Qbeg)> KARA_THRESHOLD) )
+        return karamul(R, Rbeg, Rend,
+                       P, Pbeg, Pend,
+                       Q, Qbeg, Qend);
+    else 
+        return stdmul(R, Rbeg, Rend,
+                      P, Pbeg, Pend,
+                      Q, Qbeg, Qend);
 }
+
+
+
+
+// Standard multiplication between iterator bounds
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( 
+    Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, 
+    const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const {
+
+	RepConstIterator ai=Pbeg,bi=Qbeg;
+	RepIterator ri=Rbeg, rig=Rbeg;
+	if (_domain.isZero(*ai))
+		for(;bi!=Qend;++bi,++ri)
+			*ri = _domain.zero;
+	else
+		for(;bi!=Qend;++bi,++ri)
+			if (_domain.isZero(*bi))
+				*ri = _domain.zero;
+			else
+				_domain.mul(*ri,*ai,*bi);
+        
+	for(;ri!=Rend;++ri)
+		*ri = _domain.zero;
+	for(++ai,++rig;ai!=Pend;++ai,++rig)
+		if (! _domain.isZero(*ai))
+			for(ri=rig,bi=Qbeg;bi!=Qend;++bi,++ri)
+				_domain.axpyin(*ri,*ai,*bi);
+	return R;
+}
+
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const
+{
+    // Initialize R to zero
+    for(RepIterator ri=Rbeg; ri!= Rend; ++ri) _domain.assign(*ri,_domain.zero);
+    
+
+    size_t halfP = (Pend-Pbeg)>>1;
+    size_t halfQ = (Qend-Qbeg)>>1;
+    size_t half = GIVMIN(halfP, halfQ);
+    size_t halfR = half<<1;
+
+    RepConstIterator Pmid=Pbeg+half;		// cut P in halves
+    RepConstIterator Qmid=Qbeg+half;		// cut Q in halves
+    RepIterator Rmid=Rbeg+halfR;		// cut R in halves
+    
+    mul(R, Rbeg, Rmid, 				// Recursive dynamic choice
+        P, Pbeg, Pmid,
+        Q, Qbeg, Qmid);				// PlQl in first storage part of R
+    
+    mul(R, Rmid, Rend,				// Recursive dynamic choice
+        P, Pmid, Pend,
+        Q, Qmid, Qend);				// PhQh in second storage part of R
+    
+    Rep PHPL;
+    for(RepConstIterator PHi=Pmid; PHi!=Pend; ++PHi)
+        PHPL.push_back(*PHi);
+    subin(PHPL, PHPL.begin(), P, Pbeg, Pmid);	// Ph - Pl
+    setdegree(PHPL);
+    
+    Rep QHQL;
+    for(RepConstIterator QHi=Qmid; QHi!=Qend; ++QHi)
+        QHQL.push_back(*QHi);
+    subin(QHQL, QHQL.begin(), Q, Qbeg, Qmid);	// Qh - Ql
+    setdegree(QHQL);
+    
+    Rep M; 
+    mul(M, 					// Recursive dynamic choice
+        PHPL, 
+        QHQL);					// (Ph-Pl)(Qh-Ql)
+    setdegree(M);
+    
+    subin(M, M.begin(), M.end(), R, Rbeg, Rmid);// -= PlQl
+    setdegree(M);
+
+    subin(M, M.begin(), M.end(), R, Rmid, Rend);// -= PhQh
+    setdegree(M);
+
+
+    RepIterator ri=Rbeg+half;
+    RepConstIterator mi=M.begin();		// update R with mid product
+    for( ; mi != M.end(); ++ri, ++mi) _domain.subin(*ri, *mi);
+
+    return R;
+}
+
+
+
 }
 #endif // __GIVARO_poly1_kara_INL

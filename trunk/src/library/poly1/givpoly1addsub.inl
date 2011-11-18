@@ -102,9 +102,11 @@ return R;
 }
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep& R, const typename Rep::iterator Rbeg, const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
+    Rep& R, const typename Rep::iterator Rbeg, 
+    const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
 {
-    // R larger than P
+    // PRECONDITION: NO reallocation, R MUST be of larger degree than P
     typename Rep::iterator ri=Rbeg;
     typename Rep::const_iterator pi=Pbeg;
     for( ; pi != Pend; ++pi, ++ri) _domain.subin(*ri,*pi);
@@ -112,10 +114,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep&
 }
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep& R, const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
+    Rep& R, 
+    const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
 {
-    
-    // P larger than R
+    // PRECONDITION: P of larger degree than R
     size_t sP = Pend-Pbeg;
     size_t sR = R.size();
     Rep tmp; tmp.reallocate(sP);
@@ -129,7 +132,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep&
 }
 
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep& R, const typename Rep::iterator Rbeg, const typename Rep::iterator Rend, const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const{
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
+    Rep& R, const typename Rep::iterator Rbeg, const typename Rep::iterator Rend, 
+    const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const{
   size_t sP = Pend-Pbeg;
   size_t sR = Rend-Rbeg;
   if (sP == 0) return R;
@@ -148,14 +153,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (Rep&
   size_t sR = R.size();
   if (sP == 0) return R;
   if (sR == 0) { return neg(R,P); }
-//   if (sR == sP){ _supportdomain.subin(R,P); return; }
-  if (sR < sP) {
+  if (sR < sP)
       return setdegree( subin(R, P, P.begin(), P.end()) );
-  }
-  else {
-//     for (size_t i=0; i<sP; ++i) _domain.subin(R[i], P[i]);
+  else
       return setdegree( subin(R, R.begin(), P, P.begin(), P.end()) );
-  }
 }
 
 template <class Domain>

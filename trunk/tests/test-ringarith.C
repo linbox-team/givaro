@@ -211,17 +211,39 @@ int TestPolRing(const Ring& F, const int seed)
     for(size_t i=0; i< NBITERD; ++i) {
         int d1 = int (lrand48() % DEGMAX);
         int d2 = int (lrand48() % DEGMAX);
-#ifdef GIVARO_DEBUG
-        std::cout << d1 << ' ' << d2 << ' ';
-#endif
-        typename Ring::Element x, d;
+        typename Ring::Element x, d, z, o;
         do {
             F.random(generator, x, Degree(d1));
         } while(F.isZero(x));
         do {
             F.random(generator, d, Degree(d2));
-        } while(F.isZero(x));
+        } while(F.isZero(d));
+#ifdef GIVARO_DEBUG
+        std::cout << d1 << ' ' << d2 << ' ';
+#endif
         JEONETESTE(F,x,d);
+        do {
+            F.random(generator, z, Degree(0));
+        } while(F.isZero(z));
+#ifdef GIVARO_DEBUG
+        std::cout << d1 << " 0 ";
+#endif
+        JEONETESTE(F,x,z);
+#ifdef GIVARO_DEBUG
+        std::cout << "0 " << d1 << ' ';
+#endif
+        JEONETESTE(F,z,x);
+        do {
+            F.random(generator, o, Degree(1));
+        } while(F.isZero(o));
+#ifdef GIVARO_DEBUG
+        std::cout << d2 << " 1 ";
+#endif
+        JEONETESTE(F,d,o);
+#ifdef GIVARO_DEBUG
+        std::cout << "1 " << d2 << ' ';
+#endif
+        JEONETESTE(F,o,d);
     }
     return 0;
 }/*}}}*/

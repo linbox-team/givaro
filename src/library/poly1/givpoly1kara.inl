@@ -1,14 +1,13 @@
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/poly1/givpoly1kara.inl,v $
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2011 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: T. Gautier
-// $Id: givpoly1kara.inl,v 1.3 2011-02-02 16:23:56 bboyer Exp $
+// Authors: J-G Dumas
+// $Id: givpoly1kara.inl,v 1.3 2011-11-08 10:38:00 jgdumas Exp $
 // ==========================================================================
-// Description: To be rewrite using Array0 and subarray0 or generator!!!
 #ifndef __GIVARO_poly1_kara_INL
 #define __GIVARO_poly1_kara_INL
 

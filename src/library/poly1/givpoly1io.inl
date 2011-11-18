@@ -93,39 +93,6 @@ std::ostream& Poly1Dom<Domain,Dense>::write( std::ostream& o, const Rep& R) cons
 }
 
 template<class Domain>
-std::ostream& affiche( std::ostream& o, const Domain& _domain, const typename Poly1Dom<Domain,Dense>::Element& P)
-{
-        if (P.size()) {
-            if (! _domain.isZero(P[0])) {
-                if (_domain.isOne(P[0]))
-                    _domain.write(o,P[0]);
-                else
-                    _domain.write(o << "(",P[0]) << ")";
-            }
-            if (P.size() > 1) {
-                if (! _domain.isZero(P[0])) o << " + ";
-                if (! _domain.isZero(P[1])) {
-                    if (! _domain.isOne(P[1])) {
-                        _domain.write(o << "(",P[1]) << ")*";
-                    }
-                    o << 'Z';
-                }
-                for(unsigned long l=2;l<P.size();++l) {
-                    if (! _domain.isZero(P[l-1])) o << " + ";
-                    if (! _domain.isZero(P[l])) {
-                        if (! _domain.isOne(P[l])) {
-                            _domain.write(o << "(",P[l]) << ")*";
-                        }
-                        o << 'Z' << "^" << l;
-                    }
-                }
-            }
-            return o;
-        }
-    return o << "0";
-}
-
-template<class Domain>
 std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i, Rep& P) const
 {
     long deg;

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givadicqfq.h
-// Time-stamp: <11 Jun 07 19:18:31 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <30 Nov 11 11:12:05 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
@@ -25,13 +25,13 @@
 #define __GIVARO_tablesize_MAX_H
 
 
-#ifndef FF_TABLE_MAX
+#ifndef _GIVARO_FF_TABLE_MAX
 // 2^23 ---> 2^23*4*3 = 100K
 // #define FF_TABLE_MAX 8388608UL
 // 2^20 ---> 2s on 735MHz
 //#define FF_TABLE_MAX 1048576UL
 // Now 2^21+1 seems OK
-#define FF_TABLE_MAX 2097153UL
+#define _GIVARO_FF_TABLE_MAX 2097153UL
 #endif
 
 #ifndef _GIVARO_FF_MAXEXPONENT_

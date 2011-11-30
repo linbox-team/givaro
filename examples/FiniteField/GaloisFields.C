@@ -32,7 +32,8 @@ int main (int argc, char * * argv) {
             // This is the field with q^expo elements using the best
             // possible base field
 
-        std::cout << "Exponent max for zech logs " << q << '^' << expo << " : " << FF_EXPONENT_MAX(q,expo) << std::endl;
+        std::cerr << "Exponent max for zech logs with characteristic " << q << " : " << FF_EXPONENT_MAX(q,expo) << std::endl;
+        std::cerr << "Sub-Exponent max for zech logs " << q << "^" << expo << " : " << FF_SUBEXPONENT_MAX(q,expo) << std::endl;
         std::cout << "NEED polynomial representation : " << NEED_POLYNOMIAL_REPRESENTATION(q,expo) << std::endl;
 
         if ( NEED_POLYNOMIAL_REPRESENTATION(q,expo) ) {

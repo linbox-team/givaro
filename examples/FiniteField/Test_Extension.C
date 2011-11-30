@@ -10,7 +10,6 @@
  * @brief NO DOC
  */
 
-using namespace std;
 #include "givaro/givpoly1.h"
 #include "givaro/givextension.h"
 
@@ -22,7 +21,7 @@ using namespace Givaro;
 template<class FField>
 void FaireEssai(const FField & F) {
 
-  F.write( cout << "Working in : " ) << endl;
+  F.write( std::cout << "Working in : " ) << std::endl;
 
   typename FField::Element a, b, r;
 
@@ -32,7 +31,7 @@ void FaireEssai(const FField & F) {
 
   F.add(r, a, b);
 
-  F.write( F.write( F.write( F.write(std::cout, a) << " + " , b ) << " = " , r) << " with ") << endl ;
+  F.write( F.write( F.write( F.write(std::cout, a) << " + " , b ) << " = " , r) << " with ") << std::endl ;
 
 }
 
@@ -44,11 +43,12 @@ int main (int argc, char * * argv) {
     unsigned long expo = (argc>2?atoi(argv[2]):8);
 
     GFqDom<long> Toto(q,1);
-    Toto.write( cout << "This is ") << endl ;
+    Toto.write( std::cout << "This is ") << std::endl ;
     FaireEssai( Toto );
 
-    cerr << "Exponent max for zech logs " << q << "^" << expo << " : " << FF_EXPONENT_MAX(q,expo) << endl;
-    cerr << "NEED polynomial representation : " << NEED_POLYNOMIAL_REPRESENTATION(q,expo) << endl;
+    std::cerr << "Exponent max for zech logs with characteristic " << q << " : " << FF_EXPONENT_MAX(q,expo) << std::endl;
+    std::cerr << "Sub-Exponent max for zech logs " << q << "^" << expo << " : " << FF_SUBEXPONENT_MAX(q,expo) << std::endl;
+    std::cerr << "NEED polynomial representation : " << NEED_POLYNOMIAL_REPRESENTATION(q,expo) << std::endl;
     if ( NEED_POLYNOMIAL_REPRESENTATION(q,expo) )
         FaireEssai( Extension<>(q, expo) );
     else

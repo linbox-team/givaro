@@ -20,16 +20,20 @@
 
 namespace Givaro {
 
-    template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt e = 1) {
+    template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt maxe = _GIVARO_FF_MAXEXPONENT_) {
 	Rt f = 0;
-	for(Rt i = p; (i < (Rt)FF_TABLE_MAX) && (f < e); ++f, i*=p)
-            ;
+	for(Rt i = p; (i < (Rt)_GIVARO_FF_TABLE_MAX) && (f < maxe); ++f, i*=p) ;
+	return f;
+    }
+
+    template<class Rt> Rt FF_SUBEXPONENT_MAX(const Rt p, const Rt e) {
+	Rt f = FF_EXPONENT_MAX(p,e);
 	for( ; f > 1; --f)
             if ((e % f) == 0) break;
 	return f;
     }
 
-#define NEED_POLYNOMIAL_REPRESENTATION(p,e) ((e) > FF_EXPONENT_MAX((p),(e)))
+#define NEED_POLYNOMIAL_REPRESENTATION(p,e) ((e) > FF_SUBEXPONENT_MAX((p),(e)))
 
 #define EXTENSION(q,expo) ( NEED_POLYNOMIAL_REPRESENTATION((q),(expo)) ? Extension<>((q), (expo)) : GFqDom<long>((q), (expo)) )
 
@@ -89,13 +93,13 @@ namespace Givaro {
 
 
 	Extension ( const Residu_t p, const Residu_t e = 1, const Indeter Y="Y") :
-		_bF(p, FF_EXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p )
-            , _extension_order( e/FF_EXPONENT_MAX(p,e) ), _exponent ( e )
+		_bF(p, FF_SUBEXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p )
+            , _extension_order( e/FF_SUBEXPONENT_MAX(p,e) ), _exponent ( e )
             , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_pD.zero)
             , one (_pD.one), mOne(_pD.mOne)
             {
                     /*     cerr << "Pol Cstor" << endl; */
-		unsigned long basedegree = FF_EXPONENT_MAX(p,e) ;
+		unsigned long basedegree = FF_SUBEXPONENT_MAX(p,e) ;
 		if (basedegree >= e) {
                     std::cerr << "WARNING : Try a direct extension field GFDom instead of a polynomial extension" << std::endl;
                     _bF = BaseField_t(p, 1);

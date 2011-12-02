@@ -111,7 +111,7 @@ public:
 	inline static void desallocate(void* p, const size_t = 0)
 	{
 		if (p==0) return ;
-		BlocFreeList* tmp = (BlocFreeList*)(((char*)p) -
+		BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)p) -
 						    (sizeof(BlocFreeList)-sizeof(long)));
 		int index = tmp->u.index;
 #ifdef GIVARO_DEBUG
@@ -190,7 +190,7 @@ public:
 	inline static void desallocate(void* p, const size_t = 0)
 	{
 		if (p==0) return ;
-		BlocFreeList* tmp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+		BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>((char *) p - sizeof(BlocFreeList) ) ;
 		if ( --(tmp->data[0]) ==0) {
 			int index = tmp->u.index;
 #ifdef GIVARO_DEBUG
@@ -216,7 +216,7 @@ public:
 		if (src == *dest) return *dest ;
 		if (*dest !=0) GivMMRefCount::desallocate( *dest );
 		if (src ==0) return *dest=src;
-		BlocFreeList* s = (BlocFreeList*)(((char*)src) - sizeof(BlocFreeList));
+		BlocFreeList* s = reinterpret_cast<BlocFreeList*>(((char*)src) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
 		if ((s->u.index <0) || (s->u.index >= BlocFreeList::lenTables))
 			GivError::throw_error(GivError("[GivMMRefCount::assign]: bad pointer 'src'."));
@@ -230,7 +230,7 @@ public:
 	inline static int incrc(void* p)
 	{
 		if (p ==0) return 0;
-		BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+		BlocFreeList* bp = reinterpret_cast<BlocFreeList*>(((char*)p) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
 		if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
 			throw GivError("[GivMMRefCount::incrc]: bad pointer.");
@@ -240,7 +240,7 @@ public:
 	inline static int decrc(void* p)
 	{
 		if (p ==0) return 0;
-		BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+		BlocFreeList* bp = reinterpret_cast<BlocFreeList*>(((char*)p) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
 		if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
 			throw GivError("[GivMMRefCount::incrc]: bad pointer.");
@@ -250,7 +250,7 @@ public:
 	inline static int getrc(void* p)
 	{
 		if (p ==0) return 0;
-		BlocFreeList* bp = (BlocFreeList*)(((char*)p) - sizeof(BlocFreeList));
+		BlocFreeList* bp = reinterpret_cast<BlocFreeList*>(((char*)p) - sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
 		if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
 			throw GivError("[GivMMRefCount::incrc]: bad pointer.");

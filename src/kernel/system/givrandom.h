@@ -47,7 +47,7 @@ public:
         if (! s) {
 		struct timeval tp;
 		gettimeofday(&tp, 0) ;
-		_seed = (long)(tp.tv_usec);
+		_seed = (unsigned long)(tp.tv_usec);
 	}
     }
 

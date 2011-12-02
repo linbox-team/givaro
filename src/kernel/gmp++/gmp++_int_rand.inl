@@ -48,7 +48,7 @@ namespace Givaro {
 
 	void Integer::seeding()
 	{
-		Integer::seeding( BaseTimer::seed() );
+		Integer::seeding( (unsigned long) BaseTimer::seed() );
 	}
 
 

@@ -137,7 +137,8 @@ namespace Givaro {
 		for (size_t i=1; i<sz; ++i)
 		{
 			if (!_domain.isZero(P[i])) {
-				return d = i;
+				// return d = (Degree)i;
+				return d = (long)i;
 			}
 		}
 		return d=0;

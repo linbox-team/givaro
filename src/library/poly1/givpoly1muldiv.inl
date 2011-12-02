@@ -84,7 +84,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
  	mul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
             Q, Q.begin(), Q.end());
-        
+
         return setdegree(R);
 }
 
@@ -96,18 +96,18 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
 	size_t sP = P.size();
 	size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
-	size_t newS = value(deg-Val)+1;
+	size_t newS = (size_t)value(deg-Val)+1;
 	if (sR != newS) R.reallocate(sR = newS);
 	for(typename Rep::iterator ri=R.begin(); ri!= R.end(); ++ri)
 		*ri = _domain.zero;
 
 	for(size_t i=0; i<sR; ++i) {
-		long k=i+Val.value();
+		long k=(long)i+Val.value();
 		size_t j=0;
 		if (static_cast<size_t>(k)>=sQ) {
-			j=k;
-			k=sQ-1;
-			j-=k;
+			j=static_cast<size_t>(k);
+			k=long(sQ-1);
+			j-=(size_t)k;
 		}
 		for( ; (j<sP) && (k>=0); ++j,--k) {
 			_domain.axpyin(R[i],P[j],Q[k]);

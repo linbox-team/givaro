@@ -81,7 +81,7 @@ public:
         tmp *= double(P-1);
         tmp *= double(e);
         tmp *= double(nm);
-        size_t k = ilogb(tmp);
+        size_t k = (size_t)ilogb(tmp);
         return ( (53/(2*e-1))>k ? ++k : 0);
     }
 

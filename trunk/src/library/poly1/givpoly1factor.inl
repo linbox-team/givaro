@@ -138,7 +138,8 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
 // write(std::cerr << "DD in: ", f) << std::endl;
     Rep W, D, P = f;
     Degree dP;
-    Rep Unit, G1; init(Unit, Degree(1));
+    Rep Unit, G1;
+    init(Unit, Degree(1));
     W.copy(Unit);
     degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
@@ -172,7 +173,7 @@ Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & L
 {
 // write(std::cerr << "CZ in: ", P) << std::endl;
     Degree dp; degree(dp,P);
-    size_t nb=dp.value()+1;
+    size_t nb=(size_t)dp.value()+1;
     Rep * g = new Rep[nb];
     sqrfree(nb,g,P);
 // std::cerr << "CZ sqrfree: " << nb << std::endl;

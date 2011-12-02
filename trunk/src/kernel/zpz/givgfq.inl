@@ -903,7 +903,7 @@ namespace Givaro {
         if (sz) {
             _GIVARO_GFQ_MUL(r,a[0],b[0],_qm1);
             Rep tmp;
-            for(  int i= sz; --i; ) {
+            for(  int i= (int)sz; --i; ) {
                 _GIVARO_GFQ_MUL(tmp,a[i],b[i],_qm1);
                 _GIVARO_GFQ_ADD(r,r,tmp,_qm1,_plus1);
             }

@@ -138,7 +138,7 @@ namespace Givaro {
 		}
 		short * Ip = new short[n+1];
 		int i;
-		for(int ii=n+1;ii--;)
+		for(int ii=(int)n+1;ii--;)
 			Ip[ii] = 0L;
 		i=3;
 		int j, ii;

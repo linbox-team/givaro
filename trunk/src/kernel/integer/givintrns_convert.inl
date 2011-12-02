@@ -35,7 +35,7 @@ namespace Givaro {
 			// Horner scheme
 			tmp = mixrad[i-1];
 			// JGD 16.04.2003, Si i==1 !!!!!!!
-			for (long j= i-1; j--; ) {
+			for (long j= (long)i-1; j--; ) {
 				//  std::cerr << tmp << " * " << _primes[j] << " + " << mixrad[j] << " mod " << _primes[i] << " = ";
 				modin( addin( mulin(tmp, _primes[j]), mixrad[j]), _primes[i]);
 				//  std::cerr << tmp << ";#Horner scheme" << std::endl;
@@ -77,11 +77,11 @@ namespace Givaro {
 	//#endif
 	inline void IntRNSsystem< Container, Alloc >::RingToRns( IntRNSsystem< Container, Alloc >::array& rns , const external& a)
 	{
-		size_t size = _primes.size();
-		if (rns.size() != size) rns.resize(size);
+		size_t mysize = _primes.size();
+		if (rns.size() != mysize) rns.resize(mysize);
 		// -- may be faster using the recursive
 		// tree algorithm a mod p_1...p_k/2, and a mod p_k/2+1...p_k
-		for (int i=0; i<size; i++)
+		for (int i=0; i<(int)mysize; i++)
 			mod( rns[i], a, _primes[i]);
 		//     rns[i] = mod(a, _primes[i]);
 	}

@@ -49,7 +49,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
         return setdegree(P);
     } else if (IF.isprime(n)) {
         init(P, Degree(n-1));
-        for(size_t i=n-1;i--;)
+        for(size_t i=(size_t)n-1;--i;)
             _domain.assign(P[i], _domain.one);
         return setdegree(P);
     }

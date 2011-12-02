@@ -50,7 +50,8 @@ if (TestOneRing(F,a,x)) {\
 
 template<class R, class T1, class T2>
 struct InitOrAssign {
-    void operator()(const R& r, T1& t1, const T2& t2) {
+    void operator()(const R& r, T1& t1, const T2& t2)
+    {
         r.init(t1,t2);
     }
 };
@@ -68,7 +69,7 @@ struct InitOrAssign<R,T,T> {
 
 template<class Ring, class T1, class T2>
 int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
-{/*{{{*/
+{
 #ifdef GIVARO_DEBUG
 	std::cerr << "testing " ;
 	F.write(std::cerr );
@@ -170,13 +171,13 @@ int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
 #endif
 	return 0 ;
 
-}/*}}}*/
+}
 
 #define NBITER 50
 
 template<class Ring>
 int TestRing(const Ring& F, const int seed)
-{/*{{{*/
+{
     long ch = (long) F.characteristic();
     JEONETESTE(F,7UL,-29.3);
     srand48(seed);
@@ -193,7 +194,7 @@ int TestRing(const Ring& F, const int seed)
         JEONETESTE(F,x,d);
     }
     return 0;
-}/*}}}*/
+}
 
 #ifndef DEGMAX
 #define DEGMAX 75
@@ -204,7 +205,7 @@ int TestRing(const Ring& F, const int seed)
 
 template<class Ring>
 int TestPolRing(const Ring& F, const int seed)
-{/*{{{*/
+{
     GivRandom generator(seed);
     srand48(seed);
 
@@ -246,10 +247,10 @@ int TestPolRing(const Ring& F, const int seed)
         JEONETESTE(F,o,d);
     }
     return 0;
-}/*}}}*/
+}
 
 int main(int argc, char ** argv)
-{/*{{{*/
+{
     int seed = int(argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
@@ -397,7 +398,7 @@ int main(int argc, char ** argv)
 #endif
 
 	return 0;
-}/*}}}*/
+}
 
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

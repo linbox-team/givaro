@@ -62,7 +62,7 @@ template<> Integer power(const Integer n, const unsigned int l) { return pow(n,l
 template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D& F) {
   if (l == 0) return res = F.one ;
 
-  unsigned long p = l ;
+  unsigned long p = (unsigned long) l ;
   short is_assg = 0 ;
 
   TT puiss = n ;

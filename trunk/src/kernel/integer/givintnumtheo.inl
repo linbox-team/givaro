@@ -433,7 +433,7 @@ namespace Givaro {
 		for(f=Lf.begin();f!=Lf.end();++f)
 			this->div(*f,phin,*f);
 		int found=0;
-		for(A = 2;(isleq(A,n) && (! found)); Rep::addin(A,1UL)) {
+		for(A = 2;(Rep::isleq(A,n) && (! found)); Rep::addin(A,1UL)) {
 			if (isOne(gcd(tmp,A,n))) {
 				found = 1;
 				for(f=Lf.begin();(f!=Lf.end() && found);f++)

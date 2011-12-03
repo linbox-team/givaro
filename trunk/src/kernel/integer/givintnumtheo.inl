@@ -41,8 +41,8 @@ namespace Givaro {
 	template< template<class, class> class Container, template<class> class Alloc>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Container<Rep, Alloc<Rep> >& Lf, const Rep& n) const
 	{
-		if (isleq(n,1)) return res=n;
-		if (isleq(n,3)) return Rep::sub(res,n,this->one);
+		if (Rep::isleq(n,1)) return res=n;
+		if (Rep::isleq(n,3)) return Rep::sub(res,n,this->one);
 		res = n; Rep t,m;
 		for(typename Container<Rep, Alloc<Rep> >::const_iterator f=Lf.begin(); f!=Lf.end(); ++f)
 			Rep::mul(res, Rep::divexact(t,res,*f), Rep::sub(m, *f, this->one));
@@ -95,7 +95,7 @@ namespace Givaro {
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else infinite loop
 
-		if (isleq(n,4)) return sub(A,n,this->one);
+		if (Rep::isleq(n,4)) return sub(A,n,this->one);
 		if (isZero(mod(A,n,4))) return A=this->zero;
 		Rep p,ismod2, q, no2, root;
 		if (isZero(mod(ismod2,n,2))) divexact(no2,n,2); else no2=n;
@@ -440,7 +440,7 @@ namespace Givaro {
 					found = (! isOne( this->powmod(tmp,A,*f,n)) );
 			}
 		}
-		if (isleq(A,n))
+		if (Rep::isleq(A,n))
 			return Rep::subin(A,1UL);
 		else
 			return A=this->zero;
@@ -510,7 +510,7 @@ namespace Givaro {
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_inv(Rep& A, const Rep& n) const
 	{
-		if (isleq(n,4)) return sub(A,n,this->one);
+		if (Rep::isleq(n,4)) return sub(A,n,this->one);
 		if (areEqual(n,8)) return init(A,3);
 		return prim_base(A, n);
 	}
@@ -518,7 +518,7 @@ namespace Givaro {
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_elem(Rep& A, const Rep& n) const
 	{
-		if (isleq(n,4)) {
+		if (Rep::isleq(n,4)) {
 			Rep tmp;
 			return this->sub(A,n,this->one);
 		}

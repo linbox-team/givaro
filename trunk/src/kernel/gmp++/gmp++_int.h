@@ -76,8 +76,6 @@ namespace Givaro {
 	int 		sign   (const Integer& a);
 	// (FILE gmp++_int_compare.C)
 	int 		isZero (const Integer& a);
-	template<class A, class B>
-	bool isleq(const A&a,const B&b);
 	int 		compare(const Integer& a, const Integer& b);
 	int 		absCompare(const Integer& a, const Integer& b);
 	int 		absCompare(const Integer& a, const double d);
@@ -904,7 +902,7 @@ namespace Givaro {
 		friend giv_all_inlined  int isZero(const long long a);
 #endif
 		template<class A,class B>
-		friend giv_all_inlined bool isleq(const A&,const B&);
+		giv_all_inlined bool isleq(const A&,const B&);
 
 
 

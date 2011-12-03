@@ -19,6 +19,7 @@ namespace Givaro
 	const Integer Integer::zero(0UL);
 	const Integer Integer::one(1UL);
 	const Integer Integer::mOne(-1L);
+
 } // Givaro
 #endif
 

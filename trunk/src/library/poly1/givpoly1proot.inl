@@ -215,7 +215,7 @@ namespace Givaro {
 			this->random( (RandIter&)_g, R, n); // must cast away const
 			_domain.assign(R[n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
-				_domain.assign(R[0],static_cast<Rep>(a));
+				_domain.assign(R[0],a);
 				if (is_irreducible(R))
 					return true;
 			}

@@ -19,13 +19,13 @@
 // -- normalized operations
 // ---------
 // r = a*b
-#define __GIVARO_ZPZ32_N_MUL(r,p,a,b) ( r = (uint32_t)(a*b) % (uint32_t)p )
+#define __GIVARO_ZPZ32_N_MUL(r,p,a,b) ( r = (Rep) ( (uint32_t)(a*b) % (uint32_t)p ) )
 // r *= a
-#define __GIVARO_ZPZ32_N_MULIN(r,p,a) (  r = (uint32_t)(r*a) % (uint32_t)p  )
+#define __GIVARO_ZPZ32_N_MULIN(r,p,a) (  r = (Rep) ( (uint32_t)(r*a) % (uint32_t)p  ) )
 
 // r = a - b
 //#define __GIVARO_ZPZ32_N_SUB(r,p,a,b) ( r = (a>b)? a-b: (p-b)+a )
-#define __GIVARO_ZPZ32_N_SUB(r,p,a,b) ( r = ( (r=a-b) < 0 ? r+p : r ) )
+#define __GIVARO_ZPZ32_N_SUB(r,p,a,b) ( r = (Rep) ( (r=a-b) < 0 ? r+p : r ) )
 // r -= a
 #define __GIVARO_ZPZ32_N_SUBIN(r,p,a) { r -= a; r= (r < 0 ? r+p : r); }
 
@@ -35,15 +35,15 @@
 #define __GIVARO_ZPZ32_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p); }
 
 // r <- a*b+c % p
-#define __GIVARO_ZPZ32_N_MULADD(r,p,a,b,c) ( r = (uint32_t)(a*b+c) % (uint32_t)p )
+#define __GIVARO_ZPZ32_N_MULADD(r,p,a,b,c) ( r = (Rep) ( (uint32_t)(a*b+c) % (uint32_t)p ) )
 
-#define __GIVARO_ZPZ32_N_MULADDIN(r,p,a,b) ( r = (uint32_t)(a*b+r) % (uint32_t)p )
+#define __GIVARO_ZPZ32_N_MULADDIN(r,p,a,b) ( r = (Rep) ( (uint32_t)(a*b+r) % (uint32_t)p ) )
 
 #define __GIVARO_ZPZ32_N_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
 #define __GIVARO_ZPZ32_N_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
 
 // a*b-c
-#define __GIVARO_ZPZ32_N_MULSUB(r,p,a,b,c) ( r = (uint32_t)(a*b+p-c) % (uint32_t)p )
+#define __GIVARO_ZPZ32_N_MULSUB(r,p,a,b,c) ( r = (Rep) ( (uint32_t)(a*b+p-c) % (uint32_t)p ) )
 
 // r-a*b
 #define __GIVARO_ZPZ32_N_SUBMULIN(r,p,a,b) { \
@@ -58,12 +58,12 @@ namespace Givaro {
 
 	inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::mul (Rep& r, const Rep a, const Rep b) const
 	{
-		return __GIVARO_ZPZ32_N_MUL(r,(int32_t)_p,(int32_t)a,(int32_t)b);
+		return  __GIVARO_ZPZ32_N_MUL(r,(int32_t)_p,(int32_t)a,(int32_t)b);
 	}
 
 	inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::sub (Rep& r, const Rep a, const Rep b) const
 	{
-		return __GIVARO_ZPZ32_N_SUB(r,_p,a,b);
+		return __GIVARO_ZPZ32_N_SUB(r,(int32_t)_p,(int32_t)a,(int32_t)b);
 	}
 
 	inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::add (Rep& r, const Rep a, const Rep b) const
@@ -80,9 +80,9 @@ namespace Givaro {
 	inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::inv (Rep& r, const Rep a) const
 	{
 		int32_t u;
-		ZpzDom<Std32>::invext(u, a, _p);
+		ZpzDom<Std32>::invext(u, a, (int32_t)_p);
 		//   if ((d != 1) && (d != -1)) std::cerr << "GivMathDivZero(Zpz::inv)" << std::endl;
-		return r = (u<0)?(ZpzDom<Std32>::Rep)u + _p:(ZpzDom<Std32>::Rep)u;
+		return r = (u<0)?(ZpzDom<Std32>::Rep)u + (int32_t)_p:(ZpzDom<Std32>::Rep)u;
 	}
 
 	inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::div (Rep& r, const Rep a, const Rep b) const
@@ -204,9 +204,9 @@ namespace Givaro {
 	inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::invin (Rep& r) const
 	{
 		int32_t u;
-		ZpzDom<Std32>::invext(u, r, _p);
+		ZpzDom<Std32>::invext(u, r, (int32_t)_p);
 		//   if ((d != 1) && (d != -1)) std::cerr << "GivMathDivZero(Zpz::invin)" << std::endl;
-		return r = (u<0)?(ZpzDom<Std32>::Rep)u + _p:(ZpzDom<Std32>::Rep)u;
+		return r = (u<0)?(ZpzDom<Std32>::Rep)u + (int32_t)_p:(ZpzDom<Std32>::Rep)u;
 	}
 
 	inline ZpzDom<Std32>::Rep& ZpzDom<Std32>::axpy (Rep& r,
@@ -333,8 +333,8 @@ namespace Givaro {
 			ua = fmod(ua,_dp);
 			r = (Rep) ua;
 		} else
-			r = (ua >=_p) ? (uint32_t) ua % (uint32_t)_p : (uint32_t) ua;
-		if (r && (sign ==-1)) r = _p - r;
+			r = (Rep)((ua >=_p) ? (uint32_t) ua % (uint32_t)_p : (uint32_t) ua);
+		if (r && (sign ==-1)) r = (int32_t)_p - r;
 		return r;
 	}
 
@@ -346,16 +346,25 @@ namespace Givaro {
 
 
 	inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::init ( Rep& r, const unsigned long a ) const
-	{ return r = (Rep)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
+	{
+	       	return r = (Rep)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
 	}
 
 	inline  ZpzDom<Std32>::Rep&  ZpzDom<Std32>::init ( Rep& r, const long a ) const
 	{
-		int sign; unsigned long ua;
-		if (a <0) { sign =-1; ua = -a;}
-		else { ua = a; sign =1; }
+		int sign;
+		unsigned long ua;
+		if (a <0) {
+			sign =-1;
+			ua = (unsigned long)-a;
+		}
+		else {
+			ua = (unsigned long) a;
+		       	sign =1;
+		}
 		r = Rep((ua >=_p) ? ua % (uint32_t)_p : ua);
-		if (r && (sign ==-1)) r = _p - r;
+		if (r && (sign ==-1))
+			r = (int32_t)_p - r;
 		return r;
 	}
 
@@ -365,13 +374,16 @@ namespace Givaro {
 		if (Residu <0) {
 			// -a = b [p]
 			// a = p-b [p]
-			if ( Residu <= (Integer)(-_p) ) tr = long( (-Residu) % _p) ;
-			else tr = long(-Residu);
+			if ( Residu <= (Integer)(-_p) )
+			       	tr = long( (-Residu) % _p) ;
+			else
+				tr = long(-Residu);
 			if (tr)
 				return r = Rep(_p - (unsigned long)tr);
 			else
 				return r = zero;
-		} else {
+		}
+		else {
 			if (Residu >= (Integer)_p ) tr =   long(Residu % _p) ;
 			else tr = long(Residu);
 			return r = Rep(tr);
@@ -425,31 +437,33 @@ namespace Givaro {
 			//    stride = GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound);
 			//    hopefully stride is not unsigned long !?!
 			stride = (unsigned int) (GIVARO_MAXULONG/((unsigned long)bound) / ((unsigned long)bound));
-		unsigned long dot = zero;
+		unsigned long dot = (unsigned long)zero;
 		if ((sz <10) && (sz <stride)) {
 			for(  size_t i= sz; i--; )
-				dot += a[i] * b[i];
-			if (dot > _p)  return r = (Rep)(dot % (int32_t)_p);
+				dot += (unsigned long)a[i] * (unsigned long)b[i];
+			if (dot > _p)  return r = (Rep)(dot % (unsigned long)_p);
 			else  return r = (Rep)dot;
 		}
 		size_t i_begin=0;
-		stride &= ~0x1;
+		stride &= (unsigned int)~0x1;
 		if (stride ==0) {
 			for(  size_t i= sz; --i; ) {
-				dot += a[i] * b[i];
+				dot += (unsigned long) a[i] * (unsigned long)b[i];
 				if (dot>_p) dot %= _p;
 			}
 			return r = (Rep)dot;
 		}
 		do {
 			size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
-			if ((min_sz & 0x1) !=0)
-			{ min_sz--; i_begin++; dot += a++[min_sz] * b++[min_sz]; }
+			if ((min_sz & 0x1) !=0) {
+				min_sz--; i_begin++;
+				dot += (unsigned int) a++[min_sz] * (unsigned int)b++[min_sz];
+			}
 			if (min_sz > 1)
 				for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b )
 				{
-					dot += a[0] * b[0];
-					dot += a[1] * b[1];
+					dot += (unsigned int)a[0] * (unsigned int)b[0];
+					dot += (unsigned int)a[1] * (unsigned int)b[1];
 				}
 			if (dot>_p) dot %= _p;
 			i_begin += min_sz;
@@ -499,7 +513,7 @@ namespace Givaro {
 	inline ZpzDom<Std32>::Rep&  ZpzDom<Std32>::dotprod
 	( Rep& r, const size_t sz, constArray a, constArray b ) const
 	{
-		return ZpzDom<Std32>::dotprod(r, _p, sz, a, b);
+		return ZpzDom<Std32>::dotprod(r, (int32_t)_p, sz, a, b);
 	}
 
 

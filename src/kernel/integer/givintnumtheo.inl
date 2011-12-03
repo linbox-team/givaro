@@ -28,8 +28,8 @@ namespace Givaro {
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Rep& n) const
 	{
-		if (isleq(n,1)) return res=n;
-		if (isleq(n,3)) return Rep::sub(res,n,this->one);
+		if (Rep::isleq(n,1)) return res=n;
+		if (Rep::isleq(n,3)) return Rep::sub(res,n,this->one);
 		std::list<Rep> Lf;
 		Father_t::set(Lf,n);
 		//return phi (res,Lf,n);
@@ -423,7 +423,7 @@ namespace Givaro {
 	{
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else returns zero
-		if (isleq(n,4)) return Rep::sub(A,n,this->one);
+		if (Rep::isleq(n,4)) return Rep::sub(A,n,this->one);
 		if (isZero(Rep::mod(A,n,4UL))) return A=this->zero;
 		Rep phin, tmp;
 		phi(phin,n);

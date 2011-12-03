@@ -271,10 +271,10 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const long a 
   if (a <0)
   {
 	  sign =-1;
-	  ua = -a;
+	  ua = (unsigned long) -a;
   }
   else {
-	  ua = a;
+	  ua = (unsigned long)a;
 	  sign =1;
   }
   r =Rep ( ua >= (uint32_t)_p ? ua % (uint32_t)_p : ua);

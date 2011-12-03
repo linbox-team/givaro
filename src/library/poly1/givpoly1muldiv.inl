@@ -254,7 +254,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& 
 	// Last step is erasing of the first values.
 	//     write(std::cerr << "Rem(", A) << " ,";
 	//     write(std::cerr, B) << ", X) mod " << _domain.size();
-	long i = A.size()-B.size();
+	long i = (long)(A.size()-B.size());
 	if (i >= 0) {
 		typedef typename Rep::value_type TT;
 		TT l;
@@ -277,7 +277,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& 
 			*aai = _domain.zero;
 		}
 		//         write(std::cerr << " = ", A) << ";" << std::endl;
-		A.erase(A.begin(), A.begin()+(A.size()-B.size()-i));
+		A.erase(A.begin(), A.begin()+(ssize_t)(A.size()-B.size()-(size_t)i));
 	}
 	//     write(std::cerr << " = ", setdegree(A)) << ";" << std::endl;
 	return setdegree(A);

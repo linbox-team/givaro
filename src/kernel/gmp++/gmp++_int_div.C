@@ -238,7 +238,7 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 	//    GivMathDivZero("[Integer::divide]: division by zero");
 	//  }
 	// int sgn = sign(b);
-	r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
+	r = (long)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
 			   (mpz_srcptr)&(a.gmp_rep), std::abs(b));
 	// if (sgn <0) return negin(q);
 	// if (a>0)

@@ -57,8 +57,10 @@ public:
 	const Rep mOne;
 
 	// ----- Constructor
-	ZpzDom() : zero(0), one(1), mOne(-1), _p(0) {}
-	ZpzDom( Residu_t p, unsigned long = 1) : zero(0), one(1), mOne(p-1), _p(p) {}
+	ZpzDom() :
+		zero(0), one(1), mOne(-1), _p(0) {}
+	ZpzDom( Residu_t p, unsigned long = 1) :
+	       	zero(0), one(1), mOne((Rep)p-1), _p(p) {}
 
 
 	Self_t& operator= (const Self_t& D)

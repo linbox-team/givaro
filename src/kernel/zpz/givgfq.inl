@@ -28,47 +28,47 @@
 
 #define _GIVARO_GFQ_ADD(c, a, b, mun, plun) { if ((b)==0) (c)=(a); else if ((a)==0) (c)=(b); else { \
 	(c) = (a)-(b); \
-	(c) = ((c)>0)?(c):(c)+ (mun); \
+	(c) = ((c)>0)?(c):(c)+ (TT)(mun); \
 	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(b); \
-		(c) = ((c)>0)?(c):(c)+(mun); \
+		(c) = ((c)>0)?(c):(c)+(TT)(mun); \
 	} } }
 
 #define _GIVARO_GFQ_NEG(res, a, mo, mun) { if ( (a)==0 ) (res)=0; else\
-	{ (res) = (a) - (mo) ; (res) = ((res)>0)?(res):(res)+(mun); } }
+	{ (res) = (Rep) ( (a) - (Rep) (mo) ) ; (res) = (Rep) ( ((res)>0)?(res):(res)+(Rep)(mun) ) ; } }
 
 // Warning : valid iff a != c
 // if not use AUTOSUB ...
 #define _GIVARO_GFQ_SUB(c, a, b, mo, mun, plun) { if ((a)==0) {_GIVARO_GFQ_NEG(c,b,mo,mun);} else if ((b)==0) (c)=(a); else { \
-	(c) = (b)-(a)-(mo); \
-	(c) = ((c)>0)?(c):(c)+(mun); \
-	(c) = ((c)>0)?(c):(c)+ (mun); \
+	(c) = (b)-(a)-(TT)(mo); \
+	(c) = ((c)>0)?(c):(c)+(TT)(mun); \
+	(c) = ((c)>0)?(c):(c)+ (TT)(mun); \
 	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(a); \
-		(c) = ((c)>0)?(c):(c)+(mun); \
+		(c) = ((c)>0)?(c):(c)+(TT)(mun); \
 	} } }
 #define _GIVARO_GFQ_AUTOSUB(c, b, mo, mun, plun) { if ((c)==0) {_GIVARO_GFQ_NEG(c,b,mo,mun);} else if ((b)!=0) { \
-	(c) = (c)-(b)-(mo); \
-	(c) = ((c)>0)?(c):(c)+(mun); \
-	(c) = ((c)>0)?(c):(c)+ (mun); \
+	(c) = (c)-(b)-(TT)(mo); \
+	(c) = ((c)>0)?(c):(c)+(TT)(mun); \
+	(c) = ((c)>0)?(c):(c)+ (TT)(mun); \
 	(c) = (plun)[(UT)(c)]; \
 	if (c) { \
 		(c) = (c)+(b); \
-		(c) = ((c)>0)?(c)-(mo):(c)+(mo); \
-		(c) = ((c)>0)?(c):(c)+(mun); \
+		(c) = ((c)>0)?(c)-(TT)(mo):(c)+(TT)(mo); \
+		(c) = ((c)>0)?(c):(c)+(TT)(mun); \
 	} } }
 
 
 
-#define _GIVARO_GFQ_MUL(res, a, b, mun) { if ( ((a)==0) || ((b)==0) ) { (res) =0; } else { (res) = (((res) = (a)+(b) )>(TT)(mun))?(res)-(mun):(res); } }
+#define _GIVARO_GFQ_MUL(res, a, b, mun) { if ( ((a)==0) || ((b)==0) ) { (res) =0; } else { (res) = (((res) = (a)+(b) )>(TT)(mun))?(res)-(TT)(mun):(res); } }
 
 // JGD 02.04.1998 :  if a==1, a /= a used to be --> 0 !!!
-#define _GIVARO_GFQ_INV(res, a, mun)    { (res) = (mun)-(a); (res)=(res)?(res):(mun); }
+#define _GIVARO_GFQ_INV(res, a, mun)    { (res) = (Rep)( (Rep)(mun)-(a) ); (res)= (Rep) ( (res)?(res):(Rep)(mun) ); }
 
 #define _GIVARO_GFQ_DIV(res, a, b, mun) {  \
-	if ( (a)==0 ) { (res)=0; } else { (res) = (((res)=(a)-(b))>0)?(res):(res)+(mun); } }
+	if ( (a)==0 ) { (res)=0; } else { (res) = (((res)=(a)-(b))>0)?(res):(res)+(TT)(mun); } }
 
 
 
@@ -93,11 +93,11 @@
 #define _GIVARO_GFQ_MULADD(c,a1,a2,b,mun,plun) { \
 	if (((a1)==0) || ((a2)==0)) { (c)=(b); \
 	} else if ((b)==0) { \
-		(c) = ((    (c)=(a1)+(a2) - (mun)       )>0)?(c):(c) + (mun); \
+		(c) = ((    (c)=(a1)+(a2) - (TT)(mun)       )>0)?(c):(c) + (TT)(mun); \
 	} else { \
-		(c) = ((    (c) = (a1)+(a2)-(b)-(mun)        )<0)?(c)+(mun):(c); \
-		if (( (c) = (plun)[(UT)( ((c)>0)?(c):(c)+(mun)   )])  ) { \
-			(c) = ((    (c) = (c)+(b)        )>0)?(c):(c)+(mun); }\
+		(c) = ((    (c) = (a1)+(a2)-(b)-(TT)(mun)        )<0)?(c)+(TT)(mun):(c); \
+		if (( (c) = (plun)[(UT)( ((c)>0)?(c):(c)+(TT)(mun)   )])  ) { \
+			(c) = ((    (c) = (c)+(b)        )>0)?(c):(c)+(TT)(mun); }\
 	}\
 }
 
@@ -132,7 +132,7 @@
 	} ++_add_count; } }
 
 #define _GIVARO_GFQ_NEG(res, a, mo, mun) { ++_neg_call; if ( (a)==0 ) (res)=0; else\
-	{ (res) = (a) - (mo) ; (res) = ((res)>0)?(res):(res)+(mun); ++_neg_count; } }
+	{ (res) = (Rep) ((a) - (mo)) ; (res) = (Rep) ( ((res)>0)?(res):(res)+(mun) ); ++_neg_count; } }
 
 // Warning : valid iff a != c
 // if not use AUTOSUB ...
@@ -630,7 +630,7 @@ namespace Givaro {
             }
 
             if (tr)
-                return r = _pol2log[ UT(_characteristic - (UTT)tr) ];
+                return r = (Rep)_pol2log[ UT(_characteristic - (UTT)tr) ];
             else
                 return r = zero;
         } else {
@@ -641,7 +641,7 @@ namespace Givaro {
                 if (tr >= (TT)_characteristic )
                     tr = double((UTT)tr % _characteristic) ;
             }
-            return r = _pol2log[ (UT)tr ];
+            return r = (Rep)_pol2log[ (UT)tr ];
         }
     }
 
@@ -664,14 +664,14 @@ namespace Givaro {
             if (tr >= (int)_characteristic )
                 tr =(int)( (UT)tr % _characteristic ) ;
             if (tr)
-                return r = _pol2log[(UT) _characteristic - (UT)tr ];
+                return r = (Rep) _pol2log[(UT) _characteristic - (UT)tr ];
             else
                 return r = zero;
         }
         else {
             if (tr >= (int)_characteristic )
                 tr = int((unsigned int)tr % _characteristic ) ;
-            return r = _pol2log[ tr ];
+            return r = (Rep)_pol2log[ (UT)tr ];
         }
     }
     template<typename TT>
@@ -691,7 +691,7 @@ namespace Givaro {
         } else {
             if (tr >= (long)_characteristic )
 				tr = tr % (long)_characteristic ;
-            return r = _pol2log[ tr ];
+            return r = (Rep)_pol2log[ (size_t)tr ];
         }
     }
 
@@ -712,7 +712,7 @@ namespace Givaro {
         } else {
             if (Residu >= (Integer)_characteristic ) tr =  Residu % (UTT)_characteristic ;
             else tr = UTT(Residu);
-            return r = _pol2log[ tr ];
+            return r = (Rep)_pol2log[ (size_t)tr ];
         }
     }
 
@@ -722,7 +722,7 @@ namespace Givaro {
         unsigned long tr = Residu ;
         if (tr >= _characteristic )
 			tr =tr %  (unsigned long) _characteristic ;
-        return r = _pol2log[ tr ];
+        return r = (Rep)_pol2log[ (size_t)tr ];
     }
 
     template<typename TT>
@@ -730,7 +730,7 @@ namespace Givaro {
     {
         unsigned int tr = Residu ;
         if (tr >= _characteristic ) tr = tr % _characteristic ;
-        return r = _pol2log[ tr ];
+        return r = (Rep)_pol2log[ (size_t)tr ];
     }
 
 #ifndef __GIVARO__DONOTUSE_longlong__
@@ -739,7 +739,7 @@ namespace Givaro {
     {
         unsigned long long tr = Residu ;
         if (tr >= _characteristic ) tr = tr % _characteristic ;
-        return r = _pol2log[ tr ];
+        return r = (Rep)_pol2log[ (size_t)tr ];
     }
 
     template<typename TT>
@@ -924,14 +924,14 @@ namespace Givaro {
             //     a = (a<0?a+_q:a);
             //     return a;
         a = Rep( ((UTT)(g()) % (_q-1)) + 1);
-        return a = (a<0?a+_q:a);
+        return a = (a<0?a+(Rep)_q:a);
 
     }
 
     template<typename TT> template<typename RandIter> inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(RandIter& g, Rep& a) const
     {
         a = Rep( (UTT)(g()) % _q);
-        return a = (a<0?a+_q:a);
+        return a = (a<0?a+(Rep)_q:a);
     }
 
     template<typename TT> template<typename RandIter>

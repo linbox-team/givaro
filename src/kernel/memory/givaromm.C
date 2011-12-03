@@ -182,7 +182,7 @@ void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t n
 {
 	if (src ==0) return _allocate(newsize) ;
 	if (newsize <= oldsize) return src;
-	BlocFreeList* tmp = (BlocFreeList*)(((char*)src)-sizeof(BlocFreeList)+sizeof(long));
+	BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)src)-sizeof(BlocFreeList)+sizeof(long));
 #ifdef GIVARO_DEBUG
 	if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
 		throw GivError("[GivMMFreeList::reallocate]: bad pointer 'src'");
@@ -199,8 +199,8 @@ void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t n
 
 void GivMMFreeList::memcpy( void* dest, const void* src, const size_t size )
 {
-	BlocFreeList* tmp1 = (BlocFreeList*)(((char*)dest) - sizeof(BlocFreeList)+sizeof(long));
-	BlocFreeList* tmp2 = (BlocFreeList*)(((char*)src) - sizeof(BlocFreeList)+sizeof(long));
+	BlocFreeList* tmp1 = reinterpret_cast<BlocFreeList*>(((char*)dest) - sizeof(BlocFreeList)+sizeof(long));
+	BlocFreeList* tmp2 = reinterpret_cast<BlocFreeList*>(((char*)src) - sizeof(BlocFreeList)+sizeof(long));
 #ifdef GIVARO_DEBUG
 	if ((tmp1->u.index <0) || (tmp1->u.index >= BlocFreeList::lenTables))
 		throw GivError("[GivMMFreeList::memcpy]: bad pointer 'dest'");
@@ -230,7 +230,7 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
 		return &(GivMMFreeList::_allocate(newsize+sizeof(long))->data[1]) ;
 
 
-	BlocFreeList* tmp = (BlocFreeList*)(((char*)p)-sizeof(BlocFreeList));
+	BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)p)-sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
 	if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
 		throw GivError("[GivMMRefCount::reallocate]: bad pointer");

@@ -22,9 +22,9 @@
 #ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 
 // r = a*b
-#define __GIVARO_ZPZ64_N_MUL(r,p,a,b) ( r = (uint64_t)(a*b) % (uint64_t)p )
+#define __GIVARO_ZPZ64_N_MUL(r,p,a,b) ( r = (Rep) ( (uint64_t)(a*b) % (uint64_t)p ) )
 // r *= a
-#define __GIVARO_ZPZ64_N_MULIN(r,p,a) (  r = (uint64_t)(r*a) % (uint64_t)p  )
+#define __GIVARO_ZPZ64_N_MULIN(r,p,a) (  r = (Rep) ( (uint64_t)(r*a) % (uint64_t)p  ) )
 
 // r = a - b
 #define __GIVARO_ZPZ64_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
@@ -37,15 +37,15 @@
 #define __GIVARO_ZPZ64_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p);}
 
 // r <- a*b+c % p
-#define __GIVARO_ZPZ64_N_MULADD(r,p,a,b,c) ( r = (uint64_t)(a*b+c) % (uint64_t)p )
+#define __GIVARO_ZPZ64_N_MULADD(r,p,a,b,c) ( r = (Rep) ( (uint64_t)(a*b+c) % (uint64_t)p ) )
 
-#define __GIVARO_ZPZ64_N_MULADDIN(r,p,a,b) ( r = (uint64_t)(a*b+r) % (uint64_t)p )
+#define __GIVARO_ZPZ64_N_MULADDIN(r,p,a,b) ( r = (Rep) ( (uint64_t)(a*b+r) % (uint64_t)p ) )
 
 #define __GIVARO_ZPZ64_N_NEG(r,p,a) { r = (a == 0 ? 0 : p-a); }
 #define __GIVARO_ZPZ64_N_NEGIN(r,p) { r = (r == 0 ? 0 : p-r); }
 
 // a*b-c
-#define __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,c) ( r = (uint64_t)(a*b+p-c) % (uint64_t)p )
+#define __GIVARO_ZPZ64_N_MULSUB(r,p,a,b,c) ( r = (Rep) ( (uint64_t)(a*b+p-c) % (uint64_t)p ) )
 
 // r-a*b
 #define __GIVARO_ZPZ64_N_SUBMULIN(r,p,a,b) { \
@@ -74,8 +74,8 @@ inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::inv (Rep& r, const Rep a) const
 {
 //    int64_t d, u, v;
    int64_t u;
-  ZpzDom<Std64>::invext(u, a, _p);
-  return r = (u<0)?(ZpzDom<Std64>::Rep)(u+_p):(ZpzDom<Std64>::Rep)u;
+  ZpzDom<Std64>::invext(u, a, (int64_t)_p);
+  return r = (u<0)?(ZpzDom<Std64>::Rep)(u+(int64_t)_p):(ZpzDom<Std64>::Rep)u;
  }
 
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::div (Rep& r, const Rep a, const Rep b) const
@@ -218,8 +218,8 @@ inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::negin (Rep& r) const
 inline ZpzDom<Std64>::Rep& ZpzDom<Std64>::invin (Rep& r) const
 {
    int64_t u;
-  ZpzDom<Std64>::invext(u, r, _p);
-  return r = (u<0)?(ZpzDom<Std64>::Rep)(u+_p):(ZpzDom<Std64>::Rep)u;
+  ZpzDom<Std64>::invext(u, r, (int64_t)_p);
+  return r = (u<0)?(ZpzDom<Std64>::Rep)(u+(int64_t)_p):(ZpzDom<Std64>::Rep)u;
 }
 
 
@@ -366,10 +366,10 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const unsigned long a
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long a ) const
 {
   int64_t sign; uint64_t ua;
-  if (a <0) { sign =-1; ua = -a;}
-  else { ua = a; sign =1; }
-  r = (ua >=_p) ? ua % (uint64_t)_p : ua;
-  if (r && (sign ==-1)) r = _p - r;
+  if (a <0) { sign =-1; ua = (unsigned int)-a;}
+  else { ua = (unsigned int)a; sign =1; }
+  r = (Rep)((ua >=_p) ? ua % (uint64_t)_p : ua);
+  if (r && (sign ==-1)) r = (Rep)_p - r;
   return r;
 }
 
@@ -383,7 +383,7 @@ inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const Integer& Residu 
     if ( (-Residu) >= (Integer)(_p) ) tr = int64_t( (-Residu) % (Integer)_p) ;
     else tr = int64_t(-Residu);
     if (tr)
-      return r = (uint64_t)_p - (uint64_t)tr;
+      return r = (Rep)( (uint64_t)_p - (uint64_t)tr ) ;
     else
       return r = zero;
   } else {
@@ -417,10 +417,10 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const float a ) const
 inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long long a ) const
 {
   int sign; uint64_t ua;
-  if (a <0) { sign =-1; ua = -a;}
-  else { ua = a; sign =1; }
-  r = (ua >=_p) ? ua % (uint64_t)_p : ua;
-  if (r && (sign ==-1)) r = _p - r;
+  if (a <0) { sign =-1; ua = (unsigned int)-a;}
+  else { ua = (unsigned int)a; sign =1; }
+  r = (Rep) ( (ua >=_p) ? ua % (uint64_t)_p : ua) ;
+  if (r && (sign ==-1)) r = (Rep)_p - r;
   return r;
 }
 
@@ -497,7 +497,7 @@ inline void ZpzDom<Std64>::dotprod
   if ((sz <10) && (sz <stride)) {
     for(  size_t i= sz; i--; )
 #ifdef __x86_64__
-      dot += a[i] * b[i];
+      dot += (unsigned long)a[i] * (unsigned long)b[i];
 #else
       dot = (unsigned long) (dot + a[i] * b[i]);
 #endif
@@ -506,11 +506,11 @@ inline void ZpzDom<Std64>::dotprod
     return;
   }
   unsigned int i_begin=0;
-  stride &= ~0x1;
+  stride &= (unsigned int)~0x1;
   if (stride ==0) {
     for(  size_t i= sz; --i; ) {
 #ifdef __x86_64__
-      dot += a[i] * b[i];
+      dot += (unsigned long)a[i] * (unsigned long)b[i];
       if (dot>_p) dot %= _p;
 #else
       dot = (unsigned long) (dot + a[i] * b[i]);
@@ -527,7 +527,7 @@ inline void ZpzDom<Std64>::dotprod
 	      --min_sz;
 	      ++i_begin;
 #ifdef __x86_64__
-	      dot += a++[min_sz] * b++[min_sz];
+	      dot += (unsigned long)a++[min_sz] * (unsigned long)b++[min_sz];
 #else
 	      dot = (unsigned long) (dot + a++[min_sz] * b++[min_sz]);
 #endif
@@ -536,8 +536,8 @@ inline void ZpzDom<Std64>::dotprod
       for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) //!@todo o_O
       {
 #ifdef __x86_64__
-        dot += a[0] * b[0];
-        dot += a[1] * b[1];
+        dot += (unsigned long)a[0] * (unsigned long)b[0];
+        dot += (unsigned long)a[1] * (unsigned long)b[1];
 #else
 	dot = (unsigned long) (dot +  a[0] * b[0] );
 	dot = (unsigned long) (dot +  a[1] * b[1] );

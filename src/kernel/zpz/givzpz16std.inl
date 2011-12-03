@@ -451,19 +451,19 @@ namespace Givaro {
 		unsigned int stride = 1;
 		if ((unsigned long)bound < GIVARO_MAXUINT16)
 			stride = (unsigned int) (GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound));
-		unsigned long dot = zero;
+		unsigned long dot = (unsigned long)zero;
 		if ((sz <10) && (sz <stride)) {
 			for(  size_t i= sz; i--; )
-				dot += a[i] * b[i];
+				dot += (unsigned long)a[i] * (unsigned long)b[i];
 			if (dot > _p) r = (Rep)(dot % (uint16_t)_p);
 			else r = (Rep)dot;
 			return;
 		}
 		unsigned int i_begin=0;
-		stride &= ~0x1;
+		stride &= (unsigned int)~0x1;
 		if (stride ==0) {
 			for(  size_t i = sz; i--; ) {
-				dot += a[i] * b[i];
+				dot += (unsigned long)a[i] * (unsigned long)b[i];
 				if (dot>_p) dot %= _p;
 			}
 			r = (Rep)dot;
@@ -474,13 +474,13 @@ namespace Givaro {
 			if ((min_sz & 0x1) !=0) {
 				min_sz--;
 				i_begin++;
-				dot += a++[min_sz] * b++[min_sz];
+				dot += (unsigned long)a++[min_sz] * (unsigned long)b++[min_sz];
 			}
 			if (min_sz > 1)
 				for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b )
 				{
-					dot += a[0] * b[0];
-					dot += a[1] * b[1];
+					dot += (unsigned long)a[0] * (unsigned long)b[0];
+					dot += (unsigned long)a[1] * (unsigned long)b[1];
 				}
 			if (dot>_p) dot %= (uint16_t)_p;
 			i_begin += (unsigned int) min_sz;

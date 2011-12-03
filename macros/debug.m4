@@ -79,6 +79,19 @@ dnl PATHSCALE ?
 		AC_SUBST(CCNAM) ])
 		])
 
+dnl CLANG ?
+		AS_IF([ test -z "${CCNAM}"], [
+			AC_TRY_RUN( [
+				#ifdef __clang__
+				   int main() { return !(__clang_major >=3) ; }
+			   #else
+				   pas clang non plus.
+				#endif], [
+		AC_MSG_RESULT(clang)
+		CCNAM=clang
+		AC_SUBST(CCNAM) ])
+		])
+
 dnl GCC ?
 		AS_IF([ test -z "${CCNAM}"], [
 			AC_TRY_RUN( [
@@ -87,9 +100,11 @@ dnl GCC ?
    #else
 				   pas gcc non plus ???
 				#endif], [
-   AC_MSG_RESULT(gcc)
+		CCNOM=gcc
+		AS_IF([ test -n "${CC}" ], [CCNOM="`$CC --version 2>&1|  awk 'NR<2{print $1}'`"])
    CCNAM=gcc
    AC_SUBST(CCNAM)
+		AC_MSG_RESULT($CCNOM)
    ])
 		])
 

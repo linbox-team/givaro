@@ -33,6 +33,7 @@ namespace Givaro {
 		typedef typename Poly1Dom<Domain,Tag>::Element                          Element;
 		typedef          RandIter                                      random_generator;
 		typedef typename Signed_Trait<typename Domain::Element>::unsigned_type Residu_t;
+		typedef typename Signed_Trait<typename Domain::Element>::signed_type   Element_t;
 		// typedef typename Domain::Residu_t                                      Residu_t;
 
 		Poly1FactorDom () {}

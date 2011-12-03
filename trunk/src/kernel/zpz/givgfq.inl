@@ -964,13 +964,13 @@ namespace Givaro {
     inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)
             // Precondition P prime
             :  zero(0)
-        , one (power(P,e) - 1  )
+        , one ( (TT)power(P,e) - 1  )
         , _characteristic(P)
         , _exponent(e)
-        , _q( one + 1 )
-        , _qm1 ( one )
-        , _qm1o2(  (P==2)?  (one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
-        , mOne(_qm1o2)
+        , _q( (UTT) one + 1 )
+        , _qm1 ( (UTT) one )
+        , _qm1o2(  (P==2)?  ((UTT)one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
+        , mOne((TT)_qm1o2)
         , _log2pol((UT) _q )
         , _pol2log( (UT)_q )
         , _plus1( (UT)_q )
@@ -978,7 +978,7 @@ namespace Givaro {
     {
 
             // 1 is represented by q-1, zero by 0
-        _log2pol[0] = zero;
+        _log2pol[0] = (UTT) zero;
 
         if (e <= 1) {
             IntNumTheoDom<> NTD;
@@ -1060,7 +1060,7 @@ namespace Givaro {
             else
                 b = a + 1;
                 // WARNING : in the plus1 table we pre-substract (_q - 1)
-            _plus1[(UT)i] = _pol2log[(UT)b] - _qm1;
+            _plus1[(UT)i] = (TT)(_pol2log[(UT)b] - _qm1);
         }
             // -1 + 1 == 0
         _plus1[(UT)_qm1o2] = 0;

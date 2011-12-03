@@ -549,6 +549,12 @@ namespace Givaro {
 		return a ==0LL;
 	}
 #endif
+	template<class A, class B>
+	bool isleq(const A& a, const B& b)
+	{
+		return a<=b;
+	}
+
 
 }
 

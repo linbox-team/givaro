@@ -215,7 +215,7 @@ namespace Givaro {
 			this->random( (RandIter&)_g, R, n); // must cast away const
 			_domain.assign(R[n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
-				_domain.assign(R[0],a);
+				_domain.assign(R[0],static_cast<Rep>(a));
 				if (is_irreducible(R))
 					return true;
 			}
@@ -239,7 +239,7 @@ namespace Givaro {
 
 		do {
 			this->random( (RandIter&)_g, R, n); // must cast away const
-			_domain.assign(R[n.value()],_domain.one);
+			_domain.assign(R[(size_t)n.value()],_domain.one);
 			_domain.assign(R[0],_domain.one);
 			if (is_irreducible(R))
 				return true;
@@ -398,7 +398,7 @@ namespace Givaro {
 	{
 		// Search for a monic irreducible Polynomial
 		// with random Elements
-		init(R, n);
+		this->init(R, n);
 		Residu_t MOD = _domain.residu();
 
 		if (find_irred_randomial(R,n,MOD))

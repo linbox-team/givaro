@@ -682,13 +682,15 @@ namespace Givaro {
                 // -a = b [p]
                 // a = p-b [p]
             tr = -tr;
-            if (tr >= (long)_characteristic ) tr = (unsigned long)tr % _characteristic ;
+            if (tr >= (long)_characteristic )
+				tr = tr % (long)_characteristic ;
             if (tr)
-                return r = _pol2log[ _characteristic - (unsigned long)tr ];
+                return r = (typename GFqDom<TT>::Rep) _pol2log[ (size_t)_characteristic - (size_t)tr ];
             else
                 return r = zero;
         } else {
-            if (tr >= (long)_characteristic ) tr = (unsigned long)tr % _characteristic ;
+            if (tr >= (long)_characteristic )
+				tr = tr % (long)_characteristic ;
             return r = _pol2log[ tr ];
         }
     }

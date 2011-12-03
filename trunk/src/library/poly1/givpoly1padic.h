@@ -72,7 +72,7 @@ public:
         _domain.convert(E,*pi);
         for (++pi;pi != P.rend();++pi) {
             E *= _domain.size();
-            E += _domain.convert(*pi);
+            E += (unsignedinttype)_domain.convert(*pi);
         }
         return E;
     }
@@ -131,7 +131,7 @@ public:
         }
         double iq, ir;
         vect Q;
-            long t = (n+1)/2;
+            long t = (long)(n+1)/2;
             double q = std::pow(double(_domain.size()), double(t));
             iq = floor( E / q );
             ir = E - iq*q;

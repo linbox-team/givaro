@@ -164,11 +164,12 @@ namespace Givaro {
 		// std::cout << toto << ',' << l << ',' << ',' << *this << std::endl;
 		assert((toto<l) && (-toto<l) && (toto.priv_sign()*(*this).priv_sign()>=0)) ;
 #endif
-		if (!res) return res ;
+		if (!res)
+			return (long)res ;
 		if (isneg) return (-(long)res) ;
 
 
-		return res ;
+		return (long)res ;
 	}
 
 	long Integer::operator % (const long l) const

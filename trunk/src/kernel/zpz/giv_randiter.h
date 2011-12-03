@@ -21,10 +21,10 @@ template<class TAG>
 class ZpzDom ;
 
 // -- Tag for arithmetic:
-class Std16 /*{public: typedef  int16_t type;}*/ ; // -- standard arithmetic over 16bits representations.
-class Std32 /*{public: typedef int32_t type;}*/ ; // -- standard arithmetic over 32bits representations.
+struct Std16 /*{public: typedef  int16_t type;}*/ ; // -- standard arithmetic over 16bits representations.
+struct Std32 /*{public: typedef int32_t type;}*/ ; // -- standard arithmetic over 32bits representations.
 
-class Log16 ; // -- log arithmetic over 16bits representations.
+struct Log16 ; // -- log arithmetic over 16bits representations.
 
 template<> class ZpzDom<Std16>;
 template<> class ZpzDom<Std32>;

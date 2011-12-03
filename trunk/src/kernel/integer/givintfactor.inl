@@ -136,7 +136,7 @@ namespace Givaro {
 				n >>= 1;
 			while (!(n & 0x1));
 		}
-		short * Ip = new short[n+1];
+		short * Ip = new short[(size_t)n+1];
 		int i;
 		for(int ii=(int)n+1;ii--;)
 			Ip[ii] = 0L;

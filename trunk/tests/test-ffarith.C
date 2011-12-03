@@ -231,7 +231,7 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
-    Integer::seeding(seed);
+    Integer::seeding((unsigned long)seed);
 
 
 #ifdef NDEBUG

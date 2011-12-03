@@ -237,7 +237,7 @@ namespace Givaro {
 			u2 = u;
 			prime = primes[i];
 
-			rem = u2 % prime;
+			rem = (unsigned long)(u2 % prime);
 			if (rem == 0)		/* divisable by this prime? */
 			{
 				Integer::divmod(q,rem,u2,prime * prime);

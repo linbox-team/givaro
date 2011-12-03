@@ -377,10 +377,10 @@ namespace Givaro {
 		unsigned long ua;
 		if (a <0) {
 			sign =-1;
-			ua = -a;
+			ua = (unsigned long)-a;
 		}
 		else {
-			ua = a;
+			ua = (unsigned long)a;
 			sign =1;
 		}
 		r = Rep( (ua >=_p) ? ua % _p : ua );
@@ -513,7 +513,7 @@ namespace Givaro {
 				return r = (Rep)dot;
 		}
 		size_t i_begin=0;
-		stride &= ~0x1;
+		stride &= (unsigned int)~0x1;
 		if (stride ==0) {
 			for(  size_t i= sz; --i; ) {
 				dot += a[i] * b[i];
@@ -583,7 +583,7 @@ namespace Givaro {
 	inline ZpzDom<Unsigned32>::Rep&  ZpzDom<Unsigned32>::dotprod
 	( Rep& r, const size_t sz, constArray a, constArray b ) const
 	{
-		return ZpzDom<Unsigned32>::dotprod(r, _p, sz, a, b);
+		return ZpzDom<Unsigned32>::dotprod(r, (int)_p, sz, a, b);
 	}
 
 

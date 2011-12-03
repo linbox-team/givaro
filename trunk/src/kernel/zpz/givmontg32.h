@@ -56,7 +56,7 @@ namespace Givaro {
 			_Bp( (Residu_t)  B32%p),
 			_B2p((Residu_t)  (_Bp<<HALF_BITS32) % p),
 			_B3p((Residu_t)  (_B2p<<HALF_BITS32) % p),
-			_nim((Residu_t)  -Montgomery<Std32>::invext(_p,B32) ),
+			_nim((Residu_t)  -Montgomery<Std32>::invext((int32_t)_p,B32) ),
 			_dp( (double)    p),
 			zero((Residu_t)  0UL),
 			one( (Residu_t)  redcsal( _B2p ) ),

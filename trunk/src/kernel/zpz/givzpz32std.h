@@ -56,11 +56,11 @@ public:
   const Rep mOne;
 
   // ----- Constructor
-  ZpzDom()
-	  : zero(0), one(1), mOne(-1), _p(0), _dp(0.0) {}
+  ZpzDom() :
+	  zero(0), one(1), mOne(-1), _p(0), _dp(0.0) {}
 
-  ZpzDom( Residu_t p )
-	  : zero(0), one(1), mOne(p-1), _p(p), _dp((double)p) {}
+  ZpzDom( Residu_t p ) :
+	  zero(0), one(1), mOne((Rep)p-1), _p(p), _dp((double)p) {}
 
   ZpzDom( const ZpzDom<Std32>& F)
 	  : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp) {}

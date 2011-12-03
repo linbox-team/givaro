@@ -89,6 +89,8 @@ namespace Givaro {
 	{
 		return absCompare(b,a);
 	}
+	template<class A, class B>
+	bool isleq(const A&a, const B&b);
 	int 		nonZero (const Integer& a);
 	int 		isOne  (const Integer& a);
 	// (FILE gmp++_int_misc.C)
@@ -902,7 +904,8 @@ namespace Givaro {
 		friend giv_all_inlined  int isZero(const long long a);
 #endif
 		template<class A,class B>
-		giv_all_inlined bool isleq(const A&,const B&);
+		static giv_all_inlined bool isleq(const A&a,const B&b)
+		{ return a<=b ; }
 
 
 

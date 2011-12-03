@@ -61,8 +61,9 @@ namespace Givaro {
 			P.reallocate(0);
 			return P;
 		}
-		P.reallocate(++degQ);
-		for (int i=0; degQ>i; ++i)
+		P.reallocate((size_t)++degQ);
+		// degQ >=0
+		for (size_t i=0; (size_t)degQ.value()>i; ++i)
 			_domain.assign(P[i], Q[i]);
 		return P;
 	}
@@ -111,7 +112,7 @@ namespace Givaro {
 	template<class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const Degree deg ) const
 	{
-		P.reallocate(value(deg+1));
+		P.reallocate((size_t)value(deg+1));
 
 		size_t sz = P.size();
 		for (unsigned int i=0; i<sz-1; ++i)
@@ -126,8 +127,9 @@ namespace Givaro {
 	{
 		long deg = value(d);
 		P.reallocate(deg+1);
-		for (int i=0; i<deg; ++i)
-			_domain.assign(P[i], _domain.zero);
+		assert (deg>=0);
+			for (size_t i=0; i<(size_t)deg; ++i)
+				_domain.assign(P[i], _domain.zero);
 		_domain.init(P[deg], Val);
 
 		if (_domain.isZero(P[deg])) {
@@ -144,10 +146,12 @@ namespace Givaro {
 		long deg = value(d);
 		if (_domain.isZero(lcoeff)) {
 			P.reallocate(0);
-		} else {
+		}
+	       	else {
 			P.reallocate((size_t)deg+1);
-			for (int i=0; i<deg; ++i)
-				_domain.assign(P[(size_t)i], _domain.zero);
+			assert (deg>=0);
+			for (size_t i=0; i<(size_t)deg; ++i)
+				_domain.assign(P[i], _domain.zero);
 			_domain.assign(P[(size_t)deg], lcoeff);
 		}
 		return P;

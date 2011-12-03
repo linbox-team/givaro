@@ -326,7 +326,7 @@ namespace Givaro {
 	}
 	Integer::operator long long() const
 	{
-		long long tmp = (unsigned long long)(*this);
+		long long tmp = (long long)(*this);
 //                 if (*this < 0) tmp = -tmp;
 //                 return tmp;
 		return ((*this)<0)? -tmp: tmp;

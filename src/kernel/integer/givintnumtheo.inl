@@ -29,7 +29,7 @@ namespace Givaro {
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Rep& n) const
 	{
 		if (isleq(n,1)) return res=n;
-		if (isleq(n,3)) return sub(res,n,this->one);
+		if (isleq(n,3)) return Rep::sub(res,n,this->one);
 		std::list<Rep> Lf;
 		Father_t::set(Lf,n);
 		//return phi (res,Lf,n);
@@ -42,10 +42,10 @@ namespace Givaro {
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Container<Rep, Alloc<Rep> >& Lf, const Rep& n) const
 	{
 		if (isleq(n,1)) return res=n;
-		if (isleq(n,3)) return sub(res,n,this->one);
+		if (isleq(n,3)) return Rep::sub(res,n,this->one);
 		res = n; Rep t,m;
 		for(typename Container<Rep, Alloc<Rep> >::const_iterator f=Lf.begin(); f!=Lf.end(); ++f)
-			mul(res, divexact(t,res,*f), sub(m, *f, this->one));
+			Rep::mul(res, Rep::divexact(t,res,*f), Rep::sub(m, *f, this->one));
 		return res;
 	}
 
@@ -423,8 +423,8 @@ namespace Givaro {
 	{
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else returns zero
-		if (isleq(n,4)) return sub(A,n,this->one);
-		if (isZero(mod(A,n,4))) return A=this->zero;
+		if (isleq(n,4)) return Rep::sub(A,n,this->one);
+		if (isZero(Rep::mod(A,n,4UL))) return A=this->zero;
 		Rep phin, tmp;
 		phi(phin,n);
 		std::list<Rep> Lf;
@@ -433,7 +433,7 @@ namespace Givaro {
 		for(f=Lf.begin();f!=Lf.end();++f)
 			this->div(*f,phin,*f);
 		int found=0;
-		for(A = 2;(isleq(A,n) && (! found));addin(A,1)) {
+		for(A = 2;(isleq(A,n) && (! found)); Rep::addin(A,1UL)) {
 			if (isOne(gcd(tmp,A,n))) {
 				found = 1;
 				for(f=Lf.begin();(f!=Lf.end() && found);f++)
@@ -441,7 +441,7 @@ namespace Givaro {
 			}
 		}
 		if (isleq(A,n))
-			return subin(A,1);
+			return Rep::subin(A,1UL);
 		else
 			return A=this->zero;
 	}

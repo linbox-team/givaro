@@ -145,10 +145,10 @@ namespace Givaro {
 		if (_domain.isZero(lcoeff)) {
 			P.reallocate(0);
 		} else {
-			P.reallocate(deg+1);
+			P.reallocate((size_t)deg+1);
 			for (int i=0; i<deg; ++i)
-				_domain.assign(P[i], _domain.zero);
-			_domain.assign(P[deg], lcoeff);
+				_domain.assign(P[(size_t)i], _domain.zero);
+			_domain.assign(P[(size_t)deg], lcoeff);
 		}
 		return P;
 	}

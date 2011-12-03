@@ -187,9 +187,9 @@ namespace Givaro {
             }
 
 	PolElement& assign( PolElement& e, const BFElement& a) const
-            {
+	{
 		return _pD.assign(e, a) ;
-            }
+	}
 
 	PolElement& assign( PolElement& e, const PolElement& a) const
             {

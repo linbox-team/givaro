@@ -1017,12 +1017,14 @@ namespace Givaro {
 		static inline Integer& random_lessthan (Integer& r, const Integer & m) ;
 		template<bool U>
 		static inline Integer& random_lessthan_2exp (Integer& r, const unsigned long & m);
+
 		static inline Integer& random_lessthan_2exp (Integer& r, const unsigned long & m) ;
 		template<bool U>
 		static inline Integer random_lessthan_2exp (const unsigned long & m);
 		static inline Integer random_lessthan_2exp (const unsigned long & m) ;
 		template<bool U>
 		static inline Integer& random_lessthan (Integer& r, const unsigned long & m) ;
+
 		static inline Integer& random_lessthan (Integer& r, const unsigned long & m) ;
 		template<bool U,class T>
 		static inline Integer random_lessthan (const T & m);

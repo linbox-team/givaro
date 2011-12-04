@@ -484,7 +484,7 @@ public :
 		// -- W <-- P^n
 		Rep& pow( Rep& W, const Rep& P, long n) const
 		{
-			unsigned long l = GIVABS(n);
+			unsigned long l = (unsigned long)GIVABS(n);
 			if (n>0) {
 				dom_power(W._num,P._num,l,static_cast<Ring_t&>(*this));
 				dom_power(W._den,P._den,l,static_cast<Ring_t&>(*this));

@@ -19,20 +19,20 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
-    DP.add ( R, P, Q, d1, d2); // R = P+Q;
+    DP.add ( R, P, Q, (long)d1, (long)d2); // R = P+Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.add (T, P, Q);
     V=T;
-    DP.truncin(V,d1,d2);
+    DP.truncin(V,(long)d1,(long)d2);
 
     S = P; U = P;
-    DP.addin(S,Q,d1,d2);
+    DP.addin(S,Q,(long)d1,(long)d2);
     DP.addin(U,Q);
     W=U;
-    DP.truncin(W,d1,d2);
+    DP.truncin(W,(long)d1,(long)d2);
 
     if( DP.areNEqual( V, R) || DP.areNEqual(W, S) || DP.areNEqual(V, W) ) {
         std::cerr << "ERROR ADD:" << TTcount << std::endl;
@@ -53,20 +53,20 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
-    DP.sub ( R, P, Q, d1, d2); // R = P-Q;
+    DP.sub ( R, P, Q, (long)d1, (long)d2); // R = P-Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.sub (T, P, Q);
     V=T;
-    DP.truncin(V,d1,d2);
+    DP.truncin(V,(long)d1,(long)d2);
 
     S = P; U = P;
-    DP.subin(S,Q,d1,d2);
+    DP.subin(S,Q,(long)d1,(long)d2);
     DP.subin(U,Q);
     W=U;
-    DP.truncin(W,d1,d2);
+    DP.truncin(W,(long)d1,(long)d2);
 
     if( DP.areNEqual( V, R) || DP.areNEqual(W, S) || DP.areNEqual(V, W) ) {
         std::cerr << "ERROR SUB:" << TTcount << std::endl;
@@ -87,20 +87,20 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
-    DP.mul ( R, P, Q, d1, d2); // R = P*Q;
+    DP.mul ( R, P, Q, (long)d1, (long)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.mul (T, P, Q);
     V=T;
-    DP.truncin(V,d1,d2);
+    DP.truncin(V,(long)d1,(long)d2);
 
     S = P; U = P;
-    DP.mulin(S,Q,d1,d2);
+    DP.mulin(S,Q,(long)d1,(long)d2);
     DP.mulin(U,Q);
     W=U;
-    DP.truncin(W,d1,d2);
+    DP.truncin(W,(long)d1,(long)d2);
 
     if( DP.areNEqual( V, R) || DP.areNEqual(W, S) || DP.areNEqual(V, W) ) {
         std::cerr << "ERROR MUL:" << TTcount << std::endl;
@@ -121,20 +121,20 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
-    DP.axpy ( R, P, Q, G, d1, d2); // R = P*Q+G;
+    DP.axpy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q+G;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") * (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.axpy (T, P, Q, G);
     V=T;
-    DP.truncin(V,d1,d2);
+    DP.truncin(V,(long)d1,(long)d2);
 
     S = G; U = G;
-    DP.axpyin(S,P,Q,d1,d2);
+    DP.axpyin(S,P,Q,(long)d1,(long)d2);
     DP.axpyin(U,P,Q);
     W=U;
-    DP.truncin(W,d1,d2);
+    DP.truncin(W,(long)d1,(long)d2);
 
     if( DP.areNEqual( V, R) || DP.areNEqual(W, S) || DP.areNEqual(V, W) ) {
         DP.write(std::cerr << "ERROR Axpy: ") << std::endl;
@@ -165,20 +165,20 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
-    DP.axmy ( R, P, Q, G, d1, d2); // R = P*Q-G;
+    DP.axmy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q-G;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.axmy (T, P, Q, G);
     V=T;
-    DP.truncin(V,d1,d2);
+    DP.truncin(V,(long)d1,(long)d2);
 
     S = G; U = G;
-    DP.axmyin(S,P,Q,d1,d2);
+    DP.axmyin(S,P,Q,(long)d1,(long)d2);
     DP.axmyin(U,P,Q);
     W=U;
-    DP.truncin(W,d1,d2);
+    DP.truncin(W,(long)d1,(long)d2);
 
     if( DP.areNEqual( V, R) || DP.areNEqual(W, S) || DP.areNEqual(V, W) ) {
         std::cerr << "ERROR Axmy:" << std::endl;
@@ -207,20 +207,20 @@ bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >:
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
-    DP.maxpy ( R, P, Q, G, d1, d2); // R = P*Q;
+    DP.maxpy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.maxpy (T, P, Q, G);
     V=T;
-    DP.truncin(V,d1,d2);
+    DP.truncin(V,(long)d1,(long)d2);
 
     S = G; U = G;
-    DP.maxpyin(S,P,Q,d1,d2);
+    DP.maxpyin(S,P,Q,(long)d1,(long)d2);
     DP.maxpyin(U,P,Q);
     W=U;
-    DP.truncin(W,d1,d2);
+    DP.truncin(W,(long)d1,(long)d2);
 
     if( DP.areNEqual( V, R)  || DP.areNEqual(W, S) || DP.areNEqual(V, W) ) {
         std::cerr << "ERROR Maxpy:" << std::endl;
@@ -379,14 +379,14 @@ int main(int argc, char ** argv) {
     success &= TestMaxpy(DP101, P,Q,R, 1, 2);
 
 
-    GivRandom generator(seed);
+    GivRandom generator((unsigned long)seed);
 
     for(size_t i=0; i<100; ++i) {
-        long deg1 = generator() % 75;
-        long deg2 = generator() % 85;
-        long deg3 = generator() % 155;
-        long v1 = generator() % 195;
-        long v2 = v1 + (generator() % 5);
+        long deg1 = (long)generator() % 75;
+        long deg2 = (long)generator() % 85;
+        long deg3 = (long)generator() % 155;
+        long v1 = (long)generator() % 195;
+        long v2 = v1 + (long)(generator() % 5);
         DP101.random(generator, P, Degree(deg1) );
         DP101.random(generator, Q, Degree(deg2) );
         DP101.random(generator, R, Degree(deg3) );
@@ -396,12 +396,12 @@ int main(int argc, char ** argv) {
         Degree vP; DP101.val(vP,P);
         Degree vQ; DP101.val(vQ,Q);
         Degree vR; DP101.val(vR,R);
-        success &= TestAdd(DP101, P, Q, v1, v2 );
-        success &= TestSub(DP101, P, Q, v1, v2 );
-        success &= TestMul(DP101, P, Q, v1, v2 );
-        success &= TestAxpy(DP101, P, Q, R, v1, v2 );
-        success &= TestAxmy(DP101, P, Q, R, v1, v2 );
-        success &= TestMaxpy(DP101, P, Q, R, v1, v2 );
+        success &= TestAdd(DP101, P, Q, (size_t)v1, (size_t)v2 );
+        success &= TestSub(DP101, P, Q, (size_t)v1, (size_t)v2 );
+        success &= TestMul(DP101, P, Q, (size_t)v1, (size_t)v2 );
+        success &= TestAxpy(DP101, P, Q, R, (size_t)v1, (size_t)v2 );
+        success &= TestAxmy(DP101, P, Q, R, (size_t)v1, (size_t)v2 );
+        success &= TestMaxpy(DP101, P, Q, R, (size_t)v1, (size_t)v2 );
     }
 
     success &= TestAxpy(DP101, P, Q, monomial, 11, 11);

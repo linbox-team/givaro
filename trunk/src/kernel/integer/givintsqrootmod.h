@@ -50,7 +50,7 @@ public:
         std::vector < Rep > Pe (Lf.size ());
         typename std::vector < Rep >::iterator Pe_iter = Pe.begin ();
         for (; Pe_iter != Pe.end (); ++Pe_iter, ++Lf_iter, ++Le_iter)
-            dom_power (*Pe_iter, *Lf_iter, *Le_iter, *this);
+			dom_power (*Pe_iter, *Lf_iter, (long)*Le_iter, *this);
 
         Lf_iter = Lf.begin ();
         Le_iter = Le.begin ();

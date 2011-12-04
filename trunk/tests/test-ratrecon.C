@@ -97,8 +97,8 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
-    Integer::seeding(seed);
-    GivRandom generator(seed);
+    Integer::seeding((unsigned long)seed);
+    GivRandom generator((unsigned long)seed);
 
     typedef ZpzDom<Std64> Field;
     typedef Poly1Dom< Field, Dense > PolyZpz;

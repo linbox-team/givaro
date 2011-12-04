@@ -103,7 +103,7 @@ return R;
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
-    Rep& R, const typename Rep::iterator Rbeg, 
+    Rep& R, const typename Rep::iterator Rbeg,
     const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
 {
     // PRECONDITION: NO reallocation, R MUST be of larger degree than P
@@ -115,11 +115,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
-    Rep& R, 
+    Rep& R,
     const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
 {
     // PRECONDITION: P of larger degree than R
-    size_t sP = Pend-Pbeg;
+    size_t sP = (size_t)(Pend-Pbeg);
     size_t sR = R.size();
     Rep tmp; tmp.reallocate(sP);
     size_t i;
@@ -133,10 +133,10 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
-    Rep& R, const typename Rep::iterator Rbeg, const typename Rep::iterator Rend, 
+    Rep& R, const typename Rep::iterator Rbeg, const typename Rep::iterator Rend,
     const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const{
-  size_t sP = Pend-Pbeg;
-  size_t sR = Rend-Rbeg;
+  size_t sP = (size_t) (Pend-Pbeg);
+  size_t sR = (size_t)(Rend-Rbeg);
   if (sP == 0) return R;
   if (sR < sP) {
       return subin(R, P, Pbeg, Pend);

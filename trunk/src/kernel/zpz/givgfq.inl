@@ -702,16 +702,20 @@ namespace Givaro {
         if (Residu <0) {
                 // -a = b [p]
                 // a = p-b [p]
-            if ( Residu <= (Integer)(-_characteristic) ) tr =  (-Residu) % (UTT)_characteristic ;
+            if ( Residu <= (Integer)(-_characteristic) )
+				tr = (UTT) (  (-Residu) % (UTT)_characteristic );
             else
                 tr = UTT(-Residu);
             if (tr)
-                return r = _pol2log[ _characteristic - (UTT)tr ];
+                return r = (Rep)_pol2log[ _characteristic - (UTT)tr ];
             else
                 return r = zero;
-        } else {
-            if (Residu >= (Integer)_characteristic ) tr =  Residu % (UTT)_characteristic ;
-            else tr = UTT(Residu);
+        }
+		else { /* Residu >=0 */
+            if (Residu >= (Integer)_characteristic )
+				tr =  (UTT)(Residu % (UTT)_characteristic );
+            else
+				tr = UTT(Residu);
             return r = (Rep)_pol2log[ (size_t)tr ];
         }
     }
@@ -1076,21 +1080,21 @@ namespace Givaro {
     template<typename Vector>
     inline GFqDom<TT>::GFqDom(const UTT P, const UTT e, const Vector& modPoly):
             zero(0)
-        , one (power(P,e) - 1  )
+        , one ((TT) power(P,e) - 1  )
         , _characteristic(P)
         , _exponent(e)
-        , _q( one + 1 )
-        , _qm1 ( one )
-        , _qm1o2(  (P==2)?  (one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
-        , mOne(_qm1o2)
-        , _log2pol( _q )
-        , _pol2log( _q )
-        , _plus1( _q )
+        , _q( (UTT) one + 1 )
+        , _qm1 ( (UTT)one )
+        , _qm1o2(  (P==2)?  ((UTT)one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
+        , mOne((TT)_qm1o2)
+        , _log2pol( (UT)_q )
+        , _pol2log( (UT)_q )
+        , _plus1( (UT)_q )
         , _dcharacteristic( (double)P )
     {
 
             // 1 is represented by q-1, zero by 0
-        _log2pol[0] = zero;
+        _log2pol[0] = (UTT)zero;
 
         GFqDom<TT> Zp(P,1);
         typedef Poly1FactorDom< GFqDom<TT>, Dense > PolDom;
@@ -1131,7 +1135,7 @@ namespace Givaro {
                 b = a - r;
             else
                 b = a + 1;
-            _plus1[i] = _pol2log[b] - _qm1;
+            _plus1[i] = (TT)_pol2log[b] - (TT)_qm1;
         }
 
         _plus1[_qm1o2] = 0;

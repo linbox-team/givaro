@@ -173,7 +173,7 @@ template< class T, class U>
 int test3( const T m, const U p)
 {/*{{{*/
 	int pi = int(p);
-	long int q = m / p;
+	long int q = (long int)(m / (T)p);
 	const Integer M(m);
 	const Integer P(p);
 	Integer Q ;
@@ -213,8 +213,8 @@ int main()
 #endif
 
 	long int p = 78678675;
-	unsigned long int M(m);
-	unsigned long int P(p);
+	unsigned long int M((unsigned long)m);
+	unsigned long int P((unsigned long)p);
 
         Integer mOne(-1);
             // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep

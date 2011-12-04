@@ -45,7 +45,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 	IntPrimeDom ID;
 	Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1), b;
 
-	Prime_t  Primes( argc>1 ? atoi(argv[1]):15);
+	Prime_t  Primes( argc>1 ? (size_t)atoi(argv[1]):15);
 	Domains  PrimeDoms( Primes.size() );
 	Elements Moduli( Primes.size() );
 	Prime_t  ModuliInts( Primes.size() );
@@ -144,7 +144,7 @@ int main(int argc, char ** argv)
 	// argv[2] : 2^{32-j} is size of primes
 	// argv[3] : seed for generator
 
-	GivRandom seedor( argc>3 ? atoi(argv[3]): BaseTimer::seed() );
+	GivRandom seedor( argc>3 ? (unsigned)atoi(argv[3]): (unsigned)BaseTimer::seed() );
 	unsigned long seed = seedor.seed();
 
 

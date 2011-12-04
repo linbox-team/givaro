@@ -37,7 +37,7 @@ namespace Givaro {
 			// JGD 16.04.2003, Si i==1 !!!!!!!
 			for (long j= (long)i-1; j--; ) {
 				//  std::cerr << tmp << " * " << _primes[j] << " + " << mixrad[j] << " mod " << _primes[i] << " = ";
-				modin( addin( mulin(tmp, _primes[j]), mixrad[j]), _primes[i]);
+				modin( addin( mulin(tmp, _primes[(size_t)j]), mixrad[(size_t)j]), _primes[i]);
 				//  std::cerr << tmp << ";#Horner scheme" << std::endl;
 			}
 			// - m_i = (r_i - pp_i)*ck_i, ck is reciprocals

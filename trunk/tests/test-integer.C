@@ -185,9 +185,9 @@ int test_cast_unit(const UnsignedBaseType& t, const Integer& a, const Integer& b
     if ( (UnsignedBaseType)it != t) return -1;
     if ( (UnsignedBaseType)iu != t) return -2;
     if ( (UnsignedBaseType)iv != t) return -3;
-    
+
     UnsignedBaseType at( (UnsignedBaseType)a ), bt( (UnsignedBaseType) b );
-    
+
     if ( (UnsignedBaseType) (at * bt) != (UnsignedBaseType)(a*b) ) {
 #ifdef GIVARO_DEBUG
         std::cerr << "a: " << a << std::endl;
@@ -201,7 +201,7 @@ int test_cast_unit(const UnsignedBaseType& t, const Integer& a, const Integer& b
 #endif
         return -10;
     }
-    
+
     return 0;
 }
 
@@ -246,14 +246,14 @@ int test_cast() {
 
 	return res ;
 }
-    
-    
+
+
 
 //! @todo test gcd...
 
 int main (int argc, char ** argv)
 {
-    unsigned long seed = (argc>1?atoi(argv[1]):BaseTimer::seed ());
+    unsigned long seed = (unsigned long)(argc>1?(unsigned long)atoi(argv[1]):(unsigned long)BaseTimer::seed ());
 #ifdef GIVARO_DEBUG
     std::cerr << "Seed: " << seed << std::endl;
 #endif

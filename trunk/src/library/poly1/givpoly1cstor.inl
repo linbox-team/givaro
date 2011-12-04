@@ -126,13 +126,13 @@ namespace Givaro {
 	( Rep& P, const Degree d, const XXX& Val ) const
 	{
 		long deg = value(d);
-		P.reallocate(deg+1);
+		P.reallocate((size_t)deg+1);
 		assert (deg>=0);
 			for (size_t i=0; i<(size_t)deg; ++i)
 				_domain.assign(P[i], _domain.zero);
-		_domain.init(P[deg], Val);
+		_domain.init(P[(size_t)deg], Val);
 
-		if (_domain.isZero(P[deg])) {
+		if (_domain.isZero(P[(size_t)deg])) {
 			P.reallocate(0);
 		}
 		return P;

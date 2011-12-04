@@ -57,7 +57,7 @@ namespace Givaro {
 
 		// - reallocation of a new array :
 		int Size = (int) _primes.size();
-		_ck.reallocate(Size);
+		_ck.reallocate((size_t)Size);
 		//  _ck[0] = Neutral::zero; // -- undefined and never used
 
 		for (int k=1; k < Size; ++k)

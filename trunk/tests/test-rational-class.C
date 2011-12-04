@@ -6,6 +6,7 @@
 // see the COPYRIGHT file for more details.
 
 
+#include <gmp++/gmp++.h>
 #include <gmp++/gmp++_rat.h>
 #include <iostream>
 #include <sstream>

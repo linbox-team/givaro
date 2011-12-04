@@ -26,12 +26,12 @@ namespace Givaro {
 			RnsToRingRight(I, residues, lowerlevel, lowercolnext);
 
 			I -= u0; 				// u1-u0
-			I *= _primes[lowerlevel][lowercolnext];	// (u1-u0) * (p0(p0^{-1} mod p1))
+			I *= _primes[(size_t)lowerlevel][(size_t)lowercolnext];	// (u1-u0) * (p0(p0^{-1} mod p1))
 			I += u0;				// (u1-u0)*M01+u0
-			return Integer::modin(I, _primes[level][col]);// (u1-u0)*M01 +u0 mod p0p1, between 0 and p0p1-1
+			return Integer::modin(I, _primes[(size_t)level][(size_t)col]);// (u1-u0)*M01 +u0 mod p0p1, between 0 and p0p1-1
 		}
 		else {
-			return I=residues[col];
+			return I=residues[(size_t)col];
 		}
 	}
 
@@ -47,10 +47,10 @@ namespace Givaro {
 			RnsToRingRight(I, residues, lowerlevel, lowercolnext);
 
 			I -= u0; 				// u1-u0
-			I *= _primes[lowerlevel][lowercolnext];	// (u1-u0) * (p0(p0^{-1} mod p1))
+			I *= _primes[(size_t)lowerlevel][(size_t)lowercolnext];	// (u1-u0) * (p0(p0^{-1} mod p1))
 			return I += u0;				// (u1-u0)*M01+u0
 		} else {
-			return I=residues[col];
+			return I=residues[(size_t)col];
 		}
 	}
 
@@ -62,9 +62,9 @@ namespace Givaro {
 	Ints& RNSsystemFixed<Ints>::RnsToRing( Ints& I, const smallIntVector& rns)
 	{
 		int ir = (int)_RNS.Primes().size();
-		typename RNS_t::array Reds( ir );
+		typename RNS_t::array Reds( (size_t)ir );
 		for(int i = (int)_primes.size(); i-- ;) {
-			int is = (int)_primes[i].size();
+			int is = (int)_primes[(size_t)i].size();
 			if (is & 1) {
 				RnsToRingLeft(Reds[--ir], rns, i, --is);
 			}
@@ -101,13 +101,13 @@ namespace Givaro {
 		for(typename array::const_iterator pit = inprimes.begin(); pit != inprimes.end(); ++pit) {
 			_primes.front().push_back( *pit );
 			for(int i = 1; i< (int)_primes.size(); ++i) {
-				int s = (int)_primes[i-1].size();
+				int s = (int)_primes[(size_t)i-1].size();
 				if (s & 1) break;
 				else {
-					Ints& p0(_primes[i-1][s-2]), & p1(_primes[i-1][s-1]);
+					Ints& p0(_primes[(size_t)i-1][(size_t)s-2]), & p1(_primes[(size_t)i-1][(size_t)s-1]);
 					Ints prod(p0*p1);
 					inv(p1, p0, p1) *= p0;
-					_primes[i].push_back( prod );
+					_primes[(size_t)i].push_back( prod );
 				}
 			}
 
@@ -126,7 +126,7 @@ namespace Givaro {
 
 				int s = (int)_primes.back().size();
 
-				Ints& p0(_primes[lastp][s-2]), & p1(_primes[lastp][s-1]);
+				Ints& p0(_primes[(size_t)lastp][(size_t)s-2]), & p1(_primes[(size_t)lastp][(size_t)s-1]);
 				newlevel.push_back( p0*p1  );
 
 				inv(p1, p0, p1) *= p0;
@@ -150,13 +150,13 @@ namespace Givaro {
 
 		int numodd=0;
 		for(int i = (int)_primes.size(); i-- ; )
-			if (_primes[i].size() & 1) ++numodd;
+			if (_primes[(size_t)i].size() & 1) ++numodd;
 
 
-		typename RNS_t::domains Mods(numodd);
+		typename RNS_t::domains Mods((size_t)numodd);
 		for(int i = (int)_primes.size(); i-- ; ) {
-			if (_primes[i].size() & 1)
-				Mods[--numodd] = _primes[i].back();
+			if (_primes[(size_t)i].size() & 1)
+				Mods[--numodd] = _primes[(size_t)i].back();
 		}
 		_RNS.setPrimes( Mods );
 	}

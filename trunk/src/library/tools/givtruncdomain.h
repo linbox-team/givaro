@@ -13,7 +13,9 @@
 #ifndef __GIVARO_trunc_domain_H
 #define __GIVARO_trunc_domain_H
 #include <givaro/givpoly1dense.h>
+#ifndef __PATHCC__
 #include <bits/stl_pair.h>
+#endif
 
 
 namespace Givaro {

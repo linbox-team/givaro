@@ -145,12 +145,12 @@ namespace Givaro {
 
 		virtual double& convert(double& d, const Rep a) const
 {
-			return d=_log2dbl[a];
+			return d=_log2dbl[(size_t)a];
 		}
 
 		virtual float& convert(float& d, const Rep a) const
 {
-			return d=(float)_log2dbl[a];
+			return d=(float)_log2dbl[(size_t)a];
 		}
 
 		virtual Rep& init(Rep& pad, const double d) const
@@ -176,7 +176,7 @@ namespace Givaro {
 				padl ^= prec;
 			}
 
-			pad = prec;
+			pad = (Rep)prec;
 			for(size_t j = 0;j<_degree;++j) {
 				rll >>= _BITS;
 				tll >>= _BITS;
@@ -186,9 +186,9 @@ namespace Givaro {
 				pad ^= prec;
 			}
 
-			padl = this->_low2log[padl];
-			pad = this->_high2log[pad];
-			return this->addin(pad,padl);
+			padl = this->_low2log[(size_t)padl];
+			pad = (Rep)this->_high2log[(size_t)pad];
+			return this->addin(pad,(Rep)padl);
 		}
 
 		virtual Rep& init(Rep& pad, const float d) const
@@ -221,7 +221,7 @@ namespace Givaro {
 
 			Element xkmu;
 			// This is X
-			xkmu = this->_pol2log[this->_characteristic];
+			xkmu = (Element)this->_pol2log[(size_t)this->_characteristic];
 			// This is X^{e-1}
 			dom_power(xkmu,xkmu,this->_exponent-1,*this);
 
@@ -269,11 +269,11 @@ namespace Givaro {
 				}
 
 				PAD.eval(tmp , low_ui );
-				_low2log[binpolit] = this->_pol2log[tmp];
+				_low2log[binpolit] = this->_pol2log[(size_t)tmp];
 
 				low_ui.push_back(cour);
 				PAD.eval( tmp, low_ui);
-				Father_t::mul((Element&)_high2log[binpolit],(Element)this->_pol2log[tmp], xkmu);
+				Father_t::mul((Element&)_high2log[(size_t)binpolit],(Element)this->_pol2log[(size_t)tmp], xkmu);
 			}
 		}
 	};

@@ -34,7 +34,7 @@ int testBasicConversion()
 	/*  test unsigned versions */
 	/*  cast towards unsigned consider only the absolute value */
 	unsigned int uqq = (unsigned int) qq;
-	unsigned int q4  = (int) q;
+	unsigned int q4  = (unsigned int) q;
 // 	std::cout << q4 << std::endl;
 // 	std::cout << uqq << std::endl;
 	if (q4 != uqq)
@@ -42,7 +42,7 @@ int testBasicConversion()
 
 	unsigned long lqq = (unsigned long) qq;
 //         std::cerr << "q  : " << q << std::endl;
-	unsigned long int q5 = (long int) q;
+	unsigned long int q5 = (unsigned long int) q;
 //         std::cerr << "lqq: " << lqq << std::endl;
 //         std::cerr << "q5 : " << q5 << std::endl;
 	if (q5 != lqq)
@@ -50,7 +50,7 @@ int testBasicConversion()
 
 #ifndef __GIVARO__DONOTUSE_longlong__
 	unsigned long long luqq = (unsigned long long) qq;
-	unsigned long long int q6 = (long long int) q;
+	unsigned long long int q6 = (unsigned long long int) q;
 	if (q6 != luqq)
 		return err = 6 ;
 #endif

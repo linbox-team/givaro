@@ -34,7 +34,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep
  	stdmul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
             Q, Q.begin(), Q.end());
-        
+
         return setdegree(R);
 }
 
@@ -51,16 +51,16 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
  	karamul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
             Q, Q.begin(), Q.end());
-        
+
         return setdegree(R);
 }
 
 // Generic mul with choices between standard and Karatsuba multiplication
 // Multiplies between the iterator bounds.
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( 
-    Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
-    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, 
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul(
+    Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
     const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const {
 
     if ( ( (Pend-Pbeg)> KARA_THRESHOLD ) &&
@@ -68,7 +68,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul(
         return karamul(R, Rbeg, Rend,
                        P, Pbeg, Pend,
                        Q, Qbeg, Qend);
-    else 
+    else
         return stdmul(R, Rbeg, Rend,
                       P, Pbeg, Pend,
                       Q, Qbeg, Qend);
@@ -79,9 +79,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul(
 
 // Standard multiplication between iterator bounds
 template <class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( 
-    Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
-    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, 
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul(
+    Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
     const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const {
 
 	RepConstIterator ai=Pbeg,bi=Qbeg;
@@ -95,7 +95,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul(
 				*ri = _domain.zero;
 			else
 				_domain.mul(*ri,*ai,*bi);
-        
+
 	for(;ri!=Rend;++ri)
 		*ri = _domain.zero;
 	for(++ai,++rig;ai!=Pend;++ai,++rig)
@@ -110,43 +110,43 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
 {
     // Initialize R to zero
     for(RepIterator ri=Rbeg; ri!= Rend; ++ri) _domain.assign(*ri,_domain.zero);
-    
 
-    size_t halfP = (Pend-Pbeg)>>1;
-    size_t halfQ = (Qend-Qbeg)>>1;
+
+    size_t halfP = (size_t) ((Pend-Pbeg)>>1);
+    size_t halfQ = (size_t) ((Qend-Qbeg)>>1);
     size_t half = GIVMIN(halfP, halfQ);
     size_t halfR = half<<1;
 
-    RepConstIterator Pmid=Pbeg+half;		// cut P in halves
-    RepConstIterator Qmid=Qbeg+half;		// cut Q in halves
-    RepIterator Rmid=Rbeg+halfR;		// cut R in halves
-    
+    RepConstIterator Pmid=Pbeg+(ssize_t)half;		// cut P in halves
+    RepConstIterator Qmid=Qbeg+(ssize_t)half;		// cut Q in halves
+    RepIterator Rmid=Rbeg+(ssize_t)halfR;		// cut R in halves
+
     mul(R, Rbeg, Rmid, 				// Recursive dynamic choice
         P, Pbeg, Pmid,
         Q, Qbeg, Qmid);				// PlQl in first storage part of R
-    
+
     mul(R, Rmid, Rend,				// Recursive dynamic choice
         P, Pmid, Pend,
         Q, Qmid, Qend);				// PhQh in second storage part of R
-    
+
     Rep PHPL;
     for(RepConstIterator PHi=Pmid; PHi!=Pend; ++PHi)
         PHPL.push_back(*PHi);
     subin(PHPL, PHPL.begin(), P, Pbeg, Pmid);	// Ph - Pl
     setdegree(PHPL);
-    
+
     Rep QHQL;
     for(RepConstIterator QHi=Qmid; QHi!=Qend; ++QHi)
         QHQL.push_back(*QHi);
     subin(QHQL, QHQL.begin(), Q, Qbeg, Qmid);	// Qh - Ql
     setdegree(QHQL);
-    
-    Rep M; 
+
+    Rep M;
     mul(M, 					// Recursive dynamic choice
-        PHPL, 
+        PHPL,
         QHQL);					// (Ph-Pl)(Qh-Ql)
     setdegree(M);
-    
+
     subin(M, M.begin(), M.end(), R, Rbeg, Rmid);// -= PlQl
     setdegree(M);
 
@@ -154,7 +154,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
     setdegree(M);
 
 
-    RepIterator ri=Rbeg+half;
+    RepIterator ri=Rbeg+(ssize_t)half;
     RepConstIterator mi=M.begin();		// update R with mid product
     for( ; mi != M.end(); ++ri, ++mi) _domain.subin(*ri, *mi);
 

@@ -22,7 +22,7 @@ void RNSsystem<RING,Domain>::RnsToMixedRadix
 {
   int j;
   int i=0,Size = (int)_primes.size();
-  if ((int)mixrad.size() < Size) mixrad.reallocate( Size );
+  if ((int)mixrad.size() < Size) mixrad.reallocate( (size_t)Size );
 
   // -- Computation of  Ck
   if (_ck.size()==0) ((RNSsystem*)this)->ComputeCk();
@@ -84,7 +84,7 @@ template<class RING, class Domain>
 void RNSsystem<RING,Domain>::RingToRns( RNSsystem<RING,Domain>::array& rns , const RING& a) const
 {
   int Size = (int) _primes.size();
-  if ((int)rns.size() != Size) rns.reallocate(Size);
+  if ((int)rns.size() != Size) rns.reallocate((size_t)Size);
   // -- may be faster using the recursive
   // tree algorithm a mod p_1...p_k/2, and a mod p_k/2+1...p_k
   for (int i=0; i<Size; i++)

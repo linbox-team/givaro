@@ -106,7 +106,7 @@ namespace Givaro {
                     _pD = Pol_t(_bF, Y);
                     _extension_order = _exponent;
 		}
-		_pD.creux_random_irreducible( _irred, _extension_order );
+		_pD.creux_random_irreducible( _irred, (long)_extension_order );
             }
 
 

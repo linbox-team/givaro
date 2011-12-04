@@ -176,11 +176,11 @@ int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
 #define NBITER 50
 
 template<class Ring>
-int TestRing(const Ring& F, const int seed)
+int TestRing(const Ring& F, const unsigned  long seed)
 {
     long ch = (long) F.characteristic();
     JEONETESTE(F,7UL,-29.3);
-    srand48(seed);
+    srand48((long)seed);
     for(size_t i=0; i< NBITER; ++i) {
         typename Ring::Element x;
         float d;
@@ -204,10 +204,10 @@ int TestRing(const Ring& F, const int seed)
 #endif
 
 template<class Ring>
-int TestPolRing(const Ring& F, const int seed)
+int TestPolRing(const Ring& F, const unsigned long seed)
 {
     GivRandom generator(seed);
-    srand48(seed);
+    srand48((long)seed);
 
     for(size_t i=0; i< NBITERD; ++i) {
         int d1 = int (lrand48() % DEGMAX);
@@ -251,7 +251,7 @@ int TestPolRing(const Ring& F, const int seed)
 
 int main(int argc, char ** argv)
 {
-    int seed = int(argc>1?atoi(argv[1]):BaseTimer::seed());
+    unsigned long seed = (unsigned long) (argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif

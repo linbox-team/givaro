@@ -229,7 +229,7 @@ public :
 	{
 		Degree vP; val(vP, P);
 		if (vP > d) {
-			P.first.insert(P.first.begin(),value(vP-d),this->_domain.zero);
+			P.first.insert(P.first.begin(),(Type_t)value(vP-d),this->_domain.zero);
 			P.second = d;
 		}
 		return P;
@@ -382,7 +382,7 @@ public :
 	Rep& random(GivRandom& g, Rep& r, Degree s) const
 	{
 		Father_t::random(g,r.first,s);
-		r.second = g() % ((s.value()<<1)|1);
+		r.second = (Degree)(long)((unsigned long)g() % (unsigned long)((s.value()<<1)|1));
 		return r;
 	}
 	// -- Random dense polynomial with same size as b.

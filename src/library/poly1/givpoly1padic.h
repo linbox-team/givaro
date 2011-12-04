@@ -61,7 +61,7 @@ public:
         _domain.convert(E,*pi);
         for (++pi;pi != P.rend();++pi) {
             E *= _domain.size();
-            E += _domain.convert(*pi);
+            E += (unsigned long)_domain.convert(*pi);
         }
         return E;
     }

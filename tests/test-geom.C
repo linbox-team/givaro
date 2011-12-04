@@ -79,7 +79,7 @@ template<class Interp, class RandIter>
 bool TestOneField(Interp& FD, RandIter& generator, size_t degmax) {
 
     typename Interp::Polynomial_t nouv, prec;
-    FD.getpoldomain().random(generator, prec, Degree(degmax) );
+    FD.getpoldomain().random(generator, prec, Degree((long)degmax) );
 
 #ifdef GIVARO_DEBUG
     FD.getpoldomain().write(std::cout << "Precedent: ", prec) << std::endl;
@@ -116,7 +116,7 @@ bool TestOneFieldVect(Interp& FD, RandIter& generator, size_t degmax, size_t num
 
     std::vector<typename Interp::Polynomial_t> nouv(numpol), prec(numpol);
     for(size_t i=0; i< numpol; ++i) {
-        FD.getpoldomain().random(generator, prec[i], Degree(degmax) );
+        FD.getpoldomain().random(generator, prec[i], Degree((long)degmax) );
 #ifdef GIVARO_DEBUG
         FD.getpoldomain().write(std::cout << "Precedent[" << i << "]: ", prec[i]) << std::endl;
 #endif
@@ -159,11 +159,11 @@ int main(int argc, char ** argv) {
         // argv[3] : num poly max
         // argv[4] : seed
 
-    GFqDom<long>::Residu_t MOD = (argc>1 ? atoi(argv[1]) : 101);
-    size_t degmax = (argc>2 ? atoi(argv[2]) : 20);
-    size_t numpolmax = (argc>3 ? atoi(argv[3]) : 15);
+    GFqDom<long>::Residu_t MOD = (argc>1 ? (GFqDom<long>::Residu_t) atoi(argv[1]) : 101);
+    size_t degmax = (argc>2 ? (size_t)atoi(argv[2]) : 20);
+    size_t numpolmax = (argc>3 ? (size_t)atoi(argv[3]) : 15);
 
-    size_t seed = (argc>4?atoi(argv[4]):BaseTimer::seed());
+    size_t seed = (argc>4?(size_t)atoi(argv[4]):(size_t)BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif

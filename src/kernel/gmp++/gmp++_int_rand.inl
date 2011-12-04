@@ -100,6 +100,7 @@ namespace Givaro {
 	{
 		return random_lessthan<true>(r,m);
 	}
+
 	template<class T>
 	Integer Integer::random_lessthan (const T & m)
 	{

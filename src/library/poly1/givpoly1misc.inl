@@ -69,12 +69,12 @@ namespace Givaro {
 	{
 		int sz = (int) (P.size() - 1);
 		if (P.size() <= 0) return P.reallocate(0);
-		if (_domain.isZero(P[sz]) ==0) {
+		if (_domain.isZero(P[(size_t)sz]) ==0) {
 			return P;
 		}
 		for (int j=sz; j--; )
-			if (_domain.isZero(P[j]) ==0) {
-				P.reallocate(j+1);
+			if (_domain.isZero(P[(size_t)j]) ==0) {
+				P.reallocate((size_t)j+1);
 				return P;
 			}
 		return P.reallocate(0);
@@ -87,7 +87,7 @@ namespace Givaro {
 		if (sz ==0) {
 			return deg = Degree::deginfty;
 		}
-		if (_domain.isZero(P[sz-1])) {
+		if (_domain.isZero(P[(size_t)sz-1])) {
 			setdegree(const_cast<Rep&>(P));
 			sz = (int) P.size();
 		}
@@ -106,8 +106,10 @@ namespace Givaro {
 	{
 		Degree dP;
 		degree(dP, P);
-		if (dP == Degree::deginfty) return _domain.assign(c, _domain.zero);
-		else return _domain.assign(c, P[dP.value()]);
+		if (dP == Degree::deginfty)
+			return _domain.assign(c, _domain.zero);
+		else
+			return _domain.assign(c, P[(size_t)dP.value()]);
 	}
 
 
@@ -154,9 +156,9 @@ namespace Givaro {
 		Degree dP ; degree(dP, P);
 		if (dP == Degree::deginfty) _domain.assign(res, _domain.zero);
 		else {
-			_domain.assign(res, P[dP.value()]);
+			_domain.assign(res, P[(size_t)dP.value()]);
 			for (int i = (int)dP.value(); i--; )
-				_domain.assign(res,_domain.axpy(tmp, res, Val, P[i]));
+				_domain.assign(res,_domain.axpy(tmp, res, Val, P[(size_t)i]));
 		}
 		return res;
 	}
@@ -170,11 +172,11 @@ namespace Givaro {
 			P.reallocate(0);
 			return P;
 		}
-		P.reallocate(dQ.value());
+		P.reallocate((size_t)dQ.value());
 		Type_t cste; _domain.assign(cste, _domain.zero);
 		for (int i=0; dQ>i; ++i) {
 			_domain.add(cste, cste, _domain.one);
-			_domain.mul(P[i], Q[i+1], cste);
+			_domain.mul(P[(size_t)i], Q[(size_t)i+1], cste);
 		}
 		return P;
 	}
@@ -257,7 +259,7 @@ namespace Givaro {
 	template <class Domain> template<class RandIter>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, typename Poly1Dom<Domain,Dense>::Rep& r, Degree d) const
 	{
-		r.reallocate(d.value()+1);
+		r.reallocate((size_t)d.value()+1);
 		typename Domain::Element tmp;
 		while (_domain.isZero(g.random(tmp))) ;
 		r[d.value()] = tmp;
@@ -274,10 +276,10 @@ namespace Givaro {
 	template <class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(GivRandom& g, Rep& r, Degree d) const
 	{
-		r.reallocate(d.value()+1);
-		_domain.nonzerorandom(g, r[d.value()]);
+		r.reallocate((size_t)d.value()+1);
+		_domain.nonzerorandom(g, r[(size_t)d.value()]);
 		for (int i= (int)d.value(); i--;)
-			_domain.random(g,r[i]);
+			_domain.random(g,r[(size_t)i]);
 		return r;
 	}
 
@@ -285,7 +287,7 @@ namespace Givaro {
 	template <class Domain> template<class RandIter>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, Degree d) const
 	{
-		r.reallocate(d.value()+1);
+		r.reallocate((size_t)d.value()+1);
 		while (_domain.isZero(_domain.init(r[d.value()], g()))) {};
 		for (int i=d.value(); i--;)
 			_domain.init(r[i],g());

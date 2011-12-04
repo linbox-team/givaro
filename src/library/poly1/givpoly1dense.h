@@ -133,7 +133,7 @@ namespace Givaro {
 		Poly1Dom (const Self_t&);
 		Type_t characteristic() const
 		{
-			return _domain.characteristic();
+			return (Type_t)_domain.characteristic();
 		}
 		Integer& characteristic( Integer& p) const
 		{
@@ -403,24 +403,24 @@ namespace Givaro {
             typedef typename Rep::const_iterator RepConstIterator;
 
                 // Mul only between iterator intervals
-            Rep& mul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+            Rep& mul( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
                       const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                       const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
-            
-            Rep& stdmul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+
+            Rep& stdmul( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
                       const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                       const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
-            Rep& karamul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+            Rep& karamul( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
                       const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                       const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
 
                 // Sub only between iterator intervals
-            Rep& subin (Rep& R, 
-                        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;    
-            
-            Rep& subin (Rep& R, const RepIterator Rbeg, 
+            Rep& subin (Rep& R,
                         const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;
-            Rep& subin (Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+
+            Rep& subin (Rep& R, const RepIterator Rbeg,
+                        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;
+            Rep& subin (Rep& R, const RepIterator Rbeg, const RepIterator Rend,
                         const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;
 
 	}; //  ------------------------------- End Of The Class Poly1Dom<Type_t>

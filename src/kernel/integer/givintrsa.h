@@ -47,11 +47,30 @@ public:
 // =================================================================== //
 // Constructors
 // =================================================================== //
-    IntRSADom(bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi) { keys_gen(IntFactorDom<RandIter>::_g, 257, 255, _n, _e, _d); _lm = log(_n,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const long s, bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, (s>>1)-1, (s>>1)+1, _n, _e, _d); _lm = log(_n,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const long p, const long q, bool fi = false, RandIter g = RandIter() ) : IntFactorDom<RandIter>(g), _fast_impl(fi)  { keys_gen(IntFactorDom<RandIter>::_g, p, q, _n, _e, _d); _lm = log(_n,1<<(8*sizeof(unsigned char))); }
-    IntRSADom(const Element& n, const Element& e, const Element& d) : _n(n), _e(e), _d(d), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )  {}
-    IntRSADom(const Element& n, const Element& e) : _n(n), _e(e), _d(0), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )  {}
+    IntRSADom(bool fi = false, RandIter g = RandIter() ) :
+		IntFactorDom<RandIter>(g), _fast_impl(fi)
+	{
+	   	keys_gen(IntFactorDom<RandIter>::_g, 257, 255, _n, _e, _d);
+	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
+   	}
+    IntRSADom(const long s, bool fi = false, RandIter g = RandIter() ) :
+		IntFactorDom<RandIter>(g), _fast_impl(fi)
+	{
+	   	keys_gen(IntFactorDom<RandIter>::_g, (s>>1)-1, (s>>1)+1, _n, _e, _d);
+	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
+	}
+    IntRSADom(const long p, const long q, bool fi = false, RandIter g = RandIter() ) :
+	   	IntFactorDom<RandIter>(g), _fast_impl(fi)
+   	{
+	   	keys_gen(IntFactorDom<RandIter>::_g, p, q, _n, _e, _d);
+	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
+	}
+    IntRSADom(const Element& n, const Element& e, const Element& d) :
+	   	_n(n), _e(e), _d(d), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )
+   	{}
+    IntRSADom(const Element& n, const Element& e) :
+	   	_n(n), _e(e), _d(0), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )
+	{}
 
 // =================================================================== //
 // Accesses
@@ -92,7 +111,7 @@ public:
 // =================================================================== //
 // log[10]
 // =================================================================== //
-    long log(const Element& n, const long) const ;
+    long log(const Element& n, const long = 10) const ;
 
 // =================================================================== //
 // Text conversions

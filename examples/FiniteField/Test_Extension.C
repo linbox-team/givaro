@@ -39,8 +39,8 @@ void FaireEssai(const FField & F) {
 
 int main (int argc, char * * argv) {
 
-    unsigned long q = (argc>1?atoi(argv[1]):13);
-    unsigned long expo = (argc>2?atoi(argv[2]):8);
+    unsigned long q = (argc>1?(unsigned long)atoi(argv[1]):13);
+    unsigned long expo = (argc>2?(unsigned long)atoi(argv[2]):8);
 
     GFqDom<long> Toto(q,1);
     Toto.write( std::cout << "This is ") << std::endl ;

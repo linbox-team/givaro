@@ -236,7 +236,7 @@ namespace Givaro {
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::indeterminate(Rep& X) const
     {
         if (exponent()>1) {
-            return X=_pol2log[_characteristic];
+            return X=(Rep)_pol2log[(size_t)_characteristic];
         } else {
             return X=one;
         }
@@ -854,7 +854,7 @@ namespace Givaro {
         typedef Poly1PadicDom< GFqDom<TT>, Dense > PadicDom;
         static PadicDom PAD(Pdom);
         Degree d;  Pdom.degree(d, P);
-        if (d >= this->_exponent) {
+        if (d >= (long)this->_exponent) {
             static typename PadicDom::Element tmp;
             static typename PadicDom::Element Irreducible = PAD.radix(tmp, this->_irred);
                 // All this was to get the irreducible polynomial
@@ -862,11 +862,11 @@ namespace Givaro {
             typename PolDom::Element modP; Pdom.mod(modP, P, Irreducible);
             TT tr;
             PAD.eval(tr, modP);
-            return r = this->_pol2log[ tr ];
+            return r = (Rep) this->_pol2log[(size_t) tr ];
         } else {
             TT tr;
             PAD.eval(tr, P);
-            return r = this->_pol2log[ tr ];
+            return r = (Rep) this->_pol2log[ (size_t)tr ];
         }
     }
 

@@ -163,10 +163,10 @@ int main(int argc, char ** argv) {
     Polys DP101( Z101, Indeter("X") );
     Polys::Element P, Q, R, monomial;
 
-    GivRandom generator(seed);
-    long deg1 = generator() % 6;
-    long deg2 = generator() % 6;
-    long deg3 = generator() % 155;
+    GivRandom generator((unsigned long)seed);
+    long deg1 = (long) generator() % 6;
+    long deg2 = (long) generator() % 6;
+    long deg3 = (long) generator() % 155;
 	// long v1 = generator() % 195;
 	// long v2 = v1 +  (generator() % 5);
     DP101.random(generator, P, Degree(deg1) );
@@ -195,7 +195,7 @@ int main(int argc, char ** argv) {
     size_t e = 0 ; // initialisé à quoi ? dans GammaId, k0 est const...
 
     HighOrders::Truncated G0;
-    HO101.GammaId(G0, S, dS, e, P, dP);
+    HO101.GammaId(G0, S, dS, (long)e, P, dP);
     std::cout << "e:=" << e << ';' << std::endl;
     HO101.write(std::cout << "G0:=", G0) << ';' << std::endl;
     DP101.write(std::cout << "S:=", S) << ';' << std::endl;
@@ -232,10 +232,10 @@ int main(int argc, char ** argv) {
 
 
     for(long i=0; i<numb; ++i) {
-        long Deg1 = generator() % ((66*tttn)/100);
-        long Deg2 = generator() % ((65*tttn)/100);
-        long v1 = generator() % ((19195*tttn)/100);
-        long v2 = v1 + (generator() % ((45*tttn)/100));
+        long Deg1 = (long)generator() % ((66*tttn)/100);
+        long Deg2 = (long)generator() % ((65*tttn)/100);
+        long v1 = (long)generator() % ((19195*tttn)/100);
+        long v2 = v1 + ((long)generator() % (long)((45*tttn)/100));
         DP101.random(generator, P, Degree(Deg1) );
         DP101.random(generator, Q, Degree(Deg2) );
         success &= TestFracDevel(HO101, P, Q, v1, v2);

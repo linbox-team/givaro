@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 {
     IntNumTheoDom<> IP;
 #ifdef __GMP_PLUSPLUS__
-    IP.seeding( BaseTimer::seed() );
+    IP.seeding( (unsigned long)BaseTimer::seed() );
 #endif
 
     double error;

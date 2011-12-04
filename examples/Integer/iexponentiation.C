@@ -28,12 +28,12 @@ int main(int argc, char ** argv) {
  {
     ZpzDom<Integer>::Element a, b, p(argv[3]);
     ZpzDom<Integer> Zp( p );
-    unsigned long e = atoi(argv[2]) ;
+    unsigned long e = (unsigned long)atoi(argv[2]) ;
     Zp.init(a, Integer(argv[1]));
     Zp.init(b);
 
     Timer tim;tim.clear();tim.start();
-    dom_power(b, a, e, Zp);
+    dom_power(b, a, (long)e, Zp);
     tim.stop();
 
     Zp.write( std::cout, a) << " ^ " << e << " % " << p << " = " << std::flush;

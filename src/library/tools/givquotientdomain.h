@@ -169,7 +169,7 @@ public :
 	// -- W <-- P^n
 	Rep& pow( Rep& W, const Rep& P, long n) const
 	{
-		unsigned long l = GIVABS(n);
+		unsigned long l = (unsigned long)GIVABS(n);
 		if (n>0)
 			return dom_power(W, P, l, *this);
 		else {

@@ -13,8 +13,8 @@
 using namespace Givaro;
 
 int main (int argc, char * * argv) {
-    unsigned long q = (argc>1?atoi(argv[1]):13);
-    unsigned long expo = (argc>2?atoi(argv[2]):8);
+    unsigned long q = (argc>1?(unsigned long)atoi(argv[1]):13);
+    unsigned long expo = (argc>2?(unsigned long)atoi(argv[2]):8);
 
     {
             // This is the field with 11^2=121 elements

@@ -27,10 +27,14 @@ typedef StaticElement< Field > Element;
 
 // Mandatory declaration (because of static template)
 // and an actual constructed field is mandatory (the "(2)") for g++ 3.4
-template<> Field Element::_domain(2);
+namespace Givaro
+{
+template<>
+Field Element::_domain(2);
+}
 
 int main(int argc, char ** argv) {
-    unsigned long P = (argc>1 ? atoi(argv[1]) : 5009);
+    unsigned long P = (argc>1 ? (unsigned long)atoi(argv[1]) : 5009UL);
 
         // Initialization of static member
     Element::setDomain( Field(P) );

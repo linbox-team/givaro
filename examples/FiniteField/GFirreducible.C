@@ -27,8 +27,9 @@ int main(int argc, char** argv)
 
     long p = (argc>1?atoi(argv[1]):5);
     long e = (argc>2?atoi(argv[2]):3);
-    GFqDom<long> GFq(p, e);
-    GFqDom<long> PrimeField(p,1);
+	typedef GFqDom<long>::Residu_t TT ;
+    GFqDom<long> GFq((TT)p, (TT)e);
+    GFqDom<long> PrimeField((TT)p,1);
     std::cout << "Working in GF(" << p << '^' << e << ')' << std::endl;
     std::cout << "Elements are polynomials in X modulo " << p << std::endl;
 
@@ -40,7 +41,7 @@ int main(int argc, char** argv)
     GFqDom<long>::Element temo, t, tmp;
     Poly1Dom< GFqDom<long>, Dense >::Element G, H, J, mQ, irred, modP;
 
-    Pdom.init(G, Degree(GFq.exponent()-1)); // X^(e-1)
+    Pdom.init(G, Degree((long)GFq.exponent()-1)); // X^(e-1)
     GFq.init(temo,G); // internal representation
 
     Pdom.init(H, Degree(1) ); // X
@@ -52,7 +53,7 @@ int main(int argc, char** argv)
     GFq.negin(tmp); 	   // internal representation of -X^e, i.e. of the irreducible polynomial without the largest monomial, X^e
 
     long lowerpart;
-        // p-adic value of the lower part of the irreducible polynomial  
+        // p-adic value of the lower part of the irreducible polynomial
     GFq.convert(lowerpart, tmp);
     std::cout << ' ' << p << "-adic value of the lower part of the irreducible : " << lowerpart << std::endl;
 

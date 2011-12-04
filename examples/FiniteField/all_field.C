@@ -20,7 +20,7 @@
 using namespace Givaro;
 
 
-
+namespace Givaro {
 // Domain kind
 typedef ZpzDom<Unsigned32>	Field1;	typedef StaticElement< Field1 > Element1; 	template<> Field1 Element1::_domain(2);
 typedef GFqDom<long>		Field2;	typedef StaticElement< Field2 > Element2;	template<> Field2 Element2::_domain(2);
@@ -30,8 +30,11 @@ typedef ZpzDom<Std32>		Field5;	typedef StaticElement< Field5 > Element5; 	templa
 typedef ZpzDom<Std16>		Field6;	typedef StaticElement< Field6 > Element6; 	template<> Field6 Element6::_domain(2);
 typedef ZpzDom<Log16>		Field7;	typedef StaticElement< Field7 > Element7; 	template<> Field7 Element7::_domain(2);
 #ifdef GIVARO_USE_SIXTYFOUR
-typedef ZpzDom<Std64>		Field8;	typedef StaticElement< Field8 > Element8; 	template<> Field8 Element8::_domain(2);
+typedef ZpzDom<Std64>		Field8;	typedef StaticElement< Field8 > Element8;
+template<>
+Field8 Element8::_domain(2);
 #endif
+}
 
 
 
@@ -41,7 +44,7 @@ void TestField()
     unsigned long P = 251;
 
         // Initialization of static member
-    Element::setDomain( Field( typename Field::Element(P)) );
+    Element::setDomain( Field( typename Field::Residu_t(P)) );
 
         // Initialisations of elements
     Element a(2),b(-29.8),c(33),d(Integer("123456789012345678901234567890")),e(0);

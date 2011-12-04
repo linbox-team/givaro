@@ -48,7 +48,7 @@ int main(int argc, char ** argv)
 	Timer inver;
 	inver.clear();
 	inver.start();
-	Domain GFq(P, expo);  // Buiding of finite field with P^expo Elements
+	Domain GFq((unsigned long)P, (unsigned long)expo);  // Buiding of finite field with P^expo Elements
 
 	int i;
 	std::cout << "."<< std::flush;

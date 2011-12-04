@@ -111,11 +111,11 @@ public:
             IntegerDom::divmod(iq, ir, E, q);
             radix(Q, iq, n-t);
             radix(P, ir, t);
-            Degree dp; degree(dp,P); ++dp;
+            Degree dp; this->degree(dp,P); ++dp;
             for(long i=t; dp<i; --i)
                 P.push_back(_domain.zero);
         P.insert(P.end(),Q.begin(),Q.end());
-        return setdegree(P);
+        return this->setdegree(P);
     }
 
 

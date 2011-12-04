@@ -53,7 +53,8 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                 Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
 // std::cerr << "pp: " << pp << std::endl;
                 Rep tp, tp2, G2;
-                this->gcd(G2,G, sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
+                this->gcd(G2,G,
+			  this->sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
                 Degree dG2; this->degree(dG2,G2);
 // write(std::cerr << "SF t2: ", tp2) << std::endl;
 // write(std::cerr << "SF G2: ", G2) << std::endl;
@@ -63,7 +64,8 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                         SplitFactor ( L, G2, d, MOD) ;
                     }
 // UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
-                     Rep G3; this->gcd(G3, G, add(tp2,tp,_domain.one) );
+                     Rep G3;
+		     this->gcd(G3, G, this->add(tp2,tp,_domain.one) );
                      Degree dG3; this->degree(dG3,G3);
 // write(std::cerr << "SF t3: ", tp2) << std::endl;
 // write(std::cerr << "SF G3: ", G3) << std::endl;
@@ -139,21 +141,21 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     Rep W, D, P = f;
     Degree dP;
     Rep Unit, G1;
-    init(Unit, Degree(1));
+    this->init(Unit, Degree(1));
     W.copy(Unit);
     this->degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
 // std::cerr << "DD degree: " << dp << std::endl;
         this->powmod(W, D.copy(W), MOD, P);
-        this->gcd (G1,sub(D,W,Unit), P) ;
+        this->gcd (G1,this->sub(D,W,Unit), P) ;
         Degree dG1; this->degree(dG1,G1);
 // write(std::cerr << "DD found: ", G1) << ", of degree " << dG1 << std::endl;
         if ( dG1 > 0 ) {
             SplitFactor (L, G1, dp, MOD);
-            divin(P,G1);
+            this->divin(P,G1);
         }
     }
-    degree(dP,P);
+    this->degree(dP,P);
     if (dP > 0)
         L.push_back(P);
 // write(std::cerr << "DD: ", P) << std::endl;
@@ -172,10 +174,11 @@ Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & L
 	       Residu_t MOD)  const
 {
 // write(std::cerr << "CZ in: ", P) << std::endl;
-    Degree dp; degree(dp,P);
+    Degree dp;
+    this->degree(dp,P);
     size_t nb=(size_t)dp.value()+1;
     Rep * g = new Rep[nb];
-    sqrfree(nb,g,P);
+    this->sqrfree(nb,g,P);
 // std::cerr << "CZ sqrfree: " << nb << std::endl;
     for(size_t i = 0; i<nb;++i) {
         size_t this_multiplicity = Lf.size();

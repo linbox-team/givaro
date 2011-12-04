@@ -27,9 +27,10 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-  ZpzDom<Std32>::Residu_t MOD;
+	typedef ZpzDom<Std32>::Residu_t UT ;
+	UT MOD;
   if (argc > 2)
-	  MOD = atoi(argv[2]);
+	  MOD = (UT) atoi(argv[2]);
   else
 	  std::cin >> MOD;
 

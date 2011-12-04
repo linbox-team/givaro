@@ -181,7 +181,7 @@ int main(int argc, char ** argv) {
     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
     Irred[8] = 1;
     GFqDom<long> F256(2,8, Irred); TestField( F256 );
-    
+
         // Zech log finite field with 3^4 elements
         // Using the Q-adic Transform
     GFqExt<int> GF81( 3, 4 ); TestField( GF81 );
@@ -193,7 +193,7 @@ int main(int argc, char ** argv) {
     double tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ ( 1000000.0 ) ;
 		    ;
 #ifndef __GIVARO__DONOTUSE_longlong__
-    GFqDom<long long> GF2M( 2, (argc > 1 ? atoi(argv[1]) : 20) );
+    GFqDom<long long> GF2M( 2, (argc > 1 ? (GFqDom<long long>::Residu_t) atoi(argv[1]) : 20) );
 #else
     GFqDom<long> GF2M( 2, (argc > 1 ? atoi(argv[1]) : 20) );
 #endif

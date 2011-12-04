@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     }
     {
         Timer tim; tim.clear(); tim.start();
-        int a = IP.isprimepower(p, m);
+        int a = (int)IP.isprimepower(p, m);
         tim.stop();
         if (a) std::cout << "is " << p << "^" << a << std::endl;
         else   std::cout << "not a prime power" << std::endl;

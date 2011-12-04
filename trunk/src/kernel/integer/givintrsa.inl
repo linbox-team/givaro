@@ -25,7 +25,7 @@ namespace Givaro {
 	// =================================================================== //
 
 	template<class RandIter>
-	long IntRSADom<RandIter>::log(const Element& n, const long b = 10) const
+	long IntRSADom<RandIter>::log(const Element& n, const long b ) const
 	{
 		long res = 0;
 		for(Element p = n; p>=b; ++res, this->divin(p,b) ) {}
@@ -130,7 +130,7 @@ namespace Givaro {
 	std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in)
 	{
 		double Length = (double) _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
-		char * tmp = new char[(long)Length+2];
+		char * tmp = new char[(size_t)Length+2];
 		Element r;
 		unsigned long seed; in >> seed;
 		GivRandom generator(seed);
@@ -215,14 +215,14 @@ namespace Givaro {
 			this->random(g,t,3);
 			this->random(g,s,3);
 		}
-		nextprimein( t );
-		nextprimein( s );
+		this->nextprimein( t );
+		this->nextprimein( s );
 
 
 
 		r = t<<1;
 		++r;
-		while( ! isprime(r,4) ) {
+		while( ! this->isprime(r,4) ) {
 			r += t<<1;
 		}
 
@@ -241,7 +241,7 @@ namespace Givaro {
 		r <<= 1;
 
 		p = q+r;
-		while( ! isprime(p,4) ) {
+		while( ! this->isprime(p,4) ) {
 			p += r;
 		}
 
@@ -274,21 +274,25 @@ namespace Givaro {
 		do  strong_prime(g, qsize, q); while (q == p);
 
 
-		Element phim; mul(phim, sub(d,p,IntFactorDom<RandIter>::one), sub(l,q,IntFactorDom<RandIter>::one));
-		mul(m, p, q);
+		Element phim;
+		this->mul(phim,
+			  this-> sub(d,p,IntFactorDom<RandIter>::one),
+			  this-> sub(l,q,IntFactorDom<RandIter>::one));
+		this->mul(m, p, q);
 
 		Element v, gd;
 
 		if (_fast_impl) {
-			mod(k,SIMPLE_EXPONENT, phim);
+			this->mod(k,SIMPLE_EXPONENT, phim);
 			this->gcd(gd,u,v,k,phim);
 		} else {
 			do {
 				this->random(g,k,phim);
 			} while (this->gcd(gd,u,v,k,phim) != 1);
 		}
-		modin(u,phim);
-		if ( islt(u,IntFactorDom<RandIter>::zero) ) addin(u,phim);
+		this->modin(u,phim);
+		if ( this->islt(u,IntFactorDom<RandIter>::zero) )
+			this->addin(u,phim);
 	}
 
 	// =================================================================== //
@@ -299,10 +303,12 @@ namespace Givaro {
 	{
 		if ( isZero(_d) ) {
 			Element p,v,d, pm;
-			factor(p, _n);
-			mul(pm, sub(v,p,IntFactorDom<RandIter>::one), subin( this->div(d,_n,p), IntFactorDom<RandIter>::one ) );
+			this->factor(p, _n);
+			this->mul(pm, this->sub(v,p,IntFactorDom<RandIter>::one),
+			    this->subin( this->div(d,_n,p), IntFactorDom<RandIter>::one ) );
 			this->gcd(d,_d,v,_e,pm);
-			if (islt(_d,IntFactorDom<RandIter>::zero)) addin(_d, pm);
+			if (this->islt(_d,IntFactorDom<RandIter>::zero))
+			       this->	addin(_d, pm);
 		}
 		return u = _d;
 	}

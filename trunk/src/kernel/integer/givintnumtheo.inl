@@ -95,26 +95,35 @@ namespace Givaro {
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else infinite loop
 
-		if (Rep::isleq(n,4)) return sub(A,n,this->one);
-		if (isZero(mod(A,n,4))) return A=this->zero;
+		if (Rep::isleq(n,4))
+			return this->sub(A,n,this->one);
+		if (this->isZero(this->mod(A,n,4)))
+			return A=this->zero;
 		Rep p,ismod2, q, no2, root;
-		if (isZero(mod(ismod2,n,2))) divexact(no2,n,2); else no2=n;
+		if (isZero(this->mod(ismod2,n,2)))
+			this->divexact(no2,n,2);
+		else
+			no2=n;
 		p=no2;
 		int k = 1;
-		while (! isprime(p) ) {
+		while (! this->isprime(p) ) {
 			sqrt(root, p);
-			while (mul(q,root,root) == p) {
+			while (this->mul(q,root,root) == p) {
 				p = root;
 				sqrt(root,p);
 			}
-			if (! isprime(p) ) {
+			if (! this->isprime(p) ) {
 				q=p;
-				while( p == q ) factor(p, q);
-				divin(q,p);
+				while( p == q )
+					this->factor(p, q);
+				this->divin(q,p);
 				if (q < p) p = q;
 			}
 		}
-		if (isZero(ismod2)) mul(q,p,2); else q=p;
+		if (isZero(ismod2))
+		       	this->mul(q,p,2);
+	       	else
+		       	q=p;
 		for(;q != n;++k,q*=p) ;
 		Rep phin, tmp;
 		phi(phin,p);
@@ -149,21 +158,21 @@ namespace Givaro {
 		while (! found) {
 			do {
 				this->random(this->_g, A, p);
-				addin( modin(A,sub(tmp,p,7)) , 7);
+				this->addin( this->modin(A,this->sub(tmp,p,7)) , 7);
 			} while ( ! isOne(gcd(tmp,A,p)) );
 			found = (int) ++runs;
 			for(f=Lf.begin();(f!=Lf.end() && found);f++)
 				found = (! isOne( this->powmod(tmp,A,*f,p)) );
 		}
 		if (k == 1) {
-			if (isZero(ismod2) && isZero(mod(ismod2, A, 2)))
+			if (isZero(ismod2) && isZero(this->mod(ismod2, A, 2)))
 				return A+=p;
 			else
 				return A;
 		} else {
 			if (! is_prim_root(A,no2))
 				A+=p;
-			if (isZero(ismod2) && isZero(mod(ismod2, A, 2)))
+			if (isZero(ismod2) && isZero(this->mod(ismod2, A, 2)))
 				return A+=no2;
 			else
 				return A;
@@ -221,18 +230,18 @@ namespace Givaro {
 			Lq.pop_back();
 			this->div(Temp, pmun, Q);
 			do {
-				nonzerorandom(this->_g, alea, p);
-				modin(alea, p);
+				this->nonzerorandom(this->_g, alea, p);
+				this->modin(alea, p);
 				this->powmod(essai, alea, Temp, p);
 				//std::cerr << alea << " should be of order " << Q << " mod " << p << std::endl;
 			} while (essai == 1);
 			// looking for alea, of order Q with high probability
 
-			mulin(primroot, essai);
+			this->mulin(primroot, essai);
 
 			//  1-(1+2/(p-1))*(1-1/L^2)^log_B(Q)  < 1-(1+2^(-log_2(p)))*(1-1/L^2)^log_B(Q);
 			essai = L;
-			mul(Temp, essai, L);
+			this->mul(Temp, essai, L);
 			error = 1-1.0/(double)Temp;
 			error = power(error, logp(Q,Temp) );
 			error *= (1.0+1.0/((double)Q-1.0));
@@ -245,8 +254,8 @@ namespace Givaro {
 		for ( ; Lqi != Lq.end(); ++Lqi, ++ei) {
 			this->div(Temp, pmun, *Lqi);
 			do {
-				nonzerorandom(this->_g, alea, p);
-				modin(alea, p);
+				this->nonzerorandom(this->_g, alea, p);
+				this->modin(alea, p);
 				this->powmod(essai, alea, Temp, p);
 				//std::cerr << alea << " should be of order at least " << *Lqi << "^" << *ei << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
 			} while( essai == 1 ) ;
@@ -256,10 +265,10 @@ namespace Givaro {
 			//std::cerr << alea << " is of order at least " << (*Lqi) << "^" << (*ei) << "==" << power(*Lqi,*ei) << " mod " << p << std::endl;
 
 			this->divin(Temp, power(*Lqi,*ei-1));
-			mulin(primroot, this->powmod(essai, alea, Temp, p));
+			this->mulin(primroot, this->powmod(essai, alea, Temp, p));
 		}
 
-		modin(primroot, p);
+		this->modin(primroot, p);
 
 		return primroot;
 		// return primroot with high probability
@@ -317,7 +326,8 @@ namespace Givaro {
 	{
 
 		std::vector<Rep> Lf;
-		Rep phin; sub(phin,n,this->one);
+		Rep phin;
+		this->sub(phin,n,this->one);
 		Father_t::set(Lf,phin);
 		return prim_root_of_prime(A, Lf, phin, n);
 	}
@@ -350,17 +360,21 @@ namespace Givaro {
 
 		Rep primeorder;
 
-		for(bool exemp = true; exemp; nextprimein(prime) ) {
+		for(bool exemp = true; exemp; this->nextprimein(prime) ) {
 			A = prime;
 			primeorder = phin;
 			for(typename Array::const_iterator f = Lf.begin(); f != Lf.end(); ++f) {
 				this->powmod(tmp, prime, this->div(expo, primeorder, *f), n);
 				if (isOne(tmp)) {
 					newLf.push_back(*f);
-					while (isZero(mod(tmp,expo,*f)) && isOne( this->powmod(tmp, prime, this->div(temp, expo, *f), n) ) ) { expo = temp; }
+					while (isZero(this->mod(tmp,expo,*f)) &&
+					       isOne( this->powmod(tmp, prime, this->div(temp, expo, *f), n) ) ) {
+					       	expo = temp;
+					}
 					primeorder = expo;
 					//                 std::cerr << "2 Order (Div): " << primeorder << std::endl;
-				} else {
+				}
+			       	else {
 					oldLf.push_back(*f);
 					exemp = false;
 					//                 std::cerr << "2 Order : " << primeorder << std::endl;
@@ -377,7 +391,7 @@ namespace Givaro {
 		//     std::cerr << "Root : " << A << std::endl;
 		//     std::cerr << "Order : " << Aorder << std::endl;
 
-		for ( ; islt(Aorder,phin); nextprimein(prime) ) {
+		for ( ; this->islt(Aorder,phin); this->nextprimein(prime) ) {
 			newLf.resize(0); oldLf.resize(0);
 
 			for(typename Array::const_iterator f = Lf.begin(); f != Lf.end(); ++f) {
@@ -399,9 +413,9 @@ namespace Givaro {
 
 				this->powmod(tmp, prime, g, n);
 
-				modin( mulin(A, tmp), n );
+				this->modin( this->mulin(A, tmp), n );
 
-				mulin(Aorder, this->div(tmp, phin, g));
+				this->mulin(Aorder, this->div(tmp, phin, g));
 
 				Lf = newLf;
 			}
@@ -456,7 +470,8 @@ namespace Givaro {
 		std::list<Rep> Lf;
 		Father_t::set(Lf,phin);
 		typename std::list<Rep>::iterator f=Lf.begin();
-		Rep A; mod(A,p,n);
+		Rep A;
+		this->mod(A,p,n);
 		if (isOne(gcd(tmp,A,n))) {
 			found = true;
 			for(;(f!=Lf.end() && found);f++) {
@@ -472,14 +487,15 @@ namespace Givaro {
 	{
 		// returns 1 if p is of order g in Z/nZ
 		Rep tmp;
-		return (isOne( this->powmod(tmp, p, g, n) ) && areEqual( g, order(tmp,p,n) ) );
+		return (this->isOne( this->powmod(tmp, p, g, n) ) && this->areEqual( g, order(tmp,p,n) ) );
 	}
 
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, const Rep& p, const Rep& n) const
 	{
 		// returns 0 if failed
-		Rep A; mod(A,p,n);
+		Rep A;
+		this->mod(A,p,n);
 		if (isZero(A))
 			return g = this->zero;
 		if (isOne(A))
@@ -498,7 +514,7 @@ namespace Givaro {
 					break;
 			if (noprimroot) {
 				for(;f!=Lf.end();++f)
-					while (isZero(mod(tmp,g,*f)) && isOne(  this->powmod(tmp,A,  this->div(gg,g,*f),n) ) )
+					while (isZero(this->mod(tmp,g,*f)) && isOne(  this->powmod(tmp,A,  this->div(gg,g,*f),n) ) )
 						g = gg;
 				return g;
 			} else
@@ -523,7 +539,8 @@ namespace Givaro {
 			return this->sub(A,n,this->one);
 		}
 
-		if (areEqual(n,8)) return init(A,2);
+		if (this->areEqual(n,8))
+			return this->init(A,2);
 		return prim_base(A, n);
 	}
 
@@ -542,9 +559,9 @@ namespace Givaro {
 		typename std::vector<Rep>::iterator pe = Pe.begin();
 		typename std::vector<Rep>::iterator a = Ra.begin() ;
 		for( ;p!=Lp.end();++p, ++e, ++pe, ++a) {
-			dom_power( *pe, *p, *e, *this);
-			if (areEqual(*p,2))
-				init(*a, 3);
+			dom_power( *pe, *p, (long)*e, *this);
+			if (this->areEqual(*p,2))
+				this->init(*a, 3);
 			else
 				prim_root(*a, *pe);
 		}
@@ -573,13 +590,17 @@ namespace Givaro {
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv_primpow(Rep & z, const Rep& p, const unsigned long e) const
 	{
 		// Prerequisite : p prime.
-		if (areEqual(p, 2)) {
-			if (e<=2) return init(z,e);
-			if (e==3) return init(z,2);
-			return dom_power(z, p, e-2, *this);
-		} else {
+		if (this->areEqual(p, 2)) {
+			if (e<=2)
+				return this->init(z,e);
+			if (e==3)
+				return this->init(z,2);
+			return dom_power(z, p, (long)e-2, *this);
+		}
+		else {
 			Rep tmp;
-			return mulin( dom_power(z, p, e-1, *this), sub(tmp, p, this->one) );
+			return this->mulin( dom_power(z, p, (long)e-1, *this),
+					    this->sub(tmp, p, this->one) );
 		}
 	}
 
@@ -589,17 +610,22 @@ namespace Givaro {
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv(Rep & z, const Rep& m) const
 	{
-		if (areEqual(m,2)) return init(z,1);
-		if (areEqual(m,3) || areEqual(m,4) || areEqual(m,8) ) return init(z,2);
+		if (this->areEqual(m,2))
+			return this->init(z,1);
+		if (this->areEqual(m,3) || this->areEqual(m,4) || this->areEqual(m,8) )
+			return this->init(z,2);
 		return lambda_base(z, m);
 	}
 
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda(Rep & z, const Rep& m) const
 	{
-		if (areEqual(m,2)) return init(z,1);
-		if (areEqual(m,3) || areEqual(m,4)) return init(z,2);
-		if (areEqual(m,8) ) return init(z,3);
+		if (this->areEqual(m,2))
+			return this->init(z,1);
+		if (this->areEqual(m,3) || this->areEqual(m,4))
+			return this->init(z,2);
+		if (this->areEqual(m,8) )
+			return this->init(z,3);
 		return lambda_base(z, m);
 	}
 
@@ -624,7 +650,7 @@ namespace Givaro {
 			//            Rep g;
 			//            gcd(g, z, tmp);
 			//            mulin(z, this->divin(tmp, g));
-			lcmin(z,tmp);
+			this->lcmin(z,tmp);
 		}
 
 		return z;

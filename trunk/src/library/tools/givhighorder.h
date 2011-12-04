@@ -63,16 +63,16 @@ struct HighOrder {
 
     Polynomial& taylor(Polynomial& Tay, const Rep& Fra, Degree order) const {
         Degree d; _poldom.degree(d,Fra._den);
-        Tay.resize(order.value()+1);
+        Tay.resize((size_t)order.value()+1);
         size_t i = 0;
-        for( ; (i<Fra._num.size()) && (order>=i); ++i) {
+        for( ; (i<Fra._num.size()) && (order>=(long)i); ++i) {
             _dom.assign(Tay[i],Fra._num[i]);
             for(size_t j = 1; (j<Fra._den.size()) && (j<=i); ++j) {
                 _dom.maxpyin(Tay[i],Fra._den[j],Tay[i-j]);
             }
             _dom.divin(Tay[i], Fra._den.front());
         }
-        for( ; (order>=i); ++i) {
+        for( ; (order>=(long)i); ++i) {
             _dom.assign(Tay[i], _dom.zero);
             for(size_t j = 1; (j<Fra._den.size()) && (j<=i); ++j) {
                 _dom.maxpyin(Tay[i],Fra._den[j],Tay[i-j]);
@@ -94,8 +94,8 @@ struct HighOrder {
 	  Degree dA; _poldom.degree(dA, FraDen);
 	  Polynomial Rev; _poldom.init(Rev,dA);
 	  for(int i=0;i<dA.value();++i)
-            _dom.div(Rev[i],(FraDen)[dA.value()-i],FraDen.front());
-          _dom.assign(Rev[dA.value()],_dom.one);
+            _dom.div(Rev[(size_t)i],(FraDen)[(size_t)dA.value()-(size_t)i],FraDen.front());
+          _dom.assign(Rev[(size_t)dA.value()],_dom.one);
           return FiducciaReversed(F, Tay, Rev, a, b);
     }
 
@@ -116,7 +116,7 @@ struct HighOrder {
 
         _dom.assign(dp,_dom.zero);
         for(long i=0;i<=dl.value();++i)
-            _dom.axpyin(dp, P[i], Q[i+shift]);
+            _dom.axpyin(dp, P[(size_t)i], Q[(size_t)(i+shift)]);
 
         return dp;
     }
@@ -143,17 +143,17 @@ struct HighOrder {
           long iterR=0;
 
           for( ; iterT < dT.value(); ++iterR,++iterT)
-              _dom.assign(Res[iterR],Tay[iterT]);
+              _dom.assign(Res[(size_t)iterR],Tay[(size_t)iterT]);
 
 	  dom_power(Xl, Xone, iterT-bonus, Qdom);
 
  	  Degree dl; _poldom.degree(dl, Xl);
-          shifteddotproduct( Res[iterR], Xl, Tay, bonus);
+          shifteddotproduct( Res[(size_t)iterR], Xl, Tay, bonus);
 
 
           for( ++iterR; iterR<=dR.value(); ++iterR) {
               Qdom.mulin(Xl, Xone);
-              shifteddotproduct( Res[iterR], Xl, Tay, bonus);
+              shifteddotproduct( Res[(size_t)iterR], Xl, Tay, bonus);
           }
 	  _truncdom.assign(F, Res);
           return _truncdom.mulin(F, a);
@@ -269,7 +269,7 @@ struct HighOrder {
         ++e; // 2^{e-2} < d <= 2^{e-1}
         int dt = int (1UL<<e);
 
-        Degree k0 = 1UL<<e;
+        Degree k0 = 1L<<e;
         Deg.push_back(k0-dA);
 
         Degree dif = order-a;
@@ -306,10 +306,10 @@ struct HighOrder {
 // write(std::cout << "T" << e << ":=", T0) << ';' << std::endl;
 
         Truncated TA; _truncdom.assign(TA, A);
-        size_t ordero2 = order.value()/2;
+        size_t ordero2 = (size_t)order.value()/2;
 
 
-        for( ; k0<ordero2; ) {
+        for( ; k0<(long)ordero2; ) {
 #ifdef GIVARO_HIGHORDER_TIMER
         Timer GivHOTimer; GivHOTimer.clear(); GivHOTimer.start();
 #endif

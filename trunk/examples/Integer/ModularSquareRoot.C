@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     std::cerr << "n: " << n << std::endl;
     std::cerr << "a: " << a << std::endl;
 
-    Integer::seeding (BaseTimer::seed ());
+    Integer::seeding ( (unsigned long)BaseTimer::seed ());
     IntSqrtModDom<> ISM;
 
     Integer r;

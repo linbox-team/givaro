@@ -45,7 +45,7 @@ int main(int argc, char** argv)
     RatPoly R;
 
 
-    size_t n = (argc>1?atoi(argv[1]):10);
+    size_t n = (argc>1?(size_t)atoi(argv[1]):10);
 
     for(size_t i=0;i<n;++i)
         D.push_back( (double(random()) / RAND_MAX) );

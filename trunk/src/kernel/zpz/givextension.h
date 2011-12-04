@@ -144,9 +144,9 @@ namespace Givaro {
             {
                 if (polydomain.isOne(_irred)) {
                     if (_cardinality < (1<<20) )
-                        _pD.creux_random_irreducible( _irred,  (Degree) _extension_order);
+                        _pD.creux_random_irreducible( _irred,  (long) _extension_order);
                     else
-                        _pD.random_irreducible( _irred,  (Degree) _extension_order);
+                        _pD.random_irreducible( _irred,  (long) _extension_order);
                 }
             }
 
@@ -322,7 +322,7 @@ namespace Givaro {
 
 	template<class RandIter> Element& random(RandIter& g, Element& r) const
             {
-	       	return _pD.random(g,r,Degree(_exponent-1));
+	       	return _pD.random(g,r,Degree((long)_exponent-1));
             }
 	template<class RandIter> Element& random(RandIter& g, Element& r, long s) const
             {
@@ -334,7 +334,7 @@ namespace Givaro {
             }
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r) const
             {
-	       	return _pD.nonzerorandom(g,r,Degree(_exponent-1));
+	       	return _pD.nonzerorandom(g,r,Degree((long)_exponent-1));
             }
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, long s) const
             {

@@ -100,7 +100,7 @@ std::istream& Poly1Dom<Domain,Dense>::read ( std::istream& i, Rep& P) const
     init(P,Degree(deg));
 // JGD 18.09.2002
     for(;deg>=0;--deg)
-        _domain.read( i, P[deg]);
+        _domain.read( i, P[(size_t)deg]);
         // i >> P[deg];
     return i;
 }

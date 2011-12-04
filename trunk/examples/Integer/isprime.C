@@ -31,10 +31,10 @@ int main(int argc, char** argv)
   IntPrimeDom IP;
   IntPrimeDom::Element m;
   if (argc > 1) m = Integer(argv[1]);
-  unsigned int r = argc > 2 ? atoi(argv[2]) : 5;
+  unsigned int r = argc > 2 ? (unsigned int)atoi(argv[2]) : 5;
 
         Timer tim; tim.clear(); tim.start();
-        bool a = IP.isprime(m,r);
+        bool a = IP.isprime(m,(int)r);
         tim.stop();
         cout << (a?"true":"false") << endl;
         cerr << tim << endl;

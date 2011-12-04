@@ -125,7 +125,7 @@ unsigned long Revert(const Integer p, const double epsilon)
 bool ProbLucas(const Integer n, const double orig_epsilon)
 {
 #ifdef __GMP_PLUSPLUS__
-	Integer::seeding( BaseTimer::seed() );
+	Integer::seeding( (unsigned long)BaseTimer::seed() );
 #endif
 	GivRandom generator;
 
@@ -246,7 +246,7 @@ int main (int argc, char * * argv)
 	Integer P;
 	if (argc > 1) P = Integer(argv[1]); else std::cin >> P;
 	double epsilon = argc > 2 ? atof(argv[2]) : 0.000001;
-	unsigned int NB = argc > 3 ? atoi(argv[3]) : 1;
+	unsigned int NB = argc > 3 ? (unsigned int)atoi(argv[3]) : 1U;
 
 	//    std::cerr << "P: " << P << " ; proba: " << epsilon << std::endl;
 

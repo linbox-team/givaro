@@ -75,24 +75,28 @@ if test "x$PROF" = "xyes" ; then
 fi
 
 if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
-	if test "x${CCNAM}" = "xicc" ; then
-		WARN_CFLAGS="${WARN_CFLAGS} -Wcheck"
-		# DEBUG_CFLAGS="-fast"
-	else
-		if test "x${CCNAM}" = "xgcc" -o "x${CCNAM}" = "xeko" -o "x${CCNAM}" = "xclang"; then
+	case x${CCNAM} in
+		xicc)
+			WARN_CFLAGS="${WARN_CFLAGS} -Wcheck"
+			# DEBUG_CFLAGS="-fast"
+			;;
+		xeko)
+			WARN_CFLAGS="${WARN_CFLAGS} -Wno-unused-parameter"
+			;;
+		xgcc|xclang)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
 				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -ansi -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long"
 			fi
-		else
+		;;
+		*)
 			echo
 			echo "*******************************************************"
 			echo "unsupported compiler ($CCNAM). Please file a bug."
 			echo "*******************************************************"
 			echo
 			WARN_CFLAGS="${WARN_CFLAGS}"
-		fi
-	fi
+	esac
 fi
 
 

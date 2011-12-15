@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfqext.h
-// Time-stamp: <29 Sep 09 18:10:13 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Dec 11 17:05:52 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
@@ -197,6 +197,9 @@ namespace Givaro {
 		}
 
 
+		template<class RandIter> Rep& random(RandIter& g, Rep& r) const {
+            return init(r, static_cast<double>( (UTT)g() % _MODOUT));
+        }
 
 
 	protected:

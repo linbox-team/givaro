@@ -43,7 +43,8 @@ namespace Givaro {
     }
 
 
-    template<> unsigned long Exponent_Trait(const GFqDom<long>& F) {
+    template<>
+	inline unsigned long Exponent_Trait(const GFqDom<long>& F) {
         return F.exponent();
     }
 

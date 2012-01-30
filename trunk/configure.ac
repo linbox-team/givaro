@@ -238,6 +238,7 @@ echo
 echo ' GMP version 3.1.1 or greater is required for this library to compile. Please'
 echo ' make sure GMP is installed and specify its location with the option'
 echo ' --with-gmp=<prefix> when running configure.'
+echo ' Please ensure it is compliled with cxx support too.'
 echo '*******************************************************************************'
 exit 1
 ])

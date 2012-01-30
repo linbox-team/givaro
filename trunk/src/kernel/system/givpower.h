@@ -51,13 +51,14 @@ template<class TT, class UU> TT power(const TT n, const UU l) {
   }
   return res ;
 }
-/*
+
+#if 0
 #include <givaro/givinteger.h>
 template<> Integer power(const Integer n, const long l) { return pow(n,l); }
 template<> Integer power(const Integer n, const unsigned long l) { return pow(n,l); }
 template<> Integer power(const Integer n, const int l) { return pow(n,l); }
 template<> Integer power(const Integer n, const unsigned int l) { return pow(n,l); }
-*/
+#endif
 
 template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D& F) {
   if (l == 0) return res = F.one ;
@@ -84,13 +85,13 @@ template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D&
 }
 
 
-/*
+#if 0
 #include <math.h>
 
 template<> double power<double>(const double a, const double e) {
    return pow(a,e);
 }
-*/
+#endif
 
 } // namespace Givaro
 

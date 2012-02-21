@@ -655,8 +655,9 @@ namespace Givaro {
 
 	inline std::istream& ZpzDom<Unsigned32>::read (std::istream& s, Rep& a) const
 	{
-		s >> a;
-		init(a, a);
+		Integer tmp;
+		s >> tmp;
+		init(a, tmp);
 		return s;
 	}
 

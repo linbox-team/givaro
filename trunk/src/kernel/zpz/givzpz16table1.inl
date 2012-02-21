@@ -583,11 +583,11 @@ label1:
 
 	inline std::istream& ZpzDom<Log16>::read (std::istream& s, Rep& a) const
 	{
-		int tmp; //dpritcha
+		Integer tmp; 
 		s >> tmp;
 		tmp %= _p;
 		if (tmp < 0) tmp += _p;
-		a = _tab_value2rep[tmp];
+		a = _tab_value2rep[ (uint)tmp ];
 		return s;
 	}
 

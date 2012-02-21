@@ -631,8 +631,9 @@ inline std::ostream& ZpzDom<Std64>::write (std::ostream& s ) const
 
 inline std::istream& ZpzDom<Std64>::read (std::istream& s, Rep& a) const
 {
-  s >> a;
-  init(a, a);
+  Integer tmp;
+  s >> tmp;
+  init(a, tmp);
   return s;
 }
 

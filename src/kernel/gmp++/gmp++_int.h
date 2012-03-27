@@ -705,6 +705,7 @@ namespace Givaro {
 
 		/*! Euclidean division.
 		 * <code> n = d q + r </code>.
+		 * Computes both the quotient and the residue (as in quorem).
 		 * @param q as in the formula
 		 * @param r as in the formula
 		 * @param n as in the formula

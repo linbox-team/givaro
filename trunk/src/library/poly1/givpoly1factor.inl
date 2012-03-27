@@ -102,7 +102,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
                 }
                 Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
                 Rep tp, tp2, G2;
-                this->gcd(G2,G, sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
+                this->gcd(G2,G, this->sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
                 Degree dG2; this->degree(dG2,G2);
 // write(std::cerr << "SF t2: ", tp2) << std::endl;
 // write(std::cerr << "SF G2: ", G2) << std::endl;
@@ -111,7 +111,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
                         return G1.copy(G2);
                     }
 // UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
-                     Rep G3; this->gcd(G3, G, add(tp2,tp,_domain.one) );
+                     Rep G3; this->gcd(G3, G, this->add(tp2,tp,_domain.one) );
                      Degree dG3; this->degree(dG3,G3);
 // write(std::cerr << "SF t3: ", tp2) << std::endl;
 // write(std::cerr << "SF G3: ", G3) << std::endl;

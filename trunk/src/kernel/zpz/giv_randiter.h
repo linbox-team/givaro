@@ -14,11 +14,11 @@
 
 #include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
+#include "givaro/givzpztypes.h"
 
 namespace Givaro {
 
-template<class TAG>
-class ZpzDom ;
+template<class TAG> class ZpzDom ;
 
 // -- Tag for arithmetic:
 struct Std16 /*{public: typedef  int16_t type;}*/ ; // -- standard arithmetic over 16bits representations.

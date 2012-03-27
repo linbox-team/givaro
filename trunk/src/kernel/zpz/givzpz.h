@@ -28,6 +28,8 @@ namespace Givaro {
 
 #include "givaro/givzpztypes.h"
 
+#include <givaro/givzpzGen.h>
+
 #include "givaro/givzpz16std.h"
 #include "givaro/givzpz16table1.h"
 

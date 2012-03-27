@@ -1,7 +1,7 @@
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpztypes.h,v $
 // Copyright(c)'1994-2011 by The Givaro group
-// Time-stamp: <02 Feb 11 14:36:21 Jean-Guillaume.Dumas@imag.fr>        //
+// Time-stamp: <15 Mar 12 10:36:28 Jean-Guillaume.Dumas@imag.fr>        //
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.

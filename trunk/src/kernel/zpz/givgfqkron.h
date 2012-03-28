@@ -54,6 +54,16 @@ public:
         setShift(std::numeric_limits<UTT>::digits/( (e<<1)-1) );
     }
 
+    Ints getMaxn() const {
+	return _sMAXN;
+    }
+    UTT getShift() const {
+	return _SHIFTS;
+    }
+    UTT getBase() const {
+	return _sBASE;
+    } 
+
         // Set shifts, returns maxn
     Ints setShift(const Ints& i) {
         _SHIFTS=i;

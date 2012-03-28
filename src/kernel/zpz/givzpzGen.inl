@@ -25,10 +25,10 @@
 
 // r = a - b
 //#define __GIVARO_ZPZIntType_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r); }
-#define __GIVARO_ZPZIntType_N_SUB(r,p,a,b) { r = (a-b); if (r < 0 ) r+=p; }
+#define __GIVARO_ZPZIntType_N_SUB(r,p,a,b) { r = (a>=b) ? a-b: (p-b)+a ; }
 // r -= a
 // #define __GIVARO_ZPZIntType_N_SUBIN(r,p,a) { r -= a; r= (r < 0 ? r+p : r); }
-#define __GIVARO_ZPZIntType_N_SUBIN(r,p,a) { r -= a; if (r < 0 ) r+=p; }
+#define __GIVARO_ZPZIntType_N_SUBIN(r,p,a) { if (r<a) r+=(p-a); else r-=a; }
 
 // r = a+b
 // #define __GIVARO_ZPZIntType_N_ADD(r,p,a,b) { r = (a+b); r= (r < p ? r : r-p); }
@@ -46,10 +46,10 @@
 
 // a*b-c
 //#define __GIVARO_ZPZIntType_N_MULSUB(r,p,a,b,c) { r = (a*b+p-c); r= (r<p ? r : r % p);  }
-#define __GIVARO_ZPZIntType_N_MULSUB(r,p,a,b,c) { r = a; r*=b; r+=p; r-=c; if (r>=p) r %= p;  }
+#define __GIVARO_ZPZIntType_N_MULSUB(r,p,a,b,c) { r = a*b; r+=p; r-=c; r= (r<p ? r : r % p);  }
 // a*b-c
 //#define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % p : r); } }
-#define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; if (r<0 ) r %= p ; if (r<0 ) r += p ; } }
+#define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r = p-r; r += a*b; r= (r<p ? r : r % p); __GIVARO_ZPZIntType_N_NEGIN(r,p); }
 
 #define __GIVARO_ZPZIntType_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
 #define __GIVARO_ZPZIntType_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
@@ -120,18 +120,31 @@ inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::negin (typename ZpzDom<In
 template<typename IntType>
 inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::inv (typename ZpzDom<IntType>::Rep& u1, const typename ZpzDom<IntType>::Rep& a) const
 {
-    IntType u3 ;
-    IntType v1,v3 ;
-    u1 = one ; u3 = a ;
-    v1 = zero ; v3 = _p ;
-    while ( v3 != zero )
-    {
-        IntType q , t1, t3 ;
-        q = u3 / v3 ;
-        t1 = u1 - q * v1 ; t3 = u3 - q * v3 ;
-        u1 = v1 ; u3 = v3 ; v1 = t1 ; v3 = t3 ;
-    }
-    return u1 = (u1<zero)?(u1+_p):u1;
+    u1=one;
+    IntType r0(_p), r1(a);
+    IntType q(r0/r1);
+
+    r0 -= q * r1;
+    if (r0 == zero) return u1;
+    IntType u0 = q;
+
+    q = r1/r0;
+    r1 -= q * r0; 
+
+    while (r1 != zero) {
+        u1 += q * u0;
+
+        q = r0/r1;
+        r0 -= q * r1;
+        if (r0 == zero) return u1;
+        u0 += q * u1;
+        
+        q = r1/r0;
+        r1 -= q * r0; 
+
+    };
+    
+    return u1=_p-u0;
 }
 
 template<typename IntType>

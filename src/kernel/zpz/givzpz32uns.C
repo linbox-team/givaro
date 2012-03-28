@@ -40,21 +40,33 @@ namespace Givaro {
 	}
 
 	uint32_t& ZpzDom<Unsigned32>::invext
-	( uint32_t& u, const uint32_t a, const uint32_t b ) const
+	( uint32_t& u1, const uint32_t a, const uint32_t b ) const
 	{
-		long u1,u3;
-		long v1,v3;
-		u1 = 1; u3 = a;
-		v1 = 0; v3 = b;
-		while (v3 != 0)
-		{
-			long q, t1, t3;
-			q = u3 / v3;
-			t1 = u1 - q * v1; t3 = u3 - q * v3;
-			u1 = v1; u3 = v3; v1 = t1; v3 = t3;
-		}
-		v1=(u3<0?-u1:u1);
-		return u=uint32_t(v1<0?b+v1:v1);
+            u1=one;
+            uint32_t r0(_p), r1(a);
+            uint32_t q(r0/r1);
+            
+            r0 -= q * r1;
+            if (r0 == zero) return u1;
+            uint32_t u0 = q;
+            
+            q = r1/r0;
+            r1 -= q * r0; 
+            
+            while (r1 != zero) {
+                u1 += q * u0;
+                
+                q = r0/r1;
+                r0 -= q * r1;
+                if (r0 == zero) return u1;
+                u0 += q * u1;
+                
+                q = r1/r0;
+                r1 -= q * r0; 
+                
+            }
+            
+            return u1=_p-u0;
 	}
 
 

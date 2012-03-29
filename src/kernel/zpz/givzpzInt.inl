@@ -18,21 +18,21 @@
 
 // r = a*b
 // #define __GIVARO_ZPZInteger_N_MUL(r,p,a,b) { r = a*b % p; }
-#define __GIVARO_ZPZInteger_N_MUL(r,p,a,b) { r = a; r*=b; Integer::modin(r,p); }
+#define __GIVARO_ZPZInteger_N_MUL(r,p,a,b) { Integer::mul(r,a,b); Integer::modin(r,p); }
 // r *= a
 //#define __GIVARO_ZPZInteger_N_MULIN(r,p,a) {  r = (r*a % p);  }
-#define __GIVARO_ZPZInteger_N_MULIN(r,p,a) {  r *= a; Integer::modin(r,p);  }
+#define __GIVARO_ZPZInteger_N_MULIN(r,p,a) {  Integer::mulin(r,a); Integer::modin(r,p);  }
 
 // r = a - b
 //#define __GIVARO_ZPZInteger_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r); }
-#define __GIVARO_ZPZInteger_N_SUB(r,p,a,b) { r = (a-b); if (r < 0 ) r+=p; }
+#define __GIVARO_ZPZInteger_N_SUB(r,p,a,b) { Integer::sub(r,a,b); if (sign(r) < 0) r+=p; }
 // r -= a
 // #define __GIVARO_ZPZInteger_N_SUBIN(r,p,a) { r -= a; r= (r < 0 ? r+p : r); }
-#define __GIVARO_ZPZInteger_N_SUBIN(r,p,a) { r -= a; if (r < 0 ) r+=p; }
+#define __GIVARO_ZPZInteger_N_SUBIN(r,p,a) { r -= a; if ( sign(r) < 0) r+=p; }
 
 // r = a+b
 // #define __GIVARO_ZPZInteger_N_ADD(r,p,a,b) { r = (a+b); r= (r < p ? r : r-p); }
-#define __GIVARO_ZPZInteger_N_ADD(r,p,a,b) { r = (a+b); if (r >= p) r-=p; }
+#define __GIVARO_ZPZInteger_N_ADD(r,p,a,b) { Integer::add(r,a,b); if (r >= p) r-=p; }
 // r += a
 // #define __GIVARO_ZPZInteger_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p); }
 #define __GIVARO_ZPZInteger_N_ADDIN(r,p,a) { r += a;  if (r >= p) r-=p; }
@@ -55,8 +55,10 @@
 // #define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; if (r<0 ) r %= p ; if (r<0 ) r += p ; } }
 #define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { Integer::maxpyin(r,a,b); Integer::modin(r,p) ; }
 
-#define __GIVARO_ZPZInteger_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
-#define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
+// #define __GIVARO_ZPZInteger_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
+#define __GIVARO_ZPZInteger_N_NEG(r,p,a) { if (! isZero(a)) Integer::sub(r,p,a);  }
+// #define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
+#define __GIVARO_ZPZInteger_N_NEGIN(r,p) { if (! isZero(r)) Integer::sub(r,p,r); }
 
 namespace Givaro {
 

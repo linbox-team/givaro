@@ -18,10 +18,10 @@
 
 // r = a*b
 // #define __GIVARO_ZPZInteger_N_MUL(r,p,a,b) { r = a*b % p; }
-#define __GIVARO_ZPZInteger_N_MUL(r,p,a,b) { r = a; r*=b; r %= p; }
+#define __GIVARO_ZPZInteger_N_MUL(r,p,a,b) { r = a; r*=b; Integer::modin(r,p); }
 // r *= a
 //#define __GIVARO_ZPZInteger_N_MULIN(r,p,a) {  r = (r*a % p);  }
-#define __GIVARO_ZPZInteger_N_MULIN(r,p,a) {  r *= a; r %= p;  }
+#define __GIVARO_ZPZInteger_N_MULIN(r,p,a) {  r *= a; Integer::modin(r,p);  }
 
 // r = a - b
 //#define __GIVARO_ZPZInteger_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r); }
@@ -39,17 +39,21 @@
 
 // r <- a*b+c % p
 // #define __GIVARO_ZPZInteger_N_MULADD(r,p,a,b,c) { r = (a*b+c) % p;  }
-#define __GIVARO_ZPZInteger_N_MULADD(r,p,a,b,c) { r = a; r*=b; r+=c; r %= p;  }
+//#define __GIVARO_ZPZInteger_N_MULADD(r,p,a,b,c) { r = a; r*=b; r+=c; r %= p;  }
+#define __GIVARO_ZPZInteger_N_MULADD(r,p,a,b,c) { Integer::axpy(r,a,b,c); Integer::modin(r,p);  }
 
 // #define __GIVARO_ZPZInteger_N_MULADDIN(r,p,a,b) { r = (a*b+r) % p;  }
-#define __GIVARO_ZPZInteger_N_MULADDIN(r,p,a,b) { r += (a*b); r %= p;  }
+//#define __GIVARO_ZPZInteger_N_MULADDIN(r,p,a,b) { r += (a*b); r %= p;  }
+#define __GIVARO_ZPZInteger_N_MULADDIN(r,p,a,b) { Integer::axpyin(r,a,b); Integer::modin(r,p); }
 
 // a*b-c
 //#define __GIVARO_ZPZInteger_N_MULSUB(r,p,a,b,c) { r = (a*b+p-c); r= (r<p ? r : r % p);  }
-#define __GIVARO_ZPZInteger_N_MULSUB(r,p,a,b,c) { r = a; r*=b; r+=p; r-=c; if (r>=p) r %= p;  }
+//#define __GIVARO_ZPZInteger_N_MULSUB(r,p,a,b,c) { r = a; r*=b; r+=p; r-=c; if (r>=p) r %= p;  }
+#define __GIVARO_ZPZInteger_N_MULSUB(r,p,a,b,c) { Integer::axmy(r,a,b,c); Integer::modin(r,p);  }
 // a*b-c
 //#define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % p : r); } }
-#define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; if (r<0 ) r %= p ; if (r<0 ) r += p ; } }
+// #define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; if (r<0 ) r %= p ; if (r<0 ) r += p ; } }
+#define __GIVARO_ZPZInteger_N_SUBMULIN(r,p,a,b) { Integer::maxpyin(r,a,b); Integer::modin(r,p) ; }
 
 #define __GIVARO_ZPZInteger_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
 #define __GIVARO_ZPZInteger_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
@@ -238,9 +242,11 @@ inline ZpzDom<Integer>::Rep& ZpzDom<Integer>::axpy (Rep& r,
 inline ZpzDom<Integer>::Rep&  ZpzDom<Integer>::axpyin (Rep& r,
 						       const Rep& a, const Rep& b) const
 {
-  Rep tmp = r;
-  __GIVARO_ZPZInteger_N_MULADDIN(tmp, _p, a, b);
-  return r = (ZpzDom<Integer>::Rep)tmp;
+//   Rep tmp = r;
+//   __GIVARO_ZPZInteger_N_MULADDIN(tmp, _p, a, b);
+//   return r = (ZpzDom<Integer>::Rep)tmp;
+    __GIVARO_ZPZInteger_N_MULADDIN(r, _p, a, b);
+    return r;
 }
 
 
@@ -256,9 +262,10 @@ inline void ZpzDom<Integer>::axpyin (const size_t sz, Array r,
 				     constArray a, constArray x) const
 {
   for ( size_t i=sz ; --i ; ) {
-    Rep tmp = r[i];
-    __GIVARO_ZPZInteger_N_MULADDIN(tmp, _p, a[i], x[i]);
-    r[i] = (ZpzDom<Integer>::Rep)tmp;
+//     Rep tmp = r[i];
+//     __GIVARO_ZPZInteger_N_MULADDIN(tmp, _p, a[i], x[i]);
+//     r[i] = (ZpzDom<Integer>::Rep)tmp;
+    __GIVARO_ZPZInteger_N_MULADDIN(r[i], _p, a[i], x[i]);
   }
 }
 
@@ -309,9 +316,10 @@ inline void ZpzDom<Integer>::maxpyin (const size_t sz, Array r,
 				     constArray a, constArray x) const
 {
   for ( size_t i=sz ; --i ; ) {
-    Rep tmp = r[i];
-    __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a[i], x[i]);
-    r[i] = (ZpzDom<Integer>::Rep)tmp;
+//     Rep tmp = r[i];
+//     __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a[i], x[i]);
+//     r[i] = (ZpzDom<Integer>::Rep)tmp;
+    __GIVARO_ZPZInteger_N_SUBMULIN(r[i], _p, a[i], x[i]);
   }
 }
 

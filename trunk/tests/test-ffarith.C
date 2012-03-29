@@ -348,9 +348,13 @@ int main(int argc, char ** argv)
 	ZpzDom<Integer> IntZ13(13);
 	JETESTE(IntZ13,seed);
 
-	// modulo 13 over integral type
+	// modulo 13 with generic implementation over signed integral type
 	ZpzDom<long long> GenZ13(13);
 	JETESTE(GenZ13,seed);
+
+	// modulo 101 with generic implementation over unsigned signed integral type
+	ZpzDom<unsigned long long> GenZ101(101);
+	JETESTE(GenZ101,seed);
 
         // Zech log finite field with 256 elements
         // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial

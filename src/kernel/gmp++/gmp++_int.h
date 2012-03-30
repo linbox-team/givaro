@@ -297,6 +297,9 @@ namespace Givaro {
 		giv_all_inlined unsigned long operator^ (const unsigned long& a) const;
 		giv_all_inlined unsigned long operator| (const unsigned long& a) const;
 		giv_all_inlined unsigned long operator& (const unsigned long& a) const;
+		giv_all_inlined unsigned int operator^ (const unsigned int& a) const;
+		giv_all_inlined unsigned int operator| (const unsigned int& a) const;
+		giv_all_inlined unsigned int operator& (const unsigned int& a) const;
 		giv_all_inlined Integer operator ~ () const;   // 1 complement
 		giv_all_inlined Integer& operator^= (const Integer&);   // XOR
 		giv_all_inlined Integer& operator|= (const Integer&);   // OR

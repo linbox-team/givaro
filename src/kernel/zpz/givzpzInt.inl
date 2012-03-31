@@ -25,17 +25,17 @@
 
 // r = a - b
 //#define __GIVARO_ZPZInteger_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r); }
-#define __GIVARO_ZPZInteger_N_SUB(r,p,a,b) { Integer::sub(r,a,b); if (sign(r) < 0) r+=p; }
+#define __GIVARO_ZPZInteger_N_SUB(r,p,a,b) { Integer::sub(r,a,b); if (sign(r) < 0) Integer::addin(r,p); }
 // r -= a
 // #define __GIVARO_ZPZInteger_N_SUBIN(r,p,a) { r -= a; r= (r < 0 ? r+p : r); }
-#define __GIVARO_ZPZInteger_N_SUBIN(r,p,a) { r -= a; if ( sign(r) < 0) r+=p; }
+#define __GIVARO_ZPZInteger_N_SUBIN(r,p,a) { Integer::subin(r,a) ; if ( sign(r) < 0) Integer::addin(r,p); }
 
 // r = a+b
 // #define __GIVARO_ZPZInteger_N_ADD(r,p,a,b) { r = (a+b); r= (r < p ? r : r-p); }
-#define __GIVARO_ZPZInteger_N_ADD(r,p,a,b) { Integer::add(r,a,b); if (r >= p) r-=p; }
+#define __GIVARO_ZPZInteger_N_ADD(r,p,a,b) { Integer::add(r,a,b); if (r >= p) Integer::subin(r,p); }
 // r += a
 // #define __GIVARO_ZPZInteger_N_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p); }
-#define __GIVARO_ZPZInteger_N_ADDIN(r,p,a) { r += a;  if (r >= p) r-=p; }
+#define __GIVARO_ZPZInteger_N_ADDIN(r,p,a) { Integer::addin(r,a);  if (r >= p) Integer::subin(r,p); }
 
 // r <- a*b+c % p
 // #define __GIVARO_ZPZInteger_N_MULADD(r,p,a,b,c) { r = (a*b+c) % p;  }
@@ -337,8 +337,8 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const double a ) 
   if (a < 0.0) { sign =-1; ua = -a;}
   else { ua = a; sign =1; }
   r = Integer(ua);
-  if (r >=_p) r %= _p;
-  if (!isZero(r) && (sign == -1)) r = _p - r;
+  if (r >=_p) Integer::modin(r,_p) ;
+  if (!isZero(r) && (sign == -1)) Integer::sub(r,_p,r) ;
   return r;
 }
 
@@ -351,7 +351,7 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const float a ) c
 inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const unsigned long a ) const
 {
     r = Integer(a);
-    if ( r >= _p ) r %= _p;
+    if ( r >= _p ) Integer::modin(r,_p);
     return r ;
 }
 
@@ -360,8 +360,8 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const long a ) co
   int sign;
   if (a <0) { sign =-1; r = Integer(-a);}
   else { r = Integer(a); sign =1; }
-  if (r >=_p) r %= _p;
-  if (!isZero(r) && (sign ==-1)) r = _p - r;
+  if (r >=_p) Integer::modin(r,_p);
+  if (!isZero(r) && (sign ==-1)) Integer::sub(r,_p,r);
   return r;
 }
 
@@ -370,8 +370,8 @@ inline  ZpzDom<Integer>::Rep&  ZpzDom<Integer>::init ( Rep& r, const Integer& a 
   int sign;
   if (a <0) { sign =-1; r = Integer(-a);}
   else { r = Integer(a); sign =1; }
-  if (r >=_p) r %= _p;
-  if (!isZero(r) && (sign ==-1)) r = _p - r;
+  if (r >=_p) Integer::modin(r,_p);
+  if (!isZero(r) && (sign ==-1)) Integer::sub(r, _p, r);
   return r;
 }
 
@@ -385,12 +385,12 @@ inline void ZpzDom<Integer>::assign
 {
   for ( size_t i=sz ; --i ; ) {
     if (a[i] <ZpzDom<Integer>::zero) {
-       r[i] = a[i] + _p;
-       if (r[i] <ZpzDom<Integer>::zero) r[i] %= _p;
+	    Integer::add(r[i], a[i], _p);
+       if (r[i] <ZpzDom<Integer>::zero) Integer::modin(r[i], _p);
     }
     else if (a[i] >_p) {
-       r[i] = a[i] - _p;
-       if (r[i] >=_p) r[i] %= _p;
+	    Integer::sub(r[i],a[i],_p);
+       if (r[i] >=_p) Integer::modin(r[i],_p);
     }
     else r[i] = a[i];
   }
@@ -435,12 +435,12 @@ inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& g, Rep& a) const
 template< class RandIter >
 inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& g, Rep& a, const Rep& b) const {
 	        Integer::random(a,b);
-                return a %= _p;
+                return Integer::modin(a,_p);
 }
 template< class RandIter >
 inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& g, Rep& a, long b) const {
 	        Integer::random(a,b);
-	        return a %= _p;
+	        return Integer::modin(a,_p);
 
 }
 
@@ -486,7 +486,7 @@ inline void
       // - normalization: put fractional part at the end of the representation
       tmp.d = a[i] + offset;
       r[i] = tmp.r[1];
-      if (r[i] <_p) r[i] %= _p;
+      if (r[i] <_p) Integer::modin(r[i],_p);
   }
   //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
   //    r[i] = (r[i] <_p ? r[i] : r[i]%_p);

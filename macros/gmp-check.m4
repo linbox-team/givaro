@@ -35,16 +35,18 @@ dnl Check for existence
 BACKUP_CXXFLAGS=${CXXFLAGS}
 BACKUP_LIBS=${LIBS}
 
-
+GMP_PATH=
 for GMP_HOME in ${GMP_HOME_PATH}
   do
 	if test "x$GMP_HOME" != "x/usr" -a "x$GMP_HOME" != "x/usr/local"; then
 		if test -r "$GMP_HOME/include/gmp.h" ; then
 			GMP_CFLAGS="-I${GMP_HOME}/include"
+			GMP_PATH="-L${GMP_HOME}/lib"
 			GMP_LIBS="-L${GMP_HOME}/lib -lgmp"
 		else
 		   if test -r "$GMP_HOME/gmp.h" ; then
 			GMP_CFLAGS="-I${GMP_HOME}"
+			GMP_PATH="-L${GMP_HOME}"
 			GMP_LIBS="-L${GMP_HOME} -lgmp"
 		   else
 			echo "($GMP_HOME) seems an invalid GMP prefix"
@@ -107,7 +109,7 @@ for GMP_HOME in ${GMP_HOME_PATH}
 				],[
 					AC_MSG_RESULT(yes)
 					GMP_VERSION=""
-					GMP_LIBS="${GMP_LIBS} -lgmpxx"
+					GMP_LIBS="${GMP_PATH} -lgmpxx -lgmp"
 					AC_SUBST(GMP_VERSION)
 					AC_SUBST(GMP_LIBS)
 				],[

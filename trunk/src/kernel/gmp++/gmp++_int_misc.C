@@ -355,8 +355,11 @@ namespace Givaro {
 		return (float)mpz_get_d ( (mpz_srcptr)&gmp_rep);
 	}
 
+
+	//! returns the number of bytes used to store *this
 	unsigned long length(const Integer& a)
 	{
+            // JGD 23.04.2012: shouldn't it be "mp_limb_t" instead of "unsigned long"?
 		return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(unsigned long);
 	}
 
@@ -367,16 +370,19 @@ namespace Givaro {
 		return -n;
 	}
 
+	//! returns the number of machine words used to store *this
 	size_t Integer::size() const
 	{
 		return  mpz_size( (mpz_srcptr)&gmp_rep ) ;
 	}
 
+	//! returns ceil(log_BASE(*this))
 	size_t Integer::size_in_base(int BASE) const
 	{
 		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, BASE);
 	}
 
+	//! returns ceil(log_2(*this))
 	size_t Integer::bitsize() const
 	{
 		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, 2);

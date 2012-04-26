@@ -138,6 +138,7 @@
 # define GIVARO_BITS_PER_SHORTINT	SIZEOF_SHORT
 # define GIVARO_BITS_PER_CHAR		SIZEOF_CHAR
 
+#if 0 /*  standard types should be used */
 #ifndef __GIVARO_HAVE_STDINT_H
 typedef signed    __GIVARO_INT8      int8_t;
 typedef signed    __GIVARO_INT16     int16_t;
@@ -154,6 +155,7 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #   undef GIVARO_USE_SIXTYFOUR
 #   define GIVARO_DONOTUSE_SIXTYFOUR 1
 # endif
+#endif
 #endif
 
 

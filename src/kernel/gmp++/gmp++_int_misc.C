@@ -270,15 +270,15 @@ namespace Givaro {
 	}
 	unsigned int Integer::operator^ (const unsigned int& a) const
 	{   // XOR
-		return mpz_get_ui((mpz_srcptr)&(gmp_rep)) ^ a;
+		return (unsigned int) (mpz_get_ui((mpz_srcptr)&(gmp_rep)) ^ (long unsigned int)a );
 	}
 	unsigned int Integer::operator| (const unsigned int& a) const
 	{   // OR
-		return mpz_get_ui((mpz_srcptr)&(gmp_rep)) | a;
+		return (unsigned int) (mpz_get_ui((mpz_srcptr)&(gmp_rep)) | (long unsigned int)a );
 	}
 	unsigned int Integer::operator& (const unsigned int& a) const
 	{   // AND
-		return mpz_get_ui((mpz_srcptr)&(gmp_rep)) & a;
+		return (unsigned int) (mpz_get_ui((mpz_srcptr)&(gmp_rep)) & (long unsigned int)a );
 	}
 	Integer Integer::operator~ () const
 	{   // 1 complement

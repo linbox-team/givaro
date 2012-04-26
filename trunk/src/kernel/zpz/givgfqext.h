@@ -159,8 +159,8 @@ namespace Givaro {
 			// Precondition : 0 <= d < _MODOUT
 			// Can segfault if d is too large
 			// WARNING WARNING WARNING WARNING
-			unsigned __GIVARO_INT64 rll( static_cast<unsigned __GIVARO_INT64>(d) );
-			unsigned __GIVARO_INT64 tll( static_cast<unsigned __GIVARO_INT64>(d/this->_dcharacteristic) );
+			uint64_t rll( static_cast<uint64_t>(d) );
+			uint64_t tll( static_cast<uint64_t>(d/this->_dcharacteristic) );
 			UTT prec(0);
 			UTT padl = (UTT)(rll - tll*this->_characteristic);
 			if (padl == this->_characteristic) {

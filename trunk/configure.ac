@@ -167,50 +167,50 @@ if test ! -L src/library/vector/givaro ; then ln -s . src/library/vector/givaro 
 
 # Create some useful data types of fixed, known lengths
 
-case 1 in
-  $ac_cv_sizeof_char)
-     GIVARO_INT8="char";
-     ;;
-esac
+# case 1 in
+  # $ac_cv_sizeof_char)
+     # GIVARO_INT8="char";
+     # ;;
+# esac
 
-case 2 in
-  $ac_cv_sizeof_short)
-     GIVARO_INT16="short";
-     ;;
-  $ac_cv_sizeof_int)
-     GIVARO_INT16="int";
-     ;;
-esac
+# case 2 in
+  # $ac_cv_sizeof_short)
+     # GIVARO_INT16="short";
+     # ;;
+  # $ac_cv_sizeof_int)
+     # GIVARO_INT16="int";
+     # ;;
+# esac
 
-case 4 in
-  $ac_cv_sizeof_short)
-     GIVARO_INT32="short";
-     ;;
-  $ac_cv_sizeof_int)
-     GIVARO_INT32="int";
-     ;;
-  $ac_cv_sizeof_long)
-     GIVARO_INT32="long";
-     ;;
-esac
+# case 4 in
+  # $ac_cv_sizeof_short)
+     # GIVARO_INT32="short";
+     # ;;
+  # $ac_cv_sizeof_int)
+     # GIVARO_INT32="int";
+     # ;;
+  # $ac_cv_sizeof_long)
+     # GIVARO_INT32="long";
+     # ;;
+# esac
 
-case 8 in
-  $ac_cv_sizeof_short)
-     GIVARO_INT64="short";
-     ;;
-  $ac_cv_sizeof_int)
-     GIVARO_INT64="int";
-     ;;
-  $ac_cv_sizeof_long)
-     GIVARO_INT64="long";
-     ;;
-  $ac_cv_sizeof_long_long)
-     GIVARO_INT64="long long";
-     ;;
-  $ac_cv_sizeof___int64)
-     GIVARO_INT64="__int64";
-     ;;
-esac
+# case 8 in
+  # $ac_cv_sizeof_short)
+     # GIVARO_INT64="short";
+     # ;;
+  # $ac_cv_sizeof_int)
+     # GIVARO_INT64="int";
+     # ;;
+  # $ac_cv_sizeof_long)
+     # GIVARO_INT64="long";
+     # ;;
+  # $ac_cv_sizeof_long_long)
+     # GIVARO_INT64="long long";
+     # ;;
+  # $ac_cv_sizeof___int64)
+     # GIVARO_INT64="__int64";
+     # ;;
+# esac
 
 AC_DEFINE_UNQUOTED(INT8,  $GIVARO_INT8, Canonical 8-bit data type)
 AC_DEFINE_UNQUOTED(INT16, $GIVARO_INT16, Canonical 16-bit data type)
@@ -235,10 +235,9 @@ LB_CHECK_GMP(,,[
 echo '*******************************************************************************'
 echo ' ERROR: GMP not found!'
 echo
-echo ' GMP version 3.1.1 or greater is required for this library to compile. Please'
-echo ' make sure GMP is installed and specify its location with the option'
+echo ' GMP library compiled with --enable-cxx is required for this library to compile.'
+echo ' Please make sure GMP is installed and specify its location with the option'
 echo ' --with-gmp=<prefix> when running configure.'
-echo ' Please ensure it is compliled with cxx support too.'
 echo '*******************************************************************************'
 exit 1
 ])

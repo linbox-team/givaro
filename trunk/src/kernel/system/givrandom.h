@@ -66,13 +66,14 @@ public:
 	    return _seed;
     }
 
-#if defined(__GIVARO_INT64)
+// #if defined(__GIVARO_INT64)
+#if 1
     unsigned long operator() () const
     {
         return _seed = (unsigned long)(
-            (__GIVARO_INT64)_GIVRAN_MULTIPLYER_
-            * (__GIVARO_INT64)_seed
-            % (__GIVARO_INT64)_GIVRAN_MODULO_ );
+            (int64_t)_GIVRAN_MULTIPLYER_
+            * (int64_t)_seed
+            % (int64_t)_GIVRAN_MODULO_ );
     }
 #else
     unsigned long operator() () const

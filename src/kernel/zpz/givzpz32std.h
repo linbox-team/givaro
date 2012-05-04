@@ -11,9 +11,9 @@
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 
-/*! @file zpz/givzps32std.h
+/*! @file zpz/givzpz32std.h
  * @ingroup zpz
- * @brief Arithmetic on Z/pZ, with p a prime number less than 2^32.
+ * @brief Arithmetic on \c Z/pZ, with p a prime number less than \f$2^32\f$.
  *   Modulo typedef is a signed long number. In case it was modified
  *   then Bézout algorithm must be changed (coefficient can be negative).
  */

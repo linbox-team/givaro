@@ -556,9 +556,6 @@ namespace Givaro {
             //@} Common Object Iterface
 
             /** @name Implementation-Specific Methods.
-             * These methods are not required of all
-             * \Ref{LinBox Random field Element generators}
-             * and are included only for this implementation of the archetype.
              */
             //@{
 

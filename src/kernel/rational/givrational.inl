@@ -51,7 +51,7 @@ inline const Rational operator * (const int i, const Rational& r)
 inline const Rational operator / (const int i, const Rational& r)
   { return Rational(i) / r ; }
 
-inline Rational Rational::operator + ()  const
+Rational Rational::operator + ()  const
   { return *this ; }
 
 //----------------------------------miscellaneous inline functions

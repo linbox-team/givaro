@@ -129,7 +129,7 @@ inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::inv (typename ZpzDom<IntT
     IntType u0 = q;
 
     q = r1/r0;
-    r1 -= q * r0; 
+    r1 -= q * r0;
 
     while (r1 != zero) {
         u1 += q * u0;
@@ -138,12 +138,12 @@ inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::inv (typename ZpzDom<IntT
         r0 -= q * r1;
         if (r0 == zero) return u1;
         u0 += q * u1;
-        
+
         q = r1/r0;
-        r1 -= q * r0; 
+        r1 -= q * r0;
 
     };
-    
+
     return u1=_p-u0;
 }
 
@@ -383,14 +383,15 @@ inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<
 }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const float a ) const {
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const float a ) const
+{
     return init(r, (double)a);
 }
 
 
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const unsigned long a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const unsigned long int a ) const
 {
     r = IntType(a);
     if ( r >= _p ) r %= _p;
@@ -398,7 +399,7 @@ inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<
 }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const long a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const long int a ) const
 {
   int sign;
   if (a <0) { sign =-1; r = IntType(-a);}

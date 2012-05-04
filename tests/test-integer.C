@@ -5,7 +5,7 @@
 // written by BB
 // see the COPYRIGHT file for more details.
 
-/*! @file tests/test-integer.h
+/*! @file tests/test-integer.C
  * @ingroup tests
  * tests integer.h fucntions not tested elsewhere.
  * @test tests integer.h fucntions not tested elsewhere.

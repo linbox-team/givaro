@@ -40,6 +40,7 @@ class RationalDom;
 
 // ----------------------------------- Class Rational
 
+//! Rationals. No doc.
 class Rational {
 
 public :
@@ -77,8 +78,8 @@ public :
 //----------------Elementary arithmetic between Rational
     Rational operator + (const Rational& r) const ;
     Rational operator - (const Rational& r) const ;
-    Rational operator -() const ;
-    Rational operator +() const ;
+    Rational operator - () const ;
+    giv_all_inlined Rational operator + () const ;
     Rational operator * (const Rational& r) const ;
     Rational operator / (const Rational &r) const ;
     Rational& operator += (const Rational& r) ;

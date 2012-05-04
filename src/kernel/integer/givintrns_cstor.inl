@@ -4,6 +4,11 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
+/*!@internal
+ * @file integer/givintrns_cstor.inl
+ * @brief NO DOC
+ */
+
 #ifndef __GIVARO_intrns_cstor_INL
 #define __GIVARO_intrns_cstor_INL
 
@@ -15,9 +20,9 @@ namespace Givaro {
 	//#else
 	template<template <class,class> class Container, template <class> class Alloc>
 	//#endif
-	inline IntRNSsystem<Container, Alloc>::IntRNSsystem( const IntRNSsystem<Container, Alloc>::array& inprimes)
-	: _primes(inprimes),
-	_prod(one), _ck(0)
+	inline IntRNSsystem<Container, Alloc>::IntRNSsystem( const IntRNSsystem<Container, Alloc>::array& inprimes) :
+		_primes(inprimes),
+		_prod(one), _ck(0)
 	{
 		GIVARO_ASSERT( inprimes.size()>0, "[IntRNSsystem::IntRNSsystem] bad size of array");
 	}

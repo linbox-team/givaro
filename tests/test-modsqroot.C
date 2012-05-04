@@ -8,10 +8,10 @@
 // Givaro : Modular square roots
 // =================================================================== //
 
-/*! @file examples/Integer/ModularSquareRoot.C
+/*! @file tests/test-modsqroot.C
  * @ingroup examples
  * @ingroup integers
- * @example examples/Integer/ModularSquareRoot.C
+ * @see examples/Integer/ModularSquareRoot.C
  * @brief NO DOC
  */
 #include <iostream>

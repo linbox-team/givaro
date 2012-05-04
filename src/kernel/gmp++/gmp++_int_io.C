@@ -64,7 +64,7 @@ namespace Givaro {
 	std::istream& operator>> (std::istream& inp, Integer& a)
 	{
 #ifdef __GIVARO_GMP_NO_CXX
-		static long base[10] = {
+		static long int base[10] = {
 			10,
 			100,
 			1000,

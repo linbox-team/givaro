@@ -8,17 +8,20 @@
 // Author: T. Gautier
 // $Id: givarray0.inl,v 1.7 2011-02-02 16:23:55 bboyer Exp $
 // ======================================================================= //
-// Description:
-// implementation of operators of Array0<T>
+/** @internal
+ * @file bstruct/givarray0.inl
+ * implementation of operators of Array0<T>
+ */
 
 #ifndef __GIVARO__array0_INL
 #define __GIVARO__array0_INL
 
 namespace Givaro {
 
-	// -- Default cstor : ctsor of s size array
+	// Default cstor : ctsor of s size array
 	template<class T>
-	inline void Array0<T>::build( size_t s, const T& t) {
+	inline void Array0<T>::build( size_t s, const T& t)
+	{
 		// JGD 24.02.2011 : size_t is unsigned
 		//  GIVARO_ASSERT( s>=0, "[Array<T>::cstor(size_t)] must takes a >=0 parameter");
 		_psz = _size = s;
@@ -31,23 +34,25 @@ namespace Givaro {
 	}
 
 	template<class T>
-	inline Array0<T>::Array0 ( size_t s ) {
+	inline Array0<T>::Array0 ( size_t s )
+	{
 		build(s, T());
 	}
 
 	template<class T>
-	inline Array0<T>::Array0 ( size_t s, const T& t) {
+	inline Array0<T>::Array0 ( size_t s, const T& t)
+	{
 		build(s, t);
 	}
 
 
-	//-- Recopy cstor : logical copy
+	// Recopy cstor : logical copy
 	template<class T>
 	inline Array0<T>::Array0 (const Array0<T>& p, givNoCopy)
 	{
 		_psz = p._psz; _size = p._size;
 		if (_size !=0)
-		{ // -- increment ref. counting
+		{ // increment ref. counting
 			_d = p._d;
 			_cnt = p._cnt; (*_cnt) ++;
 		}
@@ -55,7 +60,7 @@ namespace Givaro {
 	}
 
 
-	//-- Recopy cstor : physical copy
+	// Recopy cstor : physical copy
 	template<class T>
 	inline Array0<T>::Array0 (const Array0<T>& p, givWithCopy)
 	{
@@ -69,7 +74,7 @@ namespace Givaro {
 		} else { _d =0; _cnt =0; }
 	}
 
-	// -- Destroy of the array
+	// Destroy of the array
 	template<class T>
 	inline void Array0<T>::destroy( )
 	{
@@ -84,7 +89,7 @@ namespace Givaro {
 		_size = _psz = 0; _cnt = 0; _d = 0;
 	}
 
-	// -- Allocation of an array of s Elements
+	// Allocation of an array of s Elements
 	template<class T>
 	inline void Array0<T>::allocate( size_t s )
 	{
@@ -268,22 +273,30 @@ namespace Givaro {
 	template <class T>
 	inline typename Array0<T>::Iterator_t
 	Array0<T>::begin()
-	{ return _d; }
+	{
+		return _d;
+	}
 
 	template <class T>
 	inline typename Array0<T>::Iterator_t
 	Array0<T>::end()
-	{ return _d + _size; }
+	{
+		return _d + _size;
+	}
 
 	template <class T>
 	inline typename Array0<T>::constIterator_t
 	Array0<T>::begin() const
-	{ return _d; }
+	{
+		return _d;
+	}
 
 	template <class T>
 	inline typename Array0<T>::constIterator_t
 	Array0<T>::end() const
-	{ return _d + _size; }
+	{
+		return _d + _size;
+	}
 
 } // namespace Givaro
 

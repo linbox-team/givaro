@@ -259,17 +259,17 @@ namespace Givaro {
 		Integer res(*this);
 		return res &= a;
 	}
-	Integer Integer::operator^ (const long unsigned& a) const
+	Integer Integer::operator^ (const long unsigned int & a) const
 	{   // XOR
 		Integer res(*this);
 		return res ^= a;
 	}
-	Integer Integer::operator| (const long unsigned& a) const
+	Integer Integer::operator| (const long unsigned int & a) const
 	{   // OR
 		Integer res(*this);
 		return res |= a;
 	}
-	long unsigned Integer::operator& (const long unsigned& a) const
+	long unsigned Integer::operator& (const long unsigned int & a) const
 	{   // AND
 		return mpz_get_ui((mpz_srcptr)&(gmp_rep)) & a;
 	}
@@ -309,19 +309,19 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator^= (const long unsigned& a)
+	Integer& Integer::operator^= (const long unsigned int & a)
 	{   // XOR
         Integer au(a);
 		mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
 		return *this;
 	}
-	Integer& Integer::operator|= (const long unsigned& a)
+	Integer& Integer::operator|= (const long unsigned int & a)
 	{   // OR
         Integer au(a);
 		mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
 		return *this;
 	}
-	Integer& Integer::operator&= (const long unsigned& a)
+	Integer& Integer::operator&= (const long unsigned int & a)
 	{   // AND
         Integer au(a);
 		mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));

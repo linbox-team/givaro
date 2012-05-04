@@ -36,12 +36,13 @@ struct __CoutCounter {
 
 
 namespace Givaro {
-/*! @brief Class that store a set of counters.
+/*!@internal
+ * @brief Class that store a set of counters.
  * - _count_cstor: \#cstor calls except the recopy constructor calls
  * - _count_cstor_recopy: \#recopy cstor calls
  * - _count_assign: \#assignment calls
  * - _count_dstor: \#dstor calls
- * *
+ * .
  */
 
 #define GIVARO_PERF_DEFCLASS(Name,Type)					\

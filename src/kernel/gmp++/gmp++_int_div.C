@@ -19,342 +19,342 @@
 
 namespace Givaro {
 
-//-------------------------------------------------- operator /
-Integer& Integer::divin(Integer& res, const Integer& n)
-{
-	//  if (isZero(n)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(res)) return res;
-	mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n.gmp_rep );
-	return res;
-}
+	//-------------------------------------------------- operator /
+	Integer& Integer::divin(Integer& res, const Integer& n)
+	{
+		//  if (isZero(n)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(res)) return res;
+		mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n.gmp_rep );
+		return res;
+	}
 
-Integer& Integer::divin(Integer& res, const long int n)
-{
-	//  if (n ==0) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(res)) return res;
-	int sgn = Givaro::sign(n);
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, std::abs(n));
-	if (sgn <0) return res = -res;
-	// if (n<0)
-	// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
-	// else
-	// mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
-
-
-	return res;
-}
-
-Integer& Integer::divin(Integer& res, const long unsigned int n)
-{
-	//  if (n ==0) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(res)) return res;
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
-	return res;
-}
-
-Integer& Integer::div(Integer& res, const Integer& n1, const Integer& n2)
-{
-	if (isZero(n1)) return res = Integer::zero;
-	//  if (isZero(n2)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
-	return res;
-}
-
-Integer& Integer::div(Integer& res, const Integer& n1, const long int n2)
-{
-	if (isZero(n1)) return res = Integer::zero;
-	//  if (isZero(n2)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	int sgn = Givaro::sign(n2);
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, std::abs(n2));
-	if (sgn <0) return res = -res;
-
-	// if (n2>0)
-	// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
-	// else
-	// mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+	Integer& Integer::divin(Integer& res, const long int n)
+	{
+		//  if (n ==0) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(res)) return res;
+		int sgn = Givaro::sign(n);
+		mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, std::abs(n));
+		if (sgn <0) return res = -res;
+		// if (n<0)
+		// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
+		// else
+		// mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
 
 
-	return res;
-}
+		return res;
+	}
+
+	Integer& Integer::divin(Integer& res, const long unsigned int n)
+	{
+		//  if (n ==0) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(res)) return res;
+		mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
+		return res;
+	}
+
+	Integer& Integer::div(Integer& res, const Integer& n1, const Integer& n2)
+	{
+		if (isZero(n1)) return res = Integer::zero;
+		//  if (isZero(n2)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		mpz_tdiv_q( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
+		return res;
+	}
+
+	Integer& Integer::div(Integer& res, const Integer& n1, const long int n2)
+	{
+		if (isZero(n1)) return res = Integer::zero;
+		//  if (isZero(n2)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		int sgn = Givaro::sign(n2);
+		mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, std::abs(n2));
+		if (sgn <0) return res = -res;
+
+		// if (n2>0)
+		// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+		// else
+		// mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
 
 
-Integer& Integer::div(Integer& res, const Integer& n1, const int n2) {
-	return div(res,n1,long(n2));
-}
+		return res;
+	}
 
-Integer& Integer::div(Integer& res, const Integer& n1, const long unsigned int n2)
-{
-	if (isZero(n1)) return res = Integer::zero;
-	//  if (isZero(n2)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
-	return res;
-}
+	Integer& Integer::div(Integer& res, const Integer& n1, const int n2)
+	{
+		return div(res,n1,long(n2));
+	}
 
-Integer& Integer::divexact  (Integer& q, const Integer& n1, const Integer& n2)
-{
-	if (isZero(n1)) return q = Integer::zero;
-	//  if (isZero(n2)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	mpz_divexact( (mpz_ptr)&(q.gmp_rep),
-		      (mpz_srcptr)&(n1.gmp_rep), (mpz_srcptr)&(n2.gmp_rep)) ;
-	return q;
-}
+	Integer& Integer::div(Integer& res, const Integer& n1, const long unsigned int n2)
+	{
+		if (isZero(n1)) return res = Integer::zero;
+		//  if (isZero(n2)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
+		return res;
+	}
 
-Integer  Integer::divexact  (const Integer& n1, const Integer& n2)
-{
-	if (isZero(n1)) return Integer::zero;
-	//  if (isZero(n2)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	Integer q;
-	mpz_divexact( (mpz_ptr)&(q.gmp_rep),
-		      (mpz_srcptr)&(n1.gmp_rep), (mpz_srcptr)&(n2.gmp_rep)) ;
-	return q;
-}
+	Integer& Integer::divexact  (Integer& q, const Integer& n1, const Integer& n2)
+	{
+		if (isZero(n1)) return q = Integer::zero;
+		//  if (isZero(n2)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		mpz_divexact( (mpz_ptr)&(q.gmp_rep),
+			      (mpz_srcptr)&(n1.gmp_rep), (mpz_srcptr)&(n2.gmp_rep)) ;
+		return q;
+	}
 
-
-Integer& Integer::operator /= (const Integer& n)
-{
-	//  if (isZero(n)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(*this)) return *this;
-	mpz_tdiv_q( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
-	return *this;
-}
-
-Integer& Integer::operator /= (const long unsigned int l)
-{
-	//  if (l ==0) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(*this)) return *this;
-	mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
-	return *this;
-}
-
-Integer& Integer::operator /= (const long int l)
-{
-	//  if (l ==0) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(*this)) return *this;
-	int sgn = Givaro::sign(l);
-	mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
-	if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep));
-	return *this;
-}
+	Integer  Integer::divexact  (const Integer& n1, const Integer& n2)
+	{
+		if (isZero(n1)) return Integer::zero;
+		//  if (isZero(n2)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		Integer q;
+		mpz_divexact( (mpz_ptr)&(q.gmp_rep),
+			      (mpz_srcptr)&(n1.gmp_rep), (mpz_srcptr)&(n2.gmp_rep)) ;
+		return q;
+	}
 
 
-Integer Integer::operator / (const Integer& n) const
-{
-	//  if (isZero(n)) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(*this)) return Integer::zero;
-	Integer res;
-	mpz_tdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
+	Integer& Integer::operator /= (const Integer& n)
+	{
+		//  if (isZero(n)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(*this)) return *this;
+		mpz_tdiv_q( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
+		return *this;
+	}
 
-	// if (n>0)
+	Integer& Integer::operator /= (const long unsigned int l)
+	{
+		//  if (l ==0) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(*this)) return *this;
+		mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
+		return *this;
+	}
+
+	Integer& Integer::operator /= (const long int l)
+	{
+		//  if (l ==0) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(*this)) return *this;
+		int sgn = Givaro::sign(l);
+		mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
+		if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep));
+		return *this;
+	}
+
+
+	Integer Integer::operator / (const Integer& n) const
+	{
+		//  if (isZero(n)) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(*this)) return Integer::zero;
+		Integer res;
+		mpz_tdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
+
+		// if (n>0)
 		// mpz_fdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
-	// else
+		// else
 		// mpz_cdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
 
-	return res;
-}
+		return res;
+	}
 
-Integer Integer::operator / (const long unsigned int l) const
-{
-	//  if (l ==0) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(*this)) return Integer::zero;
-	Integer res;
-	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
+	Integer Integer::operator / (const long unsigned int l) const
+	{
+		//  if (l ==0) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(*this)) return Integer::zero;
+		Integer res;
+		mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
 
-	return res;
-}
+		return res;
+	}
 
-Integer Integer::operator / (const long int l) const
-{
-	//  if (l ==0) {
-	//    GivMathDivZero("[Integer::/]: division by zero");
-	//  }
-	if (isZero(*this)) return Integer::zero;
-	Integer res;
-	int sgn = Givaro::sign(l);
-	mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, std::abs(l));
-	if (sgn <0) return negin(res);
-	// if (l>0)
+	Integer Integer::operator / (const long int l) const
+	{
+		//  if (l ==0) {
+		//    GivMathDivZero("[Integer::/]: division by zero");
+		//  }
+		if (isZero(*this)) return Integer::zero;
+		Integer res;
+		int sgn = Givaro::sign(l);
+		mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, std::abs(l));
+		if (sgn <0) return negin(res);
+		// if (l>0)
 		// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l) ;
-	// else
+		// else
 		// mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, -l ) ;
 
 
-	return res;
-}
+		return res;
+	}
 
-// -- Euclidian division
-Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer &b)
-{
-	//  if (isZero(b)) {
-	//    GivMathDivZero("[Integer::divide]: division by zero");
-	//  }
+	// Euclidian division
+	Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer &b)
+	{
+		//  if (isZero(b)) {
+		//    GivMathDivZero("[Integer::divide]: division by zero");
+		//  }
 
-	mpz_tdiv_qr( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
-		     (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
-	// if (a>0)
+		mpz_tdiv_qr( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
+			     (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
+		// if (a>0)
 		// mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-				// (mpz_ptr)&(a.gmp_rep), b);
-	// else
+		// (mpz_ptr)&(a.gmp_rep), b);
+		// else
 		// mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-				// (mpz_ptr)&(a.gmp_rep), b);
+		// (mpz_ptr)&(a.gmp_rep), b);
 
-	if (a<0 && r) {
-		subin(q,(long)1) ;
-		r = b - r;
+		if (a<0 && r) {
+			subin(q,(long)1) ;
+			r = b - r;
+		}
+
+
+		return q;
 	}
 
-
-	return q;
-}
-
-Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
-{
-	//  if (isZero(b)) {
-	//    GivMathDivZero("[Integer::divide]: division by zero");
-	//  }
-	// int sgn = sign(b);
-	r = (long)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
-			   (mpz_srcptr)&(a.gmp_rep), std::abs(b));
-	// if (sgn <0) return negin(q);
-	// if (a>0)
+	Integer& Integer::divmod(Integer& q, long int & r, const Integer& a, const long int b)
+	{
+		//  if (isZero(b)) {
+		//    GivMathDivZero("[Integer::divide]: division by zero");
+		//  }
+		// int sgn = sign(b);
+		r = (long)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
+					 (mpz_srcptr)&(a.gmp_rep), std::abs(b));
+		// if (sgn <0) return negin(q);
+		// if (a>0)
 		// mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-				// (mpz_ptr)&(a.gmp_rep), b);
-	// else
+		// (mpz_ptr)&(a.gmp_rep), b);
+		// else
 		// mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-				// (mpz_ptr)&(a.gmp_rep), b);
-	if (a<0 && r) {
-		subin(q,(long)1) ;
-		r = b - r ;
+		// (mpz_ptr)&(a.gmp_rep), b);
+		if (a<0 && r) {
+			subin(q,(long)1) ;
+			r = b - r ;
+		}
+
+
+
+		return q;
 	}
 
+	Integer& Integer::divmod(Integer& q, long unsigned int & r, const Integer& a, const long unsigned int b)
+	{
+		//  if (isZero(b)) {
+		//    GivMathDivZero("[Integer::divide]: division by zero");
+		//  }
+		r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
+				   (mpz_srcptr)&(a.gmp_rep), b);
 
+		if (a<0 && r) {
+			subin(q,(long)1) ;
+			r = b - r;
+		}
 
-	return q;
-}
-
-Integer& Integer::divmod(Integer& q, long unsigned& r, const Integer& a, const long unsigned b)
-{
-	//  if (isZero(b)) {
-	//    GivMathDivZero("[Integer::divide]: division by zero");
-	//  }
-	r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
-			   (mpz_srcptr)&(a.gmp_rep), b);
-
-	if (a<0 && r) {
-		subin(q,(long)1) ;
-		r = b - r;
+		return q;
 	}
 
-	return q;
-}
+	Integer& Integer::ceil(Integer& q, const Integer & n, const Integer & d)
+	{
+		mpz_cdiv_q( (mpz_ptr)&(q.gmp_rep),
+			    (mpz_srcptr)&(n.gmp_rep),
+			    (mpz_srcptr)&(d.gmp_rep));
+		return q ;
+	}
 
-Integer& Integer::ceil(Integer& q, const Integer & n, const Integer & d)
-{
-	mpz_cdiv_q( (mpz_ptr)&(q.gmp_rep),
-		    (mpz_srcptr)&(n.gmp_rep),
-		    (mpz_srcptr)&(d.gmp_rep));
-	return q ;
-}
+	Integer& Integer::floor(Integer& q, const Integer & n, const Integer & d)
+	{
+		mpz_fdiv_q( (mpz_ptr)&(q.gmp_rep),
+			    (mpz_srcptr)&(n.gmp_rep),
+			    (mpz_srcptr)&(d.gmp_rep));
+		return q ;
+	}
 
-Integer& Integer::floor(Integer& q, const Integer & n, const Integer & d)
-{
-	mpz_fdiv_q( (mpz_ptr)&(q.gmp_rep),
-		    (mpz_srcptr)&(n.gmp_rep),
-		    (mpz_srcptr)&(d.gmp_rep));
-	return q ;
-}
+	Integer& Integer::trunc(Integer& q, const Integer & n, const Integer & d)
+	{
+		mpz_tdiv_q( (mpz_ptr)&(q.gmp_rep),
+			    (mpz_srcptr)&(n.gmp_rep),
+			    (mpz_srcptr)&(d.gmp_rep));
+		return q ;
+	}
 
-Integer& Integer::trunc(Integer& q, const Integer & n, const Integer & d)
-{
-	mpz_tdiv_q( (mpz_ptr)&(q.gmp_rep),
-		    (mpz_srcptr)&(n.gmp_rep),
-		    (mpz_srcptr)&(d.gmp_rep));
-	return q ;
-}
+	Integer Integer::ceil( const Integer & n, const Integer & d)
+	{
+		Integer q;
+		mpz_cdiv_q( (mpz_ptr)&(q.gmp_rep),
+			    (mpz_srcptr)&(n.gmp_rep),
+			    (mpz_srcptr)&(d.gmp_rep));
+		return q ;
+	}
 
-Integer Integer::ceil( const Integer & n, const Integer & d)
-{
-	Integer q;
-	mpz_cdiv_q( (mpz_ptr)&(q.gmp_rep),
-		    (mpz_srcptr)&(n.gmp_rep),
-		    (mpz_srcptr)&(d.gmp_rep));
-	return q ;
-}
+	Integer Integer::floor(const Integer & n, const Integer & d)
+	{
+		Integer q;
+		mpz_fdiv_q( (mpz_ptr)&(q.gmp_rep),
+			    (mpz_srcptr)&(n.gmp_rep),
+			    (mpz_srcptr)&(d.gmp_rep));
+		return q ;
+	}
 
-Integer Integer::floor(const Integer & n, const Integer & d)
-{
-	Integer q;
-	mpz_fdiv_q( (mpz_ptr)&(q.gmp_rep),
-		    (mpz_srcptr)&(n.gmp_rep),
-		    (mpz_srcptr)&(d.gmp_rep));
-	return q ;
-}
-
-Integer Integer::trunc(const Integer & n, const Integer & d)
-{
-	Integer q;
-	mpz_tdiv_q( (mpz_ptr)&(q.gmp_rep),
-		    (mpz_srcptr)&(n.gmp_rep),
-		    (mpz_srcptr)&(d.gmp_rep));
-	return q ;
-}
+	Integer Integer::trunc(const Integer & n, const Integer & d)
+	{
+		Integer q;
+		mpz_tdiv_q( (mpz_ptr)&(q.gmp_rep),
+			    (mpz_srcptr)&(n.gmp_rep),
+			    (mpz_srcptr)&(d.gmp_rep));
+		return q ;
+	}
 
 
 	// -- operator /
-	 Integer operator / (const int l, const Integer& n)
+	Integer operator / (const int l, const Integer& n)
 	{
 		return Integer(l)/n;
 	}
-	 Integer operator / (const long int l, const Integer& n)
+	Integer operator / (const long int l, const Integer& n)
 	{
 		return Integer(l)/n;
 	}
-	 Integer operator / (const Integer& n, const int l)
+	Integer operator / (const Integer& n, const int l)
 	{
 		return n / (long)l;
 	}
-	 Integer operator / (const Integer& n, const unsigned int l)
+	Integer operator / (const Integer& n, const unsigned int l)
 	{
 		return n / (long unsigned)l;
 	}
 
-	 Integer& operator /= (Integer& n, const int l)
+	Integer& operator /= (Integer& n, const int l)
 	{
 		if (l>=0)
 			return n /= (long unsigned)l;
 		else
 			return  n = -(n / (long unsigned)-l);
 	}
-	 Integer& operator /= (Integer& n, const long int l)
+	Integer& operator /= (Integer& n, const long int l)
 	{
 		return n /= (long unsigned)l;
 	}
-	 Integer& operator /= (Integer& n, const unsigned int l)
+	Integer& operator /= (Integer& n, const unsigned int l)
 	{
 		return n /= (long unsigned)l;
 	}

@@ -11,9 +11,9 @@
 
 using namespace Givaro;
 
-#define SONT_EQ(a,b)\
+#define AREEQUALVALUES(a,b)\
 	if ( (a) != (b) ) { \
-		std::cout << "erreur à la ligne " << __LINE__ << std::endl; \
+		std::cout << "*** ERROR line " << __LINE__ << std::endl; \
 		std::cout << a << "!=" << b << std::endl; \
 		return -1 ; \
 	}
@@ -80,19 +80,19 @@ int test1( const T m, const U p)
 	Integer R ;
 
 	Integer::mod(R,M,P);
-	SONT_EQ(r,R);
+	AREEQUALVALUES(r,R);
 
 	Integer::mod(R,M,p);
-	SONT_EQ(r,R);
+	AREEQUALVALUES(r,R);
 
 
 	Integer R1 = M ;
 	Integer::modin(R1,P);
-	SONT_EQ(R,R1);
+	AREEQUALVALUES(R,R1);
 
 	R1 = M ;
 	Integer::modin(R1,p);
-	SONT_EQ(R,R1);
+	AREEQUALVALUES(R,R1);
 
 
 	return 0;
@@ -110,18 +110,18 @@ int test1bis( const T m, const U p)
 	Integer R =r ;
 
 	Integer R1 = M%p ;
-	SONT_EQ(R,R1);
+	AREEQUALVALUES(R,R1);
 
 	Integer R2 = M%P ;
-	SONT_EQ(R,R2);
+	AREEQUALVALUES(R,R2);
 
 	Integer R3 = M%pi ;
-	SONT_EQ(R,R3);
+	AREEQUALVALUES(R,R3);
 
 
 	R2 = M ;
 	R2 %= P ;
-	SONT_EQ(R,R2);
+	AREEQUALVALUES(R,R2);
 
 	return 0;
 }/*}}}*/
@@ -139,11 +139,11 @@ int test2(Integer & M, Integer & P)
 	//!@todo existe pas !
 	//R = Integer:: imod(M,P) ;
 	Integer:: mod(R,M,P) ;
-	SONT_EQ(RR,R);
+	AREEQUALVALUES(RR,R);
 
 	R = M ;
 	Integer::modin(R,P);
-	SONT_EQ(RR,R);
+	AREEQUALVALUES(RR,R);
 
 	return 0;
 }/*}}}*/
@@ -160,11 +160,11 @@ int test2bis(Integer & M, Integer & P)
 
 	R = M ;
 	R %= P;
-	SONT_EQ(RR,R);
+	AREEQUALVALUES(RR,R);
 
 	R = M ;
 	R = M%P;
-	SONT_EQ(RR,R);
+	AREEQUALVALUES(RR,R);
 
 	return 0;
 }/*}}}*/
@@ -179,25 +179,25 @@ int test3( const T m, const U p)
 	Integer Q ;
 
 	Integer::div(Q,M,P);
-	SONT_EQ(q,Q);
+	AREEQUALVALUES(q,Q);
 
 	Integer Q1 = M/p ;
-	SONT_EQ(Q,Q1);
+	AREEQUALVALUES(Q,Q1);
 
 	Integer Q2 = M/P ;
-	SONT_EQ(Q,Q2);
+	AREEQUALVALUES(Q,Q2);
 
 	Integer Q3 = M/pi ;
-	SONT_EQ(Q,Q3);
+	AREEQUALVALUES(Q,Q3);
 
 	Q1 = M ;
 	Integer::divin(Q1,P);
-	SONT_EQ(Q,Q1);
+	AREEQUALVALUES(Q,Q1);
 
 
 	Q2 = M ;
 	Q2 /= P ;
-	SONT_EQ(Q,Q2);
+	AREEQUALVALUES(Q,Q2);
 
 	return 0;
 }/*}}}*/

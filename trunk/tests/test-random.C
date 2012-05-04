@@ -91,7 +91,7 @@ int test1()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.random_lessthan_2exp(grands);        
+		Integer tata = toto.random_lessthan_2exp(grands);
 		if ( tata.bitsize() > grands ) {
 			//        cout << tata << endl;
 			cout << "random_lessthan_2exp  failed" << endl;
@@ -142,7 +142,7 @@ int test1()
 
 }/*}}}*/
 
-//! tests <code>ret= ::func(arg,arg);</code>
+//! tests <tt>ret= ::func(arg,arg);</tt>
 int test2()
 {/*{{{*/
 	Integer un(26);

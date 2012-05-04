@@ -20,6 +20,11 @@
 #include "givaro/givintrns.h"
 #include "givaro/givpower.h"
 
+#ifndef GIVABSDIFF
+#define GIVABSDIFF(a,b) ((a)<(b)?((b)-(a)):((a)-(b)))
+#endif
+#include <math.h>
+
 namespace Givaro {
 
 	// =================================================================== //
@@ -274,10 +279,6 @@ namespace Givaro {
 		// return primroot with high probability
 	}
 
-#ifndef GIVABSDIFF
-#define GIVABSDIFF(a,b) ((a)<(b)?((b)-(a)):((a)-(b)))
-#endif
-#include <math.h>
 
 	//  Here L is computed so that the error is close to epsilon
 	// Newton-Raphson iteration is used for

@@ -18,7 +18,9 @@
 
 namespace Givaro {
 
-	// -- Neutral type: definition of zero and one
+	/** Neutral type.
+	 * definition of zero and one
+	 */
 	class Neutral {
 		public:
 			static Neutral zero;
@@ -31,11 +33,11 @@ namespace Givaro {
 			int _val;
 	};
 
-	// -- Used to build no initialized object as static object
+	//! Used to build no initialized object as static object
 	class givNoInit {};
-	// -- Used to call cstor without copy
+	//! Used to call cstor without copy
 	class givNoCopy {};
-	// -- Used to call cstor with copy
+	//! Used to call cstor with copy
 	class givWithCopy {};
 
 } // namespace Givaro

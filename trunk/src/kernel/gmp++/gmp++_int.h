@@ -43,14 +43,9 @@ namespace Givaro {
 	class Integer;
 
 	// (FILE gmp++_int_gcd.C)
-	//! inverse
-	//@{
 	Integer& 	inv (Integer& u, const Integer& a, const Integer& b);
 	Integer& 	invin (Integer& u, const Integer& b);
-	//@}
 
-	//! gcd and lcm
-	//@{
 	Integer 	gcd (const Integer& a, const Integer& b);
 	Integer 	gcd (Integer& u, Integer& v,const Integer& a, const Integer& b);
 	Integer& 	gcd (Integer& g, const Integer& a, const Integer& b);
@@ -58,11 +53,10 @@ namespace Givaro {
 	Integer 	pp( const Integer& P, const Integer& Q );
 	Integer& 	lcm (Integer& g, const Integer& a, const Integer& b);
 	Integer 	lcm (const Integer& a, const Integer& b);
-	//@}
 
 	// (FILE gmp++_int_pow.C)
 	//! power
-	//@{
+	///@{
 	Integer& 	pow(Integer& Res, const Integer& n, const long int l);
 	Integer& 	pow(Integer& Res, const long unsigned int n, const long unsigned int l);
 	Integer& 	pow(Integer& Res, const Integer& n, const long unsigned int l);
@@ -72,9 +66,9 @@ namespace Givaro {
 	Integer 	pow(const Integer& n, const long unsigned int l);
 	Integer 	pow(const Integer& n, const int l) ;
 	Integer 	pow(const Integer& n, const unsigned int l);
-	//@}
+	///@}
 	//! modular power
-	//@{
+	///@{
 	Integer& 	powmod(Integer& Res, const Integer& n, const long unsigned int e, const Integer& m);
 	Integer& 	powmod(Integer& Res, const Integer& n, const long int e, const Integer& m);
 	Integer& 	powmod(Integer& Res, const Integer& n, const unsigned int e, const Integer& m) ;
@@ -85,7 +79,7 @@ namespace Givaro {
 	Integer 	powmod(const Integer& n, const unsigned int e, const Integer& m) ;
 	Integer 	powmod(const Integer& n, const int e, const Integer& m) ;
 	Integer 	powmod(const Integer& n, const Integer& e, const Integer& m);
-	//@}
+	///@}
 
 	// (FILE inline)
 	//! sign
@@ -104,45 +98,45 @@ namespace Givaro {
 	 * @param b integer
 	 * @return \c 1 if \f$|a| > |b|\f$, \c 0 if \f$|a| = |b|\f$ and \p -1 otherwise.
 	 */
-	//@{
+	///@{
 	int 		absCompare(const Integer& a, const Integer& b);
-	int 		absCompare(const Integer& a, const double d);
-	int 		absCompare(const Integer& a, const float d);
-	int 		absCompare(const Integer& a, const long unsigned u);
-	int 		absCompare(const Integer& a, const unsigned u);
-	int 		absCompare(const Integer& a, const long int u);
-	int 		absCompare(const Integer& a, const int u);
+	int 		absCompare(const Integer& a, const double b);
+	int 		absCompare(const Integer& a, const float b);
+	int 		absCompare(const Integer& a, const long unsigned b);
+	int 		absCompare(const Integer& a, const unsigned b);
+	int 		absCompare(const Integer& a, const long int b);
+	int 		absCompare(const Integer& a, const int b);
 	template<class T>
 	int             absCompare( const T a,  const Integer & b)
 	{
 		return absCompare(b,a);
 	}
-	//@}
+	///@}
 
 	//! 0-1 equality
-	//@{
+	///@{
 	int 		isZero (const Integer& a);
 	int 		nonZero (const Integer& a);
 	int 		isOne  (const Integer& a);
-	//@}
+	///@}
 
 	// (FILE gmp++_int_misc.C)
 	//! fact (?)
 	Integer 	fact ( long unsigned int l);
 	//! (square) root
-	//@{
+	///@{
 	Integer 	sqrt(const Integer& p);
 	Integer 	sqrtrem(const Integer& p, Integer& rem);
 	Integer& 	sqrt(Integer& r, const Integer& p);
 	Integer& 	sqrtrem(Integer& r, const Integer& p, Integer& rem);
 	bool 		root(Integer& q, const Integer&, unsigned int n);
-	//@}
+	///@}
 	//! log
-	//@{
+	///@{
 	long 		logp(const Integer& a, const Integer& p) ;
 	double 		logtwo(const Integer& a) ;
 	double 		naturallog(const Integer& a) ;
-	//@}
+	///@}
 	//!swap
 	void 		swap(Integer& , Integer&);
 	//! perfect power
@@ -150,24 +144,24 @@ namespace Givaro {
 	//! absolute value
 	Integer 	abs(const Integer& n);
 	//! primes
-	//@{
+	///@{
 	Integer& 	prevprime(Integer&, const Integer& p);
 	Integer& 	nextprime(Integer&, const Integer& p);
 	int 		probab_prime(const Integer& p);
 	int 		probab_prime(const Integer& p, int r);
 	int 		jacobi(const Integer& u, const Integer& v) ;
 	int 		legendre(const Integer& u, const Integer& v) ;
-	//@}
+	///@}
 	//! length (?)
 	long unsigned 	length (const Integer& a);
 	// (FILE gmp++_int_io.C)
 	//! I/O
-	//@{
+	///@{
 	std::istream& 	operator >> (std::istream &i, Integer& n);
 	std::ostream& 	operator << (std::ostream &o, const Integer& n);
 	std::ostream& 	absOutput (std::ostream &o, const Integer& n);
 	void 		importWords(Integer&, size_t, int, int, int, size_t, const void*);
-	//@}
+	///@}
 
 	//------------------------------------------------------ Class Integer
 	/*! @ingroup integers
@@ -185,8 +179,9 @@ namespace Givaro {
 		/*! @name Constructor/Destructors.
 		 * Constructors and destructor for an Integer.
 		*/
-		//@{
-		giv_all_inlined Integer( const std::vector<mp_limb_t>& vect_t );
+		/// Constructor form a known type.
+		////@param n input to be constructed from
+		///@{
 		giv_all_inlined Integer(int n = 0);
 		giv_all_inlined Integer(long int n);
 		giv_all_inlined Integer(unsigned char n);
@@ -196,19 +191,29 @@ namespace Givaro {
 		giv_all_inlined Integer(long long int n);
 		giv_all_inlined Integer(long long unsigned int n);
 #endif
-		/*! Creates a new Integer.
-		 * @param sz size
+		giv_all_inlined Integer(double n);
+		giv_all_inlined Integer(const char *n);
+		///@}
+		/*! @name Constructor/Destructors. */
+		///@{
+		 /*! Copy constructor
+		 * @param n input to be constructed from
+		 */
+		giv_all_inlined Integer(const Integer& n);
+
+		/*! Creates a new Integer from pointers.
 		 * @param d array
-		 * @overload Integer::Integer(int)
+		 * @param sz size
 		 */
 		giv_all_inlined Integer(long unsigned* d, long sz);
+		/*! Creates a new Integers for a vector of limbs
+		* @param v vector of limbs
+		*/
+		giv_all_inlined Integer( const vect_t &v);
 
-		giv_all_inlined Integer(double d);
-		giv_all_inlined Integer(const char *s);
-		giv_all_inlined Integer(const Integer& n);
 		//! destructor
 		giv_all_inlined ~Integer();
-		//@}
+		///@}
 
 		//------------------------------------- predefined null and one
 		//! zero (0)
@@ -219,39 +224,47 @@ namespace Givaro {
 		static const Integer mOne ;
 
 
+
 		// -- Assignment and copy operators
-		/*! @name Assignment and copy operators
-		*/
-		//@{
+		/*! @name Assignment and copy operators */
+		/*! copy from an integer.
+		 * @param n integer to copy.
+		 */
+		///@{
 		giv_all_inlined Integer& operator = (const Integer& n);
 		giv_all_inlined Integer& logcpy(const Integer& n);
 		giv_all_inlined Integer& copy(const Integer& n);
-		//@}
+		///@}
 
 		//------------------Equalities and inequalities between integers and longs
 		// (FILE gmp++_int_compare.C)
-		/*! @name (in)equality
-		*/
-		//@{
-
-		//! compare
+		//! @name Comparisons functions.
+		///@{
+		/// compare.
+		/** @param a,b integers to be compared. */
 		giv_all_inlined friend int compare(const Integer& a, const Integer& b);
+		///@}
+
+		//! @name Comparisons functions.
+		///@{
 		//! compare absolute values
-		//@{
+		/** @param a,b integers to be compared. */
 		giv_all_inlined friend int absCompare(const Integer& a, const Integer& b);
-		giv_all_inlined friend int absCompare(const Integer& a, const double d);
-		giv_all_inlined friend int absCompare(const Integer& a, const float d);
-		giv_all_inlined friend int absCompare(const Integer& a, const long unsigned u);
-		giv_all_inlined friend int absCompare(const Integer& a, const unsigned u);
-		giv_all_inlined friend int absCompare(const Integer& a, const long int u);
-		giv_all_inlined friend int absCompare(const Integer& a, const int u);
+		giv_all_inlined friend int absCompare(const Integer& a, const double b);
+		giv_all_inlined friend int absCompare(const Integer& a, const float b);
+		giv_all_inlined friend int absCompare(const Integer& a, const long unsigned b);
+		giv_all_inlined friend int absCompare(const Integer& a, const unsigned b);
+		giv_all_inlined friend int absCompare(const Integer& a, const long int b);
+		giv_all_inlined friend int absCompare(const Integer& a, const int b);
 		template<class T>
 		giv_all_inlined friend int absCompare( const T a,  const Integer & b) ;
-		//@}
+		///@}
 
 
+		//! @name Comparisons operators.
+		///@{
 		//! greater or equal
-		//@{
+		/// @param l integer to be compared to
 		giv_all_inlined int operator >= (const Integer & l) const;
 		giv_all_inlined int operator >= (const int l) const;
 		giv_all_inlined int operator >= (const long int l) const;
@@ -259,17 +272,25 @@ namespace Givaro {
 		giv_all_inlined int operator >= (const unsigned int l) const;
 		giv_all_inlined int operator >= (const double l) const;
 		giv_all_inlined int operator >= (const float l) const;
+		///@}
+
+		//! @name Comparisons operators.
+		///@{
+		//! greater or equal.
+		/// @param l,n integers to compare
 		giv_all_inlined friend int operator >= (float l, const Integer& n);
 		giv_all_inlined friend int operator >= (double l, const Integer& n);
 		giv_all_inlined friend int operator >= (int l, const Integer& n);
 		giv_all_inlined friend int operator >= (long int l, const Integer& n);
 		giv_all_inlined friend int operator >= (unsigned int l, const Integer& n);
 		giv_all_inlined friend int operator >= (long unsigned int l, const Integer& n);
-		//@}
+		///@}
 
 
+		//! @name Comparisons operators.
+		///@{
 		//! less or equal
-		//@{
+		/// @param l integer to be compared to
 		giv_all_inlined int operator <= (const Integer & l) const;
 		giv_all_inlined int operator <= (const int l) const;
 		giv_all_inlined int operator <= (const long int l) const;
@@ -277,19 +298,26 @@ namespace Givaro {
 		giv_all_inlined int operator <= (const unsigned int l) const;
 		giv_all_inlined int operator <= (const double l) const;
 		giv_all_inlined int operator <= (const float l) const;
+		///@}
+
+		//! @name Comparisons operators.
+		///@{
+		//! less or equal
+		/// @param l,n integers to compare
 		giv_all_inlined friend int operator <= (float l, const Integer& n);
 		giv_all_inlined friend int operator <= (double l, const Integer& n);
 		giv_all_inlined friend int operator <= (int l, const Integer& n);
 		giv_all_inlined friend int operator <= (long int l, const Integer& n);
 		giv_all_inlined friend int operator <= (unsigned int l, const Integer& n);
 		giv_all_inlined friend int operator <= (long unsigned int l, const Integer& n);
-		//@}
+		///@}
 
+		//! @name Comparisons operators.
+		///@{
 		/*! operator != (not equal)
 		 * @param l integer
 		 * @return \c 1 iff l == this
 		 */
-		//@{
 		giv_all_inlined int operator != (const Integer & l) const;
 		giv_all_inlined int operator != (const int l) const;
 		giv_all_inlined int operator != (const long int l) const;
@@ -297,17 +325,27 @@ namespace Givaro {
 		giv_all_inlined int operator != (const unsigned int l) const;
 		giv_all_inlined int operator != (const double l) const;
 		giv_all_inlined int operator != (const float l) const;
+		///@}
+
+		//! @name Comparisons operators.
+		///@{
+		/*! operator != (not equal)
+		 * @param l,n integer
+		 * @return \c 1 iff l == n
+		 */
 		giv_all_inlined friend int operator != (float l, const Integer& n);
 		giv_all_inlined friend int operator != (double l, const Integer& n);
 		giv_all_inlined friend int operator != (int l, const Integer& n);
 		giv_all_inlined friend int operator != (long int l, const Integer& n);
 		giv_all_inlined friend int operator != (unsigned int l, const Integer& n);
 		giv_all_inlined friend int operator != (long unsigned int l, const Integer& n);
-		//@}
+		///@}
 
 
+		//! @name Comparisons operators.
+		///@{
 		//! Equality
-		//@{
+		/// @param l integer to be compared to
 		giv_all_inlined int operator == (const Integer & l) const;
 		giv_all_inlined int operator == (const int l) const;
 		giv_all_inlined int operator == (const long int l) const;
@@ -315,17 +353,25 @@ namespace Givaro {
 		giv_all_inlined int operator == (const unsigned int l) const;
 		giv_all_inlined int operator == (const double l) const;
 		giv_all_inlined int operator == (const float l) const;
+		///@}
+
+		//! @name Comparisons operators.
+		///@{
+		//! Equality
+		/// @param l,n integers to compare
 		giv_all_inlined friend int operator == (float l, const Integer& n);
 		giv_all_inlined friend int operator == (double l, const Integer& n);
 		giv_all_inlined friend int operator == (int l, const Integer& n);
 		giv_all_inlined friend int operator == (long int l, const Integer& n);
 		giv_all_inlined friend int operator == (unsigned int l, const Integer& n);
 		giv_all_inlined friend int operator == (long unsigned int l, const Integer& n);
-		//@}
+		///@}
 
 
+		//! @name Comparisons operators.
+		///@{
 		//! greater (strict)
-		//@{
+		/// @param l integer to be compared to
 		giv_all_inlined int operator > (const Integer & l) const;
 		giv_all_inlined int operator > (const int l) const;
 		giv_all_inlined int operator > (const long int l) const;
@@ -333,16 +379,24 @@ namespace Givaro {
 		giv_all_inlined int operator > (const unsigned int l) const;
 		giv_all_inlined int operator > (const double l) const;
 		giv_all_inlined int operator > (const float l) const;
+		///@}
+
+		//! @name Comparisons operators.
+		///@{
+		//! greater (strict)
+		/// @param l,n integers to compare
 		giv_all_inlined friend int operator > (float l, const Integer& n);
 		giv_all_inlined friend int operator > (double l, const Integer& n);
 		giv_all_inlined friend int operator > (int l, const Integer& n);
 		giv_all_inlined friend int operator > (long int l, const Integer& n);
 		giv_all_inlined friend int operator > (unsigned int l, const Integer& n);
 		giv_all_inlined friend int operator > (long unsigned int l, const Integer& n);
-		//@}
+		///@}
 
+		//! @name Comparisons operators.
+		///@{
 		//! less (strict)
-		//@{
+		/// @param l integer to be compared to
 		giv_all_inlined int operator < (const Integer & l) const;
 		giv_all_inlined int operator < (const int l) const;
 		giv_all_inlined int operator < (const long int l) const;
@@ -350,56 +404,69 @@ namespace Givaro {
 		giv_all_inlined int operator < (const unsigned int l) const;
 		giv_all_inlined int operator < (const double l) const;
 		giv_all_inlined int operator < (const float l) const;
+		///@}
+
+		//! @name Comparisons operators.
+		///@{
+		//! less (strict)
+		/// @param l,n integers to compare
 		giv_all_inlined friend int operator < (float l, const Integer& n);
 		giv_all_inlined friend int operator < (double l, const Integer& n);
 		giv_all_inlined friend int operator < (int l, const Integer& n);
 		giv_all_inlined friend int operator < (long int l, const Integer& n);
 		giv_all_inlined friend int operator < (unsigned int l, const Integer& n);
 		giv_all_inlined friend int operator < (long unsigned int l, const Integer& n);
-		//@}
-
-		//@}
+		///@}
 
 		// ---------------- Bit logic
 		// (FILE gmp++_int_misc.C)
-		/*! @name Bit logic.  */
-		//@{
 
-		//! XOR (^)
-		//@{
-		giv_all_inlined Integer operator^ (const Integer&) const;   // XOR
+		/*! @name Bit logic operators.  */
+		///@{
+		//! @brief XOR (^)
+		//! @param a integer
+		giv_all_inlined Integer operator^ (const Integer& a) const;   // XOR
 		giv_all_inlined Integer operator^ (const long unsigned int & a) const;
 		giv_all_inlined Integer operator^ (const unsigned int& a) const;
-		giv_all_inlined Integer& operator^= (const long unsigned int &);   // XOR
-		giv_all_inlined Integer& operator^= (const Integer&);   // XOR
-		giv_all_inlined Integer& operator^= (const unsigned int&);   // XOR
-		//@}
+		giv_all_inlined Integer& operator^= (const long unsigned int & a);   // XOR
+		giv_all_inlined Integer& operator^= (const Integer&a);   // XOR
+		giv_all_inlined Integer& operator^= (const unsigned int&a);   // XOR
+		///@}
 
+		/*! @name Bit logic operators.  */
+		///@{
 		//! OR (|)
-		//@{
-		giv_all_inlined Integer operator| (const Integer&) const;   // OR
+		//! @param a integer
+		giv_all_inlined Integer operator| (const Integer& a ) const;   // OR
 		giv_all_inlined Integer operator| (const long unsigned int & a) const;
 		giv_all_inlined Integer operator| (const unsigned int& a) const;
-		giv_all_inlined Integer& operator|= (const Integer&);   // OR
-		giv_all_inlined Integer& operator|= (const long unsigned int &);   // OR
-		giv_all_inlined Integer& operator|= (const unsigned int&);   // OR
-		//@}
+		giv_all_inlined Integer& operator|= (const Integer& a );   // OR
+		giv_all_inlined Integer& operator|= (const long unsigned int & a );   // OR
+		giv_all_inlined Integer& operator|= (const unsigned int& a );   // OR
+		///@}
 
+		/*! @name Bit logic operators.  */
+		///@{
 		//! AND (&)
-		//@{
-		giv_all_inlined Integer operator& (const Integer&) const;   // AND
+		//! @param a integer
+		giv_all_inlined Integer operator& (const Integer&a) const;   // AND
 		giv_all_inlined unsigned int operator& (const unsigned int& a) const;
 		giv_all_inlined long unsigned operator& (const long unsigned int & a) const;
-		giv_all_inlined Integer& operator&= (const Integer&);   // AND
-		giv_all_inlined Integer& operator&= (const long unsigned int &);   // AND
-		giv_all_inlined Integer& operator&= (const unsigned int&);   // AND
-		//@}
+		giv_all_inlined Integer& operator&= (const Integer&a);   // AND
+		giv_all_inlined Integer& operator&= (const long unsigned int &a);   // AND
+		giv_all_inlined Integer& operator&= (const unsigned int&a);   // AND
+		///@}
 
+		/*! @name Bit logic operators.  */
+		///@{
 		//! complement to 1 (~)
 		giv_all_inlined Integer operator ~ () const;   // 1 complement
+		///@}
 
+		/*! @name Bit logic operators.  */
+		///@{
 		//! left shift (<<)
-		//@{
+		//! @param l shift
 		giv_all_inlined Integer operator<< (int l) const; // lshift
 		giv_all_inlined Integer operator<< (long int l) const; // lshift
 		giv_all_inlined Integer operator<< (unsigned int l) const; // lshift
@@ -409,10 +476,12 @@ namespace Givaro {
 		giv_all_inlined Integer& operator<<= (long int l) ; // lshift
 		giv_all_inlined Integer& operator<<= (unsigned int l) ; // lshift
 		giv_all_inlined Integer& operator<<= (long unsigned int l) ; // lshift
-		//@}
+		///@}
 
+		/*! @name Bit logic operators.  */
+		///@{
 		//! right shift (>>)
-		//@{
+		//! @param l shift
 		giv_all_inlined Integer operator>> (int l) const; // rshift
 		giv_all_inlined Integer operator>> (long int l) const; // rshift
 		giv_all_inlined Integer operator>> (unsigned int l) const; // rshift
@@ -422,59 +491,64 @@ namespace Givaro {
 		giv_all_inlined Integer& operator>>= (long int l) ; // rshift
 		giv_all_inlined Integer& operator>>= (unsigned int l) ; // rshift
 		giv_all_inlined Integer& operator>>= (long unsigned int l) ; // rshift
-		//@}
+		///@}
 
-		//@}
 
 		// - Methods
-		/*! @name Addition, substraction, multiplication
-		*/
-		//@{
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		// (FILE gmp++_int_add.C)
 		/*!  Addition (inplace)
 		 * <code>res+=n</code>.
 		 * @param res as in the formula
 		 * @param n as in the formula
 		 */
-		//@{
 		static giv_all_inlined  Integer& addin (Integer& res, const Integer& n);
 		static giv_all_inlined  Integer& addin (Integer& res, const long int n);
 		static giv_all_inlined  Integer& addin (Integer& res, const long unsigned int n);
-		//@}
+		///@}
+
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*!  Addition
 		 * <code>res=n1+n2</code>.
 		 * @param res as in the formula
 		 * @param n1 as in the formula
 		 * @param n2 as in the formula
 		 */
-		//@{
 		static giv_all_inlined  Integer& add   (Integer& res, const Integer& n1, const Integer& n2);
 		static giv_all_inlined  Integer& add   (Integer& res, const Integer& n1, const long int n2);
 		static giv_all_inlined  Integer& add   (Integer& res, const Integer& n1, const long unsigned int n2);
-		//@}
+		///@}
 
 		// (FILE gmp++_int_sub.C)
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*!  Substraction (inplace)
 		 * <code>res-=n</code>.
 		 * @param res as in the formula
 		 * @param n as in the formula
 		 */
-		//@{
 		static giv_all_inlined  Integer& subin (Integer& res, const Integer& n);
 		static giv_all_inlined  Integer& subin (Integer& res, const long int n);
 		static giv_all_inlined  Integer& subin (Integer& res, const long unsigned int n);
-		//@}
+		///@}
+
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*!  Substraction
 		 * <code>res=n1-n2</code>.
 		 * @param res as in the formula
 		 * @param n1 as in the formula
 		 * @param n2 as in the formula
 		 */
-		//@{
 		static giv_all_inlined  Integer& sub   (Integer& res, const Integer& n1, const Integer& n2);
 		static giv_all_inlined  Integer& sub   (Integer& res, const Integer& n1, const long int n2);
 		static giv_all_inlined  Integer& sub   (Integer& res, const Integer& n1, const long unsigned int n2);
-		//@}
+		///@}
+
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*!  Negation (inplace)
 		 * <code>res=-res</code>.
 		 * @param res as in the formula
@@ -486,46 +560,52 @@ namespace Givaro {
 		 * @param res as in the formula
 		 */
 		static giv_all_inlined  Integer& neg   (Integer& res, const Integer& n);
+		///@}
 
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*!  Multiplication (inplace)
 		 * <code>res*=n</code>.
 		 * @param res as in the formula
 		 * @param n as in the formula
 		 */
-		//@{
 		static giv_all_inlined  Integer& mulin (Integer& res, const Integer& n);
 		static giv_all_inlined  Integer& mulin (Integer& res, const long int n);
 		static giv_all_inlined  Integer& mulin (Integer& res, const long unsigned int n);
-		//@}
+		///@}
+
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*! Multiplication
 		 * <code>res=n1*n2</code>.
 		 * @param res as in the formula
 		 * @param n1 as in the formula
 		 * @param n2 as in the formula
 		 */
-		//@{
 		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const Integer& n2);
 		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const long int n2);
 		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const long unsigned int n2);
-		//@}
+		///@}
 
 		//----------------Elementary arithmetic between Integers & longs
 		// (FILE gmp++_int_add.C)
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*! operator \c +.
 		 * @return <code> (*this)+n</code>
 		 * @param n as in the formula.
 		 */
-		//@{
 		giv_all_inlined Integer  operator + (const Integer& n) const;
 		giv_all_inlined Integer  operator + (const long unsigned int n) const;
 		giv_all_inlined Integer  operator + (const long int n) const;
-		//@}
+		///@}
 
+		///@{
+		/*! @name Addition, substraction, multiplication */
 		/*! operator \c += .
 		 * @param n asfriend In the formula.
 		 * @return <code> (*this) += n</code>.
 		 */
-		//@{
 		giv_all_inlined Integer& operator += (const Integer& n);
 		giv_all_inlined Integer& operator += (const long unsigned int n);
 		giv_all_inlined Integer& operator += (const long int n);
@@ -533,10 +613,11 @@ namespace Givaro {
 		Integer& operator +=(const XXX& n) {
 			return this->operator += ( (Integer)n );
 		}
-		//@}
+		///@}
 
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		//! operator +
-		//@{
 		friend giv_all_inlined  Integer operator + (const int l, const Integer& n);
 		friend giv_all_inlined  Integer operator + (const unsigned int l, const Integer& n);
 		friend giv_all_inlined  Integer operator + (const long int l, const Integer& n);
@@ -555,25 +636,28 @@ namespace Givaro {
 		friend giv_all_inlined 	Integer& operator += (Integer& n, const long long int l);
 		friend giv_all_inlined 	Integer& operator += (Integer& n, const long long unsigned int l);
 #endif
-		//@}
+		///@}
 
 
 		// (FILE gmp++_int_sub.C)
 
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*! operator \c -.
 		 * @return <code> (*this)-n</code>
 		 * @param n as in the formula.
 		 */
-		//@{
 		giv_all_inlined Integer  operator - (const Integer& n) const;
 		giv_all_inlined Integer  operator - (const long unsigned int n) const;
 		giv_all_inlined Integer  operator - (const long int n) const;
-		//@}
+		///@}
+
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*! operator \c -= .
 		 * @param n as in the formula.
 		 * @return <code> (*this) -= n</code>.
 		 */
-		//@{
 		giv_all_inlined Integer& operator -= (const Integer& n);
 		giv_all_inlined Integer& operator -= (const long unsigned int n);
 		giv_all_inlined Integer& operator -= (const long int n);
@@ -582,15 +666,20 @@ namespace Givaro {
 		{
 			return this->operator -= ( (Integer)n );
 		}
-		//@}
+		///@}
 
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*! Opposite.
 		 * \return <code>-(*this)</code>.
 		 */
 		giv_all_inlined Integer  operator -() const;
+		///@}
 
+
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		//! operator -
-		//@{
 		friend giv_all_inlined  Integer operator - (const int l, const Integer& n);
 		friend giv_all_inlined  Integer operator - (const unsigned int l, const Integer& n);
 		friend giv_all_inlined  Integer operator - (const long int l, const Integer& n);
@@ -610,24 +699,27 @@ namespace Givaro {
 		friend giv_all_inlined  Integer& operator -= (Integer& n, const long long int l);
 		friend giv_all_inlined  Integer& operator -= (Integer& n, const long long unsigned int l);
 #endif
-		//@}
+		///@}
 
 		// (FILE gmp++_int_mul.C)
 
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*! operator \c *.
 		 * @return <code> (*this)*n</code>
 		 * @param n as in the formula.
 		 */
-		//@{
 		giv_all_inlined Integer  operator * (const Integer& n) const;
 		giv_all_inlined Integer  operator * (const long unsigned int n) const;
 		giv_all_inlined Integer  operator * (const long int n) const;
-		//@}
+		///@}
+
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		/*! operator \c *= .
 		 * @param n as in the formula.
 		 * @return <code> (*this) *= n</code>.
 		 */
-		//@{
 		giv_all_inlined Integer& operator *= (const Integer& n);
 		giv_all_inlined Integer& operator *= (const long unsigned int n);
 		giv_all_inlined Integer& operator *= (const long int n);
@@ -635,10 +727,11 @@ namespace Givaro {
 		Integer& operator *=(const XXX& n) {
 			return this->operator *= ( (Integer)n );
 		}
-		//@}
+		///@}
 
+		/*! @name Addition, substraction, multiplication */
+		///@{
 		//! operator *
-		//@{
 		friend giv_all_inlined  Integer operator * (const int l, const Integer& n);
 		friend giv_all_inlined  Integer operator * (const unsigned int l, const Integer& n);
 		friend giv_all_inlined  Integer operator * (const long int l, const Integer& n);
@@ -658,16 +751,14 @@ namespace Givaro {
 		friend giv_all_inlined  Integer& operator *= (Integer& n, const long long int l);
 		friend giv_all_inlined  Integer& operator *= (Integer& n, const long long unsigned int l);
 #endif
-		//@}
-
-		//@}
+		///@}
 
 		/*! @name fused add-multiply
 		 * @brief
 		 * Groups a multiplication adn an addition/division is a single function.
 		 * This is usually faster than doing the two operations separately.
 		 */
-		//@{
+		///@{
 		/*! axpy
 		 *  <code>res = ax+y</code>.
 		 * @param res Integers as in the forumla
@@ -675,16 +766,16 @@ namespace Givaro {
 		 * @param x Integers as in the forumla
 		 * @param y Integers as in the forumla
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& axpy   (Integer& res,
 							 const Integer& a,
 							 const Integer& x,
-							 const Integer& b );
+							 const Integer& y );
 		static giv_all_inlined  Integer& axpy   (Integer& res,
 							 const Integer& a,
-							 const long unsigned x,
-							 const Integer& b );
-		//@}
+							 const long unsigned int x,
+							 const Integer& y );
+		///@}
 
 		/*! axpyin (inplace)
 		 *  <code>res += ax</code>.
@@ -692,14 +783,14 @@ namespace Givaro {
 		 * @param a Integers as in the formula.
 		 * @param x Integers as in the formula.
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& axpyin   (Integer& res,
 							   const Integer& a,
 							   const Integer& x);
 		static giv_all_inlined  Integer& axpyin   (Integer& res,
 							   const Integer& a,
-							   const long unsigned x);
-		//@}
+							   const long unsigned int x);
+		///@}
 
 		/*! maxpy
 		 *  <code>res = y - ax</code>.
@@ -708,16 +799,16 @@ namespace Givaro {
 		 * @param x Integers as in the formula.
 		 * @param y Integers as in the formula.
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& maxpy   (Integer& res,
 							  const Integer& a,
 							  const Integer& x,
 							  const Integer& y );
 		static giv_all_inlined  Integer& maxpy   (Integer& res,
 							  const Integer& a,
-							  const long unsigned x,
+							  const long unsigned int x,
 							  const Integer& y );
-		//@}
+		///@}
 
 		/*! maxpyin
 		 *  <code>res -= ax</code>.
@@ -726,14 +817,14 @@ namespace Givaro {
 		 * @param x Integers as in the formula.
 		 * @param y Integers as in the formula.
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& maxpyin (Integer& res,
 							  const Integer& a,
 							  const Integer& x );
 		static giv_all_inlined  Integer& maxpyin (Integer& res,
 							  const Integer& a,
-							  const long unsigned x );
-		//@}
+							  const long unsigned int x );
+		///@}
 
 
 		/*! axmy
@@ -743,16 +834,16 @@ namespace Givaro {
 		 * @param x Integers as in the formula.
 		 * @param y Integers as in the formula.
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& axmy   (Integer& res,
 							 const Integer& a,
 							 const Integer& x,
 							 const Integer& y );
 		static giv_all_inlined  Integer& axmy   (Integer& res,
 							 const Integer& a,
-							 const long unsigned x,
+							 const long unsigned int x,
 							 const Integer & y );
-		//@}
+		///@}
 
 
 		/*! axmyin (in place)
@@ -761,13 +852,12 @@ namespace Givaro {
 		 * @param a Integers as in the formula.
 		 * @param x Integers as in the formula.
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& axmyin   (Integer& res,
 							   const Integer& a, const Integer& x);
 		static giv_all_inlined  Integer& axmyin   (Integer& res,
-							   const Integer& a, const long unsigned x);
-		//@}
-		//@}
+							   const Integer& a, const long unsigned int x);
+		///@}
 
 		/*! @name Division/euclidean division/modulo
 		 * @brief
@@ -792,24 +882,24 @@ namespace Givaro {
 		 * conventions and expect equalities <small>(except if a>=0)</small>.
 		 */
 		// (FILE gmp++_int_div.C)
-		//@{
+		///@{
 		/*! Division \c q/=d.
 		 * @param q quotient
 		 * @param d divisor.
 		 * @return \c q
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& divin (Integer& q, const Integer& d);
 		static giv_all_inlined  Integer& divin (Integer& q, const long int d);
 		static giv_all_inlined  Integer& divin (Integer& q, const long unsigned int d);
-		//@}
+		///@}
 		/*! Division \c q=n/d.
 		 * @param q quotient
 		 * @param n dividand.
 		 * @param d divisor
 		 * @return \c q
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& div   (Integer& q,
 							const Integer& n, const Integer& d);
 		static giv_all_inlined  Integer& div   (Integer& q,
@@ -818,7 +908,7 @@ namespace Givaro {
 							const Integer& n, const int d);
 		static giv_all_inlined  Integer& div   (Integer& q,
 							const Integer& n, const long unsigned int d);
-		//@}
+		///@}
 		/*! Division when \c d divides \c n.
 		 * @param q exact quotient
 		 * @param n dividend
@@ -838,27 +928,27 @@ namespace Givaro {
 		/*! Division operator.
 		 * @param d divisor
 		 */
-		//@{
+		///@{
 		giv_all_inlined Integer  operator /  (const Integer&      d) const;
 		giv_all_inlined Integer  operator /  (const long unsigned int d) const;
-		giv_all_inlined Integer  operator /  (const long          d) const;
-		//@}
+		giv_all_inlined Integer  operator /  (const long int d) const;
+		///@}
 
 		/*! Division operator (inplace).
 		 * @param d divisor
 		 */
-		//@{
+		///@{
 		giv_all_inlined Integer& operator /= (const Integer&      d);
 		giv_all_inlined Integer& operator /= (const long unsigned int d);
-		giv_all_inlined Integer& operator /= (const long          d);
+		giv_all_inlined Integer& operator /= (const long int d);
 		template<class XXX>
 		Integer& operator /=(const XXX& d) {
 			return this->operator /= ( (Integer)d );
 		}
-		//@}
+		///@}
 
 		//! operator /
-		//@{
+		///@{
 		friend giv_all_inlined  Integer operator / (const int l, const Integer& n);
 		friend giv_all_inlined  Integer operator / (const long int l, const Integer& n);
 		friend giv_all_inlined  Integer operator / (const Integer& n, const int l);
@@ -867,32 +957,32 @@ namespace Givaro {
 		friend giv_all_inlined  Integer& operator /= (Integer& n, const int l);
 		friend giv_all_inlined  Integer& operator /= (Integer& n, const long int l);
 		friend giv_all_inlined  Integer& operator /= (Integer& n, const unsigned int l);
-		//@}
+		///@}
 
 		/*!  Function \c mod (inplace).
 		 * \f$ r \gets r \mod n\f$
 		 * @param r remainder
 		 * @param n modulus
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& modin (Integer& r, const Integer& n);
 		static giv_all_inlined  Integer& modin (Integer& r, const long int n);
 		static giv_all_inlined  Integer& modin (Integer& r, const long unsigned int n);
-		//@}
+		///@}
 		/*!  Function \c mod.
 		 * \f$ r \gets n \mod d\f$
 		 * @param r remainder
 		 * @param n integer
 		 * @param d modulus
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& mod   (Integer& r,
 							const Integer& n, const Integer& d);
 		static giv_all_inlined  Integer& mod   (Integer& r,
 							const Integer& n, const long int d);
 		static giv_all_inlined  Integer& mod   (Integer& r,
 							const Integer& n, const long unsigned int d);
-		//@}
+		///@}
 
 		/*! Euclidean division.
 		 * <code> n = d q + r </code>.
@@ -903,15 +993,14 @@ namespace Givaro {
 		 * @param d as in the formula
 		 * @return the quotient \c q
 		 */
-		//@{
+		///@{
 		static giv_all_inlined  Integer& divmod   (Integer& q, Integer& r,
 							   const Integer& n, const Integer& d);
 		static giv_all_inlined  Integer& divmod   (Integer& q, long int & r,
 							   const Integer& n, const long int d);
 		static giv_all_inlined  Integer& divmod   (Integer& q, long unsigned int & r,
 							   const Integer& n, const long unsigned int d);
-		//@}
-		//@}
+		///@}
 
 		/*! @name rounding function
 		 * these are the same as the STL ones, except for the signature.
@@ -919,7 +1008,7 @@ namespace Givaro {
 		 * @param n the numerator
 		 * @param d the demominator
 		 */
-		//@{
+		///@{
 		//! @details same as std::ceil (n/d)
 		static giv_all_inlined  Integer&   ceil (Integer & res,
 							 const Integer &n, const Integer & d);
@@ -935,7 +1024,7 @@ namespace Givaro {
 		static giv_all_inlined  Integer    floor(const Integer &n, const Integer & d);
 		//! @details same as std::trunc(n/d)
 		static giv_all_inlined  Integer    trunc(const Integer &n, const Integer & d);
-		//@}
+		///@}
 
 
 
@@ -944,7 +1033,7 @@ namespace Givaro {
 		 * @param n modulus
 		 * @return remainder <code> (*this) mod n</code>
 		 */
-		//@{
+		///@{
 		giv_all_inlined Integer  operator % (const Integer& n) const;
 		giv_all_inlined long     operator % (const long unsigned int n) const;
 		giv_all_inlined long     operator % (const long int n) const;
@@ -967,14 +1056,14 @@ namespace Givaro {
 
 		friend giv_all_inlined  Integer& operator %= (Integer& n, const int l);
 		friend giv_all_inlined  Integer& operator %= (Integer& n, const unsigned int l);
-		//@}
+		///@}
 
 
 		/*! Modulo operator (inplace).
 		 * @param n modulus
 		 * @return remainder <code> (*this) <- (*this) mod n</code>
 		 */
-		//@{
+		///@{
 		giv_all_inlined Integer&  operator %= (const Integer& n);
 		giv_all_inlined Integer&  operator %= (const long unsigned int n);
 		giv_all_inlined Integer&  operator %= (const long int n);
@@ -992,7 +1081,7 @@ namespace Givaro {
 		Integer& operator  %=(const XXX& n) {
 			return this->operator %= ( (Integer)n );
 		}
-		//@}
+		///@}
 
 
 
@@ -1001,38 +1090,48 @@ namespace Givaro {
 
 		// (FILE gmp++_int_gcd.C)
 		//------------------------------------- Arithmetic functions
-		/*! @name Arithmetic functions */
-		//@{
-
-
-		//! gcd
-		//@{
+		/*! @name Arithmetic functions
+		 * @{
+		 */
+		//! gcd.
 		friend giv_all_inlined  Integer gcd (const Integer& a, const Integer& b);
+		//! \overload Integer::gcd(const Integer&, const Integer&)
 		friend giv_all_inlined  Integer gcd ( Integer& u, Integer& v,
 						      const Integer& a, const Integer& b);
+		//! \overload Integer::gcd(const Integer&, const Integer&)
 		friend giv_all_inlined  Integer& gcd (Integer& g, const Integer& a, const Integer& b);
+		//! \overload Integer::gcd(const Integer&, const Integer&)
 		friend giv_all_inlined  Integer& gcd (Integer& g, Integer& u, Integer& v,
 						      const Integer& a, const Integer& b);
-		//@}
 
-		//! inverse
-		//@{
+		//! Inverse.
+		//! Compute the inverse u = a/b.
+		/*! @param u
+		 * @param a
+		 * @param b
+		 */
 		friend giv_all_inlined  Integer& inv (Integer& u, const Integer& a, const Integer& b);
-		friend giv_all_inlined  Integer& invin (Integer& u, const Integer& b);
-		//@}
 
+		//! Compute the inverse inplace  u = u/b.
+		/*! @param u
+		 * @param b
+		 */
+		friend giv_all_inlined  Integer& invin (Integer& u, const Integer& b);
+		///@}
+
+		/*! @name Arithmetic functions.*/
 		//! pp
 		friend giv_all_inlined  Integer pp( const Integer& P, const Integer& Q );
 
 		//! lcm
-		//@{
+		///@{
 		friend giv_all_inlined  Integer& lcm (Integer& g, const Integer& a, const Integer& b);
 		friend giv_all_inlined  Integer lcm (const Integer& a, const Integer& b);
-		//@}
+		///@}
 
 		// (FILE gmp++_int_pow.C)
 		//! pow. return \f$n^l\f$
-		//@{
+		///@{
 		friend giv_all_inlined  Integer& pow(Integer& Res, const Integer& n, const long int l);
 		friend giv_all_inlined  Integer& pow(Integer& Res, const long unsigned int n, const long unsigned int l);
 		friend giv_all_inlined  Integer& pow(Integer& Res, const Integer& n, const long unsigned int l);
@@ -1054,10 +1153,10 @@ namespace Givaro {
 		{
 			return pow(n, (long unsigned)l );
 		}
-		//@}
+		///@}
 
 		//! modular pow. return \f$n^e \mod  m\f$.
-		//@{
+		///@{
 		friend giv_all_inlined  Integer& powmod(Integer& Res, const Integer& n, const long unsigned int e, const Integer& m);
 		friend giv_all_inlined  Integer& powmod(Integer& Res, const Integer& n, const long int e, const Integer& m);
 		friend giv_all_inlined  Integer& powmod(Integer& Res, const Integer& n, const unsigned int e, const Integer& m)
@@ -1080,14 +1179,14 @@ namespace Givaro {
 			return powmod(n, (long)e, m);
 		}
 		friend giv_all_inlined  Integer powmod(const Integer& n, const Integer& e, const Integer& m);
-		//@}
+		///@}
 
 		// (FILE gmp++_int_misc.C)
 		//! fact
 		friend giv_all_inlined  Integer fact ( long unsigned int l);
 
 		//! (square) roots
-		//@{
+		///@{
 		friend giv_all_inlined  Integer sqrt(const Integer& p);
 		friend giv_all_inlined  Integer& sqrt(Integer& r, const Integer& p);
 
@@ -1095,25 +1194,24 @@ namespace Givaro {
 		friend giv_all_inlined  Integer& sqrtrem(Integer& r, const Integer& p, Integer& rem);
 
 		friend giv_all_inlined  bool root(Integer& q, const Integer&, unsigned int n);
-		//@}
+		///@}
 
 		//! logs
-		//@{
+		///@{
 		friend giv_all_inlined  long logp(const Integer& a, const Integer& p) ;
 		friend giv_all_inlined  double logtwo(const Integer& a) ;
 		friend giv_all_inlined  double naturallog(const Integer& a) ;
-		//@}
-		//@}
+		///@}
 
 		//-----------------------------------------Miscellaneous
 		/*! @name Miscellaneous.
 		*/
-		//@{
+		///@{
 		//! swap
 		friend giv_all_inlined  void swap(Integer& , Integer&);
 
 		//! sign
-		//@{
+		///@{
  		friend inline int sign   (const Integer& a)
 		{
 			return a.priv_sign();
@@ -1128,11 +1226,11 @@ namespace Givaro {
 		{
 			return mpz_sgn( (mpz_srcptr)&gmp_rep );
 		}
-		//@}
+		///@}
 
 
 		//! representation
-		//@{
+		///@{
 		//! get representation
 		mpz_ptr get_mpz()
 		{
@@ -1144,7 +1242,7 @@ namespace Givaro {
 		{
 			return (mpz_srcptr)&gmp_rep;
 		}
-		//@}
+		///@}
 
 		/*! returns the number of bytes used to store *this          */
 		friend giv_all_inlined  long unsigned int length (const Integer& a);
@@ -1162,7 +1260,7 @@ namespace Givaro {
 
 		// (FILE gmp++_int_compare.C)
 		//! compare to 1 and 0
-		//@{
+		///@{
 		friend giv_all_inlined  int isOne(const Integer& a);
 
 		friend giv_all_inlined  int isZero(const Integer& a);
@@ -1187,34 +1285,33 @@ namespace Givaro {
 		static giv_all_inlined bool isleq(const A&a,const B&b)
 		{ return a<=b ; }
 
-		//@}
-		//@}
+		///@}
 
 
 		// (FILE gmp++_int_misc.C)
 
 		//! perfect power
-		friend giv_all_inlined  int isperfectpower  (const Integer& );
+		friend giv_all_inlined  int isperfectpower  (const Integer& n );
 
 		//! absolute value
 		friend giv_all_inlined  Integer abs(const Integer& n);
 
-		//! primes
-		//@{
+		//! @name primes
+		///@{
 		friend giv_all_inlined  Integer& prevprime(Integer&, const Integer& p);
 		friend giv_all_inlined  Integer& nextprime(Integer&, const Integer& p);
 		friend giv_all_inlined  int probab_prime(const Integer& p);
 		friend giv_all_inlined  int probab_prime(const Integer& p, int r);
 		friend giv_all_inlined  int jacobi(const Integer& u, const Integer& v) ;
 		friend giv_all_inlined  int legendre(const Integer& u, const Integer& v) ;
-		//@}
+		///@}
 
-		//! Increment/Decrement operators
-		//@{
+		//! @name Increment/Decrement operators
+		///@{
 		Integer& operator++()
-		{
+		{ // prefix
 			return *this+=1UL;
-		} // prefix
+		}
 		Integer operator++(int)
 		{ // postfix
 			Integer tmp = *this ;
@@ -1222,24 +1319,24 @@ namespace Givaro {
 			return tmp;
 		}
 		Integer& operator--()
-		{
+		{// prefix
 			return *this-=1UL;
-		} // prefix
+		}
 		Integer operator--(int)
 		{// postfix
 			Integer tmp = *this ;
 			--*this;
 			return tmp;
 		}
-		//@}
+		///@}
 
 
-		/** Cast operators.
+		/** @name Cast operators.
 		 * Convert an Integer to a basic C++ type.
 		 * @warning Cast towards \b unsigned consider only the absolute
 		 * value
 		 */
-		//@{
+		///@{
 		operator bool() const
 		{
 			return *this!=0UL;
@@ -1272,7 +1369,7 @@ namespace Givaro {
 		giv_all_inlined operator float() const ;
 		giv_all_inlined operator double() const ;
 		giv_all_inlined operator vect_t() const ;
-		//@}
+		///@}
 
 		// (FILE gmp++_int_rand.inl)
 		/* BB:
@@ -1282,7 +1379,8 @@ namespace Givaro {
 		//--------------------Random Iterators
 		/*! @name Random numbers functions
 		*/
-		//@{
+		//! Random numbers (no doc)
+		///@{
 		static inline void seeding(long unsigned int  s);
 		static inline void seeding(Integer s);
 		static inline void seeding();
@@ -1375,20 +1473,47 @@ namespace Givaro {
 		template<class T>
 		static inline Integer& nonzerorandom (Integer& r, const T& size) ;
 		static inline Integer nonzerorandom() ;
-		//@}
+		///@}
 
 		//----------------------------------------------I/O
-		/*! @name I/O
-		*/
-		//@{
+		/*! @name I/O */
+		//! Input/Output of Integers
+		///@{
+
+		/** in operator.
+		 * @param i input stream
+		 * @param n integer to be built
+		 */
 		friend giv_all_inlined  std::istream& operator >> (std::istream &i, Integer& n);
+
+		/** @brief out operator.
+		 * @param o output stream
+		 * @param n integer to be printed
+		 */
 		friend giv_all_inlined  std::ostream& operator << (std::ostream &o, const Integer& n);
+
+		//! nodoc
+		//! @param o output
+		//! @param n integer
 		friend giv_all_inlined  std::ostream& absOutput (std::ostream &o, const Integer& n);
 
-		friend giv_all_inlined  void importWords(Integer&, size_t, int, int, int, size_t, const void*);
-
+		/// nodoc
+		/*! @param  x x
+		 * @param count x
+		 * @param order x
+		 * @param size x
+		 * @param endian x
+		 * @param nails x
+		 * @param op x
+		 */
+		friend giv_all_inlined  void importWords(Integer& x , size_t count, int order,
+							 int size, int endian, size_t nails,
+							 const void* op);
+		/** print integer.
+		 * @param o output stream.
+		 */
 		giv_all_inlined std::ostream& print( std::ostream& o ) const;
-		//@}
+		///@}
 
 
 	protected:

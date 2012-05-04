@@ -11,7 +11,7 @@
 // date: 2004
 //==================================================================
 
-/*! @file zpz/taticElement.h
+/*! @file zpz/StaticElement.h
  * @ingroup zpz
  * @brief NO DOC
  */

@@ -239,7 +239,6 @@ namespace Givaro {
 	//     Container<Rep> Lf;
 	//     Container<unsigned long> Le;
 	// #else
-#include <vector>
 	template<class RandIter>
 	template<class Container> Container& IntFactorDom<RandIter>::divisors( Container& L, const Rep& n)  const
 	{

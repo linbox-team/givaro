@@ -17,20 +17,21 @@
 
 using namespace Givaro;
 
-
-
-// Finite Field with Domain style
-typedef GFqDom<long> Field;
-
-// Wrapper to give an operator style to the elements
-typedef StaticElement< Field > Element;
-
-// Mandatory declaration (because of static template)
-// and an actual constructed field is mandatory (the "(2)") for g++ 3.4
 namespace Givaro
 {
-template<>
-Field Element::_domain(2);
+
+	// Finite Field with Domain style
+	typedef GFqDom<long> Field;
+
+	// Wrapper to give an operator style to the elements
+	typedef StaticElement< Field > Element;
+
+	// Mandatory declaration (because of static template)
+	// and an actual constructed field is mandatory (the "(2)") for g++ 3.4
+
+	//! Specialisation of...
+	template<>
+	Field Element::_domain(2);
 }
 
 int main(int argc, char ** argv) {
@@ -75,3 +76,5 @@ int main(int argc, char ** argv) {
 
     return 0;
 }
+
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

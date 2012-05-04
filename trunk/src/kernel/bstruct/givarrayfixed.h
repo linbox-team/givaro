@@ -8,8 +8,10 @@
 // Author: T. Gautier
 // $Id: givarrayfixed.h,v 1.5 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
-// Description:
-// ArrayFixed of type T with fixed dimension
+/*! @file bstruct/givarrayfixed.h
+ * ArrayFixed of type T with fixed dimension
+ */
+
 #ifndef __GIVARO_array_fixed_H
 #define __GIVARO_array_fixed_H
 #include <stddef.h> // size_t
@@ -22,7 +24,13 @@ namespace Givaro {
 
 
 template <class T, size_t SIZE>
-class ArrayFixed GIVARO_PERF_INEHERIT(ArrayFixed,T) {
+class ArrayFixed
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+GIVARO_PERF_INEHERIT(ArrayFixed,T)
+#else
+	: public _perfArrayFixed<T>
+#endif
+{
   T  _data[SIZE];        // _data
 public :
   typedef int  			Indice_t;
@@ -134,3 +142,4 @@ void ArrayFixed<T,SIZE>::map( UNARYOP& opcode ) const
 
 
 #endif // __GIVARO_array_fixed_H
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

@@ -31,6 +31,7 @@ int test1()
 
 	Integer un(26);
 	Integer autre(511);
+	Integer large( Integer::one<<3000);
 #ifdef GIVARO_DEBUG
 	cout << "random...............OK" << endl;
 #endif
@@ -48,6 +49,7 @@ int test1()
 
 	unsigned long trois = 3 ;
 	unsigned long petits = 6 ;
+	unsigned long grands = 300 ;
 	//std::vector<int> T(1<<petits) ;
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -86,6 +88,30 @@ int test1()
 	}
 #ifdef GIVARO_DEBUG
 	cout << "random_exact.........OK" << endl;
+#endif
+
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.random_lessthan_2exp(grands);        
+		if ( tata.bitsize() > grands ) {
+			//        cout << tata << endl;
+			cout << "random_lessthan_2exp  failed" << endl;
+			return -1  ;
+		}
+	}
+#ifdef GIVARO_DEBUG
+	cout << "random_lessthan_2exp.....OK" << endl;
+#endif
+
+	for (size_t i = 0 ; i < 5000 ; ++i) {
+		Integer tata = toto.random_lessthan(large);
+		//        cout << tata << endl;
+		if ( tata.bitsize() > large.bitsize() ){
+			cout << "random_lessthan  failed" << endl;
+			return -1  ;
+		}
+	}
+#ifdef GIVARO_DEBUG
+	cout << "random_lessthan.........OK" << endl;
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {

@@ -162,6 +162,7 @@ namespace Givaro {
 		static const Integer zero ;
 		//! one
 		static const Integer one ;
+		//! -1
 		static const Integer mOne ;
 
 
@@ -395,11 +396,12 @@ namespace Givaro {
 
 		//----------------Elementary arithmetic between Integers & longs
 		// (FILE gmp++_int_add.C)
+        /*! - NODOC */
+		giv_all_inlined Integer  operator + (const Integer& n) const;
 		/*! operator \c +.
 		 * @return <code> (*this)+n</code>
 		 * @param n as in the formula.
 		 */
-		giv_all_inlined Integer  operator + (const Integer& n) const;
 		giv_all_inlined Integer  operator + (const unsigned long n) const;
 		giv_all_inlined Integer  operator + (const long n) const;
 		/*! operator \c += .
@@ -661,12 +663,14 @@ namespace Givaro {
 		 */
 		static giv_all_inlined  Integer  divexact  (const Integer& n, const Integer& d);
 
+            /*! - NODOC */
+		giv_all_inlined Integer  operator /  (const Integer&      d) const;
 		/*! Division operator.
 		 * @param d divisor
 		 */
-		giv_all_inlined Integer  operator /  (const Integer&      d) const;
 		giv_all_inlined Integer  operator /  (const unsigned long d) const;
 		giv_all_inlined Integer  operator /  (const long          d) const;
+
 		/*! Division operator (inplace).
 		 * @param d divisor
 		 */
@@ -880,7 +884,7 @@ namespace Givaro {
 		//@{
 		friend giv_all_inlined  void swap(Integer& , Integer&);
 
-		friend inline int sign   (const Integer& a)
+ 		friend inline int sign   (const Integer& a)
 		{
 			return a.priv_sign();
 		}
@@ -926,6 +930,7 @@ namespace Givaro {
 		friend giv_all_inlined  int jacobi(const Integer& u, const Integer& v) ;
 		friend giv_all_inlined  int legendre(const Integer& u, const Integer& v) ;
 
+           /*! - NODOC */
 		Integer& operator++()
 		{
 			return *this+=1UL;
@@ -947,20 +952,22 @@ namespace Givaro {
 			return tmp;
 		}
 
-		// - return the size in byte
+            /*! returns the number of bytes used to store *this          */
 		friend giv_all_inlined  unsigned long length (const Integer& a);
-		// - return the size in word.
+
+            /*! returns the number of machine words used to store *this          */
 		giv_all_inlined size_t size() const;
-		// - return the size in base B (always exact if B is a power of two)
+            /*! returns <code>ceil(log_BASE(*this))</code>.        */
 		giv_all_inlined size_t size_in_base(int B) const;
-		// - return the size in bit.
+            /*! returns <code>ceil(log_2(*this)) </code>.        */
 		giv_all_inlined size_t bitsize() const;
-		// - return the i-th word of the integer. Word 0 is lowest word.
+
+            /*! return the i-th word of the integer. Word 0 is lowest word.*/
 		giv_all_inlined unsigned long operator[](size_t i) const;
 
-		// -- Convert an Integer to a basic C++ type
-		// -- Cast operators
-		// -- Cast towards unsigned consider only the absolute value
+		//! Convert an Integer to a basic C++ type
+		//! Cast operators
+		//! Cast towards unsigned consider only the absolute value
 		operator bool() const
 		{
 			return *this!=0UL;
@@ -1016,44 +1023,44 @@ namespace Givaro {
 #endif
 		static inline bool RandBool()  ;
 		/*  random <= */
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer& random_lessthan (Integer& r, const Integer & m);
 		static inline Integer& random_lessthan (Integer& r, const Integer & m) ;
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer& random_lessthan_2exp (Integer& r, const unsigned long & m);
 
 		static inline Integer& random_lessthan_2exp (Integer& r, const unsigned long & m) ;
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer random_lessthan_2exp (const unsigned long & m);
 		static inline Integer random_lessthan_2exp (const unsigned long & m) ;
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer& random_lessthan (Integer& r, const unsigned long & m) ;
 
 		static inline Integer& random_lessthan (Integer& r, const unsigned long & m) ;
-		template<bool U,class T>
+		template<bool ALWAYSPOSITIVE,class T>
 		static inline Integer random_lessthan (const T & m);
 		template<class T>
 		static inline Integer random_lessthan (const T & m) ;
 
 
 		/*  random = */
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer& random_exact_2exp (Integer& r, const unsigned long int & m) ;
 		static inline Integer& random_exact_2exp (Integer& r, const unsigned long int & m);
 
 
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer& random_exact (Integer& r, const Integer & s) ;
 		static inline Integer& random_exact (Integer& r, const Integer & s) ;
 
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer& random_exact (Integer& r, const unsigned long int & m)  ;
 		static inline Integer& random_exact (Integer& r, const unsigned long int & m) ;
-		template<bool U,class T>
+		template<bool ALWAYSPOSITIVE,class T>
 		static inline Integer& random_exact (Integer& r, const T & m) ;
 		template<class T>
 		static inline Integer& random_exact (Integer& r, const T & m) ;
-		template<bool U,class T>
+		template<bool ALWAYSPOSITIVE,class T>
 		static inline Integer random_exact (const T & s) ;
 		template<class T>
 		static inline Integer random_exact (const T & s) ;
@@ -1076,20 +1083,20 @@ namespace Givaro {
 
 
 		// useful functions :
-		template<bool U,class T>
+		template<bool ALWAYSPOSITIVE,class T>
 		static inline Integer& random (Integer& r, const T & m) ;
 		template<class T>
 		static inline Integer& random (Integer& r, const T & m) ;
-		template<bool U,class T>
+		template<bool ALWAYSPOSITIVE,class T>
 		static inline Integer random(const T & sz) ;
 		template<class T>
 		static inline Integer random(const T & sz) ;
-		template<bool U>
+		template<bool ALWAYSPOSITIVE>
 		static inline Integer random();
 		static inline Integer random();
-		template<bool U,class T>
+		template<bool ALWAYSPOSITIVE,class T>
 		static inline Integer nonzerorandom(const T & sz) ;
-		template<bool U,class T>
+		template<bool ALWAYSPOSITIVE,class T>
 		static inline Integer& nonzerorandom (Integer& r, const T& size) ;
 		template<class T>
 		static inline Integer nonzerorandom(const T & sz) ;

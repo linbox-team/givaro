@@ -295,16 +295,22 @@ namespace Givaro {
 		giv_all_inlined Integer operator^ (const Integer&) const;   // XOR
 		giv_all_inlined Integer operator| (const Integer&) const;   // OR
 		giv_all_inlined Integer operator& (const Integer&) const;   // AND
-		giv_all_inlined unsigned long operator^ (const unsigned long& a) const;
-		giv_all_inlined unsigned long operator| (const unsigned long& a) const;
+		giv_all_inlined Integer operator^ (const unsigned long& a) const;
+		giv_all_inlined Integer operator| (const unsigned long& a) const;
 		giv_all_inlined unsigned long operator& (const unsigned long& a) const;
-		giv_all_inlined unsigned int operator^ (const unsigned int& a) const;
-		giv_all_inlined unsigned int operator| (const unsigned int& a) const;
+		giv_all_inlined Integer operator^ (const unsigned int& a) const;
+		giv_all_inlined Integer operator| (const unsigned int& a) const;
 		giv_all_inlined unsigned int operator& (const unsigned int& a) const;
 		giv_all_inlined Integer operator ~ () const;   // 1 complement
 		giv_all_inlined Integer& operator^= (const Integer&);   // XOR
 		giv_all_inlined Integer& operator|= (const Integer&);   // OR
 		giv_all_inlined Integer& operator&= (const Integer&);   // AND
+		giv_all_inlined Integer& operator^= (const unsigned long&);   // XOR
+		giv_all_inlined Integer& operator|= (const unsigned long&);   // OR
+		giv_all_inlined Integer& operator&= (const unsigned long&);   // AND
+		giv_all_inlined Integer& operator^= (const unsigned int&);   // XOR
+		giv_all_inlined Integer& operator|= (const unsigned int&);   // OR
+		giv_all_inlined Integer& operator&= (const unsigned int&);   // AND
 		giv_all_inlined Integer operator<< (int l) const; // lshift
 		giv_all_inlined Integer operator>> (int l) const; // rshift
 		giv_all_inlined Integer operator<< (long l) const; // lshift

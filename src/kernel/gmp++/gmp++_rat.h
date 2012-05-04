@@ -98,17 +98,17 @@ namespace Givaro
 					  enum reduceFlag = NoReduce) ;
 		giv_all_inlined Rationel( int n, long int d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( int n, unsigned long int d,
+		giv_all_inlined Rationel( int n, long unsigned int d,
 					  enum reduceFlag = NoReduce) ;
 
 		giv_all_inlined Rationel( unsigned int n, unsigned int d,
 					  enum reduceFlag = NoReduce);
 		giv_all_inlined Rationel( unsigned int n, long int d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( unsigned int n, unsigned long int d,
+		giv_all_inlined Rationel( unsigned int n, long unsigned int d,
 					  enum reduceFlag = NoReduce);
 
-		giv_all_inlined Rationel( unsigned long int n, unsigned int d,
+		giv_all_inlined Rationel( long unsigned int n, unsigned int d,
 					  enum reduceFlag = NoReduce) ;
 		giv_all_inlined Rationel( long int n, unsigned int d,
 					  enum reduceFlag = NoReduce) ;
@@ -116,12 +116,12 @@ namespace Givaro
 
 		giv_all_inlined Rationel( long int n, long int d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( unsigned long int n, long int d,
+		giv_all_inlined Rationel( long unsigned int n, long int d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( long int n, unsigned long int d,
+		giv_all_inlined Rationel( long int n, long unsigned int d,
 					  enum reduceFlag = NoReduce) ;
 
-		giv_all_inlined Rationel( unsigned long int n, unsigned long int d,
+		giv_all_inlined Rationel( long unsigned int n, long unsigned int d,
 					  enum reduceFlag = NoReduce) ;
 
 		template<class T>

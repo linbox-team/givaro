@@ -25,18 +25,18 @@ namespace Givaro {
 		return mpz_perfect_power_p((mpz_srcptr)&(n.gmp_rep));
 	}
 
-	Integer& pow(Integer& Res, const unsigned long n, const unsigned long p)
+	Integer& pow(Integer& Res, const long unsigned int n, const long unsigned p)
 	{
 		mpz_ui_pow_ui( (mpz_ptr)&(Res.gmp_rep), n, p);
 		return Res;
 	}
-	Integer& pow(Integer& Res, const Integer& n, const unsigned long p)
+	Integer& pow(Integer& Res, const Integer& n, const long unsigned p)
 	{
 		__gmpz_pow_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p);
 		return Res;
 	}
 
-	Integer pow(const Integer& n, const unsigned long p)
+	Integer pow(const Integer& n, const long unsigned p)
 	{
 		if (p == 0) return Integer::one;
 
@@ -44,25 +44,25 @@ namespace Givaro {
 		return pow(Res,n,p);
 	}
 
-	Integer& pow(Integer& Res, const Integer& n, const long l)
+	Integer& pow(Integer& Res, const Integer& n, const long int l)
 	{
 		// Beware of negative values
-		return pow(Res, n, (unsigned long) std::abs(l) );
+		return pow(Res, n, (long unsigned) std::abs(l) );
 	}
-	Integer pow(const Integer& n, const long l)
+	Integer pow(const Integer& n, const long int l)
 	{
 		if (l < 0)
 			return Integer::zero;
-		return pow(n, (unsigned long) std::abs(l) );
+		return pow(n, (long unsigned) std::abs(l) );
 	}
 
-	Integer& powmod(Integer& Res, const Integer& n, const unsigned long p, const Integer& m)
+	Integer& powmod(Integer& Res, const Integer& n, const long unsigned p, const Integer& m)
 	{
 		mpz_powm_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p, (mpz_srcptr)&m.gmp_rep);
 		return Res;
 	}
 
-	Integer powmod(const Integer& n, const unsigned long p, const Integer& m)
+	Integer powmod(const Integer& n, const long unsigned p, const Integer& m)
 	{
 		if (p == 0) return Integer::one;
 		Integer Res;
@@ -73,10 +73,10 @@ namespace Givaro {
 	{
 		if (e < 0) {
 			inv(Res, n, m);
-			return powmod(Res, Res, (unsigned long)std::abs(e), m);
+			return powmod(Res, Res, (long unsigned)std::abs(e), m);
 		}
 		else {
-			return powmod (Res, n, (unsigned long)(e), m);
+			return powmod (Res, n, (long unsigned)(e), m);
 		}
 	}
 	Integer powmod(const Integer& n, const long e, const Integer& m)

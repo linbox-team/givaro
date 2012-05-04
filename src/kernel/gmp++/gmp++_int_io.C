@@ -30,7 +30,7 @@ namespace Givaro {
 	{
 		int base = 10;
 
-		unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(n.gmp_rep), base) + 2;
+		long unsigned strSize = mpz_sizeinbase((mpz_srcptr)&(n.gmp_rep), base) + 2;
 		char *str = ::new char[strSize];
 		mpz_get_str(str, base, (mpz_srcptr)&(n.gmp_rep));
 		if (sign(n) < 0) {
@@ -47,7 +47,7 @@ namespace Givaro {
 	{
 #ifdef __GIVARO_GMP_NO_CXX
 		int base = 10;
-		unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
+		long unsigned strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
 		char *str = new char[strSize];
 		mpz_get_str(str, base, (mpz_srcptr)&(gmp_rep));
 		// JGD 08.11.1999 : temporaire
@@ -118,7 +118,7 @@ namespace Givaro {
 				else { noend = 0 ;  inp.putback(ch) ; }
 			}
 			if (counter >0) {
-				long l ;
+				long int l ;
 				Tmp[counter] = '\0' ; // terminate the string
 				l = atol(Tmp) ;
 				a = a * base[counter-1] + l ;

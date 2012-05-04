@@ -44,24 +44,24 @@ namespace Givaro {
 		return mpz_cmpabs_d( (mpz_srcptr)&(a.gmp_rep), (double)b);
 	}
 
-	int absCompare(const Integer &a, const unsigned long b)
+	int absCompare(const Integer &a, const long unsigned b)
 	{
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), b);
 	}
 
 	int absCompare(const Integer &a, const unsigned b)
 	{
-		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (unsigned long)b);
+		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (long unsigned)b);
 	}
 
 	int absCompare(const Integer &a, const long int b)
 	{
-		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (unsigned long) std::abs(b));
+		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (long unsigned) std::abs(b));
 	}
 
 	int absCompare(const Integer &a, const int b)
 	{
-		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (unsigned long) std::abs(b));
+		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (long unsigned) std::abs(b));
 	}
 
 	// Operator !=
@@ -85,17 +85,17 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
 	}
 
-	int Integer::operator != (const unsigned l) const
+	int Integer::operator != (const unsigned int l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) != 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (long unsigned) l) != 0;
 	}
 
-	int Integer::operator != (const long l) const
+	int Integer::operator != (const long int l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
 	}
 
-	int Integer::operator != (const unsigned long l) const
+	int Integer::operator != (const long unsigned int l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) != 0;
 	}
@@ -116,17 +116,17 @@ namespace Givaro {
 		return n.operator != (l);
 	}
 
-	int operator != (long l, const Integer& n)
+	int operator != (long int l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
-	int operator != (unsigned long l, const Integer& n)
+	int operator != (long unsigned int l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
-	int operator != (unsigned l, const Integer& n)
+	int operator != (unsigned int l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
@@ -152,17 +152,17 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
 	}
 
-	int Integer::operator == (const unsigned l) const
+	int Integer::operator == (const unsigned int l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) == 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (long unsigned) l) == 0;
 	}
 
-	int Integer::operator == (const long l) const
+	int Integer::operator == (const long int l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
 	}
 
-	int Integer::operator == (const unsigned long l) const
+	int Integer::operator == (const long unsigned int l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) == 0;
 	}
@@ -183,17 +183,17 @@ namespace Givaro {
 		return n.operator == (l);
 	}
 
-	int operator == (long l, const Integer& n)
+	int operator == (long int l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
-	int operator == (unsigned long l, const Integer& n)
+	int operator == (long unsigned int l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
-	int operator == (unsigned l, const Integer& n)
+	int operator == (unsigned int l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
@@ -219,17 +219,17 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator > (const unsigned l) const
+	int Integer::operator > (const unsigned int l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) > 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (long unsigned) l) > 0;
 	}
 
-	int Integer::operator > (const long l) const
+	int Integer::operator > (const long int l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator > (const unsigned long l) const
+	int Integer::operator > (const long unsigned int l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
 	}
@@ -250,17 +250,17 @@ namespace Givaro {
 		return n.operator < (l);
 	}
 
-	int operator > (long l, const Integer& n)
+	int operator > (long int l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
-	int operator > (unsigned long l, const Integer& n)
+	int operator > (long unsigned int l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
-	int operator > (unsigned l, const Integer& n)
+	int operator > (unsigned int l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
@@ -281,12 +281,12 @@ namespace Givaro {
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float) l) < 0;
 	}
 
-	int Integer::operator < (const unsigned l) const
+	int Integer::operator < (const unsigned int l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) < 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (long unsigned) l) < 0;
 	}
 
-	int Integer::operator < (const unsigned long l) const
+	int Integer::operator < (const long unsigned int l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
 	}
@@ -296,7 +296,7 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
-	int Integer::operator < (const long l) const
+	int Integer::operator < (const long int l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
@@ -317,17 +317,17 @@ namespace Givaro {
 		return n.operator > (l);
 	}
 
-	int operator < (long l, const Integer& n)
+	int operator < (long int l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
-	int operator < (unsigned long l, const Integer& n)
+	int operator < (long unsigned int l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
-	int operator < (unsigned l, const Integer& n)
+	int operator < (unsigned int l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
@@ -353,17 +353,17 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
-	int Integer::operator >= (const unsigned l) const
+	int Integer::operator >= (const unsigned int l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) >= 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (long unsigned) l) >= 0;
 	}
 
-	int Integer::operator >= (const long l) const
+	int Integer::operator >= (const long int l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
-	int Integer::operator >= (const unsigned long l) const
+	int Integer::operator >= (const long unsigned int l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
@@ -384,17 +384,17 @@ namespace Givaro {
 		return n.operator <= (l);
 	}
 
-	int operator >= (long l, const Integer& n)
+	int operator >= (long int l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
-	int operator >= (unsigned long l, const Integer& n)
+	int operator >= (long unsigned int l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
-	int operator >= (unsigned l, const Integer& n)
+	int operator >= (unsigned int l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
@@ -415,12 +415,12 @@ namespace Givaro {
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float) l) <= 0;
 	}
 
-	int Integer::operator <= (const unsigned l) const
+	int Integer::operator <= (const unsigned int l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (unsigned long) l) <= 0;
+		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (long unsigned) l) <= 0;
 	}
 
-	int Integer::operator <= (const unsigned long l) const
+	int Integer::operator <= (const long unsigned int l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
@@ -430,7 +430,7 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
-	int Integer::operator <= (const long l) const
+	int Integer::operator <= (const long int l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
@@ -451,17 +451,17 @@ namespace Givaro {
 		return n.operator >= (l);
 	}
 
-	int operator <= (long l, const Integer& n)
+	int operator <= (long int l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
-	int operator <= (unsigned long l, const Integer& n)
+	int operator <= (long unsigned int l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
-	int operator <= (unsigned l, const Integer& n)
+	int operator <= (unsigned int l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
@@ -492,7 +492,7 @@ namespace Givaro {
 	{
 		return a ==0;
 	}
-	int isZero(const long a)
+	int isZero(const long int a)
 	{
 		return a ==0;
 	}
@@ -504,18 +504,18 @@ namespace Givaro {
 	{
 		return a ==0;
 	}
-	int isZero(const unsigned long a)
+	int isZero(const long unsigned int a)
 	{
 		return a ==0UL;
 	}
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #if 1 /*  use of C++0x long long integer constant */
-	int isZero(const unsigned long long a)
+	int isZero(const long long unsigned int a)
 	{
 		return a ==0ULL;
 	}
 #endif
-	int isZero(const long long a)
+	int isZero(const long long int a)
 	{
 		return a ==0LL;
 	}

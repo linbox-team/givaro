@@ -18,6 +18,9 @@
 #ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
 #endif
+#ifndef __GIVARO_GMP_NO_CXX
+#include <sstream>
+#endif
 
 namespace Givaro {
 	//-------------------------------------------fact (unsigned long l)
@@ -397,6 +400,32 @@ namespace Givaro {
 		return (float)mpz_get_d ( (mpz_srcptr)&gmp_rep);
 	}
 
+	Integer::operator std::string () const
+	{
+#ifdef __GIVARO_GMP_NO_CXX
+		std::string s;
+		unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), 10) + 2;
+		char *str = new char[strSize + 2];
+		mpz_get_str(str, 10, (mpz_srcptr)&(gmp_rep));
+		s = std::string(str);
+		delete [] str ;
+		// return ??
+#else
+		std::ostringstream o ;
+		print(o);
+		return o.str();
+#endif
+	}
+
+	Integer::operator std::vector<mp_limb_t> () const
+	{
+		size_t s = mpz_size( (mpz_srcptr)&(gmp_rep) );
+		std::vector<mp_limb_t> v(s);
+		std::vector<mp_limb_t>::iterator vi = v.begin();
+		for(mp_size_t i = 0;vi != v.end();++vi, ++i)
+			*vi = mpz_getlimbn( (mpz_srcptr)& (gmp_rep) ,i);
+		return v;
+	}
 
 	unsigned long length(const Integer& a)
 	{

@@ -13,7 +13,7 @@
 #define __GIVARO_GMPplusplus_Rationel_H
 // #define __GIVARO_Rationel_H
 
-/*! @file kernel/gmp++/gmp++_Rationel.h
+/*! @file gmp++/gmp++_rat.h
  * @ingroup Rationel
  * Core Rationel from GMP
  */

@@ -60,52 +60,6 @@ namespace Givaro {
 #endif
 	}
 
-	Integer::operator std::string () const
-	{
-
-#ifdef __GIVARO_GMP_NO_CXX
-		std::string s;
-		unsigned long strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), 10) + 2;
-		char *str = new char[strSize + 2];
-		mpz_get_str(str, 10, (mpz_srcptr)&(gmp_rep));
-		s = std::string(str);
-		delete [] str ;
-#else
-		std::ostringstream o ;
-		print(o);
-		return o.str();
-#endif
-	}
-
-	Integer::Integer(const std::vector<mp_limb_t>& v)
-	{
-		size_t s = v.size();
-		if (s) {
-			mpz_init_set_ui((mpz_ptr)&gmp_rep, v[0]);
-			Integer base(256), prod, tmp;
-			prod = base = pow(base, (unsigned long)sizeof(mp_limb_t) );
-
-			std::vector<mp_limb_t>::const_iterator vi = v.begin();
-			for(++vi;vi != v.end();++vi) {
-				mpz_mul_ui( (mpz_ptr)&tmp.gmp_rep, (mpz_ptr)&prod.gmp_rep, *vi);
-				*this += tmp;
-				prod *= base;
-			}
-		} else
-			mpz_init( (mpz_ptr)&gmp_rep );
-
-	}
-
-	Integer::operator std::vector<mp_limb_t> () const
-	{
-		size_t s = mpz_size( (mpz_srcptr)&(gmp_rep) );
-		std::vector<mp_limb_t> v(s);
-		std::vector<mp_limb_t>::iterator vi = v.begin();
-		for(mp_size_t i = 0;vi != v.end();++vi, ++i)
-			*vi = mpz_getlimbn( (mpz_srcptr)& (gmp_rep) ,i);
-		return v;
-	}
-
 	// Entree au format de la sortie
 	std::istream& operator>> (std::istream& inp, Integer& a)
 	{

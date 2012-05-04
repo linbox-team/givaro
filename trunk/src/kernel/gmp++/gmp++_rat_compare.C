@@ -9,7 +9,7 @@
 // $Id: gmp++_int_compare.C,v 1.6 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
 
-/*! @file givaro/gmp++_int_compare.C
+/*! @file gmp++/gmp++_rat_compare.C
  * @brief routines to compare integers.
  */
 

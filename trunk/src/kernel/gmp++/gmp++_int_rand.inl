@@ -36,7 +36,7 @@ namespace Givaro {
 #error "please include gmp++/gmp++.h very high in your inlcude list"
 #endif
 
-	inline void Integer::seeding(unsigned long  s)
+	inline void Integer::seeding(unsigned long int s)
 	{
 		Integer::randstate().seed(s) ;
 	}

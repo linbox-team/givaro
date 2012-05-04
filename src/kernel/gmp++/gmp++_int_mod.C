@@ -62,7 +62,7 @@ namespace Givaro {
 		assert(!(res<0) && (res<abs(n2)));
 		return res;
 	}
-	Integer& Integer::mod(Integer& res, const Integer& n1, const long n2)
+	Integer& Integer::mod(Integer& res, const Integer& n1, const long int n2)
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		// int sgn = sign(n2);
@@ -77,7 +77,7 @@ namespace Givaro {
 		assert(!(res<0) && (res<std::abs(n2)));
 		return res;
 	}
-	Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long n2)
+	Integer& Integer::mod(Integer& res, const Integer& n1, const unsigned long int n2)
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
@@ -205,7 +205,7 @@ namespace Givaro {
 	}
 
 	//Added by Dan Roche, 6-28-04
-#ifdef __USE_64_bits__
+#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 	unsigned long long Integer::operator % (const unsigned long long l) const
 	{
 		if (isZero(*this)) return 0LL;

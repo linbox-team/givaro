@@ -9,7 +9,7 @@
 // $Id: gmp++_int_compare.C,v 1.6 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
 
-/*! @file givaro/gmp++_int_compare.C
+/*! @file gmp++/gmp++_int_compare.C
  * @brief routines to compare integers.
  */
 
@@ -23,23 +23,12 @@
 
 namespace Givaro {
 
-	/*! Compares two integers.
-	 * @param a integer
-	 * @param b integer
-	 * @return \c 1 if \f$a > b\f$, \c 0 if \f$a = b\f$ and \p -1 otherwise.
-	 */
 	int compare(const Integer &a, const Integer& b)
 	{
 		return mpz_cmp ( (mpz_srcptr)&a.gmp_rep, (mpz_srcptr)&b.gmp_rep );
 	}
 
 	// absCompare
-	/*! Compare the norm of two integers.
-	 * @param a integer
-	 * @param b integer
-	 * @return \c 1 if \f$|a| > |b|\f$, \c 0 if \f$|a| = |b|\f$ and \p -1 otherwise.
-	 */
-	//@{
 	int absCompare(const Integer &a, const Integer &b)
 	{
 		return mpz_cmpabs( (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
@@ -74,15 +63,8 @@ namespace Givaro {
 	{
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (unsigned long) std::abs(b));
 	}
-	//@}
 
 	// Operator !=
-
-	/*! operator != (not equal)
-	 * @param l integer
-	 * @return \c 1 iff l == this
-	 */
-	//@{
 	int Integer::operator != (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) != 0;
@@ -149,9 +131,7 @@ namespace Givaro {
 		return n.operator != (l);
 	}
 
-	//@}
-
-	//@{
+	// operator ==
 	int Integer::operator == (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) == 0;
@@ -218,12 +198,7 @@ namespace Givaro {
 		return n.operator == (l);
 	}
 
-	//@}
-
-
-
 	// Operator >
-	//@{
 	int Integer::operator > (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) > 0;
@@ -291,7 +266,6 @@ namespace Givaro {
 	}
 
 	// Operator <
-	//@{
 	int Integer::operator < (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) < 0;
@@ -359,7 +333,6 @@ namespace Givaro {
 	}
 
 	// Operator >=
-	//@{
 	int Integer::operator >= (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) >= 0;
@@ -427,7 +400,6 @@ namespace Givaro {
 	}
 
 	// Operator <=
-	//@{
 	int Integer::operator <= (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) <= 0;
@@ -493,7 +465,6 @@ namespace Givaro {
 	{
 		return n.operator >= (l);
 	}
-
 
 
 	// compare to 1 and 0

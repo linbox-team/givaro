@@ -116,10 +116,31 @@ namespace Givaro {
 		return *this ;
 	}
 
-	void importWords(Integer& x, size_t count, int order, int size, int endian, size_t nails, const void* op)
+	void importWords(Integer& x, size_t count, int order, int size,
+			 int endian, size_t nails, const void* op)
 	{
 		mpz_import( (mpz_ptr)&(x.gmp_rep), count, order, size, endian, nails, op);
 	}
+
+	Integer::Integer(const std::vector<mp_limb_t>& v)
+	{
+		size_t s = v.size();
+		if (s) {
+			mpz_init_set_ui((mpz_ptr)&gmp_rep, v[0]);
+			Integer base(256), prod, tmp;
+			prod = base = pow(base, (unsigned long)sizeof(mp_limb_t) );
+
+			std::vector<mp_limb_t>::const_iterator vi = v.begin();
+			for(++vi;vi != v.end();++vi) {
+				mpz_mul_ui( (mpz_ptr)&tmp.gmp_rep, (mpz_ptr)&prod.gmp_rep, *vi);
+				*this += tmp;
+				prod *= base;
+			}
+		} else
+			mpz_init( (mpz_ptr)&gmp_rep );
+
+	}
+
 
 }
 

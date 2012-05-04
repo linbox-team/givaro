@@ -36,7 +36,7 @@ namespace Givaro {
 #error "please include gmp++/gmp++.h very high in your inlcude list"
 #endif
 
-	inline void Integer::seeding(unsigned long int s)
+	inline void Integer::seeding(long unsigned int s)
 	{
 		Integer::randstate().seed(s) ;
 	}
@@ -48,7 +48,7 @@ namespace Givaro {
 
 	void Integer::seeding()
 	{
-		Integer::seeding( (unsigned long) BaseTimer::seed() );
+		Integer::seeding( (long unsigned) BaseTimer::seed() );
 	}
 
 
@@ -88,15 +88,15 @@ namespace Givaro {
 	{
 		return random_lessthan<true>(r,m);
 	}
-	Integer& Integer::random_lessthan_2exp (Integer& r, const unsigned long & m)
+	Integer& Integer::random_lessthan_2exp (Integer& r, const long unsigned & m)
 	{
 		return random_lessthan_2exp<true>(r,m);
 	}
-	Integer Integer::random_lessthan_2exp (const unsigned long & m)
+	Integer Integer::random_lessthan_2exp (const long unsigned & m)
 	{
 		return random_lessthan_2exp<true>(m);
 	}
-	Integer& Integer::random_lessthan (Integer& r, const unsigned long & m)
+	Integer& Integer::random_lessthan (Integer& r, const long unsigned & m)
 	{
 		return random_lessthan<true>(r,m);
 	}
@@ -114,7 +114,7 @@ namespace Givaro {
 #ifdef __GMP_PLUSPLUS__
 	//! returns a random integer \p r of at most \p m bits
 	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan_2exp (Integer& r, const unsigned long & m)
+	Integer& Integer::random_lessthan_2exp (Integer& r, const long unsigned & m)
 	{
 		mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_bits(m)).get_mpz_t() );
 		if(!ALWAYSPOSITIVE) {
@@ -125,7 +125,7 @@ namespace Givaro {
 #else
 	//! returns a random integer \p r of at most \p m bits
 	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan_2exp (Integer& r, const unsigned long & m)
+	Integer& Integer::random_lessthan_2exp (Integer& r, const long unsigned & m)
 	{
 		mpz_urandomb((mpz_ptr) &(r.gmp_rep),Integer::randstate(),m) ;
 		if(!ALWAYSPOSITIVE) if (Integer::RandBool()) Integer::negin(r);
@@ -134,7 +134,7 @@ namespace Givaro {
 #endif
 
 	template<bool ALWAYSPOSITIVE>
-	Integer Integer::random_lessthan_2exp (const unsigned long & m)
+	Integer Integer::random_lessthan_2exp (const long unsigned & m)
 	{
 		Integer r ;
 		random_lessthan_2exp<ALWAYSPOSITIVE>(r,m);
@@ -143,7 +143,7 @@ namespace Givaro {
 
 	/* synonyms */
 	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan (Integer& r, const unsigned long & m)
+	Integer& Integer::random_lessthan (Integer& r, const long unsigned & m)
 	{
 		return Integer::random_lessthan_2exp<ALWAYSPOSITIVE>(r,m);
 	}
@@ -167,7 +167,7 @@ namespace Givaro {
 		Integer::random_exact_2exp<ALWAYSPOSITIVE>(r,t);
 		return r;
 	}
-	Integer& Integer::random_exact (Integer& r, const unsigned long int & m)
+	Integer& Integer::random_exact (Integer& r, const long unsigned int & m)
 	{
 		return Integer::random_exact<true>(r,m);
 	}
@@ -178,12 +178,12 @@ namespace Givaro {
 	template<bool ALWAYSPOSITIVE,class T>
 	Integer& Integer::random_exact (Integer& r, const T & m)
 	{
-		return Integer::random_exact<ALWAYSPOSITIVE>(r,static_cast<unsigned long int>(m));
+		return Integer::random_exact<ALWAYSPOSITIVE>(r,static_cast<long unsigned int>(m));
 	}
 	template<class T>
 	Integer& Integer::random_exact (Integer& r, const T & m)
 	{
-		return Integer::random_exact(r,static_cast<unsigned long int>(m));
+		return Integer::random_exact(r,static_cast<long unsigned int>(m));
 	}
 
 	template<class T>
@@ -200,7 +200,7 @@ namespace Givaro {
 
 	//! returns a reference to a random number \p r of the size \p m bits, exactly.
 	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_exact_2exp (Integer& r, const unsigned long int & m)
+	Integer& Integer::random_exact_2exp (Integer& r, const long unsigned int & m)
 	{
 		if (m) random_lessthan_2exp<true>(r,m-1);
 		mpz_setbit( (mpz_ptr) &(r.gmp_rep) , m-1);
@@ -208,13 +208,13 @@ namespace Givaro {
 		return r;
 	}
 
-	Integer& Integer::random_exact_2exp (Integer& r, const unsigned long int & m)
+	Integer& Integer::random_exact_2exp (Integer& r, const long unsigned int & m)
 	{
 		return Integer::random_exact<true>(r,m);
 	}
 	// synonym
 	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_exact (Integer& r, const unsigned long int & m)
+	Integer& Integer::random_exact (Integer& r, const long unsigned int & m)
 	{
 		return Integer::random_exact_2exp<ALWAYSPOSITIVE>(r,m) ;
 	}
@@ -248,14 +248,14 @@ namespace Givaro {
 	template<class R>
 	Integer Integer::random_between (const R & m, const R & M)
 	{
-		return Integer::random_between(static_cast<unsigned long int>(m),
-					       static_cast<unsigned long int>(M));
+		return Integer::random_between(static_cast<long unsigned int>(m),
+					       static_cast<long unsigned int>(M));
 	}
 	template<class R>
 	Integer & Integer::random_between (Integer &r, const R & m, const R & M)
 	{
-		return Integer::random_between(r,static_cast<unsigned long int>(m),
-					       static_cast<unsigned long int>(M));
+		return Integer::random_between(r,static_cast<long unsigned int>(m),
+					       static_cast<long unsigned int>(M));
 	}
 
 
@@ -263,30 +263,30 @@ namespace Givaro {
 	/*  random number in [[2^m,2^M-1]]  */
 	/* ******************************** */
 	// todo : template<bool ALWAYSPOSITIVE, bool V>
-	Integer& Integer::random_between_2exp (Integer& r, const unsigned long int& m, const unsigned long int &M)
+	Integer& Integer::random_between_2exp (Integer& r, const long unsigned int& m, const long unsigned int &M)
 	{
 		assert(M > m);
-		r = nonzerorandom((unsigned long int)M-m);
+		r = nonzerorandom((long unsigned int)M-m);
 		Integer r1 = random_lessthan_2exp(m);
 		r <<= m ;
 		r+= r1 ;
 		return (r);
 	}
 
-	Integer Integer::random_between_2exp (const unsigned long int & m, const unsigned long int &M)
+	Integer Integer::random_between_2exp (const long unsigned int & m, const long unsigned int &M)
 	{
 		Integer r ;
 		return random_between_2exp(r,m,M);
 	}
 
 	// synonym.
-	Integer Integer::random_between (const unsigned long & m, const unsigned long &M)
+	Integer Integer::random_between (const long unsigned & m, const long unsigned &M)
 	{
 		return random_between_2exp(m,M) ;
 	}
 
 
-	Integer& Integer::random_between (Integer& r, const unsigned long int& m, const unsigned long int &M)
+	Integer& Integer::random_between (Integer& r, const long unsigned int& m, const long unsigned int &M)
 	{
 		return random_between_2exp(r,m,M);
 	}

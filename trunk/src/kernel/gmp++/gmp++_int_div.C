@@ -30,7 +30,7 @@ Integer& Integer::divin(Integer& res, const Integer& n)
 	return res;
 }
 
-Integer& Integer::divin(Integer& res, const long n)
+Integer& Integer::divin(Integer& res, const long int n)
 {
 	//  if (n ==0) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
@@ -48,7 +48,7 @@ Integer& Integer::divin(Integer& res, const long n)
 	return res;
 }
 
-Integer& Integer::divin(Integer& res, const unsigned long n)
+Integer& Integer::divin(Integer& res, const long unsigned int n)
 {
 	//  if (n ==0) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
@@ -68,7 +68,7 @@ Integer& Integer::div(Integer& res, const Integer& n1, const Integer& n2)
 	return res;
 }
 
-Integer& Integer::div(Integer& res, const Integer& n1, const long n2)
+Integer& Integer::div(Integer& res, const Integer& n1, const long int n2)
 {
 	if (isZero(n1)) return res = Integer::zero;
 	//  if (isZero(n2)) {
@@ -92,7 +92,7 @@ Integer& Integer::div(Integer& res, const Integer& n1, const int n2) {
 	return div(res,n1,long(n2));
 }
 
-Integer& Integer::div(Integer& res, const Integer& n1, const unsigned long n2)
+Integer& Integer::div(Integer& res, const Integer& n1, const long unsigned int n2)
 {
 	if (isZero(n1)) return res = Integer::zero;
 	//  if (isZero(n2)) {
@@ -136,7 +136,7 @@ Integer& Integer::operator /= (const Integer& n)
 	return *this;
 }
 
-Integer& Integer::operator /= (const unsigned long l)
+Integer& Integer::operator /= (const long unsigned int l)
 {
 	//  if (l ==0) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
@@ -146,7 +146,7 @@ Integer& Integer::operator /= (const unsigned long l)
 	return *this;
 }
 
-Integer& Integer::operator /= (const long l)
+Integer& Integer::operator /= (const long int l)
 {
 	//  if (l ==0) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
@@ -176,7 +176,7 @@ Integer Integer::operator / (const Integer& n) const
 	return res;
 }
 
-Integer Integer::operator / (const unsigned long l) const
+Integer Integer::operator / (const long unsigned int l) const
 {
 	//  if (l ==0) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
@@ -188,7 +188,7 @@ Integer Integer::operator / (const unsigned long l) const
 	return res;
 }
 
-Integer Integer::operator / (const long l) const
+Integer Integer::operator / (const long int l) const
 {
 	//  if (l ==0) {
 	//    GivMathDivZero("[Integer::/]: division by zero");
@@ -257,7 +257,7 @@ Integer& Integer::divmod(Integer& q, long& r, const Integer& a, const long b)
 	return q;
 }
 
-Integer& Integer::divmod(Integer& q, unsigned long& r, const Integer& a, const unsigned long b)
+Integer& Integer::divmod(Integer& q, long unsigned& r, const Integer& a, const long unsigned b)
 {
 	//  if (isZero(b)) {
 	//    GivMathDivZero("[Integer::divide]: division by zero");
@@ -330,7 +330,7 @@ Integer Integer::trunc(const Integer & n, const Integer & d)
 	{
 		return Integer(l)/n;
 	}
-	 Integer operator / (const long l, const Integer& n)
+	 Integer operator / (const long int l, const Integer& n)
 	{
 		return Integer(l)/n;
 	}
@@ -340,23 +340,23 @@ Integer Integer::trunc(const Integer & n, const Integer & d)
 	}
 	 Integer operator / (const Integer& n, const unsigned int l)
 	{
-		return n / (unsigned long)l;
+		return n / (long unsigned)l;
 	}
 
 	 Integer& operator /= (Integer& n, const int l)
 	{
 		if (l>=0)
-			return n /= (unsigned long)l;
+			return n /= (long unsigned)l;
 		else
-			return  n = -(n / (unsigned long)-l);
+			return  n = -(n / (long unsigned)-l);
 	}
-	 Integer& operator /= (Integer& n, const long l)
+	 Integer& operator /= (Integer& n, const long int l)
 	{
-		return n /= (unsigned long)l;
+		return n /= (long unsigned)l;
 	}
 	 Integer& operator /= (Integer& n, const unsigned int l)
 	{
-		return n /= (unsigned long)l;
+		return n /= (long unsigned)l;
 	}
 
 

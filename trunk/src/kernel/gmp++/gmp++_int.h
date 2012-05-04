@@ -1147,7 +1147,7 @@ namespace Givaro {
 		//@}
 
 		/*! returns the number of bytes used to store *this          */
-		friend giv_all_inlined  long unsigned length (const Integer& a);
+		friend giv_all_inlined  long unsigned int length (const Integer& a);
 
 		/*! returns the number of machine words used to store *this          */
 		giv_all_inlined size_t size() const;
@@ -1173,15 +1173,15 @@ namespace Givaro {
 		friend giv_all_inlined  int isZero(const short int a);
 
 		friend giv_all_inlined  int isZero(const int a);
-		friend giv_all_inlined  int isZero(const long a);
+		friend giv_all_inlined  int isZero(const long int a);
 		friend giv_all_inlined  int isZero(const unsigned short int a);
 		friend giv_all_inlined  int isZero(const unsigned int a);
-		friend giv_all_inlined  int isZero(const long unsigned a);
+		friend giv_all_inlined  int isZero(const long unsigned int a);
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #if 1 /*  use of C++0x long long integer constant */
-		friend giv_all_inlined  int isZero(const long long unsigned a);
+		friend giv_all_inlined  int isZero(const long long unsigned int a);
 #endif
-		friend giv_all_inlined  int isZero(const long long a);
+		friend giv_all_inlined  int isZero(const long long int a);
 #endif
 		template<class A,class B>
 		static giv_all_inlined bool isleq(const A&a,const B&b)

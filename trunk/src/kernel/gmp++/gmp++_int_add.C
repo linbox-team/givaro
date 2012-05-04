@@ -26,7 +26,7 @@ namespace Givaro {
 		mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, (mpz_srcptr)&n.gmp_rep );
 		return res;
 	}
-	Integer& Integer::addin(Integer& res, const long n)
+	Integer& Integer::addin(Integer& res, const long int n)
 	{
 		if (isZero(n)) return res;
 		if (isZero(res)) return res = n;
@@ -35,7 +35,7 @@ namespace Givaro {
 		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n);
 		return res;
 	}
-	Integer& Integer::addin(Integer& res, const unsigned long n)
+	Integer& Integer::addin(Integer& res, const long unsigned int n)
 	{
 		if (isZero(n)) return res;
 		if (isZero(res)) return res = n;
@@ -50,7 +50,7 @@ namespace Givaro {
 		mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
 		return res;
 	}
-	Integer& Integer::add(Integer& res, const Integer& n1, const long n2)
+	Integer& Integer::add(Integer& res, const Integer& n1, const long int n2)
 	{
 		if (isZero(n1)) return res = n2;
 		if (isZero(n2)) return res = n1;
@@ -59,7 +59,7 @@ namespace Givaro {
 		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, -n2);
 		return res;
 	}
-	Integer& Integer::add(Integer& res, const Integer& n1, const unsigned long n2)
+	Integer& Integer::add(Integer& res, const Integer& n1, const long unsigned int n2)
 	{
 		if (isZero(n1)) return res = n2;
 		if (isZero(n2)) return res = n1;
@@ -77,7 +77,7 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator += (const unsigned long l)
+	Integer& Integer::operator += (const long unsigned int l)
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return logcpy(Integer(l));
@@ -85,7 +85,7 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator += (const long l)
+	Integer& Integer::operator += (const long int l)
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return logcpy(Integer(l));
@@ -105,7 +105,7 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer Integer::operator + (const unsigned long l) const
+	Integer Integer::operator + (const long unsigned int l) const
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return Integer(l);
@@ -114,7 +114,7 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer Integer::operator + (const long l) const
+	Integer Integer::operator + (const long int l) const
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return Integer(l);
@@ -139,13 +139,13 @@ namespace Givaro {
 	}
 	Integer operator + (const unsigned int l, const Integer& n)
 	{
-		return n + (unsigned long)l;
+		return n + (long unsigned)l;
 	}
-	Integer operator + (const long l, const Integer& n)
+	Integer operator + (const long int l, const Integer& n)
 	{
 		return n + l;
 	}
-	Integer operator + (const unsigned long l, const Integer& n)
+	Integer operator + (const long unsigned int l, const Integer& n)
 	{
 		return n + l;
 	}
@@ -155,7 +155,7 @@ namespace Givaro {
 	}
 	Integer operator + (const Integer& n, const unsigned int l)
 	{
-		return n + (unsigned long)l;
+		return n + (long unsigned)l;
 	}
 
 	Integer& operator += (Integer& n, const int l)
@@ -164,31 +164,31 @@ namespace Givaro {
 	}
 	Integer& operator += (Integer& n, const unsigned int l)
 	{
-		return n += (unsigned long)l;
+		return n += (long unsigned)l;
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	Integer operator + (const Integer& n, const long long l)
+	Integer operator + (const Integer& n, const long long int l)
 	{
 		return n + (Integer)l;
 	}
-	Integer operator + (const Integer& n, const unsigned long long l)
+	Integer operator + (const Integer& n, const long long unsigned int l)
 	{
 		return n + (Integer)l;
 	}
-	Integer operator + (const long long l, const Integer& n)
+	Integer operator + (const long long int l, const Integer& n)
 	{
 		return n+l;
 	}
-	Integer operator + (const unsigned long long l, const Integer& n)
+	Integer operator + (const long long unsigned int l, const Integer& n)
 	{
 		return n+l;
 	}
-	Integer& operator += (Integer& n, const long long l)
+	Integer& operator += (Integer& n, const long long int l)
 	{
 		return n += (Integer)l;
 	}
-	Integer& operator += (Integer& n, const unsigned long long l)
+	Integer& operator += (Integer& n, const long long unsigned int l)
 	{
 		return n += (Integer)l;
 	}

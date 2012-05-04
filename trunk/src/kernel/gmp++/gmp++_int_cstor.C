@@ -47,34 +47,34 @@ namespace Givaro {
 		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
-	//-----------------------------Integer(long n)
-	Integer::Integer(long n)
+	//-----------------------------Integer(long int n)
+	Integer::Integer(long int n)
 	{
 		mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
 	}
 
-	//-----------------------------Integer(unsigned long n)
-	Integer::Integer(unsigned long n)
+	//-----------------------------Integer(long unsigned int n)
+	Integer::Integer(long unsigned int n)
 	{
 		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #include <stdio.h>
-	//-----------------------------Integer(long long n)
+	//-----------------------------Integer(long long int n)
 	// log[10](2^8) < 2.408239966
-	Integer::Integer(long long n)
+	Integer::Integer(long long int n)
 	{
 		char * tmp = new char[long(2.408239966*sizeof(long long))+1]; sprintf(tmp,"%lld",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 		delete [] tmp;
 	}
 
-	//-----------------------------Integer(unsigned long long n)
+	//-----------------------------Integer(long long unsigned int n)
 	// log[10](2^8) < 2.408239966
-	Integer::Integer(unsigned long long n)
+	Integer::Integer(long long unsigned int n)
 	{
-		char * tmp = new char[ long(2.408239966*sizeof(unsigned long long))+1];
+		char * tmp = new char[ long(2.408239966*sizeof(long long unsigned))+1];
 		sprintf(tmp,"%llu",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 		delete [] tmp;
@@ -128,7 +128,7 @@ namespace Givaro {
 		if (s) {
 			mpz_init_set_ui((mpz_ptr)&gmp_rep, v[0]);
 			Integer base(256), prod, tmp;
-			prod = base = pow(base, (unsigned long)sizeof(mp_limb_t) );
+			prod = base = pow(base, (long unsigned)sizeof(mp_limb_t) );
 
 			std::vector<mp_limb_t>::const_iterator vi = v.begin();
 			for(++vi;vi != v.end();++vi) {

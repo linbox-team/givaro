@@ -51,7 +51,7 @@ namespace Givaro {
 		if (s) {
 			mpz_init_set_ui((mpz_ptr)&gmp_rep, v[0]);
 			Integer base(256), prod, tmp;
-			prod = base = pow(base, (unsigned long)sizeof(mp_limb_t) );
+			prod = base = pow(base, (long unsigned)sizeof(mp_limb_t) );
 
 			std::vector<mp_limb_t>::const_iterator vi = v.begin();
 			for(++vi;vi != v.end();++vi) {

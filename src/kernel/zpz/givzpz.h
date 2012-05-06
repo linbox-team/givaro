@@ -9,7 +9,7 @@
 // $Id: givzpz.h,v 1.8 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 
-/*!@file zpz/givzpz.h
+/*!@file givzpz.h
  * @ingroup zpz
  * @brief   Family of arithmetics over Zpz (\f$\mathbf{Z}/p\mathbf{Z}\f$).
  */
@@ -23,7 +23,8 @@
 #include <givaro/givconfig.h>
 
 namespace Givaro {
-	template<class TAG> class ZpzDom;
+	template<class TAG>
+	class ZpzDom;
 }
 
 #include "givaro/givzpztypes.h"

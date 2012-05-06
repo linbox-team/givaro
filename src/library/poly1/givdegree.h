@@ -7,17 +7,22 @@
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
 // $Id: givdegree.h,v 1.7 2011-02-02 16:23:56 bboyer Exp $
-// Description: opaque class for Degree of polynomial. Degree of polynomial
-// 0 is Degree::deginfty with value DEGPOLYZERO.
 // ==========================================================================
+/** @file givdegree.h
+ * @ingroup poly1
+ * @brief NO DOC
+ * opaque class for Degree of polynomial. Degree of polynomial
+ * 0 is Degree::deginfty with value DEGPOLYZERO.
+ *
+ */
+
 #ifndef __GIVARO_poly1degree_H
 #define __GIVARO_poly1degree_H
 
 #include <iostream>
 
 namespace Givaro {
-// -- Degree type for polynomials
-//
+//! Degree type for polynomials
 class Degree {
 public:
   typedef long value_type;
@@ -78,6 +83,7 @@ public:
   long _deg;
 };
 
+//! value
 inline long value(const Degree& d) { return d._deg; }
 } // Givaro
 

@@ -4,11 +4,9 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Givaro : Prime numbers
-//              Factors,
-// Needs list structures : stl ones for instance
 // Time-stamp: <06 Jun 06 15:03:59 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
+
 #ifndef __GIVARO_factorisation_INL
 #define __GIVARO_factorisation_INL
 

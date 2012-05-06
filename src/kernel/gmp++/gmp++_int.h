@@ -148,7 +148,7 @@ namespace Givaro {
 		// (FILE gmp++_cstor.C)
 		/*! @name Constructor/Destructors.
 		 * Constructors and destructor for an Integer.
-		*/
+		 */
 		/// Constructor form a known type.
 		///@param n input to be constructed from
 		giv_all_inlined Integer(int n = 0);
@@ -250,31 +250,31 @@ namespace Givaro {
 
 
 
-			//! name compare to 1 and 0
+		//! name compare to 1 and 0
 		//! @param a
-friend giv_all_inlined  int nonZero(const Integer& a);
+		friend giv_all_inlined  int nonZero(const Integer& a);
 
 		//! name compare to 1 and 0
 		//! @param a
-	friend giv_all_inlined  int isZero(const Integer& a);
-	//! @overload Givaro::isZero(Integer);
+		friend giv_all_inlined  int isZero(const Integer& a);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const short int a);
-	//! @overload Givaro::isZero(Integer);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const int a);
-	//! @overload Givaro::isZero(Integer);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const long int a);
-	//! @overload Givaro::isZero(Integer);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const unsigned short int a);
-	//! @overload Givaro::isZero(Integer);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const unsigned int a);
-	//! @overload Givaro::isZero(Integer);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const long unsigned int a);
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #if 1 /*  use of C++0x long long integer constant */
-	//! @overload Givaro::isZero(Integer);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const long long unsigned int a);
 #endif
-	//! @overload Givaro::isZero(Integer);
+		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int isZero(const long long int a);
 #endif
 		//! isleq

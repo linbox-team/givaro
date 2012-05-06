@@ -7,7 +7,7 @@
 /*! @file examples/FiniteField/exponentiation.C
  * @ingroup examples
  * @ingroup finitefields
- * @example examples/FiniteField/exponentation.C
+ * @example examples/FiniteField/exponentiation.C
  * @brief NO DOC
  */
 

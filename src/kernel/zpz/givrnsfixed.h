@@ -6,7 +6,7 @@
 // Time-stamp: <01 Apr 11 15:43:07 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 
-/*! @file zpz/givrnsfixed.h
+/*! @file givrnsfixed.h
  * @ingroup zpz
  * @brief Chinese Remainder Algorithm.
  */

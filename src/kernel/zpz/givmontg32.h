@@ -8,7 +8,7 @@
 // $Id: givmontg32.h,v 1.15 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
 
-/*! @file zpz/givmontg32.h
+/*! @file givmontg32.h
  * @ingroup zpz
  * @brief NO DOC
  */

@@ -8,6 +8,11 @@
 // Author: T. Gautier
 // $Id: givarrayallocator.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
+
+/** @file givarrayallocator.h
+ * @ingroup bstruct
+ * @brief NO DOC
+ */
 #ifndef __GIVARO_array_allocator_H
 #define __GIVARO_array_allocator_H
 
@@ -25,8 +30,10 @@ template<class T, class Tag>
 class ArrayAllocatort { };
 
 
-// -- Specialization: for Array0Tag
+//! Array0Tag
 class Array0Tag {};
+
+//! Specialization: for Array0Tag
 template<class T, Array0Tag>
 class ArrayAllocatort : public Array0<T> {};
 

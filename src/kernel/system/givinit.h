@@ -8,21 +8,25 @@
 // Authors: T. Gautier
 // $Id: givinit.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+/** @file givinit.h
+ * @ingroup system
+ * @brief NO DOC
+ */
 #ifndef __GIVARO_init_H
 #define __GIVARO_init_H
 #include "givaro/givconfig.h"
 #include <iostream>
 
+//! Namespace in which the whole Givaro library resides.
 namespace Givaro {
 
 // ==========================================================================
-// --
-// -- Description:
-//   - Initialisation of GIVARO :
-//     * handler to manage signal
-//     * init the memory manager
-//     * init all other modules
-
+	/**  Initialisation of GIVARO .
+	 * - handler to manage signal
+	 * - init the memory manager
+	 * - init all other modules
+	 * .
+	 */
 class GivaroMain {
 public:
   //- Init of Givaro kernel :
@@ -43,8 +47,8 @@ static void DisplayVersion();
 
 // ==========================================================================
 // --
-// -- Main application class
-// -- Could be not used
+//! Main application class
+//! Could be not used
 class GivaroAppli : public GivaroMain {
 public:
   //- Cstor, destor
@@ -60,3 +64,4 @@ public:
 
 } // namespace Givaro
 #endif // __GIVARO_init_H
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -48,7 +48,7 @@ namespace Givaro {
 
 	// Recopy cstor : logical copy
 	template<class T>
-	inline Array0<T>::Array0 (const Array0<T>& p, givNoCopy)
+	inline Array0<T>::Array0 (const Self_t& p, givNoCopy)
 	{
 		_psz = p._psz; _size = p._size;
 		if (_size !=0)
@@ -62,7 +62,7 @@ namespace Givaro {
 
 	// Recopy cstor : physical copy
 	template<class T>
-	inline Array0<T>::Array0 (const Array0<T>& p, givWithCopy)
+	inline Array0<T>::Array0 (const Self_t& p, givWithCopy)
 	{
 		_psz = _size = p._size;
 		if (_size !=0) {

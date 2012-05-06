@@ -8,8 +8,11 @@
 // Authors: T. Gautier
 // $Id: givpoly1dense.h,v 1.29 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description: univariate polynomial over T
-// - we assume that T is a ring (0,1,+,*)
+/** @file givpoly1dense.h
+ * @ingroup poly1
+ * @brief univariate polynomial over T.
+ * we assume that T is a ring (0,1,+,*)
+ */
 #ifndef __GIVARO_poly1_dense_H
 #define __GIVARO_poly1_dense_H
 
@@ -26,6 +29,7 @@
 
 namespace Givaro {
 
+	//! givvector
 	template < typename T, typename A=std::allocator<T> >
 	class givvector : public __GIV_STANDARD_VECTOR<T,A> {
 		typedef givvector<T,A>     Self_t;
@@ -101,7 +105,7 @@ namespace Givaro {
 
 	};
 
-	//  -------------------------------------------- Class Poly1Dom<Domain>
+	//!  Class Poly1Dom
 	template <class Domain>
 	class Poly1Dom<Domain,Dense> {
 	protected:  //  -- Representation
@@ -395,6 +399,20 @@ namespace Givaro {
 		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const;
 
 		// -- Square free decomposition
+		/** Sqrfree decomposition.
+		 * Decompose P such that:
+		 * P = Fact[0]^0 * Fact[1]^1 * ... * Fact[P.degree()]^(P.degree()),
+		 * with Fact[0] the leading coefficient.
+		 * The array Fact must be allocated before calling the function.
+		 * The size of Fact must be degP+1 is all factors should be computed.
+		 * For more readeable version of the algorithm, see Geddes, p342.
+		 * @param Nfact [in] the size of Fact
+		 * @param Fact  [in] an array of dimension Nfact
+		 @param Nfact [out] is the number of factor in the sqrfree decomposition
+		 @param Fact  [out] contains at most Nfact factors of the decomposition.
+		 @param P rep.
+		  */
+
 		size_t& sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const;
 
 

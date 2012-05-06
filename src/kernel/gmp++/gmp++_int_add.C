@@ -9,6 +9,10 @@
 // $Id: gmp++_int_add.C,v 1.5 2010-12-20 12:09:37 bboyer Exp $
 // ==========================================================================
 
+/** @file gmp++/gmp++_int_add.C
+ * adding stuff.
+ */
+
 #ifndef __GIVARO_gmpxx_gmpxx_int_add_C
 #define __GIVARO_gmpxx_gmpxx_int_add_C
 

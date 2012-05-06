@@ -8,10 +8,13 @@
 // Authors: JG Dumas
 // $Id: givinterp.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-// Interpolation at geometric points
-// see: Polynomial evaluation and interpolation on special sets of points,
-// A. Bostan and E. Schost, Journal of Complexity 21(4): 420-446, 2005.
+
+/** @file givinterpgeom.h
+ * @ingroup poly1
+ * @brief  Interpolation at geometric points
+ * @bib Polynomial evaluation and interpolation on special sets of points,
+ * A. Bostan and E. Schost, Journal of Complexity 21(4): 420-446, 2005.
+ */
 
 #ifndef __GIVARO_interpolation_at_geometric_points_H
 #define __GIVARO_interpolation_at_geometric_points_H
@@ -22,6 +25,8 @@
 #include <givaro/givtruncdomain.h>
 
 namespace Givaro {
+
+	//! Newton
 template<class Domain, bool REDUCE = true>
 struct NewtonInterpGeom : TruncDom<Domain>  {
     typedef std::vector< typename Domain::Element > Vect_t;

@@ -142,7 +142,7 @@ int test1()
 
 }/*}}}*/
 
-//! tests <tt>ret= ::func(arg,arg);</tt>
+//! tests \verbatim ret= ::func(arg,arg); \endverbatim
 int test2()
 {/*{{{*/
 	Integer un(26);
@@ -229,7 +229,7 @@ int test2()
 
 }/*}}}*/
 
-//! tests <code>::func(ret,arg,arg);</code>
+//! tests \verbatim ::func(ret,arg,arg); \endverbatim
 int test3()
 {/*{{{*/
 	Integer un(26);

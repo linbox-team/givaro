@@ -4,9 +4,13 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Givaro : RSA scheme.
 // Time-stamp: <07 May 09 13:51:58 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
+
+/** @file givintrsa.h
+ * @ingroup integers
+ * @brief RSA scheme.
+ */
 
 #ifndef __GIVARO_rsa_H
 #define __GIVARO_rsa_H
@@ -27,6 +31,7 @@
 
 namespace Givaro {
 
+	//! RSA domain
 template<class RandIter = GivRandom>
 class IntRSADom : public IntFactorDom<RandIter> {
 public:
@@ -45,8 +50,9 @@ private:
 public:
 
 // =================================================================== //
-// Constructors
+//! Constructors
 // =================================================================== //
+//@{
     IntRSADom(bool fi = false, RandIter g = RandIter() ) :
 		IntFactorDom<RandIter>(g), _fast_impl(fi)
 	{
@@ -71,19 +77,24 @@ public:
     IntRSADom(const Element& n, const Element& e) :
 	   	_n(n), _e(e), _d(0), _lm(log(n,1<<(8*sizeof(unsigned char)))), _fast_impl( e == SIMPLE_EXPONENT )
 	{}
+	//@}
 
 // =================================================================== //
-// Accesses
+//! Accesses
 // =================================================================== //
+//@{
     const Element& getn() const { return _n; }
     const Element& gete() const { return _e; }
     const Element& getd() const { return _d; }
+//@}
 
 // =================================================================== //
-// Text conversions
+//! Text conversions
 // =================================================================== //
+//@{
     std::ostream& encipher(std::ostream&, std::istream&) const ;
     std::ostream& decipher(std::ostream&, std::istream&) ;
+	//@}
 
 // =================================================================== //
 // Keys generation
@@ -95,40 +106,46 @@ public:
 
 
 // =================================================================== //
-// [Strong Primes Are Easy to Find, J. Gordon, EUROCRYPT'84, LNCS 209
+/*! Strong Primes.
+ * @bib Strong Primes Are Easy to Find, J. Gordon, EUROCRYPT'84, LNCS 209.
+ */
 // =================================================================== //
     Element& strong_prime(random_generator& g, long psize, Element& p) const;
 
 // =================================================================== //
-// Here m = p*q
-// p and q are prime numbers of respective sizes psize, qsize
-// Moreover p-1 and q-1 have one prime factor of respective size 2/3
-// since k.u = 1 mod (p-1)(q-1)
+/** Key gen.
+ * Here m = p*q
+ * p and q are prime numbers of respective sizes psize, qsize
+ * Moreover p-1 and q-1 have one prime factor of respective size 2/3
+ * since k.u = 1 mod (p-1)(q-1)
+ */
 // =================================================================== //
+//@{
     void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d, Element& p, Element& q) const ;
     void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d) const ;
+	//@}
 
 // =================================================================== //
-// log[10]
+//! log[10]
 // =================================================================== //
     long log(const Element& n, const long = 10) const ;
 
 // =================================================================== //
-// Text conversions
+//! Text conversions
 // =================================================================== //
     std::ostream& ecriture_str(std::ostream&, const Element&) const ;
     std::ostream& ecriture_str_last(std::ostream&, const Element&) const ;
     std::ostream& ecriture_Int(std::ostream&, const Element&) const ;
 
 // =================================================================== //
-// Breaking codes : finding u knowing only m an k ...
+//! Breaking codes : finding u knowing only m an k ...
 // =================================================================== //
     Element& point_break(Element& u) ;
 
 protected:
-// Fast implementation
-// Means simple enciphering key, and deciphering via chinese remaindering
-// WARNING: this means less security !
+//! Fast implementation.
+//! Means simple enciphering key, and deciphering via chinese remaindering.
+//! @warning this means less security !
     bool _fast_impl;
 
 };

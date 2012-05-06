@@ -4,9 +4,14 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Givaro field Elements generator
 // Author : Giorgi Pascal   pascal.giorgi@ens-lyon.fr
 //==================================================================
+
+/** @file giv_randiter.h
+ * @ingroup zpz
+ * @brief NO DOC
+ * Givaro field Elements generator
+ */
 
 #ifndef __GIVARO_randiter_H
 #define __GIVARO_randiter_H
@@ -36,8 +41,8 @@ template<class TT> class GFqDom;
  *   throught a template argument as a field.
  *   The random generator used is the givrandom.
  */
-
-template <class Field , class Type> class GIV_randIter
+template <class Field , class Type>
+	class GIV_randIter
 {
   public:
 

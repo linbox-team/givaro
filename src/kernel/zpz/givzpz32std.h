@@ -11,7 +11,7 @@
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 
-/*! @file zpz/givzpz32std.h
+/*! @file givzpz32std.h
  * @ingroup zpz
  * @brief Arithmetic on \c Z/pZ, with p a prime number less than \f$2^32\f$.
  *   Modulo typedef is a signed long number. In case it was modified
@@ -30,12 +30,12 @@
 
 
 namespace Givaro {
+
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
  * - p max is 46337
  * .
  */
-
 template<>
 class ZpzDom<Std32> {
 public:

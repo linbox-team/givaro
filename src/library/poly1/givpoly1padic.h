@@ -7,6 +7,11 @@
 // Time-stamp: <11 Jun 10 14:43:52 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
+/** @file givpoly1padic.h
+ * @ingroup poly1
+ * @brief NO DOC.
+ */
+
 #ifndef __GIVARO_poly1_p_adic_H
 #define __GIVARO_poly1_p_adic_H
 #include <givaro/givinteger.h>
@@ -18,6 +23,7 @@ namespace Givaro {
 
 template<class Domain, class Tag=Dense> class Poly1PadicDom;
 
+//! Poly1 p-adic.
 template<class Domain>
 class Poly1PadicDom<Domain,Dense> : public Poly1Dom<Domain,Dense>, public IntegerDom {
     using Poly1Dom<Domain,Dense>::_domain;

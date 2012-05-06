@@ -9,6 +9,9 @@
 // Modified: JG. Dumas, BB.
 // $Id: gmp++_int_mod.C,v 1.17 2010-12-22 13:47:45 jgdumas Exp $
 // ==========================================================================
+/** @file gmp++/gmp++_int_mod.C
+ * moding stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_mod_C
 #define __GIVARO_gmpxx_gmpxx_int_mod_C

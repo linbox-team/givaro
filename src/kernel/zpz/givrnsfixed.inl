@@ -85,14 +85,14 @@ namespace Givaro {
 	{}
 
 	template<class Ints>
-	RNSsystemFixed<Ints>::RNSsystemFixed (const RNSsystemFixed<Ints>& R) :
+	RNSsystemFixed<Ints>::RNSsystemFixed (const Self_t& R) :
 		_primes(R._primes, givWithCopy())
 	{}
 
 
 	// -- Array of primes are given
 	template<class Ints>
-	RNSsystemFixed<Ints>::RNSsystemFixed( const RNSsystemFixed<Ints>::array& inprimes) : _primes(0)
+	RNSsystemFixed<Ints>::RNSsystemFixed( const array& inprimes) : _primes(0)
 	{
 		GIVARO_ASSERT( inprimes.size()>0, "[RNSsystemFixed<Ints>::RNSsystemFixed] bad size of array");
 		_primes.reserve( GIVINTLOG(inprimes.size()) );

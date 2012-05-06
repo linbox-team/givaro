@@ -8,6 +8,9 @@
 // Authors: M. Samama, T. Gautier
 // $Id: gmp++_int_div.C,v 1.9 2011-01-06 18:02:37 bboyer Exp $
 // ==========================================================================
+/** @file gmp++/gmp++_int_div.C
+ * diving stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_div_C
 #define __GIVARO_gmpxx_gmpxx_int_div_C

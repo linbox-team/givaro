@@ -9,7 +9,7 @@
 // $Id: givarray0.h,v 1.7 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
 //
-/*! @file bstruct/givarray0.h
+/*! @file givarray0.h
  * @brief Array of type T with reference mecanism.
  */
 

@@ -13,17 +13,7 @@
 #define __GIVARO_poly1_sqrfree_INL
 
 namespace Givaro {
-/** Sqrfree decomposition.
-Decompose P such that: P = Fact[0]^0 * Fact[1]^1 * ... * Fact[P.degree()]^(P.degree()),
-with Fact[0] the leading coefficient.
-The array Fact must be allocated before calling the function.
-The size of Fact must be degP+1 is all factors should be computed.
-For more readeable version of the algorithm, see Geddes, p342.
-@param Nfact [in] the size of Fact
-@param Fact  [in] an array of dimension Nfact
-@param Nfact [out] is the number of factor in the sqrfree decomposition
-@param Fact  [out] contains at most Nfact factors of the decomposition.
-*/
+
 template <class Domain>
 size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) const
 {
@@ -76,6 +66,7 @@ size_t& Poly1Dom<Domain,Dense>::sqrfree(size_t& Nfact, Rep* Fact, const Rep& P) 
 //write(cout << "L" << count << ":", Fact[count]) << endl;
   return Nfact = ++count;
 }
+
 } // Givaro
 
 #endif // __GIVARO_poly1_sqrfree_INL

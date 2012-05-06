@@ -9,7 +9,7 @@
 // $Id: givzpzInt.h,v 1.11 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 
-/*! @file zpz/givzpzInt.h
+/*! @file givzpzInt.h
  * @ingroup zpz
  *  @brief Arithmetic on Z/pZ, with p a prime number in arbitrary precision.
  */

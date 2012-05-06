@@ -9,7 +9,7 @@
 // Time-stamp: <02 Oct 07 16:43:17 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 
-/*! @file zpz/givprimes16.h
+/*! @file givprimes16.h
  * @ingroup zpz
  * @brief  set of primes less than 2^16
  */
@@ -19,7 +19,7 @@
 
 #include <stddef.h>
 namespace Givaro {
-  // ---------------------------------------------  class Primes16
+  //! class Primes16
 class Primes16  {
 public:
 

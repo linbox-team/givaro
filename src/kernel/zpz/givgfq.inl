@@ -307,68 +307,71 @@ namespace Givaro {
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::mulin
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a) const
+    (Rep& r, const Rep a) const
     { _GIVARO_GFQ_MUL(r,r,a, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::div
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b) const
-    { _GIVARO_GFQ_DIV(r, a, b, GFqDom<TT>::_qm1) ; return r; }
+    (Rep& r, const Rep a, const Rep b) const
+    {
+	   	_GIVARO_GFQ_DIV(r, a, b, GFqDom<TT>::_qm1) ;
+		return r;
+	}
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::divin
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a) const
+    (Rep& r, const Rep a) const
     { _GIVARO_GFQ_DIV(r, r, a, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::add
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b) const
+    (Rep& r, const Rep a, const Rep b) const
     { _GIVARO_GFQ_ADD(r, a, b, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::addin
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a) const
+    (Rep& r, const Rep a) const
     { _GIVARO_GFQ_ADD(r, r, a, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::sub
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b) const
+    (Rep& r, const Rep a, const Rep b) const
     { _GIVARO_GFQ_SUB(r, a, b, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::subin
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a) const
+    (Rep& r, const Rep a) const
     { _GIVARO_GFQ_AUTOSUB(r, a, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::neg
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a) const
+    (Rep& r, const Rep a) const
     { _GIVARO_GFQ_NEG(r, a, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::negin
-    (GFqDom<TT>::Rep& r) const
+    (Rep& r) const
     { _GIVARO_GFQ_NEG(r, r, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::inv
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a) const
+    (Rep& r, const Rep a) const
     { _GIVARO_GFQ_INV(r, a, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::invin
-    (GFqDom<TT>::Rep& r) const
+    (Rep& r) const
     { _GIVARO_GFQ_INV(r, r, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axpy
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b, const GFqDom<TT>::Rep c)
+    (Rep& r, const Rep a, const Rep b, const Rep c)
 	const
     { _GIVARO_GFQ_MULADD(r,a,b,c, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axpyin
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b) const
+    (Rep& r, const Rep a, const Rep b) const
     {
         Rep tmp = r;
         _GIVARO_GFQ_MULADD((r),a,b,tmp, (GFqDom<TT>::_qm1), (GFqDom<TT>::_plus1)) ;
@@ -377,9 +380,9 @@ namespace Givaro {
 
         // r <- r-a*b
     template<typename TT>
-    inline typename GFqDom<TT>::Rep&  GFqDom<TT>::maxpyin (GFqDom<TT>::Rep& r,
-                                                           const GFqDom<TT>::Rep a,
-                                                           const GFqDom<TT>::Rep b) const
+    inline typename GFqDom<TT>::Rep&  GFqDom<TT>::maxpyin (Rep& r,
+                                                           const Rep a,
+                                                           const Rep b) const
     {
             //   Rep tmp = r;
             //   _GIVARO_GFQ_MULSUB(r,a,b,tmp, _qm1o2, _qm1, _plus1) ;
@@ -389,9 +392,9 @@ namespace Givaro {
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmyin (GFqDom<TT>::Rep& r,
-                                                          const GFqDom<TT>::Rep a,
-                                                          const GFqDom<TT>::Rep b) const
+    inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmyin (Rep& r,
+                                                          const Rep a,
+                                                          const Rep b) const
     {
         this->maxpyin(r,a,b);
         return this->negin(r);
@@ -400,7 +403,7 @@ namespace Givaro {
         // r <- a*b-c
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::axmy
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b, const GFqDom<TT>::Rep c)
+    (Rep& r, const Rep a, const Rep b, const Rep c)
         const
     {
         _GIVARO_GFQ_MUL(r,a,b, GFqDom<TT>::_qm1) ;
@@ -409,7 +412,7 @@ namespace Givaro {
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::maxpy
-    (GFqDom<TT>::Rep& r, const GFqDom<TT>::Rep a, const GFqDom<TT>::Rep b, const GFqDom<TT>::Rep c)
+    (Rep& r, const Rep a, const Rep b, const Rep c)
         const
     {
         _GIVARO_GFQ_MUL(r,a,b, GFqDom<TT>::_qm1) ;

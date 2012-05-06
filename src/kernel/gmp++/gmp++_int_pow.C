@@ -9,6 +9,9 @@
 // $Id: gmp++_int_pow.C,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
 // Description:
+/** @file gmp++/gmp++_int_pow.C
+ * powing stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_pow_C
 #define __GIVARO_gmpxx_gmpxx_int_pow_C

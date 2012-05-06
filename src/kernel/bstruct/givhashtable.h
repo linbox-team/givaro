@@ -8,7 +8,7 @@
 // Author: T. Gautier
 // $Id: givhashtable.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
-/*! @file bstruct/givhashtable.h
+/*! @file givhashtable.h
  * @ingroup bstruct
  * @brief hash table
  */
@@ -26,7 +26,6 @@ namespace Givaro {
  * - godel      : void -> int
  * .
  */
-
 // Generic Key for class T which can be cast to and int
 template<class T>
 class Key {
@@ -41,6 +40,7 @@ private:
   T a ;
 } ;
 
+//! Hash table
 template<class T, class Key>
 class HashTable {
 public:

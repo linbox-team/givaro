@@ -4,13 +4,20 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Givaro : Prime numbers
-//              Factor sets :
-//              Pollard's rho method for factorization
-//              Elliptic curves factorization by Lenstra
 // Needs Container structures : stl ones for instance
 // Time-stamp: <29 Jun 05 14:12:09 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
+
+/*! @file givintfactor.h
+ * @ingroup integers
+ * @brief factorisation
+ *- Prime numbers
+ * - Factor sets :
+ * - Pollard's rho method for factorization
+ * - Elliptic curves factorization by Lenstra
+ * .
+ */
+
 #ifndef __GIVARO_factorisation_H
 #define __GIVARO_factorisation_H
 
@@ -31,6 +38,7 @@ namespace Givaro {
 	// Set or Container of divisors, factors.
 	// =================================================================== //
 
+	//! Integer Factor Domain.
 	template<class RandIter = GivRandom>
 	class IntFactorDom : public IntPrimeDom {
 	private:

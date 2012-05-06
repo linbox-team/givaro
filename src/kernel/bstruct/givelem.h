@@ -8,8 +8,10 @@
 // Authors: T. Gautier
 // $Id
 // ==========================================================================
-// Description:
-// definition of a reference to an object.
+/** @file givelem.h
+ * @ingroup bstuct
+ * @brief definition of a reference to an object.
+ */
 //
 #ifndef __GIVARO_Elem_H
 #define __GIVARO_Elem_H
@@ -17,6 +19,7 @@
 namespace Givaro {
 
 
+	//! Elem Ref
 template<class T>
 struct ElemRef {
   typedef T Type_t;
@@ -27,6 +30,7 @@ struct ElemRef {
   ElemRef<T> operator= (const Type_t& v) { _ref = v; return *this; }
 };
 
+	//! Elem const Ref
 template<class T>
 struct ElemConstRef {
   typedef T Type_t;
@@ -35,6 +39,7 @@ struct ElemConstRef {
   operator const Type_t& () const { return _ref; }
 };
 
+	//!  Pair
 template<class T1, class T2>
 struct Pair {
   T1 _val1;
@@ -47,10 +52,12 @@ struct Pair {
   const T2& second() const { return _val2; }
 };
 
+//! IO
 template<class T1, class T2>
 ostream& operator<< (ostream& o, const Pair<T1,T2>& p )
 { return o << '(' << p._val1 << ',' << p._val2 << ')'; }
 
+//! IO
 template<class T1, class T2>
 istream& operator>> (istream& fin, Pair<T1,T2>& p )
 {

@@ -11,7 +11,7 @@
 // date: 2004
 //==================================================================
 
-/*! @file zpz/StaticElement.h
+/*! @file StaticElement.h
  * @ingroup zpz
  * @brief NO DOC
  */
@@ -24,6 +24,7 @@
 
 namespace Givaro {
 
+	//! Static Element
 template <class Domain>
 class StaticElement {
     static Domain _domain;

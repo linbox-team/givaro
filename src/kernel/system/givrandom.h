@@ -4,16 +4,14 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Givaro : random generator
-// a la Linbox ...
 // Time-stamp: <13 Jul 07 14:40:27 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
-/*! @file system/givrandom.h
+/*! @file givrandom.h
  * @ingroup system
  * @brief NO DOC
  * @bib Fishman, G.S. "Multiplicative congruential random
- * number generators ..." Math. Comp. 54:331-344 (1990)
+ * number generators ..." Math. Comp. 54:331-344 (1990).
  */
 
 #ifndef __GIVARO_random_H
@@ -36,6 +34,7 @@ extern "C" {
 
 namespace Givaro {
 
+	//! GivRandom
 class GivRandom {
     mutable unsigned long _seed;
 public:

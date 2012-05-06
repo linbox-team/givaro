@@ -8,8 +8,10 @@
 // Authors: T. Gautier
 // $Id: givperf.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-// - performance analysis
+/** @file givperf.h
+ * @ingroup system
+ * @brief performance analysis
+ */
 #ifndef __GIVARO_perf_H
 #define __GIVARO_perf_H
 
@@ -19,6 +21,7 @@
 
 namespace Givaro {
 
+	//! cout counter
 struct __CoutCounter {
   void (*print)(ostream&);
   __CoutCounter( void (*prn)(ostream& ) ) : print(prn)

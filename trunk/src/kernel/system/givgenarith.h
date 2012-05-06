@@ -8,21 +8,23 @@
 // Authors: T. Gautier
 // $Id: givgenarith.h,v 1.5 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-// Domain definition for basic type of the language.
+/** @file givgenarith.h
+ * @ingroup system
+ * @brief Domain definition for basic type of the language.
+ */
 #ifndef __GIVARO_genarith_H
 #define __GIVARO_genarith_H
 
 #include "givaro/givbasictype.h"
 namespace Givaro {
-// -- give a name for /read/write
+//! give a name for /read/write
 template<class T>
 struct __givdom_trait_name { enum { val = '?' }; };
 
 #define __GIVARO_SPEC_NAME( type, name ) \
 struct __givdom_trait_name<type> { enum { val = name }; } ;
 
-
+//! Base Domain
 template<class T>
 class BaseDomain {
 public:
@@ -93,20 +95,26 @@ public:
   { return s >> r; }
 };
 
-
+//! char dom
 typedef BaseDomain<char>    CharDom;
 __GIVARO_SPEC_NAME(char, 'c')
+//! short dom
 typedef BaseDomain<short>   ShortDom;
 __GIVARO_SPEC_NAME(short, 's')
+//! int dom
 typedef BaseDomain<int>     IntDom;
 __GIVARO_SPEC_NAME(int, 'i')
+//! long dom
 typedef BaseDomain<long>    LongDom;
 __GIVARO_SPEC_NAME(long, 'l')
+//! float dom
 typedef BaseDomain<float>   FloatDom;
 __GIVARO_SPEC_NAME(float, 'f')
+//! double dom
 typedef BaseDomain<double>  DoubleDom;
 __GIVARO_SPEC_NAME(double, 'd')
 
 } // namespace Givaro
 
 #endif // __GIVARO_genarith_H
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

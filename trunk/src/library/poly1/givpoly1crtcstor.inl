@@ -23,7 +23,7 @@ Poly1CRT<Field>::Poly1CRT ()
 {}
 
 template<class Field>
-Poly1CRT<Field>::Poly1CRT (const Poly1CRT<Field>& R)
+Poly1CRT<Field>::Poly1CRT (const Self_t& R)
  : _XIndet(R._XIndet),
    _F(R._F),
    _PolRing(R._PolRing),
@@ -34,7 +34,7 @@ Poly1CRT<Field>::Poly1CRT (const Poly1CRT<Field>& R)
 
   // -- Array of primes are given
 template<class Field>
-Poly1CRT<Field>::Poly1CRT( const Field& F, const Poly1CRT<Field>::array_T& inprimes, const Indeter& X)
+Poly1CRT<Field>::Poly1CRT( const Field& F, const array_T& inprimes, const Indeter& X)
  : _XIndet(X),
    _F(F),
    _PolRing(F,X),

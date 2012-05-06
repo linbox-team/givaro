@@ -65,17 +65,17 @@ inline typename ZpzDom<IntType>::Residu_t ZpzDom<IntType>::residu( ) const
  // ------------------------- Miscellaneous functions
 
 template<typename IntType>
-inline int ZpzDom<IntType>::isZero(const typename ZpzDom<IntType>::Rep& a) const
+inline int ZpzDom<IntType>::isZero(const Rep& a) const
 { return a == zero; }
 
 template<typename IntType>
-inline int ZpzDom<IntType>::isOne(const typename ZpzDom<IntType>::Rep& a) const
+inline int ZpzDom<IntType>::isOne(const Rep& a) const
 { return a == one; }
 
 
 
 template<typename IntType>
-inline size_t ZpzDom<IntType>::length(const typename ZpzDom<IntType>::Rep& a) const
+inline size_t ZpzDom<IntType>::length(const Rep& a) const
 { return ZpzDom<IntType>::size_rep;}
 
 
@@ -86,39 +86,44 @@ inline size_t ZpzDom<IntType>::length(const typename ZpzDom<IntType>::Rep& a) co
 
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::mul (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::mul (Rep& r,
+							    const Rep& a, const Rep& b) const
 {
     __GIVARO_ZPZIntType_N_MUL(r,_p,a,b); return r;
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::sub (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::sub (Rep& r,
+							    const Rep& a, const Rep& b) const
 {
   __GIVARO_ZPZIntType_N_SUB(r,_p,a,b); return r;
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::add (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::add (Rep& r,
+							    const Rep& a, const Rep& b) const
 {
     __GIVARO_ZPZIntType_N_ADD(r,_p,a,b); return r;
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::neg (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::neg (Rep& r,
+							    const Rep& a) const
 {
     __GIVARO_ZPZIntType_N_NEG(r,_p,a); return r;
 
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::negin (typename ZpzDom<IntType>::Rep& r) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::negin (Rep& r) const
 {
   __GIVARO_ZPZIntType_N_NEGIN(r,_p);
   return r;
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::inv (typename ZpzDom<IntType>::Rep& u1, const typename ZpzDom<IntType>::Rep& a) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::inv (Rep& u1,
+							    const Rep& a) const
 {
     u1=one;
     IntType r0(_p), r1(a);
@@ -148,7 +153,8 @@ inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::inv (typename ZpzDom<IntT
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::div (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::div (Rep& r,
+							    const Rep& a, const Rep& b) const
 {
   typename ZpzDom<IntType>::Rep ib;
   inv(ib, b);
@@ -166,7 +172,8 @@ inline void ZpzDom<IntType>::mul (const size_t sz, Array r, constArray a, constA
 }
 
 template<typename IntType>
-inline void ZpzDom<IntType>::mul (const size_t sz, Array r, constArray a, const typename ZpzDom<IntType>::Rep& b) const
+inline void ZpzDom<IntType>::mul (const size_t sz,
+				  Array r, constArray a, const Rep& b) const
 {
   for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZIntType_N_MUL(r[i], _p, a[i], b);
@@ -182,7 +189,8 @@ inline void ZpzDom<IntType>::div (const size_t sz, Array r, constArray a, constA
 }
 
 template<typename IntType>
-inline void ZpzDom<IntType>::div (const size_t sz, Array r, constArray a, const typename ZpzDom<IntType>::Rep& b) const
+inline void ZpzDom<IntType>::div (const size_t sz, Array r, constArray a,
+				  const Rep& b) const
 {
   typename ZpzDom<IntType>::Rep ib;
   inv(ib, b);
@@ -198,7 +206,8 @@ inline void ZpzDom<IntType>::add (const size_t sz, Array r, constArray a, constA
 }
 
 template<typename IntType>
-inline void ZpzDom<IntType>::add (const size_t sz, Array r, constArray a, const typename ZpzDom<IntType>::Rep& b) const
+inline void ZpzDom<IntType>::add (const size_t sz, Array r, constArray a,
+				  const Rep& b) const
 {
   for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZIntType_N_ADD(r[i], _p, a[i], b);
@@ -214,7 +223,8 @@ inline void ZpzDom<IntType>::sub (const size_t sz, Array r, constArray a, constA
 }
 
 template<typename IntType>
-inline void ZpzDom<IntType>::sub (const size_t sz, Array r, constArray a, const typename ZpzDom<IntType>::Rep& b) const
+inline void ZpzDom<IntType>::sub (const size_t sz, Array r, constArray a,
+				  const Rep& b) const
 {
   for ( size_t i=sz ; --i ; ) {
     __GIVARO_ZPZIntType_N_SUB(r[i], _p, a[i], b);
@@ -231,14 +241,16 @@ inline void ZpzDom<IntType>::neg (const size_t sz, Array r, constArray a) const
 
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::mulin (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::mulin (Rep& r,
+							      const Rep& a) const
 {
   __GIVARO_ZPZIntType_N_MULIN(r,_p, a);
   return r;
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::divin (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::divin (Rep& r,
+							      const Rep& a) const
 {
   typename ZpzDom<IntType>::Rep ia;
   inv(ia, a);
@@ -246,14 +258,16 @@ inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::divin (typename ZpzDom<In
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::addin (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::addin (Rep& r,
+							      const Rep& a) const
 {
   __GIVARO_ZPZIntType_N_ADDIN(r,_p, a);
   return r;
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::subin (typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::subin (Rep& r,
+							      const Rep& a) const
 {
   __GIVARO_ZPZIntType_N_SUBIN(r,_p, a);
   return r;
@@ -261,27 +275,27 @@ inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::subin (typename ZpzDom<In
 
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::invin (typename ZpzDom<IntType>::Rep& r) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::invin (Rep& r) const
 {
    typename ZpzDom<IntType>::Rep t = r;
    return ZpzDom<IntType>::inv(r,t);
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::axpy (typename ZpzDom<IntType>::Rep& r,
-						    const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b, const typename ZpzDom<IntType>::Rep& c) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::axpy (Rep& r,
+						    const Rep& a, const Rep& b, const Rep& c) const
 {
   __GIVARO_ZPZIntType_N_MULADD(r, _p, a, b, c);
   return r;
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::axpyin (typename ZpzDom<IntType>::Rep& r,
-						       const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const
+inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::axpyin (Rep& r,
+						       const Rep& a, const Rep& b) const
 {
   typename ZpzDom<IntType>::Rep tmp = r;
   __GIVARO_ZPZIntType_N_MULADDIN(tmp, _p, a, b);
-  return r = (typename ZpzDom<IntType>::Rep)tmp;
+  return r = (Rep)tmp;
 }
 
 
@@ -301,13 +315,13 @@ inline void ZpzDom<IntType>::axpyin (const size_t sz, Array r,
   for ( size_t i=sz ; --i ; ) {
     typename ZpzDom<IntType>::Rep tmp = r[i];
     __GIVARO_ZPZIntType_N_MULADDIN(tmp, _p, a[i], x[i]);
-    r[i] = (typename ZpzDom<IntType>::Rep)tmp;
+    r[i] = (Rep)tmp;
   }
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::axmy (typename ZpzDom<IntType>::Rep& r,
-						     const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b, const typename ZpzDom<IntType>::Rep& c) const
+inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::axmy (Rep& r,
+						     const Rep& a, const Rep& b, const Rep& c) const
 {
   __GIVARO_ZPZIntType_N_MULSUB(r, _p, a, b, c);
   return r;
@@ -315,28 +329,28 @@ inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::axmy (typename ZpzDom<In
 
 // r = c - a*b
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::maxpy (typename ZpzDom<IntType>::Rep& r,
-						      const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b, const typename ZpzDom<IntType>::Rep& c) const
+inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::maxpy (Rep& r,
+						      const Rep& a, const Rep& b, const Rep& c) const
 {
   typename ZpzDom<IntType>::Rep tmp = c;
   __GIVARO_ZPZIntType_N_SUBMULIN(tmp, _p, a, b );
-  return r = (typename ZpzDom<IntType>::Rep)tmp;
+  return r = (Rep)tmp;
 }
 // r -= a*b
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::maxpyin (typename ZpzDom<IntType>::Rep& r,
-						       	const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const
+inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::maxpyin (Rep& r,
+						       	const Rep& a, const Rep& b) const
 {
   __GIVARO_ZPZIntType_N_SUBMULIN(r, _p, a, b );
   return r;
 //   typename ZpzDom<IntType>::Rep tmp = r;
 //   __GIVARO_ZPZIntType_N_SUBMULIN(tmp, _p, a, b );
-//   return r = (typename ZpzDom<IntType>::Rep)tmp;
+//   return r = (Rep)tmp;
 }
 // r = a*b - r
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::axmyin (typename ZpzDom<IntType>::Rep& r,
-						       const typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const
+inline typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::axmyin (Rep& r,
+						       const Rep& a, const Rep& b) const
 {
     maxpyin(r,a,b);
     return negin(r);
@@ -360,7 +374,7 @@ inline void ZpzDom<IntType>::maxpyin (const size_t sz, Array r,
   for ( size_t i=sz ; --i ; ) {
     typename ZpzDom<IntType>::Rep tmp = r[i];
     __GIVARO_ZPZIntType_N_SUBMULIN(tmp, _p, a[i], x[i]);
-    r[i] = (typename ZpzDom<IntType>::Rep)tmp;
+    r[i] = (Rep)tmp;
   }
 }
 
@@ -371,7 +385,7 @@ inline void ZpzDom<IntType>::maxpyin (const size_t sz, Array r,
 
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const double a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( Rep& r, const double a ) const
 {
   int sign; double ua;
   if (a < 0.0) { sign =-1; ua = -a;}
@@ -383,7 +397,7 @@ inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<
 }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const float a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( Rep& r, const float a ) const
 {
     return init(r, (double)a);
 }
@@ -391,7 +405,7 @@ inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<
 
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const unsigned long int a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( Rep& r, const unsigned long int a ) const
 {
     r = IntType(a);
     if ( r >= _p ) r %= _p;
@@ -399,7 +413,7 @@ inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<
 }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const long int a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( Rep& r, const long int a ) const
 {
   int sign;
   if (a <0) { sign =-1; r = IntType(-a);}
@@ -410,7 +424,7 @@ inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<
 }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r, const IntType& a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( Rep& r, const IntType& a ) const
 {
   int sign;
   if (a < zero) { sign =-1; r = IntType(-a);}
@@ -421,10 +435,10 @@ inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::init ( typename ZpzDom<
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::init( typename ZpzDom<IntType>::Rep& a, const int i) const { return init(a,(long)i); }
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::init( Rep& a, const int i) const { return init(a,(long)i); }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::init( typename ZpzDom<IntType>::Rep& a, const unsigned int i) const { return init(a,(unsigned long)i); }
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::init( Rep& a, const unsigned int i) const { return init(a,(unsigned long)i); }
 
 
 template<typename IntType>
@@ -445,27 +459,27 @@ inline void ZpzDom<IntType>::assign
 }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign ( typename ZpzDom<IntType>::Rep& r, const long a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign ( Rep& r, const long a ) const
 {
   return r = typename ZpzDom<IntType>::Rep(a);
 }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign ( typename ZpzDom<IntType>::Rep& r, const short a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign ( Rep& r, const short a ) const
 { return ZpzDom<IntType>::assign( r, (long)a); }
 
 template<typename IntType>
-inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign ( typename ZpzDom<IntType>::Rep& r, const unsigned long a ) const
+inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign ( Rep& r, const unsigned long a ) const
 { return r = typename ZpzDom<IntType>::Rep(a); }
 
 template<typename IntType>
 inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign
-  ( typename ZpzDom<IntType>::Rep& r, const unsigned short a ) const
+  ( Rep& r, const unsigned short a ) const
 { return r = typename ZpzDom<IntType>::Rep(a); }
 
 template<typename IntType>
 inline  typename ZpzDom<IntType>::Rep&  ZpzDom<IntType>::assign
-  ( typename ZpzDom<IntType>::Rep& r, const typename ZpzDom<IntType>::Rep& a ) const
+  ( Rep& r, const Rep& a ) const
 { return r=a; }
 
 
@@ -478,25 +492,28 @@ inline void ZpzDom<IntType>::init
 }
 
 template<typename IntType>
-inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::init ( typename ZpzDom<IntType>::Rep& r ) const
+inline typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::init ( Rep& r ) const
 { return r = zero; }
 
 
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g, typename ZpzDom<IntType>::Rep& a) const {
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g,
+							       Rep& a) const {
 	        return init(a, g());
 }
 
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g, typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const {
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g,
+							       Rep& a, const Rep& b) const {
 	        IntType::random(a,b);
                 return a %= _p;
 }
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g, typename ZpzDom<IntType>::Rep& a, long b) const {
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g,
+							       Rep& a, long b) const {
 	        IntType::random(a,b);
 	        return a %= _p;
 
@@ -504,21 +521,24 @@ inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g, type
 
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::nonzerorandom(RandIter& g, typename ZpzDom<IntType>::Rep& a) const {
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::nonzerorandom(RandIter& g,
+								      Rep& a) const {
 	        while (isZero( random(g,a) )) {};
 		return a;
 }
 
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::nonzerorandom(RandIter& g, typename ZpzDom<IntType>::Rep& a, const typename ZpzDom<IntType>::Rep& b) const {
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::nonzerorandom(RandIter& g,
+								      Rep& a, const Rep& b) const {
 	        while (isZero( random(g,a,b))) {};
 		return a;
 }
 
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::nonzerorandom(RandIter& g, typename ZpzDom<IntType>::Rep& a, long b) const {
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::nonzerorandom(RandIter& g,
+								      Rep& a, long b) const {
 	        while (isZero( random(g,a,b))) {};
 		return a;
 }
@@ -595,7 +615,8 @@ inline std::ostream& ZpzDom<IntType>::write (std::ostream& s ) const
 }
 
 template<typename IntType>
-inline std::istream& ZpzDom<IntType>::read (std::istream& s, typename ZpzDom<IntType>::Rep& a) const
+inline std::istream& ZpzDom<IntType>::read (std::istream& s,
+					    Rep& a) const
 {
   s >> a;
   init(a, a);
@@ -603,7 +624,8 @@ inline std::istream& ZpzDom<IntType>::read (std::istream& s, typename ZpzDom<Int
 }
 
 template<typename IntType>
-inline std::ostream& ZpzDom<IntType>::write (std::ostream& s, const typename ZpzDom<IntType>::Rep& a) const
+inline std::ostream& ZpzDom<IntType>::write (std::ostream& s,
+					     const Rep& a) const
 {
   return s << a;
 }

@@ -6,9 +6,12 @@
 // see the COPYRIGHT file for more details.
 // Time-stamp: <05 Apr 00 10:17:06 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
-// Tabulation of factors of cyclotomic polynomials
-// of degree expo modulo mod
-// By vectors. P = v[0] + v[1] X + ... + v[n] X^n
+/** @file givpoly1tabcycl.h
+ * @ingroup poly1
+ * @brief Tabulation of factors of cyclotomic polynomials of degree expo modulo mod
+ *
+ * By vectors. P = v[0] + v[1] X + ... + v[n] X^n
+ */
 #ifndef __GIVARO_poly1_cyclo_table_H
 #define __GIVARO_poly1_cyclo_table_H
 
@@ -16,6 +19,8 @@
 #include "givaro/givpoly1factor.h"
 
 namespace Givaro {
+
+	//! CyclotomicTable
 template<class Domain, class Tag>
 class CyclotomicTable : public Poly1FactorDom<Domain,Tag> {
     typedef typename Poly1FactorDom<Domain,Tag>::Element Element;

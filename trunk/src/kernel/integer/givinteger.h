@@ -6,10 +6,15 @@
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier, J.-G. Dumas
 // =============================================================
-// Description:
-// Integer Domain class definition
+
+/*! @file givinteger.h
+ * @ingroup integers
+ * @brief Integer Domain class definition.
+ */
+
 #ifndef __GIVARO_integer_H
 #define __GIVARO_integer_H
+
 #include "givaro/givbasictype.h"
 #include "givaro/givinit.h"
 #include "givaro/giverror.h"
@@ -19,6 +24,7 @@
 
 namespace Givaro {
 	//------------------------------------ Class IntegerDom
+	//! Integer Domain.
 	class IntegerDom {
 	public:
 		typedef Integer Rep;

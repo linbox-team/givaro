@@ -8,6 +8,11 @@
 // Authors: M. Samama, T. Gautier
 // $Id: givrational.h,v 1.13 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+/*! @file givrational.h
+ * @ingroup rational
+ * @brief Rationals (and domain)
+ * NO DOC.
+ */
 #ifndef __GIVARO_rational_H
 #define __GIVARO_rational_H
 // #define __GIVARO_GMPplusplus_rational_H
@@ -38,7 +43,6 @@ int isInteger(const Rational& r);
 
 class RationalDom;
 
-// ----------------------------------- Class Rational
 
 //! Rationals. No doc.
 class Rational {
@@ -79,7 +83,7 @@ public :
     Rational operator + (const Rational& r) const ;
     Rational operator - (const Rational& r) const ;
     Rational operator - () const ;
-    giv_all_inlined Rational operator + () const ;
+    Rational operator + () const ;
     Rational operator * (const Rational& r) const ;
     Rational operator / (const Rational &r) const ;
     Rational& operator += (const Rational& r) ;
@@ -167,10 +171,14 @@ public:
 }; // ----------------------------------- End of Class Rationalional
 
 extern std::istream& operator>> (std::istream& in, Rational& r) ;
+}
+
 
 #include "givaro/givrational.inl"
 
-//------------------------------------------------------ Class RationalDom
+namespace Givaro {
+
+//! Rational Domain
 class RationalDom  {
 public:
     typedef Rational Element;

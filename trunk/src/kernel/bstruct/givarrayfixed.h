@@ -8,8 +8,9 @@
 // Author: T. Gautier
 // $Id: givarrayfixed.h,v 1.5 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
-/*! @file bstruct/givarrayfixed.h
- * ArrayFixed of type T with fixed dimension
+/*! @file givarrayfixed.h
+ * @ingroup bstruct
+ * @brief ArrayFixed of type T with fixed dimension.
  */
 
 #ifndef __GIVARO_array_fixed_H
@@ -23,6 +24,7 @@
 namespace Givaro {
 
 
+	//! ArrayFixed
 template <class T, size_t SIZE>
 class ArrayFixed
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -90,8 +92,8 @@ private:
   Self_t& operator= (const Self_t& p) {};
 };
 
-// -- Map opcode on all Elements less or requal that ith
-// -- Terminal recursion, specialization
+//! Map opcode on all Elements less or requal that ith.
+//! Terminal recursion, specialization
 template<class T, class UNARYOP, size_t ith>
 struct __giv_map_less_ith;
 
@@ -128,11 +130,13 @@ struct __giv_map_less_ith_const<T,UNARYOP,ith> {
 };
 
 
+//! Specialization
 template<class T, size_t SIZE>
 template<class UNARYOP>
 void ArrayFixed<T,SIZE>::map( UNARYOP& opcode )
 { __giv_map_less_ith<T,UNARYOP,SIZE>()(_data, opcode); }
 
+//! Specialization
 template<class T, size_t SIZE>
 template<class UNARYOP>
 void ArrayFixed<T,SIZE>::map( UNARYOP& opcode ) const

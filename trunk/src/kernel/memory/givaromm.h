@@ -8,10 +8,16 @@
 // Author: T. Gautier
 // $Id: givaromm.h,v 1.7 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-// - two memory managers: the first one handle a set on free-list
-//   of blocs, the second one implement a reference mecanism on
-//   the bloc. The latter used method of the former.
+
+/** @file givaromm.h
+ * @ingroup memory
+ * @brief Memory management in Givaro
+ * two memory managers:
+ * - the first one handle a set on free-list of blocs ;
+ * - the second one implement a reference mecanism on the bloc.
+ * .
+ * The latter used method of the former.
+ */
 #ifndef __GIVARO_mm_H
 #define __GIVARO_mm_H
 
@@ -29,7 +35,7 @@ namespace Givaro {
 
 // ==================================================================== //
 
-// -------- Static informations of memory allocation
+//!  Static informations of memory allocation
 class GivMMInfo {
 public:
 	GivMMInfo();
@@ -43,12 +49,13 @@ public:
 	std::ostream& print( std::ostream& so ) const;
 };
 
+//! IO
 inline std::ostream& operator<<( std::ostream& o, const GivMMInfo& T)
 { return T.print(o); }
 
 // --------------------------------------------------------
-// -- Data structure of a bloc.
-// Each bloc in TabFree[id] has a data field of size TabSize[id]
+//! Data structure of a bloc.
+//! Each bloc in TabFree[id] has a data field of size TabSize[id]
 class BlocFreeList {
 	union header {
 		int index ;             // - index in free list
@@ -69,8 +76,8 @@ class BlocFreeList {
 
 
 // --------------------------------------------------------
-// Implementation of a memory manager with free-lists.
-// All members are static methods.
+//! Implementation of a memory manager with free-lists.
+//! All members are static methods.
 class GivMMFreeList {
 public:
 
@@ -151,9 +158,9 @@ private:
 };
 
 
-// -- Memory management with reference counter on allocated data.
-// The memory manager uses the BlocFreeList data structure
-// and stores the refcounter in the field data[0]
+//! Memory management with reference counter on allocated data.
+//! The memory manager uses the BlocFreeList data structure
+//! and stores the refcounter in the field data[0]
 class GivMMRefCount {
 public:
 	// -- Allocation of a new bloc of size at least s
@@ -260,7 +267,7 @@ public:
 };
 
 
-// -- Memory manager that allocates array of object of type T for
+//! Memory manager that allocates array of object of type T for
 template<class T>
 class GivaroMM {
 public:
@@ -275,6 +282,10 @@ public:
 	// -- Call destructor on each elements pointed by bloc
 	static void destroy(T* bloc, const size_t s);
 };
+
+
+//! @bug implem does not belong here
+//@{
 template<class T>
 inline T* GivaroMM<T>::allocate (const size_t s)
 { return (T*)GivMMFreeList::allocate(s*sizeof(T)); }
@@ -290,6 +301,7 @@ inline void GivaroMM<T>::initialize(T* bloc, const size_t s, const T& V)
 template<class T>
 inline void GivaroMM<T>::destroy(T* bloc, const size_t s)
 { for (size_t i=0; i<s; i++) bloc[i].~T(); }
+//@}
 
 // -- specialized version: for basic C++ type and pointer on this type
 #define GIVARO_MM_SPECIALIZED(TYPE) \

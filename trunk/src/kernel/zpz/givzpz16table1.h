@@ -11,7 +11,7 @@
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 
-/*! @file zpz/givzpz16table1.h
+/*! @file givzpz16table1.h
  * @ingroup zpz
  * @brief  Arithmetic on Z/pZ, with tabulation of operations.
  */

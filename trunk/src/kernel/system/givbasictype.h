@@ -8,6 +8,12 @@
 // Authors: T. Gautier
 // $Id: givbasictype.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
+
+/** @file givbasictype.h
+ * @ingroup system
+ * @brief NO DOC
+ */
+
 #ifndef __GIVARO_basictype_H
 #define __GIVARO_basictype_H
 #include "givaro/givconfig.h"
@@ -43,3 +49,4 @@ namespace Givaro {
 } // namespace Givaro
 
 #endif // __GIVARO_basictype_H
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

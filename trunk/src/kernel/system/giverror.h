@@ -9,7 +9,7 @@
 // $Id: giverror.h,v 1.4 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 
-/*! @file system/giverror.h
+/*! @file giverror.h
  * @ingroup system
  * @brief error exception.
  */
@@ -20,7 +20,7 @@
 #include <iostream>
 namespace Givaro {
 // ------------------------------- GivError
-// - Base class for exeception handling in Givaro
+//! Base class for exeception handling in Givaro
 class GivError {
 public:
   GivError(const char* msg =0 )
@@ -40,6 +40,7 @@ protected:
   const char* strg;
 };
 
+//! Math error.
 class GivMathError : public GivError {
 public:
   virtual ~GivMathError() ;
@@ -47,13 +48,14 @@ public:
   GivMathError(const char* msg = 0) : GivError(msg) { }
 };
 
-// -- Exception thrown in input of data structure
+//! Exception thrown in input of data structure
 class GivBadFormat : public GivError {
 public:
   virtual ~GivBadFormat();
   GivBadFormat(const char* msg = 0) : GivError(msg) { }
 };
 
+//! Div by 0.
 class GivMathDivZero : public GivError {
 public:
   virtual ~GivMathDivZero();
@@ -63,3 +65,4 @@ public:
 } // namespace Givaro
 
 #endif // __GIVARO_error_H
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

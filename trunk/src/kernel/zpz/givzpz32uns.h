@@ -11,7 +11,7 @@
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
 
-/*! @file zpz/givzpz32uns.h
+/*! @file givzpz32uns.h
  * @ingroup zpz
  * @brief    Arithmetic on Z/pZ, with p a prime number less than 2^32.
  *   Modulo typedef is a signed long number. In case it was modified
@@ -33,7 +33,6 @@ namespace Givaro {
  * - The representation of an integer a in Zpz is the value a % p
  * .
  */
-
 template<>
 class ZpzDom<Unsigned32> {
 public:

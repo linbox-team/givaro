@@ -8,8 +8,10 @@
 // Author: T. Gautier
 // $Id: givpointer.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
-// Description:
-// - auto ptr management
+/*! @file givpointer.h
+ * @ingroup memory
+ * @brief  auto ptr management
+ */
 #ifndef __GIVARO_pointer_H
 #define __GIVARO_pointer_H
 
@@ -19,6 +21,7 @@ namespace Givaro {
 
 // ==================================================================== //
 
+//! Refcount Pointer
 template<class T>
 class RefCountPtr {
   T*   _data;

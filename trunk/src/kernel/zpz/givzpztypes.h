@@ -9,7 +9,7 @@
 // Authors: JG Dumas
 // ==========================================================================
 
-/*! @file zpz/givzpztypes.h
+/*! @file givzpztypes.h
  * @ingroup zpz
  * @brief  Family of types for arithmetic over Zpz.
  */

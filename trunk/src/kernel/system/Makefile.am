@@ -29,3 +29,5 @@ libgivsystem_la_SOURCES= \
 	givinit.C	         \
 	givmodule.C	         \
 	givtimer.C
+
+EXTRA_DIST=system.doxy

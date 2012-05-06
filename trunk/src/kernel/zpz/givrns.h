@@ -9,7 +9,7 @@
 // $Id: givrns.h,v 1.5 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 
-/*! @file zpz/givrns.h
+/*! @file givrns.h
  * @ingroup zpz
  * @brief  Modular arithmetic for GIVARO.
  * Here is defined arithmetic functions
@@ -36,7 +36,6 @@ namespace Givaro {
 	 * - operator += (Ring&, const Modulo&)
 	 * .
 	 */
-
 	template<class RING, class Domain>
 	class RNSsystem  {
 		typedef RNSsystem<RING, Domain> Self_t;

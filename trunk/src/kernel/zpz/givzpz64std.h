@@ -9,9 +9,9 @@
 // $Id: givzpz64std.h,v 1.21 2011-02-04 14:11:46 jgdumas Exp $
 // ==========================================================================
 
-/*! @file zpz/givzpz64std.h
+/*! @file givzpz64std.h
  * @ingroup zpz
- * @brief Description.
+ * @brief Zpz on 64bit words
  *   Arithmetic on Z/pZ, with p a prime number less than 2^64
  *   Modulo typedef is a signed long number. In case it was modified
  *   then Bézout algorithm must be changed (coefficient can be negative).
@@ -32,7 +32,6 @@ namespace Givaro {
  * - p max is 2147483647
  * .
  */
-
 template<>
 class ZpzDom<Std64>
 {

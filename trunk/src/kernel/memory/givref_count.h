@@ -7,16 +7,21 @@
 // author: Th. Gautier
 // version : 2.7
 // date: 1995
-// Definition of the Counter class, Counter
-// This class definition objects to handle reference
-// counter for memory allocation (eg array0).
 // ==================================================================== //
+ /** @file givref_count.h
+  * @ingroup memory
+  * @brief Definition of the Counter class, Counter.
+ * This class definition objects to handle reference
+ * counter for memory allocation (eg array0).
+ */
+
 #ifndef __GIVARO_ref_counter_H
 #define __GIVARO_ref_counter_H
 #include <stddef.h>
 
 namespace Givaro {
 
+	//! Ref counter.
 class RefCounter {
 public:
    // Cstor and Dstor

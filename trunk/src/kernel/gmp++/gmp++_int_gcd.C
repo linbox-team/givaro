@@ -10,6 +10,9 @@
 // ==========================================================================
 // Description:
 //
+/** @file gmp++/gmp++_int_gcd.C
+ * gcding stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_gcd_C
 #define __GIVARO_gmpxx_gmpxx_int_gcd_C

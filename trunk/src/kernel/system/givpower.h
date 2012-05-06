@@ -8,15 +8,22 @@
 // Time-stamp: <25 Feb 11 13:34:07 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 
+/** @file givpower.h
+ * @ingroup system
+ * @brief NO DOC
+ */
+
 #ifndef __GIVARO_power_H
 #define __GIVARO_power_H
 
 namespace Givaro {
 
 // -------------------------------------------------------------
-// Integer log
+//! Integer log
 // -------------------------------------------------------------
-template<typename T> inline unsigned GIVINTLOG(const T& a) {
+template<typename T>
+	inline unsigned GIVINTLOG(const T& a)
+{
     unsigned l(0);
     for(T v(a); v >>= 1; ++l) {}
     return l;
@@ -25,9 +32,11 @@ template<typename T> inline unsigned GIVINTLOG(const T& a) {
 
 
 // -------------------------------------------------------------
-// Powering
+//! Powering
 // -------------------------------------------------------------
-template<class TT, class UU> TT power(const TT n, const UU l) {
+template<class TT, class UU>
+TT power(const TT n, const UU l)
+{
   if (l == 0) return 1 ;
 
   unsigned long p = (unsigned long) l ;
@@ -60,7 +69,10 @@ template<> Integer power(const Integer n, const int l) { return pow(n,l); }
 template<> Integer power(const Integer n, const unsigned int l) { return pow(n,l); }
 #endif
 
-template<class D, class TT> TT& dom_power(TT& res, const TT& n, long l, const D& F) {
+//! dom_power
+template<class D, class TT>
+TT& dom_power(TT& res, const TT& n, long l, const D& F)
+{
   if (l == 0) return res = F.one ;
 
   unsigned long p = (unsigned long) l ;
@@ -96,3 +108,4 @@ template<> double power<double>(const double a, const double e) {
 } // namespace Givaro
 
 #endif // __GIVARO_power_H
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

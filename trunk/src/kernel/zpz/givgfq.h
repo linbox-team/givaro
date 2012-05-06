@@ -10,7 +10,7 @@
 // version:
 // author: Jean-Guillaume.Dumas
 
-/*! @file zpz/givgfq.h
+/*! @file givgfq.h
  * @ingroup zpz
  * @brief   Arithmetic on GF(p^k), with p a prime number less than 2^16.
  */
@@ -27,7 +27,7 @@
 
 namespace Givaro {
 
-// ------------------------------------------------- class GFqDom
+//! class GFqDom
 template<class TT> class GFqDom {
 protected:
 	typedef typename Signed_Trait<TT>::unsigned_type UTT;
@@ -55,7 +55,7 @@ protected:
 	std::vector<UTT> _log2pol;
 	std::vector<UTT> _pol2log;
 	std::vector<TT> _plus1;
-  
+
     	UTT zech2padic(UTT x) { return _log2pol[x]; };
     	UTT padic2zech(UTT x) { return _pol2log[x]; };
 

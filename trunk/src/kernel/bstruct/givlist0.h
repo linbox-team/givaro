@@ -9,7 +9,7 @@
 // $Id: givlist0.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
 
-/*! @file bstruct/givlist0.h
+/*! @file givlist0.h
  * @ingroup bstruct
  * @brief List of type T with double link and various insert/get/rmv method.
  * Used reference counting on each node of the list.
@@ -24,6 +24,7 @@
 
 namespace Givaro {
 
+	//! ListO
 template <class T>
 class List0 {
 public :

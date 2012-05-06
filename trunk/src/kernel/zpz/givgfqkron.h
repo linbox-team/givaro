@@ -10,7 +10,7 @@
 // version:
 // author: Jean-Guillaume.Dumas
 
-/*! @file zpz/givgfqkron.h
+/*! @file givgfqkron.h
  * @ingroup zpz
  * @brief  Arithmetic on GF(p^k), with dynamic Kronecker substitution.
  * @pre  k(p-1)^2 < word size
@@ -29,6 +29,7 @@
 
 namespace Givaro {
 
+	//! GFqKronecker
 template<class TT, class Ints> struct GFqKronecker : public GFqDom<TT> {
 protected:
     typedef typename Signed_Trait<TT>::unsigned_type UTT;
@@ -62,7 +63,7 @@ public:
     }
     UTT getBase() const {
 	return _sBASE;
-    } 
+    }
 
         // Set shifts, returns maxn
     Ints setShift(const Ints& i) {

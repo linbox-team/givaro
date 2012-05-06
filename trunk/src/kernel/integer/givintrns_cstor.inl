@@ -20,7 +20,7 @@ namespace Givaro {
 	//#else
 	template<template <class,class> class Container, template <class> class Alloc>
 	//#endif
-	inline IntRNSsystem<Container, Alloc>::IntRNSsystem( const IntRNSsystem<Container, Alloc>::array& inprimes) :
+	inline IntRNSsystem<Container, Alloc>::IntRNSsystem( const array& inprimes) :
 		_primes(inprimes),
 		_prod(one), _ck(0)
 	{

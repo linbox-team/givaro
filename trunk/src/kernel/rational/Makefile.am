@@ -24,3 +24,5 @@ libgivrational_la_SOURCES= \
 	givratcpy.C	           \
 	givratcompare.C        \
 	givratreconstruct.C
+
+EXTRA_DIST=rational.doxy

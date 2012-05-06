@@ -10,7 +10,9 @@
 // version:
 // author: Jean-Guillaume.Dumas
 
-/*! @brief   Arithmetic on GF(p^k), with p a prime number less than 2^15.
+/*! @file givgfqext.h
+ * @ingroup zpz
+ * @brief   Arithmetic on GF(p^k), with p a prime number less than 2^15.
  *   Specialized for fast conversions to floating point numbers.
  *  Main difference in interface is init/convert.
  * @bib  [JG Dumas, Q-adic Transform Revisited, ISSAC 2008]
@@ -35,6 +37,7 @@ namespace Givaro {
 	template<class TT> class GFqExt;
 
 
+	//! GFq Ext
 	template<class TT> class GFqExtFast : public GFqDom<TT> {
 	protected:
 		typedef typename Signed_Trait<TT>::unsigned_type UTT;
@@ -121,21 +124,21 @@ namespace Givaro {
 		// Accesses
 
 		UTT bits() const
-{ return _BITS;}
+		{ return _BITS;}
 		UTT base() const
-{ return _BASE;}
+		{ return _BASE;}
 		UTT mask() const
-{ return _MASK;}
+		{ return _MASK;}
 		UTT maxdot() const
-{ return _maxn; }
+		{ return _maxn; }
 		UTT& characteristic(UTT& a) const
-{ return a=this->_characteristic; }
+		{ return a=this->_characteristic; }
 		UTT characteristic() const
-{ return this->_characteristic; }
+		{ return this->_characteristic; }
 		const bool balanced;
 
 		Rep& init( Rep& r, const unsigned long l) const
-{
+		{
 			return Father_t::init(r,l);
 		}
 
@@ -144,17 +147,17 @@ namespace Givaro {
 
 
 		virtual double& convert(double& d, const Rep a) const
-{
+		{
 			return d=_log2dbl[(size_t)a];
 		}
 
 		virtual float& convert(float& d, const Rep a) const
-{
+		{
 			return d=(float)_log2dbl[(size_t)a];
 		}
 
 		virtual Rep& init(Rep& pad, const double d) const
-{
+		{
 			// WARNING WARNING WARNING WARNING
 			// Precondition : 0 <= d < _MODOUT
 			// Can segfault if d is too large
@@ -192,14 +195,14 @@ namespace Givaro {
 		}
 
 		virtual Rep& init(Rep& pad, const float d) const
-{
+		{
 			return init(pad, (double)d);
 		}
 
 
 		template<class RandIter> Rep& random(RandIter& g, Rep& r) const {
-            return init(r, static_cast<double>( (UTT)g() % _MODOUT));
-        }
+			return init(r, static_cast<double>( (UTT)g() % _MODOUT));
+		}
 
 
 	protected:
@@ -283,7 +286,7 @@ namespace Givaro {
 
 
 
-
+	//! GFq Ext (other)
 	template<class TT> class GFqExt : public GFqExtFast<TT> {
 	protected:
 		typedef typename Signed_Trait<TT>::unsigned_type UTT;
@@ -320,7 +323,7 @@ namespace Givaro {
 		using Father_t::init;
 
 		virtual Rep& init(Rep& pad, const double d) const
-{
+		{
 			// Defensive init
 			const double tmp(fmod(d,this->_fMODOUT));
 			return DirectFather_t::init(pad, (tmp>0.0)?tmp:(tmp+_fMODOUT) );

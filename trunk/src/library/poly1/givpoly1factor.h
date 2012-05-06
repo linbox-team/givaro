@@ -4,13 +4,21 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Irreducibily test
-// Factorisations de  Polynomes dans Fp[X] :
-//      Distinct Degree
-//      Cantor-Zassenhaus
-//      Berlekamp: moved in LinBox
 // Time-stamp: <27 Jun 05 11:35:32 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
+
+/** @file givpoly1factor.h
+ * @ingroup poly1
+ * @brief NO DOC
+ * - Irreducibily test
+ * - Factorisations de  Polynomes dans Fp[X] :
+ * - Distinct Degree
+ * - Cantor-Zassenhaus
+ * - Berlekamp: moved in LinBox
+ * .
+ */
+
+
 #ifndef __GIVARO_poly1_facto_H
 #define __GIVARO_poly1_facto_H
 #include <givaro/givrandom.h>
@@ -21,6 +29,7 @@ namespace Givaro {
 
 	// template<class Domain, class StorageTag> class Poly1FactorDom {};
 
+	//! Poly1FactorDom
 	template<class Domain, class Tag, class RandIter = GivRandom>
 	class Poly1FactorDom : public Poly1Dom<Domain,Tag> {
 	protected:

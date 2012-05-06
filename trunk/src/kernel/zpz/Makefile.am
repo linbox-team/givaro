@@ -55,3 +55,5 @@ libgivzpz_la_SOURCES=   \
 	givprimes16.C		\
 	givtablelimits.C	\
 	givzpz16table1.C
+
+EXTRA_DIST=zpz.doxy

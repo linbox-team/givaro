@@ -8,7 +8,10 @@
 // Authors: T. Gautier
 // $Id: givconfig.h,v 1.22 2011-02-04 14:50:07 bboyer Exp $
 // ==========================================================================
-// Description: configuration file for Givaro
+/** @file givconfig.h
+ * @ingroup system
+ * @brief configuration file for Givaro
+ */
 #ifndef _GIVARO_INTERNAL_CONFIG_H_
 #define _GIVARO_INTERNAL_CONFIG_H_ 1
 
@@ -316,7 +319,7 @@ template<class XXX> struct GIVARO_numeric_limits {
 #  endif
 #endif
 
-
+//! @bug why not use numeric limits from stl ?
 template<> inline float GIVARO_numeric_limits<float>::max() { return FLT_MAX; }
 template<> inline double GIVARO_numeric_limits<double>::max() { return DBL_MAX; }
 template<> inline short GIVARO_numeric_limits<short>::max() { return SHRT_MAX; }
@@ -406,3 +409,4 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
   #endif
 
 #endif
+// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

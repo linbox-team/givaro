@@ -9,6 +9,9 @@
 // $Id: gmp++_int_misc.C,v 1.16 2010-12-16 16:54:38 jgdumas Exp $
 // ==========================================================================
 // Description:
+/** @file gmp++/gmp++_int_misc.C
+ * miscing stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_misc_C
 #define __GIVARO_gmpxx_gmpxx_int_misc_C
@@ -417,7 +420,7 @@ namespace Givaro {
 #endif
 	}
 
-	Integer::operator std::vector<mp_limb_t> () const
+	Integer::operator Integer::vect_t () const
 	{
 		size_t s = mpz_size( (mpz_srcptr)&(gmp_rep) );
 		std::vector<mp_limb_t> v(s);

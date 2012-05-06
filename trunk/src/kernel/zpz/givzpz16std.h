@@ -10,7 +10,7 @@
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
-/*! @file zpz/givzpz16std.h
+/*! @file givzpz16std.h
  * @ingroup zpz
  * @brief   Arithmetic on Z/pZ, with p a prime number less than 2^14.
  *   Modulo typedef is a signed long number. In case it was modified

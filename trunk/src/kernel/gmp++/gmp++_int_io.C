@@ -9,6 +9,9 @@
 // $Id: gmp++_int_io.C,v 1.7 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
 // Description:
+/** @file gmp++/gmp++_int_io.C
+ * ioing stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_io_C
 #define __GIVARO_gmpxx_gmpxx_int_io_C

@@ -8,6 +8,10 @@
 // Authors: M. Samama, T. Gautier
 // $Id: gmp++_int_cstor.C,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
+/** @file gmp++/gmp++_int_cstor.C
+ * cstoring stuff.
+ */
+
 #ifndef __GMPplusplus_CSTOR_C__
 #define __GMPplusplus_CSTOR_C__
 #include <iostream>
@@ -122,7 +126,7 @@ namespace Givaro {
 		mpz_import( (mpz_ptr)&(x.gmp_rep), count, order, size, endian, nails, op);
 	}
 
-	Integer::Integer(const std::vector<mp_limb_t>& v)
+	Integer::Integer(const vect_t & v)
 	{
 		size_t s = v.size();
 		if (s) {

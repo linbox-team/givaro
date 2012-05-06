@@ -13,6 +13,8 @@
 #ifndef __GIVARO_rational_INL
 #define __GIVARO_rational_INL
 
+namespace Givaro {
+
 //-------------------------------------------------inline comparaison operators
 inline int operator != (const Rational& a , const Rational& b)
   { return compare(a,b) != 0 ; }
@@ -51,7 +53,7 @@ inline const Rational operator * (const int i, const Rational& r)
 inline const Rational operator / (const int i, const Rational& r)
   { return Rational(i) / r ; }
 
-Rational Rational::operator + ()  const
+inline Rational Rational::operator + ()  const
   { return *this ; }
 
 //----------------------------------miscellaneous inline functions
@@ -85,5 +87,6 @@ inline Rational Rational::reduce( const Rational& R) const
 //-------------------------------------------------inline >> & << operators
 inline std::ostream& operator<< (std::ostream& o, const Rational& a)
   { return a.print(o); }
+} // Givaro
 
 #endif // __GIVARO_rational_INL

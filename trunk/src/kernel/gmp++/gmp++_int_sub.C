@@ -9,6 +9,9 @@
 // $Id: gmp++_int_sub.C,v 1.4 2009-09-17 14:28:22 jgdumas Exp $
 // ==========================================================================
 
+/** @file gmp++/gmp++_int_sub.C
+ * subing stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_sub_C
 #define __GIVARO_gmpxx_gmpxx_int_sub_C

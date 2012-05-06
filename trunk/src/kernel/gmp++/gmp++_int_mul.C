@@ -8,6 +8,9 @@
 // Authors: M. Samama, T. Gautier
 // $Id: gmp++_int_mul.C,v 1.11 2011-01-20 08:19:15 jgdumas Exp $
 // ==========================================================================
+/** @file gmp++/gmp++_int_mul.C
+ * muling stuff.
+ */
 
 #ifndef __GIVARO_gmpxx_gmpxx_int_mul_C
 #define __GIVARO_gmpxx_gmpxx_int_mul_C

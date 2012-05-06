@@ -5,6 +5,7 @@
 // see the COPYRIGHT file for more details.
 
 /*! @file givextension.h
+ * @ingroup zpz
  * @brief NO DOX
  */
 
@@ -20,13 +21,19 @@
 
 namespace Givaro {
 
-    template<class Rt> Rt FF_EXPONENT_MAX(const Rt p, const Rt maxe = _GIVARO_FF_MAXEXPONENT_) {
+	//! XXX
+    template<class Rt>
+	Rt FF_EXPONENT_MAX(const Rt p, const Rt maxe = _GIVARO_FF_MAXEXPONENT_)
+	{
 	Rt f = 0;
 	for(Rt i = p; (i < (Rt)_GIVARO_FF_TABLE_MAX) && (f < maxe); ++f, i*=p) ;
 	return f;
     }
 
-    template<class Rt> Rt FF_SUBEXPONENT_MAX(const Rt p, const Rt e) {
+	//! XXX
+    template<class Rt>
+	Rt FF_SUBEXPONENT_MAX(const Rt p, const Rt e)
+	{
 	Rt f = FF_EXPONENT_MAX(p,e);
 	for( ; f > 1; --f)
             if ((e % f) == 0) break;
@@ -38,24 +45,31 @@ namespace Givaro {
 #define EXTENSION(q,expo) ( NEED_POLYNOMIAL_REPRESENTATION((q),(expo)) ? Extension<>((q), (expo)) : GFqDom<long>((q), (expo)) )
 
 
-    template<typename Field> unsigned long Exponent_Trait(const Field& F) {
+	//! XXX
+    template<typename Field>
+	unsigned long Exponent_Trait(const Field& F)
+	{
         return 1;
     }
 
 
+	//! XXX
     template<>
-	inline unsigned long Exponent_Trait(const GFqDom<long>& F) {
+	inline unsigned long Exponent_Trait(const GFqDom<long>& F)
+	{
         return F.exponent();
     }
 
     template<typename BaseField> class Extension;
 
+	//! XXX
     template<typename BaseField>
-    unsigned long Exponent_Trait(const Extension<BaseField>& F) {
+    unsigned long Exponent_Trait(const Extension<BaseField>& F)
+	{
         return F.exponent();
     }
 
-
+//! Extension
     template<class BFT = GFqDom<long>  >
     class Extension {
     public:
@@ -433,7 +447,7 @@ namespace Givaro {
 
     };
 
-
+//! Extension rand iters
     template <class ExtensionField, class Type>
     class GIV_ExtensionrandIter {
 

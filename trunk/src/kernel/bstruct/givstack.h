@@ -8,11 +8,16 @@
 // Author: T. Gautier
 // $Id: givstack.h,v 1.3 2011-02-02 16:23:55 bboyer Exp $
 // ==========================================================================
+/** @file givstack.h
+ * @ingroup bstruct
+ * @brief no doc.
+ */
 #ifndef __GIVARO_stack_H
 #define __GIVARO_stack_H
 
 namespace Givaro {
 
+	//! Stack
 template <class THING>
 class Stack {
 public :

@@ -11,8 +11,9 @@
 /** @file givinterpgeom-multip.h
  * @ingroup poly1
  * @brief Interpolation at geometric points
- * @bib Polynomial evaluation and interpolation on special sets of points,
- * A. Bostan and E. Schost, Journal of Complexity 21(4): 420-446, 2005.
+ * @bib
+ * - A Bostan and E Schost, <i>Polynomial evaluation and interpolation on special sets of points</i>,
+ * Journal of Complexity 21(4): 420-446, 2005.
  */
 
 #ifndef __GIVARO_multiple_interpolation_at_geometric_points_H

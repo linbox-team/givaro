@@ -16,10 +16,6 @@
 namespace Givaro {
 
 
-	/*! @brief Rational number reconstruction.
-	 * \f$ num/den \equiv f \mod m\f$, with \f$|num|<k\f$ and \f$0 < |den| \leq f/kf\f$
-	 * @bib See [von zur Gathen & Gerhard, Modern Computer Algebra, 5.10, Cambridge Univ. Press 1999]
-	 */
 	Rational::Rational(const Integer& f, const Integer& m, const Integer& k, bool recurs )
 	{
 		bool res = this->ratrecon(f,m,k,recurs);

@@ -10,8 +10,10 @@
 /*! @file givrandom.h
  * @ingroup system
  * @brief NO DOC
- * @bib Fishman, G.S. "Multiplicative congruential random
- * number generators ..." Math. Comp. 54:331-344 (1990).
+ * @bib
+ * - Fishman, GS <i>Multiplicative congruential random
+ * number generators...</i> Math. Comp. 54:331-344 (1990).
+ * .
  */
 
 #ifndef __GIVARO_random_H

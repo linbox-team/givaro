@@ -15,7 +15,8 @@
  * @brief   Arithmetic on GF(p^k), with p a prime number less than 2^15.
  *   Specialized for fast conversions to floating point numbers.
  *  Main difference in interface is init/convert.
- * @bib  [JG Dumas, Q-adic Transform Revisited, ISSAC 2008]
+ * @bib
+ * - JG Dumas, <i>Q-adic Transform Revisited</i>, ISSAC 2008
  *  @warning k strictly greater than 1
  */
 

@@ -107,7 +107,8 @@ public:
 
 // =================================================================== //
 /*! Strong Primes.
- * @bib Strong Primes Are Easy to Find, J. Gordon, EUROCRYPT'84, LNCS 209.
+ * @bib
+ * - J. Gordon, <i>Strong Primes Are Easy to Find</i>,  EUROCRYPT'84, LNCS 209.
  */
 // =================================================================== //
     Element& strong_prime(random_generator& g, long psize, Element& p) const;

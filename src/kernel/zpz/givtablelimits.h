@@ -16,7 +16,7 @@
  * Zech extension fitting a small enough memory space
  *   t-adic max sizes for BLAS based linear algebra over extension fields
  * @bib
- * -  [Dumas, Gautier, Pernet 2002] Finite field linear algebra subroutines.
+ * - Dumas, Gautier, Pernet  <i>Finite field linear algebra subroutines.</i>
  *  ISSAC'02: Proceedings of the 2002 International Symposium on Symbolic
  * and Algebraic Computation, Lille, France pp 63--74.
  */

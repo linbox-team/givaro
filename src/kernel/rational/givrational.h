@@ -60,6 +60,12 @@ public :
     Rational(const Integer& n) ;
     Rational(const Integer& n, const Integer& d, int red = 1 ) ;
         // Rational number reconstruction
+	/*! @brief Rational number reconstruction.
+	 * \f$ num/den \equiv f \mod m\f$, with \f$|num|<k\f$ and \f$0 < |den| \leq f/kf\f$
+	 * @bib
+	 * - von zur Gathen & Gerhard <i>Modern Computer Algebra</i>, 5.10, Cambridge Univ. Press 1999]
+	 */
+
     Rational(const Integer& f, const Integer& m, const Integer& k, bool recurs = false ) ;
     Rational(const Rational&) ;
         //~Rational();

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfqext.h
-// Time-stamp: <15 Dec 11 17:05:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <07 May 12 15:08:17 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
@@ -89,6 +89,21 @@ namespace Givaro {
 
 		}
 
+		// Extension MUST be a parameter of the constructor
+        template<typename Vector>
+		GFqExtFast( const UTT P, const UTT e, const Vector& modPoly) : Father_t(P,e, modPoly),
+		_BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ),
+		_BASE(1 << _BITS),
+		_MASK( _BASE - 1),
+		_maxn( _BASE/(P-1)/(P-1)/e),
+		_degree( e-1 ),
+		balanced(false)
+		{
+			GIVARO_ASSERT(_maxn>0 , "[GFqExtFast]: field too large");
+			builddoubletables();
+
+		}
+
 		virtual ~GFqExtFast() {};
 
 		Self_t operator=( const Self_t& F)
@@ -159,6 +174,8 @@ namespace Givaro {
 
 		virtual Rep& init(Rep& pad, const double d) const
 		{
+			GIVARO_ASSERT(d>=0.0 , "[GFqExtFast]: init from a negative number");
+			GIVARO_ASSERT(d<_MODOUT, "[GFqExtFast]: init from a too large number");
 			// WARNING WARNING WARNING WARNING
 			// Precondition : 0 <= d < _MODOUT
 			// Can segfault if d is too large
@@ -167,6 +184,7 @@ namespace Givaro {
 			uint64_t tll( static_cast<uint64_t>(d/this->_dcharacteristic) );
 			UTT prec(0);
 			UTT padl = (UTT)(rll - tll*this->_characteristic);
+  
 			if (padl == this->_characteristic) {
 				padl -= this->_characteristic;
 				tll += 1;

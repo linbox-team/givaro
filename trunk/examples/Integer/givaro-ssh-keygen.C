@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <15 Apr 11 09:09:19 Jean-Guillaume.Dumas@imag.fr>        //
+// Time-stamp: <07 May 12 14:48:35 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
 // Givaro replacement for ssh-keygen: generated keys use strong primes  //
 // Random generator is seeded by					 //
@@ -16,7 +16,7 @@
 // Warning: Sometimes putting -lssh twice is required                   //
 // You also need the openssl and openssh development headers below:     //
 // openssh/buffer.h openssh/key.h openssh/uuencode.h openssh/xmalloc.h  //
-// The latter libraries/heqders are avaible from openssl and openssh    //
+// The latter libraries/headers are avaible from openssl and openssh    //
 // openssl > 0.9.8  and  openssh > 5.2p1  are expected                  //
 // ==================================================================== //
 /*! @file examples/Integer/givaro-ssh-keygen.C

@@ -254,7 +254,7 @@ namespace Givaro {
 
 		// -- Returns the i-th coefficients
 		Type_t& getEntry(Type_t& c, const Degree& i, const Rep& P) const;
-		Type_t& setEntry(Rep &P, const Type_t&c, const Degree&i) const;
+		Type_t  setEntry(Rep &P, const Type_t&c, const Degree&i) const;
 
 		// -- Returns the degree of polynomial
 		Degree& degree(Degree& d, const Rep& P) const;
@@ -269,6 +269,7 @@ namespace Givaro {
 		 * @param P polynomial
 		 */
 		Rep& setdegree( Rep& P ) const;
+		Rep& setDegree( Rep& P ) const { return setdegree(P); }
 
 		// -- Evaluation on one point.
 		Type_t& eval(Type_t& pval, const Rep& P, const Type_t& val) const;

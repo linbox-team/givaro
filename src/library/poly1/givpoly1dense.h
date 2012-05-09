@@ -96,10 +96,11 @@ namespace Givaro {
 		}
 
 
+		//! @warning we have no field in Vectors so << is RAW.
             friend std::ostream& operator<<(std::ostream& out, const Self_t& V) {
                 out << '[';
                 for(typename Self_t::const_iterator it=V.begin(); it!= V.end(); ++it)
-                    out << *it << ' ';
+		    out << *it << ' ';
                 return out << ']';
             }
 
@@ -172,11 +173,27 @@ namespace Givaro {
 		{
 			return _domain;
 		}
+
 		Domain& setdomain(const Domain& D)
 		{
 			return _domain = D;
 		}
 
+		// -- Return the domain of the entries
+		const Domain& subDomain() const
+		{
+			return _domain;
+		}
+		// -- Return the domain of the entries
+		const Domain& getDomain() const
+		{
+			return _domain;
+		}
+
+		Domain& setDomain(const Domain& D)
+		{
+			return _domain = D;
+		}
 
 		// -- Constantes
 		Rep zero;
@@ -237,6 +254,7 @@ namespace Givaro {
 
 		// -- Returns the i-th coefficients
 		Type_t& getEntry(Type_t& c, const Degree& i, const Rep& P) const;
+		Type_t& setEntry(Rep &P, const Type_t&c, const Degree&i) const;
 
 		// -- Returns the degree of polynomial
 		Degree& degree(Degree& d, const Rep& P) const;

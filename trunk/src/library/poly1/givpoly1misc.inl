@@ -123,6 +123,21 @@ namespace Givaro {
 		else return _domain.assign(c, P[i.value()]);
 	}
 
+	template<class Domain>
+	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::setEntry(Rep &P, const Type_t&c, const Degree&i) const
+	{
+		Degree dP;
+		degree(dP, P);
+		if (dP < i) {
+			if (!_domain.isZero(c))
+				// #ifndef NDEBUG
+				// std::cout << __func__ << " (" << __FILE__ << ") : "<< __LINE__ << std::endl << "no need to reallocate..." << std::endl;
+				// #endif
+				P.reallocate(i.value()+1);
+		}
+		return _domain.assign(P[i.value()], c);
+	}
+
 
 
 

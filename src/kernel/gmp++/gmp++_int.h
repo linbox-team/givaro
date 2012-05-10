@@ -288,10 +288,13 @@ namespace Givaro {
 		///@}
 
 
-		//! @name Comparison operators.
+		/** @name Comparison operators.
+		 * @brief Compare with operators.
+		 */
 		///@{
-		//! greater or equal
-		/// @param l integer to be compared to
+		/** greater or equal.
+		 * @param l integer to be compared to
+		 */
 		giv_all_inlined int operator >= (const Integer & l) const;
 		/** @overload Integer::operator>=(Integer) */
 		giv_all_inlined int operator >= (const int l) const;

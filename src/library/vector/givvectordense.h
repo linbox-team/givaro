@@ -169,18 +169,18 @@ public:
 
   // -- map of a unary operator, with operator()( Type_t& res )
   // res and u could be aliases if OP permits it
-  template<class OP>
-  void map ( Rep& res, OP& op ) const;
+  template<class UNOP>
+  void map ( Rep& res, UNOP& op ) const;
 
   // -- map of a unary operator, with operator()( Type_t& res, const Type_t& val)
   // res and u could be aliases if OP permits it
-  template<class OP>
-  void map ( Rep& res, OP& op, const Rep& u ) const;
+  template<class UNOP>
+  void map ( Rep& res, UNOP& op, const Rep& u ) const;
 
   // -- map of a binary operator, with :
   // -- operator()( Type_t& res, const Type_t&, const Type_t& )
-  template<class OP>
-  void map ( Rep& res, const OP& op, const Rep& u, const Rep& u ) const;
+  template<class BINOP>
+  void map ( Rep& res, const BINOP& op, const Rep& u, const Rep& u ) const;
 
   // -- IO
   istream& read ( istream& s );

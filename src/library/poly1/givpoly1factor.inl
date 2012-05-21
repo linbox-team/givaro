@@ -15,6 +15,7 @@
 #ifndef __GIVARO_poly1_facto_INL
 #define __GIVARO_poly1_facto_INL
 #include <givaro/givpower.h>
+#include <givaro/givcaster.h>
 
 //!@todo use NTL if available ?
 
@@ -50,7 +51,8 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                     SplitFactor ( L, G1, d, MOD) ;
                 }
 
-                Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
+                Integer iMOD; Caster(iMOD, MOD);
+                Integer pp = (power(iMOD, d.value()) - 1)/2;
 // std::cerr << "pp: " << pp << std::endl;
                 Rep tp, tp2, G2;
                 this->gcd(G2,G,
@@ -100,7 +102,8 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
                 if (dG1 > 0 ) {
                     return G1;
                 }
-                Integer pp = (power(Integer(MOD), d.value()) - 1)/2;
+                Integer iMOD; Caster(iMOD, MOD);
+                Integer pp = (power(iMOD, d.value()) - 1)/2;
                 Rep tp, tp2, G2;
                 this->gcd(G2,G, this->sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
                 Degree dG2; this->degree(dG2,G2);

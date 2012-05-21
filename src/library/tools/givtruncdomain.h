@@ -231,7 +231,7 @@ public :
 	{
 		Degree vP; val(vP, P);
 		if (vP > d) {
-			P.first.insert(P.first.begin(),(Type_t)value(vP-d),this->_domain.zero);
+			P.first.insert(P.first.begin(),(size_t)value(vP-d),this->_domain.zero);
 			P.second = d;
 		}
 		return P;

@@ -102,6 +102,19 @@ return R;
 }
 
 template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::addin
+ (Rep& R, const Type_t& Val) const
+{
+  size_t sR = R.size();
+  if (sR == 0)  {
+      R.reallocate(1);
+      _domain.assign(R[0],Val);
+  } else
+      _domain.addin(R[0],Val);
+  return R;
+}
+
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
     Rep& R, const typename Rep::iterator Rbeg,
     const Rep& P, const typename Rep::const_iterator Pbeg, const typename Rep::const_iterator Pend) const
@@ -199,6 +212,19 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sub
     assign(R, P);
     _domain.sub(R[0],P[0],Val);
   }
+  return R;
+}
+
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin
+ (Rep& R, const Type_t& Val) const
+{
+  size_t sR = R.size();
+  if (sR == 0)  {
+      R.reallocate(1);
+      _domain.neg(R[0],Val);
+  } else
+      _domain.subin(R[0],Val);
   return R;
 }
 

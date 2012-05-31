@@ -34,47 +34,43 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
     , Degree d
     , Residu_t MOD) const
 {
-    Degree dG;this->degree(dG,G);
+    Degree dG; this->degree(dG,G);
     if (dG == d)
         L.push_back(G);
     else {
         int splitted = 0;
         while (! splitted) {
-            Rep tmp, G1;
-            this->gcd(G1, G, this->random(_g, tmp, dG-1));
+            Rep G1, G2;
+            this->gcd(G1, G, this->random(_g, G2, dG-1) );
             Degree dG1; this->degree(dG1,G1);
-// write(std::cerr << "SF rd: ", tmp) << std::endl;
+// write(std::cerr << "SF rd: ", G2) << std::endl;
 // write(std::cerr << "SF G1: ", G1) << std::endl;
             if ( dG1 != dG) {
                 if (dG1 > 0 ) {
                     splitted = 1;
                     SplitFactor ( L, G1, d, MOD) ;
+                    this->div(G2, G, G1);
+                    SplitFactor ( L, G2, d, MOD) ;
+                    return ;
                 }
 
                 Integer iMOD; Caster(iMOD, MOD);
                 Integer pp = (power(iMOD, d.value()) - 1)/2;
 // std::cerr << "pp: " << pp << std::endl;
-                Rep tp, tp2, G2;
-                this->gcd(G2,G,
-			  this->sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
-                Degree dG2; this->degree(dG2,G2);
+                Rep tp;
+                this->gcd(G1, G,
+                          this->subin( this->powmod(tp, G2, pp, G), 
+                                       _domain.one) 
+                          );
+
+                this->degree(dG1,G1);
 // write(std::cerr << "SF t2: ", tp2) << std::endl;
-// write(std::cerr << "SF G2: ", G2) << std::endl;
-                if ( dG2 != dG) {
-                    if ( dG2 > 0 ) {
-                        splitted = 1 ;
-                        SplitFactor ( L, G2, d, MOD) ;
-                    }
-// UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
-                     Rep G3;
-		     this->gcd(G3, G, this->add(tp2,tp,_domain.one) );
-                     Degree dG3; this->degree(dG3,G3);
-// write(std::cerr << "SF t3: ", tp2) << std::endl;
-// write(std::cerr << "SF G3: ", G3) << std::endl;
-                     if (( dG3 != dG) && (dG3 > 0 )) {
-                         splitted = 1 ;
-                         SplitFactor ( L, G3, d, MOD) ;
-                     }
+// write(std::cerr << "SF G1: ", G1) << std::endl;
+                if ( ( dG1 != dG) && (dG1 > 0 ) ) {
+                    splitted = 1 ;
+                    SplitFactor ( L, G1, d, MOD) ;
+                    this->div( G2, G, G1);
+                    SplitFactor ( L, G2, d, MOD) ;
                 }
             }
         }

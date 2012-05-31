@@ -25,9 +25,9 @@ namespace Givaro {
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-	size_t sR = R.size();
-	size_t sP = P.size();
-	size_t sQ = Q.size();
+	const size_t sR = R.size();
+	const size_t sP = P.size();
+	const size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
 	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
 
@@ -35,16 +35,16 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep
             P, P.begin(), P.end(),
             Q, Q.begin(), Q.end());
 
-        return setdegree(R);
+    return setdegree(R);
 }
 
 // forces FIRST recursive level with Karatsuba multiplication
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-	size_t sR = R.size();
-	size_t sP = P.size();
-	size_t sQ = Q.size();
+	const size_t sR = R.size();
+	const size_t sP = P.size();
+	const size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
 	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
 
@@ -52,7 +52,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
             P, P.begin(), P.end(),
             Q, Q.begin(), Q.end());
 
-        return setdegree(R);
+    return setdegree(R);
 }
 
 // Generic mul with choices between standard and Karatsuba multiplication
@@ -112,14 +112,14 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
     for(RepIterator ri=Rbeg; ri!= Rend; ++ri) _domain.assign(*ri,_domain.zero);
 
 
-    size_t halfP = (size_t) ((Pend-Pbeg)>>1);
-    size_t halfQ = (size_t) ((Qend-Qbeg)>>1);
-    size_t half = GIVMIN(halfP, halfQ);
-    size_t halfR = half<<1;
+    const size_t halfP = (size_t) ((Pend-Pbeg)>>1);
+    const size_t halfQ = (size_t) ((Qend-Qbeg)>>1);
+    const size_t half = GIVMIN(halfP, halfQ);
+    const size_t halfR = half<<1;
 
-    RepConstIterator Pmid=Pbeg+(ssize_t)half;		// cut P in halves
-    RepConstIterator Qmid=Qbeg+(ssize_t)half;		// cut Q in halves
-    RepIterator Rmid=Rbeg+(ssize_t)halfR;		// cut R in halves
+    const RepConstIterator Pmid=Pbeg+(ssize_t)half;		// cut P in halves
+    const RepConstIterator Qmid=Qbeg+(ssize_t)half;		// cut Q in halves
+    const RepIterator Rmid=Rbeg+(ssize_t)halfR;			// cut R in halves
 
     mul(R, Rbeg, Rmid, 				// Recursive dynamic choice
         P, Pbeg, Pmid,
@@ -160,6 +160,52 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
 
     return R;
 }
+
+
+
+// Standard square 
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdsqr(
+    Rep& R, const Rep& P) const {
+
+// Rep A, B; this->assign(B, P); this->mul(A,B,B);
+
+	const size_t dR = R.size()-1;
+	const size_t dP = P.size()-1;
+    
+    Type_t two; _domain.init(two);
+    _domain.add(two, _domain.one, _domain.one);
+    
+        // even coefficients
+    for(size_t i=0; i<dR; ++i) {
+        _domain.assign(R[i],_domain.zero);
+        size_t iot(i>>1);
+        size_t firstj( i>dP ? i-dP : 0);
+        for(size_t j=firstj; j<iot; ++j)
+            _domain.axpyin(R[i], P[j], P[i-j]);
+        _domain.mulin(R[i], two);
+        _domain.axpyin(R[i],P[iot],P[iot]);
+
+        ++i; ++iot;
+        _domain.assign(R[i],_domain.zero);
+        firstj = i>dP ? i-dP : 0;
+        for(size_t j=firstj; j<iot; ++j) {
+            _domain.axpyin(R[i], P[j], P[i-j]);
+        }
+        _domain.mulin(R[i], two);
+
+    }
+    _domain.mul(R[dR],P[dP],P[dP]);
+
+//     if (! this->areEqual(A,R)) {
+//         this->write(this->write(std::cerr << '(', P) << ") * (", P) << ");" << std::endl;
+//         this->write(std::cerr << "mul: ", A) << std::endl;
+//         this->write(std::cerr << "sqr: ", R) << std::endl;
+//     }
+
+	return R;
+}
+
 
 
 

@@ -290,11 +290,13 @@ namespace Givaro {
 
 		// -- Arithmetics operators
 		Rep& addin ( Rep& res, const Rep& u ) const;
+		Rep& addin ( Rep& res, const Type_t& val ) const;
 		Rep& add ( Rep& res, const Rep& u, const Rep& v ) const;
 		Rep& add ( Rep& res, const Rep& u, const Type_t& val ) const;
 		Rep& add ( Rep& res, const Type_t& val, const Rep& v ) const;
 
 		Rep& subin ( Rep& res, const Rep& u ) const;
+		Rep& subin ( Rep& res, const Type_t& val ) const;
 		Rep& sub ( Rep& res, const Rep& u, const Rep& v ) const;
 		Rep& sub ( Rep& res, const Rep& u, const Type_t& val ) const;
 		Rep& sub ( Rep& res, const Type_t& val, const Rep& v ) const;
@@ -306,16 +308,19 @@ namespace Givaro {
 		Rep& mulin ( Rep& q, const Type_t& a ) const;
 		Rep& mul   ( Rep& q, const Type_t& a, const Rep& b ) const;
 		Rep& mul   ( Rep& q, const Rep& a, const Type_t& b ) const;
-		// generic mul with dynamic recursive choices between stdmul and karamul
-            	Rep& mul   ( Rep& q, const Rep& a, const Rep& b ) const;
-            	// Forces standard multiplication algorithm
-	        Rep& stdmul( Rep& R, const Rep& P, const Rep& Q) const;
-		// Forces first level of Karatsuba multiplication algorithm
-            	Rep& karamul( Rep& R, const Rep& P, const Rep& Q) const;
-
+            // generic mul with dynamic recursive choices between stdmul and karamul
+        Rep& mul   ( Rep& q, const Rep& a, const Rep& b ) const;
+            // Forces standard multiplication algorithm
+        Rep& stdmul( Rep& R, const Rep& P, const Rep& Q) const;
+            // Forces first level of Karatsuba multiplication algorithm
+        Rep& karamul( Rep& R, const Rep& P, const Rep& Q) const;
+        
 		// Compute truncated mul: only the coefficients inside
 		// the degree interval, included
 		Rep& mul( Rep&, const Rep&, const Rep&, const Degree&, const Degree&) const;
+        
+        
+		Rep& sqr   ( Rep& q, const Rep& a ) const;
 
 
 		Rep& shiftin ( Rep&, int ) const;
@@ -450,6 +455,8 @@ namespace Givaro {
             Rep& karamul( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
                       const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                       const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
+
+            Rep& stdsqr( Rep& R, const Rep& P) const;
 
                 // Sub only between iterator intervals
             Rep& subin (Rep& R,

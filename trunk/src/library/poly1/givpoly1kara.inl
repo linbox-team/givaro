@@ -17,6 +17,10 @@ namespace Givaro {
 #define KARA_THRESHOLD 50
 #endif
 
+#ifndef SQR_THRESHOLD
+#define SQR_THRESHOLD 50
+#endif
+
 #ifndef GIVMIN
 #define GIVMIN(a,b) ((a)<(b)?(a):(b))
 #endif
@@ -72,6 +76,27 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul(
         return stdmul(R, Rbeg, Rend,
                       P, Pbeg, Pend,
                       Q, Qbeg, Qend);
+}
+
+
+// Generic sqr with choices between standard and recursive multiplication
+// Multiplies between the iterator bounds.
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqr(
+    Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const {
+
+    Type_t two; _domain.init(two);
+    _domain.add(two, _domain.one, _domain.one);    
+
+    if ( (Pend-Pbeg)> SQR_THRESHOLD )
+        return sqrrec(R, Rbeg, Rend,
+                      P, Pbeg, Pend, 
+                      two);
+    else
+        return stdsqr(R, Rbeg, Rend,
+                      P, Pbeg, Pend,
+                      two);
 }
 
 
@@ -162,50 +187,105 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
 }
 
 
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqrrec( Rep& R, const RepIterator Rbeg, const RepIterator Rend, const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, const Type_t& two) const
+{
+    // Initialize R to zero
+    for(RepIterator ri=Rbeg; ri!= Rend; ++ri) _domain.assign(*ri,_domain.zero);
+
+
+    const size_t half = (size_t) ((Pend-Pbeg)>>1);
+    const size_t halfR = (half<<1);
+
+    const RepConstIterator Pmid=Pbeg+(ssize_t)half;  // cut P in halves
+    const RepIterator Rmid=Rbeg+(ssize_t)halfR;	// cut R in halves
+
+    sqr(R, Rbeg, Rmid-1, 			// Recursive dynamic choice
+        P, Pbeg, Pmid);				// Pl^2 in first storage part of R
+
+    sqr(R, Rmid, Rend,				// Recursive dynamic choice
+        P, Pmid, Pend);				// Ph^2 in second storage part of R
+
+    Rep M(P.size());
+    mul(M, M.begin(), M.end(),                  // Recursive dynamic choice
+        P, Pbeg, Pmid,
+        P, Pmid, Pend);
+    setdegree(M);
+    this->mulin(M,two);
+    
+    RepIterator ri=Rbeg+(ssize_t)half;
+    RepConstIterator mi=M.begin();		// update R with mid product
+    for( ; mi != M.end(); ++ri, ++mi) _domain.addin(*ri, *mi);
+
+    return R;
+}
 
 // Standard square 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdsqr(
-    Rep& R, const Rep& P) const {
+    Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+    const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+    const Type_t& two) const {
 
-// Rep A, B; this->assign(B, P); this->mul(A,B,B);
+    _domain.mul(*Rbeg, *Pbeg, *Pbeg);
 
-	const size_t dR = R.size()-1;
-	const size_t dP = P.size()-1;
-    
-    Type_t two; _domain.init(two);
-    _domain.add(two, _domain.one, _domain.one);
-    
-        // even coefficients
-    for(size_t i=0; i<dR; ++i) {
-        _domain.assign(R[i],_domain.zero);
-        size_t iot(i>>1);
-        size_t firstj( i>dP ? i-dP : 0);
-        for(size_t j=firstj; j<iot; ++j)
-            _domain.axpyin(R[i], P[j], P[i-j]);
-        _domain.mulin(R[i], two);
-        _domain.axpyin(R[i],P[iot],P[iot]);
+    RepIterator rit(Rbeg); 
+    RepConstIterator pit=Pbeg;
+    for(++rit,++pit; rit != Rend; ++pit, ++rit) {
+        
+        _domain.assign(*rit,_domain.zero);
 
-        ++i; ++iot;
-        _domain.assign(R[i],_domain.zero);
-        firstj = i>dP ? i-dP : 0;
-        for(size_t j=firstj; j<iot; ++j) {
-            _domain.axpyin(R[i], P[j], P[i-j]);
+        RepConstIterator backpit=pit, forpit=pit;
+        for(--backpit ; forpit != Pend; --backpit, ++forpit) {
+            _domain.axpyin(*rit, *backpit, *forpit);
+            if (backpit == Pbeg) break;
         }
-        _domain.mulin(R[i], two);
+        
+
+        _domain.mulin(*rit, two);            
+
+        ++rit;
+
+        _domain.assign(*rit,_domain.zero);
+         
+        backpit=pit, forpit=pit;
+        for(--backpit,++forpit; forpit != Pend; --backpit, ++forpit) 
+        {
+            _domain.axpyin(*rit, *backpit, *forpit);
+            if (backpit == Pbeg) break;
+        }
+        _domain.mulin(*rit, two);
+        _domain.axpyin(*rit, *pit, *pit);        
 
     }
-    _domain.mul(R[dR],P[dP],P[dP]);
+    
 
-//     if (! this->areEqual(A,R)) {
-//         this->write(this->write(std::cerr << '(', P) << ") * (", P) << ");" << std::endl;
-//         this->write(std::cerr << "mul: ", A) << std::endl;
-//         this->write(std::cerr << "sqr: ", R) << std::endl;
+
+//     for(size_t i=0; i<dR; ++i) {
+//             // even coefficients
+//         _domain.assign(R[i],_domain.zero);
+//         size_t iot(i>>1);
+//         size_t firstj( i>dP ? i-dP : 0);
+//         for(size_t j=firstj; j<iot; ++j)
+//             _domain.axpyin(R[i], P[j], P[i-j]);
+//         _domain.mulin(R[i], two);
+//         _domain.axpyin(R[i],P[iot],P[iot]);
+
+//             // odd coefficients
+//         ++i; ++iot;
+//         _domain.assign(R[i],_domain.zero);
+//         firstj = i>dP ? i-dP : 0;
+//         for(size_t j=firstj; j<iot; ++j) {
+//             _domain.axpyin(R[i], P[j], P[i-j]);
+//         }
+//         _domain.mulin(R[i], two);
+
 //     }
+//     _domain.mul(R[dR],P[dP],P[dP]);
+
 
 	return R;
 }
-
 
 
 

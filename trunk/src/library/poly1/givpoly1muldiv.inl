@@ -75,13 +75,13 @@ Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, 
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqr( Rep& R, const Rep& P) const
 {
-	const size_t sP = P.size();
-	if (sP ==0) { R.reallocate(0); return R; }
-	size_t sR = sP<<1;
+    const size_t sP = P.size();
+    if (sP ==0) { R.reallocate(0); return R; }
+    size_t sR = sP<<1;
     if (R.size() != --sR) R.reallocate(sR);
     
         // Generic square handler
- 	return stdsqr(R, P);
+    return sqr(R, R.begin(), R.end(), P, P.begin(), P.end());
 }
 
 template <class Domain>

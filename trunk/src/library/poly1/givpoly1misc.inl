@@ -254,10 +254,10 @@ namespace Givaro {
 			n.copy(q);
 			if (! ID.isZero(r)) {
 				mulin(W,puiss);
-				mod(tmp, W, U);
-				assign(W,tmp);
+                modin(W,U);
 			}
 			mul(tmp,puiss,puiss);
+// 			sqr(tmp,puiss);
 			mod(puiss,tmp,U);
 		}
 

@@ -73,6 +73,18 @@ Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, 
 #endif
 
 template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqr( Rep& R, const Rep& P) const
+{
+	const size_t sP = P.size();
+	if (sP ==0) { R.reallocate(0); return R; }
+	size_t sR = sP<<1;
+    if (R.size() != --sR) R.reallocate(sR);
+    
+        // Generic square handler
+ 	return stdsqr(R, P);
+}
+
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, const Rep& Q ) const
 {
 	size_t sR = R.size();
@@ -81,6 +93,8 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
 	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
 
+        // Generic multiplication handler
+        // Can use e.g. Karatsuba multiplication
  	mul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
             Q, Q.begin(), Q.end());

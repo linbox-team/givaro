@@ -456,7 +456,14 @@ namespace Givaro {
                       const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                       const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
 
-            Rep& stdsqr( Rep& R, const Rep& P) const;
+            Rep& sqr( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+                      const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;
+            Rep& stdsqr( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+                         const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+                         const Type_t& two) const;
+            Rep& sqrrec( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+                         const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+                         const Type_t& two) const;
 
                 // Sub only between iterator intervals
             Rep& subin (Rep& R,

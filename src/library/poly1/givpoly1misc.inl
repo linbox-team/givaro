@@ -256,8 +256,8 @@ namespace Givaro {
 				mulin(W,puiss);
                 modin(W,U);
 			}
-			mul(tmp,puiss,puiss);
-// 			sqr(tmp,puiss);
+//			mul(tmp,puiss,puiss);
+			sqr(tmp,puiss);
 			mod(puiss,tmp,U);
 		}
 

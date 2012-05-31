@@ -376,20 +376,20 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long a ) const
 
 inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const Integer& Residu ) const
 {
-  int64_t tr;
   if (Residu <0) {
-      // -a = b [p]
-      // a = p-b [p]
-    if ( (-Residu) >= (Integer)(_p) ) tr = int64_t( (-Residu) % (Integer)_p) ;
-    else tr = int64_t(-Residu);
-    if (tr)
-      return r = (Rep)( (uint64_t)_p - (uint64_t)tr ) ;
-    else
-      return r = zero;
+      int64_t tr;
+          // -a = b [p]
+          // a = p-b [p]
+      if ( (-Residu) >= (Integer)(_p) ) tr = int64_t( (-Residu) % (Integer)_p) ;
+      else tr = int64_t(-Residu);
+      if (tr)
+          return r = (Rep)( (uint64_t)_p - (uint64_t)tr ) ;
+      else
+          return r = zero;
   } else {
-      if (Residu >= (Integer)_p ) tr =   int64_t(Residu % (Integer)_p) ;
-    else tr = int64_t(Residu);
-    return r = tr;
+      Integer ip(_p);
+      if (Residu >= ip ) return r =   int64_t(Residu % ip) ;
+      else return r = int64_t(Residu);
   }
 }
 

@@ -97,6 +97,8 @@ public :
     Rational& operator *= (const Rational& r) ;
     Rational& operator /= (const Rational &r) ;
 
+    Integer operator % (const Integer &r) const;
+
 //-----------------------------------------Arithmetic functions
     friend const Rational pow(const Rational &r, const long l);
 

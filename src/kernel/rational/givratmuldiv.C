@@ -176,4 +176,17 @@ Rational& Rational::operator /= (const Rational& r)
 }
 
 
+// --------------------------------------- operator /=
+Integer Rational::operator % (const Integer& r) const
+{
+  if ( isZero(r) ) {
+     throw GivMathDivZero("*** division by zero, in operator / (const Rational&)") ;
+  }
+  if (isZero(this->num)) return this->num ;
+
+  Integer res(this->den);
+  invin(res, r);
+  return res *= this->num;
+}
+
 } // namespace Givaro

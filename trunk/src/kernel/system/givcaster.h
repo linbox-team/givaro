@@ -13,8 +13,8 @@
  * @brief NO DOC
  */
 
-#ifndef __GIVARO_caster_H
-#define __GIVARO_caster_H
+#ifndef __GIVARO_givcaster_H
+#define __GIVARO_givcaster_H
 
 namespace Givaro {
     template <typename Target, typename Source>

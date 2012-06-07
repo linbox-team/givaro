@@ -51,9 +51,9 @@ int main (int argc, char * * argv) {
         // This is the field with 11^2=121 elements
         // Using a polynomial representation
     {
-        GFqDom<long> F11(11);
-        Extension< GFqDom<long> > F121(F11, 2);
-        F121.write(std::cout << "This is the field with 121 elements: ") << std::endl;
+	    GFqDom<long> F11(11);
+	    Extension< GFqDom<long> > F121(F11, 2);
+	    F121.write(std::cout << "This is the field with 121 elements: ") << std::endl;
     }
 
         // This is the field with 11^2=121 elements

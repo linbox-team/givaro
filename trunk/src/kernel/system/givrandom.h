@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <13 Jul 07 14:40:27 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <04 Jun 12 14:31:40 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givrandom.h
@@ -66,6 +66,13 @@ public:
     {
 	    return _seed;
     }
+
+
+    unsigned long max_rand() const
+    {   
+        return _GIVRAN_MODULO_;
+    }
+    
 
 // #if defined(__GIVARO_INT64)
 #if 1

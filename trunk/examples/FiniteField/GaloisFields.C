@@ -104,7 +104,24 @@ int main (int argc, char * * argv) {
 
         std::cout << " this field is generated (in 2-adic) by: " << F256.generator() << std::endl;
 
-        std::cout << " in this field the indeterminate is represented by: " << F256.sage_generator() << std::endl;
+        std::cout << " in this field the indeterminate is represented by: " << F256.sage_generator() << " (same as " << F256.indeterminate() << ')' << std::endl;
+
+        
+        Givaro::GFqDom<long> F2(2);
+        typedef Givaro::Poly1Dom< Givaro::GFqDom<long>, Givaro::Dense> PolDomain;
+        typedef Givaro::Poly1PadicDom< Givaro::GFqDom<long>, Givaro::Dense> PadicDomain;
+        
+        
+        PolDomain Pol2(F2,"Z");
+        PadicDomain Padic2(Pol2);
+        PolDomain::Element polGen, polIrred; 
+        Padic2.radix(polGen, F256.generator() );
+        Padic2.radix(polIrred, F256.irreducible() );
+        
+        Pol2.write(Pol2.write(
+            std::cout << " that is with this representation, (", polGen) 
+                   << ")^" << F256.indeterminate()
+                   << " == Z mod (", polIrred) << ')' << std::endl;
 
         {
             GFqDom<long>::Element a, b, c;

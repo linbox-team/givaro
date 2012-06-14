@@ -31,6 +31,7 @@
 #include "givaro/giverror.h"
 #endif
 
+#include <givaro/givconfig.h>
 namespace Givaro {
 
 // ==================================================================== //
@@ -42,10 +43,10 @@ public:
 	~GivMMInfo();
 	size_t physalloc; // size in bytes of physical allocated bloc
 	size_t logalloc;  // size in bytes of "logical" allocated bloc
-	long  sizetab;    // length of next arrays
+	size_t  sizetab;    // length of next arrays
 	size_t* tabbloc;  // size of all the blocs
-	long* tablog;     // number of each logical allocated bloc
-	long* tabphy;     // number of each physical allocated bloc
+	size_t* tablog;     // number of each logical allocated bloc
+	size_t* tabphy;     // number of each physical allocated bloc
 	std::ostream& print( std::ostream& so ) const;
 };
 
@@ -61,7 +62,7 @@ class BlocFreeList {
 		int index ;             // - index in free list
 		BlocFreeList* nextfree; // - pointer to the next free bloc (of the same size)
 	} u;
-	long data[1];     // - alignement on long, may be no enough one some processor ?
+	int64_t data[1];     
 
 	// -- Array of list of free bloc
 	static BlocFreeList* TabFree[];
@@ -119,7 +120,7 @@ public:
 	{
 		if (p==0) return ;
 		BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)p) -
-						    (sizeof(BlocFreeList)-sizeof(long)));
+						    (sizeof(BlocFreeList)-sizeof(int64_t)));
 		int index = tmp->u.index;
 #ifdef GIVARO_DEBUG
 		if ((index <0) || (index >= BlocFreeList::lenTables))
@@ -144,8 +145,8 @@ public:
 	friend class GivMMRefCount;
 	static size_t& physalloc;  // total amount of physical allocated bloc
 	static size_t& logalloc;   // total amoun of "logical" allocated bloc
-	static long*& tablog;      // number of each logical allocated bloc
-	static long*& tabphy;      // number of each physical allocated bloc
+	static size_t*& tablog;      // number of each logical allocated bloc
+	static size_t*& tabphy;      // number of each physical allocated bloc
 #endif
 
 	// -- Initialization module
@@ -172,7 +173,7 @@ public:
 #endif
 		int index;
 		BlocFreeList* tmp;
-		size_t sz = s + sizeof(long);
+		size_t sz = s + sizeof(int64_t);
 		if ((sz <= 32) && ((tmp=BlocFreeList::TabFree[index =int(sz-1)]) !=0)) {
 			BlocFreeList::TabFree[index] = tmp->u.nextfree;
 			tmp->u.index = index;

@@ -29,8 +29,8 @@ GivMMInfo GivMMFreeList::info;
 #ifdef GIVARO_STATMEM
 size_t& GivMMFreeList::physalloc = GivMMFreeList::info.physalloc;
 size_t& GivMMFreeList::logalloc = GivMMFreeList::info.logalloc;
-long*& GivMMFreeList::tablog = GivMMFreeList::info.tablog;
-long*& GivMMFreeList::tabphy = GivMMFreeList::info.tabphy;
+size_t*& GivMMFreeList::tablog = GivMMFreeList::info.tablog;
+size_t*& GivMMFreeList::tabphy = GivMMFreeList::info.tabphy;
 #endif
 
 
@@ -145,8 +145,8 @@ inline int BlocFreeList::search_binary( size_t sz )
 }
 
 
-// assume 4 bytes in a long:
-#define ALIGN(s) (s>>2 + 1)  // may one more ?
+// // assume 4 bytes in a long:
+// #define ALIGN(s) (s>>2 + 1)  // may one more ?
 
 BlocFreeList* GivMMFreeList::_allocate (const size_t s)
 {
@@ -161,7 +161,7 @@ BlocFreeList* GivMMFreeList::_allocate (const size_t s)
 		BlocFreeList::TabFree[index] = tmp->u.nextfree;
 	}
 	else {
-		tmp = (BlocFreeList*) malloc( (BlocFreeList::TabSize[index]+sizeof(BlocFreeList)-sizeof(long)) );
+		tmp = (BlocFreeList*) malloc( (BlocFreeList::TabSize[index]+sizeof(BlocFreeList)-sizeof(int64_t)) );
 
 #ifdef GIVARO_STATMEM
 		tabphy[index] ++; physalloc += BlocFreeList::TabSize[index];
@@ -182,7 +182,7 @@ void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t n
 {
 	if (src ==0) return _allocate(newsize) ;
 	if (newsize <= oldsize) return src;
-	BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)src)-sizeof(BlocFreeList)+sizeof(long));
+	BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)src)-sizeof(BlocFreeList)+sizeof(int64_t));
 #ifdef GIVARO_DEBUG
 	if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
 		throw GivError("[GivMMFreeList::reallocate]: bad pointer 'src'");
@@ -199,8 +199,8 @@ void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t n
 
 void GivMMFreeList::memcpy( void* dest, const void* src, const size_t size )
 {
-	BlocFreeList* tmp1 = reinterpret_cast<BlocFreeList*>(((char*)dest) - sizeof(BlocFreeList)+sizeof(long));
-	BlocFreeList* tmp2 = reinterpret_cast<BlocFreeList*>(((char*)src) - sizeof(BlocFreeList)+sizeof(long));
+	BlocFreeList* tmp1 = reinterpret_cast<BlocFreeList*>(((char*)dest) - sizeof(BlocFreeList)+sizeof(int64_t));
+	BlocFreeList* tmp2 = reinterpret_cast<BlocFreeList*>(((char*)src) - sizeof(BlocFreeList)+sizeof(int64_t));
 #ifdef GIVARO_DEBUG
 	if ((tmp1->u.index <0) || (tmp1->u.index >= BlocFreeList::lenTables))
 		throw GivError("[GivMMFreeList::memcpy]: bad pointer 'dest'");
@@ -227,7 +227,7 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
 {
 
 	if (p ==0)
-		return &(GivMMFreeList::_allocate(newsize+sizeof(long))->data[1]) ;
+		return &(GivMMFreeList::_allocate(newsize+sizeof(int64_t))->data[1]) ;
 
 
 	BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)p)-sizeof(BlocFreeList));
@@ -241,11 +241,11 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
 		memlog << "reall: in:" << (void*) tmp << ", user:" << (void*)p << std::endl;
 #endif
 		int index = tmp->u.index;
-		if (BlocFreeList::TabSize[index] >= sizeof(long)+newsize) return p;
+		if (BlocFreeList::TabSize[index] >= sizeof(int64_t)+newsize) return p;
 		GivMMRefCount::desallocate(p);
 	}
 	else --(tmp->data[0]);  // -- two pointer on the bloc:
-	tmp = GivMMFreeList::_allocate( newsize+sizeof(long) );
+	tmp = GivMMFreeList::_allocate( newsize+sizeof(int64_t) );
 	tmp->data[0] = 1 ;
 	if (oldsize !=0) {
 		if (newsize <= oldsize) ::memcpy( &(tmp->data[1]), p, newsize );
@@ -259,10 +259,10 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
 GivMMInfo::GivMMInfo()
 {
 	tabbloc = ::new size_t[BlocFreeList::lenTables];
-	tablog = ::new long[BlocFreeList::lenTables];
-	tabphy = ::new long[BlocFreeList::lenTables];
+	tablog = ::new size_t[BlocFreeList::lenTables];
+	tabphy = ::new size_t[BlocFreeList::lenTables];
 	sizetab = BlocFreeList::lenTables;
-	for (int i=0; i<sizetab; i++) {
+	for (size_t i=0; i<sizetab; i++) {
 		tabbloc[i] = BlocFreeList::TabSize[i];
 		tabphy[i] = 0;
 		tablog[i] = 0;
@@ -284,7 +284,7 @@ std::ostream& GivMMInfo::print( std::ostream& so ) const
 	so << "- details for each bloc size:\n";
 	so.width(7); so << "index" << ": "; so.width(9); so << "bytes" << " | ";
 	so.width(9); so << "#physical" << " | "; so.width(9); so << "#logical" << std::endl;
-	for (long i=0; i<sizetab; i++) {
+	for (size_t i=0; i<sizetab; i++) {
 		if (tabphy[i] !=0) {
 			so.width(7); so << i << ": ";
 			so.width(9); so << tabbloc[i] << " | " ;

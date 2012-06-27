@@ -140,6 +140,10 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 int main(int argc, char ** argv)
 {
 	::Givaro::GivaroMain::Init();
+#ifdef GIVARO_DEBUG
+    Givaro::GivMMInfo MemoryInfo;
+#endif
+
 	// argv[1] : number of primes
 	// argv[2] : 2^{32-j} is size of primes
 	// argv[3] : seed for generator
@@ -152,6 +156,7 @@ int main(int argc, char ** argv)
 	Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed));
 	Integer a3 = tmain<Field3>(argc, argv, GivRandom(seed));
 	Integer a4 = tmain<Field4>(argc, argv, GivRandom(seed));
+    
 	Integer a5 = tmain<Field5>(argc, argv, GivRandom(seed));
 	Integer a6 = tmain<Field6>(argc, argv, GivRandom(seed));
 	Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed));
@@ -185,7 +190,8 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
 	if (! success)
 		std::cerr << "Error: " << seed << std::endl;
-#endif
+    MemoryInfo.print(std::cerr) << std::endl;
+#endif    
 
 	::Givaro::GivaroMain::End();
 	return (! success);

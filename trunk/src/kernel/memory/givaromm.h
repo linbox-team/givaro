@@ -61,6 +61,7 @@ class BlocFreeList {
 	union header {
 		int index ;             // - index in free list
 		BlocFreeList* nextfree; // - pointer to the next free bloc (of the same size)
+        double dummy; 			// - here to force alignment on data on 8bytes boundary
 	} u;
 	int64_t data[1];     
 

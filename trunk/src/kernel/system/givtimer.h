@@ -229,9 +229,12 @@ inline std::ostream &operator << (std::ostream &o, const Timer &T)
 	if (ut < 0.0000000001) ut = 0;
 	return o << T.realtime() << "s (" << ut << " cpu) [" << T.count() << "]";
 }
+}
 
 #if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H)
 #include <omp.h>
+
+namespace Givaro {
 //! OMP timer
 struct OMPTimer {
 	double _c;

@@ -408,5 +408,14 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
   };
   #endif
 
+
+
+#if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H) || defined(__pmp_omp_h)
+#define GIVAVO_USES_OMP 1
+#else
+#undef GIVAVO_USES_OMP
+#endif
+
+
 #endif
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

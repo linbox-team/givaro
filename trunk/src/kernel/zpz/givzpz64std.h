@@ -83,6 +83,7 @@ public:
 	Residu_t residu() const;
 	Residu_t size() const { return _p; }
 	Residu_t characteristic() const { return _p; }
+	Residu_t& characteristic(Residu_t& p) const { return p=_p; }
 	Integer& characteristic(Integer& p) const { return p=_p; }
 	Residu_t cardinality() const { return _p; }
 	Rep access( const Rep a ) const { return a; }

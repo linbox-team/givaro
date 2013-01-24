@@ -23,7 +23,8 @@ pkginclude_HEADERS=         \
 	givintsqrootmod.h       \
 	givintsqrootmod.inl     \
 	givintrns_convert.inl	\
-	givintrns_cstor.inl
+	givintrns_cstor.inl     \
+	givspyinteger.h
 
 noinst_LTLIBRARIES=libgivinteger.la
 

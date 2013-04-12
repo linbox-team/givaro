@@ -26,26 +26,27 @@ using namespace Givaro;
 int main(int argc, char ** argv) {
 
  {
-    ZpzDom<Integer>::Element a, b, p(argv[3]);
-    ZpzDom<Integer> Zp( p );
-    unsigned long e = (unsigned long)atoi(argv[2]) ;
-    Zp.init(a, Integer(argv[1]));
-    Zp.init(b);
+     Integer p(argv[3]);
+     ZpzDom<Integer> Zp( p );
+     ZpzDom<Integer>::Element a, b;
+     unsigned long e = (unsigned long)atoi(argv[2]) ;
+     Zp.init(a, Integer(argv[1]));
+     Zp.init(b);
 
-    Timer tim;tim.clear();tim.start();
-    dom_power(b, a, (long)e, Zp);
-    tim.stop();
-
-    Zp.write( std::cout, a) << " ^ " << e << " % " << p << " = " << std::flush;
-    Zp.write( std::cerr, b) << std::endl;
-
-    std::cerr << tim << std::endl;
-
+     Timer tim;tim.clear();tim.start();
+     dom_power(b, a, (long)e, Zp);
+     tim.stop();
+     
+     Zp.write( std::cout << '(', a) << '^' << e << ") % " << p << '=' << std::flush;
+     Zp.write( std::cerr, b) << std::endl;
+     
+     std::cerr << tim << std::endl;
+     
  }
-
-
-
-
-    return 0;
+ 
+ 
+ 
+ 
+ return 0;
 }
 

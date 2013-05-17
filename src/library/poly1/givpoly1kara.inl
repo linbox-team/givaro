@@ -29,7 +29,7 @@ namespace Givaro {
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-	const size_t sR = R.size();
+	size_t sR = R.size();
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
@@ -46,7 +46,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-	const size_t sR = R.size();
+	size_t sR = R.size();
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
@@ -87,11 +87,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqr(
     const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const {
 
     Type_t two; _domain.init(two);
-    _domain.add(two, _domain.one, _domain.one);    
+    _domain.add(two, _domain.one, _domain.one);
 
     if ( (Pend-Pbeg)> SQR_THRESHOLD )
         return sqrrec(R, Rbeg, Rend,
-                      P, Pbeg, Pend, 
+                      P, Pbeg, Pend,
                       two);
     else
         return stdsqr(R, Rbeg, Rend,
@@ -212,7 +212,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqrrec( Rep
         P, Pmid, Pend);
     setdegree(M);
     this->mulin(M,two);
-    
+
     RepIterator ri=Rbeg+(ssize_t)half;
     RepConstIterator mi=M.begin();		// update R with mid product
     for( ; mi != M.end(); ++ri, ++mi) _domain.addin(*ri, *mi);
@@ -220,19 +220,19 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqrrec( Rep
     return R;
 }
 
-// Standard square 
+// Standard square
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdsqr(
-    Rep& R, const RepIterator Rbeg, const RepIterator Rend, 
+    Rep& R, const RepIterator Rbeg, const RepIterator Rend,
     const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
     const Type_t& two) const {
 
     _domain.mul(*Rbeg, *Pbeg, *Pbeg);
 
-    RepIterator rit(Rbeg); 
+    RepIterator rit(Rbeg);
     RepConstIterator pit=Pbeg;
     for(++rit,++pit; rit != Rend; ++pit, ++rit) {
-        
+
         _domain.assign(*rit,_domain.zero);
 
         RepConstIterator backpit=pit, forpit=pit;
@@ -240,25 +240,25 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdsqr(
             _domain.axpyin(*rit, *backpit, *forpit);
             if (backpit == Pbeg) break;
         }
-        
 
-        _domain.mulin(*rit, two);            
+
+        _domain.mulin(*rit, two);
 
         ++rit;
 
         _domain.assign(*rit,_domain.zero);
-         
+
         backpit=pit, forpit=pit;
-        for(--backpit,++forpit; forpit != Pend; --backpit, ++forpit) 
+        for(--backpit,++forpit; forpit != Pend; --backpit, ++forpit)
         {
             _domain.axpyin(*rit, *backpit, *forpit);
             if (backpit == Pbeg) break;
         }
         _domain.mulin(*rit, two);
-        _domain.axpyin(*rit, *pit, *pit);        
+        _domain.axpyin(*rit, *pit, *pit);
 
     }
-    
+
 
 
 //     for(size_t i=0; i<dR; ++i) {

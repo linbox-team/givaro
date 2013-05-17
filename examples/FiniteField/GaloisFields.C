@@ -106,20 +106,20 @@ int main (int argc, char * * argv) {
 
         std::cout << " in this field the indeterminate is represented by: " << F256.sage_generator() << " (same as " << F256.indeterminate() << ')' << std::endl;
 
-        
+
         Givaro::GFqDom<long> F2(2);
         typedef Givaro::Poly1Dom< Givaro::GFqDom<long>, Givaro::Dense> PolDomain;
         typedef Givaro::Poly1PadicDom< Givaro::GFqDom<long>, Givaro::Dense> PadicDomain;
-        
-        
+
+
         PolDomain Pol2(F2,"Z");
         PadicDomain Padic2(Pol2);
-        PolDomain::Element polGen, polIrred; 
+        PolDomain::Element polGen, polIrred;
         Padic2.radix(polGen, F256.generator() );
         Padic2.radix(polIrred, F256.irreducible() );
-        
+
         Pol2.write(Pol2.write(
-            std::cout << " that is with this representation, (", polGen) 
+            std::cout << " that is with this representation, (", polGen)
                    << ")^" << F256.indeterminate()
                    << " == Z mod (", polIrred) << ')' << std::endl;
 
@@ -181,8 +181,8 @@ int main (int argc, char * * argv) {
         }
 
         {
-            ZpzDom<Std16> F2(2);
-            Poly1PadicDom< ZpzDom<Std16> > P2(F2,"X");
+            ZpzDom<Std16> GF2(2);
+            Poly1PadicDom< ZpzDom<Std16> > P2(GF2,"X");
 
             givvector<long> vect202; P2.radixdirect(vect202, 202, 8);
             givvector<long> vect83; P2.radixdirect(vect83, 83, 8);

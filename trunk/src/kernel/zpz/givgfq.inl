@@ -632,7 +632,7 @@ namespace Givaro {
                     tr = double((UTT)tr % _characteristic) ;
             }
 
-            if (tr)
+            if ((bool)tr)
                 return r = (Rep)_pol2log[ UT(_characteristic - (UTT)tr) ];
             else
                 return r = zero;

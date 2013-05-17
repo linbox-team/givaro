@@ -36,7 +36,7 @@ namespace Givaro {
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, Residue MOD) const
 	{
 		for(Residue a=0; a<MOD; ++a) {
-			_domain.assign(R[0],(Element_t)a);
+			_domain.assign(R[0],(Type_t)a);
 			if (is_irreducible(R))
 				return true;
 		}
@@ -102,9 +102,9 @@ namespace Givaro {
 
 		for(long d=1;d<=(n.value()/2);++d) {
 			for(Residu_t b=0; b<MOD; ++b) {
-				_domain.assign(R[(size_t)d],(Element_t)b);
+				_domain.assign(R[(size_t)d],(Type_t)b);
 				for(Residu_t a=1; a<MOD; ++a) {
-					_domain.assign(R[0],(Element_t)a);
+					_domain.assign(R[0],(Type_t)a);
 					if (is_irreducible(R))
 						return true;
 				}
@@ -215,7 +215,7 @@ namespace Givaro {
 			this->random( (RandIter&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
-				_domain.assign(R[0],(Element_t)a);
+				_domain.assign(R[0],(Type_t)a);
 				if (is_irreducible(R))
 					return true;
 			}

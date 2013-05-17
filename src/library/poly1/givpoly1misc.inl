@@ -289,9 +289,9 @@ namespace Givaro {
 		r.reallocate((size_t)d.value()+1);
 		typename Domain::Element tmp;
 		while (_domain.isZero(g.random(tmp))) ;
-		r[d.value()] = tmp;
+		r[(size_t)d.value()] = tmp;
 		for (int i=(int)d.value(); i--;)
-			g.random(r[i]);
+			g.random(r[(size_t)i]);
 		return r;
 	}
 
@@ -317,10 +317,10 @@ namespace Givaro {
 		r.reallocate((size_t)d.value()+1);
 		while (_domain.isZero(_domain.init(r[d.value()], g()))) {};
 		for (int i=d.value(); i--;)
-			_domain.init(r[i],g());
+			_domain.init(r[(size_t)i],g());
 		_domain.nonzerorandom(g, r[d.value()]);
 		for (int i=d.value(); i--;)
-			_domain.random(g,r[i]);
+			_domain.random(g,r[(size_t)i]);
 		return r;
 	}
 #endif

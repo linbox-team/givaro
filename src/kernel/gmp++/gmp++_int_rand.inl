@@ -301,7 +301,7 @@ namespace Givaro {
 	template<bool ALWAYSPOSITIVE,class T>
 	Integer& Integer::random (Integer& r, const T & m)
 	{
-		return Integer::random_lessthan<ALWAYSPOSITIVE>(r,m) ;
+		return Integer::random_lessthan<ALWAYSPOSITIVE>(r, (typename Signed_Trait<T>::unsigned_type) m) ;
 	}
 
 	//! returns a random integer less than...

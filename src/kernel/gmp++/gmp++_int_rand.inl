@@ -155,7 +155,7 @@ namespace Givaro {
 	Integer Integer::random_lessthan (const T & m)
 	{
 		Integer res ;
-		return Integer::random_lessthan<ALWAYSPOSITIVE>(res,m);
+		return Integer::random_lessthan<ALWAYSPOSITIVE>(res,(long unsigned int)m);
 	}
 
 	/* ********************************* */

@@ -129,8 +129,8 @@ int test1()
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer tata = toto.nonzerorandom(autre);
 		if (tata == 0 || tata >= autre) {
-			//        cout << tata << endl;
-			cout << "nonzerorandom  failed" << endl;
+			       cout << tata << endl;
+			cout << tata << "nonzerorandom  failed" << endl;
 			return -1  ;
 		}
 	}
@@ -403,7 +403,7 @@ int test4()
 		Integer::nonzerorandom<false>(tata,petits);
 		if (tata<0) count ++ ;
 		if (tata == 0 || tata >= 1<<petits) {
-			//        cout << tata << endl;
+//             cout << tata << endl;
 			cout << "nonzerorandom  failed" << endl;
 			return -1  ;
 		}
@@ -416,13 +416,14 @@ int test4()
 #ifdef GIVARO_DEBUG
 	cout << "nonzerorandom_exp....OK" << endl;
 #endif
+    if (autre<0) Integer::negin(autre);
+    
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		Integer::nonzerorandom<false>(tata,autre);
 		if (tata<0) ++ count ;
-		if (tata == 0 || tata >= autre) {
-			//        cout << tata << endl;
+		if (tata == 0 || tata >= autre || (-tata) >= autre) {
 			cout << "nonzerorandom  failed" << endl;
 			return -1  ;
 		}

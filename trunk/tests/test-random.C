@@ -502,7 +502,7 @@ int test5()
 		tata = Integer::random<false>(l) ;
 		if (tata<0) ++ count ;
 		if (tata.bitsize() > l) {
-			//cout << tata << endl;
+			// cout << tata << endl;
 			cout << "random  failed" << endl;
 			return -1  ;
 		}
@@ -515,7 +515,7 @@ int test5()
 	for (size_t i = 0 ; i < 5000 ; ++i) {
 		tata = Integer::random(l) ;
 		if (tata<0 || tata.bitsize() > l) {
-			//cout << tata << endl;
+			// cout << tata << endl;
 			cout << "random  failed" << endl;
 			return -1  ;
 		}

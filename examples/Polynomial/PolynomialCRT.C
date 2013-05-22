@@ -47,8 +47,8 @@ bool tmain(int argc, char ** argv, GivRandom& generator) {
     bool pass = true;
     typedef Poly1CRT< Field >  CRTSystem;
     typedef typename CRTSystem::Element	Poly;
-    typedef typename CRTSystem::Type_t	Scal;
-    typedef typename CRTSystem::array_E	VPoly;
+//     typedef typename CRTSystem::Type_t	Scal;
+//     typedef typename CRTSystem::array_E	VPoly;
     typedef typename CRTSystem::array_T	VScal;
 
     IntPrimeDom ID;
@@ -128,8 +128,8 @@ bool tmainext(int argc, char ** argv, GivRandom& generator) {
     bool pass = true;
     typedef Poly1CRT< Field >  CRTSystem;
     typedef typename CRTSystem::Element	Poly;
-    typedef typename CRTSystem::Type_t	Scal;
-    typedef typename CRTSystem::array_E	VPoly;
+//     typedef typename CRTSystem::Type_t	Scal;
+//     typedef typename CRTSystem::array_E	VPoly;
     typedef typename CRTSystem::array_T	VScal;
 
     IntPrimeDom ID;

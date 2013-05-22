@@ -37,7 +37,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 	typedef RNSsystem<Integer, Field >      CRTSystem;
 	typedef typename CRTSystem::domains	  Domains;
 	typedef typename CRTSystem::array	 Elements;
-	typedef typename CRTSystem::ring	     Ring;
+// 	typedef typename CRTSystem::ring	     Ring;
 
 	typedef RNSsystemFixed<Integer>    CRTSystemFixed;
 	typedef CRTSystemFixed::array             Prime_t;

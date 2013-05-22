@@ -29,6 +29,20 @@ int test1()
         toto.random();
 #endif
 
+	toto.seeding();
+#ifdef GIVARO_DEBUG
+	cout << "this is a random() number : " << toto.random() << endl;
+#else
+        toto.random();
+#endif
+
+    Integer::seeding();
+#ifdef GIVARO_DEBUG
+	cout << "this is a random() number : " << toto.random() << endl;
+#else
+        toto.random();
+#endif
+
 	Integer un(26);
 	Integer autre(511);
 	Integer large( Integer::one<<3000);

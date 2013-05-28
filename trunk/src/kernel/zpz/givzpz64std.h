@@ -29,7 +29,8 @@ namespace Givaro {
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
- * - p max is 2147483647
+ * - m max is 3037000500
+ * - p max is 3037000493
  * .
  */
 template<>
@@ -219,6 +220,9 @@ protected:
 
 	static void Init();
 	static void End();
+
+public: static inline Residu_t getMaxModulus() { return 3037000500ULL; }
+    
 };
 
 } // namespace Givaro

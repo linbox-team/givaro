@@ -33,6 +33,7 @@ namespace Givaro {
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
+ * - m max is 46341
  * - p max is 46337
  * .
  */
@@ -213,8 +214,7 @@ public:
   std::ostream& write( std::ostream& s, const Rep a ) const;
 
 protected:
-  // -- based for modular inverse, d = a*u + b*v
-//   static const int32_t gcdext ( int32_t& u, int32_t& v, const int32_t a, const int32_t b );
+  // -- Modular inverse, d = a*u + b*v
   int32_t& gcdext (int32_t& d, int32_t& u, int32_t& v, const int32_t a, const int32_t b ) const;
   int32_t& invext (int32_t& u, const int32_t a, const int32_t b ) const;
 
@@ -225,6 +225,9 @@ protected:
 
     static void Init();
     static void End();
+
+public: static inline Residu_t getMaxModulus() { return 46341; }
+    
 };
 
 } // namespace Givaro

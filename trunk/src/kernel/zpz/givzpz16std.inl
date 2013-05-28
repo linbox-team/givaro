@@ -21,8 +21,8 @@
 #define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = Rep(a>=b? a-b: (p-b)+a) )
 
 // r -= a
-#define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r = Rep(r-a); r= Rep(r < 0 ? r+p : r);}
-
+// #define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r = Rep(r-a); r= Rep(r < 0 ? r+p : r);}
+#define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r = Rep(r>=a?r-a:(p-a)+r);}
 // r = a+b
 #define __GIVARO_ZPZ16_N_ADD(r,p,a,b) { r = Rep(a+b); r= Rep(r < p ? r : r-p);}
 // r += a
@@ -71,6 +71,7 @@ namespace Givaro {
 
 	inline ZpzDom<Std16>::Rep& ZpzDom<Std16>::sub (Rep& r, const Rep a, const Rep b) const
 	{
+
 		return __GIVARO_ZPZ16_N_SUB(r,_p,a,b);
 	}
 

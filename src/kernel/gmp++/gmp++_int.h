@@ -125,6 +125,8 @@ namespace Givaro {
 	int 		jacobi(const Integer& u, const Integer& v) ;
 	int 		legendre(const Integer& u, const Integer& v) ;
 
+	bool            isOdd(const Integer&);
+
 	long unsigned 	length (const Integer& a);
 	// (FILE gmp++_int_io.C)
 
@@ -1460,6 +1462,9 @@ namespace Givaro {
 
 		//! absolute value
 		friend giv_all_inlined  Integer abs(const Integer& n);
+
+		//! parity of an integer
+		friend giv_all_inlined  bool isOdd(const Integer&);
 
 		//! @name primes
 		///@{

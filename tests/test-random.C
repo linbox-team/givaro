@@ -431,7 +431,7 @@ int test4()
 	cout << "nonzerorandom_exp....OK" << endl;
 #endif
     if (autre<0) Integer::negin(autre);
-    
+
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {

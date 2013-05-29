@@ -84,6 +84,15 @@ namespace Givaro {
 	}
 
 
+	/*! Tests parity of an integer
+	 * @param a integer
+	 * @return 1 if odd, 0 if even
+	 */
+	bool isOdd(const Integer &a)
+	{
+		int o = mpz_tstbit( (mpz_srcptr) &(a.gmp_rep), 0);
+		return (o!=0);
+	}
 
 	// base p logarithm of a
 	long logp(const Integer& a, const Integer& p)
@@ -129,15 +138,21 @@ namespace Givaro {
 	// Copied and adapted from mpz/nextprime.c
 	Integer& prevprime(Integer& r, const Integer &p)
 	{
-		mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1L );
-		while( !mpz_probab_prime_p ( (mpz_srcptr)&(p.gmp_rep), 5 ) )
+		if (p < 3) return (r=2);
+		if (isOdd(p))
+			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2L );
+		else
 			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1L );
+
+		while( !mpz_probab_prime_p ( (mpz_srcptr)&(p.gmp_rep), 10 ) )
+			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2L );
+
 		return r;
 	}
 
 	int probab_prime(const Integer &p)
 	{
-		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),1) ;
+		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),10) ;
 	}
 
 	int probab_prime(const Integer &p, int r)
@@ -432,7 +447,7 @@ namespace Givaro {
 
 	long unsigned int length(const Integer& a)
 	{
-            // JGD 23.04.2012: shouldn't it be "mp_limb_t" instead of "long unsigned"?
+		//! @bug JGD 23.04.2012: shouldn't it be "mp_limb_t" instead of "long unsigned"?
 		return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(long unsigned);
 	}
 

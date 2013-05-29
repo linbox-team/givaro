@@ -87,7 +87,7 @@ public:
 	const Rep mOne;
 
 	// ----- Constructor
-	ZpzDom() : zero(0), one(1), mOne(-1), _p(0) {}
+	ZpzDom() : zero(0), one(1), mOne((Rep)-1), _p(0) {}
 	ZpzDom( Residu_t p ) : zero(0), one(1), mOne(Rep(p-1)), _p(p) {}
 	ZpzDom( const ZpzDom<Std16>& F) : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
 
@@ -249,7 +249,7 @@ protected:
 	static void End();
 
 public: static inline Residu_t getMaxModulus() { return 32768; }
-    
+
 };
 
 } // namespace Givaro

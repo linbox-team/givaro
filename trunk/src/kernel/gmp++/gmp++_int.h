@@ -1030,6 +1030,11 @@ namespace Givaro {
 		 */
 		static giv_all_inlined  Integer& divexact (Integer& q,
 							   const Integer& n, const Integer& d);
+		static giv_all_inlined  Integer& divexact (Integer& q,
+							   const Integer& n, const unsigned long & d);
+		static giv_all_inlined  Integer& divexact (Integer& q,
+							   const Integer& n, const long & d);
+
 		/*! Division when \c d divides \c n.
 		 * @param n dividend
 		 * @param d divisor
@@ -1037,6 +1042,23 @@ namespace Givaro {
 		 * @warning if quotient is not exact, the result is not predictable.
 		 */
 		static giv_all_inlined  Integer  divexact (const Integer& n, const Integer& d);
+		static giv_all_inlined  Integer  divexact (const Integer& n, const unsigned long & d);
+		static giv_all_inlined  Integer  divexact (const Integer& n, const long & d);
+
+		//! Stuff
+	static giv_all_inlined Integer& trem(Integer& r, const Integer &n , const Integer & d);
+	static giv_all_inlined Integer& crem(Integer& r, const Integer &n , const Integer & d);
+	static giv_all_inlined Integer& frem(Integer& r, const Integer &n , const Integer & d);
+
+		//! Stuff
+	static giv_all_inlined Integer& trem(Integer& r, const Integer &n , const unsigned long& d);
+	static giv_all_inlined Integer& crem(Integer& r, const Integer &n , const unsigned long & d);
+	static giv_all_inlined Integer& frem(Integer& r, const Integer &n , const unsigned long & d);
+
+		//! Stuff
+	static giv_all_inlined unsigned long trem(const Integer &n , const unsigned long& d);
+	static giv_all_inlined unsigned long crem(const Integer &n , const unsigned long & d);
+	static giv_all_inlined unsigned long frem(const Integer &n , const unsigned long & d);
 
 		/*! Division operator.
 		 * @param d divisor
@@ -1541,6 +1563,10 @@ namespace Givaro {
 		giv_all_inlined operator vect_t() const ;
 		///@}
 
+		// (FILE gmp++_int_other.C)
+		//! Other stuff gmp has (temporary)
+		///@{
+		///@}
 		// (FILE gmp++_int_rand.inl)
 		/* BB:
 		 * if the following functions are NOT static inline, one

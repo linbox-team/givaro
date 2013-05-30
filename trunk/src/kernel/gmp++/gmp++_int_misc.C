@@ -91,7 +91,7 @@ namespace Givaro {
 	bool isOdd(const Integer &a)
 	{
 		int o = mpz_tstbit( (mpz_srcptr) &(a.gmp_rep), 0);
-		return (o!=0);
+		return (o!=0); // or maybe should I write l==1 ^^
 	}
 
 	// base p logarithm of a

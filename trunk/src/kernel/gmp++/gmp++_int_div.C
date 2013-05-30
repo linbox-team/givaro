@@ -116,6 +116,25 @@ namespace Givaro {
 		return q;
 	}
 
+	Integer& Integer::divexact  (Integer& q, const Integer& n1, const unsigned long & n2)
+	{
+		if (isZero(n1)) return q = Integer::zero;
+		mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
+			      (mpz_srcptr)&(n1.gmp_rep), (n2)) ;
+		return q;
+	}
+
+	Integer& Integer::divexact  (Integer& q, const Integer& n1, const long & n2)
+	{
+		if (isZero(n1)) return q = Integer::zero;
+		mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
+			      (mpz_srcptr)&(n1.gmp_rep), std::abs(n2)) ;
+		if (n2<0)
+			negin(q);
+		return q;
+	}
+
+
 	Integer  Integer::divexact  (const Integer& n1, const Integer& n2)
 	{
 		if (isZero(n1)) return Integer::zero;
@@ -128,6 +147,24 @@ namespace Givaro {
 		return q;
 	}
 
+	Integer  Integer::divexact  (const Integer& n1, const unsigned long& n2)
+	{
+		if (isZero(n1)) return Integer::zero;
+		Integer q;
+		mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
+			      (mpz_srcptr)&(n1.gmp_rep), (n2)) ;
+		return q;
+	}
+
+	Integer  Integer::divexact  (const Integer& n1, const long& n2)
+	{
+		if (isZero(n1)) return Integer::zero;
+		Integer q;
+		mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
+			      (mpz_srcptr)&(n1.gmp_rep), std::abs(n2)) ;
+		if (n2<0) negin(q);
+		return q;
+	}
 
 	Integer& Integer::operator /= (const Integer& n)
 	{
@@ -327,6 +364,71 @@ namespace Givaro {
 		return q ;
 	}
 
+	Integer& Integer::trem(Integer& r, const Integer &n , const Integer & d)
+	{
+		mpz_tdiv_r((mpz_ptr)&(r.gmp_rep),
+			   (mpz_srcptr)&(n.gmp_rep),
+			   (mpz_srcptr)&(d.gmp_rep));
+		return r;
+	}
+
+	Integer& Integer::crem(Integer& r, const Integer &n , const Integer & d)
+	{
+		mpz_cdiv_r((mpz_ptr)&(r.gmp_rep),
+			   (mpz_srcptr)&(n.gmp_rep),
+			   (mpz_srcptr)&(d.gmp_rep));
+		return r;
+	}
+
+	Integer& Integer::frem(Integer& r, const Integer &n , const Integer & d)
+	{
+		mpz_fdiv_r((mpz_ptr)&(r.gmp_rep),
+			   (mpz_srcptr)&(n.gmp_rep),
+			   (mpz_srcptr)&(d.gmp_rep));
+		return r;
+	}
+
+	Integer& Integer::trem(Integer& r, const Integer &n , const unsigned long& d)
+	{
+		mpz_tdiv_r_ui((mpz_ptr)&(r.gmp_rep),
+			      (mpz_srcptr)&(n.gmp_rep),
+			      (d));
+		return r;
+	}
+
+	Integer& Integer::crem(Integer& r, const Integer &n , const unsigned long & d)
+	{
+		mpz_cdiv_r_ui((mpz_ptr)&(r.gmp_rep),
+			      (mpz_srcptr)&(n.gmp_rep),
+			      (d));
+		return r;
+	}
+
+	Integer& Integer::frem(Integer& r, const Integer &n , const unsigned long & d)
+	{
+		mpz_fdiv_r_ui((mpz_ptr)&(r.gmp_rep),
+			      (mpz_srcptr)&(n.gmp_rep),
+			      d);
+		return r;
+	}
+
+	unsigned long Integer::trem(const Integer &n , const unsigned long& d)
+	{
+		return mpz_cdiv_ui( (mpz_srcptr)&(n.gmp_rep),
+				    (d));
+	}
+
+	unsigned long Integer::crem(const Integer &n , const unsigned long & d)
+	{
+		return mpz_tdiv_ui( (mpz_srcptr)&(n.gmp_rep),
+				    (d));
+	}
+
+	unsigned long Integer::frem(const Integer &n , const unsigned long & d)
+	{
+		return mpz_fdiv_ui( (mpz_srcptr)&(n.gmp_rep),
+				    d);
+	}
 
 	// -- operator /
 	Integer operator / (const int l, const Integer& n)

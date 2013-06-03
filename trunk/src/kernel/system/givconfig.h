@@ -84,49 +84,49 @@
 #define __STDC_LIMIT_MACROS
 #endif
 #include <stdint.h>
-#ifndef INT64_MAX
+#if !defined(INT64_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define INT64_MAX std::numeric_limits<int64_t>::max()
 #endif
 
-#ifndef UINT64_MAX
+#if !defined(UINT64_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define UINT64_MAX std::numeric_limits<uint64_t>::max()
 #endif
 
-#ifndef INT32_MAX
+#if !defined(INT32_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define INT32_MAX std::numeric_limits<int32_t>::max()
 #endif
 
-#ifndef UINT32_MAX
+#if !defined(UINT32_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define UINT32_MAX std::numeric_limits<uint32_t>::max()
 #endif
 
-#ifndef INT16_MAX
+#if !defined(INT16_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define INT16_MAX std::numeric_limits<int16_t>::max()
 #endif
 
-#ifndef UINT16_MAX
+#if !defined(UINT16_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define UINT16_MAX std::numeric_limits<uint16_t>::max()
 #endif
 
-#ifndef INT8_MAX
+#if !defined(INT8_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define INT8_MAX std::numeric_limits<int8_t>::max()
 #endif
 
-#ifndef UINT8_MAX
+#if !defined(UINT8_MAX) && !defined(__CYGWIN__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #include <limits>
 #define UINT8_MAX std::numeric_limits<uint8_t>::max()

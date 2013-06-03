@@ -411,19 +411,22 @@ namespace Givaro {
 
 	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned long a ) const
 	{
-		r = Rep((a >_p) ? a % _p : a);
+		r = Rep((a >=_p) ? a % _p : a);
+		assert(r < _p);
 		return r= _tab_value2rep[r];
 	}
 
 	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned int a ) const
 	{
-		r = Rep((a >_p) ? a % _p : a);
+		r = Rep((a >=_p) ? a % _p : a);
+		assert(r < _p);
 		return r= _tab_value2rep[r];
 	}
 
 	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const uint16_t a ) const
 	{
-		r = Rep((a >_p) ? a % _p : a);
+		r = Rep((a >=_p) ? a % _p : a);
+		assert(r < _p);
 		return r= _tab_value2rep[r];
 	}
 
@@ -449,13 +452,16 @@ namespace Givaro {
 			// a = p-b [p]
 			if ( Residu <= (Integer)(-_p) ) tr = int16_t( (-Residu) % _p) ;
 			else tr = int16_t(-Residu);
-			if (tr)
+			if (tr){
+				assert(_p -(uint16_t)tr < _p);
 				return r = _tab_value2rep[ _p - (uint16_t)tr ];
+			}
 			else
 				return r = (Rep) zero;
 		} else {
 			if (Residu >= (Integer)_p ) tr =   int16_t(Residu % _p) ;
 			else tr = int16_t(Residu);
+			assert(tr < _p);
 			return r = _tab_value2rep[tr];
 		}
 	}
@@ -472,8 +478,14 @@ namespace Givaro {
 		if ((sz <10) && (sz <stride)) {
 			for(  size_t i= sz; i--; )
 				dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
-			if (dot > _p) return r = _tab_value2rep[(Rep)(dot % _p)];
-			else return r = _tab_value2rep[dot];
+			if (dot > _p){
+				assert( (Rep)(dot %_p) < _p);
+				return r = _tab_value2rep[(Rep)(dot % _p)];
+			}
+			else {
+				assert(dot < _p);
+				return r = _tab_value2rep[dot];
+			}
 
 		}
 		unsigned int i_begin=0;
@@ -483,6 +495,7 @@ namespace Givaro {
 				dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
 				if (dot>_p) dot %= _p;
 			}
+			assert(dot < _p);
 			return r = _tab_value2rep[dot];
 
 		}
@@ -501,6 +514,7 @@ namespace Givaro {
 			if (dot>_p) dot %= _p;
 			i_begin += (unsigned int) min_sz;
 		} while (i_begin <sz);
+		assert(dot < _p);
 		return r = _tab_value2rep[dot];
 	}
 
@@ -535,7 +549,10 @@ label1:
 			d_2_l tmp;
 			// - normalization: put fractional part at the end of the representation
 			tmp.d = a[i] + offset;
-			r[i--] = (Residu_t)_tab_value2rep[(tmp.r[1] >_p ? tmp.r[1] : tmp.r[1] % _p)];
+			{
+				assert((tmp.r[1] >=_p ? tmp.r[1] : tmp.r[1] % _p) < _p);
+			}
+			r[i--] = (Residu_t)_tab_value2rep[(tmp.r[1] >=_p ? tmp.r[1] : tmp.r[1] % _p)];
 		}
 		// while (i!=0)
 		if (i >0) goto label1;
@@ -588,6 +605,7 @@ label1:
 		s >> tmp;
 		tmp %= _p;
 		if (tmp < 0) tmp += _p;
+		assert ( (uint)tmp < _p) ;
 		a = _tab_value2rep[ (uint)tmp ];
 		return s;
 	}

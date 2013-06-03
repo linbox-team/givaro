@@ -37,7 +37,7 @@ if (TestOneField(F,(int)a,(float)x)) {\
 template<class Int1, class Int2>
 long long locgcd ( const Int1 a, const Int2 b ) {
 //     std::cerr << std::endl << '|' << a << '^' << b << '|';
-    long long u3, v3; u3 = a; v3 = b;
+    long long u3, v3; u3 = a; v3 = (long long)b;
     while (v3 != 0) {
         long long q, t3;
         q = u3 / v3;
@@ -45,7 +45,7 @@ long long locgcd ( const Int1 a, const Int2 b ) {
         u3 = v3; v3 = t3;
     }
 //     std::cerr << u3 << std::endl;
-    
+
     return u3;
 }
 
@@ -86,12 +86,12 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 
 	F.init(a, FIRSTINT);
     double invertible=(FIRSTFLOAT<0?-FIRSTFLOAT:FIRSTFLOAT);
-    do { 
+    do {
         invertible += 1;
-        F.init(b, invertible); 
+        F.init(b, invertible);
     } while ( locgcd( (long long)(invertible),F.characteristic()) != 1 );
 
-    
+
 
 	F.init(c);            // empty constructor
 	F.init(d);            // empty constructor

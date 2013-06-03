@@ -397,9 +397,10 @@ namespace Givaro {
 			ua = (unsigned long)a;
 			sign =1;
 		}
-		r = Rep( (ua >_p) ? ua % _p : ua );
+		r = Rep( (ua >=_p) ? ua % _p : ua );
 		if (sign ==-1)
 			r = Rep(_p - r);
+		assert(r < _p);
 		return r = _tab_value2rep[r];
 	}
 
@@ -583,7 +584,7 @@ label1:
 
 	inline std::istream& ZpzDom<Log16>::read (std::istream& s, Rep& a) const
 	{
-		Integer tmp; 
+		Integer tmp;
 		s >> tmp;
 		tmp %= _p;
 		if (tmp < 0) tmp += _p;

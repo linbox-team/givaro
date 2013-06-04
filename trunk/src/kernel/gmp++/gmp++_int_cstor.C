@@ -78,7 +78,7 @@ namespace Givaro {
 	// log[10](2^8) < 2.408239966
 	Integer::Integer(long long unsigned int n)
 	{
-		char * tmp = new char[ long(2.408239966*sizeof(long long unsigned))+1];
+		char * tmp = new char[ long(2.408239966*(double)sizeof(long long unsigned))+1];
 		sprintf(tmp,"%llu",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 		delete [] tmp;

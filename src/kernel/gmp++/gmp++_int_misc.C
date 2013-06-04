@@ -389,7 +389,7 @@ namespace Givaro {
 	{
 		long unsigned int low = (long unsigned)(*this);
 		Integer rem;
-		short cbtuli = CHAR_BIT*sizeof(long unsigned int);
+		short cbtuli = (short)(CHAR_BIT*(double)sizeof(long unsigned int));
 		mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), cbtuli );
 		long long unsigned tmp = (long unsigned)(rem);
 		//	tmp <<= CHAR_BIT*sizeof(long unsigned int) ;

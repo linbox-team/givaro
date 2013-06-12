@@ -20,7 +20,7 @@ using std::cout ; using std::endl;
 
 //! tests <code>ret= .func(arg,arg);</code> ...
 int test1()
-{/*{{{*/
+{
 	Integer toto  ;
 	toto.seeding((long unsigned int)0);
 #ifdef GIVARO_DEBUG
@@ -154,11 +154,11 @@ int test1()
 
 	return 0;
 
-}/*}}}*/
+}
 
 //! tests \verbatim ret= ::func(arg,arg); \endverbatim
 int test2()
-{/*{{{*/
+{
 	Integer un(26);
 	Integer autre(511);
 	for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -241,11 +241,11 @@ int test2()
 
 	return 0;
 
-}/*}}}*/
+}
 
 //! tests \verbatim ::func(ret,arg,arg); \endverbatim
 int test3()
-{/*{{{*/
+{
 	Integer un(26);
 	Integer autre(511);
 	Integer tata ;
@@ -341,11 +341,11 @@ int test3()
 
 	return 0;
 
-}/*}}}*/
+}
 
 //! test possibly <0 random numbers
 int test4()
-{/*{{{*/
+{
 	Integer un(26);
 	Integer autre(511);
 	Integer tata ;
@@ -453,7 +453,7 @@ int test4()
 
 	return 0;
 
-}/*}}}*/
+}
 
 //! tests standard interface
 int test5()
@@ -565,7 +565,7 @@ int test5()
 }
 
 int main()
-{/*{{{*/
+{
 #ifdef GIVARO_DEBUG
 	std::cout << "T1" << std::endl;
 	if (test1()) return -1;
@@ -593,9 +593,17 @@ int main()
 	tata = Integer::random();
 	if (toto != tata) return -1 ;
 
+	// long unsigned int rangerand = (1<<20);
+	// Integer seed;
+	// seed = Integer::random_lessthan_2exp(rangerand); // <- l'erreur est dûe à cette ligne
+	// cout << "seed : " << seed << endl;
+	// Integer seed(1<<20);
+	// cout << "seed : " << seed << endl;
+
+
 	return 0 ;
 
-}/*}}}*/
+}
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */

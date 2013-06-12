@@ -18,6 +18,7 @@
 #include <givaro/givinteger.h>
 using namespace Givaro;
 
+
 #ifdef GIVARO_DEBUG
 long long TTcount = 0;
 #endif

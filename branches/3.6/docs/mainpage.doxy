@@ -1,0 +1,56 @@
+/** @mainpage Givaro Documentation.
+ *  Givaro is a C++ library for arithmetic and algebraic computations.
+ *
+ * \section intro Introduction
+ *
+ * Givaro can do fast arithmetic computations with
+ * - Integers. The Integer class uses GMP integers.
+ * - Rationals.
+ * - Rings of the form \f$\mathbf{Z}/m\mathbf{Z}\f$.
+ * - Prime fields and extensions.
+ * - Polynomials.
+ * .
+ *
+ * Non-standard arithmetic tools include trucated arithmetic.
+ *
+ * \section goals Goals
+ *
+ * \section desig Design
+ *
+ * \section using Using Givaro
+ * - \subpage copy.
+ * - \subpage tuto. This is a brief introduction to %LinBox capabilities.
+ * - \subpage inst. Explains how to install from sources or from the latest cvs version.
+ * - \subpage arch. Describes how Givaro is organized
+ * - <a href="../givaro-html/index.html"     style="color: blue  ; font-weight: bold">
+ * Documentation for Users</a>. If everything around is blue, then you are reading
+ * the lighter, user-oriented, documentation.
+ * - <a href="../givaro-dev-html/index.html" style="color: green ; font-weight: bold">
+ * Documentation for Developers</a>. If everything around is green, then you can
+ * get to everything (not necessarily yet) documented.
+ * .
+ * \section contrib Contributing to Givaro, getting assistance.
+ \version 3.6.0
+ */
+
+/**
+ * \page tuto Tutorial.
+ * Empty.
+ */
+
+/**
+ * \page copy Licence.
+ * Empty.
+ */
+
+/**
+ * \page inst Installation.
+ * Empty.
+ */
+
+/**
+ * \page arch Architecture.
+ * Empty.
+ */
+
+// vim:syn=doxygen

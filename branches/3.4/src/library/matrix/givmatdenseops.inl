@@ -12,7 +12,7 @@
 #error "this looks very much like dead code"
 
 namespace Givaro {
-#warning "this file will probably not compile"
+#pragma message "#warning this file will probably not compile"
 
 template<class Domain>
 int MatrixDom<Domain,Dense>::areEqual ( const Rep& A, const Rep& B ) const

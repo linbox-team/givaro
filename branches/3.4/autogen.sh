@@ -15,7 +15,8 @@ test -z "$srcdir" && srcdir=.
 
 PKG_NAME="Givaro Library"
 
-(test -f $srcdir/configure.ac ) || {
+(test -f $srcdir/configure.ac  \
+	&& test -f $srcdir//src/kernel/integer/givinteger.h ) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level "\`$PKG_NAME\'" directory"
     exit 1
@@ -27,6 +28,18 @@ PROJECT=givaro
 TEST_TYPE=-f
 
 DIE=0
+
+# Defaults
+LIBTOOL=libtool
+LIBTOOLIZE=libtoolize
+
+# Fix OSx problem with GNU libtool
+(uname -a|grep -v Darwin) < /dev/null > /dev/null 2>&1 ||
+{
+echo "....Adding fix for OSX"
+LIBTOOL=glibtool
+LIBTOOLIZE=glibtoolize
+}
 
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
 	echo
@@ -44,8 +57,8 @@ DIE=0
 	DIE=1
 }
 
-(grep "^AM_PROG_LIBTOOL" configure.ac >/dev/null) && {
-  (libtool --version) < /dev/null > /dev/null 2>&1 || {
+(grep "^AC_PROG_LIBTOOL" configure.ac >/dev/null) && {
+  ($LIBTOOL --version) < /dev/null > /dev/null 2>&1 || {
     echo
     echo "**Error**: You must have \`libtool' installed to compile $PROJECT."
     echo "Get ftp://ftp.gnu.org/pub/gnu/libtool-1.2d.tar.gz"
@@ -76,7 +89,7 @@ if test -z "$*"; then
 fi
 
 case $CC in
-*xlc | *xlc\ * | *lcc | *lcc\ *) am_opt=--include-deps;;
+	*xlc | *xlc\ * | *lcc | *lcc\ *) am_opt=--include-deps;;
 esac
 
 for coin in `find . -name configure.ac -print`
@@ -116,9 +129,9 @@ do
 	echo "Making $dr/aclocal.m4 writable ..."
 	test -r $dr/aclocal.m4 && chmod u+w $dr/aclocal.m4
       fi
-      if grep "^AM_PROG_LIBTOOL" configure.ac >/dev/null; then
-	echo "Running libtoolize..."
-	libtoolize --force --copy
+      if grep "^AC_PROG_LIBTOOL" configure.ac >/dev/null; then
+			echo "Running libtoolize..."
+			$LIBTOOLIZE --force --copy
       fi
       echo "Running aclocal $aclocalinclude ..."
       aclocal $aclocalinclude
@@ -127,7 +140,7 @@ do
 	autoheader
       fi
       echo "Running automake --gnu $am_opt ..."
-      automake --add-missing --gnu $am_opt
+      automake -c --add-missing --gnu $am_opt
       echo "Running autoconf ..."
       autoconf
     )
@@ -143,7 +156,7 @@ cd "$ORIGDIR"
 if test x$NOCONFIGURE = x; then
   echo Running $srcdir/configure $conf_flags "$@" ...
   $srcdir/configure $conf_flags "$@" \
-  && echo Now type \`make install\' to compile $PROJECT  || exit 1
+	  && echo "Now type \`make install' to compile $PROJECT"  || exit 1
 else
   echo Skipping configure process.
 fi

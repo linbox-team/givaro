@@ -171,7 +171,8 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
                                 for( ;(j<sP) && (i<R.first.size());++i,++j)
                                     this->_domain.assign(R.first[i],P.first[j]);
                             }
-                        } else {
+                        }
+						else {
                                 // vP <= vR < v <= lastR
                             R.first.erase(R.first.begin(),R.first.begin()+value(v-vR));
                             R.second = v;
@@ -180,12 +181,12 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
                             size_t j = value(v-vP);
                             Degree lastP(vP+sP-1);
                             lastP = (lastP>d?d:lastP);
-                            Degree lastR(v+sR-1);
-                            lastR = (lastR>d?d:lastR);
-                            size_t endi=value(lastR-v)+1;
+                            Degree lastRR(v+sR-1);
+                            lastRR = (lastRR>d?d:lastRR);
+                            size_t endi=value(lastRR-v)+1;
                             size_t endj=value(lastP-vP)+1;
-                            lastR = (lastP>lastR?lastP:lastR);
-                            R.first.resize(value(lastR-v)+1);
+                            lastRR = (lastP>lastRR?lastP:lastRR);
+                            R.first.resize(value(lastRR-v)+1);
                             for( ; (j<endj) && (i<endi); ++i,++j)
                                 this->_domain.addin(R.first[i], P.first[j]);
                             for( ; j<endj; ++i,++j)
@@ -245,12 +246,12 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
                         size_t j = value(v-vP);
                         Degree lastP(vP+sP-1);
                         lastP = (lastP>d?d:lastP);
-                        Degree lastR(v+sR-1);
-                        lastR = (lastR>d?d:lastR);
-                        size_t endi=value(lastR-v)+1;
+                        Degree lastRR(v+sR-1);
+                        lastRR = (lastRR>d?d:lastRR);
+                        size_t endi=value(lastRR-v)+1;
                         size_t endj=value(lastP-vP)+1;
-                        lastR=(lastP>lastR?lastP:lastR);
-                        R.first.resize(value(lastR-v)+1);
+                        lastRR=(lastP>lastRR?lastP:lastRR);
+                        R.first.resize(value(lastRR-v)+1);
                         for( ; (j<endj) && (i<endi); ++i,++j)
                             this->_domain.addin(R.first[i], P.first[j]);
                         for( ; j<endj; ++i,++j)
@@ -343,13 +344,13 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::subin ( Rep& R, const R
 }
 
 template <class Domain>
-inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::mul( Rep& r, const Rep& u, const Rep& v, const Degree& val, const Degree& deg) const {
+inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::mul( Rep& r, const Rep& u, const Rep& v, const Degree& Val, const Degree& deg) const {
     Degree vU; this->val(vU, u);
     Degree vV; this->val(vV, v);
     r.second = u.second+v.second;
-    if (val >= r.second) {
-        Father_t::mul(r.first,u.first,v.first,val-r.second,deg-r.second);
-        r.second=val.value();
+    if (Val >= r.second) {
+        Father_t::mul(r.first,u.first,v.first,Val-r.second,deg-r.second);
+        r.second=Val.value();
     } else if (deg >= r.second) {
         Father_t::mul(r.first,u.first,v.first,Degree(0),deg-r.second);
     } else {

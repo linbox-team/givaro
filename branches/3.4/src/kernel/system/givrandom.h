@@ -42,7 +42,8 @@ public:
     typedef GivRandom random_generator;
 
     GivRandom(const unsigned long s = 0)
-            : _seed(s) {
+            : _seed(s)
+    {
         if (! s) {
 		struct timeval tp;
 		gettimeofday(&tp, 0) ;
@@ -50,20 +51,32 @@ public:
 	}
     }
 
-    GivRandom(const GivRandom& R) : _seed(R._seed) {}
-    GivRandom& operator= (const GivRandom& R) { _seed = R._seed; return *this; }
+    GivRandom(const GivRandom& R) :
+	    _seed(R._seed)
+	{}
 
-    unsigned long seed() const { return _seed; }
+    GivRandom& operator= (const GivRandom& R)
+    {
+	    _seed = R._seed;
+	    return *this;
+    }
+
+    unsigned long seed() const
+    {
+	    return _seed;
+    }
 
 #if defined(__GIVARO_INT64)
-    unsigned long operator() () const {
+    unsigned long operator() () const
+    {
         return _seed = (unsigned long)(
             (__GIVARO_INT64)_GIVRAN_MULTIPLYER_
             * (__GIVARO_INT64)_seed
             % (__GIVARO_INT64)_GIVRAN_MODULO_ );
     }
 #else
-    unsigned long operator() () const {
+    unsigned long operator() () const
+    {
         return _seed = (unsigned long)(
             (unsigned long)_GIVRAN_MULTIPLYER_
             * _seed
@@ -71,7 +84,8 @@ public:
     }
 #endif
 
-    template<class XXX> XXX& operator() (XXX& x) const {
+    template<class XXX> XXX& operator() (XXX& x) const
+    {
         return x = (XXX)this->operator() ();
     }
 

@@ -63,12 +63,14 @@
 // - zz: revision number
 #define GIVARO_MAJOR_VERSION    3
 #define GIVARO_MINOR_VERSION    4
-#define GIVARO_REVISION_VERSION 0
-#define GIVARO_VERSION          30400
+#define GIVARO_REVISION_VERSION 3
+#define GIVARO_VERSION          30403
 
 // -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)
-//#define GIVARO_DEBUG 1
+#ifdef DEBUG
+#define GIVARO_DEBUG 1
+#endif
 
 
 // ==========================================================================
@@ -77,7 +79,57 @@
 #ifdef __GIVARO_HAVE_STDINT_H
 #define __STDC_LIMIT_MACROS
 #include <stdint.h>
+#ifndef INT64_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define INT64_MAX std::numeric_limits<int64_t>::max()
 #endif
+
+#ifndef UINT64_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define UINT64_MAX std::numeric_limits<uint64_t>::max()
+#endif
+
+#ifndef INT32_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define INT32_MAX std::numeric_limits<int32_t>::max()
+#endif
+
+#ifndef UINT32_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define UINT32_MAX std::numeric_limits<uint32_t>::max()
+#endif
+
+#ifndef INT16_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define INT16_MAX std::numeric_limits<int16_t>::max()
+#endif
+
+#ifndef UINT16_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define UINT16_MAX std::numeric_limits<uint16_t>::max()
+#endif
+
+#ifndef INT8_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define INT8_MAX std::numeric_limits<int8_t>::max()
+#endif
+
+#ifndef UINT8_MAX
+#pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
+#include <limits>
+#define UINT8_MAX std::numeric_limits<uint8_t>::max()
+#endif
+
+
+#endif
+
 
 # define GIVARO_BITS_PER_LONGINT 	SIZEOF_LONG
 # define GIVARO_BITS_PER_INT		SIZEOF_INT
@@ -177,13 +229,14 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 
 #define GIVARO_REQUIRE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro required: ", msg)
 #define GIVARO_ENSURE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro ensured: ", msg)
-#define GIVARO_STATE(expression) expression
+#define GIVARO_STATE(expression)  expression
 #else
 #define GIVARO_ASSERT(cond, msg)
 #define GIVARO_ASSERT2(cond, msg1, msg2)
 #define GIVARO_REQUIRE(ignore, msg) ((void) 0)
 #define GIVARO_ENSURE(ignore, msg) ((void) 0)
-#define GIVARO_STATE(ignore) ((void) 0)
+// #define GIVARO_STATE(expression) do { (expression) } while (0)
+#define GIVARO_STATE(ignore)  ((void) 0)
 
 #endif
 

@@ -242,10 +242,10 @@ public :
 	}
 
 	Rep& addin ( Rep& R, const Rep& P, const Degree& v, const Degree& d) const;
-	Rep& add ( Rep& res, const Rep& u, const Rep& v, const Degree& val, const Degree& deg) const
+	Rep& add ( Rep& res, const Rep& u, const Rep& v, const Degree& Val, const Degree& deg) const
 	{
 		assign(res,u);
-		return addin(res,v,val,deg);
+		return addin(res,v,Val,deg);
 	}
 
 	Rep& neg(Rep& R, const Rep& P) const
@@ -290,11 +290,11 @@ public :
 	}
 
 
-	Rep& mul( Rep& r, const Rep& u, const Rep& v, const Degree& val, const Degree& deg) const;
-	Rep& mulin( Rep& r, const Rep& v, const Degree& val, const Degree& deg) const
+	Rep& mul( Rep& r, const Rep& u, const Rep& v, const Degree& Val, const Degree& deg) const;
+	Rep& mulin( Rep& r, const Rep& v, const Degree& Val, const Degree& deg) const
 	{
 		Rep tmp(r);
-		return mul(r,tmp,v,val,deg);
+		return mul(r,tmp,v,Val,deg);
 	}
 
 	Rep& axpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const
@@ -306,14 +306,14 @@ public :
             Rep tmp; this->init(tmp);
             return this->addin(r, this->mul(tmp,a,x));
 	}
-	Rep& axpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& val, const Degree& deg) const
+	Rep& axpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& Val, const Degree& deg) const
 	{
-		return this->addin(this->mul(r,a,x,val,deg), y, val, deg);
+		return this->addin(this->mul(r,a,x,Val,deg), y, Val, deg);
 	}
-	Rep& axpyin  (Rep& r, const Rep& a, const Rep& x, const Degree& val, const Degree& deg) const
+	Rep& axpyin  (Rep& r, const Rep& a, const Rep& x, const Degree& Val, const Degree& deg) const
 	{
 		Rep tmp; this->init(tmp);
-		return this->addin(r, this->mul(tmp,a,x,val,deg), val, deg);
+		return this->addin(r, this->mul(tmp,a,x,Val,deg), Val, deg);
 	}
 
 	Rep& axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const
@@ -324,13 +324,13 @@ public :
 	{
 		return this->negin(this->maxpyin(r,a,x));
 	}
-	Rep& axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& val, const Degree& deg) const
+	Rep& axmy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& Val, const Degree& deg) const
 	{
-		return this->subin(this->mul(r,a,x,val,deg), y, val, deg);
+		return this->subin(this->mul(r,a,x,Val,deg), y, Val, deg);
 	}
-	Rep& axmyin  (Rep& r, const Rep& a, const Rep& x, const Degree& val, const Degree& deg) const
+	Rep& axmyin  (Rep& r, const Rep& a, const Rep& x, const Degree& Val, const Degree& deg) const
 	{
-                return this->negin(this->maxpyin(r,a,x,val,deg));
+                return this->negin(this->maxpyin(r,a,x,Val,deg));
 	}
 
 	Rep& maxpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y) const
@@ -342,14 +342,14 @@ public :
 		Rep tmp;
 		return this->subin(r, this->mul(tmp,a,x));
 	}
-	Rep& maxpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& val, const Degree& deg) const
+	Rep& maxpy  (Rep& r, const Rep& a, const Rep& x, const Rep& y, const Degree& Val, const Degree& deg) const
 	{
-		return this->addin( this->negin(this->mul(r,a,x,val,deg)), y, val, deg);
+		return this->addin( this->negin(this->mul(r,a,x,Val,deg)), y, Val, deg);
 	}
-	Rep& maxpyin  (Rep& r, const Rep& a, const Rep& x, const Degree& val, const Degree& deg) const
+	Rep& maxpyin  (Rep& r, const Rep& a, const Rep& x, const Degree& Val, const Degree& deg) const
 	{
 		Rep tmp;
-		return this->subin(r, this->mul(tmp,a,x,val,deg), val, deg);
+		return this->subin(r, this->mul(tmp,a,x,Val,deg), Val, deg);
 	}
 
 	// -- Random generators

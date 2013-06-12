@@ -26,11 +26,12 @@ AM_CPPFLAGS=-I$(top_srcdir)
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/kernel/rational -I$(top_srcdir)/src/library/tools
 
-LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
+LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT
+EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder
+
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 interpolate_SOURCES   = interpolate.C
@@ -41,8 +42,9 @@ trunc_arith_SOURCES   = trunc_arith.C
 pol_eval_SOURCES      = pol_eval.C
 pol_factor_SOURCES    = pol_factor.C
 PolynomialCRT_SOURCES = PolynomialCRT.C
+highorder_SOURCES     = highorder.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@
 %:%.C
-	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)  `$(GIVARO_BIN)/givaro-config --libs`
+	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)    `$(GIVARO_BIN)/givaro-config --libs`

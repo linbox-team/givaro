@@ -9,18 +9,22 @@
 set conf = configure.ac
 set mak  = src/Makefile.am
 set ver  = src/kernel/system/givconfig.h
+set mkf  = Makefile.am
 
-		###################################
-		## INCREMENT THE LIBRARY VERSION ##
-		###################################
+#verbatim second argument of AC_INIT
+set verb = `grep ^AC_INIT $conf | cut -d',' -f2`
+#removes spaces and brackets
+set vern = `echo "$verb" | sed 's/ //g;s/\[//;s/\]//'`
+
+echo "Current version is $vern."
+
+###################################
+## INCREMENT THE LIBRARY VERSION ##
+###################################
 
 echo -n "Increment library version ? (y/n)"
 set answ = $<
 if ("$answ" == "y") then
-	#verbatim second argument of AC_INIT
-	set verb = `grep ^AC_INIT $conf | cut -d',' -f2`
-	#removes spaces and brackets
-	set vern = `echo "$verb" | sed 's/ //g;s/\[//;s/\]//'`
 	#gets the line
 	set line = `grep -n  ^AC_INIT $conf  | cut -d':' -f1`
 	#a version number is macro.minor.micro
@@ -86,7 +90,7 @@ if ("$answ" == "y") then
 		#####################################
 
 		echo -n "Incrementing givconfig revision accordingly."
-        set backupgiv = $ver.back$$
+        set backupver = $ver.back$$
 		set tmpfile = `mktemp`
 		set sedfile = `mktemp`
 		switch ($increm)
@@ -117,7 +121,7 @@ if ("$answ" == "y") then
 		echo -n "Confirmation of incrementation ? (yes/no) "
 		set answ = $<
 		if ("$answ" == "yes") then
-            \cp -p $ver $backupgiv
+            \cp -p $ver $backupver
 			\mv -f $tmpfile $ver
 		else
 			echo "'$answ' was read. Not incrementing anything."
@@ -127,13 +131,54 @@ if ("$answ" == "y") then
 			exit 0
 		endif
 
+		#####################################
+		## INCREMENT THE MAKEFILE VERSION ##
+		#####################################
+
+		echo "Incrementing Makefile.am version."
+		set tmpfile = `mktemp` #tempfile
+		set sedfile = `mktemp` #tempfile
+		switch ($increm)
+			case 0:
+				echo -n "s/VERSION.*/VERSION=$macro.$minor.$pmicro/"  >> $sedfile
+				breaksw
+			case 1:
+				echo "s/VERSION.*/VERSION=$macro.$pminor.0/"  > $sedfile
+				breaksw
+			case 2:
+				echo "s/VERSION.*/VERSION=$pmacro.0.0/"  > $sedfile
+				breaksw
+			default:
+				echo "Something abnormal happened"
+				exit 1
+				breaksw
+		endsw
+		sed -f $sedfile $mkf > $tmpfile
+		\rm -f $sedfile
+		diff -u0 $mkf $tmpfile
+		echo -n "Confirmation of incrementation ? (yes/no) "
+		set backupmkf = $mkf.back$$
+		set answ = $<
+		if ("$answ" == "yes") then
+			\cp -p $mkf $backupmkf
+			\mv -f $tmpfile $mkf
+		else
+			echo "'$answ' read. Not incrementing anything."
+			echo " your old $conf and $ver are restored..."
+			\rm -f $tmpfile
+			\mv -f $backupconf $conf
+			\mv -f $backupver $ver
+			exit 0
+		endif
+
+
 		##################################
 		## INCREMENT THE SONAME VERSION ##
 		##################################
 
 		echo "Incrementing soname version now."
         set backupmake = $mak.back$$
-		set infostring = `fgrep libgivaro_la_LDFLAGS $mak | awk  '{print $NF}'`
+		set infostring = `grep "libgivaro_la_LDFLAGS.*version-info" $mak | awk  '{print $NF}'`
 		set cur = `echo $infostring | cut -d':' -f1`
 		set rev = `echo $infostring | cut -d':' -f2`
 		set age = `echo $infostring | cut -d':' -f3`
@@ -168,21 +213,23 @@ if ("$answ" == "y") then
 		if ("$answ" == "yes") then
             \cp -p $mak $backupmake
 			\mv -f $tmpfile $mak
-             echo -n "Removing back-up for $conf, $mak and $ver ? (y/n)"
+             echo -n "Removing back-up for $conf, $mkf, $mak and $ver ? (y/n)"
              set remo = $<
              if ("$remo" == "y") then
 					 \rm -f $backupconf
-					 \rm -f $backupgiv
+					 \rm -f $backupver
 					 \rm -f $backupmake
+					 \rm -f $backupmkf
              else
-				 echo "You can find them in $backupconf, $backupgiv and $backupmake."
+				 echo "You can find them in $backupconf, $backupmkf, $backupver and $backupmake."
 			 endif
 		else
 			echo "'$answ' was read. Not incrementing anything."
 			echo " your old $conf and $ver are restored..."
 			\rm -f $tmpfile
 			\mv -f $backupconf $conf
-			\mv -f $backupgiv  $ver
+			\mv -f $backupver  $ver
+			\mv -f $backupmkf  $mkf
 			exit 0
 		endif
 

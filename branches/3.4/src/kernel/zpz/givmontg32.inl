@@ -260,37 +260,46 @@ inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const float a
 
 
 inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const unsigned long a ) const
-{ r = ( a >= (uint32_t)_p ? a % (uint32_t)_p : a);
+{
+	r = Rep( a >= (uint32_t)_p ? a % (uint32_t)_p : a);
   return redc(r,r*_B2p);
 }
 
 inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const long a ) const
 {
   int sign; unsigned long ua;
-  if (a <0) { sign =-1; ua = -a;}
-  else { ua = a; sign =1; }
-  r = ( ua >= (uint32_t)_p ? ua % (uint32_t)_p : ua);
-  if (r && (sign ==-1)) r = _p - r;
+  if (a <0)
+  {
+	  sign =-1;
+	  ua = -a;
+  }
+  else {
+	  ua = a;
+	  sign =1;
+  }
+  r =Rep ( ua >= (uint32_t)_p ? ua % (uint32_t)_p : ua);
+  if (r && (sign ==-1))
+	  r = _p - r;
   return redc(r,r*_B2p);
 }
 
 
-inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const Integer& residu ) const
+inline  Montgomery<Std32>::Rep&  Montgomery<Std32>::init ( Rep& r, const Integer& Residu ) const
 {
   long tr;
-  if (residu <0) {
+  if (Residu <0) {
       // -a = b [p]
       // a = p-b [p]
-    if ( residu <= (Integer)(-_p) ) tr = long( (-residu) % _p) ;
-    else tr = long(-residu);
+    if ( Residu <= (Integer)(-_p) ) tr = long( (-Residu) % _p) ;
+    else tr = long(-Residu);
     if (tr)
-      r = _p - (unsigned long)tr;
+      r = Rep(_p - (unsigned long)tr);
     else
       r = zero;
   } else {
-    if (residu >= (Integer)_p ) tr =   long(residu % _p) ;
-    else tr = long(residu);
-    r = tr;
+    if (Residu >= (Integer)_p ) tr =   long(Residu % _p) ;
+    else tr = long(Residu);
+    r = Rep(tr);
   }
   return redc(r,r*_B2p);
 }

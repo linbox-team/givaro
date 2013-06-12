@@ -41,22 +41,22 @@ namespace Givaro {
 static Bits::base* Table2pow;
 
 
-Bits::Bits ()
-  : rep(0)
+Bits::Bits () :
+	rep(0)
 { }
 
 Bits::Bits (const size_t n)
 {
-  int len = MAX_WORD(n) ;
+  size_t len = MAX_WORD(n) ;
   rep.allocate( len );
 }
 
-Bits::Bits( const Bits& B )
- : rep(B.rep, givWithCopy())
+Bits::Bits( const Bits& B ) :
+	rep(B.rep, givWithCopy())
 {}
 
-Bits::Bits( const Bits::Rep& B )
- : rep(B, givWithCopy())
+Bits::Bits( const Bits::Rep& B ) :
+	rep(B, givWithCopy())
 {}
 
 Bits::~Bits()
@@ -66,9 +66,10 @@ Bits::~Bits()
 const Bits Bits::operator& (const Bits& A) const
 {
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in 'and'");
-  int len = rep.size();
+  size_t len = rep.size();
   Rep res( len );
-  for (int i=0; i<len; i++) res[i] = rep[i] & A.rep[i];
+  for (int i=0; i< int(len); ++i)
+	  res[i] = rep[i] & A.rep[i];
   return Bits(res);
 }
 
@@ -76,16 +77,18 @@ Bits& Bits::andin( const Bits& A, const Bits B)
 {
   GIVARO_ASSERT( B.rep.size() == A.rep.size(), "[Bits]: invalide size in andin");
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in andin");
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] = A.rep[i] & B.rep[i];
+  size_t len = rep.size();
+  for (int i=0; i<int(len); ++i)
+	  rep[i] = A.rep[i] & B.rep[i];
   return *this;
 }
 
 Bits& Bits::operator&= (const Bits& A)
 {
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in &=");
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] &= A.rep[i];
+  size_t len = rep.size();
+  for (int i=0; i< int(len); ++i)
+	  rep[i] &= A.rep[i];
   return *this;
 }
 
@@ -93,9 +96,10 @@ Bits& Bits::operator&= (const Bits& A)
 const Bits Bits::operator| (const Bits& A) const
 {
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in or");
-  int len = rep.size();
+  size_t len = rep.size();
   Rep res( len );
-  for (int i=0; i<len; i++) res[i] = rep[i] | A.rep[i];
+  for (int i=0; i<int(len); ++i)
+	  res[i] = rep[i] | A.rep[i];
   return Bits(res);
 }
 
@@ -103,16 +107,18 @@ Bits& Bits::orin( const Bits& A, const Bits B)
 {
   GIVARO_ASSERT( B.rep.size() == A.rep.size(), "[Bits]: invalide size in orin");
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in orin");
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] = A.rep[i] | B.rep[i];
+  size_t len = rep.size();
+  for (int i=0; i<int(len); ++i)
+	  rep[i] = A.rep[i] | B.rep[i];
   return *this;
 }
 
 Bits& Bits::operator|=( const Bits& A )
 {
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in |=");
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] |= A.rep[i];
+  size_t len = rep.size();
+  for (int i=0; i<int(len); ++i)
+	  rep[i] |= A.rep[i];
   return *this;
 }
 
@@ -120,34 +126,37 @@ Bits& Bits::operator|=( const Bits& A )
 const Bits Bits::operator^ (const Bits& A) const
 {
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in xor");
-  int len = rep.size();
+  size_t len = rep.size();
   Rep res( len );
-  for (int i=0; i<len; i++) res[i] = rep[i] ^ A.rep[i];
+  for (int i=0; i<int(len); ++i)
+	  res[i] = rep[i] ^ A.rep[i];
   return Bits(res);
 }
 
 Bits& Bits::xorin( const Bits& A, const Bits B)
 {
   GIVARO_ASSERT( B.rep.size() == A.rep.size(), "[Bits]: invalide size in xorin");
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] = A.rep[i] ^ B.rep[i];
+  size_t len = rep.size();
+  for (int i=0; i<int(len); ++i)
+	  rep[i] = A.rep[i] ^ B.rep[i];
   return *this;
 }
 
 Bits& Bits::operator^=( const Bits& A )
 {
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in ^=");
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] ^= A.rep[i];
+  size_t len = rep.size();
+  for (int i=0; i<int(len); ++i)
+	  rep[i] ^= A.rep[i];
   return *this;
 }
 
   // Not
 const Bits Bits::operator~() const
 {
-  int len = rep.size();
+  size_t len = rep.size();
   Rep res( len );
-  for (int i=0; i<len; i++) {
+  for (int i=0; i<int(len); ++i) {
     res[i] = ~rep[i];
   }
   return res;
@@ -156,8 +165,9 @@ const Bits Bits::operator~() const
 Bits& Bits::notin( const Bits& A )
 {
   GIVARO_ASSERT( rep.size() == A.rep.size(), "[Bits]: invalide size in notin");
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] = ~(A.rep[i]);
+  size_t len = rep.size();
+  for (int i=0; i<int(len); ++i)
+	  rep[i] = ~(A.rep[i]);
   return *this;
 }
 
@@ -166,7 +176,7 @@ long Bits::numone() const
 {
   size_t l = rep.size();
   long num = 0;
-  for (size_t i=0; i<l; i++)
+  for (int i=0; i<int(l); ++i)
   {
     int quo = QUO(i);
     int rem = REM(i);
@@ -181,11 +191,12 @@ void Bits::indexofone( Array0<base>& index) const
   size_t l = rep.size();
   index.allocate( numone() );
   long num =0;
-  for (size_t i=0; i<l; i++)
+  for (int i=0; i<int(l); ++i)
   {
     int quo = QUO(i);
     int rem = REM(i);
-    if (((rep[quo] & Table2pow[rem]) >> rem) !=0) index[num++] = i;
+    if (((rep[quo] & Table2pow[rem]) >> rem) !=0)
+		index[int(num++)] = i;
   }
 }
 
@@ -201,33 +212,43 @@ size_t Bits::length() const
 int Bits::operator[] (const int i) const
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::operator[]");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::operator[]");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::operator[]");
   int quo = QUO(i);
   int rem = REM(i);
-  return (rep[quo] & Table2pow[rem]) >> rem;
+  return int((rep[quo] & Table2pow[rem]) >> rem);
 }
+
+int Bits::operator[] (const size_t i) const
+{
+  // GIVARO_ASSERT( i>=0, "invalide index in Bits::operator[]");
+  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::operator[]");
+  int quo = QUO(int(i));
+  int rem = REM(int(i));
+  return (int) ((rep[quo] & Table2pow[rem]) >> rem);
+}
+
 
 int Bits::get (const int i) const
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::get");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::get");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::get");
   int quo = QUO(i);
   int rem = REM(i);
-  return (rep[quo] & Table2pow[rem]) >> rem;
+  return int((rep[quo] & Table2pow[rem]) >> rem);
 }
 
   // Set all bits
 void Bits::set()
 {
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] = ~0L;
+  int len = (int) rep.size();
+  for (int i=0; i< len; ++i) rep[i] = ~0L;
 }
 
   // Set the i-th bit of *this
 void Bits::set(const int i)
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::set");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::set");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::set");
   int quo = QUO(i);
   int rem = REM(i);
   rep[quo] |= Table2pow[rem];
@@ -235,15 +256,16 @@ void Bits::set(const int i)
 
 void Bits::clear()
 {
-  int len = rep.size();
-  for (int i=0; i<len; i++) rep[i] = 0;
+  size_t len = rep.size();
+  for (int i=0; i<int(len); ++i)
+	  rep[i] = 0;
 }
 
   // Clear the i-th bit of *this
 void Bits::clear(const int i)
 {
   GIVARO_ASSERT( i>=0, "invalide index in Bits::clear");
-  GIVARO_ASSERT( i<length()*SIZE_IN_BIT, "invalide index in Bits::clear");
+  GIVARO_ASSERT( i<(int)length()*SIZE_IN_BIT, "invalide index in Bits::clear");
   int quo = QUO(i);
   int rem = REM(i);
   rep[quo] ^= !(Table2pow[rem]); // is the true not ?
@@ -252,8 +274,8 @@ void Bits::clear(const int i)
 std::ostream& Bits::print( std::ostream& o ) const
 {
   //-  o << "";
-  int len = rep.size();
-  for (int i= len-1; i>=0; i--)
+  size_t len = rep.size();
+  for (int i= int(len-1); i>=0; i--)
   {
     for (int j=SIZE_IN_BIT-1; j>=0; j--)
       if ((rep[i] & Table2pow[j]) !=0) o << '1';
@@ -269,7 +291,7 @@ void Bits::Init(int*, char***)
   Table2pow = new Bits::base[SIZE_IN_BIT];
   int i;
   Table2pow[0] = 1;
-  for (i=1; i<SIZE_IN_BIT; i++) {
+  for (i=1; i<SIZE_IN_BIT; ++i) {
     Table2pow[i] = Table2pow[i-1] << 1;
   }
 }

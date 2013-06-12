@@ -6,7 +6,7 @@
 
 AC_PREREQ(2.61)
 
-AC_INIT([Givaro],[3.4.0],[Jean-Guillaume.Dumas@imag.fr],[givaro],
+AC_INIT([Givaro],[3.4.3],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -28,10 +28,13 @@ AC_SUBST([MKDIR_P])
 
 AC_LANG([C++])
 
+echo "-----------------------------------------------"
+
 AC_DEBUG
-# AC_FULL_DEBUG
+AC_PROFILE
 AC_WARNINGS
 
+echo "-----------------------------------------------"
 # CFLAGS=${CFLAGS:-$DEFAULT_CFLAGS}
 # CXXFLAGS=${CXXFLAGS:-$DEFAULT_CXXFLAGS}
 
@@ -51,28 +54,33 @@ AC_SUBST([DEFAULT_CFLAGS])
 AC_SUBST([DEBUG_CFLAGS])
 AC_SUBST([TESTS_CFLAGS])
 
-TESTS_CFLAGS="-O0 -g"
+TESTS_CFLAGS="-O0"
 DEBUG_CFLAGS="-g"
 DEFAULT_CFLAGS="-pipe"
 WARN_CFLAGS="-Wall"
 
 if test "x$DBG" = "xyes" ; then
-	DEFAULT_CFLAGS="-O0 ${DEFAULT_CFLAGS} -g -pg" #those are CXXFLAGS
-	DEBUG_CFLAGS="${DEBUG_CFLAGS} -DDEBUG -DGIVARO_DEBUG" #those are CPPFLAGS
+	DEFAULT_CFLAGS="-O0 ${DEFAULT_CFLAGS} " #those are CXXFLAGS
+	DEBUG_CFLAGS="${DEBUG_CFLAGS} -DDEBUG -DGIVARO_DEBUG"
 else
-	DEFAULT_CFLAGS="-O2 ${DEFAULT_CFLAGS} -DNDEBUG -U_LB_DEBUG"
+	DEFAULT_CFLAGS="-O2 ${DEFAULT_CFLAGS} "
+	DEBUG_CFLAGS="${DEBUG_CFLAGS} -DNDEBUG -UGIVARO_DEBUG -UDEBUG"
 fi
 
+if test "x$PROF" = "xyes" ; then
+	DEFAULT_CFLAGS="${DEFAULT_CFLAGS} -pg"
+fi
 
-
-if test "x$WARN" = "xyes" ; then
-	# if  test "x${CXX}" = "xicpc" -o "x${CXX}" = "xicc"  ; then
+if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 	if test "x${CCNAM}" = "xicc" ; then
 		WARN_CFLAGS="${WARN_CFLAGS} -Wcheck"
 		# DEBUG_CFLAGS="-fast"
 	else
-		if test "x${CCNAM}" = "xgcc"  ; then
+		if test "x${CCNAM}" = "xgcc" -o  "x${CCNAM}" = "xeko"  ; then
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
+			if test "x${WARN}" = "xfull" ; then
+				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -ansi -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long"
+			fi
 		else
 			echo
 			echo "*******************************************************"
@@ -91,11 +99,12 @@ TESTS_CFLAGS="${TESTS_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
 
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
-AM_PROG_LIBTOOL
 
 # newer libtool...
 LT_PREREQ([2.2])
 LT_INIT
+
+echo "-----------------------------------------------"
 
 #check lib
 # AC_CHECK_LIB([givaro], [main])
@@ -210,9 +219,13 @@ AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 #    ;;
 #esac
 
+echo "-----------------------------------------------"
 # Feature checks
 
 AC_LANG_CPLUSPLUS
+
+echo "-----------------------------------------------"
+
 LB_CHECK_GMP(,,[
 echo '*******************************************************************************'
 echo ' ERROR: GMP not found!'
@@ -230,6 +243,7 @@ CXXFLAGS="${GMP_CFLAGS} ${CXXFLAGS}"
 LIBS="${GMP_LIBS}"
 AC_SUBST(CXXFLAGS)
 
+echo "-----------------------------------------------"
 AC_CONFIG_FILES([
 Makefile
 givaro-config

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfq.h
-// Time-stamp: <04 Feb 11 13:42:23 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <07 Jun 11 14:40:16 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -32,6 +32,7 @@ template<class TT> class GFqDom {
 protected:
 	typedef typename Signed_Trait<TT>::unsigned_type UTT;
 	typedef TT Rep;
+	typedef typename std::vector<UTT>::size_type  UT  ;
 public:
 	Rep zero;
 	Rep one;
@@ -73,9 +74,15 @@ public:
 
 	GFqDom(): zero(0), one(1), _log2pol(0), _pol2log(0),_plus1(0) {}
 
+        // Automatic construction
 	GFqDom( const UTT P, const UTT e = 1);
 
-	GFqDom( const UTT P, const UTT e, const std::vector<UTT>& modPoly);
+        // Construction with prescribed irreducible polynomial
+        //   coefficients of the vector should be integers-like
+        //   there will be a call to this->init to build the 
+        //   representation of the irreducible polynomial
+    	template<typename Vector>
+    	GFqDom(const UTT P, const UTT e, const Vector& modPoly);
 
 	GFqDom( const GFqDom<TT>& F)
 	{
@@ -124,7 +131,15 @@ public:
 	// Access to the modulus, characteristic, size, exponent
 	UTT residu() const;
 	UTT characteristic() const;
-	Integer& characteristic(Integer& p) const{return p=characteristic();}
+	Integer& characteristic(Integer& p) const
+	{
+		return p=characteristic();
+	}
+	unsigned long& characteristic(unsigned long& p) const
+	{
+		return p=(unsigned long)_characteristic;
+	}
+
 	UTT cardinality() const;
 	UTT size() const;
 	UTT exponent() const;
@@ -132,11 +147,15 @@ public:
 	Rep& generator(Rep&) const;
 	// p-adic representation of the used generator
 	UTT generator() const;
-	// an integer representation of the polynomial
+	// p-adic representation of the used irreducible polynomial
+	UTT irreducible() const;
+
+	// the internal representation of the polynomial X
 	// where the indeterminate is replaced by the characteristic
 	// This has no meaning if exponent is 1
-	UTT sage_generator() const;
-	UTT irreducible() const;
+	Rep sage_generator() const;
+	Rep indeterminate() const;
+	Rep& indeterminate(Rep&) const;
 
 	// Initialization of Elements
 	Rep& init( Rep&) const;
@@ -152,6 +171,7 @@ public:
 	Rep& init( Rep&, const unsigned long long) const ;
 #endif
 	Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
+
 	// Initialization of a polynomial
 	template<typename val_t, template<class,class> class Vector,template <class> class Alloc>
 	Rep& init( Rep&, const Vector<val_t,Alloc<val_t> >&);

@@ -172,7 +172,7 @@ int test2bis(Integer & M, Integer & P)
 template< class T, class U>
 int test3( const T m, const U p)
 {/*{{{*/
-	int pi (p);
+	int pi = int(p);
 	long int q = m / p;
 	const Integer M(m);
 	const Integer P(p);
@@ -365,27 +365,27 @@ int main()
 
 	for (unsigned i = 0 ; i < NB_ITERS ; ++i)
 	{
-		Integer M = Integer::random_between(680,700);
-		Integer P = Integer::random_between(134,198);
-		rez = test2(M,P); if (rez) return 7 ;
-		Integer::negin(M);
-		rez = test2(M,P); if (rez) return 8 ;
-		Integer::negin(P);
-		rez = test2(M,P); if (rez) return 9 ;
-		Integer::negin(M);
-		rez = test2(M,P); if (rez) return 10 ;
+		Integer Mint = Integer::random_between(680,700);
+		Integer Pint = Integer::random_between(134,198);
+		rez = test2(Mint,Pint); if (rez) return 7 ;
+		Integer::negin(Mint);
+		rez = test2(Mint,Pint); if (rez) return 8 ;
+		Integer::negin(Pint);
+		rez = test2(Mint,Pint); if (rez) return 9 ;
+		Integer::negin(Mint);
+		rez = test2(Mint,Pint); if (rez) return 10 ;
 	}
 	for (unsigned i = 0 ; i < NB_ITERS ; ++i)
 	{
-		Integer M = Integer::random_between(680,700);
-		Integer P = Integer::random_between(134,198);
-		rez = test2bis(M,P); if (rez) return 7 ;
-		Integer::negin(M);
-		rez = test2bis(M,P); if (rez) return 8 ;
-		Integer::negin(P);
-		rez = test2bis(M,P); if (rez) return 9 ;
-		Integer::negin(M);
-		rez = test2bis(M,P); if (rez) return 10 ;
+		Integer Mint = Integer::random_between(680,700);
+		Integer Pint = Integer::random_between(134,198);
+		rez = test2bis(Mint,Pint); if (rez) return 7 ;
+		Integer::negin(Mint);
+		rez = test2bis(Mint,Pint); if (rez) return 8 ;
+		Integer::negin(Pint);
+		rez = test2bis(Mint,Pint); if (rez) return 9 ;
+		Integer::negin(Mint);
+		rez = test2bis(Mint,Pint); if (rez) return 10 ;
 	}
 
 	//std::cout << "ok6" << std::endl;

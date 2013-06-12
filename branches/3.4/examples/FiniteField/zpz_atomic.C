@@ -34,7 +34,8 @@ typedef Domain::Element Modulo;
 #define TAILLE 256
 #endif
 
-int main(int argc, char ** argv) {
+int main(int argc, char ** argv)
+{
 
     GivRandom generator;
     long P (32749);     // argv[1] : Modulus
@@ -48,7 +49,7 @@ int main(int argc, char ** argv) {
     Timer inver;
     inver.clear();
     inver.start();
-    Domain GFq(P);
+    Domain GFq((Domain::Element)P);
 
     int i;
     std::cout << "."<< std::flush;

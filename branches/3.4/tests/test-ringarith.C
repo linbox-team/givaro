@@ -62,7 +62,7 @@ struct InitOrAssign<R,T,T> {
         r.assign(t1,t2);
     }
 };
-    
+
 
 
 
@@ -120,7 +120,7 @@ int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
         F.assign(d_,c);
         F.axpyin(d_,a,b);
         TESTE_EG(d_, d);
-        
+
 
 	F.sub(d,a,b); // d = a -b
 	F.add(c,a,b); // c = a+b
@@ -177,18 +177,18 @@ int TestOneRing(const Ring& F, const T1 FIRSTINT, const T2 FIRSTFLOAT)
 template<class Ring>
 int TestRing(const Ring& F, const int seed)
 {/*{{{*/
-    long ch = F.characteristic();
+    long ch = (long) F.characteristic();
     JEONETESTE(F,7UL,-29.3);
     srand48(seed);
     for(size_t i=0; i< NBITER; ++i) {
         typename Ring::Element x;
         float d;
        	do {
-		d = float(ch*drand48()) ;
+		d = float((double)ch*drand48()) ;
 		F.init(x,d );
         } while(F.isZero(x));
         int a; do {
-            F.init(x, a = lrand48());
+            F.init(x, a = (int)lrand48());
         } while(F.isZero(x));
         JEONETESTE(F,x,d);
     }
@@ -205,8 +205,8 @@ int TestPolRing(const Ring& F, const int seed)
     srand48(seed);
 
     for(size_t i=0; i< NBITERD; ++i) {
-        int d1 = lrand48() % DEGMAX;
-        int d2 = lrand48() % DEGMAX;
+        int d1 = int (lrand48() % DEGMAX);
+        int d2 = int (lrand48() % DEGMAX);
 #ifdef GIVARO_DEBUG
         std::cout << d1 << ' ' << d2 << ' ';
 #endif
@@ -224,7 +224,7 @@ int TestPolRing(const Ring& F, const int seed)
 
 int main(int argc, char ** argv)
 {/*{{{*/
-    int seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
+    int seed = int(argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif

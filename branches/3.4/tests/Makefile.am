@@ -12,7 +12,7 @@ AM_CXXFLAGS = @TESTS_CFLAGS@
 AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
 
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
-AM_LDFLAGS=-static
+AM_LDFLAGS=-static $(LDFLAGS)
 
 BASIC_TESTS =          \
 		test-random    \
@@ -25,7 +25,8 @@ BASIC_TESTS =          \
 		test-crt       \
 		test-geom      \
 		test-integer   \
-        test-ratrecon
+		test-conversion \
+		test-ratrecon
 
 CLEANFILES =           \
 		$(BASIC_TESTS)
@@ -48,6 +49,7 @@ test_crt_SOURCES      = test-crt.C
 test_geom_SOURCES     = test-geom.C
 test_integer_SOURCES  = test-integer.C
 test_ratrecon_SOURCES = test-ratrecon.C
+test_conversion_SOURCES = test-conversion.C
 
 
 # for compilation of new tests

@@ -43,5 +43,6 @@ extern "C" {
 #endif
 
 #include <gmp++/gmp++_int.h>
+#include <gmp++/gmp++_rat.h>
 
 #endif // __GIVARO_GMPplusplus_H

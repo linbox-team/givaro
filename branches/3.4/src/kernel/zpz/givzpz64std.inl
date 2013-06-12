@@ -374,21 +374,21 @@ inline  ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const long a ) const
 }
 
 
-inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const Integer& residu ) const
+inline ZpzDom<Std64>::Rep&  ZpzDom<Std64>::init ( Rep& r, const Integer& Residu ) const
 {
   int64_t tr;
-  if (residu <0) {
+  if (Residu <0) {
       // -a = b [p]
       // a = p-b [p]
-    if ( (-residu) >= (Integer)(_p) ) tr = int64_t( (-residu) % (Integer)_p) ;
-    else tr = int64_t(-residu);
+    if ( (-Residu) >= (Integer)(_p) ) tr = int64_t( (-Residu) % (Integer)_p) ;
+    else tr = int64_t(-Residu);
     if (tr)
       return r = (uint64_t)_p - (uint64_t)tr;
     else
       return r = zero;
   } else {
-      if (residu >= (Integer)_p ) tr =   int64_t(residu % (Integer)_p) ;
-    else tr = int64_t(residu);
+      if (Residu >= (Integer)_p ) tr =   int64_t(Residu % (Integer)_p) ;
+    else tr = int64_t(Residu);
     return r = tr;
   }
 }
@@ -492,11 +492,15 @@ inline void ZpzDom<Std64>::dotprod
 {
   unsigned int stride = 1;
   if ((int64_t)bound < Signed_Trait<Rep>::max() )
-   stride = GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound);
-  unsigned long dot = zero;
+   stride = (unsigned int) ( GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound) );
+  unsigned long dot = (unsigned long) zero; // this is intented !
   if ((sz <10) && (sz <stride)) {
-    for(  int i= sz; i--; )
+    for(  size_t i= sz; i--; )
+#ifdef __x86_64__
       dot += a[i] * b[i];
+#else
+      dot = (unsigned long) (dot + a[i] * b[i]);
+#endif
     if (dot > _p) r = (Rep)(dot % (uint64_t)_p);
     else r = (Rep)dot;
     return;
@@ -504,9 +508,14 @@ inline void ZpzDom<Std64>::dotprod
   unsigned int i_begin=0;
   stride &= ~0x1;
   if (stride ==0) {
-    for(  int i= sz; --i; ) {
+    for(  size_t i= sz; --i; ) {
+#ifdef __x86_64__
       dot += a[i] * b[i];
       if (dot>_p) dot %= _p;
+#else
+      dot = (unsigned long) (dot + a[i] * b[i]);
+      if (dot>_p) dot = (unsigned long) (dot % _p);
+#endif
     }
     r = (Rep)dot;
     return;
@@ -514,15 +523,33 @@ inline void ZpzDom<Std64>::dotprod
   do {
     size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
     if ((min_sz & 0x1) !=0)
-      { min_sz--; i_begin++; dot += a++[min_sz] * b++[min_sz]; }
+      {
+	      --min_sz;
+	      ++i_begin;
+#ifdef __x86_64__
+	      dot += a++[min_sz] * b++[min_sz];
+#else
+	      dot = (unsigned long) (dot + a++[min_sz] * b++[min_sz]);
+#endif
+      }
     if (min_sz > 1)
       for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) //!@todo o_O
       {
+#ifdef __x86_64__
         dot += a[0] * b[0];
         dot += a[1] * b[1];
+#else
+	dot = (unsigned long) (dot +  a[0] * b[0] );
+	dot = (unsigned long) (dot +  a[1] * b[1] );
+#endif
+
       }
+#ifdef __x86_64__
     if (dot>(uint64_t)_p) dot %= (uint64_t)_p;
-    i_begin += min_sz;
+#else
+    if (dot>_p) dot = (unsigned long) (dot % _p);
+#endif
+    i_begin += (unsigned int) min_sz;
   } while (i_begin <sz);
   r = (Rep)dot;
 }
@@ -530,7 +557,7 @@ inline void ZpzDom<Std64>::dotprod
 inline void ZpzDom<Std64>::dotprod
   ( Rep& r, const size_t sz, constArray a, constArray b ) const
 {
-  return ZpzDom<Std64>::dotprod(r, _p, sz, a, b);
+  ZpzDom<Std64>::dotprod(r, int(_p), sz, a, b);
 }
 
 

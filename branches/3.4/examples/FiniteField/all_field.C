@@ -36,11 +36,12 @@ typedef ZpzDom<Std64>		Field8;	typedef StaticElement< Field8 > Element8; 	templa
 
 
 template<class Field, class Element>
-void TestField() {
+void TestField()
+{
     unsigned long P = 251;
 
         // Initialization of static member
-    Element::setDomain( Field(P) );
+    Element::setDomain( Field( typename Field::Element(P)) );
 
         // Initialisations of elements
     Element a(2),b(-29.8),c(33),d(Integer("123456789012345678901234567890")),e(0);

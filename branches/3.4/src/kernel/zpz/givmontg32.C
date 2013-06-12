@@ -31,9 +31,9 @@ int32_t& Montgomery<Std32>::gcdext
         t1 = u1 - q * v1; t2 = u2 - q * v2; t3 = u3 - q * v3;
         u1 = v1; u2 = v2; u3 = v3; v1 = t1; v2 = t2; v3 = t3;
      }
-   u = u1;
-   v = u2;
-   return d=u3;
+   u = int32_t(u1);
+   v = int32_t(u2);
+   return d=int32_t(u3);
 //    return u3;
 }
 
@@ -42,8 +42,10 @@ int32_t& Montgomery<Std32>::invext
 {
     long u1,u3;
     long v1,v3;
-   u1 = 1; u3 = a;
-   v1 = 0; v3 = b;
+   u1 = 1;
+   u3 = long(a);
+   v1 = 0;
+   v3 = long(b);
    while (v3 != 0)
    {
 	 long q, t1, t3;
@@ -52,9 +54,9 @@ int32_t& Montgomery<Std32>::invext
 	u1 = v1; u3 = v3; v1 = t1; v3 = t3;
    }
    if (u1 < 0)
-       return u = u1+b;
+       return u = int32_t(u1+b);
    else
-       return u = u1;
+       return u = int32_t(u1);
 }
 
 int32_t Montgomery<Std32>::invext

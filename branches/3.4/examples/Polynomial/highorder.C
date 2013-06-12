@@ -36,7 +36,7 @@ Timer Ttaylor, Thighorder, Tfiduccia;
 
 
 bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys::Element oQ, Degree a, Degree b) {
-    bool success, successF;
+    bool success = false, successF=false;
 
     try {
 
@@ -167,8 +167,8 @@ int main(int argc, char ** argv) {
     long deg1 = generator() % 6;
     long deg2 = generator() % 6;
     long deg3 = generator() % 155;
-    long v1 = generator() % 195;
-    long v2 = v1 + (generator() % 5);
+	// long v1 = generator() % 195;
+	// long v2 = v1 +  (generator() % 5);
     DP101.random(generator, P, Degree(deg1) );
     DP101.random(generator, Q, Degree(deg2) );
     DP101.random(generator, R, Degree(deg3) );
@@ -192,7 +192,7 @@ int main(int argc, char ** argv) {
 
     Polys::Element S; Degree dS;
 
-    size_t e;
+    size_t e = 0 ; // initialisé à quoi ? dans GammaId, k0 est const...
 
     HighOrders::Truncated G0;
     HO101.GammaId(G0, S, dS, e, P, dP);
@@ -231,13 +231,13 @@ int main(int argc, char ** argv) {
     success &= TestFracDevel(HO101, P, Q, tttn-2,tttn);
 
 
-    for(size_t i=0; i<numb; ++i) {
-        long deg1 = generator() % ((66*tttn)/100);
-        long deg2 = generator() % ((65*tttn)/100);
+    for(long i=0; i<numb; ++i) {
+        long Deg1 = generator() % ((66*tttn)/100);
+        long Deg2 = generator() % ((65*tttn)/100);
         long v1 = generator() % ((19195*tttn)/100);
         long v2 = v1 + (generator() % ((45*tttn)/100));
-        DP101.random(generator, P, Degree(deg1) );
-        DP101.random(generator, Q, Degree(deg2) );
+        DP101.random(generator, P, Degree(Deg1) );
+        DP101.random(generator, Q, Degree(Deg2) );
         success &= TestFracDevel(HO101, P, Q, v1, v2);
     }
 

@@ -46,5 +46,5 @@ DISTCLEANFILES = src/kernel/system/givaro   \
 #  doc/givaro-dev-html/index.html:
 #  (cd docs; make docs_dev)
 
-
+VERSION=3.4.3
 

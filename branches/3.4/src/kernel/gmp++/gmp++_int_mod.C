@@ -10,6 +10,9 @@
 // $Id: gmp++_int_mod.C,v 1.17 2010-12-22 13:47:45 jgdumas Exp $
 // ==========================================================================
 
+#ifndef __GIVARO_gmpxx_gmpxx_int_mod_C
+#define __GIVARO_gmpxx_gmpxx_int_mod_C
+
 #include "gmp++/gmp++.h"
 
 #ifndef GIVABS
@@ -22,7 +25,7 @@ namespace Givaro {
 	{
 		if (isZero(res)) return res;
 		//   mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
-		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n.gmp_rep );
+		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n.gmp_rep );
 		return res;
 	}
 	Integer& Integer::modin(Integer& res, const unsigned long n)
@@ -52,7 +55,7 @@ namespace Givaro {
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		// mpz_tdiv_r( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
-		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, (mpz_ptr)&n2.gmp_rep);
+		mpz_mod( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
 		assert(!(res<0) && (res<GMP__ABS(n2)));
 		return res;
 	}
@@ -64,9 +67,9 @@ namespace Givaro {
 		// if (sgn <0) return res = - res;
 
 		if (n2>0)
-			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
+			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&n1.gmp_rep, n2);
 		else
-			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, -n2);
+			mpz_mod_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&n1.gmp_rep, -n2);
 
 		assert(!(res<0) && (res<GMP__ABS(n2)));
 		return res;
@@ -75,7 +78,7 @@ namespace Givaro {
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
-		mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, n2);
+		mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
 		assert(!(res<0) && (res<n2));
 		return res;
 	}
@@ -84,7 +87,7 @@ namespace Givaro {
 	Integer& Integer::operator %= (const Integer& n)
 	{
 		if (isZero(*this)) return *this;
-		mpz_tdiv_r( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+		mpz_tdiv_r( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
 		// mpz_mod( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
 		return *this;
 	}
@@ -125,7 +128,7 @@ namespace Givaro {
 	{
 		if (isZero(*this)) return Integer::zero;
 		Integer res;
-		mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
+		mpz_tdiv_r( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
 
 		// std::cout << res << ',' << n << ',' << *this << std::endl;
 		assert((res<GIVABS(n)) && (res> -GIVABS(n)) && (res.priv_sign()*(*this).priv_sign()>=0)) ;
@@ -150,7 +153,7 @@ namespace Givaro {
 		if (isZero(*this)) return 0UL;
 		bool isneg = (*this)<0 ;
 		//CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
-		unsigned long res = mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
+		unsigned long res = mpz_tdiv_ui( (mpz_srcptr)&gmp_rep, l);
 #ifdef DEBUG
 		Integer toto = res;
 		if (isneg) toto = -(long)res ;
@@ -204,7 +207,7 @@ namespace Givaro {
 		if (isZero(*this)) return 0LL;
 		Integer Res(Integer::one);
 		Integer Divisor(l);
-		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
+		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
 		return (unsigned long long)( Res );
 	}
 
@@ -213,11 +216,42 @@ namespace Givaro {
 		if (isZero(*this)) return 0LL;
 		Integer Res(Integer::one);
 		Integer Divisor(l);
-		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
+		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
 		return (long long)( Res );
 	}
 #endif //__USE_64_bits__
 
+	// -- operator %
+	 Integer operator % (const int l, const Integer& n)
+	{
+		return Integer(l) % n;
+	}
+	 Integer operator % (const long l, const Integer& n)
+	{
+		return Integer(l) % n;
+	}
+	 Integer operator % (const Integer& n, const int l)
+	{
+		return n % (long)l;
+	}
+	 Integer operator % (const Integer& n, const unsigned int l)
+	{
+		return n % (unsigned long)l;
+	}
+
+	 Integer& operator %= (Integer& n, const int l)
+	{
+		return n %= (long)l;
+	}
+	 Integer& operator %= (Integer& n, const unsigned int l)
+	{
+		return n %= (unsigned long)l;
+	}
+
+
 }
+
+
+#endif __GIVARO_gmpxx_gmpxx_int_mod_C
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax

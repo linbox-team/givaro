@@ -207,8 +207,8 @@ namespace Givaro {
 	template<class Residue>
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD) const
 	{
-#ifdef DEBUG
-		int no_inf_loop = n.value()/2+5 ;
+#ifdef INFLOOPDEBUG
+		int no_inf_loop =(int) n.value()/2+5 ;
 #endif
 
 		do {
@@ -220,7 +220,7 @@ namespace Givaro {
 					return true;
 			}
 		}
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		while(--no_inf_loop);
 #else
 		while(1);
@@ -233,7 +233,7 @@ namespace Givaro {
 	// template<>
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, bool MOD) const
 	{
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 
@@ -244,7 +244,7 @@ namespace Givaro {
 			if (is_irreducible(R))
 				return true;
 		}
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		while(--no_inf_loop);
 #else
 		while(1);
@@ -257,8 +257,8 @@ namespace Givaro {
 	template<class Residue>
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
-#ifdef DEBUG
-		int no_inf_loop = n.value()/2+5 ;
+#ifdef INFLOOPDEBUG
+		int no_inf_loop = (int)n.value()/2+5 ;
 #endif
 		do {
 			this->random( (RandIter&)_g, R, n); // must cast away const
@@ -269,7 +269,7 @@ namespace Givaro {
 					return true;
 			}
 		}
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		while(--no_inf_loop);
 #else
 		while(1);
@@ -282,7 +282,7 @@ namespace Givaro {
 	// template<>
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, bool MOD, Element IXE) const
 	{
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 
@@ -293,7 +293,7 @@ namespace Givaro {
 			if (is_irreducible(R) && (is_prim_root(IXE,R) ))
 				return true;
 		}
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		while(--no_inf_loop);
 #else
 		while(1);
@@ -306,7 +306,7 @@ namespace Givaro {
 	template<class Residue>
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 		do {
@@ -318,7 +318,7 @@ namespace Givaro {
 					return true;
 			}
 		}
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		while(--no_inf_loop);
 #else
 		while(1);
@@ -331,7 +331,7 @@ namespace Givaro {
 	// template<>
 	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial2 (Element& R, Degree n, bool MOD, Element IXE) const
 	{
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 		do {
@@ -341,7 +341,7 @@ namespace Givaro {
 			if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
 				return true;
 		}
-#ifdef DEBUG
+#ifdef INFLOOPDEBUG
 		while(--no_inf_loop);
 #else
 		while(1);
@@ -442,8 +442,6 @@ namespace Givaro {
 
 		// Search for a monic irreducible Polynomial
 		// with random Elements
-
-
 		if (find_irred_randomial(R,n,MOD,IXE))
 			return R ;
 		else
@@ -492,8 +490,7 @@ namespace Givaro {
 	// ---------------------------------------------------------------
 
 	template<class Domain, class Tag, class RandIter>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2(
-									  const Rep& P
+	inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2( const Rep& P
 									  , Residu_t MOD ) const
 	{
 		// Square free ?
@@ -534,7 +531,8 @@ namespace Givaro {
 	bool Poly1FactorDom<Domain,Tag, RandIter>::is_prim_root( const Rep& P, const Rep& F)  const
 	{
 		bool isproot = 0;
-		Rep A, G; mod(A,P,F);
+		Rep A, G;
+		mod(A,P,F);
 		Degree d;
 		if ( degree(d, this->gcd(G,A,F)) == 0) {
 			Residu_t MOD = _domain.residu();

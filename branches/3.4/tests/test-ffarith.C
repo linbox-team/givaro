@@ -22,13 +22,13 @@ if (!F.areEqual((a),(b))) {\
 }
 
 #define JETESTE( a, s ) \
-if (TestField( (a), (s)) ) {\
+if (TestField( (a), int(s)) ) {\
 	std::cout << #a << " failed !" << std::endl;\
 	return -1 ; \
 }
 
 #define JEONETESTE( F, a, x ) \
-if (TestOneField(F,a,x)) {\
+if (TestOneField(F,(int)a,(float)x)) {\
 	std::cout << #a << " failed !" << std::endl;\
 	return -1 ; \
 }
@@ -203,17 +203,18 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 template<class Field>
 int TestField(const Field& F, const int seed)
 {/*{{{*/
-    long ch = F.characteristic();
+    long ch = (long) F.characteristic();
     JEONETESTE(F,7UL,-29.3);
     srand48(seed);
     for(size_t i=0; i< NBITER; ++i) {
         typename Field::Element x;
-        float d; do {
-		d = float(ch*drand48());
+        float d;
+	do {
+		d = float((double)ch*drand48());
             F.init(x,d );
         } while(F.isZero(x));
         int a; do {
-            F.init(x, a = lrand48());
+            F.init(x, a = (int)lrand48());
         } while(F.isZero(x));
         JEONETESTE(F,a,d);
     }
@@ -224,7 +225,7 @@ int TestField(const Field& F, const int seed)
 
 int main(int argc, char ** argv)
 {/*{{{*/
-    int seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
+    int seed = int (argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
@@ -344,6 +345,15 @@ int main(int argc, char ** argv)
 	// modulo 13 over arbitrary size
 	ZpzDom<Integer> IntZ13(13);
 	JETESTE(IntZ13,seed);
+
+        // Zech log finite field with 256 elements
+        // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
+        std::vector< GFqDom<long>::Residu_t > Irred(9);
+        Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
+        Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
+        Irred[8] = 1;
+        GFqDom<long> GF256(2,8, Irred);
+        JETESTE(GF256,seed);
 
 	// Zech log finite field with 5^4 elements
 	GFqDom<int> GF625( 5, 4 );

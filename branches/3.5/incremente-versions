@@ -1,0 +1,244 @@
+#!/bin/csh -f
+# Copyright(c)'1994-2011 by The Givaro group
+# This file is part of Givaro.
+# Givaro is governed by the CeCILL-B license under French law
+# and abiding by the rules of distribution of free software.
+# see the COPYRIGHT file for more details.
+
+
+set conf = configure.ac
+set mak  = src/Makefile.am
+set ver  = src/kernel/system/givconfig.h
+set mkf  = Makefile.am
+
+#verbatim second argument of AC_INIT
+set verb = `grep ^AC_INIT $conf | cut -d',' -f2`
+#removes spaces and brackets
+set vern = `echo "$verb" | sed 's/ //g;s/\[//;s/\]//'`
+
+echo "Current version is $vern."
+
+###################################
+## INCREMENT THE LIBRARY VERSION ##
+###################################
+
+echo -n "Increment library version ? (y/n)"
+set answ = $<
+if ("$answ" == "y") then
+	#gets the line
+	set line = `grep -n  ^AC_INIT $conf  | cut -d':' -f1`
+	#a version number is macro.minor.micro
+    set macro = `echo "$vern" | cut -d'.' -f1`
+    set minor = `echo "$vern" | cut -d'.' -f2`
+	set micro = `echo "$vern" | cut -d'.' -f3`
+    #make temp files for sed
+	set tmpfile = `mktemp`
+	set sedfile = `mktemp`
+    #increment the revision numbers.
+	set pmicro = `echo $micro`
+    @ pmicro ++
+	set pminor = `echo $minor`
+    @ pminor ++
+	set pmacro = `echo $macro`
+    @ pmacro ++
+    # talk to the user. This choice is very important here
+	echo "Increment micro revision number ($vern -> $macro.$minor.$pmicro) ? press '0' "
+	echo "Increment minor revision number ($vern -> $macro.$pminor.0) ? press '1' "
+	echo -n "Increment macro revision number ($vern -> $pmacro.0.0) ? press '2' "
+	set increm = $<
+	switch ($increm)
+		case 0:
+			set newv = "[$macro.$minor.$pmicro]"
+			breaksw
+		case 1:
+			set newv = "[$macro.$pminor.0]"
+			breaksw
+		case 2:
+			set newv = "[$pmacro.0.0]"
+			breaksw
+		default:
+			set newv = "$verb"
+			echo "'$increm' was read. Not incrementing anything."
+			breaksw
+	endsw
+	# replacing [ ] and . with escaped version for sed would understand them as 'operators'.
+	# This line is important when the used left spaces or removed [].
+	echo "$line s/$verb/$newv/" | sed 's/\./\\\./g;s/\[/\\\[/g;s/\]/\\\]/g' > $sedfile
+	sed -f $sedfile $conf > $tmpfile
+	# clean up
+	\rm -f $sedfile
+	# diff for changes
+	diff -u0 $conf $tmpfile
+	# if something was changed, confirm incrementation :
+	# if not confirm, we restore and abort.
+    if ("$newv" != "$verb") then
+		echo -n "Confirmation of incrementation ? (yes/no)"
+		set answ = $<
+		set backupconf = $conf.back$$
+		if ("$answ" == "yes") then
+            \cp -p $conf $backupconf
+            echo "Back-up of $conf made in $backupconf. Now overwriting $conf."
+			\mv -f $tmpfile $conf
+		else
+			echo "'$answ' was read. Not incrementing anything."
+			\rm -f $tmpfile
+			exit 0
+		endif
+
+		#####################################
+		## INCREMENT THE GIVCONFIG VERSION ##
+		#####################################
+
+		echo -n "Incrementing givconfig revision accordingly."
+        set backupver = $ver.back$$
+		set tmpfile = `mktemp`
+		set sedfile = `mktemp`
+		switch ($increm)
+			case 0:
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION $pmicro/" > $sedfile
+                set decimalversion = `expr \( $macro \* 100 + $minor \) \* 100 + $pmicro`
+				breaksw
+			case 1:
+				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    $pminor/"    > $sedfile
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/"      >> $sedfile
+                set decimalversion = `expr \( $macro \* 100 + $pminor \) \* 100`
+				breaksw
+			case 2:
+				echo "s/GIVARO_MAJOR_VERSION.*/GIVARO_MAJOR_VERSION    $pmacro/"    > $sedfile
+				echo "s/GIVARO_REVISION_VERSION.*/GIVARO_REVISION_VERSION 0/"      >> $sedfile
+				echo "s/GIVARO_MINOR_VERSION.*/GIVARO_MINOR_VERSION    0/"         >> $sedfile
+                set decimalversion = `expr $pmacro \* 10000`
+				breaksw
+			default:
+				echo "Something abnormal happened"
+				exit 1
+				breaksw
+		endsw
+		echo "s/GIVARO_VERSION.*/GIVARO_VERSION          $decimalversion/" >> $sedfile
+		sed -f $sedfile $ver > $tmpfile
+		\rm -f $sedfile
+		diff -u0 $ver $tmpfile
+		echo -n "Confirmation of incrementation ? (yes/no) "
+		set answ = $<
+		if ("$answ" == "yes") then
+            \cp -p $ver $backupver
+			\mv -f $tmpfile $ver
+		else
+			echo "'$answ' was read. Not incrementing anything."
+			echo " your old $conf is restored..."
+			\rm -f $tmpfile
+			\mv -f $backupconf $conf
+			exit 0
+		endif
+
+		#####################################
+		## INCREMENT THE MAKEFILE VERSION ##
+		#####################################
+
+		echo "Incrementing Makefile.am version."
+		set tmpfile = `mktemp` #tempfile
+		set sedfile = `mktemp` #tempfile
+		switch ($increm)
+			case 0:
+				echo -n "s/VERSION.*/VERSION=$macro.$minor.$pmicro/"  >> $sedfile
+				breaksw
+			case 1:
+				echo "s/VERSION.*/VERSION=$macro.$pminor.0/"  > $sedfile
+				breaksw
+			case 2:
+				echo "s/VERSION.*/VERSION=$pmacro.0.0/"  > $sedfile
+				breaksw
+			default:
+				echo "Something abnormal happened"
+				exit 1
+				breaksw
+		endsw
+		sed -f $sedfile $mkf > $tmpfile
+		\rm -f $sedfile
+		diff -u0 $mkf $tmpfile
+		echo -n "Confirmation of incrementation ? (yes/no) "
+		set backupmkf = $mkf.back$$
+		set answ = $<
+		if ("$answ" == "yes") then
+			\cp -p $mkf $backupmkf
+			\mv -f $tmpfile $mkf
+		else
+			echo "'$answ' read. Not incrementing anything."
+			echo " your old $conf and $ver are restored..."
+			\rm -f $tmpfile
+			\mv -f $backupconf $conf
+			\mv -f $backupver $ver
+			exit 0
+		endif
+
+
+		##################################
+		## INCREMENT THE SONAME VERSION ##
+		##################################
+
+		echo "Incrementing soname version now."
+        set backupmake = $mak.back$$
+		set infostring = `grep "libgivaro_la_LDFLAGS.*version-info" $mak | awk  '{print $NF}'`
+		set cur = `echo $infostring | cut -d':' -f1`
+		set rev = `echo $infostring | cut -d':' -f2`
+		set age = `echo $infostring | cut -d':' -f3`
+		set pcur = `echo $cur`
+        @ pcur ++
+		set prev = `echo $rev`
+        @ prev ++
+		set page = `echo $age`
+        @ page ++
+		set tmpfile = `mktemp`
+		set sedfile = `mktemp`
+		switch ($increm)
+			case 0:
+				echo "s/${infostring}/${cur}:${prev}:${age}/" > $sedfile
+				breaksw
+			case 1:
+				echo "s/${infostring}/${pcur}:0:${page}/"     > $sedfile
+				breaksw
+			case 2:
+				echo "s/${infostring}/${pcur}:0:0/"           > $sedfile
+				breaksw
+			default:
+				echo "Something enourmously abnormal happened"
+				exit 1
+				breaksw
+		endsw
+		sed -f $sedfile $mak > $tmpfile
+		\rm -f $sedfile
+		diff -u0 $mak $tmpfile
+		echo -n "Confirmation of incrementation ? (yes/no) "
+		set answ = $<
+		if ("$answ" == "yes") then
+            \cp -p $mak $backupmake
+			\mv -f $tmpfile $mak
+             echo -n "Removing back-up for $conf, $mkf, $mak and $ver ? (y/n)"
+             set remo = $<
+             if ("$remo" == "y") then
+					 \rm -f $backupconf
+					 \rm -f $backupver
+					 \rm -f $backupmake
+					 \rm -f $backupmkf
+             else
+				 echo "You can find them in $backupconf, $backupmkf, $backupver and $backupmake."
+			 endif
+		else
+			echo "'$answ' was read. Not incrementing anything."
+			echo " your old $conf and $ver are restored..."
+			\rm -f $tmpfile
+			\mv -f $backupconf $conf
+			\mv -f $backupver  $ver
+			\mv -f $backupmkf  $mkf
+			exit 0
+		endif
+
+	endif
+else
+	echo "'$answ' was read. Not incrementing anything."
+	exit 0
+endif
+
+exit 0
+
+# how to unset set variables ?

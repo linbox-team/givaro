@@ -65,9 +65,9 @@
 // - yy: minor version number
 // - zz: revision number
 #define GIVARO_MAJOR_VERSION    3
-#define GIVARO_MINOR_VERSION    7
-#define GIVARO_REVISION_VERSION 2
-#define GIVARO_VERSION          30702
+#define GIVARO_MINOR_VERSION    8
+#define GIVARO_REVISION_VERSION 0
+#define GIVARO_VERSION          30800
 
 // -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)

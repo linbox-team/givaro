@@ -1,0 +1,79 @@
+// ==========================================================================
+// $Source: /var/lib/cvs/Givaro/src/library/matrix/givmatdenseops.f.spe,v $
+// Copyright(c)'94-97 by Givaro Team
+// see the copyright file.
+// Authors: T. Gautier
+// $Id: givmatdenseops.f.spe,v 1.1.1.1 2004-05-12 16:08:24 jgdumas Exp $
+// ==========================================================================
+
+namespace Givaro {
+#warning "this file will probably not compile"
+
+ // R <- A * B, R cannot be an alias for A or B 
+template<>
+void MatrixDom<FloatDom,Dense>::mul( Rep& R, const Rep& A, const Rep& B) const
+{
+  float alpha =1.0;
+  float beta  =0.0;
+
+  R.copy(Y);
+
+  // -- Call the blas dgemm
+  sgemm("N","N", &A._nrow, &A._ncol, &B._ncol, 
+         &alpha, A._data, &A._nrow, 
+         B._data, &B._nrow, 
+         &beta, R._data, &R._nrow); 
+}
+
+  // -- axpy operations: 
+  // A*X - Y
+template<>
+void MatrixDom<FloatDom,Dense>::axpy  
+ ( Rep& R, const Rep& A, const Rep& X, const Rep& Y ) const
+{
+  float alpha =1.0;
+  float beta  =1.0;
+
+  R.copy(Y);
+
+  // -- Call the blas dgemm
+  sgemm("N","N", &A._nrow, &A._ncol, &B._ncol, 
+         &alpha, A._data, &A._nrow, 
+         B._data, &B._nrow, 
+         &beta, R._data, &R._nrow); 
+}
+
+  // a*A*X - b*Y
+template<class Domain>
+void MatrixDom<Domain,Dense>::axpy  
+  ( Rep& res, const float& a, const Rep& A, 
+    const Rep& X, const float& b, const Rep& Y ) const
+{
+  float alpha =a;
+  float beta  =b;
+
+  R.copy(Y);
+
+  // -- Call the blas dgemm
+  sgemm("N","N", &A._nrow, &A._ncol, &B._ncol, 
+         &alpha, A._data, &A._nrow, 
+         B._data, &B._nrow, 
+         &beta, R._data, &R._nrow); 
+}
+
+template<> 
+void MatrixDom<FloatDom,Dense>::mul( Rep& R, const Rep& A, const Type_t& val ) const
+{
+  Indice_t i; 
+  Indice_t max = ncol(R) * nrow(R);
+  for (i=max; --i>=0; ) R[i] = A[i]* val;
+}
+
+template<> 
+void MatrixDom<FloatDom,Dense>::mul( Rep& R, const Type_t& val, const Rep& A) const
+{
+  Indice_t i; 
+  Indice_t max = ncol(R) * nrow(R);
+  for (i=max; --i>=0; ) R[i] = val * A[i];
+}
+} //Givaro

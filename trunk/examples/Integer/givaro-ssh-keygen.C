@@ -167,7 +167,7 @@ int main(int argc, char** argv)
 
 
     for (long i = 1; i < argc; i++) {
-        
+
         if (argv[i][0] == '-') {
             switch(argv[i][1]) {
                 case 'h':; case 'H': {
@@ -196,10 +196,11 @@ int main(int argc, char** argv)
     }
 
 
-    FILE * filpriv, *filpub;
     if (files > 1) {
+	    FILE * filpriv;
         filpriv = fopen(filprivname.c_str(),"w");
         if (argc>3) {
+		FILE * filpub ;
             filpub = fopen(filpubname.c_str(),"w");
             mymain(filpriv,filpub,s,seed);
             fclose(filpub);

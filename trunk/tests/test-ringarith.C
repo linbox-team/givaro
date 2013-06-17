@@ -189,7 +189,8 @@ int TestRing(const Ring& F, const unsigned  long seed)
 		d = float((double)ch*drand48()) ;
 		F.init(x,d );
         } while(F.isZero(x));
-        int a; do {
+	do {
+		int a;
             F.init(x, a = (int)lrand48());
         } while(F.isZero(x));
         JEONETESTE(F,x,d);

@@ -71,7 +71,7 @@ long int ref_modulobis(const T  m, const U p)
 // m and p should not be too large
 template< class T, class U>
 int test1( const T m, const U p)
-{/*{{{*/
+{
 	// double pi (p);
 	long int r =  ref_modulo(m, p);
 
@@ -96,12 +96,12 @@ int test1( const T m, const U p)
 
 
 	return 0;
-}/*}}}*/
+}
 
 // m and p should not be too large
 template< class T, class U>
 int test1bis( const T m, const U p)
-{/*{{{*/
+{
 	double pi = (double) p;
 	long int r =  ref_modulobis(m, p);
 	// if (r<0)  r += (IsNeg(p) )?(-p):(p); // r est dans [[0,p-1]]
@@ -124,10 +124,10 @@ int test1bis( const T m, const U p)
 	AREEQUALVALUES(R,R2);
 
 	return 0;
-}/*}}}*/
+}
 
 int test2(Integer & M, Integer & P)
-{/*{{{*/
+{
 	Integer RR ;
 	Integer MM = M ;
 	Integer PP = P ;
@@ -146,10 +146,10 @@ int test2(Integer & M, Integer & P)
 	AREEQUALVALUES(RR,R);
 
 	return 0;
-}/*}}}*/
+}
 
 int test2bis(Integer & M, Integer & P)
-{/*{{{*/
+{
 	Integer RR ;
 	Integer MM = M ;
 	Integer PP = P ;
@@ -162,16 +162,16 @@ int test2bis(Integer & M, Integer & P)
 	R %= P;
 	AREEQUALVALUES(RR,R);
 
-	R = M ;
+	// R = M ;
 	R = M%P;
 	AREEQUALVALUES(RR,R);
 
 	return 0;
-}/*}}}*/
+}
 
 template< class T, class U>
 int test3( const T m, const U p)
-{/*{{{*/
+{
 	int pi = int(p);
 	long int q = (long int)(m / (T)p);
 	const Integer M(m);
@@ -200,12 +200,12 @@ int test3( const T m, const U p)
 	AREEQUALVALUES(Q,Q2);
 
 	return 0;
-}/*}}}*/
+}
 
 #include <cassert>
 
 int main()
-{/*{{{*/
+{
 #if (SIZEOF_LONG==8)
 	long int m = 1253345363665346363;
 #else
@@ -404,7 +404,7 @@ int main()
 
 
 	return 0;
-}/*}}}*/
+}
 
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

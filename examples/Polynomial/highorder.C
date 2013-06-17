@@ -135,7 +135,7 @@ bool TestFracDevel(const HighOrders& HO101, const Polys::Element P, const Polys:
     }
 
 
-} catch (GivError e) {
+} catch (GivError &e) {
     std::cerr << e << std::endl;
 }
 

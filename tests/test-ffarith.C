@@ -54,7 +54,7 @@ long long locgcd ( const Int1 a, const Int2 b ) {
 
 template<class Field>
 int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
-{/*{{{*/
+{
 #ifdef GIVARO_DEBUG
 	std::cerr << "testing " ;
 	F.write(std::cerr );
@@ -229,7 +229,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 #endif
 	return 0 ;
 
-}/*}}}*/
+}
 
 #ifndef NBITER
 #define NBITER 50
@@ -237,7 +237,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 
 template<class Field>
 int TestField(const Field& F, const int seed)
-{/*{{{*/
+{
     long ch = (long) F.characteristic();
     JEONETESTE(F,7UL,-29.3);
     srand48(seed);
@@ -254,7 +254,7 @@ int TestField(const Field& F, const int seed)
         JEONETESTE(F,a,d);
     }
     return 0;
-}/*}}}*/
+}
 
 template<class Ints>
 Ints previousprime(const Ints& a) {
@@ -267,7 +267,7 @@ Ints previousprime(const Ints& a) {
 
 
 int main(int argc, char ** argv)
-{/*{{{*/
+{
     int seed = int (argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
@@ -479,7 +479,7 @@ int main(int argc, char ** argv)
 
 
 	return 0;
-}/*}}}*/
+}
 
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

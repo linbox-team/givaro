@@ -91,12 +91,13 @@ Integer& MyPollard(GivRandom& gen, Integer& g, const Integer& n, const unsigned 
 
 unsigned long Revert(const Integer p, const double epsilon, double firstguess)
 {
-	unsigned long L;
-	double t1,t3, t4, t5, t7, t8, t9, t11, t12, t18, t22, t23, t34(firstguess), dL;
+	// unsigned long L;
+	double t1, t4, t8, t34(firstguess), dL;
 	t1 = (double)p-1.0;
 	t4 = 2.0/t1+1.0;
 	t8 = logtwo(p)*log(2.0)-log(2.0);            // log( p/2 )
 	do {
+		double t3, t5, t7, t9, t11, t12, t18, t22, t23 ;
 		//          std::cerr << "dL: " << t34 << std::endl;
 		dL = t34;
 		t3 = 1.0/dL;
@@ -110,7 +111,7 @@ unsigned long Revert(const Integer p, const double epsilon, double firstguess)
 		t23 = (-t8/t18*t3*t22+t11*t5*t3/t7);
 		t34 = dL-(  1.0 - (1.0-epsilon)/(t4*t12))/(2.0*t23);
 	} while( (GIVABSDIV(t34,dL) < 0.95) && (dL<1048576.0)  );
-	return L = (unsigned long)GIVMIN(dL,1048576.0);
+	return /* L =*/ (unsigned long)GIVMIN(dL,1048576.0);
 }
 
 unsigned long Revert(const Integer p, const double epsilon)

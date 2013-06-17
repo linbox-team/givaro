@@ -653,9 +653,10 @@ inline Integer& ZpzDom<Std64>::write (Integer& r, const Rep a) const
   return r = Integer(a);
 }
 
-#endif // __DONOTUSE_Givaro_SIXTYFOUR__
 
 } // namespace Givaro
+
+#endif // __DONOTUSE_Givaro_SIXTYFOUR__
 
 #endif // __GIVARO_zpz64std_INL
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

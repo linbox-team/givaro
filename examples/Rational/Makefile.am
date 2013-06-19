@@ -32,6 +32,7 @@ AM_LDFLAGS=-static
 
 
 EXTRA_PROGRAMS=iratrecon polydouble
+
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 iratrecon_SOURCES  = iratrecon.C

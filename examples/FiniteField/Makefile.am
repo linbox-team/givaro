@@ -36,6 +36,7 @@ AM_LDFLAGS=-static
 
 
 EXTRA_PROGRAMS=gfq_atomic GaloisFields Test_Extension zpz_atomic ff_arith exponentiation domain_to_operatorstyle all_field GF128 GFirreducible
+
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 GFirreducible_SOURCES           = GFirreducible.C

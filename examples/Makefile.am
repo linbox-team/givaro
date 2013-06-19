@@ -14,3 +14,6 @@ examples: $(SUBDIRS)
 
 $(SUBDIRS):
 	$(MAKE) -C $@
+
+CLEANFILES:
+	$(SUBDIRS)

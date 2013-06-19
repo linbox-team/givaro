@@ -200,7 +200,8 @@ void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t n
 void GivMMFreeList::memcpy( void* dest, const void* src, const size_t size )
 {
 	BlocFreeList* tmp1 = reinterpret_cast<BlocFreeList*>(((char*)dest) - sizeof(BlocFreeList)+sizeof(int64_t));
-	BlocFreeList* tmp2 = reinterpret_cast<BlocFreeList*>(((char*)src) - sizeof(BlocFreeList)+sizeof(int64_t));
+	void * toto = const_cast<void*>( src );
+	BlocFreeList* tmp2 = reinterpret_cast<BlocFreeList*>(((char*)toto) - sizeof(BlocFreeList)+sizeof(int64_t));
 #ifdef GIVARO_DEBUG
 	if ((tmp1->u.index <0) || (tmp1->u.index >= BlocFreeList::lenTables))
 		throw GivError("[GivMMFreeList::memcpy]: bad pointer 'dest'");

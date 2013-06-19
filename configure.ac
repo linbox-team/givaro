@@ -4,10 +4,11 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
-AC_PREREQ(2.61)
+AC_PREREQ([2.61])
 
 AC_INIT([Givaro],[3.8.0],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
+
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability])
@@ -59,6 +60,7 @@ AC_SUBST([TESTS_CFLAGS])
 
 TESTS_CFLAGS="-O0"
 DEBUG_CFLAGS="-g"
+
 DEFAULT_CFLAGS="-pipe"
 WARN_CFLAGS="-Wall"
 
@@ -78,7 +80,7 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 	case x${CCNAM} in
 		xicc)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wcheck"
-			# DEBUG_CFLAGS="-fast"
+		WARN_CFLAGS="${WARN_CFLAGS} -Wall -Wno-unused-parameter -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith  -Wwrite-strings -Wno-long-long"
 			;;
 		xeko)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wno-unused-parameter"
@@ -105,7 +107,7 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 		xclang31)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long -fsanitize=address"
+				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long -fsanitize=address -g"
 			fi
 			;;
 
@@ -266,9 +268,11 @@ GIV_DOC
 
 CXXFLAGS="${GMP_CFLAGS} ${CXXFLAGS}"
 LIBS="${GMP_LIBS}"
+
 AC_SUBST(CXXFLAGS)
 
 echo "-----------------------------------------------"
+
 AC_CONFIG_FILES([
 Makefile
 givaro-config

@@ -14,8 +14,8 @@ namespace Givaro {
 
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) const
 {
-        Element c0 = c & MASK32;	/* c mod B */
-        c0 = (c0 * _nim) & MASK32; 	/* -c/p mod B */
+        Element c0 = (Element)(c & MASK32);	/* c mod B */
+        c0 = (Element)((c0 * _nim) & MASK32); 	/* -c/p mod B */
 	// c0 *= _p;
 	// c0 += c;			/* c = 0 mod B */
 	c0 = c + c0*_p;
@@ -24,7 +24,7 @@ inline Montgomery<Std32>::Element Montgomery<Std32>::redcal(const Element c) con
 }
 inline Montgomery<Std32>::Element Montgomery<Std32>::redcsal(const Element c) const
 {
-        Element c0 = (c * _nim) & MASK32; 	/* -c/p mod B */
+        Element c0 = (Element)((c * _nim) & MASK32); 	/* -c/p mod B */
         c0 = c + c0 * _p; 		/* c = 0 mod B */
         c0 >>= HALF_BITS32;
 	return (c0>_p?c0-=_p:c0);
@@ -32,7 +32,7 @@ inline Montgomery<Std32>::Element Montgomery<Std32>::redcsal(const Element c) co
 
 inline Montgomery<Std32>::Element& Montgomery<Std32>::redc(Element& r, const Element c) const
 {
-        r = c & MASK32;			/* c mod B */
+        r = (Element)(c & MASK32);			/* c mod B */
 	r *= _nim;
 	r &= MASK32;
 	r *= _p;
@@ -43,7 +43,7 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redc(Element& r, const Ele
 
 inline Montgomery<Std32>::Element& Montgomery<Std32>::redcs(Element& r, const Element c) const
 {
-        r = (c * _nim) & MASK32; 	/* -c/p mod B */
+        r = (Element)((c * _nim) & MASK32); 	/* -c/p mod B */
         r = c + r * _p; 		/* c = 0 mod B */
         r >>= HALF_BITS32;
 	return (r>_p?r-=_p:r);
@@ -51,15 +51,15 @@ inline Montgomery<Std32>::Element& Montgomery<Std32>::redcs(Element& r, const El
 
 inline Montgomery<Std32>::Element& Montgomery<Std32>::redcin(Element& r) const
 {
-        Element c0 = r & MASK32;	/* c mod B */
-        c0 = (c0 * _nim) & MASK32; 	/* -c/p mod B */
+        Element c0 = (Element)(r & MASK32);	/* c mod B */
+        c0 = (Element)((c0 * _nim) & MASK32); 	/* -c/p mod B */
         r += c0 * _p; 			/* c = 0 mod B */
         r >>= HALF_BITS32;
 	return (r>_p?r-=_p:r);
 }
 inline Montgomery<Std32>::Element& Montgomery<Std32>::redcsin(Element& r) const
 {
-        Element c0 = (r * _nim) & MASK32; 	/* -c/p mod B */
+        Element c0 = (Element)((r * _nim) & MASK32); 	/* -c/p mod B */
         r += c0 * _p; 				/* c = 0 mod B */
         r >>= HALF_BITS32;
 	return (r>_p?r-=_p:r);

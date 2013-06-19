@@ -6,7 +6,7 @@
 
 ACLOCAL_AMFLAGS = -I macros
 
-SUBDIRS=src macros tests docs
+SUBDIRS=src macros tests docs examples
 
 include_HEADERS=givaro-config.h
 
@@ -26,19 +26,19 @@ bin_SCRIPTS=givaro-config givaro-makefile
 EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt \
 		   givaro.doxy
 
-DIST_SUBDIRS=examples ${SUBDIRS}
+DIST_SUBDIRS=${SUBDIRS}
 
 DISTCLEANFILES = src/kernel/system/givaro   \
-				 src/kernel/bstruct/givaro  \
-				 src/kernel/integer/givaro  \
-				 src/kernel/memory/givaro   \
-				 src/kernel/rational/givaro \
-				 src/kernel/zpz/givaro      \
-				 src/kernel/gmp++/gmp++     \
-				 src/library/matrix/givaro  \
-				 src/library/poly1/givaro   \
-				 src/library/tools/givaro   \
-				 src/library/vector/givaro
+		 src/kernel/bstruct/givaro  \
+		 src/kernel/integer/givaro  \
+		 src/kernel/memory/givaro   \
+		 src/kernel/rational/givaro \
+		 src/kernel/zpz/givaro      \
+		 src/kernel/gmp++/gmp++     \
+		 src/library/matrix/givaro  \
+		 src/library/poly1/givaro   \
+		 src/library/tools/givaro   \
+		 src/library/vector/givaro
 
 uninstall-hook:
 	(test -d "$(includedir)/givaro" && rmdir "$(includedir)/givaro") || true

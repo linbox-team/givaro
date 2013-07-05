@@ -290,7 +290,7 @@ namespace Givaro {
 
 	template<typename TT>
     inline bool GFqDom<TT>::isMOne(const Rep a) const
-    { return a == GFqDom<TT>::mone ; }
+    { return a == GFqDom<TT>::mOne ; }
 
     template<typename TT>
     inline bool GFqDom<TT>::isunit(const Rep a) const

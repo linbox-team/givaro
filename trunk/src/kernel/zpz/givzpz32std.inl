@@ -310,6 +310,10 @@ namespace Givaro {
 	{
 		return a == ZpzDom<Std32>::one;
 	}
+	inline int ZpzDom<Std32>::isMOne(const Rep a) const
+	{
+		return a == ZpzDom<Std32>::mOne;
+	}
 
 
 

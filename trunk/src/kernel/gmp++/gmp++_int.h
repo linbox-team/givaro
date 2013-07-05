@@ -98,6 +98,7 @@ namespace Givaro {
 	int 		isZero (const Integer& a);
 	int 		nonZero (const Integer& a);
 	int 		isOne  (const Integer& a);
+	int 		isMOne  (const Integer& a);
 
 	// (FILE gmp++_int_misc.C)
 	Integer 	fact ( long unsigned int l);
@@ -249,6 +250,7 @@ namespace Givaro {
 		//! name compare to 1 and 0
 		//! @param a
 		friend giv_all_inlined  int isOne(const Integer& a);
+		friend giv_all_inlined  int isMOne(const Integer& a);
 
 
 

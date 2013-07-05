@@ -125,6 +125,7 @@ public:
   //@{
   int isZero( const Rep& a ) const;
   int isOne ( const Rep& a ) const;
+  int isMOne ( const Rep& a ) const;
   size_t length ( const Rep& a ) const;
   //@}
 

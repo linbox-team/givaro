@@ -109,6 +109,7 @@ public:
 	int isZero( const Rep a ) const;
 	int isnzero( const Rep a ) const;
 	int isOne ( const Rep a ) const;
+	int isMOne ( const Rep a ) const;
 	size_t length ( const Rep a ) const;
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
@@ -222,7 +223,7 @@ protected:
 	static void End();
 
 public: static inline Residu_t getMaxModulus() { return 3037000500ULL; }
-    
+
 };
 
 } // namespace Givaro

@@ -39,6 +39,7 @@ unsigned long length (const Rational& r) ;
 int sign   (const Rational& r) ;
 int isZero (const Rational& r) ;
 int isOne  (const Rational& r) ;
+int isMOne  (const Rational& r) ;
 int isInteger(const Rational& r);
 
 class RationalDom;
@@ -128,6 +129,7 @@ public :
     inline friend int sign   (const Rational& r) ;
     inline friend int isZero (const Rational& r) ;
     inline friend int isOne  (const Rational& r) ;
+    inline friend int isMOne  (const Rational& r) ;
     inline friend int isInteger(const Rational& r);
 
     std::ostream& print ( std::ostream& o ) const ;
@@ -260,6 +262,7 @@ public:
     size_t length (const Rep& a) const { return  ::Givaro::length(a); }
     int sign    (const Rep& a) const { return  ::Givaro::sign(a); }
     int isOne   (const Rep& a) const { return compare(a, one) ==0; }
+    int isMOne   (const Rep& a) const { return compare(a, mOne) ==0; }
     int isZero  (const Rep& a) const { return compare(a, zero) ==0; }
     int areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
     int areNEqual(const Rep& a, const Rep& b) const { return compare(a, b) !=0; }

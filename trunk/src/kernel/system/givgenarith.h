@@ -33,8 +33,9 @@ public:
 
   const Rep zero;
   const Rep one;
+  const Rep mone;
 
-  BaseDomain() : zero((T)0), one((T)1) {}
+  BaseDomain() : zero((T)0), one((T)1), mone((T)-1) {}
 
   // -- Assignment of domain: default operator=
   // -- Comparizon of domain:
@@ -49,6 +50,7 @@ public:
   // -- Comparizon of Rep
   int isZero( const Rep r ) const { return r ==zero; };
   int isOne ( const Rep r ) const { return r ==one; };
+  int isMOne ( const Rep r ) const { return r ==mone; };
   int areEqual ( const Rep r, const Rep a ) const { r == a; };
   int areNEqual( const Rep r, const Rep a ) const { r != a; };
 

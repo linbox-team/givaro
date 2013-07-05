@@ -342,6 +342,9 @@ inline int ZpzDom<Std64>::isnzero(const Rep a) const
 inline int ZpzDom<Std64>::isOne(const Rep a) const
 { return a == ZpzDom<Std64>::one; }
 
+inline int ZpzDom<Std64>::isMOne(const Rep a) const
+{ return a == ZpzDom<Std64>::mOne; }
+
 
 inline size_t ZpzDom<Std64>::length(const Rep ) const
 { return ZpzDom<Std64>::size_rep;}

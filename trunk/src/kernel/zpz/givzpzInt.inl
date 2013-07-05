@@ -75,6 +75,9 @@ inline int ZpzDom<Integer>::isZero(const Rep& a) const
 inline int ZpzDom<Integer>::isOne(const Rep& a) const
 { return ::Givaro::isOne(a); }
 
+inline int ZpzDom<Integer>::isMOne(const Rep& a) const
+{ return ::Givaro::isMOne(a); }
+
 
 
 inline size_t ZpzDom<Integer>::length(const Rep& a) const

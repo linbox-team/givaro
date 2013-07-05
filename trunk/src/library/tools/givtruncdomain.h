@@ -183,6 +183,11 @@ public :
 		Degree vP;val(vP,P);
 		return ((vP == 0) && Father_t::isOne(P.first));
 	}
+	int isMOne   ( const Rep& P ) const
+	{
+		Degree vP;val(vP,P);
+		return ((vP == 0) && Father_t::isMOne(P.first));
+	}
 
 
 	int areEqual ( const Rep& P, const Rep& Q ) const

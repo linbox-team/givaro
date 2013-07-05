@@ -61,7 +61,11 @@ inline int isInteger(const Rational& r)
   { return isOne(r.den) ; }
 
 inline int isOne(const Rational& a)
-  { return (isOne(a.num) && isOne(a.den)) ; }
+  { return (isOne(a.num) && isOne(a.den)) ; } // -1/-1 ?  k/k ?
+inline int isMOne(const Rational& a)
+  { return (isMOne(a.num) && isOne(a.den)) ; } // k/-k ?
+
+
 
 inline int isZero(const Rational& a)
   { return isZero(a.num) ; }

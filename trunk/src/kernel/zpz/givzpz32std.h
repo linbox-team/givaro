@@ -120,6 +120,7 @@ public:
   // ----- Misc methods
   int isZero( const Rep a ) const;
   int isOne ( const Rep a ) const;
+  int isMOne ( const Rep a ) const;
   size_t length ( const Rep a ) const;
 
   // ----- Equality between two Elements
@@ -227,7 +228,7 @@ protected:
     static void End();
 
 public: static inline Residu_t getMaxModulus() { return 46341; }
-    
+
 };
 
 } // namespace Givaro

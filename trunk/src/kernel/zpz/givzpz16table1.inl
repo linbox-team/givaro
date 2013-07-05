@@ -330,6 +330,12 @@ namespace Givaro {
 		return a == ZpzDom<Log16>::one;
 	}
 
+	inline int ZpzDom<Log16>::ismone(const Rep a) const
+	{
+		return a == ZpzDom<Log16>::mOne;
+	}
+
+
 	inline size_t ZpzDom<Log16>::length(const Rep ) const
 	{
 		return ZpzDom<Log16>::size_rep;
@@ -342,6 +348,10 @@ namespace Givaro {
 	inline int ZpzDom<Log16>::isOne ( const Rep a ) const
 	{
 		return isone(a);
+	}
+	inline int ZpzDom<Log16>::isMOne ( const Rep a ) const
+	{
+		return ismone(a);
 	}
 
 

@@ -109,8 +109,10 @@ public:
   // ----- Misc methods
   int iszero( const Rep a ) const;
   int isone ( const Rep a ) const;
+  int ismone ( const Rep a ) const;
   int isZero( const Rep a ) const;
   int isOne ( const Rep a ) const;
+  int isMOne ( const Rep a ) const;
   size_t length ( const Rep a ) const;
 
 
@@ -234,7 +236,7 @@ public:
   const Element mOne;
 
 public: static inline Residu_t getMaxModulus() { return 16381; }
-    
+
 
 };
 

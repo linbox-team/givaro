@@ -57,6 +57,9 @@ public :
 	{ return Ring_t::isZero(P); }
 	int isOne   ( const Rep& P ) const
 	{ return Ring_t::isOne(P); }
+	int isMOne   ( const Rep& P ) const
+	{ return Ring_t::isMOne(P); }
+
 	int areEqual ( const Rep& P, const Rep& Q ) const
 	{
 		return Ring_t::areEqual(P, Q);

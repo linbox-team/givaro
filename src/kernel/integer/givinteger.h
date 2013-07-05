@@ -267,6 +267,11 @@ namespace Givaro {
 		{
 			return ::Givaro::isOne(a);
 		}
+		bool isMOne  (const Rep& a) const
+		{
+			return ::Givaro::isMOne(a);
+		}
+
 		bool areEqual (const Rep& a, const Rep& b) const
 		{
 			return compare(a,b) ==0;

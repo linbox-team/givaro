@@ -107,6 +107,9 @@ public :
 	{ return Ring_t::isZero(P._num); }
 	int isOne   ( const Rep& P ) const
 	{ return Ring_t::areEqual(P._num, P._den); }
+	int isMOne   ( const Rep& P ) const
+	{ return (Ring_t::areEqual(abs(P._num), abs(P._den)) && !isOne(P)); }
+
 	int areEqual ( const Rep& P, const Rep& Q ) const
 	{
 		return Ring_t::areEqual(P._num, Q._num) && Ring_t::areEqual(P._den, Q._den) ; }

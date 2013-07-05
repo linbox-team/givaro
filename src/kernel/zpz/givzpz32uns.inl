@@ -333,6 +333,10 @@ namespace Givaro {
 		return a == ZpzDom<Unsigned32>::one;
 	}
 
+inline int ZpzDom<Unsigned32>::isMOne(const Rep a) const
+	{
+		return a == ZpzDom<Unsigned32>::mOne;
+	}
 
 	inline size_t ZpzDom<Unsigned32>::length(const Rep ) const
 	{

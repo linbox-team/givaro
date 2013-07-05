@@ -333,6 +333,10 @@ namespace Givaro {
             {
 		return _pD.isOne(b) ;
             }
+	bool isMOne (const PolElement& b) const
+            {
+		return _pD.isMOne(b) ;
+            }
 
 
 	template<class RandIter> Element& random(RandIter& g, Element& r) const

@@ -311,6 +311,10 @@ namespace Givaro {
 		return a == ZpzDom<Std16>::one;
 	}
 
+inline int ZpzDom<Std16>::isMOne(const Rep a) const
+	{
+		return a == ZpzDom<Std16>::mOne;
+	}
 
 
 	inline size_t ZpzDom<Std16>::length(const Rep ) const

@@ -246,6 +246,7 @@ namespace Givaro {
 		}
 #endif
 		int isOne   ( const Rep& P ) const;
+		int isMOne   ( const Rep& P ) const;
 		int areEqual ( const Rep& P, const Rep& Q ) const;
 		int areNEqual( const Rep& P, const Rep& Q ) const;
 
@@ -314,12 +315,12 @@ namespace Givaro {
         Rep& stdmul( Rep& R, const Rep& P, const Rep& Q) const;
             // Forces first level of Karatsuba multiplication algorithm
         Rep& karamul( Rep& R, const Rep& P, const Rep& Q) const;
-        
+
 		// Compute truncated mul: only the coefficients inside
 		// the degree interval, included
 		Rep& mul( Rep&, const Rep&, const Rep&, const Degree&, const Degree&) const;
-        
-        
+
+
 		Rep& sqr   ( Rep& q, const Rep& a ) const;
 
 

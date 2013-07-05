@@ -472,6 +472,10 @@ namespace Givaro {
 	{
 		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 1UL);
 	}
+	int isMOne(const Integer& a)
+	{
+		return ! mpz_cmp_si((mpz_srcptr)&(a.gmp_rep), 1L);
+	}
 
 	int nonZero(const Integer& a)
 	{

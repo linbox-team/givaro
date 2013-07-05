@@ -72,6 +72,10 @@ template<typename IntType>
 inline int ZpzDom<IntType>::isOne(const Rep& a) const
 { return a == one; }
 
+template<typename IntType>
+inline int ZpzDom<IntType>::isMOne(const Rep& a) const
+{ return a == mOne; }
+
 
 
 template<typename IntType>

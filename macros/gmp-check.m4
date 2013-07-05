@@ -12,7 +12,7 @@ dnl LB_CHECK_GMP ([MINIMUM-VERSION [, ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl
 dnl Test for the GNU Multiprecision library and define GMP_CFLAGS and GMP_LIBS
 
-AC_DEFUN([LB_CHECK_GMP], [
+AC_DEFUN([GIV_CHECK_GMP], [
 
 		AC_ARG_WITH(gmp,
 			[AC_HELP_STRING([--with-gmp=<path>|yes|no],[

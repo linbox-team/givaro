@@ -226,6 +226,9 @@ inline int Montgomery<Std32>::isZero(const Rep a) const
 inline int Montgomery<Std32>::isOne(const Rep a) const
 { return a == Montgomery<Std32>::one; }
 
+inline int Montgomery<Std32>::isMOne(const Rep a) const
+{ return a == Montgomery<Std32>::mOne; }
+
 
 
 inline size_t Montgomery<Std32>::length(const Rep) const

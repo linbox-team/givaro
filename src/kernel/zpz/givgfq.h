@@ -223,6 +223,7 @@ public:
 	bool isZero( const Rep ) const;
 	bool isnzero( const Rep ) const;
 	bool isOne ( const Rep ) const;
+	bool isMOne ( const Rep ) const;
 	bool isunit ( const Rep ) const; // Element belongs to prime subfield
 	size_t length ( const Rep ) const;
 

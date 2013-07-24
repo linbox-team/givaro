@@ -293,16 +293,18 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 
 // -- Signed Traits (JGD 15.12.1999)
 // JGD 11.06.03
-#if !defined(__GNUC__) || (__GNUC__ != 2)
+#if !defined( __GNUC__ ) || ( __GNUC__ != 2 )
 // JGD 21.03.03
 #include <limits>
-template<class XXX> struct GIVARO_numeric_limits {
+template<class XXX>
+struct GIVARO_numeric_limits {
     	typedef XXX self_type;
 	static XXX max() { return  std::numeric_limits<XXX>::max(); }
 };
 #else
 #include <limits.h>
-template<class XXX> struct GIVARO_numeric_limits {
+template<class XXX>
+struct GIVARO_numeric_limits {
     	typedef XXX self_type;
 	static XXX max() { return (XXX)(pow(2,8*sizeof(XXX))-1); }
 };

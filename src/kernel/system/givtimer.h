@@ -27,6 +27,7 @@
 
 #include <iostream>
 #include <givaro/givconfig.h>
+
 namespace Givaro {
 // class BaseTimer; class RealTimer; class SysTimer; class UserTimer;
 

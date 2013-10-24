@@ -21,6 +21,7 @@
 #include "givaro/givconfig.h"
 #include "givaro/givinteger.h"
 #include <iostream>
+#include <string>
 #include <vector>
 #include "givaro/giv_randiter.h"
 #include "givaro/givpoly1factor.h"
@@ -194,6 +195,7 @@ public:
 	// --- IO methods for the Domain
 	std::istream& read ( std::istream& s );
 	std::ostream& write( std::ostream& s ) const;
+	std::ostream& write( std::ostream& s , const std::string& ) const;
 	// --- IO methods for the Elements
 	std::istream& read ( std::istream& s, Rep& a ) const;
 	std::ostream& write( std::ostream& s, const Rep a ) const;

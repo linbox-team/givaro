@@ -607,6 +607,11 @@ namespace Givaro {
     {
         return o << "Givaro Gfq of (" <<  GFqDom<TT>::_characteristic << '^' << GFqDom<TT>::_exponent << ')';
     }
+    template<typename TT>
+    inline std::ostream& GFqDom<TT>::write (std::ostream& o, const std::string& s) const
+    {
+	return this->write(o) << s;
+    }
 
         // ------------------------------------
         // Input - Output  of the Elements

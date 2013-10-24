@@ -335,12 +335,12 @@ public:
 
 	void info() const
 	{
-		cerr << "Mul Call: " << _mul_call << ", real: " << _mul_count << endl;
-		cerr << "Add Call: " << _add_call << ", real: " << _add_count << endl;
-		cerr << "Div Call: " << _div_call << ", real: " << _div_count << endl;
-		cerr << "Sub Call: " << _sub_call << ", real: " << _sub_count << endl;
-		cerr << "Neg Call: " << _neg_call << ", real: " << _neg_count << endl;
-		cerr << "Inv Call: " << _inv_call << ", real: " << _inv_count << endl;
+		std::cerr << "Mul Call: " << _mul_call << ", real: " << _mul_count << std::endl;
+		std::cerr << "Add Call: " << _add_call << ", real: " << _add_count << std::endl;
+		std::cerr << "Div Call: " << _div_call << ", real: " << _div_count << std::endl;
+		std::cerr << "Sub Call: " << _sub_call << ", real: " << _sub_count << std::endl;
+		std::cerr << "Neg Call: " << _neg_call << ", real: " << _neg_count << std::endl;
+		std::cerr << "Inv Call: " << _inv_call << ", real: " << _inv_count << std::endl;
 	}
 #endif
 

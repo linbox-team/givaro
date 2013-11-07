@@ -18,6 +18,7 @@
 // openssh/buffer.h openssh/key.h openssh/uuencode.h openssh/xmalloc.h  //
 // The latter libraries/headers are avaible from openssl and openssh    //
 // openssl > 0.9.8  and  openssh > 5.2p1  are expected                  //
+// For openssh > 6.3p1, use "-lopenbsd-compat -lssh -lssl -lcrypto -ldl"//
 // ==================================================================== //
 /*! @file examples/Integer/givaro-ssh-keygen.C
  * @ingroup examples
@@ -141,7 +142,7 @@ int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
 unsigned long seedfromfile(char * filename) {
      std::ifstream filrand(filename);
      unsigned long seed=0;
-     for(int i=0; i<sizeof(unsigned long); ++i) {
+     for(unsigned int i=0; i<sizeof(unsigned long); ++i) {
          unsigned char t; filrand >> t;
          seed <<= 8;
          seed |= t;

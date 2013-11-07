@@ -37,7 +37,7 @@ public:
         StaticElement::_domain = D;
     }
 
-    static Domain& getDomain() {
+    static const Domain & getDomain() {
         return StaticElement::_domain;
     }
 

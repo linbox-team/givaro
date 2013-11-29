@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // -----------------------------------------------------------------
-// Time-stamp: <10 Oct 12 16:04:17 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <29 Nov 13 13:20:12 Jean-Guillaume.Dumas@imag.fr>
 // -----------------------------------------------------------------
 // author: Jean-Guillaume.Dumas
 // date: 2004
@@ -70,8 +70,6 @@ public:
     operator INITCST() const 		{ INITCST tmp; return _domain.convert(tmp,_elem); }
 
 
-
-
     template<class INITCST>
     StaticElement(const INITCST& i) { _domain.init( (_elem), i); }
 
@@ -91,6 +89,30 @@ public:
 
     bool operator!=(const StaticElement& e) {
         return !_domain.areEqual((_elem), e._elem);
+    }
+
+    bool isZero() const {
+        return StaticElement::_domain.isZero(this->_elem);
+    }
+
+    static bool isZero(const StaticElement& e) {
+        return e.isZero();
+    }
+
+    bool isOne() const {
+        return StaticElement::_domain.isOne(this->_elem);
+    }
+
+    static bool isOne(const StaticElement& e) {
+        return e.isOne();
+    }
+
+    bool isMOne() const {
+        return StaticElement::_domain.isMOne(this->_elem);
+    }
+
+    static bool isMOne(const StaticElement& e) {
+        return e.isMOne();
     }
 
 

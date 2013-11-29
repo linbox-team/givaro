@@ -65,13 +65,19 @@ int main(int argc, char ** argv) {
     d /= a; std::cerr << d << ";" << std::endl;
 
         // Tests
-    std::cerr << a << " is non zero is " << (a != Element(0) ) << std::endl;
 
-    a = 0; std::cerr << a << " is zero is " << (a == Element(0) ) << std::endl;
+    const Element zero(0);
 
+    std::cerr << a << " is non zero is " << (a != zero ) << std::endl;
+    std::cerr << a << " is non zero is " << (! Element::isZero(a)) << std::endl;
+    std::cerr << a << " is non zero is " << (! a.isZero()) << std::endl;
+
+    a = 0; std::cerr << a << " is zero is " << (a == zero ) << std::endl;
+    std::cerr << a << " is zero is " << Element::isZero(a) << std::endl;
+    std::cerr << a << " is zero is " << a.isZero() << std::endl;
 
         // Access to Field object
-    Field F = Element::getDomain();
+    const Field & F = Element::getDomain();
     F.write( std::cerr << "Test: within ") << std::endl;
 
     return 0;

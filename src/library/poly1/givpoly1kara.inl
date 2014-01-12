@@ -29,11 +29,11 @@ namespace Givaro {
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-	size_t sR = R.size();
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
-	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
+	size_t sR = sP+sQ-1;
+	if (sR != R.size() ) R.reallocate(sR);
 
  	stdmul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
@@ -46,11 +46,11 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep
 template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Rep& R, const Rep& P, const Rep& Q ) const
 {
-	size_t sR = R.size();
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
-	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
+	size_t sR = sP+sQ-1;
+	if (sR != R.size()) R.reallocate(sR);
 
  	karamul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),

@@ -141,7 +141,7 @@ ZpzDom<Log16>::ZpzDom( Residu_t p ) :
 	numRefs = new int;
 	(*numRefs) = 1;
 #ifdef GIVARO_DEBUG
-	std::cout << *(numRefs) << " Arefs, p="<<_p<<" \n";
+	// std::cout << *(numRefs) << " Arefs, p="<<_p<<" \n";
 #endif
 
 	// -- temporary
@@ -225,8 +225,8 @@ ZpzDom<Log16>::~ZpzDom()
   (*numRefs)--;
   if (*numRefs == 0) {
 #ifdef GIVARO_DEBUG
-    std::cout << "zero : " << zero << std::endl;
-    std::cout << "Fdestroying, p="<<residu()<<"\n";
+    // std::cout << "zero : " << zero << std::endl;
+    // std::cout << "Fdestroying, p="<<residu()<<"\n";
 #endif
     delete [] _tab_value2rep;
     delete [] _tab_rep2value;

@@ -165,7 +165,7 @@ ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F) :
 {
   (*numRefs)++;
 #ifdef GIVARO_DEBUG
-  std::cout << *(numRefs) << " Brefs, p="<<_p<<" \n";
+  // std::cout << *(numRefs) << " Brefs, p="<<_p<<" \n";
 #endif
 }
 

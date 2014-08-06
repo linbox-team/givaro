@@ -429,11 +429,11 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
 
 
 #if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H) || defined(__pmp_omp_h)
-#define GIVAVO_USES_OMP 1
-#define __GIVARO_USE_OPENMP
+#  ifndef __GIVARO_USE_OPENMP
+#    define __GIVARO_USE_OPENMP 1
+#  endif
 #else
-#undef GIVAVO_USES_OMP
-#undef __GIVARO_USE_OPENMP
+#  undef __GIVARO_USE_OPENMP
 #endif
 
 

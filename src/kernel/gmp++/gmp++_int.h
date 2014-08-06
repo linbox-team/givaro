@@ -43,6 +43,12 @@ namespace Givaro {
 	class Integer;
 
 	// (FILE gmp++_int_gcd.C)
+
+        /*! @brief Modular inverse.
+         * @param a 
+         * @param b
+         * @param[out] u is set to \f$a^{-1}\f$ modulo b
+         */
 	Integer& 	inv (Integer& u, const Integer& a, const Integer& b);
 	Integer& 	invin (Integer& u, const Integer& b);
 

@@ -46,6 +46,10 @@ public:
   // ----- Representation of Element of the domain ZpzDom
   typedef int32_t Rep;
   typedef int32_t Element;
+ typedef Element* Element_ptr ;
+	typedef const Element* ConstElement_ptr;
+
+
 
   // ----- Representation of vector of the Element
   typedef Rep* Array;

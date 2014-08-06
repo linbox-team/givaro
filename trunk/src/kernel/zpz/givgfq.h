@@ -67,6 +67,10 @@ protected:
 public:
 	typedef GFqDom<TT> Self_t;
 	typedef Rep Element;
+	typedef Element* Element_ptr ;
+	typedef const Element* ConstElement_ptr;
+
+
 	//     class Element {
 	//     public:
 	//         mutable Rep _value;

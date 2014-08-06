@@ -49,6 +49,10 @@ namespace Givaro {
 		// ----- Representation of Element of the domain Montgomery
 		typedef uint32_t Rep;
 		typedef uint32_t Element;
+ typedef Element* Element_ptr ;
+  typedef const uint32_t* ConstElement_ptr;
+
+
 
 		// ----- Constructor
 		Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL), mOne(0UL) {}

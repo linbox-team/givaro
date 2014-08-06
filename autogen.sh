@@ -4,9 +4,9 @@
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software. 
 # see the COPYRIGHT file for more details.
+#/
 
 # Run this to generate all the initial makefiles, etc.
-
 
 # Recover command line, with double-quotes
 CMDLINE=""

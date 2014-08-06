@@ -40,7 +40,7 @@ public:
   typedef Integer Rep;
   typedef Integer Element;
   typedef Element* Element_ptr ;
-  typedef const Integer* ConstElement_ptr;
+  typedef const Element* ConstElement_ptr;
 
 
   // ----- Representation of vector of the Element

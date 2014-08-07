@@ -45,20 +45,20 @@ do
 		if test -r "$GMP_HOME/include/gmp.h" ; then
 			GMP_CFLAGS="-I${GMP_HOME}/include"
 			GMP_PATH="-L${GMP_HOME}/lib"
-			GMP_LIBS="-L${GMP_HOME}/lib -lgmp"
+			GMP_LIBS="-L${GMP_HOME}/lib -lgmpxx -lgmp"
 		elif test -r "$GMP_HOME/gmp.h" ; then
 			GMP_CFLAGS="-I${GMP_HOME}"
 			GMP_PATH="-L${GMP_HOME}"
-			GMP_LIBS="-L${GMP_HOME} -lgmp"
+			GMP_LIBS="-L${GMP_HOME} -lgmpxx -lgmp"
 		else
 			echo "($GMP_HOME) seems an invalid GMP prefix"
 			echo "Searching GMP in PATH"
 			GMP_CFLAGS=""
-			GMP_LIBS="-lgmp"
+			GMP_LIBS="-lgmpxx -lgmp"
 		fi
 	else
 		GMP_CFLAGS=""
-		GMP_LIBS="-lgmp"
+		GMP_LIBS="-lgmpxx -lgmp"
 	fi
 
 	CXXFLAGS="${CXXFLAGS} ${GMP_CFLAGS}"

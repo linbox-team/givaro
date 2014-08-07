@@ -50,5 +50,5 @@ docs_dev:docs/givaro-dev-html/index.html
 docs/givaro-dev-html/index.html:
 	(cd docs; make docs_dev)
 
-VERSION=3.8.0
+VERSION=3.8.1
 

@@ -76,6 +76,7 @@ do
 		[mpz_t a; mpz_init (a);],
 		[
 		dnl  # See if we are running GMP 4.0 with --enable-cxx
+		dnl  There seems to be incompatiblity between g++-4.9 and gmp-5.1.2
 		AC_TRY_RUN(
 			[#include <gmpxx.h>
 			int main () {

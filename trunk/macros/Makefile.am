@@ -9,4 +9,5 @@ EXTRA_DIST=             \
 	gmp-check.m4		\
 	config-header.m4    \
 	givaro-doc.m4       \
+	ax_cxx_compile_stdcxx_11.m4 \
 	debug.m4

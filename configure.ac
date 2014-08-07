@@ -3,6 +3,7 @@
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
+#/
 
 AC_PREREQ([2.61])
 
@@ -34,7 +35,6 @@ echo "-----------------------------------------------"
 AC_DEBUG
 AC_PROFILE
 AC_WARNINGS
-AC_INLINE
 
 echo "-----------------------------------------------"
 
@@ -54,14 +54,17 @@ AC_PROG_CXX
 
 AC_COMPILER_NAME
 
+if test "x$CCNAM" != "xgcc44" ; then
+AX_CXX_COMPILE_STDCXX_11([ext],[optional])
+fi
+
 AC_SUBST([DEFAULT_CFLAGS])
 AC_SUBST([DEBUG_CFLAGS])
 AC_SUBST([TESTS_CFLAGS])
 
-TESTS_CFLAGS="-O0 -Wno-vla"
+TESTS_CFLAGS="-O0"
 DEBUG_CFLAGS="-g"
-
-DEFAULT_CFLAGS="-pipe -Wno-vla"
+DEFAULT_CFLAGS=""
 WARN_CFLAGS="-Wall"
 
 #TODO use -fast for icc, -ipa for eko...
@@ -90,7 +93,7 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 		xgcc|xgcc44)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long"
+				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -Wno-variadic-macros -Wno-vla"
 			fi
 			if test "x${HAVE_CXX11}" = "x0" ; then
 				WARN_CFLAGS="${WARN_CFLAGS} -ansi"
@@ -99,7 +102,7 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 		xgcc48)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long "
+				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -Wno-variadic-macros -Wno-vla"
 				# WARN_CFLAGS="${WARN_CFLAGS} -fsanitize=address"
 			fi
 			if test "x${HAVE_CXX11}" = "x0" ; then
@@ -111,13 +114,15 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 		xclang)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long"
+				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long -Wno-vla-extension -Wno-variadic-macros"
+				WARN_CFLAGS="${WARN_CFLAGS} -D__STRICT_ANSI__"
 			fi
 			;;
 		xclang31)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -g"
+				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -g -Wno-vla-extension -Wno-variadic-macros"
+				WARN_CFLAGS="${WARN_CFLAGS} -D__STRICT_ANSI__"
 				# WARN_CFLAGS="${WARN_CFLAGS} -fsanitize=address"
 			fi
 			;;
@@ -146,19 +151,15 @@ LT_INIT
 
 
 echo "-----------------------------------------------"
+echo "        START  GIVARO CONFIG                   "
+echo "-----------------------------------------------"
 
-# Checks for header files.
-AC_HEADER_STDC
-AC_CHECK_HEADERS([float.h limits.h stddef.h stdlib.h string.h sys/time.h stdint.h])
-# Checks for library functions.
-AC_FUNC_MALLOC
-AC_CHECK_FUNCS([floor gettimeofday pow sqrt])
-# Checks for typedefs, structures, and compiler characteristics.
-AC_HEADER_STDBOOL
-AC_C_CONST
-AC_C_INLINE
-AC_HEADER_TIME
-# Check machine characteristics
+echo "-----------------------------------------------"
+
+echo "-----------------------------------------------"
+
+# Machine characteristics
+
 AC_CHECK_SIZEOF(char, 8)
 AC_CHECK_SIZEOF(short, 16)
 AC_CHECK_SIZEOF(int, 32)
@@ -166,17 +167,10 @@ AC_CHECK_SIZEOF(long, 32)
 AC_CHECK_SIZEOF(long long, 64)
 AC_CHECK_SIZEOF(__int64, 64)
 
-# and check (not so usefull since we have stdint.h)
-# Besides, it seems it breaks givaro-config.h leaving oprhaned #endif and dubious code...
-# AC_TYPE_SIZE_T
-# AC_TYPE_INT8_T
-# AC_TYPE_INT16_T
-# AC_TYPE_INT32_T
-# AC_TYPE_INT64_T
-# AC_TYPE_UINT8_T
-# AC_TYPE_UINT16_T
-# AC_TYPE_UINT32_T
-# AC_TYPE_UINT64_T
+# Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([float.h limits.h stddef.h stdlib.h string.h sys/time.h stdint.h pthread.h])
+
 
 # check endianness of the architecture
 AC_C_BIGENDIAN(
@@ -198,69 +192,17 @@ if test ! -L src/library/tools/givaro  ; then ln -s . src/library/tools/givaro  
 if test ! -L src/library/vector/givaro ; then ln -s . src/library/vector/givaro ; fi
 
 
-# Create some useful data types of fixed, known lengths
-
-# case 1 in
-  # $ac_cv_sizeof_char)
-     # GIVARO_INT8="char";
-     # ;;
-# esac
-
-# case 2 in
-  # $ac_cv_sizeof_short)
-     # GIVARO_INT16="short";
-     # ;;
-  # $ac_cv_sizeof_int)
-     # GIVARO_INT16="int";
-     # ;;
-# esac
-
-# case 4 in
-  # $ac_cv_sizeof_short)
-     # GIVARO_INT32="short";
-     # ;;
-  # $ac_cv_sizeof_int)
-     # GIVARO_INT32="int";
-     # ;;
-  # $ac_cv_sizeof_long)
-     # GIVARO_INT32="long";
-     # ;;
-# esac
-
-# case 8 in
-  # $ac_cv_sizeof_short)
-     # GIVARO_INT64="short";
-     # ;;
-  # $ac_cv_sizeof_int)
-     # GIVARO_INT64="int";
-     # ;;
-  # $ac_cv_sizeof_long)
-     # GIVARO_INT64="long";
-     # ;;
-  # $ac_cv_sizeof_long_long)
-     # GIVARO_INT64="long long";
-     # ;;
-  # $ac_cv_sizeof___int64)
-     # GIVARO_INT64="__int64";
-     # ;;
-# esac
 
 AC_DEFINE_UNQUOTED(INT8,  $GIVARO_INT8, Canonical 8-bit data type)
 AC_DEFINE_UNQUOTED(INT16, $GIVARO_INT16, Canonical 16-bit data type)
 AC_DEFINE_UNQUOTED(INT32, $GIVARO_INT32, Canonical 32-bit data type)
 AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 
-# This is weird
-#case $ac_cv_sizeof_long in
-#  $ac_cv_sizeof_long_long)
-#    AC_DEFINE_UNQUOTED(_DONOTUSE_longlong__,1, long long is equal to long)
-#    ;;
-#esac
-
 echo "-----------------------------------------------"
 # Feature checks
 
 AC_LANG_CPLUSPLUS
+
 
 echo "-----------------------------------------------"
 
@@ -282,6 +224,8 @@ LIBS="${GMP_LIBS}"
 
 AC_SUBST(CXXFLAGS)
 
+echo "-----------------------------------------------"
+echo "          END GIVARO CONFIG                    "
 echo "-----------------------------------------------"
 
 AC_CONFIG_FILES([
@@ -312,3 +256,5 @@ tests/Makefile
 docs/Makefile
 ])
 AC_OUTPUT
+
+echo "-----------------------------------------------"

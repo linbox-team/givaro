@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givgfqext.h
-// Time-stamp: <07 May 12 15:08:17 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <30 Sep 14 10:25:12 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
@@ -114,12 +114,12 @@ namespace Givaro {
 		{
 			this->zero = F.zero;
 			this->one = F.one;
+			this->mOne = F.mOne;
 			this->_characteristic = F._characteristic;
 			this->_dcharacteristic = F._dcharacteristic;
 			this->_exponent = F._exponent;
 			this->_q = F._q;
 			this->_qm1 = F._qm1;
-			this->_qm1o2 = F._qm1o2;
 			this->_log2pol = F._log2pol;
 			this->_pol2log = F._pol2log;
 			this->_plus1 = F._plus1;

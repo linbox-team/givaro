@@ -340,22 +340,22 @@ namespace Givaro {
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::sub
     (Rep& r, const Rep a, const Rep b) const
-    { _GIVARO_GFQ_SUB(r, a, b, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
+    { _GIVARO_GFQ_SUB(r, a, b, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::subin
     (Rep& r, const Rep a) const
-    { _GIVARO_GFQ_AUTOSUB(r, a, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
+    { _GIVARO_GFQ_AUTOSUB(r, a, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::neg
     (Rep& r, const Rep a) const
-    { _GIVARO_GFQ_NEG(r, a, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1) ; return r; }
+    { _GIVARO_GFQ_NEG(r, a, GFqDom<TT>::mOne, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::negin
     (Rep& r) const
-    { _GIVARO_GFQ_NEG(r, r, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1) ; return r; }
+    { _GIVARO_GFQ_NEG(r, r, GFqDom<TT>::mOne, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::inv
@@ -389,9 +389,9 @@ namespace Givaro {
                                                            const Rep b) const
     {
             //   Rep tmp = r;
-            //   _GIVARO_GFQ_MULSUB(r,a,b,tmp, _qm1o2, _qm1, _plus1) ;
+            //   _GIVARO_GFQ_MULSUB(r,a,b,tmp, mOne, _qm1, _plus1) ;
         Rep tmp; _GIVARO_GFQ_MUL(tmp,a,b, _qm1) ;
-        _GIVARO_GFQ_AUTOSUB(r,tmp, _qm1o2, _qm1, _plus1) ;
+        _GIVARO_GFQ_AUTOSUB(r,tmp, mOne, _qm1, _plus1) ;
         return r;
     }
 
@@ -411,7 +411,7 @@ namespace Givaro {
         const
     {
         _GIVARO_GFQ_MUL(r,a,b, GFqDom<TT>::_qm1) ;
-        _GIVARO_GFQ_AUTOSUB(r,c, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
+        _GIVARO_GFQ_AUTOSUB(r,c, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
         return r; }
 
     template<typename TT>
@@ -420,7 +420,7 @@ namespace Givaro {
         const
     {
         _GIVARO_GFQ_MUL(r,a,b, GFqDom<TT>::_qm1) ;
-        _GIVARO_GFQ_SUB(r,c,r, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
+        _GIVARO_GFQ_SUB(r,c,r, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
         return r; }
 
 
@@ -484,7 +484,7 @@ namespace Givaro {
     (const size_t sz, Array r, constArray a, constArray b) const
     {
         for ( size_t i=sz ; --i ; ) {
-            _GIVARO_GFQ_SUB(r[i], a[i], b[i], GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
+            _GIVARO_GFQ_SUB(r[i], a[i], b[i], GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
         }
     }
 
@@ -493,7 +493,7 @@ namespace Givaro {
     (const size_t sz, Array r, constArray a, Rep b) const
     {
         for ( size_t i=sz ; --i ; ) {
-            _GIVARO_GFQ_SUB(r[i], a[i], b, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
+            _GIVARO_GFQ_SUB(r[i], a[i], b, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
         }
     }
 
@@ -502,7 +502,7 @@ namespace Givaro {
     (const size_t sz, Array r, constArray a) const
     {
         for ( size_t i=sz ; --i ; ) {
-            _GIVARO_GFQ_NEG(r[i], a[i], GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1) ;
+            _GIVARO_GFQ_NEG(r[i], a[i], GFqDom<TT>::mOne, GFqDom<TT>::_qm1) ;
         }
     }
 
@@ -550,7 +550,7 @@ namespace Givaro {
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MUL(r[i], a, x[i], GFqDom<TT>::_qm1) ;
-            _GIVARO_GFQ_AUTOSUB(r[i], y[i], GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
+            _GIVARO_GFQ_AUTOSUB(r[i], y[i], GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
         }
     }
 
@@ -560,7 +560,7 @@ namespace Givaro {
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MUL(r[i], a, x[i], GFqDom<TT>::_qm1) ;
-            _GIVARO_GFQ_AUTOSUB(r[i], y, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
+            _GIVARO_GFQ_AUTOSUB(r[i], y, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
         }
     }
 
@@ -571,7 +571,7 @@ namespace Givaro {
         Rep tmp;
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MUL(tmp, a, x[i], GFqDom<TT>::_qm1) ;
-            _GIVARO_GFQ_AUTOSUB(r[i], tmp, GFqDom<TT>::_qm1o2, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
+            _GIVARO_GFQ_AUTOSUB(r[i], tmp, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
         }
     }
 
@@ -983,12 +983,11 @@ namespace Givaro {
             // Precondition P prime
             :  zero(0)
         , one ( (TT)power(P,e) - 1  )
+        , mOne(  (P==2)?  (one)  :  (one >> 1) )   // 1 == -1 in GF(2^k)
         , _characteristic(P)
         , _exponent(e)
         , _q( (UTT) one + 1 )
         , _qm1 ( (UTT) one )
-        , _qm1o2(  (P==2)?  ((UTT)one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
-        , mOne((TT)_qm1o2)
         , _log2pol((UT) _q )
         , _pol2log( (UT)_q )
         , _plus1( (UT)_q )
@@ -1081,7 +1080,7 @@ namespace Givaro {
             _plus1[(UT)i] = (TT)(_pol2log[(UT)b] - _qm1);
         }
             // -1 + 1 == 0
-        _plus1[(UT)_qm1o2] = 0;
+        _plus1[(UT)mOne] = 0;
     }
 
         // Dan Roche 6-15-04, adapted my/ported back to Givaro
@@ -1093,12 +1092,11 @@ namespace Givaro {
     inline GFqDom<TT>::GFqDom(const UTT P, const UTT e, const Vector& modPoly):
             zero(0)
         , one ((TT) power(P,e) - 1  )
+        , mOne(  (P==2)?  (one)  :  ( one >> 1) )   // 1 == -1 in GF(2^k)
         , _characteristic(P)
         , _exponent(e)
         , _q( (UTT) one + 1 )
         , _qm1 ( (UTT)one )
-        , _qm1o2(  (P==2)?  ((UTT)one)  :  (_q >> 1) )   // 1 == -1 in GF(2^k)
-        , mOne((TT)_qm1o2)
         , _log2pol( (UT)_q )
         , _pol2log( (UT)_q )
         , _plus1( (UT)_q )
@@ -1150,7 +1148,7 @@ namespace Givaro {
             _plus1[i] = (TT)_pol2log[b] - (TT)_qm1;
         }
 
-        _plus1[_qm1o2] = 0;
+        _plus1[mOne] = 0;
     }
 
 

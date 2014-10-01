@@ -57,6 +57,15 @@ public:
   ZpzDom( Residu_t p ) : zero(0), one(1), mOne(p-1), _p(p) {}
   ZpzDom( const ZpzDom<Integer>& F) : zero(F.zero), one(F.one), mOne(F.mOne),_p(F._p) { }
 
+  Rep minElement() const
+  {
+	  return zero ;
+  }
+
+  Rep maxElement() const
+  {
+	  return mOne ;
+  }
 
   int operator==( const ZpzDom<Integer>& BC) const { return _p == BC._p;}
   int operator!=( const ZpzDom<Integer>& BC) const { return _p != BC._p;}

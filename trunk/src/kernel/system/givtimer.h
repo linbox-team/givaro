@@ -234,6 +234,7 @@ inline std::ostream &operator << (std::ostream &o, const Timer &T)
 }
 
 #ifdef __GIVARO_USE_OPENMP
+
 #include <omp.h>
 
 namespace Givaro {

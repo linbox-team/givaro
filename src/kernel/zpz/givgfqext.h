@@ -76,16 +76,21 @@ namespace Givaro {
 
 		typedef GIV_randIter< GFqExtFast<TT> , Rep> RandIter;
 
-		GFqExtFast(): Father_t(), balanced(false) {}
+		GFqExtFast():
+			Father_t()
+			// , balanced(false)
+		{
+		}
 
 		// Extension MUST be a parameter of the constructor
-		GFqExtFast( const UTT P, const UTT e) : Father_t(P,e),
-		_BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ),
-		_BASE(1 << _BITS),
-		_MASK( _BASE - 1),
-		_maxn( _BASE/(P-1)/(P-1)/e),
-		_degree( e-1 ),
-		balanced(false)
+		GFqExtFast( const UTT P, const UTT e) :
+			Father_t(P,e),
+			_BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ),
+			_BASE(1 << _BITS),
+			_MASK( _BASE - 1),
+			_maxn( _BASE/(P-1)/(P-1)/e),
+			_degree( e-1 )
+			// , balanced(false)
 		{
 
 			GIVARO_ASSERT(_maxn>0 , "[GFqExtFast]: field too large");
@@ -94,14 +99,15 @@ namespace Givaro {
 		}
 
 		// Extension MUST be a parameter of the constructor
-        template<typename Vector>
-		GFqExtFast( const UTT P, const UTT e, const Vector& modPoly) : Father_t(P,e, modPoly),
-		_BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ),
-		_BASE(1 << _BITS),
-		_MASK( _BASE - 1),
-		_maxn( _BASE/(P-1)/(P-1)/e),
-		_degree( e-1 ),
-		balanced(false)
+		template<typename Vector>
+		GFqExtFast( const UTT P, const UTT e, const Vector& modPoly) :
+			Father_t(P,e, modPoly),
+			_BITS( std::numeric_limits< double >::digits/( (e<<1)-1) ),
+			_BASE(1 << _BITS),
+			_MASK( _BASE - 1),
+			_maxn( _BASE/(P-1)/(P-1)/e),
+			_degree( e-1 )
+			// , balanced(false)
 		{
 			GIVARO_ASSERT(_maxn>0 , "[GFqExtFast]: field too large");
 			builddoubletables();
@@ -134,46 +140,45 @@ namespace Givaro {
 			return *this;
 		}
 
-		GFqExtFast( const GFqDom<TT>& F) : Father_t(F),
-		_BITS( F._BITS ), _BASE( F._BASE ),_MASK( F._MASK ),
-		_maxn( F._maxn ),_degree( F._degree ),
-		_log2dbl ( F._log2dbl ), _low2log( F._low2log ),
-		_high2log (F._high2log ), balanced(false) {
+		GFqExtFast( const GFqDom<TT>& F) :
+			Father_t(F),
+			_BITS( F._BITS ), _BASE( F._BASE ),_MASK( F._MASK ),
+			_maxn( F._maxn ),_degree( F._degree ),
+			_log2dbl ( F._log2dbl ), _low2log( F._low2log ),
+			_high2log (F._high2log )
+			// , balanced(false)
+		{
 		}
 
 		// Accesses
 
 		UTT bits() const
 		{ return _BITS;}
+
 		UTT base() const
 		{ return _BASE;}
+
 		UTT mask() const
 		{ return _MASK;}
+
 		UTT maxdot() const
 		{ return _maxn; }
+
 		UTT& characteristic(UTT& a) const
 		{ return a=this->_characteristic; }
+
 		UTT characteristic() const
 		{ return this->_characteristic; }
-		const bool balanced;
+
+		// const bool balanced;
+
+		// Init/Convert
+
+		using Father_t::init;
 
 		Rep& init( Rep& r, const unsigned long l) const
 		{
 			return Father_t::init(r,l);
-		}
-
-
-		using Father_t::init;
-
-
-		virtual double& convert(double& d, const Rep a) const
-		{
-			return d=_log2dbl[(size_t)a];
-		}
-
-		virtual float& convert(float& d, const Rep a) const
-		{
-			return d=(float)_log2dbl[(size_t)a];
 		}
 
 		virtual Rep& init(Rep& pad, const double d) const
@@ -222,11 +227,22 @@ namespace Givaro {
 			return init(pad, (double)d);
 		}
 
+		using Father_t::convert;
 
-		template<class RandIter> Rep& random(RandIter& g, Rep& r) const {
-			return init(r, static_cast<double>( (UTT)g() % _MODOUT));
+		virtual double& convert(double& d, const Rep a) const
+		{
+			return d=_log2dbl[(size_t)a];
 		}
 
+		virtual float& convert(float& d, const Rep a) const
+		{
+			return d=(float)_log2dbl[(size_t)a];
+		}
+
+		template<class RandIter> Rep& random(RandIter& g, Rep& r) const
+		{
+			return init(r, static_cast<double>( (UTT)g() % _MODOUT));
+		}
 
 	protected:
 

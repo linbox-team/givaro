@@ -81,6 +81,15 @@ public:
 	int operator==( const Self_t& BC) const { return _p == BC._p;}
 	int operator!=( const Self_t& BC) const { return _p != BC._p;}
 
+ Rep minElement() const
+  {
+	  return zero ;
+  }
+
+  Rep maxElement() const
+  {
+	  return mOne ;
+  }
 
 
 

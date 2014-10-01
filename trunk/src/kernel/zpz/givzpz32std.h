@@ -70,6 +70,15 @@ public:
   ZpzDom( const ZpzDom<Std32>& F)
 	  : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp) {}
 
+ Rep minElement() const
+  {
+	  return zero ;
+  }
+
+  Rep maxElement() const
+  {
+	  return mOne ;
+  }
 
 
 

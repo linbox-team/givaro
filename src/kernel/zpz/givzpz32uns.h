@@ -78,6 +78,16 @@ public:
 	  return *this;
   }
 
+ Rep minElement() const
+  {
+	  return zero ;
+  }
+
+  Rep maxElement() const
+  {
+	  return mOne ;
+  }
+
   // ----- Access to the modulus
   Residu_t residu() const;
   Residu_t size() const {return _p;}

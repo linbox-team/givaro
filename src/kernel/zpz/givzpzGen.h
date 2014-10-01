@@ -63,6 +63,19 @@ public:
   ZpzDom( const ZpzDom<IntType>& F) : zero(F.zero), one(F.one), mOne(F.mOne),_p(F._p) { }
   //@}
 
+  //! Min/Max Element
+  //@{
+ Rep minElement() const
+  {
+	  return zero ;
+  }
+
+  Rep maxElement() const
+  {
+	  return mOne ;
+  }
+  //@}
+
   //! Copy
   ZpzDom<IntType>& operator=( const ZpzDom<IntType>& F)
   {

@@ -1,0 +1,60 @@
+# Copyright(c)'1994-2009 by The Givaro group
+# This file is part of Givaro.
+# Givaro is governed by the CeCILL-B license under French law
+# and abiding by the rules of distribution of free software.
+# see the COPYRIGHT file for more details.
+all: $(EXTRA_PROGRAMS)
+
+AM_CPPFLAGS=-I$(top_srcdir)
+
+OPTFLAGS=
+OPTLINKS=
+
+# for gcc ...
+#OPTFLAGS+= -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
+#OPTFLAGS+= -frerun-loop-opt -fexpensive-optimizations
+#OPTFLAGS+= -fomit-frame-pointer
+#OPTFLAGS+= -fprefetch-loop-arrays -floop-optimize
+#OPTFLAGS+= -malign-double
+#OPTFLAGS+= -falign-loops -falign-jumps -falign-functions -falign-labels
+#OPTFLAGS+= -fschedule-insns2
+#OPTFLAGS+= -fforce-addr -fforce-mem -fstrength-reduce
+#OPTFLAGS+= -ffast-math
+
+# for icc ...
+#OPTFLAGS+= -fast -Ob2  -ipo_obj -unroll
+#OPTFLAGS+= -parallel -par_report1
+#OPTLINKS+= -parallel
+# icc for itanium2
+#OPTFLAGS+= -tpp2 -mcpu=itanium2
+
+AM_CXXFLAGS = @DEFAULT_CFLAGS@
+AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/recint
+
+LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
+AM_LDFLAGS=-static
+
+
+EXTRA_PROGRAMS=exp exp_gmp inv_arazi inv_naive iterator mul mul_gmp rsa
+
+CLEANFILES=$(EXTRA_PROGRAMS)
+
+exp_SOURCES       = exp.C
+exp_gmp_SOURCES   = exp_gmp.C
+inv_arazi_SOURCES = inv_arazi.C
+inv_naive_SOURCES = inv_naive.C
+iterator_SOURCES  = iterator.C
+mul_SOURCES       = mul.C
+mul_gmp_SOURCES   = mul_gmp.C
+rsa_SOURCES       = rsa.C
+
+# for compilation of new examples
+GIVARO_BIN=@bindir@
+examp_comp = $(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $< -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD) $(shell $(GIVARO_BIN)/givaro-config --libs)
+
+%:%.C
+	$(examp_comp)
+
+%:%.cpp
+	$(examp_comp)
+

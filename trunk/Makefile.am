@@ -33,6 +33,7 @@ DISTCLEANFILES = src/kernel/system/givaro   \
 		 src/kernel/integer/givaro  \
 		 src/kernel/memory/givaro   \
 		 src/kernel/rational/givaro \
+		 src/kernel/recint/recint   \
 		 src/kernel/zpz/givaro      \
 		 src/kernel/gmp++/gmp++     \
 		 src/library/matrix/givaro  \
@@ -43,6 +44,7 @@ DISTCLEANFILES = src/kernel/system/givaro   \
 uninstall-hook:
 	(test -d "$(includedir)/givaro" && rmdir "$(includedir)/givaro") || true
 	(test -d "$(includedir)/gmp++" && rmdir "$(includedir)/gmp++") || true
+	(test -d "$(includedir)/recint" && rmdir "$(includedir)/recint") || true
 
 
 docs_dev:docs/givaro-dev-html/index.html

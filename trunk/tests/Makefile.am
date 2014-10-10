@@ -4,12 +4,17 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
-SUBDIRS =
-check: $(BASE_TESTS)
+SUBDIRS=RecInt
 
-AM_CPPFLAGS=-I$(top_srcdir)
+.PHONY:$(SUBDIRS)
+
+$(SUBDIRS):
+	$(MAKE) -C $@
+
+check: $(SUBDIRS) $(BASE_TESTS)
+
 AM_CXXFLAGS = @TESTS_CFLAGS@
-AM_CPPFLAGS += @TESTS_CFLAGS@ $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
+AM_CPPFLAGS = @TESTS_CFLAGS@ $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/zpz -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
 
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
 AM_LDFLAGS=-static $(LDFLAGS)
@@ -29,6 +34,7 @@ BASIC_TESTS =          \
 		test-ratrecon
 
 CLEANFILES =           \
+		$(SUBDIRS)     \
 		$(BASIC_TESTS)
 
 EXTRA_PROGRAMS =       \

@@ -81,12 +81,11 @@ namespace RecInt
         
         ruint<K> temp, pp, t;
         rmint<K, MG> tempmod, ppmod;
-        UDItype s, tempUDItype;
+        UDItype s(0), tempUDItype(0);
 
         // Compute t and s such that p - 1 = 2^s * t , where t is odd
         pp = a.p - 1;
         div(pp, tempUDItype, pp, UDItype(2));
-        s = 0;
 
         while(tempUDItype == 0) {
             s += 1;

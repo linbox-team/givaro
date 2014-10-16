@@ -80,7 +80,7 @@ namespace RecInt
     template <size_t K> inline std::ostream& display_dec(std::ostream& out, const ruint<K>& a) {
         ruint<K> b(a);
         char result[1024];
-        limb m, ten(10);
+        limb m(0), ten(10);
         int i;
         
         if (b == 0) out << '0';

@@ -5,7 +5,7 @@
 # see the COPYRIGHT file for more details.
 # --- Makefile.am stolen and modified by Alexis Breust
 
-all: $(EXTRA_PROGRAMS)
+check: $(EXTRA_PROGRAMS)
 
 # -DSTD_RECINT_SIZE=n creates numbers of size 2^(2^n)
 # -DLOOPS=m changes the number of checks per test

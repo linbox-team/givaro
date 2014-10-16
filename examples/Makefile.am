@@ -13,7 +13,8 @@ SUBDIRS=Rational Integer FiniteField Polynomial RecInt
 examples: $(SUBDIRS)
 
 $(SUBDIRS):
-	$(MAKE) -C $@
+	$(MAKE) -C $@ examples
 
 CLEANFILES:
 	$(SUBDIRS)
+

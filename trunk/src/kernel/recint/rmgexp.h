@@ -60,9 +60,9 @@ namespace RecInt
     // a = b^c mod a.p
     template <size_t K>
     inline void exp(rmint<K, MGA>& a, const rmint<K, MGA>& b, const ruint<K>& c) {
-        limb **tab;
-        tab = (limb**)malloc(NBLIMB<K>::value * sizeof(limb*)); // TODO Cleaner ce bordel
-        pointers_list(tab, c);
+        limb **tab, **originalTab;
+        originalTab = (limb**)malloc(NBLIMB<K>::value * sizeof(limb*)); // TODO Cleaner ce bordel
+        pointers_list(originalTab, c);
 
         rmint<K, MGA> *g;
         g = (rmint<K, MGA>*)malloc(16*sizeof(rmint<K, MGA>));
@@ -76,7 +76,7 @@ namespace RecInt
         for (i=1;i<16;i++) mul(g[i], g[i-1], b);
 
         copy(a.Value, rmint<K, MG_ACTIVE>::r);
-        tab=&tab[NBLIMB<K>::value - 1];
+        tab=&originalTab[NBLIMB<K>::value - 1];
 
         for (i=NBLIMB<K>::value - 1;i>0;i--) {
             exp=**tab;
@@ -99,7 +99,7 @@ namespace RecInt
         }
         mul(a, a, g[exp & mask]);
 
-        free(tab);
+        free(originalTab);
         free(g);
     }
 

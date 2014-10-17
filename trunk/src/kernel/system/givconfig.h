@@ -432,8 +432,8 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
 #  ifndef __GIVARO_USE_OPENMP
 #    define __GIVARO_USE_OPENMP 1
 #  endif
-#else
-#  undef __GIVARO_USE_OPENMP
+//#else
+//#  undef __GIVARO_USE_OPENMP
 #endif
 
 

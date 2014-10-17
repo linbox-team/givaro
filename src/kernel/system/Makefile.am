@@ -20,7 +20,8 @@ pkginclude_HEADERS= \
 	givperf.h 	    \
 	givpower.h	    \
 	givrandom.h	    \
-	givtimer.h
+	givtimer.h	    \
+	givomptimer.h
 
 noinst_LTLIBRARIES=libgivsystem.la
 

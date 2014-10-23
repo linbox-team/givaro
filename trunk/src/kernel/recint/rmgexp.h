@@ -61,7 +61,7 @@ namespace RecInt
     template <size_t K>
     inline void exp(rmint<K, MGA>& a, const rmint<K, MGA>& b, const ruint<K>& c) {
         limb **tab, **originalTab;
-        originalTab = (limb**)malloc(NBLIMB<K>::value * sizeof(limb*)); // TODO Cleaner ce bordel
+        originalTab = (limb**)malloc(NBLIMB<K>::value * sizeof(limb*)); // TODO Cleaner avec iterateurs
         pointers_list(originalTab, c);
 
         rmint<K, MGA> *g;

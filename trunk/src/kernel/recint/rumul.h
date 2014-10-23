@@ -250,12 +250,11 @@ namespace RecInt
     // The higher part is lost
     template <size_t K>
     inline ruint<K>& mul(ruint<K>& al, const ruint<K>& b, const ruint<K>& c) {
-        ruint<K-1> b0c1, b1c0;
-        mul(b0c1, b.Low, c.High);
-        mul(b1c0, b.High, c.Low);
+        ruint<K-1> b0c1b1c0;
+        mul(b0c1b1c0, b.Low, c.High);
+        addmul(b0c1b1c0, b.High, c.Low);
         lmul(al.High, al.Low, b.Low, c.Low);
-        add(al.High, b0c1);
-        add(al.High, b1c0);
+        add(al.High, b0c1b1c0);
         return al;
     }
     template<>
@@ -268,12 +267,11 @@ namespace RecInt
     // The higher part is lost
     template <size_t K>
     inline ruint<K>& mul(ruint<K>& al, const ruint<K>& c) {
-        ruint<K-1> b0c1, b1c0;
-        mul(b0c1, al.Low, c.High);
-        mul(b1c0, al.High, c.Low);
+        ruint<K-1> b0c1b1c0;
+        mul(b0c1b1c0, al.Low, c.High);
+        addmul(b0c1b1c0, al.High, c.Low);
         lmul(al.High, al.Low, al.Low, c.Low);
-        add(al.High, b0c1);
-        add(al.High, b1c0);
+        add(al.High, b0c1b1c0);
         return al;
     }
     template<>

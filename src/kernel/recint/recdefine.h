@@ -85,20 +85,19 @@ namespace RecInt
 // --------------------------------------------------------------
 // ------------------- Template compatibility -------------------
 
-#include <boost/utility/enable_if.hpp>
-#include <boost/type_traits.hpp>
+#include <type_traits>
 
 /* If typename T is an arithmetic type,
    then template enable and return value is RET */
-#define IS_ARITH(T, ...)    typename ::boost::enable_if< ::boost::is_arithmetic<T>, __VA_ARGS__>::type
+#define IS_ARITH(T, ...)    typename std::enable_if<std::is_arithmetic<T>::value, __VA_ARGS__>::type
 
 /* If typename T is an unsigned type,
    then template enable and return value is RET */
-#define IS_UNSIGNED(T, ...) typename ::boost::enable_if< ::boost::is_unsigned<T>, __VA_ARGS__>::type
+#define IS_UNSIGNED(T, ...) typename std::enable_if<std::is_unsigned<T>::value, __VA_ARGS__>::type
 
 /* If typename T is a signed type,
    then template enable and return value is RET */
-#define IS_SIGNED(T, ...)   typename ::boost::enable_if< ::boost::is_signed<T>, __VA_ARGS__>::type
+#define IS_SIGNED(T, ...)   typename std::enable_if<std::is_signed<T>::value, __VA_ARGS__>::type
 
 
 // --------------------------------------------------------------

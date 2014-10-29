@@ -4,13 +4,8 @@
 #include <recint/recint.h>
 #include <givaro/givtimer.h>
 
-#if not defined(STD_RECINT_SIZE)
 #define STD_RECINT_SIZE 9
-#endif
-
-#if not defined(LOOPS)
 #define LOOPS 500
-#endif
 
 #define ALEA_MAX  64
 #define ALEA_MASK 63
@@ -22,8 +17,6 @@ int main(void)
     rmint<STD_RECINT_SIZE> m[ALEA_MAX];
     ruint<STD_RECINT_SIZE> u[ALEA_MAX], module;
     Givaro::Timer tim;
-    
-    std::cout << "Size of numbers: 2^(2^" << STD_RECINT_SIZE << ")" << std::endl;
     
     // For montgomery algorithm, the module must be odd
     RecInt::srand(42);
@@ -45,8 +38,7 @@ int main(void)
     }
     tim.stop();
     
-    std::cout << "RecInt: " << tim.usertime() << std::endl;
-    std::cout << "Result: " << std::hex << m[0] << std::endl;
+    std::cout << tim.usertime() << std::endl;
     
     return 0;
 }

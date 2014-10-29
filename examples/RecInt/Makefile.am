@@ -35,17 +35,10 @@ LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=exp exp_gmp inv_arazi inv_naive iterator mul mul_gmp rsa
-
+EXTRA_PROGRAMS=iterator rsa
 CLEANFILES=$(EXTRA_PROGRAMS)
 
-exp_SOURCES       = exp.C
-exp_gmp_SOURCES   = exp_gmp.C
-inv_arazi_SOURCES = inv_arazi.C
-inv_naive_SOURCES = inv_naive.C
 iterator_SOURCES  = iterator.C
-mul_SOURCES       = mul.C
-mul_gmp_SOURCES   = mul_gmp.C
 rsa_SOURCES       = rsa.C
 
 # for compilation of new examples

@@ -250,6 +250,8 @@ src/library/tools/Makefile
 src/library/poly1/Makefile
 src/library/matrix/Makefile
 macros/Makefile
+benchmarks/Makefile
+benchmarks/recint/Makefile
 examples/Makefile
 examples/FiniteField/Makefile
 examples/Integer/Makefile

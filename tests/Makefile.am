@@ -34,7 +34,6 @@ BASIC_TESTS =          \
 		test-ratrecon
 
 CLEANFILES =           \
-		$(SUBDIRS)     \
 		$(BASIC_TESTS)
 
 EXTRA_PROGRAMS =       \

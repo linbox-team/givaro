@@ -6,19 +6,22 @@
 
 ACLOCAL_AMFLAGS = -I macros
 
-SUBDIRS=src macros tests docs examples
+SUBDIRS=src macros tests docs examples benchmarks
 
 include_HEADERS=givaro-config.h
 
 docs:docs/givaro-html/index.html
 
 docs/givaro-html/index.html:
-	(cd docs; make docs)
+	(cd docs; ${MAKE} docs)
 
-.PHONY:examples
+.PHONY:examples benchmarks
 
 examples:
-	(cd examples; make examples)
+	(cd examples; ${MAKE} examples)
+
+benchmarks:
+	(cd benchmarks; ${MAKE} benchmarks)
 
 
 bin_SCRIPTS=givaro-config givaro-makefile
@@ -50,7 +53,7 @@ uninstall-hook:
 docs_dev:docs/givaro-dev-html/index.html
 
 docs/givaro-dev-html/index.html:
-	(cd docs; make docs_dev)
+	(cd docs; ${MAKE} docs_dev)
 
 VERSION=3.9.0
 

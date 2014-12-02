@@ -79,7 +79,7 @@ inline int ZpzDom<IntType>::isMOne(const Rep& a) const
 
 
 template<typename IntType>
-inline size_t ZpzDom<IntType>::length(const Rep& a) const
+inline size_t ZpzDom<IntType>::length(const Rep& ) const
 { return ZpzDom<IntType>::size_rep;}
 
 
@@ -509,14 +509,14 @@ inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g,
 
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g,
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& ,
 							       Rep& a, const Rep& b) const {
 	        IntType::random(a,b);
                 return a %= _p;
 }
 template<typename IntType>
 template< class RandIter >
-inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& g,
+inline  typename ZpzDom<IntType>::Rep& ZpzDom<IntType>::random(RandIter& ,
 							       Rep& a, long b) const {
 	        IntType::random(a,b);
 	        return a %= _p;

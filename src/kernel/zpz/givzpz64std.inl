@@ -453,7 +453,7 @@ inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::random(RandIter& g, Rep& a) const {
 }
 
 template< class RandIter >
-inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::random(RandIter& g, Rep& a, const Rep& b) const {
+inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::random(RandIter& g, Rep& a, const Rep& ) const {
 	return init(a, g());
 }
 
@@ -469,7 +469,7 @@ inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a) co
 }
 
 template< class RandIter >
-inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
+inline  ZpzDom<Std64>::Rep& ZpzDom<Std64>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const {
 	while (isZero(init(a, g()))) {};
 	return a;
 }

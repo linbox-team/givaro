@@ -436,12 +436,12 @@ inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& g, Rep& a) const
 }
 
 template< class RandIter >
-inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& g, Rep& a, const Rep& ) const {
+inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& , Rep& a, const Rep& b) const {
 	        Integer::random(a,b);
                 return Integer::modin(a,_p);
 }
 template< class RandIter >
-inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& g, Rep& a, long ) const {
+inline  ZpzDom<Integer>::Rep& ZpzDom<Integer>::random(RandIter& , Rep& a, long b) const {
 	        Integer::random(a,b);
 	        return Integer::modin(a,_p);
 

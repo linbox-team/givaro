@@ -406,7 +406,7 @@ inline int ZpzDom<Std16>::isMOne(const Rep a) const
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::random(RandIter& g, Rep& a, const Rep& b) const
+	inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::random(RandIter& g, Rep& a, const Rep&) const
 	{
 		return init(a, g());
 	}
@@ -425,7 +425,7 @@ inline int ZpzDom<Std16>::isMOne(const Rep a) const
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const
+	inline  ZpzDom<Std16>::Rep& ZpzDom<Std16>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
 	{
 		while (isZero(init(a, g()))) {};
 		return a;

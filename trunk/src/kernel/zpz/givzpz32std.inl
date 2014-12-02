@@ -482,7 +482,7 @@ namespace Givaro {
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::random(RandIter& g, Rep& a, const Rep& b) const
+	inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::random(RandIter& g, Rep& a, const Rep& ) const
 	{
 		return init(a, g());
 	}
@@ -501,7 +501,7 @@ namespace Givaro {
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const
+	inline  ZpzDom<Std32>::Rep& ZpzDom<Std32>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
 	{
 		while (isZero(init(a, g()))) {};
 		return a;

@@ -69,9 +69,14 @@ namespace RecInt
 
         reset(a);
 	    for (i = 0; i < NBLIMB<K>::value; i++) {
+#if GMP_LIMB_BITS != 64
 		    l = c.get_ui(); c >>= 32;
 		    l |= (limb(c.get_ui()) << 32);
 		    set_limb(a, l, i); c >>= 32;
+#else
+            l = c.get_ui();
+            set_limb(a, l, i); c >>= 64;
+#endif
 	    }
 
         return a;
@@ -82,8 +87,12 @@ namespace RecInt
 	    mpz_class c(b);
         limb l;
         
+#if GMP_LIMB_BITS != 64
 	    l = c.get_ui(); c >>= 32;
 	    l |= (limb(c.get_ui()) << 32);
+#else
+        l = c.get_ui();
+#endif
 	    a.Value = l;
         
         return a;
@@ -92,13 +101,18 @@ namespace RecInt
     // Convert a ruint into a GMP integer
     template <size_t K>
     inline mpz_class& ruint_to_mpz(mpz_class& a, const ruint<K>& b) {
-        a = 0;
-        for( auto it(b.rbegin()); it != b.rend(); ++it) {
+        a = 0; 
+        for (auto it(b.rbegin()); it != b.rend(); ++it) {
+#if GMP_LIMB_BITS != 64
 		    // GMP does not handle uint64_t, need to break it
             a <<= 32;
             a += USItype((*it) >> 32);
             a <<= 32;
 		    a += USItype(*it);
+#else
+            a <<= 64;
+            a += *it;
+#endif
         }
         
         return a;

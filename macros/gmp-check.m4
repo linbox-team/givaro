@@ -22,12 +22,12 @@ AC_DEFUN([GIV_CHECK_GMP], [
 				search path "/usr" or "/usr/local"  (set as default).
 				Otherwise you give the <path> to the directory which contain the library.
 				])],
-			[if test "$withval" = yes ; then
+			[if test "$withval" = yes || test "x$withval" = "x"; then
 			GMP_HOME_PATH="/usr"
 			elif test "$withval" != no ; then
 			GMP_HOME_PATH="$withval"
 			fi],
-			[GMP_HOME_PATH=" /usr"])
+			[GMP_HOME_PATH="/usr"])
 
 		min_gmp_version=ifelse([$1], ,4.0.0,$1)
 

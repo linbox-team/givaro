@@ -41,7 +41,7 @@ namespace Givaro {
      *   - p max is 40499
 	 */
 	template<>
-	class Montgomery<Std32> {
+	class Montgomery<int32_t> {
 	public:
 		// ----- Exported Types and constantes
 		typedef uint32_t Residu_t;                    // - type to store residue
@@ -62,24 +62,24 @@ namespace Givaro {
 			_Bp( (Residu_t)  B32%p),
 			_B2p((Residu_t)  (_Bp<<HALF_BITS32) % p),
 			_B3p((Residu_t)  (_B2p<<HALF_BITS32) % p),
-			_nim((Residu_t)  -Montgomery<Std32>::invext((int32_t)_p,B32) ),
+			_nim((Residu_t)  -Montgomery<int32_t>::invext((int32_t)_p,B32) ),
 			_dp( (double)    p),
 			zero((Residu_t)  0UL),
 			one( (Residu_t)  redcsal( _B2p ) ),
 			mOne( _p - one )
 		{}
 
-		Montgomery( const Montgomery<Std32>& F)
+		Montgomery( const Montgomery<int32_t>& F)
 		: _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim),_dp(F._dp), zero(0UL), one(F.one),mOne(F.mOne)
 		{ }
 
 
-		int operator==( const Montgomery<Std32>& BC) const
+		int operator==( const Montgomery<int32_t>& BC) const
 		{ return _p == BC._p;}
-		int operator!=( const Montgomery<Std32>& BC) const
+		int operator!=( const Montgomery<int32_t>& BC) const
 		{ return _p != BC._p;}
 
-		Montgomery<Std32>& operator=( const Montgomery<Std32>& F)
+		Montgomery<int32_t>& operator=( const Montgomery<int32_t>& F)
 		{
 			this->_p = F._p;
 			this->_Bp = F._Bp;
@@ -208,7 +208,7 @@ namespace Givaro {
 					template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
 					template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-					typedef GIV_randIter< Montgomery<Std32> , Rep > randIter;
+					typedef GIV_randIter< Montgomery<int32_t> , Rep > randIter;
 
 					// --- IO methods
 					std::istream& read ( std::istream& s );
@@ -259,7 +259,7 @@ namespace Givaro {
 
 } // namespace Givaro
 
-#include "givaro/givmontg32.inl"
+#include "givaro/montgomery-int32.inl"
 
 #endif //  __GIVARO_montg32_H
 

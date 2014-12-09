@@ -185,8 +185,8 @@ if test ! -L src/kernel/bstruct/givaro ; then ln -s . src/kernel/bstruct/givaro 
 if test ! -L src/kernel/integer/givaro ; then ln -s . src/kernel/integer/givaro ; fi
 if test ! -L src/kernel/memory/givaro  ; then ln -s . src/kernel/memory/givaro  ; fi
 if test ! -L src/kernel/rational/givaro; then ln -s . src/kernel/rational/givaro; fi
-if test ! -L src/kernel/recint/recint  ; then ln -s . src/kernel/recint/recint; fi
-if test ! -L src/kernel/zpz/givaro     ; then ln -s . src/kernel/zpz/givaro     ; fi
+if test ! -L src/kernel/recint/recint  ; then ln -s . src/kernel/recint/recint;   fi
+if test ! -L src/kernel/field/givaro   ; then ln -s . src/kernel/field/givaro;    fi
 if test ! -L src/kernel/gmp++/gmp++    ; then ln -s . src/kernel/gmp++/gmp++    ; fi
 if test ! -L src/library/matrix/givaro ; then ln -s . src/library/matrix/givaro ; fi
 if test ! -L src/library/poly1/givaro  ; then ln -s . src/library/poly1/givaro  ; fi
@@ -243,7 +243,7 @@ src/kernel/integer/Makefile
 src/kernel/bstruct/Makefile
 src/kernel/rational/Makefile
 src/kernel/recint/Makefile
-src/kernel/zpz/Makefile
+src/kernel/field/Makefile
 src/library/Makefile
 src/library/vector/Makefile
 src/library/tools/Makefile

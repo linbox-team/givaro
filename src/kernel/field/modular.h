@@ -27,15 +27,12 @@ namespace Givaro {
 	class ZpzDom;
 }
 
-#include "givaro/givzpztypes.h"
-
-#include <givaro/givzpzGen.h>
-
-#include "givaro/givzpz16std.h"
-#include "givaro/givzpz16table1.h"
-
-#include "givaro/givzpz32std.h"
-#include "givaro/givzpz32uns.h"
+#include "givaro/modular-int16.h"
+#include "givaro/modular-int32.h"
+#include "givaro/modular-uint32.h"
+#include "givaro/modular-integer.h"
+#include "givaro/modular-inttype.h"
+#include "givaro/modular-log16.h"
 
 #ifndef __USE_Givaro_SIXTYFOUR__
 #ifdef __USE_64_bits__
@@ -48,10 +45,8 @@ namespace Givaro {
 #endif
 
 #ifndef __DONOTUSE_Givaro_SIXTYFOUR__
-#include "givaro/givzpz64std.h"
+#include "givaro/modular-int64.h"
 #endif
-
-#include "givaro/givzpzInt.h"
 
 #endif // __GIVARO_zpz_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

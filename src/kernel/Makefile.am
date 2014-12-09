@@ -8,5 +8,5 @@ AM_CPPFLAGS=-I$(top_srcdir)
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 
-SUBDIRS=system memory gmp++ integer bstruct rational recint zpz
+SUBDIRS=system memory gmp++ integer bstruct rational recint field
 

@@ -22,7 +22,6 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
-#include "givaro/givzpztypes.h"
 #include "givaro/giv_randiter.h"
 #include <math.h>
 
@@ -36,14 +35,14 @@ namespace Givaro {
  * .
  */
 template<>
-class ZpzDom<Unsigned32> {
+class ZpzDom<uint32_t> {
 public:
   // ----- Exported Types and constantes
-  typedef Unsigned32::type Residu_t;         // - type to store residue
+  typedef uint32_t Residu_t;         // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
   // ----- Representation of Element of the domain ZpzDom
-  typedef Unsigned32::type Rep;
-  typedef Unsigned32::type Element;
+  typedef uint32_t Rep;
+  typedef uint32_t Element;
  typedef Element* Element_ptr ;
 	typedef const Element* ConstElement_ptr;
 
@@ -61,12 +60,12 @@ public:
   // ----- Constructor
   ZpzDom();
   ZpzDom( Residu_t p );
-  ZpzDom( const ZpzDom<Unsigned32>& F);
+  ZpzDom( const ZpzDom<uint32_t>& F);
 
-  int operator==( const ZpzDom<Unsigned32>& BC) const { return _p == BC._p;}
-  int operator!=( const ZpzDom<Unsigned32>& BC) const { return _p != BC._p;}
+  int operator==( const ZpzDom<uint32_t>& BC) const { return _p == BC._p;}
+  int operator!=( const ZpzDom<uint32_t>& BC) const { return _p != BC._p;}
 
-  ZpzDom<Unsigned32>& operator=( const ZpzDom<Unsigned32>& F)
+  ZpzDom<uint32_t>& operator=( const ZpzDom<uint32_t>& F)
   {
 	  F.assign(const_cast<Element&>(one),F.one);
 	  F.assign(const_cast<Element&>(zero),F.zero);
@@ -206,7 +205,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< ZpzDom<Unsigned32> , Rep > randIter;
+    typedef GIV_randIter< ZpzDom<uint32_t> , Rep > randIter;
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
   Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;
@@ -251,7 +250,7 @@ public: static inline Residu_t getMaxModulus() { return 65536; }
 } // namespace Givaro
 
 
-#include "givaro/givzpz32uns.inl"
+#include "givaro/modular-uint32.inl"
 
 #endif // __GIVARO_zpz32unsigned_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -13,7 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
-#include <givaro/givzpz.h>
+#include <givaro/modular.h>
 #include <givaro/givpoly1factor.h>
 #include <givaro/givtimer.h>
 #include <givaro/givinterp.h>
@@ -27,21 +27,21 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-	typedef ZpzDom<Std32>::Residu_t UT ;
+	typedef ZpzDom<int32_t>::Residu_t UT ;
 	UT MOD;
   if (argc > 2)
 	  MOD = (UT) atoi(argv[2]);
   else
 	  std::cin >> MOD;
 
-  ZpzDom<Std32> F(MOD);
+  ZpzDom<int32_t> F(MOD);
 
 
-  Interpolation< ZpzDom<Std32> > FD(F,Indeter("X"));
-  Interpolation< ZpzDom<Std32> >::Element nouv, prec;
+  Interpolation< ZpzDom<int32_t> > FD(F,Indeter("X"));
+  Interpolation< ZpzDom<int32_t> >::Element nouv, prec;
   int EarlyTerm = 0, Bound = 5;
 
-  ZpzDom<Std32>::Element x, f;
+  ZpzDom<int32_t>::Element x, f;
 
   std::ifstream input (argv[1]);
   F.read(input, x);

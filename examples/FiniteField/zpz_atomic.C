@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <givaro/givtimer.h>
 #include <givaro/givrandom.h>
-#include <givaro/givzpz.h>
+#include <givaro/modular.h>
 
 using namespace Givaro;
 
@@ -24,7 +24,7 @@ using namespace Givaro;
 #define GIVMIN(a,b) (((a)<(b))?(a):(b))
 #endif
 
-typedef ZpzDom<Std32> Domain;
+typedef ZpzDom<int32_t> Domain;
 typedef Domain::Element Modulo;
 
 #ifndef NB

@@ -14,11 +14,11 @@ namespace Givaro {
 
 
 template<>
-inline void VectorDom<ZpzDom<Std16>,Dense>::dot
+inline void VectorDom<ZpzDom<int16_t>,Dense>::dot
   ( Type_t& res, const Rep& op1, const Rep& op2) const
 {
   size_t sz = dim(op1);
-  const ZpzDom<Std16>& domain = subdomain();
+  const ZpzDom<int16_t>& domain = subdomain();
   domain.dotprod( res, sz, op1.baseptr(), op2.baseptr() );
 }
 

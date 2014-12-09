@@ -28,7 +28,7 @@ using namespace std;
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
 #include <givaro/givinit.h>
-#include <givaro/givzpzInt.h>
+#include <givaro/modular-integer.h>
 #include <givaro/givinteger.h>
 #include <givaro/givrandom.h>
 #include <givaro/givinteger.h>

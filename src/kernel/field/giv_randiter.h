@@ -19,22 +19,10 @@
 
 #include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
-#include "givaro/givzpztypes.h"
 
 namespace Givaro {
 
 template<class TAG> class ZpzDom ;
-
-// -- Tag for arithmetic:
-struct Std16 /*{public: typedef  int16_t type;}*/ ; // -- standard arithmetic over 16bits representations.
-struct Std32 /*{public: typedef int32_t type;}*/ ; // -- standard arithmetic over 32bits representations.
-
-struct Log16 ; // -- log arithmetic over 16bits representations.
-
-template<> class ZpzDom<Std16>;
-template<> class ZpzDom<Std32>;
-template<> class ZpzDom<Log16>;
-template<class TT> class GFqDom;
 
 /** Random field Element generator.
  *   This class defines a field Element generator for all givaro field (Gfq and Zpz)

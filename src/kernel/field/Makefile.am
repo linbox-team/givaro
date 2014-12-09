@@ -11,49 +11,49 @@ AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(
 
 pkginclude_HEADERS=     \
 	StaticElement.h		\
-	givzpz.h		    \
-	givzpztypes.h		\
 	givgfq.h		    \
-	givzpz16std.h		\
-	givzpz32std.h		\
-	givzpz32uns.h		\
-	givzpzInt.h		    \
-	givzpzGen.h		    \
-	givzpz64std.h		\
+	modular.h		    \
+	modular-int16.h		\
+	modular-int32.h		\
+	modular-int64.h		\
+	modular-uint32.h	\
+	modular-integer.h	\
+	modular-inttype.h	\
+	modular-log16.h		\
+	montgomery.h	    \
+	montgomery-int32.h	\
 	givprimes16.h		\
 	givrns.h		    \
-	givrnsfixed.h		    \
+	givrnsfixed.h		\
 	givcra.h		    \
-	givzpz16table1.h	\
-	givmontg32.h		\
 	giv_randiter.h		\
 	givextension.h		\
 	givgfqext.h		    \
 	givtablelimits.h	\
 	givgfqkron.h		\
-	givzpz16std.inl		\
-	givzpz32std.inl		\
-	givzpz32uns.inl		\
-	givzpzInt.inl		\
-	givzpzGen.inl		\
-	givzpz64std.inl		\
+	modular-int16.inl	\
+	modular-int32.inl	\
+	modular-int64.inl	\
+	modular-uint32.inl	\
+	modular-integer.inl	\
+	modular-inttype.inl	\
+	modular-log16.inl	\
+	montgomery-int32.inl\
 	givrnsfixed.inl		\
 	givrnscstor.inl		\
 	givrnsconvert.inl	\
-	givzpz16table1.inl	\
-	givmontg32.inl		\
 	givgfq.inl
 
-noinst_LTLIBRARIES=libgivzpz.la
+noinst_LTLIBRARIES=libgivfield.la
 
-libgivzpz_la_SOURCES=   \
-	givzpz16std.C		\
-	givzpz32std.C		\
-	givzpz32uns.C		\
-	givmontg32.C		\
-	givzpz64std.C		\
+libgivfield_la_SOURCES=   \
+	modular-int16.C		\
+	modular-int32.C		\
+	modular-int64.C		\
+	modular-uint32.C	\
+	modular-log16.C		\
+	montgomery-int32.C	\
 	givprimes16.C		\
-	givtablelimits.C	\
-	givzpz16table1.C
+	givtablelimits.C
 
-EXTRA_DIST=zpz.doxy
+EXTRA_DIST=field.doxy

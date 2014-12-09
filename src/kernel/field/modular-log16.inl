@@ -50,43 +50,43 @@
 
 namespace Givaro {
 
-	inline ZpzDom<Log16>::Residu_t ZpzDom<Log16>::residu( ) const
+	inline Modular<Log16>::Residu_t Modular<Log16>::residu( ) const
 	{
 		return _p;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::mul (Rep& r, const Rep a, const Rep b) const
+	inline Modular<Log16>::Rep& Modular<Log16>::mul (Rep& r, const Rep a, const Rep b) const
 	{
 		int32_t tmp;
 		__GIVARO_ZPZ16_LOG_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)b);
-		return r= (ZpzDom<Log16>::Rep)tmp;
+		return r= (Modular<Log16>::Rep)tmp;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::div (Rep& r, const Rep a, const Rep b) const
+	inline Modular<Log16>::Rep& Modular<Log16>::div (Rep& r, const Rep a, const Rep b) const
 	{
 		__GIVARO_ZPZ16_LOG_DIV(r,_p,a,b);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::sub (Rep& r, const Rep a, const Rep b) const
+	inline Modular<Log16>::Rep& Modular<Log16>::sub (Rep& r, const Rep a, const Rep b) const
 	{
 		__GIVARO_ZPZ16_LOG_SUB(r,_p,a,b);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::add (Rep& r, const Rep a, const Rep b) const
+	inline Modular<Log16>::Rep& Modular<Log16>::add (Rep& r, const Rep a, const Rep b) const
 	{
 		__GIVARO_ZPZ16_LOG_ADD(r,_p,a,b);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::neg (Rep& r, const Rep a) const
+	inline Modular<Log16>::Rep& Modular<Log16>::neg (Rep& r, const Rep a) const
 	{
 		__GIVARO_ZPZ16_LOG_NEG(r,_p,a);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::inv (Rep& r, const Rep a) const
+	inline Modular<Log16>::Rep& Modular<Log16>::inv (Rep& r, const Rep a) const
 	{
 		__GIVARO_ZPZ16_LOG_INV(r,_p,a);
 		// GivError::throw_error( GivMathDivZero("Zpz::inv"));
@@ -95,39 +95,39 @@ namespace Givaro {
 
 
 	template< class RandIter >
-	inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a) const
+	inline  Modular<Log16>::Rep& Modular<Log16>::random(RandIter& g, Rep& a) const
 	{
 		return init(a, g());
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a, const Rep&) const
+	inline  Modular<Log16>::Rep& Modular<Log16>::random(RandIter& g, Rep& a, const Rep&) const
 	{
 		return init(a, g());
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::random(RandIter& g, Rep& a, long b) const
+	inline  Modular<Log16>::Rep& Modular<Log16>::random(RandIter& g, Rep& a, long b) const
 	{
 		return init(a, g() %(uint16_t) b);
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a) const
+	inline  Modular<Log16>::Rep& Modular<Log16>::nonzerorandom(RandIter& g, Rep& a) const
 	{
 		while (iszero(init(a, g()))) {};
 		return a;
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, const Rep&) const
+	inline  Modular<Log16>::Rep& Modular<Log16>::nonzerorandom(RandIter& g, Rep& a, const Rep&) const
 	{
 		while (iszero(init(a, g()))) {};
 		return a;
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<Log16>::Rep& ZpzDom<Log16>::nonzerorandom(RandIter& g, Rep& a, long b) const
+	inline  Modular<Log16>::Rep& Modular<Log16>::nonzerorandom(RandIter& g, Rep& a, long b) const
 	{
 		while (iszero(init(a, g() %(uint16_t) b))) {};
 		return a;
@@ -135,64 +135,64 @@ namespace Givaro {
 
 
 
-	// -- inline array operations between ZpzDom<Log16>::Rep
-	inline void ZpzDom<Log16>::mul (const size_t sz, Array r, constArray a, constArray b) const
+	// -- inline array operations between Modular<Log16>::Rep
+	inline void Modular<Log16>::mul (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_MUL_RES(r[i], _p,a[i], b[i]);
 		}
 	}
 
-	inline void ZpzDom<Log16>::mul (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<Log16>::mul (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_MUL_RES(r[i], _p, a[i], b);
 		}
 	}
 
-	inline void ZpzDom<Log16>::div (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<Log16>::div (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_DIV_RES( r[i], _p, a[i], b[i]);
 		}
 	}
 
-	inline void ZpzDom<Log16>::div (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<Log16>::div (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_DIV_RES( r[i], _p, a[i], b);
 		}
 	}
 
-	inline void ZpzDom<Log16>::add (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<Log16>::add (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_ADD_RES(r[i], _p, a[i], b[i]);
 		}
 	}
 
-	inline void ZpzDom<Log16>::add (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<Log16>::add (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_ADD_RES(r[i], _p, a[i], b);
 		}
 	}
 
-	inline void ZpzDom<Log16>::sub (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<Log16>::sub (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_SUB_RES(r[i], _p, a[i], b[i]);
 		}
 	}
 
-	inline void ZpzDom<Log16>::sub (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<Log16>::sub (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_SUB_RES(r[i], _p, a[i], b);
 		}
 	}
 
-	inline void ZpzDom<Log16>::neg (const size_t sz, Array r, constArray a) const
+	inline void Modular<Log16>::neg (const size_t sz, Array r, constArray a) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			__GIVARO_ZPZ16_LOG_NEG_RES(r[i], _p, a[i]);
@@ -200,59 +200,59 @@ namespace Givaro {
 	}
 
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::mulin (Rep& r, const Rep a) const
+	inline Modular<Log16>::Rep& Modular<Log16>::mulin (Rep& r, const Rep a) const
 	{
 		__GIVARO_ZPZ16_LOG_MUL(r,_p, r,a);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::divin (Rep& r, const Rep a) const
+	inline Modular<Log16>::Rep& Modular<Log16>::divin (Rep& r, const Rep a) const
 	{
-		ZpzDom<Log16>::Rep ia;
+		Modular<Log16>::Rep ia;
 		inv(ia, a);
 		mulin(r, ia);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::addin (Rep& r, const Rep a) const
+	inline Modular<Log16>::Rep& Modular<Log16>::addin (Rep& r, const Rep a) const
 	{
 		__GIVARO_ZPZ16_LOG_ADD(r, _p, r,a);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::subin (Rep& r, const Rep a) const
+	inline Modular<Log16>::Rep& Modular<Log16>::subin (Rep& r, const Rep a) const
 	{
 		__GIVARO_ZPZ16_LOG_SUB(r,_p, r,a);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::negin (Rep& r) const
+	inline Modular<Log16>::Rep& Modular<Log16>::negin (Rep& r) const
 	{
 		__GIVARO_ZPZ16_LOG_NEG(r,_p,r);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep&  ZpzDom<Log16>::invin (Rep& r) const
+	inline Modular<Log16>::Rep&  Modular<Log16>::invin (Rep& r) const
 	{
 		__GIVARO_ZPZ16_LOG_INV(r,_p,r);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axpy
+	inline Modular<Log16>::Rep& Modular<Log16>::axpy
 	(Rep& r, const Rep a, const Rep b, const Rep c) const
 	{
 		__GIVARO_ZPZ16_LOG_MULADD(r, _p, a, b, c);
 		return r;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axpyin
+	inline Modular<Log16>::Rep& Modular<Log16>::axpyin
 	(Rep& r, const Rep a, const Rep b) const
 	{
 		return axpy(r,a,b,r);
 	}
 
 
-	inline void ZpzDom<Log16>::axpy
+	inline void Modular<Log16>::axpy
 	(const size_t sz, Array r, constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz ; --i ; ) {
@@ -260,7 +260,7 @@ namespace Givaro {
 		}
 	}
 
-	inline void ZpzDom<Log16>::axpyin
+	inline void Modular<Log16>::axpyin
 	(const size_t sz, Array r, constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
@@ -269,7 +269,7 @@ namespace Givaro {
 	}
 
 	// r <- a*b-c
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axmy
+	inline Modular<Log16>::Rep& Modular<Log16>::axmy
 	(Rep& r, const Rep a, const Rep b, const Rep c) const
 	{
 		__GIVARO_ZPZ16_LOG_MULSUB(r,_p,a,b,c);
@@ -277,7 +277,7 @@ namespace Givaro {
 	}
 
 	// r <- r-a*b
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::maxpyin
+	inline Modular<Log16>::Rep& Modular<Log16>::maxpyin
 	(Rep& r, const Rep a, const Rep b) const
 	{
 		Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
@@ -285,7 +285,7 @@ namespace Givaro {
 	}
 
 	// r <- c-a*b
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::maxpy
+	inline Modular<Log16>::Rep& Modular<Log16>::maxpy
 	(Rep& r, const Rep a, const Rep b, const Rep c) const
 	{
 		Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
@@ -294,14 +294,14 @@ namespace Givaro {
 
 
 	// r <- a*b-r
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::axmyin (Rep& r,
+	inline Modular<Log16>::Rep& Modular<Log16>::axmyin (Rep& r,
 							  const Rep a, const Rep b) const
 	{
 		Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
 		return sub(r,t,r);
 	}
 
-	inline void ZpzDom<Log16>::axmy
+	inline void Modular<Log16>::axmy
 	(const size_t sz, Array r, constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz ; --i ; ) {
@@ -309,7 +309,7 @@ namespace Givaro {
 		}
 	}
 
-	inline void ZpzDom<Log16>::maxpyin (const size_t sz, Array r,
+	inline void Modular<Log16>::maxpyin (const size_t sz, Array r,
 					    constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
@@ -320,36 +320,36 @@ namespace Givaro {
 
 	// ------------------------- Miscellaneous functions
 
-	inline int ZpzDom<Log16>::iszero(const Rep a) const
+	inline int Modular<Log16>::iszero(const Rep a) const
 	{
 		return a >= _p;
 	}
 
-	inline int ZpzDom<Log16>::isone(const Rep a) const
+	inline int Modular<Log16>::isone(const Rep a) const
 	{
-		return a == ZpzDom<Log16>::one;
+		return a == Modular<Log16>::one;
 	}
 
-	inline int ZpzDom<Log16>::ismone(const Rep a) const
+	inline int Modular<Log16>::ismone(const Rep a) const
 	{
-		return a == ZpzDom<Log16>::mOne;
+		return a == Modular<Log16>::mOne;
 	}
 
 
-	inline size_t ZpzDom<Log16>::length(const Rep ) const
+	inline size_t Modular<Log16>::length(const Rep ) const
 	{
-		return ZpzDom<Log16>::size_rep;
+		return Modular<Log16>::size_rep;
 	}
 
-	inline int ZpzDom<Log16>::isZero( const Rep a ) const
+	inline int Modular<Log16>::isZero( const Rep a ) const
 	{
 		return iszero(a);
 	}
-	inline int ZpzDom<Log16>::isOne ( const Rep a ) const
+	inline int Modular<Log16>::isOne ( const Rep a ) const
 	{
 		return isone(a);
 	}
-	inline int ZpzDom<Log16>::isMOne ( const Rep a ) const
+	inline int Modular<Log16>::isMOne ( const Rep a ) const
 	{
 		return ismone(a);
 	}
@@ -359,13 +359,13 @@ namespace Givaro {
 	// -- misc operations
 	// ---------
 #if 0
-	inline void ZpzDom<Log16>::assign
+	inline void Modular<Log16>::assign
 	( const size_t sz, Array r, constArray a ) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			if (a[i] <ZpzDom<Log16>::zero) {
+			if (a[i] <Modular<Log16>::zero) {
 				r[i] = a[i] + _p;
-				if (r[i] <ZpzDom<Log16>::zero) r[i] = r[i] % _p;
+				if (r[i] <Modular<Log16>::zero) r[i] = r[i] % _p;
 			}
 			else if (a[i] >_p) {
 				r[i] = a[i] - _p;
@@ -376,7 +376,7 @@ namespace Givaro {
 	}
 #endif
 
-	inline void ZpzDom<Log16>::assign ( const size_t sz, Array r, constArray a ) const
+	inline void Modular<Log16>::assign ( const size_t sz, Array r, constArray a ) const
 	{
 		for ( size_t i=sz ; --i ; )
 			r[i] = a[i];
@@ -385,18 +385,18 @@ namespace Givaro {
 
 
 	// initialized by a degree of the generator.
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r ) const
 	{
 		return r = zero;
 	}
 
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::assign ( Rep& r, const Rep a ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::assign ( Rep& r, const Rep a ) const
 	{
 		return r = a;
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const long a ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const long a ) const
 	{
 		int sign; unsigned long ua;
 		if (a <0) {
@@ -414,47 +414,47 @@ namespace Givaro {
 		return r = _tab_value2rep[r];
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int a ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const int a ) const
 	{
-		return ZpzDom<Log16>::init( r, (long)a);
+		return Modular<Log16>::init( r, (long)a);
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned long a ) const
-	{
-		r = Rep((a >=_p) ? a % _p : a);
-		assert(r < _p);
-		return r= _tab_value2rep[r];
-	}
-
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const unsigned int a ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const unsigned long a ) const
 	{
 		r = Rep((a >=_p) ? a % _p : a);
 		assert(r < _p);
 		return r= _tab_value2rep[r];
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const uint16_t a ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const unsigned int a ) const
 	{
 		r = Rep((a >=_p) ? a % _p : a);
 		assert(r < _p);
 		return r= _tab_value2rep[r];
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const int16_t a ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const uint16_t a ) const
 	{
-		return ZpzDom<Log16>::init( r, (long)a);
+		r = Rep((a >=_p) ? a % _p : a);
+		assert(r < _p);
+		return r= _tab_value2rep[r];
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const double i) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const int16_t a ) const
+	{
+		return Modular<Log16>::init( r, (long)a);
+	}
+
+	inline Modular<Log16>::Rep& Modular<Log16>::init( Rep& a, const double i) const
 	{
 		return init(a,(long)i);
 	}
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init( Rep& a, const float i) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init( Rep& a, const float i) const
 	{
 		return init(a,(double)i);
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::init ( Rep& r, const Integer& Residu ) const
+	inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const Integer& Residu ) const
 	{
 		int16_t tr;
 		if (Residu <0) {
@@ -478,7 +478,7 @@ namespace Givaro {
 
 
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::dotprod
+	inline Modular<Log16>::Rep& Modular<Log16>::dotprod
 	( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
 	{
 		unsigned int stride = 1;
@@ -528,23 +528,23 @@ namespace Givaro {
 		return r = _tab_value2rep[dot];
 	}
 
-	inline ZpzDom<Log16>::Rep& ZpzDom<Log16>::dotprod
+	inline Modular<Log16>::Rep& Modular<Log16>::dotprod
 	( Rep& r, const size_t sz, constArray a, constArray b ) const
 	{
-		return ZpzDom<Log16>::dotprod(r, _p, sz, a, b);
+		return Modular<Log16>::dotprod(r, _p, sz, a, b);
 	}
 
 
 	//  a -> r: int16_t to double
 	inline void
-	ZpzDom<Log16>::i2d ( const size_t sz, double* r, constArray a ) const
+	Modular<Log16>::i2d ( const size_t sz, double* r, constArray a ) const
 	{
 		for (size_t i=0; i<sz; ++i) r[i] = _tab_rep2value[a[i]];
 	}
 
 	//  a -> r: double to int16_t
 	inline void
-	ZpzDom<Log16>::d2i ( const size_t sz, Array r, const double* a ) const
+	Modular<Log16>::d2i ( const size_t sz, Array r, const double* a ) const
 	{
 		union d_2_l {
 			double d;
@@ -571,45 +571,45 @@ label1:
 
 
 	// -- Input: (z, <_p>)
-	inline std::istream& ZpzDom<Log16>::read (std::istream& s)
+	inline std::istream& Modular<Log16>::read (std::istream& s)
 	{
 		char ch;
 		s >> std::ws >> ch;
 		//   if (ch != '(')
-		//     GivError::throw_error( GivBadFormat("ZpzDom<Log16>::read: syntax error: no '('"));
+		//     GivError::throw_error( GivBadFormat("Modular<Log16>::read: syntax error: no '('"));
 		if (ch != '(')
-			std::cerr << "ZpzDom<Log16>::read: syntax error: no '('" << std::endl;
+			std::cerr << "Modular<Log16>::read: syntax error: no '('" << std::endl;
 
 		s >> std::ws >> ch;
 		//   if (ch != 'z')
-		//     GivError::throw_error( GivBadFormat("ZpzDom<Log16>::read: bad domain object"));
+		//     GivError::throw_error( GivBadFormat("Modular<Log16>::read: bad domain object"));
 		if (ch != 'z')
-			std::cerr << "ZpzDom<Log16>::read: bad domain object" << std::endl ;
+			std::cerr << "Modular<Log16>::read: bad domain object" << std::endl ;
 
 		s >> std::ws >> ch;
 		//   if (ch != ',')
-		//     GivError::throw_error( GivBadFormat("ZpzDom<Log16>::read: syntax error: no ','"));
+		//     GivError::throw_error( GivBadFormat("Modular<Log16>::read: syntax error: no ','"));
 		if (ch != ',')
-			std::cerr << "ZpzDom<Log16>::read: syntax error: no ','" << std::endl;
+			std::cerr << "Modular<Log16>::read: syntax error: no ','" << std::endl;
 
 
 		s >> std::ws >> _p;
 
 		s >> std::ws >> ch;
 		//   if (ch != ')')
-		//     GivError::throw_error( GivBadFormat("ZpzDom<Log16>::read: syntax error: no ')'"));
+		//     GivError::throw_error( GivBadFormat("Modular<Log16>::read: syntax error: no ')'"));
 		if (ch != ')')
-			std::cerr << "ZpzDom<Log16>::read: syntax error: no ')'" << std::endl;
+			std::cerr << "Modular<Log16>::read: syntax error: no ')'" << std::endl;
 
 		return s;
 	}
 
-	inline std::ostream& ZpzDom<Log16>::write (std::ostream& s ) const
+	inline std::ostream& Modular<Log16>::write (std::ostream& s ) const
 	{
 		return s << "Log16 Givaro Z/pZ modulo " << residu();
 	}
 
-	inline std::istream& ZpzDom<Log16>::read (std::istream& s, Rep& a) const
+	inline std::istream& Modular<Log16>::read (std::istream& s, Rep& a) const
 	{
 		Integer tmp;
 		s >> tmp;
@@ -620,7 +620,7 @@ label1:
 		return s;
 	}
 
-	inline std::ostream& ZpzDom<Log16>::write (std::ostream& s, const Rep a) const
+	inline std::ostream& Modular<Log16>::write (std::ostream& s, const Rep a) const
 	{
 		if (a >= _p) return s << '0';
 		return s << _tab_rep2value[a]; //dpritcha

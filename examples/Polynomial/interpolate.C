@@ -27,21 +27,21 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-	typedef ZpzDom<int32_t>::Residu_t UT ;
+	typedef Modular<int32_t>::Residu_t UT ;
 	UT MOD;
   if (argc > 2)
 	  MOD = (UT) atoi(argv[2]);
   else
 	  std::cin >> MOD;
 
-  ZpzDom<int32_t> F(MOD);
+  Modular<int32_t> F(MOD);
 
 
-  Interpolation< ZpzDom<int32_t> > FD(F,Indeter("X"));
-  Interpolation< ZpzDom<int32_t> >::Element nouv, prec;
+  Interpolation< Modular<int32_t> > FD(F,Indeter("X"));
+  Interpolation< Modular<int32_t> >::Element nouv, prec;
   int EarlyTerm = 0, Bound = 5;
 
-  ZpzDom<int32_t>::Element x, f;
+  Modular<int32_t>::Element x, f;
 
   std::ifstream input (argv[1]);
   F.read(input, x);

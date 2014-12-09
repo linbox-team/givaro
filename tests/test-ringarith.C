@@ -255,138 +255,138 @@ int main(int argc, char ** argv)
 
 
 	// modulo 13 over 16 bits
-	ZpzDom<int16_t> C13(13);
+	Modular<int16_t> C13(13);
 	JETESTE(C13,seed);
 
 	// modulo 13 over 32 bits
-	ZpzDom<int32_t> Z13(13);
+	Modular<int32_t> Z13(13);
 	JETESTE(Z13,seed);
 
 	// modulo 13 over unsigned 32 bits
-	ZpzDom<uint32_t> U13(13);
+	Modular<uint32_t> U13(13);
 	JETESTE(U13,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 13 over 64 bits
-	ZpzDom<int64_t> LL13(13UL);
+	Modular<int64_t> LL13(13UL);
 	JETESTE(LL13,seed);
 #endif
 
 	// modulo 13 over arbitrary size
-	ZpzDom<Integer> IntZ13(13);
+	Modular<Integer> IntZ13(13);
 	JETESTE(IntZ13,seed);
 
 
 	// modulo 2 over 16 bits
-	ZpzDom<int16_t> C2(2);
+	Modular<int16_t> C2(2);
 	JETESTE(C2,seed);
 
 	// modulo 2 over 32 bits
-	ZpzDom<int32_t> Z2(2);
+	Modular<int32_t> Z2(2);
 	JETESTE(Z2,seed);
 
 	// modulo 2 over unsigned 32 bits
-	ZpzDom<uint32_t> U2(2);
+	Modular<uint32_t> U2(2);
 	JETESTE(U2,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<int64_t> LL2(2UL);
+	Modular<int64_t> LL2(2UL);
 	JETESTE(LL2,seed);
 #endif
 
 	// modulo 2 fully tabulated
-	ZpzDom<Log16> L2(2);
+	Modular<Log16> L2(2);
 	JETESTE(L2,seed);
 
 	// modulo 13 over arbitrary size
-	ZpzDom<Integer> IntZ2(2);
+	Modular<Integer> IntZ2(2);
 	JETESTE(IntZ2,seed);
 
 // --------------------------------------------
 	// modulo 4 over 16 bits
-	ZpzDom<int16_t> C4(4);
+	Modular<int16_t> C4(4);
 	JETESTE(C4,seed);
 
 	// modulo 4 over 32 bits
-	ZpzDom<int32_t> Z4(4);
+	Modular<int32_t> Z4(4);
 	JETESTE(Z4,seed);
 
 	// modulo 4 over unsigned 32 bits
-	ZpzDom<uint32_t> U4(4);
+	Modular<uint32_t> U4(4);
 	JETESTE(U4,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<int64_t> LL4(4UL);
+	Modular<int64_t> LL4(4UL);
 	JETESTE(LL4,seed);
 #endif
 
 	// modulo 13 over arbitrary size
-	ZpzDom<Integer> IntZ4(4);
+	Modular<Integer> IntZ4(4);
 	JETESTE(IntZ4,seed);
 
 // --------------------------------------------
 	// modulo 75 over 16 bits
-	ZpzDom<int16_t> C75(75);
+	Modular<int16_t> C75(75);
 	JETESTE(C75,seed);
 
 	// modulo 75 over 32 bits
-	ZpzDom<int32_t> Z75(75);
+	Modular<int32_t> Z75(75);
 	JETESTE(Z75,seed);
 
 	// modulo 75 over unsigned 32 bits
-	ZpzDom<uint32_t> U75(75);
+	Modular<uint32_t> U75(75);
 	JETESTE(U75,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 675 bits
-	ZpzDom<int64_t> LL75(75UL);
+	Modular<int64_t> LL75(75UL);
 	JETESTE(LL75,seed);
 #endif
 
 	// modulo 13 over arbitrary size
-	ZpzDom<Integer> IntZ75(75);
+	Modular<Integer> IntZ75(75);
 	JETESTE(IntZ75,seed);
 
 
-        Poly1Dom< ZpzDom<int16_t>, Dense > CP13(C13, "X");
+        Poly1Dom< Modular<int16_t>, Dense > CP13(C13, "X");
 	JETESTE(CP13,seed); JEPOLTESTE(CP13,seed);
-        Poly1Dom< ZpzDom<int32_t>, Dense > ZP13(Z13, "X");
+        Poly1Dom< Modular<int32_t>, Dense > ZP13(Z13, "X");
 	JETESTE(ZP13,seed); JEPOLTESTE(ZP13,seed);
 
-        Poly1Dom< ZpzDom<uint32_t>, Dense > UP13(U13, "X");
+        Poly1Dom< Modular<uint32_t>, Dense > UP13(U13, "X");
 	JETESTE(UP13,seed); JEPOLTESTE(UP13,seed);
 
-        Poly1Dom< ZpzDom<int64_t>, Dense > LLP13(LL13, "X");
+        Poly1Dom< Modular<int64_t>, Dense > LLP13(LL13, "X");
 	JETESTE(LLP13,seed); JEPOLTESTE(LLP13,seed);
 
-        Poly1Dom< ZpzDom<Integer>, Dense > IntZP13(IntZ13, "X");
+        Poly1Dom< Modular<Integer>, Dense > IntZP13(IntZ13, "X");
 	JETESTE(IntZP13,seed); JEPOLTESTE(IntZP13,seed);
 
 
 
-        Poly1Dom< ZpzDom<int16_t>, Dense > CP75(C75, "X");
+        Poly1Dom< Modular<int16_t>, Dense > CP75(C75, "X");
 	JEPOLTESTE(CP75,seed);
 
-        Poly1Dom< ZpzDom<int32_t>, Dense > ZP75(Z75, "X");
+        Poly1Dom< Modular<int32_t>, Dense > ZP75(Z75, "X");
 	JEPOLTESTE(ZP75,seed);
 
-        Poly1Dom< ZpzDom<uint32_t>, Dense > UP75(U75, "X");
+        Poly1Dom< Modular<uint32_t>, Dense > UP75(U75, "X");
 	JEPOLTESTE(UP75,seed);
 
-        Poly1Dom< ZpzDom<int64_t>, Dense > LLP75(LL75, "X");
+        Poly1Dom< Modular<int64_t>, Dense > LLP75(LL75, "X");
 	JEPOLTESTE(LLP75,seed);
 
-        Poly1Dom< ZpzDom<Integer>, Dense > IntZP75(IntZ75, "X");
+        Poly1Dom< Modular<Integer>, Dense > IntZP75(IntZ75, "X");
 	JEPOLTESTE(IntZP75,seed);
 
 
 
-        Poly1Dom< Poly1Dom< ZpzDom<Integer>, Dense >, Dense> IntZPP75(IntZP75, "Y");
+        Poly1Dom< Poly1Dom< Modular<Integer>, Dense >, Dense> IntZPP75(IntZP75, "Y");
 	JEPOLTESTE(IntZPP75,seed);
 
-        Poly1Dom< Poly1Dom< Poly1Dom< ZpzDom<Integer>, Dense >, Dense>, Dense > IntZPPP75(IntZPP75, "Z");
+        Poly1Dom< Poly1Dom< Poly1Dom< Modular<Integer>, Dense >, Dense>, Dense > IntZPPP75(IntZPP75, "Z");
 	JEPOLTESTE(IntZPPP75,seed);
 
 #ifdef GIVARO_DEBUG

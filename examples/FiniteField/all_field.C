@@ -22,15 +22,15 @@ using namespace Givaro;
 
 namespace Givaro {
 // Domain kind
-typedef ZpzDom<uint32_t>	Field1;	typedef StaticElement< Field1 > Element1; 	template<> Field1 Element1::_domain(2);
+typedef Modular<uint32_t>	Field1;	typedef StaticElement< Field1 > Element1; 	template<> Field1 Element1::_domain(2);
 typedef GFqDom<long>		Field2;	typedef StaticElement< Field2 > Element2;	template<> Field2 Element2::_domain(2);
 typedef Montgomery<int32_t>	Field3;	typedef StaticElement< Field3 > Element3;	template<> Field3 Element3::_domain(2);
-typedef ZpzDom<Integer>		Field4;	typedef StaticElement< Field4 > Element4;	template<> Field4 Element4::_domain(2);
-typedef ZpzDom<int32_t>		Field5;	typedef StaticElement< Field5 > Element5; 	template<> Field5 Element5::_domain(2);
-typedef ZpzDom<int16_t>		Field6;	typedef StaticElement< Field6 > Element6; 	template<> Field6 Element6::_domain(2);
-typedef ZpzDom<Log16>		Field7;	typedef StaticElement< Field7 > Element7; 	template<> Field7 Element7::_domain(2);
+typedef Modular<Integer>		Field4;	typedef StaticElement< Field4 > Element4;	template<> Field4 Element4::_domain(2);
+typedef Modular<int32_t>		Field5;	typedef StaticElement< Field5 > Element5; 	template<> Field5 Element5::_domain(2);
+typedef Modular<int16_t>		Field6;	typedef StaticElement< Field6 > Element6; 	template<> Field6 Element6::_domain(2);
+typedef Modular<Log16>		Field7;	typedef StaticElement< Field7 > Element7; 	template<> Field7 Element7::_domain(2);
 #ifdef GIVARO_USE_SIXTYFOUR
-typedef ZpzDom<int64_t>		Field8;	typedef StaticElement< Field8 > Element8;
+typedef Modular<int64_t>		Field8;	typedef StaticElement< Field8 > Element8;
 template<>
 Field8 Element8::_domain(2);
 #endif

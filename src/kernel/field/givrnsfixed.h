@@ -28,7 +28,7 @@ namespace Givaro {
 template<class Ints>
 class RNSsystemFixed  {
     typedef RNSsystemFixed<Ints> Self_t;
-    typedef RNSsystem<Ints, ZpzDom<Ints> > RNS_t;
+    typedef RNSsystem<Ints, Modular<Ints> > RNS_t;
 public:
     typedef std::vector<Ints>     array;
     typedef std::vector<array>    tree;

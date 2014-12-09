@@ -22,7 +22,7 @@
 
 namespace Givaro {
 
-template<class TAG> class ZpzDom ;
+template<class TAG> class Modular ;
 
 /** Random field Element generator.
  *   This class defines a field Element generator for all givaro field (Gfq and Zpz)

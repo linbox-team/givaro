@@ -26,7 +26,7 @@
 
 namespace Givaro {
 
-template<class TAG> class ZpzDom;
+template<class TAG> class Modular;
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
@@ -35,15 +35,15 @@ template<class TAG> class ZpzDom;
  * .
  */
 template<>
-class ZpzDom<int64_t>
+class Modular<int64_t>
 {
-	typedef ZpzDom<int64_t> Self_t;
+	typedef Modular<int64_t> Self_t;
 
 public:
 	// ----- Exported Types and constantes
 	typedef uint64_t Residu_t;                    // - type to store residue
 	enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-	// ----- Representation of Element of the domain ZpzDom
+	// ----- Representation of Element of the domain Modular
 	typedef int64_t Rep;
 	typedef int64_t Element;
  typedef Element* Element_ptr ;
@@ -62,9 +62,9 @@ public:
 	const Rep mOne;
 
 	// ----- Constructor
-	ZpzDom() :
+	Modular() :
 		zero(0), one(1), mOne(-1), _p(0) {}
-	ZpzDom( Residu_t p, unsigned long = 1) :
+	Modular( Residu_t p, unsigned long = 1) :
 	       	zero(0), one(1), mOne((Rep)p-1), _p(p) {}
 
 

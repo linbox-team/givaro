@@ -35,196 +35,196 @@
 namespace Givaro {
 
 
-	inline ZpzDom<int16_t>::Residu_t ZpzDom<int16_t>::residu( ) const
+	inline Modular<int16_t>::Residu_t Modular<int16_t>::residu( ) const
 	{
 		return _p;
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::mul (Rep& r, const Rep a, const Rep b) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::mul (Rep& r, const Rep a, const Rep b) const
 	{
 		int32_t tmp;
 		__GIVARO_ZPZ32_N_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)b);
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::neg (Rep& r, const Rep a) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::neg (Rep& r, const Rep a) const
 	{
 		return __GIVARO_ZPZ16_N_NEG(r,_p,a);
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::inv (Rep& r, const Rep a) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::inv (Rep& r, const Rep a) const
 	{
 		int32_t u;
-		ZpzDom<int16_t>::invext(u, a, _p);
+		Modular<int16_t>::invext(u, a, _p);
 		//   if ((d != 1) && (d != -1)) std::cerr << "GivMathDivZero(Zpz::inv)" << std::endl;
-		return r = (u<0)?(ZpzDom<int16_t>::Rep)(u+_p):(ZpzDom<int16_t>::Rep)u;
+		return r = (u<0)?(Modular<int16_t>::Rep)(u+_p):(Modular<int16_t>::Rep)u;
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::div (Rep& r, const Rep a, const Rep b) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::div (Rep& r, const Rep a, const Rep b) const
 	{
 		int32_t tmp;
 		Rep ib;
 		inv(ib, b);
 		__GIVARO_ZPZ32_N_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)ib);
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::sub (Rep& r, const Rep a, const Rep b) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::sub (Rep& r, const Rep a, const Rep b) const
 	{
 
 		return __GIVARO_ZPZ16_N_SUB(r,_p,a,b);
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::add (Rep& r, const Rep a, const Rep b) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::add (Rep& r, const Rep a, const Rep b) const
 	{
 		__GIVARO_ZPZ16_N_ADD(r,_p,a,b);
 		return r;
 	}
 
 
-	// -- inline array operations between ZpzDom<int16_t>::Rep
-	inline void ZpzDom<int16_t>::mul (const size_t sz, Array r, constArray a, constArray b) const
+	// -- inline array operations between Modular<int16_t>::Rep
+	inline void Modular<int16_t>::mul (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int32_t tmp;
 			__GIVARO_ZPZ32_N_MUL(tmp, (int32_t)_p,(int32_t)a[i], (int32_t)b[i]);
-			r[i] = (ZpzDom<int16_t>::Rep)tmp;
+			r[i] = (Modular<int16_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<int16_t>::mul (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<int16_t>::mul (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int32_t tmp;
 			__GIVARO_ZPZ32_N_MUL(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)b);
-			r[i] = (ZpzDom<int16_t>::Rep)tmp;
+			r[i] = (Modular<int16_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<int16_t>::div (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<int16_t>::div (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			div( r[i], a[i], b[i]);
 		}
 	}
 
-	inline void ZpzDom<int16_t>::div (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<int16_t>::div (const size_t sz, Array r, constArray a, Rep b) const
 	{
-		ZpzDom<int16_t>::Rep ib;
+		Modular<int16_t>::Rep ib;
 		inv(ib, b);
 		mul(sz, r, a, ib);
 	}
 
-	inline void ZpzDom<int16_t>::add (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<int16_t>::add (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; )
 			__GIVARO_ZPZ16_N_ADD(r[i], _p, a[i], b[i]);
 	}
 
-	inline void ZpzDom<int16_t>::add (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<int16_t>::add (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; )
 			__GIVARO_ZPZ16_N_ADD(r[i], _p, a[i], b);
 	}
 
-	inline void ZpzDom<int16_t>::sub (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<int16_t>::sub (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; )
 			__GIVARO_ZPZ16_N_SUB(r[i], _p, a[i], b[i]);
 	}
 
-	inline void ZpzDom<int16_t>::sub (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<int16_t>::sub (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; )
 			__GIVARO_ZPZ16_N_SUB(r[i], _p, a[i], b);
 	}
 
-	inline void ZpzDom<int16_t>::neg (const size_t sz, Array r, constArray a) const
+	inline void Modular<int16_t>::neg (const size_t sz, Array r, constArray a) const
 	{
 		for ( size_t i=sz ; --i ; )
 			__GIVARO_ZPZ16_N_NEG(r[i], _p, a[i]);
 	}
 
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::mulin (Rep& r, const Rep a) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::mulin (Rep& r, const Rep a) const
 	{
 		int32_t tmp = (int32_t)r;
 		__GIVARO_ZPZ32_N_MULIN(tmp,(int32_t)_p, (int32_t)a);
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::divin (Rep& r, const Rep a) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::divin (Rep& r, const Rep a) const
 	{
-		ZpzDom<int16_t>::Rep ia;
+		Modular<int16_t>::Rep ia;
 		inv(ia, a);
 		return mulin(r, ia);
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::addin (Rep& r, const Rep a) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::addin (Rep& r, const Rep a) const
 	{
 		__GIVARO_ZPZ16_N_ADDIN(r,_p, a);
 		return r;
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::subin (Rep& r, const Rep a) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::subin (Rep& r, const Rep a) const
 	{
 		__GIVARO_ZPZ16_N_SUBIN(r,_p,a);
 		return r;
 	}
 
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::negin (Rep& r) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::negin (Rep& r) const
 	{
 		return __GIVARO_ZPZ16_N_NEGIN(r,_p);
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::invin (Rep& r) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::invin (Rep& r) const
 	{
 		int32_t u;
-		ZpzDom<int16_t>::invext(u, r, _p);
+		Modular<int16_t>::invext(u, r, _p);
 		//   if ((d != 1) && (d != -1)) std::cerr << "GivMathDivZero(Zpz::inv)" << std::endl;
-		return r = (u<0)?(ZpzDom<int16_t>::Rep)(u+_p):(ZpzDom<int16_t>::Rep)u;
+		return r = (u<0)?(Modular<int16_t>::Rep)(u+_p):(Modular<int16_t>::Rep)u;
 	}
 
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::axpy
+	inline Modular<int16_t>::Rep& Modular<int16_t>::axpy
 	(Rep& r, const Rep a, const Rep b, const Rep c) const
 	{
 		int32_t tmp;
 		__GIVARO_ZPZ32_N_MULADD(tmp, (int32_t)_p, (int32_t)a, (int32_t)b, (int32_t)c);
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::axpyin
+	inline Modular<int16_t>::Rep& Modular<int16_t>::axpyin
 	(Rep& r, const Rep a, const Rep b) const
 	{
 		int32_t tmp = (int32_t)r;
 		__GIVARO_ZPZ32_N_MULADDIN(tmp, (int32_t)_p, (int32_t)a, (int32_t)b);
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 	}
 
 
-	inline void ZpzDom<int16_t>::axpy
+	inline void Modular<int16_t>::axpy
 	(const size_t sz, Array r, constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int32_t tmp;
 			__GIVARO_ZPZ32_N_MULADD(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i], (int32_t)y[i]);
-			r[i] = (ZpzDom<int16_t>::Rep)tmp;
+			r[i] = (Modular<int16_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<int16_t>::axpyin
+	inline void Modular<int16_t>::axpyin
 	(const size_t sz, Array r, constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int32_t tmp = (int32_t)r[i];
 			__GIVARO_ZPZ32_N_MULADDIN(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i]);
-			r[i] = (ZpzDom<int16_t>::Rep)tmp;
+			r[i] = (Modular<int16_t>::Rep)tmp;
 		}
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::maxpy
+	inline Modular<int16_t>::Rep& Modular<int16_t>::maxpy
 	(Rep& r, const Rep a, const Rep b, const Rep c) const
 	{
 		int32_t tmp;
@@ -233,104 +233,104 @@ namespace Givaro {
 	}
 
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::axmy
+	inline Modular<int16_t>::Rep& Modular<int16_t>::axmy
 	(Rep& r, const Rep a, const Rep b, const Rep c) const
 	{
 		int32_t tmp;
 		__GIVARO_ZPZ32_N_MULSUB(tmp, (int32_t)_p, (int32_t)a, (int32_t)b, (int32_t)c);
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 	}
 
 	// r -= a*b
-	inline ZpzDom<int16_t>::Rep&  ZpzDom<int16_t>::maxpyin
+	inline Modular<int16_t>::Rep&  Modular<int16_t>::maxpyin
 	(Rep& r, const Rep a, const Rep b) const
 	{
 		int32_t tmp = (int32_t)r;
 		__GIVARO_ZPZ32_N_SUBMULIN(tmp, (int32_t)_p, (int32_t)a, (int32_t)b );
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 		//    int32_t tmp = (int32_t)r;
 		//   __GIVARO_ZPZ16_N_SUBMULIN(tmp, (int32_t)_p, (int32_t)a, (int32_t)b );
-		//   return r = (ZpzDom<int16_t>::Rep)tmp;
+		//   return r = (Modular<int16_t>::Rep)tmp;
 	}
 
 	// r = a*b - r
-	inline ZpzDom<int16_t>::Rep&  ZpzDom<int16_t>::axmyin (Rep& r,
+	inline Modular<int16_t>::Rep&  Modular<int16_t>::axmyin (Rep& r,
 							   const Rep a, const Rep b) const
 	{
 		int32_t tmp = (int32_t)r;
 		__GIVARO_ZPZ32_N_MULSUB(tmp, (int32_t)_p, (int32_t)a, (int32_t)b , tmp);
-		return r = (ZpzDom<int16_t>::Rep)tmp;
+		return r = (Modular<int16_t>::Rep)tmp;
 	}
 
 
-	inline void ZpzDom<int16_t>::axmy (const size_t sz, Array r,
+	inline void Modular<int16_t>::axmy (const size_t sz, Array r,
 					 constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int32_t tmp;
 			__GIVARO_ZPZ32_N_MULSUB(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i], (int32_t)y[i]);
-			r[i] = (ZpzDom<int16_t>::Rep)tmp;
+			r[i] = (Modular<int16_t>::Rep)tmp;
 		}
 	}
 
 	// r -= a*b
-	inline void ZpzDom<int16_t>::maxpyin (const size_t sz, Array r,
+	inline void Modular<int16_t>::maxpyin (const size_t sz, Array r,
 					    constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int32_t tmp = (int32_t)r[i];
 			__GIVARO_ZPZ32_N_SUBMULIN(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i]);
-			r[i] = (ZpzDom<int16_t>::Rep)tmp;
+			r[i] = (Modular<int16_t>::Rep)tmp;
 		}
 	}
 
 	// ------------------------- Miscellaneous functions
 
-	inline int ZpzDom<int16_t>::areEqual(const Rep a, const Rep b) const
+	inline int Modular<int16_t>::areEqual(const Rep a, const Rep b) const
 	{
 		return a == b;
 	}
 
-	inline int ZpzDom<int16_t>::areNEqual(const Rep a, const Rep b) const
+	inline int Modular<int16_t>::areNEqual(const Rep a, const Rep b) const
 	{
 		return a != b;
 	}
 
-	inline int ZpzDom<int16_t>::isZero(const Rep a) const
+	inline int Modular<int16_t>::isZero(const Rep a) const
 	{
-		return a == ZpzDom<int16_t>::zero;
+		return a == Modular<int16_t>::zero;
 	}
 
-	inline int ZpzDom<int16_t>::isnzero(const Rep a) const
+	inline int Modular<int16_t>::isnzero(const Rep a) const
 	{
-		return a != ZpzDom<int16_t>::zero;
+		return a != Modular<int16_t>::zero;
 	}
 
-	inline int ZpzDom<int16_t>::isOne(const Rep a) const
+	inline int Modular<int16_t>::isOne(const Rep a) const
 	{
-		return a == ZpzDom<int16_t>::one;
+		return a == Modular<int16_t>::one;
 	}
 
-inline int ZpzDom<int16_t>::isMOne(const Rep a) const
+inline int Modular<int16_t>::isMOne(const Rep a) const
 	{
-		return a == ZpzDom<int16_t>::mOne;
+		return a == Modular<int16_t>::mOne;
 	}
 
 
-	inline size_t ZpzDom<int16_t>::length(const Rep ) const
+	inline size_t Modular<int16_t>::length(const Rep ) const
 	{
-		return ZpzDom<int16_t>::size_rep;
+		return Modular<int16_t>::size_rep;
 	}
 
 	// ---------
 	// -- misc operations
 	// ---------
-	inline  ZpzDom<int16_t>::Rep&  ZpzDom<int16_t>::init ( Rep& r, const unsigned long a ) const
+	inline  Modular<int16_t>::Rep&  Modular<int16_t>::init ( Rep& r, const unsigned long a ) const
 	{
 		return r = (Rep)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
 	}
 
-	inline  ZpzDom<int16_t>::Rep&  ZpzDom<int16_t>::init ( Rep& r, const long a ) const
+	inline  Modular<int16_t>::Rep&  Modular<int16_t>::init ( Rep& r, const long a ) const
 	{
 		int sign; long ua;
 		if (a <0) {
@@ -347,7 +347,7 @@ inline int ZpzDom<int16_t>::isMOne(const Rep a) const
 		return r;
 	}
 
-	inline ZpzDom<int16_t>::Rep&  ZpzDom<int16_t>::init ( Rep& r, const Integer& Residu ) const
+	inline Modular<int16_t>::Rep&  Modular<int16_t>::init ( Rep& r, const Integer& Residu ) const
 	{
 		Rep tr;
 		if (Residu <0) {
@@ -370,87 +370,87 @@ inline int ZpzDom<int16_t>::isMOne(const Rep a) const
 
 
 
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::init( Rep& a, const int i) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const int i) const
 	{
 		return init(a,(long)i);
 	}
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::init( Rep& a, const double i) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const double i) const
 	{
 		return init(a,(long)i);
 	}
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::init( Rep& a, const float i) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const float i) const
 	{
 		return init(a,(double)i);
 	}
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::init( Rep& a, const unsigned int i) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const unsigned int i) const
 	{
 		return init(a,(unsigned long)i);
 	}
 
 
-	inline void ZpzDom<int16_t>::assign
+	inline void Modular<int16_t>::assign
 	( const size_t sz, Array r, constArray a ) const
 	{
 		for ( size_t i=sz ; --i ; )
 			r[i] = a[i];
 	}
 
-	inline  ZpzDom<int16_t>::Rep&  ZpzDom<int16_t>::assign ( Rep& r, const Rep a ) const
+	inline  Modular<int16_t>::Rep&  Modular<int16_t>::assign ( Rep& r, const Rep a ) const
 	{  return r=a;
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::random(RandIter& g, Rep& a) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::random(RandIter& g, Rep& a) const
 	{
 		return init(a, g());
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::random(RandIter& g, Rep& a, const Rep&) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::random(RandIter& g, Rep& a, const Rep&) const
 	{
 		return init(a, g());
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::random(RandIter& g, Rep& a, long b) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::random(RandIter& g, Rep& a, long b) const
 	{
 		return init(a, g() %(uint16_t) b);
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::nonzerorandom(RandIter& g, Rep& a) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::nonzerorandom(RandIter& g, Rep& a) const
 	{
 		while (isZero(init(a, g()))) {};
 		return a;
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
 	{
 		while (isZero(init(a, g()))) {};
 		return a;
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::nonzerorandom(RandIter& g, Rep& a, long b) const
+	inline  Modular<int16_t>::Rep& Modular<int16_t>::nonzerorandom(RandIter& g, Rep& a, long b) const
 	{
 		while (isZero(init(a, g() %(uint16_t) b))) {};
 		return a;
 	}
 
-	inline void ZpzDom<int16_t>::init
+	inline void Modular<int16_t>::init
 	( const size_t sz, Array r, constArray a ) const
 	{
 		for ( size_t i=sz ; --i ; )
 			r[i] = a[i];
 	}
 
-	inline ZpzDom<int16_t>::Rep& ZpzDom<int16_t>::init ( Rep& r ) const
+	inline Modular<int16_t>::Rep& Modular<int16_t>::init ( Rep& r ) const
 	{
 		return r = zero;
 	}
 
-	inline void ZpzDom<int16_t>::dotprod
+	inline void Modular<int16_t>::dotprod
 	( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
 	{
 		unsigned int stride = 1;
@@ -493,23 +493,23 @@ inline int ZpzDom<int16_t>::isMOne(const Rep a) const
 		r = (Rep)dot;
 	}
 
-	inline void ZpzDom<int16_t>::dotprod
+	inline void Modular<int16_t>::dotprod
 	( Rep& r, const size_t sz, constArray a, constArray b ) const
 	{
-		return ZpzDom<int16_t>::dotprod(r, _p, sz, a, b);
+		return Modular<int16_t>::dotprod(r, _p, sz, a, b);
 	}
 
 
 	//  a -> r: int16_t to double
 	inline void
-	ZpzDom<int16_t>::i2d ( const size_t sz, double* r, constArray a ) const
+	Modular<int16_t>::i2d ( const size_t sz, double* r, constArray a ) const
 	{
 		for (size_t i=0; i<sz; ++i) r[i] = a[i];
 	}
 
 	//  a -> r: double to int16_t
 	inline void
-	ZpzDom<int16_t>::d2i ( const size_t sz, Array r, const double* a ) const
+	Modular<int16_t>::d2i ( const size_t sz, Array r, const double* a ) const
 	{
 		union d_2_l {
 			double d;
@@ -534,40 +534,40 @@ inline int ZpzDom<int16_t>::isMOne(const Rep a) const
 
 
 	// -- Input: (z, <_p>)
-	inline std::istream& ZpzDom<int16_t>::read (std::istream& s)
+	inline std::istream& Modular<int16_t>::read (std::istream& s)
 	{
 		char ch;
 		s >> std::ws >> ch;
 		if (ch != '(')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<int16_t>::read: syntax error: no '('"));
-			std::cerr << "GivBadFormat(ZpzDom<int16_t>::read: syntax error: no '('))" << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<int16_t>::read: syntax error: no '('"));
+			std::cerr << "GivBadFormat(Modular<int16_t>::read: syntax error: no '('))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != 'z')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<int16_t>::read: bad domain object"));
-			std::cerr << "GivBadFormat(ZpzDom<int16_t>::read: bad domain object))" << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<int16_t>::read: bad domain object"));
+			std::cerr << "GivBadFormat(Modular<int16_t>::read: bad domain object))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != ',')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<int16_t>::read: syntax error: no ','"));
-			std::cerr << "GivBadFormat(ZpzDom<int16_t>::read: syntax error: no ',')) " << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<int16_t>::read: syntax error: no ','"));
+			std::cerr << "GivBadFormat(Modular<int16_t>::read: syntax error: no ',')) " << std::endl;
 
 		s >> std::ws >> _p;
 
 		s >> std::ws >> ch;
 		if (ch != ')')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<int16_t>::read: syntax error: no ')'"));
-			std::cerr << "GivBadFormat(ZpzDom<int16_t>::read: syntax error: no ')')) " << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<int16_t>::read: syntax error: no ')'"));
+			std::cerr << "GivBadFormat(Modular<int16_t>::read: syntax error: no ')')) " << std::endl;
 
 		return s;
 	}
 
-	inline std::ostream& ZpzDom<int16_t>::write (std::ostream& s ) const
+	inline std::ostream& Modular<int16_t>::write (std::ostream& s ) const
 	{
 		return s << "int16_t Givaro Z/pZ modulo " << residu();
 	}
 
-	inline std::istream& ZpzDom<int16_t>::read (std::istream& s, Rep& a) const
+	inline std::istream& Modular<int16_t>::read (std::istream& s, Rep& a) const
 	{
         	Integer tmp;
 		s >> tmp;
@@ -575,7 +575,7 @@ inline int ZpzDom<int16_t>::isMOne(const Rep a) const
 		return s;
 	}
 
-	inline std::ostream& ZpzDom<int16_t>::write (std::ostream& s, const Rep a) const
+	inline std::ostream& Modular<int16_t>::write (std::ostream& s, const Rep a) const
 	{
 		return s << a;
 	}

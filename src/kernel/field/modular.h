@@ -24,7 +24,7 @@
 
 namespace Givaro {
 	template<class TAG>
-	class ZpzDom;
+	class Modular;
 }
 
 #include "givaro/modular-int16.h"

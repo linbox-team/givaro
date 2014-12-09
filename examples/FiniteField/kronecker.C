@@ -42,9 +42,9 @@ int main(int argc, char ** argv) {
 
     GF.write( std::cerr << "b: ", b ) << std::endl;
 
-    ZpzDom<int32_t> Zp(charac);
-    Poly1PadicDom<ZpzDom<int32_t> > PAD(Zp ,"Y");
-    Poly1PadicDom<ZpzDom<int32_t> >::Element pol;
+    Modular<int32_t> Zp(charac);
+    Poly1PadicDom<Modular<int32_t> > PAD(Zp ,"Y");
+    Poly1PadicDom<Modular<int32_t> >::Element pol;
     PAD.radixdirect(pol, GF.convert(b), expo);
     PAD.write(std::cerr<< "b(Y): ", pol) << std::endl;
 
@@ -57,9 +57,9 @@ int main(int argc, char ** argv) {
         GF.convert(r, b);
         std::cerr << "b kron(" << shift << "): " << r << std::endl;
 
-        ZpzDom<Integer> Zm( 1<<shift );
-        Poly1PadicDom<ZpzDom<Integer> > PmAD(Zm ,"Z");
-        Poly1PadicDom<ZpzDom<Integer> >::Element pol;
+        Modular<Integer> Zm( 1<<shift );
+        Poly1PadicDom<Modular<Integer> > PmAD(Zm ,"Z");
+        Poly1PadicDom<Modular<Integer> >::Element pol;
         PmAD.radixdirect(pol, r, expo);
         PmAD.write(std::cerr<< "b(" << (1<<shift) << "): ", pol) << std::endl;
 
@@ -67,10 +67,10 @@ int main(int argc, char ** argv) {
 
     --shift;
 /// Test arithmetic
-        ZpzDom<Integer> Zm( 1<<shift );
+        Modular<Integer> Zm( 1<<shift );
         Zm.write(std::cerr << "with shift: ") << std::endl;
-        Poly1PadicDom<ZpzDom<Integer> > PmAD(Zm ,"B");
-        Poly1PadicDom<ZpzDom<Integer> >::Element Ipol;
+        Poly1PadicDom<Modular<Integer> > PmAD(Zm ,"B");
+        Poly1PadicDom<Modular<Integer> >::Element Ipol;
 
 
     GFqKronecker<long,Integer>::Element c,d,e,f;

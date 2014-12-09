@@ -54,245 +54,245 @@
 
 namespace Givaro {
 
-	inline ZpzDom<uint32_t>::ZpzDom( ) :
+	inline Modular<uint32_t>::Modular( ) :
 		zero(0), one(1), mOne(0), _p(0), _dp(0.0)
 	{}
 
-	inline ZpzDom<uint32_t>::ZpzDom( Residu_t p ) :
+	inline Modular<uint32_t>::Modular( Residu_t p ) :
 		zero(0), one(1), mOne(Rep(p-1)),_p(p), _dp((double)p)
 
 	{}
 
-	inline ZpzDom<uint32_t>::Residu_t ZpzDom<uint32_t>::residu( ) const
+	inline Modular<uint32_t>::Residu_t Modular<uint32_t>::residu( ) const
 	{
 		return _p;
 	}
 
-	inline ZpzDom<uint32_t>::ZpzDom(const ZpzDom<uint32_t>& F) :
+	inline Modular<uint32_t>::Modular(const Modular<uint32_t>& F) :
 		zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp)
 	{ }
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::mul (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::mul (Rep& r, const Rep a, const Rep b) const
 	{
 		return __GIVARO_ZPZ32_Uns_MUL(r,_p,a,b);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::sub (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::sub (Rep& r, const Rep a, const Rep b) const
 	{
 		return __GIVARO_ZPZ32_Uns_SUB(r,_p,a,b);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::add (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::add (Rep& r, const Rep a, const Rep b) const
 	{
 		__GIVARO_ZPZ32_Uns_ADD(r,_p,a,b);
 		return r;
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::neg (Rep& r, const Rep a) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::neg (Rep& r, const Rep a) const
 	{
 		return __GIVARO_ZPZ32_Uns_NEG(r,_p,a);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::inv (Rep& r,
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::inv (Rep& r,
 								 const Rep a) const
 	{
-		return ZpzDom<uint32_t>::invext(r, a, _p);
+		return Modular<uint32_t>::invext(r, a, _p);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::div (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::div (Rep& r, const Rep a, const Rep b) const
 	{
 		/*
 		   uint32_t tmp;
 		   uint32_t ib;
 		   inv(ib, b);
 		   __GIVARO_ZPZ32_Uns_MUL(tmp,_p,a,ib);
-		   return r = (ZpzDom<uint32_t>::Rep)tmp;
+		   return r = (Modular<uint32_t>::Rep)tmp;
 		   */
 		return mulin( inv(r, b), a );
 	}
 
-	// -- inline array operations between ZpzDom<uint32_t>::Rep
-	inline void ZpzDom<uint32_t>::mul (const size_t sz, Array r, constArray a, constArray b) const
+	// -- inline array operations between Modular<uint32_t>::Rep
+	inline void Modular<uint32_t>::mul (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_MUL(tmp, _p,a[i], b[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::mul (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::mul (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_MUL(tmp, _p, a[i], b);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::div (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<uint32_t>::div (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			div( r[i], a[i], b[i]);
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::div (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::div (const size_t sz, Array r, constArray a, Rep b) const
 	{
-		ZpzDom<uint32_t>::Rep ib;
+		Modular<uint32_t>::Rep ib;
 		inv(ib, b);
 		mul(sz, r, a, ib);
 	}
 
-	inline void ZpzDom<uint32_t>::add (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<uint32_t>::add (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_ADD(tmp, _p, a[i], b[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::add (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::add (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_ADD(tmp, _p, a[i], b);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::sub (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<uint32_t>::sub (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_SUB(tmp, _p, a[i], b[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::sub (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::sub (const size_t sz, Array r, constArray a, Rep b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_SUB(tmp, _p, a[i], b);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::neg (const size_t sz, Array r, constArray a) const
+	inline void Modular<uint32_t>::neg (const size_t sz, Array r, constArray a) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_NEG(tmp, _p, a[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::mulin (Rep& r, const Rep a) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::mulin (Rep& r, const Rep a) const
 	{
 		return __GIVARO_ZPZ32_Uns_MULIN(r,_p, a);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::divin (Rep& r, const Rep a) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::divin (Rep& r, const Rep a) const
 	{
-		ZpzDom<uint32_t>::Rep ia;
+		Modular<uint32_t>::Rep ia;
 		inv(ia, a);
 		return mulin(r, ia);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::addin (Rep& r, const Rep a) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::addin (Rep& r, const Rep a) const
 	{
 		uint32_t tmp = r;
 		__GIVARO_ZPZ32_Uns_ADDIN(tmp,_p, a);
-		return r = (ZpzDom<uint32_t>::Rep)tmp;
+		return r = (Modular<uint32_t>::Rep)tmp;
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::subin (Rep& r, const Rep a) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::subin (Rep& r, const Rep a) const
 	{
 		uint32_t tmp = r;
 		__GIVARO_ZPZ32_Uns_SUBIN(tmp,_p, a);
-		return r = (ZpzDom<uint32_t>::Rep)tmp;
+		return r = (Modular<uint32_t>::Rep)tmp;
 	}
 
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::negin (Rep& r) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::negin (Rep& r) const
 	{
 		return __GIVARO_ZPZ32_Uns_NEGIN(r,_p);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::invin (Rep& r) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::invin (Rep& r) const
 	{
-		return ZpzDom<uint32_t>::invext(r, r, _p);
+		return Modular<uint32_t>::invext(r, r, _p);
 	}
 
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::axpy (Rep& r,
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::axpy (Rep& r,
 								  const Rep a, const Rep b, const Rep c) const
 	{
 		uint32_t tmp;
 		__GIVARO_ZPZ32_Uns_MULADD(tmp, _p, a, b, c);
-		return r = (ZpzDom<uint32_t>::Rep)tmp;
+		return r = (Modular<uint32_t>::Rep)tmp;
 	}
 
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::axpyin (Rep& r,
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::axpyin (Rep& r,
 								     const Rep a, const Rep b) const
 	{
 		uint32_t tmp = r;
 		__GIVARO_ZPZ32_Uns_MULADDIN(tmp, _p, a, b);
-		return r = (ZpzDom<uint32_t>::Rep)tmp;
+		return r = (Modular<uint32_t>::Rep)tmp;
 	}
 
 
-	inline void ZpzDom<uint32_t>::axpy (const size_t sz, Array r,
+	inline void Modular<uint32_t>::axpy (const size_t sz, Array r,
 					      constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_MULADD(tmp, _p, a[i], x[i], y[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline void ZpzDom<uint32_t>::axpyin (const size_t sz, Array r,
+	inline void Modular<uint32_t>::axpyin (const size_t sz, Array r,
 						constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp = r[i];
 			__GIVARO_ZPZ32_Uns_MULADDIN(tmp, _p, a[i], x[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::axmy (Rep& r,
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::axmy (Rep& r,
 								   const Rep a, const Rep b, const Rep c) const
 	{
 		uint32_t tmp;
 		__GIVARO_ZPZ32_Uns_MULSUB(tmp, _p, a, b, c);
-		return r = (ZpzDom<uint32_t>::Rep)tmp;
+		return r = (Modular<uint32_t>::Rep)tmp;
 	}
 
 	// r = c-a*b
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::maxpy (Rep& r,
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::maxpy (Rep& r,
 								    const Rep a, const Rep b, const Rep c) const
 	{
 		uint32_t tmp=c;
 		__GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a, b);
-		return r = (ZpzDom<uint32_t>::Rep)tmp;
+		return r = (Modular<uint32_t>::Rep)tmp;
 	}
 
 	// r -= a*b
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::maxpyin (Rep& r,
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::maxpyin (Rep& r,
 								      const Rep a, const Rep b) const
 	{
 		uint32_t tmp = r;
 		__GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a, b );
-		return r = (ZpzDom<uint32_t>::Rep)tmp;
+		return r = (Modular<uint32_t>::Rep)tmp;
 	}
 
 	// r = a*b - r
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::axmyin (Rep& r,
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::axmyin (Rep& r,
 								     const Rep a, const Rep b) const
 	{
 		maxpyin(r,a,b);
@@ -300,47 +300,47 @@ namespace Givaro {
 	}
 
 
-	inline void ZpzDom<uint32_t>::axmy (const size_t sz, Array r,
+	inline void Modular<uint32_t>::axmy (const size_t sz, Array r,
 					      constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_ZPZ32_Uns_MULSUB(tmp, _p, a[i], x[i], y[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
 	// r -= a*b
-	inline void ZpzDom<uint32_t>::maxpyin (const size_t sz, Array r,
+	inline void Modular<uint32_t>::maxpyin (const size_t sz, Array r,
 						 constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp = r[i];
 			__GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a[i], x[i]);
-			r[i] = (ZpzDom<uint32_t>::Rep)tmp;
+			r[i] = (Modular<uint32_t>::Rep)tmp;
 		}
 	}
 
 	// ------------------------- Miscellaneous functions
 
-	inline int ZpzDom<uint32_t>::isZero(const Rep a) const
+	inline int Modular<uint32_t>::isZero(const Rep a) const
 	{
-		return a == ZpzDom<uint32_t>::zero;
+		return a == Modular<uint32_t>::zero;
 	}
 
-	inline int ZpzDom<uint32_t>::isOne(const Rep a) const
+	inline int Modular<uint32_t>::isOne(const Rep a) const
 	{
-		return a == ZpzDom<uint32_t>::one;
+		return a == Modular<uint32_t>::one;
 	}
 
-inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
+inline int Modular<uint32_t>::isMOne(const Rep a) const
 	{
-		return a == ZpzDom<uint32_t>::mOne;
+		return a == Modular<uint32_t>::mOne;
 	}
 
-	inline size_t ZpzDom<uint32_t>::length(const Rep ) const
+	inline size_t Modular<uint32_t>::length(const Rep ) const
 	{
-		return ZpzDom<uint32_t>::size_rep;
+		return Modular<uint32_t>::size_rep;
 	}
 
 	// ---------
@@ -348,7 +348,7 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 	// ---------
 
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::init ( Rep& r, const double a ) const
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const double a ) const
 	{
 		int sign; double ua;
 		if (a < 0.0) { sign =-1; ua = -a;}
@@ -363,19 +363,19 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 		return r;
 	}
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::init ( Rep& r, const float a ) const
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const float a ) const
 	{
 		return init(r, (double)a);
 	}
 
 
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::init ( Rep& r, const unsigned long a ) const
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const unsigned long a ) const
 	{
 		return r = (Rep)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
 	}
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::init ( Rep& r, const long a ) const
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const long a ) const
 	{
 		int sign;
 		unsigned long ua;
@@ -393,7 +393,7 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 		return r;
 	}
 
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::init ( Rep& r, const Integer& Residu ) const
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const Integer& Residu ) const
 	{
 		long tr;
 		if (Residu <0) {
@@ -420,24 +420,24 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 
 
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::init( Rep& a, const int i) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::init( Rep& a, const int i) const
 	{
 		return init(a,(long)i);
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::init( Rep& a, const unsigned int i) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::init( Rep& a, const unsigned int i) const
 	{
 		return init(a,(unsigned long)i);
 	}
 
 
-	inline void ZpzDom<uint32_t>::assign
+	inline void Modular<uint32_t>::assign
 	( const size_t sz, Array r, constArray a ) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			if (a[i] <ZpzDom<uint32_t>::zero) {
+			if (a[i] <Modular<uint32_t>::zero) {
 				r[i] = a[i] + _p;
-				if (r[i] <ZpzDom<uint32_t>::zero) r[i] = r[i] % _p;
+				if (r[i] <Modular<uint32_t>::zero) r[i] = r[i] % _p;
 			}
 			else if ((uint32_t)a[i] >_p) {
 				r[i] = a[i] - _p;
@@ -447,7 +447,7 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 		}
 	}
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::assign ( Rep& r, const long a ) const
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign ( Rep& r, const long a ) const
 	{
 		int sign;
 		uint32_t ua;
@@ -465,42 +465,42 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 		return r;
 	}
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::assign ( Rep& r, const short a ) const
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign ( Rep& r, const short a ) const
 	{
-		return ZpzDom<uint32_t>::assign( r, (long)a);
+		return Modular<uint32_t>::assign( r, (long)a);
 	}
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::assign ( Rep& r, const unsigned long a ) const
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign ( Rep& r, const unsigned long a ) const
 	{
 		return r = Rep( (a >=_p) ? (a % _p) : a );
 	}
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::assign
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign
 	( Rep& r, const unsigned short a ) const
 	{
 		return r = Rep( (a >=_p) ? (a % _p) : a );
 	}
 
-	inline  ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::assign
+	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign
 	( Rep& r, const Rep a ) const
 	{
 		return assign(r, (long)a);
 	}
 
 
-	inline void ZpzDom<uint32_t>::init
+	inline void Modular<uint32_t>::init
 	( const size_t sz, Array r, constArray a ) const
 	{
 		for ( size_t i=sz ; --i ; )
 			r[i] = a[i];
 	}
 
-	inline ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::init ( Rep& r ) const
+	inline Modular<uint32_t>::Rep& Modular<uint32_t>::init ( Rep& r ) const
 	{
 		return r = zero;
 	}
 
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::dotprod
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::dotprod
 	( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
 	{
 		unsigned int stride = 1;
@@ -546,61 +546,61 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::random(RandIter& g, Rep& a) const
+	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::random(RandIter& g, Rep& a) const
 	{
 		return init(a, g());
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::random(RandIter& g, Rep& a, const Rep& ) const
+	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::random(RandIter& g, Rep& a, const Rep& ) const
 	{
 		return init(a, g());
 	}
 	template< class RandIter >
-	inline  ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::random(RandIter& g, Rep& a, long b) const
+	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::random(RandIter& g, Rep& a, long b) const
 	{
 		return init(a, g() %(uint32_t) b);
 
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::nonzerorandom(RandIter& g, Rep& a) const
+	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::nonzerorandom(RandIter& g, Rep& a) const
 	{
 		while (isZero(init(a, g()))) {};
 		return a;
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
+	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
 	{
 		while (isZero(init(a, g()))) {};
 		return a;
 	}
 
 	template< class RandIter >
-	inline  ZpzDom<uint32_t>::Rep& ZpzDom<uint32_t>::nonzerorandom(RandIter& g, Rep& a, long b) const
+	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::nonzerorandom(RandIter& g, Rep& a, long b) const
 	{
 		while (isZero(init(a, g() %(uint32_t) b))) {};
 		return a;
 	}
 
-	inline ZpzDom<uint32_t>::Rep&  ZpzDom<uint32_t>::dotprod
+	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::dotprod
 	( Rep& r, const size_t sz, constArray a, constArray b ) const
 	{
-		return ZpzDom<uint32_t>::dotprod(r, (int)_p, sz, a, b);
+		return Modular<uint32_t>::dotprod(r, (int)_p, sz, a, b);
 	}
 
 
 	//  a -> r: uint32_t to double
 	inline void
-	ZpzDom<uint32_t>::i2d ( const size_t sz, double* r, constArray a ) const
+	Modular<uint32_t>::i2d ( const size_t sz, double* r, constArray a ) const
 	{
 		for (size_t i=0; i<sz; ++i) r[i] = a[i];
 	}
 
 	//  a -> r: double to uint32_t
 	inline void
-	ZpzDom<uint32_t>::d2i ( const size_t sz, Array r, const double* a ) const
+	Modular<uint32_t>::d2i ( const size_t sz, Array r, const double* a ) const
 	{
 		union d_2_l {
 			double d;
@@ -624,40 +624,40 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 
 
 	// -- Input: (z, <_p>)
-	inline std::istream& ZpzDom<uint32_t>::read (std::istream& s)
+	inline std::istream& Modular<uint32_t>::read (std::istream& s)
 	{
 		char ch;
 		s >> std::ws >> ch;
 		if (ch != '(')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<uint32_t>::read: syntax error: no '('"));
-			std::cerr << "GivBadFormat(ZpzDom<uint32_t>::read: syntax error: no '('))" << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<uint32_t>::read: syntax error: no '('"));
+			std::cerr << "GivBadFormat(Modular<uint32_t>::read: syntax error: no '('))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != 'z')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<uint32_t>::read: bad domain object"));
-			std::cerr << "GivBadFormat(ZpzDom<uint32_t>::read: bad domain object))" << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<uint32_t>::read: bad domain object"));
+			std::cerr << "GivBadFormat(Modular<uint32_t>::read: bad domain object))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != ',')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<uint32_t>::read: syntax error: no ','"));
-			std::cerr << "GivBadFormat(ZpzDom<uint32_t>::read: syntax error: no ',')) " << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<uint32_t>::read: syntax error: no ','"));
+			std::cerr << "GivBadFormat(Modular<uint32_t>::read: syntax error: no ',')) " << std::endl;
 
 		s >> std::ws >> _p;
 
 		s >> std::ws >> ch;
 		if (ch != ')')
-			//    GivError::throw_error( GivBadFormat("ZpzDom<uint32_t>::read: syntax error: no ')'"));
-			std::cerr << "GivBadFormat(ZpzDom<uint32_t>::read: syntax error: no ')')) " << std::endl;
+			//    GivError::throw_error( GivBadFormat("Modular<uint32_t>::read: syntax error: no ')'"));
+			std::cerr << "GivBadFormat(Modular<uint32_t>::read: syntax error: no ')')) " << std::endl;
 
 		return s;
 	}
 
-	inline std::ostream& ZpzDom<uint32_t>::write (std::ostream& s ) const
+	inline std::ostream& Modular<uint32_t>::write (std::ostream& s ) const
 	{
 		return s << "Uns32 Givaro Z/pZ modulo " << residu();
 	}
 
-	inline std::istream& ZpzDom<uint32_t>::read (std::istream& s, Rep& a) const
+	inline std::istream& Modular<uint32_t>::read (std::istream& s, Rep& a) const
 	{
 		Integer tmp;
 		s >> tmp;
@@ -665,7 +665,7 @@ inline int ZpzDom<uint32_t>::isMOne(const Rep a) const
 		return s;
 	}
 
-	inline std::ostream& ZpzDom<uint32_t>::write (std::ostream& s, const Rep a) const
+	inline std::ostream& Modular<uint32_t>::write (std::ostream& s, const Rep a) const
 	{
 		return s << a;
 	}

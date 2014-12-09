@@ -30,12 +30,12 @@ namespace Givaro {
  * .
  */
 template<>
-class ZpzDom<Integer> {
+class Modular<Integer> {
 public:
   // ----- Exported Types and constantes
   typedef Integer Residu_t;                    // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-  // ----- Representation of Element of the domain ZpzDom
+  // ----- Representation of Element of the domain Modular
   typedef Integer Rep;
   typedef Integer Element;
   typedef Element* Element_ptr ;
@@ -52,9 +52,9 @@ public:
   const Rep mOne;
 
   // ----- Constructor
-  ZpzDom() : zero(0), one(1), mOne(-1), _p(0) {}
-  ZpzDom( Residu_t p ) : zero(0), one(1), mOne(p-1), _p(p) {}
-  ZpzDom( const ZpzDom<Integer>& F) : zero(F.zero), one(F.one), mOne(F.mOne),_p(F._p) { }
+  Modular() : zero(0), one(1), mOne(-1), _p(0) {}
+  Modular( Residu_t p ) : zero(0), one(1), mOne(p-1), _p(p) {}
+  Modular( const Modular<Integer>& F) : zero(F.zero), one(F.one), mOne(F.mOne),_p(F._p) { }
 
   Rep minElement() const
   {
@@ -66,10 +66,10 @@ public:
 	  return mOne ;
   }
 
-  int operator==( const ZpzDom<Integer>& BC) const { return _p == BC._p;}
-  int operator!=( const ZpzDom<Integer>& BC) const { return _p != BC._p;}
+  int operator==( const Modular<Integer>& BC) const { return _p == BC._p;}
+  int operator!=( const Modular<Integer>& BC) const { return _p != BC._p;}
 
-  ZpzDom<Integer>& operator=( const ZpzDom<Integer>& F) {
+  Modular<Integer>& operator=( const Modular<Integer>& F) {
 	  F.assign(const_cast<Element&>(one),F.one);
 	  F.assign(const_cast<Element&>(zero),F.zero);
 	  F.assign(const_cast<Element&>(mOne),F.mOne);
@@ -195,7 +195,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< ZpzDom<Integer> , Rep > randIter;
+    typedef GIV_randIter< Modular<Integer> , Rep > randIter;
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
   Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;

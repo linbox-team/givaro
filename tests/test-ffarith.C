@@ -279,25 +279,25 @@ int main(int argc, char ** argv)
 #endif
 
 	// modulo 13 over 16 bits
-	ZpzDom<int16_t> C13(13);
+	Modular<int16_t> C13(13);
 	JETESTE(C13,seed);
 
 	// modulo 13 over 32 bits
-	ZpzDom<int32_t> Z13(13);
+	Modular<int32_t> Z13(13);
 	JETESTE(Z13,seed);
 
 	// modulo 13 over unsigned 32 bits
-	ZpzDom<uint32_t> U13(13);
+	Modular<uint32_t> U13(13);
 	JETESTE(U13,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 13 over 64 bits
-	ZpzDom<int64_t> LL13(13UL);
+	Modular<int64_t> LL13(13UL);
 	JETESTE(LL13,seed);
 #endif
 
 	// modulo 13 fully tabulated
-	ZpzDom<Log16> L13(13);
+	Modular<Log16> L13(13);
 	JETESTE(L13,seed);
 
 	// modulo 13 over 32 bits with Montgomery reduction
@@ -307,19 +307,19 @@ int main(int argc, char ** argv)
 // Maximal prime values
 
 	// prime modulo max over 15 bits
-	ZpzDom<int16_t> CUpmax( previousprime(ZpzDom<int16_t>::getMaxModulus()) ); // 16381
+	Modular<int16_t> CUpmax( previousprime(Modular<int16_t>::getMaxModulus()) ); // 16381
 	JETESTE(CUpmax,seed);
 
 	// previous prime modulo max fully tabulated
-	ZpzDom<Log16> Lpmax( previousprime(ZpzDom<Log16>::getMaxModulus() ) ); // 16369
+	Modular<Log16> Lpmax( previousprime(Modular<Log16>::getMaxModulus() ) ); // 16369
 	JETESTE(Lpmax,seed);
 
 	// prime modulo max over 31 bits
-	ZpzDom<int32_t> Zpmax( previousprime(ZpzDom<int32_t>::getMaxModulus() ) ); // 46337
+	Modular<int32_t> Zpmax( previousprime(Modular<int32_t>::getMaxModulus() ) ); // 46337
 	JETESTE(Zpmax,seed);
 
 	// prime modulo max over 32 bits
-	ZpzDom<uint32_t> Upmax(previousprime(ZpzDom<uint32_t>::getMaxModulus() ) ); // 65521
+	Modular<uint32_t> Upmax(previousprime(Modular<uint32_t>::getMaxModulus() ) ); // 65521
 	JETESTE(Upmax,seed);
 
 	// prime modulo max over 32 bits with Montgomery reduction
@@ -328,7 +328,7 @@ int main(int argc, char ** argv)
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// prime modulo max over 63 bits
-	ZpzDom<int64_t> LLpmax(previousprime(ZpzDom<int64_t>::getMaxModulus() ) ); // 3037000493ULL
+	Modular<int64_t> LLpmax(previousprime(Modular<int64_t>::getMaxModulus() ) ); // 3037000493ULL
 	JETESTE(LLpmax,seed);
 #endif
 
@@ -343,19 +343,19 @@ int main(int argc, char ** argv)
 
 // Maximal values
 	// prime modulo max over 15 bits
-	ZpzDom<int16_t> CUmax(ZpzDom<int16_t>::getMaxModulus() );
+	Modular<int16_t> CUmax(Modular<int16_t>::getMaxModulus() );
 	JETESTE(CUmax,seed);
 
 	// prime modulo max fully tabulated
-	ZpzDom<Log16> Lmax( ZpzDom<Log16>::getMaxModulus()  );
+	Modular<Log16> Lmax( Modular<Log16>::getMaxModulus()  );
 	JETESTE(Lmax,seed);
 
 	// prime modulo max over 31 bits
-	ZpzDom<int32_t> Zmax(ZpzDom<int32_t>::getMaxModulus());
+	Modular<int32_t> Zmax(Modular<int32_t>::getMaxModulus());
 	JETESTE(Zmax,seed);
 
 	// modulo max over 32 bits
-	ZpzDom<uint32_t> Umax(ZpzDom<uint32_t>::getMaxModulus() );
+	Modular<uint32_t> Umax(Modular<uint32_t>::getMaxModulus() );
 	JETESTE(Umax,seed);
 	// prime modulo max over 32 bits with Montgomery reduction
 	Montgomery<int32_t> Mmax(Montgomery<int32_t>::getMaxModulus() );
@@ -363,7 +363,7 @@ int main(int argc, char ** argv)
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// prime modulo max over 63 bits
-	ZpzDom<int64_t> LLmax(ZpzDom<int64_t>::getMaxModulus());
+	Modular<int64_t> LLmax(Modular<int64_t>::getMaxModulus());
 	JETESTE(LLmax,seed);
 #endif
 
@@ -373,28 +373,28 @@ int main(int argc, char ** argv)
 
 
 	// modulo 2 over 16 bits
-	ZpzDom<int16_t> C2(2);
+	Modular<int16_t> C2(2);
 	JETESTE(C2,seed);
 
 	// modulo 2 over 32 bits
-	ZpzDom<int32_t> Z2(2);
+	Modular<int32_t> Z2(2);
 	JETESTE(Z2,seed);
 
 	// modulo 2 over unsigned 32 bits
-	ZpzDom<uint32_t> U2(2);
+	Modular<uint32_t> U2(2);
 	JETESTE(U2,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<int64_t> LL2(2UL);
+	Modular<int64_t> LL2(2UL);
 	JETESTE(LL2,seed);
 #endif
 
 	// modulo 2 fully tabulated
-	ZpzDom<Log16> L2(2);
+	Modular<Log16> L2(2);
 	JETESTE(L2,seed);
 
-	ZpzDom<Log16> L2b( L2 );
+	Modular<Log16> L2b( L2 );
 	JETESTE(L2b,seed);
 
 // Other Characteristics
@@ -412,15 +412,15 @@ int main(int argc, char ** argv)
 	JETESTE(GF13,seed);
 
 	// modulo 13 over arbitrary size
-	ZpzDom<Integer> IntZ13(13);
+	Modular<Integer> IntZ13(13);
 	JETESTE(IntZ13,seed);
 
 	// modulo 13 with generic implementation over signed integral type
-	ZpzDom<long long> GenZ13(13);
+	Modular<long long> GenZ13(13);
 	JETESTE(GenZ13,seed);
 
 	// modulo 101 with generic implementation over unsigned signed integral type
-	ZpzDom<unsigned long long> GenZ101(101);
+	Modular<unsigned long long> GenZ101(101);
 	JETESTE(GenZ101,seed);
 
         // Zech log finite field with 256 elements

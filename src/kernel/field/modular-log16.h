@@ -35,13 +35,13 @@ struct Log16;
  */
 
 template<>
-class ZpzDom<Log16> {
+class Modular<Log16> {
 public:
   // ----- Exported Types and constantes
   typedef uint16_t Residu_t;                    // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
 
-  // ----- Representation of Element of the domain ZpzDom:
+  // ----- Representation of Element of the domain Modular:
   typedef int16_t Power_t;
   typedef Power_t Rep;
   typedef int16_t Element;
@@ -55,14 +55,14 @@ public:
   typedef const Residu_t* constArray;
 
    // ----- Constructor /destor
-  ZpzDom( Residu_t p = 2 );
-  ZpzDom( const ZpzDom<Log16>& F);
-  ~ZpzDom();
+  Modular( Residu_t p = 2 );
+  Modular( const Modular<Log16>& F);
+  ~Modular();
 
-  int operator==( const ZpzDom<Log16>& BC) const { return _p == BC._p;}
-  int operator!=( const ZpzDom<Log16>& BC) const { return _p != BC._p;}
+  int operator==( const Modular<Log16>& BC) const { return _p == BC._p;}
+  int operator!=( const Modular<Log16>& BC) const { return _p != BC._p;}
 
-  ZpzDom<Log16>& operator=( const ZpzDom<Log16>& F);
+  Modular<Log16>& operator=( const Modular<Log16>& F);
 
   // ----- Access to the modulus
   Residu_t residu() const;
@@ -204,7 +204,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< ZpzDom<int16_t>, Rep > randIter;
+    typedef GIV_randIter< Modular<int16_t>, Rep > randIter;
 
 
   // --- IO methods

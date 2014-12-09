@@ -55,9 +55,8 @@ typedef unsigned int    uint32_t;
  * GivBadFormat( " ... " )
  */
 #include "givaro/giverror.h"
-// #include "givaro/givzpz16std.h"
-#include "givaro/givzpz32std.h"
 #include "givaro/giv_randiter.h"
+#include "givaro/modular-int32.h" // For defines in *.inl
 
 namespace Givaro {
 
@@ -68,7 +67,7 @@ namespace Givaro {
  * .
  */
 template<>
-class ZpzDom<Std16> {
+class ZpzDom<int16_t> {
 public:
 	// ----- Exported Types and constantes
 	typedef uint16_t Residu_t;                    // - type to store residue
@@ -93,7 +92,7 @@ public:
 	// ----- Constructor
 	ZpzDom() : zero(0), one(1), mOne((Rep)-1), _p(0) {}
 	ZpzDom( Residu_t p ) : zero(0), one(1), mOne(Rep(p-1)), _p(p) {}
-	ZpzDom( const ZpzDom<Std16>& F) : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
+	ZpzDom( const ZpzDom<int16_t>& F) : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
 
  Rep minElement() const
   {
@@ -105,10 +104,10 @@ public:
 	  return mOne ;
   }
 
-	int operator==( const ZpzDom<Std16>& BC) const { return _p == BC._p;}
-	int operator!=( const ZpzDom<Std16>& BC) const { return _p != BC._p;}
+	int operator==( const ZpzDom<int16_t>& BC) const { return _p == BC._p;}
+	int operator!=( const ZpzDom<int16_t>& BC) const { return _p != BC._p;}
 
-	ZpzDom<Std16>& operator=( const ZpzDom<Std16>& F)
+	ZpzDom<int16_t>& operator=( const ZpzDom<int16_t>& F)
 	{
 
 		F.assign(const_cast<Element&>(one),F.one);
@@ -225,7 +224,7 @@ public:
 	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
 	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-	typedef GIV_randIter< ZpzDom<Std16>, Rep > randIter;
+	typedef GIV_randIter< ZpzDom<int16_t>, Rep > randIter;
 
 	// <- \sum_i a[i], return 1 if a.size() ==0,
 	void reduceadd ( Rep& r, const size_t sz, constArray a ) const;
@@ -268,7 +267,7 @@ public: static inline Residu_t getMaxModulus() { return 32768; }
 
 } // namespace Givaro
 
-#include "givaro/givzpz16std.inl"
+#include "givaro/modular-int16.inl"
 
 #endif // __GIVARO_zpz16std_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

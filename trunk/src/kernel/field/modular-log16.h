@@ -22,10 +22,11 @@
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
 #include "givaro/givarray0.h"
-#include "givaro/givzpztypes.h"
 #include "givaro/giv_randiter.h"
 
 namespace Givaro {
+
+struct Log16;
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
@@ -203,7 +204,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< ZpzDom<Std16>, Rep > randIter;
+    typedef GIV_randIter< ZpzDom<int16_t>, Rep > randIter;
 
 
   // --- IO methods
@@ -246,6 +247,6 @@ public: static inline Residu_t getMaxModulus() { return 16381; }
 
 } // namespace Givaro
 
-#include "givaro/givzpz16table1.inl"
+#include "givaro/modular-log16.inl"
 
 #endif // __GIVARO_zpz16log_H

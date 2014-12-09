@@ -6,13 +6,7 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
-#include "givaro/givzpz16std.h"
-#include "givaro/givzpz16table1.h"
-#include "givaro/givzpz32std.h"
-#include "givaro/givzpz32uns.h"
-#include <givaro/givzpzInt.h>
-#include <givaro/givzpz64std.h>
-#include <givaro/givzpz.h>
+#include <givaro/modular.h>
 #include <givaro/givpoly1.h>
 
 #include <givaro/givinteger.h>
@@ -261,20 +255,20 @@ int main(int argc, char ** argv)
 
 
 	// modulo 13 over 16 bits
-	ZpzDom<Std16> C13(13);
+	ZpzDom<int16_t> C13(13);
 	JETESTE(C13,seed);
 
 	// modulo 13 over 32 bits
-	ZpzDom<Std32> Z13(13);
+	ZpzDom<int32_t> Z13(13);
 	JETESTE(Z13,seed);
 
 	// modulo 13 over unsigned 32 bits
-	ZpzDom<Unsigned32> U13(13);
+	ZpzDom<uint32_t> U13(13);
 	JETESTE(U13,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 13 over 64 bits
-	ZpzDom<Std64> LL13(13UL);
+	ZpzDom<int64_t> LL13(13UL);
 	JETESTE(LL13,seed);
 #endif
 
@@ -284,20 +278,20 @@ int main(int argc, char ** argv)
 
 
 	// modulo 2 over 16 bits
-	ZpzDom<Std16> C2(2);
+	ZpzDom<int16_t> C2(2);
 	JETESTE(C2,seed);
 
 	// modulo 2 over 32 bits
-	ZpzDom<Std32> Z2(2);
+	ZpzDom<int32_t> Z2(2);
 	JETESTE(Z2,seed);
 
 	// modulo 2 over unsigned 32 bits
-	ZpzDom<Unsigned32> U2(2);
+	ZpzDom<uint32_t> U2(2);
 	JETESTE(U2,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<Std64> LL2(2UL);
+	ZpzDom<int64_t> LL2(2UL);
 	JETESTE(LL2,seed);
 #endif
 
@@ -311,20 +305,20 @@ int main(int argc, char ** argv)
 
 // --------------------------------------------
 	// modulo 4 over 16 bits
-	ZpzDom<Std16> C4(4);
+	ZpzDom<int16_t> C4(4);
 	JETESTE(C4,seed);
 
 	// modulo 4 over 32 bits
-	ZpzDom<Std32> Z4(4);
+	ZpzDom<int32_t> Z4(4);
 	JETESTE(Z4,seed);
 
 	// modulo 4 over unsigned 32 bits
-	ZpzDom<Unsigned32> U4(4);
+	ZpzDom<uint32_t> U4(4);
 	JETESTE(U4,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<Std64> LL4(4UL);
+	ZpzDom<int64_t> LL4(4UL);
 	JETESTE(LL4,seed);
 #endif
 
@@ -334,20 +328,20 @@ int main(int argc, char ** argv)
 
 // --------------------------------------------
 	// modulo 75 over 16 bits
-	ZpzDom<Std16> C75(75);
+	ZpzDom<int16_t> C75(75);
 	JETESTE(C75,seed);
 
 	// modulo 75 over 32 bits
-	ZpzDom<Std32> Z75(75);
+	ZpzDom<int32_t> Z75(75);
 	JETESTE(Z75,seed);
 
 	// modulo 75 over unsigned 32 bits
-	ZpzDom<Unsigned32> U75(75);
+	ZpzDom<uint32_t> U75(75);
 	JETESTE(U75,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 675 bits
-	ZpzDom<Std64> LL75(75UL);
+	ZpzDom<int64_t> LL75(75UL);
 	JETESTE(LL75,seed);
 #endif
 
@@ -356,15 +350,15 @@ int main(int argc, char ** argv)
 	JETESTE(IntZ75,seed);
 
 
-        Poly1Dom< ZpzDom<Std16>, Dense > CP13(C13, "X");
+        Poly1Dom< ZpzDom<int16_t>, Dense > CP13(C13, "X");
 	JETESTE(CP13,seed); JEPOLTESTE(CP13,seed);
-        Poly1Dom< ZpzDom<Std32>, Dense > ZP13(Z13, "X");
+        Poly1Dom< ZpzDom<int32_t>, Dense > ZP13(Z13, "X");
 	JETESTE(ZP13,seed); JEPOLTESTE(ZP13,seed);
 
-        Poly1Dom< ZpzDom<Unsigned32>, Dense > UP13(U13, "X");
+        Poly1Dom< ZpzDom<uint32_t>, Dense > UP13(U13, "X");
 	JETESTE(UP13,seed); JEPOLTESTE(UP13,seed);
 
-        Poly1Dom< ZpzDom<Std64>, Dense > LLP13(LL13, "X");
+        Poly1Dom< ZpzDom<int64_t>, Dense > LLP13(LL13, "X");
 	JETESTE(LLP13,seed); JEPOLTESTE(LLP13,seed);
 
         Poly1Dom< ZpzDom<Integer>, Dense > IntZP13(IntZ13, "X");
@@ -372,16 +366,16 @@ int main(int argc, char ** argv)
 
 
 
-        Poly1Dom< ZpzDom<Std16>, Dense > CP75(C75, "X");
+        Poly1Dom< ZpzDom<int16_t>, Dense > CP75(C75, "X");
 	JEPOLTESTE(CP75,seed);
 
-        Poly1Dom< ZpzDom<Std32>, Dense > ZP75(Z75, "X");
+        Poly1Dom< ZpzDom<int32_t>, Dense > ZP75(Z75, "X");
 	JEPOLTESTE(ZP75,seed);
 
-        Poly1Dom< ZpzDom<Unsigned32>, Dense > UP75(U75, "X");
+        Poly1Dom< ZpzDom<uint32_t>, Dense > UP75(U75, "X");
 	JEPOLTESTE(UP75,seed);
 
-        Poly1Dom< ZpzDom<Std64>, Dense > LLP75(LL75, "X");
+        Poly1Dom< ZpzDom<int64_t>, Dense > LLP75(LL75, "X");
 	JEPOLTESTE(LLP75,seed);
 
         Poly1Dom< ZpzDom<Integer>, Dense > IntZP75(IntZ75, "X");

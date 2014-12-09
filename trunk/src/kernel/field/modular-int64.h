@@ -22,10 +22,11 @@
 
 #include "givaro/givinteger.h"
 #include "givaro/giverror.h"
-#include "givaro/givzpztypes.h"
 
 
 namespace Givaro {
+
+template<class TAG> class ZpzDom;
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
@@ -34,9 +35,9 @@ namespace Givaro {
  * .
  */
 template<>
-class ZpzDom<Std64>
+class ZpzDom<int64_t>
 {
-	typedef ZpzDom<Std64> Self_t;
+	typedef ZpzDom<int64_t> Self_t;
 
 public:
 	// ----- Exported Types and constantes
@@ -241,7 +242,7 @@ public: static inline Residu_t getMaxModulus() { return 3037000500ULL; }
 
 } // namespace Givaro
 
-#include "givaro/givzpz64std.inl"
+#include "givaro/modular-int64.inl"
 #endif // __GIVARO_zpz64std_H
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

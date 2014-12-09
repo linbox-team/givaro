@@ -13,7 +13,7 @@
 
 #include <iostream>
 #include <givaro/givpower.h>
-#include <givaro/givzpz.h>
+#include <givaro/modular.h>
 #include <givaro/givgfq.h>
 
 using namespace Givaro;
@@ -23,8 +23,8 @@ using namespace Givaro;
 int main(int argc, char ** argv) {
 
  {
-    ZpzDom<Std32> Z13(13);   // modulo 13 over 32 bits
-    ZpzDom<Std32>::Element a, c;
+    ZpzDom<int32_t> Z13(13);   // modulo 13 over 32 bits
+    ZpzDom<int32_t>::Element a, c;
     Z13.init(a, 7);
 
     long l = 29;

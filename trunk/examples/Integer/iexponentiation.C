@@ -11,7 +11,7 @@
  * @brief NO DOC
  */
 #include <iostream>
-#include <givaro/givzpz.h>
+#include <givaro/modular-integer.h>
 #include <givaro/givpower.h>
 #include <givaro/givtimer.h>
 

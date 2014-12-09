@@ -15,9 +15,9 @@
 #include <givaro/givtimer.h>
 #include <givaro/givpoly1crt.h>
 #include <givaro/givintprime.h>
-#include <givaro/givmontg32.h>
+#include <givaro/montgomery.h>
 #include <givaro/givextension.h>
-#include <givaro/givzpz.h>
+#include <givaro/modular.h>
 #include <givaro/givgfq.h>
 #include <givaro/givcra.h>    // Chinese Remainder of two elements
 #include <givaro/givrns.h>    // Chinese Remainder of an array of elements
@@ -30,14 +30,14 @@ using namespace Givaro;
 
 
 typedef GFqDom<long> 		Field1;
-typedef ZpzDom<Std16>           Field2;
-typedef ZpzDom<Log16>           Field3;
-typedef ZpzDom<Std32>  		Field4;
-typedef ZpzDom<Std64>  		Field5;
-typedef ZpzDom<Unsigned32>	Field6;
-typedef Montgomery<Std32>       Field7;
+typedef ZpzDom<int16_t>     Field2;
+typedef ZpzDom<Log16>       Field3;
+typedef ZpzDom<int32_t>  	Field4;
+typedef ZpzDom<int64_t>  	Field5;
+typedef ZpzDom<uint32_t>	Field6;
+typedef Montgomery<int32_t> Field7;
 typedef RationalDom	        Field8;
-typedef ZpzDom<Integer>         Field9;
+typedef ZpzDom<Integer>     Field9;
 
 
 typedef Extension<> 		Field10;

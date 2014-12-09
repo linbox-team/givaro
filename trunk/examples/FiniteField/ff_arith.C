@@ -12,10 +12,9 @@
  */
 
 #include <iostream>
-#include <givaro/givzpz64std.h>
-#include <givaro/givzpz.h>
+#include <givaro/modular.h>
+#include <givaro/montgomery.h>
 #include <givaro/givgfq.h>
-#include <givaro/givmontg32.h>
 #include <givaro/givgfqext.h>
 
 using namespace Givaro;
@@ -145,25 +144,25 @@ extern "C" {
 int main(int argc, char ** argv) {
 
         // modulo 13 over 16 bits
-    ZpzDom<Std16> C13(13); TestField( C13 );
+    ZpzDom<int16_t> C13(13); TestField( C13 );
 
         // modulo 13 over 32 bits
-    ZpzDom<Std32> Z13(13); TestField( Z13 );
+    ZpzDom<int32_t> Z13(13); TestField( Z13 );
 
         // modulo 13 over unsigned 32 bits
-    ZpzDom<Unsigned32> U13(13); TestField( U13 );
+    ZpzDom<uint32_t> U13(13); TestField( U13 );
 
 #ifdef __USE_Givaro_SIXTYFOUR__
         // modulo 13 over 64 bits
-    ZpzDom<Std64> LL13(13UL); TestField( LL13 );
+    ZpzDom<int64_t> LL13(13UL); TestField( LL13 );
 #endif
 
         // modulo 13 fully tabulated
     ZpzDom<Log16> L13(13); TestField( L13 );
 
         // modulo 13 over 32 bits with Montgomery reduction
-    Montgomery<Std32> M13(13); TestField( M13 );
-    Montgomery<Std32> M3(39989); TestField( M3 );
+    Montgomery<int32_t> M13(13); TestField( M13 );
+    Montgomery<int32_t> M3(39989); TestField( M3 );
 
         // modulo 13 with primitive root representation
     GFqDom<int> GF13( 13 ); TestField( GF13 );

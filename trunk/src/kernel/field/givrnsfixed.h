@@ -17,7 +17,7 @@
 #include "givaro/givrns.h"
 #include "givaro/givrandom.h"
 #include "givaro/givintprime.h"
-#include "givaro/givzpzInt.h"
+#include "givaro/modular-integer.h"
 #include <vector>
 
 namespace Givaro {

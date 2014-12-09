@@ -24,7 +24,6 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
-#include "givaro/givzpztypes.h"
 #include "givaro/giv_randiter.h"
 #include <math.h>
 
@@ -38,7 +37,7 @@ namespace Givaro {
  * .
  */
 template<>
-class ZpzDom<Std32> {
+class ZpzDom<int32_t> {
 public:
   // ----- Exported Types and constantes
   typedef uint32_t Residu_t;                    // - type to store residue
@@ -67,7 +66,7 @@ public:
   ZpzDom( Residu_t p ) :
 	  zero(0), one(1), mOne((Rep)p-1), _p(p), _dp((double)p) {}
 
-  ZpzDom( const ZpzDom<Std32>& F)
+  ZpzDom( const ZpzDom<int32_t>& F)
 	  : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp) {}
 
  Rep minElement() const
@@ -82,10 +81,10 @@ public:
 
 
 
-  int operator==( const ZpzDom<Std32>& BC) const { return _p == BC._p;}
-  int operator!=( const ZpzDom<Std32>& BC) const { return _p != BC._p;}
+  int operator==( const ZpzDom<int32_t>& BC) const { return _p == BC._p;}
+  int operator!=( const ZpzDom<int32_t>& BC) const { return _p != BC._p;}
 
-  ZpzDom<Std32>& operator=( const ZpzDom<Std32>& F)
+  ZpzDom<int32_t>& operator=( const ZpzDom<int32_t>& F)
   {
 	  F.assign(const_cast<Element&>(one),F.one);
 	  F.assign(const_cast<Element&>(zero),F.zero);
@@ -203,7 +202,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< ZpzDom<Std32> , Rep > randIter;
+    typedef GIV_randIter< ZpzDom<int32_t> , Rep > randIter;
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
   Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;
@@ -247,7 +246,7 @@ public: static inline Residu_t getMaxModulus() { return 46341; }
 } // namespace Givaro
 
 
-#include "givaro/givzpz32std.inl"
+#include "givaro/modular-int32.inl"
 
 #endif // __GIVARO_zpz32std_H
 

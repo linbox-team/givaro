@@ -19,7 +19,6 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
-#include "givaro/givzpztypes.h"
 #include "givaro/giv_randiter.h"
 
 
@@ -271,7 +270,7 @@ protected:
 
 } // namespace Givaro
 
-#include "givaro/givzpzGen.inl"
+#include "givaro/modular-inttype.inl"
 
 #endif // __GIVARO_zpz_gen_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

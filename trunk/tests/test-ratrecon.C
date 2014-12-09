@@ -8,7 +8,7 @@
 #include <iostream>
 #include <givaro/givpoly1.h>
 #include <givaro/givfractiondomain.h>
-#include <givaro/givzpz64std.h>
+#include <givaro/modular-int64.h>
 
 #ifdef GIVARO_DEBUG
 long long TTcount = 0;
@@ -100,7 +100,7 @@ int main(int argc, char ** argv)
     Integer::seeding((unsigned long)seed);
     GivRandom generator((unsigned long)seed);
 
-    typedef ZpzDom<Std64> Field;
+    typedef ZpzDom<int64_t> Field;
     typedef Poly1Dom< Field, Dense > PolyZpz;
     typedef FracDom<PolyZpz> FracZpz;
     typedef Poly1Dom< FracZpz, Dense > PolyFracZpz;

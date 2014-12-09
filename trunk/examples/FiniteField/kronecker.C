@@ -16,7 +16,7 @@
  */
 #include <iostream>
 #include <givaro/givrandom.h>
-#include <givaro/givzpzInt.h>
+#include <givaro/modular-integer.h>
 #include <givaro/givgfqkron.h>
 
 using namespace Givaro;
@@ -42,9 +42,9 @@ int main(int argc, char ** argv) {
 
     GF.write( std::cerr << "b: ", b ) << std::endl;
 
-    ZpzDom<Std32> Zp(charac);
-    Poly1PadicDom<ZpzDom<Std32> > PAD(Zp ,"Y");
-    Poly1PadicDom<ZpzDom<Std32> >::Element pol;
+    ZpzDom<int32_t> Zp(charac);
+    Poly1PadicDom<ZpzDom<int32_t> > PAD(Zp ,"Y");
+    Poly1PadicDom<ZpzDom<int32_t> >::Element pol;
     PAD.radixdirect(pol, GF.convert(b), expo);
     PAD.write(std::cerr<< "b(Y): ", pol) << std::endl;
 

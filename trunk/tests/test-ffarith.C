@@ -6,11 +6,10 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
-#include <givaro/givzpz64std.h>
-#include <givaro/givzpz.h>
+#include <givaro/modular.h>
+#include <givaro/montgomery.h>
 #include <givaro/givgfq.h>
 #include <givaro/givintprime.h>
-#include <givaro/givmontg32.h>
 #include <givaro/givgfqext.h>
 #include <givaro/givextension.h>
 
@@ -280,20 +279,20 @@ int main(int argc, char ** argv)
 #endif
 
 	// modulo 13 over 16 bits
-	ZpzDom<Std16> C13(13);
+	ZpzDom<int16_t> C13(13);
 	JETESTE(C13,seed);
 
 	// modulo 13 over 32 bits
-	ZpzDom<Std32> Z13(13);
+	ZpzDom<int32_t> Z13(13);
 	JETESTE(Z13,seed);
 
 	// modulo 13 over unsigned 32 bits
-	ZpzDom<Unsigned32> U13(13);
+	ZpzDom<uint32_t> U13(13);
 	JETESTE(U13,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 13 over 64 bits
-	ZpzDom<Std64> LL13(13UL);
+	ZpzDom<int64_t> LL13(13UL);
 	JETESTE(LL13,seed);
 #endif
 
@@ -302,13 +301,13 @@ int main(int argc, char ** argv)
 	JETESTE(L13,seed);
 
 	// modulo 13 over 32 bits with Montgomery reduction
-	Montgomery<Std32> M13(13);
+	Montgomery<int32_t> M13(13);
 	JETESTE(M13,seed);
 
 // Maximal prime values
 
 	// prime modulo max over 15 bits
-	ZpzDom<Std16> CUpmax( previousprime(ZpzDom<Std16>::getMaxModulus()) ); // 16381
+	ZpzDom<int16_t> CUpmax( previousprime(ZpzDom<int16_t>::getMaxModulus()) ); // 16381
 	JETESTE(CUpmax,seed);
 
 	// previous prime modulo max fully tabulated
@@ -316,20 +315,20 @@ int main(int argc, char ** argv)
 	JETESTE(Lpmax,seed);
 
 	// prime modulo max over 31 bits
-	ZpzDom<Std32> Zpmax( previousprime(ZpzDom<Std32>::getMaxModulus() ) ); // 46337
+	ZpzDom<int32_t> Zpmax( previousprime(ZpzDom<int32_t>::getMaxModulus() ) ); // 46337
 	JETESTE(Zpmax,seed);
 
 	// prime modulo max over 32 bits
-	ZpzDom<Unsigned32> Upmax(previousprime(ZpzDom<Unsigned32>::getMaxModulus() ) ); // 65521
+	ZpzDom<uint32_t> Upmax(previousprime(ZpzDom<uint32_t>::getMaxModulus() ) ); // 65521
 	JETESTE(Upmax,seed);
 
 	// prime modulo max over 32 bits with Montgomery reduction
-	Montgomery<Std32> Mpmax(previousprime(Montgomery<Std32>::getMaxModulus() ) ); // 40499
+	Montgomery<int32_t> Mpmax(previousprime(Montgomery<int32_t>::getMaxModulus() ) ); // 40499
 	JETESTE(Mpmax,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// prime modulo max over 63 bits
-	ZpzDom<Std64> LLpmax(previousprime(ZpzDom<Std64>::getMaxModulus() ) ); // 3037000493ULL
+	ZpzDom<int64_t> LLpmax(previousprime(ZpzDom<int64_t>::getMaxModulus() ) ); // 3037000493ULL
 	JETESTE(LLpmax,seed);
 #endif
 
@@ -344,7 +343,7 @@ int main(int argc, char ** argv)
 
 // Maximal values
 	// prime modulo max over 15 bits
-	ZpzDom<Std16> CUmax(ZpzDom<Std16>::getMaxModulus() );
+	ZpzDom<int16_t> CUmax(ZpzDom<int16_t>::getMaxModulus() );
 	JETESTE(CUmax,seed);
 
 	// prime modulo max fully tabulated
@@ -352,19 +351,19 @@ int main(int argc, char ** argv)
 	JETESTE(Lmax,seed);
 
 	// prime modulo max over 31 bits
-	ZpzDom<Std32> Zmax(ZpzDom<Std32>::getMaxModulus());
+	ZpzDom<int32_t> Zmax(ZpzDom<int32_t>::getMaxModulus());
 	JETESTE(Zmax,seed);
 
 	// modulo max over 32 bits
-	ZpzDom<Unsigned32> Umax(ZpzDom<Unsigned32>::getMaxModulus() );
+	ZpzDom<uint32_t> Umax(ZpzDom<uint32_t>::getMaxModulus() );
 	JETESTE(Umax,seed);
 	// prime modulo max over 32 bits with Montgomery reduction
-	Montgomery<Std32> Mmax(Montgomery<Std32>::getMaxModulus() );
+	Montgomery<int32_t> Mmax(Montgomery<int32_t>::getMaxModulus() );
 	JETESTE(Mmax,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// prime modulo max over 63 bits
-	ZpzDom<Std64> LLmax(ZpzDom<Std64>::getMaxModulus());
+	ZpzDom<int64_t> LLmax(ZpzDom<int64_t>::getMaxModulus());
 	JETESTE(LLmax,seed);
 #endif
 
@@ -374,20 +373,20 @@ int main(int argc, char ** argv)
 
 
 	// modulo 2 over 16 bits
-	ZpzDom<Std16> C2(2);
+	ZpzDom<int16_t> C2(2);
 	JETESTE(C2,seed);
 
 	// modulo 2 over 32 bits
-	ZpzDom<Std32> Z2(2);
+	ZpzDom<int32_t> Z2(2);
 	JETESTE(Z2,seed);
 
 	// modulo 2 over unsigned 32 bits
-	ZpzDom<Unsigned32> U2(2);
+	ZpzDom<uint32_t> U2(2);
 	JETESTE(U2,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
 	// modulo 2 over 64 bits
-	ZpzDom<Std64> LL2(2UL);
+	ZpzDom<int64_t> LL2(2UL);
 	JETESTE(LL2,seed);
 #endif
 
@@ -402,10 +401,10 @@ int main(int argc, char ** argv)
 
 
 	// modulo 3 over 32 bits with Montgomery reduction
-	Montgomery<Std32> M2(3);
+	Montgomery<int32_t> M2(3);
 	JETESTE(M2,seed);
 
-	Montgomery<Std32> M3(39989);
+	Montgomery<int32_t> M3(39989);
 	JETESTE(M3,seed);
 
 	// modulo 13 with primitive root representation

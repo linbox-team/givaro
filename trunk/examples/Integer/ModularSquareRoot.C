@@ -21,10 +21,9 @@
 
 
 #include <givaro/givpoly1factor.h>
-#include <givaro/givzpzInt.h>
+#include <givaro/modular-integer.h>
+
 using namespace Givaro;
-
-
 
 // Algorithm 3.34 (Square Root Mod p) of
 // Handbook of Applied Cryptography

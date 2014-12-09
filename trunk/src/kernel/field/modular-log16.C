@@ -11,7 +11,7 @@
 // Description:
 
 #include <iostream>
-#include "givaro/givzpz16table1.h"
+#include "givaro/modular-log16.h"
 
 namespace Givaro {
 

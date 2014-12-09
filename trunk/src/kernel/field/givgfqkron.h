@@ -145,9 +145,9 @@ public:
 
 protected:
     std::ostream& polywrite(std::ostream& out, const Element& a, const Indeter In= "B") const {
-        static ZpzDom<Integer> Zp(this->_characteristic);
-        static Poly1PadicDom<ZpzDom<Integer> > PAD(Zp ,In);
-        static Poly1PadicDom<ZpzDom<Integer> >::Element pol;
+        static Modular<Integer> Zp(this->_characteristic);
+        static Poly1PadicDom<Modular<Integer> > PAD(Zp ,In);
+        static Poly1PadicDom<Modular<Integer> >::Element pol;
         Integer r;
         PAD.radixdirect(pol, this->convert(r, a), this->_exponent);
         return PAD.write(out, pol);

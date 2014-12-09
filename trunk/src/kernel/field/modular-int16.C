@@ -20,9 +20,9 @@ namespace Givaro {
 
 	// Returns d, and u and v such that u a + v b = d;
 	// JGD 04.11.1999
-	// const int32_t ZpzDom<int16_t>::gcdext
+	// const int32_t Modular<int16_t>::gcdext
 	//   ( int32_t& u, int32_t& v, const int32_t a, const int32_t b )
-	int32_t& ZpzDom<int16_t>::gcdext
+	int32_t& Modular<int16_t>::gcdext
 	( int32_t& d,  int32_t& u, int32_t& v, const int32_t a, const int32_t b ) const
 	{
 		long u1,u2,u3;
@@ -41,7 +41,7 @@ namespace Givaro {
 		return d=int32_t(u3);
 	}
 
-	int32_t& ZpzDom<int16_t>::invext
+	int32_t& Modular<int16_t>::invext
 	( int32_t& u, const int32_t a, const int32_t b ) const
 	{
 		long u3;
@@ -66,11 +66,11 @@ namespace Givaro {
 		return (u3<0?u=-u:u);
 	}
 
-	void ZpzDom<int16_t>::Init()
+	void Modular<int16_t>::Init()
 	{
 	}
 
-	void ZpzDom<int16_t>::End()
+	void Modular<int16_t>::End()
 	{
 	}
 

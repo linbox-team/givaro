@@ -23,13 +23,13 @@
 using namespace Givaro;
 
 typedef GFqDom<long>         Field1;
-typedef ZpzDom<int16_t>      Field2;
-typedef ZpzDom<Log16>        Field3;
-typedef ZpzDom<int32_t>      Field4;
-typedef ZpzDom<int64_t>      Field5;
-typedef ZpzDom<uint32_t>     Field6;
+typedef Modular<int16_t>      Field2;
+typedef Modular<Log16>        Field3;
+typedef Modular<int32_t>      Field4;
+typedef Modular<int64_t>      Field5;
+typedef Modular<uint32_t>     Field6;
 typedef Montgomery<int32_t>  Field7;
-typedef ZpzDom<Integer>      Field8;
+typedef Modular<Integer>      Field8;
 
 template <typename Field>
 Integer tmain(int argc, char ** argv, const GivRandom& generator)

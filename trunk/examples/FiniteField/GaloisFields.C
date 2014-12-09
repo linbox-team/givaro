@@ -61,8 +61,8 @@ int main (int argc, char * * argv) {
         // And an alternative field, works only with Givaro >= 3.4.1
     {
 
-        ZpzDom<int64_t> F11(11);
-        Extension< ZpzDom<int64_t> > F121(F11, 2);
+        Modular<int64_t> F11(11);
+        Extension< Modular<int64_t> > F121(F11, 2);
         F121.write(std::cout << "This is the field with 121 elements: ") << ", using: " << F121.irreducible() << " as irreducible polynomial" << std::endl;
 
 
@@ -73,13 +73,13 @@ int main (int argc, char * * argv) {
         // And an alternative field, works only with Givaro >= 3.4.1
     {
 
-        ZpzDom<int64_t> F11(11);
-        Poly1Dom< ZpzDom<int64_t>, Dense > PolF11(F11,"Z");
-        Poly1Dom< ZpzDom<int64_t>, Dense >::Element Irred;
+        Modular<int64_t> F11(11);
+        Poly1Dom< Modular<int64_t>, Dense > PolF11(F11,"Z");
+        Poly1Dom< Modular<int64_t>, Dense >::Element Irred;
         PolF11.init(Irred, Degree(2));
         F11.assign(Irred[0],F11.one);
         F11.assign(Irred[1],F11.one); // Irred is Y^2+Y+1
-        Extension< ZpzDom<int64_t> > F121(PolF11, Irred);
+        Extension< Modular<int64_t> > F121(PolF11, Irred);
         F121.write(std::cout << "This is the field with 121 elements: ") << ", using: " << F121.irreducible() << " as irreducible polynomial" << std::endl;
 
 
@@ -181,8 +181,8 @@ int main (int argc, char * * argv) {
         }
 
         {
-            ZpzDom<int16_t> GF2(2);
-            Poly1PadicDom< ZpzDom<int16_t> > P2(GF2,"X");
+            Modular<int16_t> GF2(2);
+            Poly1PadicDom< Modular<int16_t> > P2(GF2,"X");
 
             givvector<long> vect202; P2.radixdirect(vect202, 202, 8);
             givvector<long> vect83; P2.radixdirect(vect83, 83, 8);

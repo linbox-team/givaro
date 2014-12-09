@@ -100,7 +100,7 @@ int main(int argc, char ** argv)
     Integer::seeding((unsigned long)seed);
     GivRandom generator((unsigned long)seed);
 
-    typedef ZpzDom<int64_t> Field;
+    typedef Modular<int64_t> Field;
     typedef Poly1Dom< Field, Dense > PolyZpz;
     typedef FracDom<PolyZpz> FracZpz;
     typedef Poly1Dom< FracZpz, Dense > PolyFracZpz;

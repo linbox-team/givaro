@@ -23,8 +23,8 @@ using namespace Givaro;
 int main(int argc, char ** argv) {
 
  {
-    ZpzDom<int32_t> Z13(13);   // modulo 13 over 32 bits
-    ZpzDom<int32_t>::Element a, c;
+    Modular<int32_t> Z13(13);   // modulo 13 over 32 bits
+    Modular<int32_t>::Element a, c;
     Z13.init(a, 7);
 
     long l = 29;

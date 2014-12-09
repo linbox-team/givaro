@@ -24,7 +24,7 @@ using namespace Givaro;
 #define GIVMIN(a,b) (((a)<(b))?(a):(b))
 #endif
 
-typedef ZpzDom<int32_t> Domain;
+typedef Modular<int32_t> Domain;
 typedef Domain::Element Modulo;
 
 #ifndef NB

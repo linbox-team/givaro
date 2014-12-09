@@ -29,12 +29,12 @@ namespace Givaro {
  * .
  */
 template<typename IntType>
-class ZpzDom {
+class Modular {
 public:
   // ----- Exported Types and constantes
   typedef IntType Residu_t;                    //!<  type to store residue
   enum { size_rep = sizeof(Residu_t) };      //!<  size of the storage type
-  //! Representation of Element of the domain ZpzDom
+  //! Representation of Element of the domain Modular
   typedef IntType Rep;
   typedef IntType Element;
  typedef Element* Element_ptr ;
@@ -57,9 +57,9 @@ public:
 
   //! Constructor
   //@{
-  ZpzDom() : zero(0), one(1), mOne(-1), _p(0) {}
-  ZpzDom( Residu_t p ) : zero(0), one(1), mOne(p-1), _p(p) {}
-  ZpzDom( const ZpzDom<IntType>& F) : zero(F.zero), one(F.one), mOne(F.mOne),_p(F._p) { }
+  Modular() : zero(0), one(1), mOne(-1), _p(0) {}
+  Modular( Residu_t p ) : zero(0), one(1), mOne(p-1), _p(p) {}
+  Modular( const Modular<IntType>& F) : zero(F.zero), one(F.one), mOne(F.mOne),_p(F._p) { }
   //@}
 
   //! Min/Max Element
@@ -76,7 +76,7 @@ public:
   //@}
 
   //! Copy
-  ZpzDom<IntType>& operator=( const ZpzDom<IntType>& F)
+  Modular<IntType>& operator=( const Modular<IntType>& F)
   {
 	  F.assign(const_cast<Element&>(one),F.one);
 	  F.assign(const_cast<Element&>(zero),F.zero);
@@ -89,8 +89,8 @@ public:
 
   //! (in)Equality
   //@{
-  int operator==( const ZpzDom<IntType>& BC) const { return _p == BC._p;}
-  int operator!=( const ZpzDom<IntType>& BC) const { return _p != BC._p;}
+  int operator==( const Modular<IntType>& BC) const { return _p == BC._p;}
+  int operator!=( const Modular<IntType>& BC) const { return _p != BC._p;}
 
   // ----- Equality between two Elements
 
@@ -227,7 +227,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< ZpzDom<IntType> , Rep > randIter;
+    typedef GIV_randIter< Modular<IntType> , Rep > randIter;
     //@}
 
     //! Misc.

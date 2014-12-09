@@ -67,12 +67,12 @@ namespace Givaro {
  * .
  */
 template<>
-class ZpzDom<int16_t> {
+class Modular<int16_t> {
 public:
 	// ----- Exported Types and constantes
 	typedef uint16_t Residu_t;                    // - type to store residue
 	enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-	// ----- Representation of Element of the domain ZpzDom
+	// ----- Representation of Element of the domain Modular
 	typedef uint16_t Rep;
 	typedef uint16_t Element;
 	typedef Element* Element_ptr ;
@@ -90,9 +90,9 @@ public:
 	const Rep mOne;
 
 	// ----- Constructor
-	ZpzDom() : zero(0), one(1), mOne((Rep)-1), _p(0) {}
-	ZpzDom( Residu_t p ) : zero(0), one(1), mOne(Rep(p-1)), _p(p) {}
-	ZpzDom( const ZpzDom<int16_t>& F) : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
+	Modular() : zero(0), one(1), mOne((Rep)-1), _p(0) {}
+	Modular( Residu_t p ) : zero(0), one(1), mOne(Rep(p-1)), _p(p) {}
+	Modular( const Modular<int16_t>& F) : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
 
  Rep minElement() const
   {
@@ -104,10 +104,10 @@ public:
 	  return mOne ;
   }
 
-	int operator==( const ZpzDom<int16_t>& BC) const { return _p == BC._p;}
-	int operator!=( const ZpzDom<int16_t>& BC) const { return _p != BC._p;}
+	int operator==( const Modular<int16_t>& BC) const { return _p == BC._p;}
+	int operator!=( const Modular<int16_t>& BC) const { return _p != BC._p;}
 
-	ZpzDom<int16_t>& operator=( const ZpzDom<int16_t>& F)
+	Modular<int16_t>& operator=( const Modular<int16_t>& F)
 	{
 
 		F.assign(const_cast<Element&>(one),F.one);
@@ -224,7 +224,7 @@ public:
 	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
 	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-	typedef GIV_randIter< ZpzDom<int16_t>, Rep > randIter;
+	typedef GIV_randIter< Modular<int16_t>, Rep > randIter;
 
 	// <- \sum_i a[i], return 1 if a.size() ==0,
 	void reduceadd ( Rep& r, const size_t sz, constArray a ) const;

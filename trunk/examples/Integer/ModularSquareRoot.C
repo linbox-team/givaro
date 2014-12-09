@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     
     if (ISM.isprime(n)) {
         std::cout << "Using polynomial factorization : " << std::endl;
-        typedef ZpzDom<Integer> Field;
+        typedef Modular<Integer> Field;
         typedef Poly1FactorDom<Field,Dense> Polys;
         typedef Polys::Element Polynomial;
         Field F(n); Polys Pol(F, "X");

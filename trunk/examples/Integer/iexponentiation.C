@@ -27,8 +27,8 @@ int main(int argc, char ** argv) {
 
  {
      Integer p(argv[3]);
-     ZpzDom<Integer> Zp( p );
-     ZpzDom<Integer>::Element a, b;
+     Modular<Integer> Zp( p );
+     Modular<Integer>::Element a, b;
      unsigned long e = (unsigned long)atoi(argv[2]) ;
      Zp.init(a, Integer(argv[1]));
      Zp.init(b);

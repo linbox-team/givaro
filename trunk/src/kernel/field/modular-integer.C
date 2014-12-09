@@ -15,11 +15,11 @@
 
 namespace Givaro {
 
-void ZpzDom<Integer>::Init()
+void Modular<Integer>::Init()
 {
 }
 
-void ZpzDom<Integer>::End()
+void Modular<Integer>::End()
 {
 }
 

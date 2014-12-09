@@ -35,12 +35,12 @@ namespace Givaro {
  * .
  */
 template<>
-class ZpzDom<uint32_t> {
+class Modular<uint32_t> {
 public:
   // ----- Exported Types and constantes
   typedef uint32_t Residu_t;         // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-  // ----- Representation of Element of the domain ZpzDom
+  // ----- Representation of Element of the domain Modular
   typedef uint32_t Rep;
   typedef uint32_t Element;
  typedef Element* Element_ptr ;
@@ -58,14 +58,14 @@ public:
   const Rep mOne;
 
   // ----- Constructor
-  ZpzDom();
-  ZpzDom( Residu_t p );
-  ZpzDom( const ZpzDom<uint32_t>& F);
+  Modular();
+  Modular( Residu_t p );
+  Modular( const Modular<uint32_t>& F);
 
-  int operator==( const ZpzDom<uint32_t>& BC) const { return _p == BC._p;}
-  int operator!=( const ZpzDom<uint32_t>& BC) const { return _p != BC._p;}
+  int operator==( const Modular<uint32_t>& BC) const { return _p == BC._p;}
+  int operator!=( const Modular<uint32_t>& BC) const { return _p != BC._p;}
 
-  ZpzDom<uint32_t>& operator=( const ZpzDom<uint32_t>& F)
+  Modular<uint32_t>& operator=( const Modular<uint32_t>& F)
   {
 	  F.assign(const_cast<Element&>(one),F.one);
 	  F.assign(const_cast<Element&>(zero),F.zero);
@@ -205,7 +205,7 @@ public:
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
     template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< ZpzDom<uint32_t> , Rep > randIter;
+    typedef GIV_randIter< Modular<uint32_t> , Rep > randIter;
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
   Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;

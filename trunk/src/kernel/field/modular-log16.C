@@ -15,7 +15,7 @@
 
 namespace Givaro {
 
-ZpzDom<Log16>::ZpzDom( Residu_t p ) :
+Modular<Log16>::Modular( Residu_t p ) :
 	_p(p),_pmone(Residu_t(p-1)),zero(Rep(_pmone << 1)), one(0),mOne(Rep(_pmone>>1))
 {
 	int32_t i,j;
@@ -147,7 +147,7 @@ ZpzDom<Log16>::ZpzDom( Residu_t p ) :
 	// -- temporary
 }
 
-ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F) :
+Modular<Log16>::Modular(const Modular<Log16>& F) :
 	_p ( F._p),
 	_pmone ( F._pmone),
 	_tab_value2rep ( F._tab_value2rep),
@@ -170,7 +170,7 @@ ZpzDom<Log16>::ZpzDom(const ZpzDom<Log16>& F) :
 }
 
 
-ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
+Modular<Log16>& Modular<Log16>::operator=( const Modular<Log16>& F)
 {
 
 	F.assign(const_cast<Element&>(one),F.one);
@@ -220,7 +220,7 @@ ZpzDom<Log16>& ZpzDom<Log16>::operator=( const ZpzDom<Log16>& F)
 }
 
 
-ZpzDom<Log16>::~ZpzDom()
+Modular<Log16>::~Modular()
 {
   (*numRefs)--;
   if (*numRefs == 0) {
@@ -239,11 +239,11 @@ ZpzDom<Log16>::~ZpzDom()
   }
 }
 
-void ZpzDom<Log16>::Init()
+void Modular<Log16>::Init()
 {
 }
 
-void ZpzDom<Log16>::End()
+void Modular<Log16>::End()
 {
 }
 

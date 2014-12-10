@@ -115,15 +115,12 @@ namespace Givaro {
 
 	const int * IntPrimeDom::TP2 = &(IntPrimeDom::IP2)[2];
 
-	int IntPrimeDom::isprime_Tabule2(const int n)  const
-	{
+	int IntPrimeDom::isprime_Tabule2(const int n) const {
 		int plus = LOGMAX2 >> 1;
 		int here = plus;
-		int a;
-		//        int loop = LOGMAX2;
-		//        while (loop)
 		for(int loop = LOGMAX2;loop; (loop >>= 1) ) {
-			if ( (a = (TP2[here] - n)) == 0) return 1;
+            int a= (TP2[here] - n);
+			if (a == 0) return 1;
 			if (a > 0)
 				here -= (++plus >>= 1);
 			else
@@ -197,12 +194,9 @@ namespace Givaro {
 #endif
 
 
-	unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const
-	{
-		unsigned long int prime;
+	unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const {
 		unsigned long int n, n2;
 		int i;
-		unsigned long int rem;
 		Integer t(u);
 		int exact;
 		int usize = int(u.size());
@@ -235,9 +229,9 @@ namespace Givaro {
 		for (i = 1; primes[i] != 0; i++)
 		{
 			u2 = u;
-			prime = primes[i];
+            unsigned long int prime = primes[i];
 
-			rem = (unsigned long)(u2 % prime);
+            unsigned long int rem = (unsigned long)(u2 % prime);
 			if (rem == 0)		/* divisable by this prime? */
 			{
 				Integer::divmod(q,rem,u2,prime * prime);

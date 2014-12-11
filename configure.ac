@@ -251,7 +251,6 @@ src/library/poly1/Makefile
 src/library/matrix/Makefile
 macros/Makefile
 benchmarks/Makefile
-benchmarks/recint/Makefile
 examples/Makefile
 examples/FiniteField/Makefile
 examples/Integer/Makefile
@@ -259,7 +258,6 @@ examples/Rational/Makefile
 examples/RecInt/Makefile
 examples/Polynomial/Makefile
 tests/Makefile
-tests/RecInt/Makefile
 docs/Makefile
 ])
 AC_OUTPUT

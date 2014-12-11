@@ -17,7 +17,7 @@
 #endif
 
 #if not defined(LOOPS)
-#define LOOPS 100000
+#define LOOPS 10000
 #endif
 
 using namespace RecInt;
@@ -42,8 +42,10 @@ int main(void)
     }
     tim.stop();
     
-    std::cout << "Old: " << tim.usertime() << std::endl;
-    std::cout << "Last inv: " << std::hex << pinv << std::endl;
+	// -----------
+	// Standard output for benchmark - Alexis Breust 2014/12/11
+	std::cout << "Time: " << tim.usertime()
+			  << " Gflops: " << "Irrelevant" << std::endl;
     
     return 0; 
 }

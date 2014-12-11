@@ -38,7 +38,10 @@ int main(void)
     }
     tim.stop();
     
-    std::cout << tim.usertime() << std::endl;
+	// -----------
+	// Standard output for benchmark - Alexis Breust 2014/12/11
+	std::cout << "Time: " << tim.usertime()
+			  << " Gflops: " << "Irrelevant" << std::endl;
     
     return 0;
 }

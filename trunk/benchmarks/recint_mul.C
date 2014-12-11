@@ -9,7 +9,7 @@
 #endif
 
 #if not defined(LOOPS)
-#define LOOPS 1000000
+#define LOOPS 10000
 #endif
 
 #define ALEA_MAX  64
@@ -22,8 +22,6 @@ int main(void)
     rmint<STD_RECINT_SIZE> a[ALEA_MAX];
     ruint<STD_RECINT_SIZE> module;
     Givaro::Timer tim;
-    
-    std::cout << "Size of numbers: 2^(2^" << STD_RECINT_SIZE << ")" << std::endl;
     
     // For montgomery algorithm, the module must be odd
     RecInt::srand(42);
@@ -42,8 +40,10 @@ int main(void)
     }
     tim.stop();
     
-    std::cout << "RecInt: " << tim.usertime() << std::endl;
-    std::cout << "Result: " << std::hex << a[0] << std::endl;
+	// -----------
+	// Standard output for benchmark - Alexis Breust 2014/12/11
+	std::cout << "Time: " << tim.usertime()
+			  << " Gflops: " << "Irrelevant" << std::endl;
     
     return 0;
 }

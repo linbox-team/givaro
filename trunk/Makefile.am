@@ -23,6 +23,13 @@ examples:
 benchmarks:
 	(cd benchmarks; ${MAKE} benchmarks)
 
+perfpublisher: benchmarks/perfpublisher tests/perfpublisher
+
+benchmarks/perfpublisher:
+	(cd benchmarks; ${MAKE} perfpublisher)
+
+tests/perfpublisher:
+	(cd tests; ${MAKE} perfpublisher)
 
 bin_SCRIPTS=givaro-config givaro-makefile
 

@@ -21,19 +21,19 @@ LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP
 AM_LDFLAGS=-static
 
 BENCHMARKS=				\
-	recint_exp			\
-	recint_inv_arazi	\
-	recint_inv_naive	\
-	recint_mul
+	benchmark-recint_exp			\
+	benchmark-recint_inv_arazi	\
+	benchmark-recint_inv_naive	\
+	benchmark-recint_mul
 
 CLEANFILES = $(BENCHMARKS) $(PERFPUBLISHERFILE)
 
 EXTRA_PROGRAMS = $(BENCHMARKS)
 
-recint_exp_SOURCES = recint_exp.C
-recint_inv_arazi_SOURCES = recint_inv_arazi.C
-recint_inv_naive_SOURCES = recint_inv_naive.C
-recint_mul_SOURCES = recint_mul.C
+benchmark_recint_exp_SOURCES = benchmark-recint_exp.C
+benchmark_recint_inv_arazi_SOURCES = benchmark-recint_inv_arazi.C
+benchmark_recint_inv_naive_SOURCES = benchmark-recint_inv_naive.C
+benchmark_recint_mul_SOURCES = benchmark-recint_mul.C
 
 # Perfpublisher script interaction - AB 2014/11/17
 perfpublisher:

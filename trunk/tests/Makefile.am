@@ -9,7 +9,7 @@ check: $(BASE_TESTS)
 
 # -DSTD_RECINT_SIZE=n creates numbers of size 2^(2^n)
 # -DLOOPS=m changes the number of checks per test
-OPTFLAGS = -DSTD_RECINT_SIZE=8
+OPTFLAGS= -DSTD_RECINT_SIZE=8
 OPTLINKS=
 
 AM_CXXFLAGS = @TESTS_CFLAGS@

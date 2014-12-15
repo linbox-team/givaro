@@ -11,7 +11,7 @@
  */
 
 #include <iostream>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 #include <givaro/givpoly1.h>
 
 using namespace Givaro;

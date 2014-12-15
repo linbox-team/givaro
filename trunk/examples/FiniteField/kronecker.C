@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givgfqkron.h
+// file: gfqkronecker.h
 // Time-stamp: <12 Apr 10 16:46:17 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 //
@@ -17,7 +17,7 @@
 #include <iostream>
 #include <givaro/givrandom.h>
 #include <givaro/modular-integer.h>
-#include <givaro/givgfqkron.h>
+#include <givaro/gfqkronecker.h>
 
 using namespace Givaro;
 

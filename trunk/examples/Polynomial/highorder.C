@@ -14,7 +14,7 @@
 #define GIVARO_DEBUG 1
 #include <givaro/givrandom.h>
 #include <givaro/givtimer.h>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givtruncdomain.h>
 #include <givaro/givhighorder.h>

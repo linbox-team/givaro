@@ -16,10 +16,10 @@
 #include <givaro/givpoly1crt.h>
 #include <givaro/givintprime.h>
 #include <givaro/montgomery.h>
-#include <givaro/givextension.h>
+#include <givaro/extension.h>
 #include <givaro/modular.h>
-#include <givaro/givgfq.h>
-#include <givaro/givcra.h>    // Chinese Remainder of two elements
+#include <givaro/gfq.h>
+#include <givaro/chineseremainder.h>    // Chinese Remainder of two elements
 #include <givaro/givrns.h>    // Chinese Remainder of an array of elements
 #include <givaro/givrandom.h>
 

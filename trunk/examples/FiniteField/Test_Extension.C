@@ -11,7 +11,7 @@
  */
 
 #include "givaro/givpoly1.h"
-#include "givaro/givextension.h"
+#include "givaro/extension.h"
 
 using namespace Givaro;
 

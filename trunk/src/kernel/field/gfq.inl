@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givgfq.inl
+// file: gfq.inl
 // Description:
 //   Arithmetic on GF(q)
 // Bugs:

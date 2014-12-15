@@ -14,8 +14,8 @@
 #include <iostream>
 #include <givaro/modular.h>
 #include <givaro/montgomery.h>
-#include <givaro/givgfq.h>
-#include <givaro/givgfqext.h>
+#include <givaro/gfq.h>
+#include <givaro/gfqext.h>
 
 using namespace Givaro;
 

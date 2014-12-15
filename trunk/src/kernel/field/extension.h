@@ -13,8 +13,8 @@
 #define __GIVARO_extension_H
 
 #include <gmp.h>
+#include <givaro/gfq.h>
 #include <givaro/givconfig.h>
-#include <givaro/givgfq.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givpoly1factor.h>
 #include "givaro/givtablelimits.h"

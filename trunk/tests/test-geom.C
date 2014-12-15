@@ -16,7 +16,7 @@
 #include <iostream>
 #include <givaro/givrandom.h>
 #include <givaro/givtimer.h>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givinterpgeom.h>
 #include <givaro/givinterpgeom-multip.h>

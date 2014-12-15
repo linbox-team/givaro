@@ -19,7 +19,7 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
-#include "givaro/giv_randiter.h"
+#include "givaro/givranditer.h"
 
 
 namespace Givaro {

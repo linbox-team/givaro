@@ -7,7 +7,7 @@
 // Author : Giorgi Pascal   pascal.giorgi@ens-lyon.fr
 //==================================================================
 
-/** @file giv_randiter.h
+/** @file givranditer.h
  * @ingroup zpz
  * @brief NO DOC
  * Givaro field Elements generator
@@ -21,8 +21,6 @@
 #include "givaro/givrandom.h"
 
 namespace Givaro {
-
-template<class TAG> class Modular ;
 
 /** Random field Element generator.
  *   This class defines a field Element generator for all givaro field (Gfq and Zpz)

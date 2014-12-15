@@ -8,10 +8,10 @@
 #include <iostream>
 #include <givaro/modular.h>
 #include <givaro/montgomery.h>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
+#include <givaro/gfqext.h>
+#include <givaro/extension.h>
 #include <givaro/givintprime.h>
-#include <givaro/givgfqext.h>
-#include <givaro/givextension.h>
 
 using namespace Givaro;
 

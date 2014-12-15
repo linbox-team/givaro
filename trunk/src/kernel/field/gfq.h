@@ -20,11 +20,15 @@
 
 #include "givaro/givconfig.h"
 #include "givaro/givinteger.h"
-#include <iostream>
+#include "givaro/givranditer.h"
+#include "givaro/givpoly1factor.h"
+
 #include <string>
 #include <vector>
-#include "givaro/giv_randiter.h"
-#include "givaro/givpoly1factor.h"
+
+#ifdef __GIVARO_COUNT__
+#include <iostream>
+#endif
 
 namespace Givaro {
 
@@ -365,7 +369,7 @@ public:
 
 } // namespace Givaro
 
-#include "givaro/givgfq.inl"
+#include "givaro/gfq.inl"
 
 #endif // __GIVARO_gfq1_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

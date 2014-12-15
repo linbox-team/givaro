@@ -45,6 +45,7 @@ DISTCLEANFILES = src/kernel/system/givaro   \
 		 src/kernel/rational/givaro \
 		 src/kernel/recint/recint   \
 		 src/kernel/field/givaro    \
+		 src/kernel/ring/givaro    \
 		 src/kernel/gmp++/gmp++     \
 		 src/library/matrix/givaro  \
 		 src/library/poly1/givaro   \

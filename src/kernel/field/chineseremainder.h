@@ -1,15 +1,15 @@
 // ==========================================================================
-// $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givcra.h,v $
+// $Source: /var/lib/cvs/Givaro/src/kernel/zpz/chineseremainder.h,v $
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givcra.h,v 1.12 2011-02-02 16:23:56 bboyer Exp $
+// $Id: chineseremainder.h,v 1.12 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 
-/*!@file givcra.h
+/*!@file chineseremainder.h
  * @ingroup zpz
  * @brief  Chinese Remainder Algorithm for 2 Elements.
  * @sa

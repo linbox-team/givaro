@@ -4,13 +4,13 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givgfqext.h
+// file: gfqext.h
 // Time-stamp: <30 Sep 14 10:25:12 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
 
-/*! @file givgfqext.h
+/*! @file gfqext.h
  * @ingroup zpz
  * @brief   Arithmetic on GF(p^k), with p a prime number less than 2^15.
  *   Specialized for fast conversions to floating point numbers.

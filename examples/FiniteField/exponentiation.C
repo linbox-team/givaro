@@ -14,7 +14,7 @@
 #include <iostream>
 #include <givaro/givpower.h>
 #include <givaro/modular.h>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 
 using namespace Givaro;
 

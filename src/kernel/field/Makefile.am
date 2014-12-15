@@ -13,7 +13,7 @@ pkginclude_HEADERS=     \
 	StaticElement.h		\
 	gfq.h		    	\
 	gfqext.h		    \
-	gfqkronecker.h		\
+	gfqkroneckerecker.h		\
 	extension.h			\
 	givprimes16.h		\
 	givrns.h		    \

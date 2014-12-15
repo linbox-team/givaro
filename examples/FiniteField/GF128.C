@@ -14,7 +14,7 @@
  * @example examples/FiniteField/GF128.C
  * @brief NO DOC
  */
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 #include <givaro/givtimer.h>
 
 using namespace Givaro;

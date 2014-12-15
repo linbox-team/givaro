@@ -25,6 +25,8 @@
 
 namespace Givaro {
 
+template<class TAG> class Modular;
+
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
  * .

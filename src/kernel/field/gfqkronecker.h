@@ -4,13 +4,13 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givgfqkron.h
+// file: gfqkronecker.h
 // Time-stamp: <12 Apr 10 16:45:02 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
 
-/*! @file givgfqkron.h
+/*! @file gfqkronecker.h
  * @ingroup zpz
  * @brief  Arithmetic on GF(p^k), with dynamic Kronecker substitution.
  * @pre  k(p-1)^2 < word size
@@ -21,7 +21,7 @@
 
 #include "givaro/givzpz.h"
 #include "givaro/givzpzInt.h"
-#include "givaro/givgfq.h"
+#include "givaro/gfq.h"
 #include "givaro/givpower.h"
 #include <limits>
 #include <vector>

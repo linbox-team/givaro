@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <givaro/givtimer.h>
 #include <givaro/givrandom.h>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 
 using namespace Givaro;
 

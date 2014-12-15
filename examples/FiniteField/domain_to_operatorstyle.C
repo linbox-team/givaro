@@ -12,7 +12,7 @@
  */
 
 #include <iostream>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 #include <givaro/StaticElement.h>
 
 using namespace Givaro;

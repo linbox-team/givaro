@@ -14,7 +14,7 @@
  * @example examples/FiniteField/GFirreducible.C
  * @brief NO DOC
  */
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 #include <givaro/givpower.h>
 #include <givaro/givtimer.h>
 

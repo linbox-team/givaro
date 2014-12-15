@@ -12,7 +12,7 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include <givaro/givgfq.h>
+#include <givaro/gfq.h>
 #include <givaro/givpoly1factor.h>
 #include <givaro/givtimer.h>
 

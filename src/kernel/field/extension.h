@@ -4,7 +4,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
-/*! @file givextension.h
+/*! @file extension.h
  * @ingroup zpz
  * @brief NO DOX
  */

@@ -4,13 +4,13 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// file: givgfq.h
+// file: gfq.h
 // Time-stamp: <30 Sep 14 10:24:48 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
 
-/*! @file givgfq.h
+/*! @file gfq.h
  * @ingroup zpz
  * @brief   Arithmetic on GF(p^k), with p a prime number less than 2^16.
  */

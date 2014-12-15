@@ -5,8 +5,8 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
-#include <givaro/givgfq.h>
-#include <givaro/givextension.h>
+#include <givaro/gfq.h>
+#include <givaro/extension.h>
 #include <givaro/modular-int16.h>
 #include <givaro/modular-int64.h>
 

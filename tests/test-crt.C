@@ -13,8 +13,8 @@
 #include <givaro/givintprime.h>
 #include <givaro/montgomery.h>
 #include <givaro/modular.h>
-#include <givaro/givgfq.h>
-#include <givaro/givcra.h>    // Chinese Remainder of two elements
+#include <givaro/gfq.h>
+#include <givaro/chineseremainder.h>    // Chinese Remainder of two elements
 #include <givaro/givrns.h>    // Chinese Remainder of an array of elements
 #include <givaro/givrnsfixed.h>    // Chinese Remainder with fixed primes
 #include <givaro/givtimer.h>

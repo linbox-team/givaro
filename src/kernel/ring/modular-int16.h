@@ -55,7 +55,7 @@ typedef unsigned int    uint32_t;
  * GivBadFormat( " ... " )
  */
 #include "givaro/giverror.h"
-#include "givaro/giv_randiter.h"
+#include "givaro/givranditer.h"
 #include "givaro/modular-int32.h" // For defines in *.inl
 
 namespace Givaro {

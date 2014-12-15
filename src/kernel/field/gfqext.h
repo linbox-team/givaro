@@ -23,10 +23,10 @@
 #ifndef __GIVARO_gfq_extension_H
 #define __GIVARO_gfq_extension_H
 
-#include "givaro/givgfq.h"
+#include "givaro/gfq.h"
 #include "givaro/givpower.h"
+
 #include <limits>
-#include <vector>
 #include <deque>
 
 namespace Givaro {

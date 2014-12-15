@@ -22,10 +22,11 @@
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
 #include "givaro/givarray0.h"
-#include "givaro/giv_randiter.h"
+#include "givaro/givranditer.h"
 
 namespace Givaro {
 
+template<class TAG> class Modular;
 struct Log16;
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.

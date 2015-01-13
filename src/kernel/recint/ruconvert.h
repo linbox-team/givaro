@@ -111,7 +111,7 @@ namespace RecInt
 		    a += USItype(*it);
 #else
             a <<= 64;
-            a += *it;
+            a += mp_limb_t(*it);
 #endif
         }
         

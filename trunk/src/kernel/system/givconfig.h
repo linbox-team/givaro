@@ -85,7 +85,7 @@
 #endif
 #include <stdint.h>
 #if !defined(INT64_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>
@@ -93,7 +93,7 @@
 #endif
 
 #if !defined(UINT64_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>
@@ -101,7 +101,7 @@
 #endif
 
 #if !defined(INT32_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>
@@ -109,7 +109,7 @@
 #endif
 
 #if !defined(UINT32_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>
@@ -117,7 +117,7 @@
 #endif
 
 #if !defined(INT16_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>
@@ -125,7 +125,7 @@
 #endif
 
 #if !defined(UINT16_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>
@@ -133,7 +133,7 @@
 #endif
 
 #if !defined(INT8_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>
@@ -141,7 +141,7 @@
 #endif
 
 #if !defined(UINT8_MAX)
-#if !defined(__CYGWIN__)
+#if !defined(__CYGWIN__) && !defined(__PATHCC__)
 #pragma message "#warning somebody nasty previously included <stdint.h> without __STDC_LIMIT_MACROS :)"
 #endif
 #include <limits>

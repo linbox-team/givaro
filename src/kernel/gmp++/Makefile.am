@@ -9,7 +9,7 @@ AM_CPPFLAGS=-I$(top_srcdir) ${GMP_VERSION}
 pkgincludesubdir=$(includedir)/gmp++
 
 AM_CXXFLAGS=@DEFAULT_CFLAGS@
-AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/system
+AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/recint
 
 
 noinst_LTLIBRARIES=libgmppp.la

@@ -14,22 +14,22 @@
  * @brief   Family of arithmetics over Zpz (\f$\mathbf{Z}/p\mathbf{Z}\f$).
  */
 
-#ifndef __GIVARO_zpz_H
-#define __GIVARO_zpz_H
+#ifndef __GIVARO_modular_H
+#define __GIVARO_modular_H
 
 // ==========================================================================
 // --
 // ==========================================================================
 #include <givaro/givconfig.h>
 
-namespace Givaro {
-	template<class TAG>
-	class Modular;
-}
-
+#include "givaro/modular-int8.h"
+#include "givaro/modular-uint8.h"
 #include "givaro/modular-int16.h"
+#include "givaro/modular-uint16.h"
 #include "givaro/modular-int32.h"
 #include "givaro/modular-uint32.h"
+#include "givaro/modular-float.h"
+#include "givaro/modular-double.h"
 #include "givaro/modular-integer.h"
 #include "givaro/modular-inttype.h"
 #include "givaro/modular-log16.h"
@@ -46,7 +46,8 @@ namespace Givaro {
 
 #ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 #include "givaro/modular-int64.h"
+#include "givaro/modular-uint64.h"
 #endif
 
-#endif // __GIVARO_zpz_H
+#endif // __GIVARO_modular_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

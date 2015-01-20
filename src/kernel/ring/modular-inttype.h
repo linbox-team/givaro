@@ -29,9 +29,10 @@ namespace Givaro {
  * .
  */
 template<typename IntType>
-class Modular {
+class Modular /*: RingInterface<IntType>*/ {
 public:
   // ----- Exported Types and constantes
+  typedef Modular<IntType> Self_t;
   typedef IntType Residu_t;                    //!<  type to store residue
   enum { size_rep = sizeof(Residu_t) };      //!<  size of the storage type
   //! Representation of Element of the domain Modular
@@ -202,32 +203,21 @@ public:
   //! Misc: r <- a mod p
   //@{
   void assign ( const size_t sz, Array r, constArray a ) const;
-#if 0 /* JGD 26.10.99 */
-  void assign ( Rep& r, const Rep& a) const;
-  void assign ( Rep& r, const long a ) const;
-  void assign ( Rep& r, const unsigned long a ) const;
-  void assign ( Rep& r, const int a ) const;
-  void assign ( Rep& r, const unsigned int a ) const;
-#endif
   Rep& assign ( Rep& r, const Rep& a) const;
   Rep& assign ( Rep& r, const long a ) const;
   Rep& assign ( Rep& r, const unsigned long a ) const;
   Rep& assign ( Rep& r, const short a ) const;
   Rep& assign ( Rep& r, const unsigned short a ) const;
+
+	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
+	inline Element& reduce (Element& x) const { return x %= _p; }
+  
   //@}
   //! Random
   //@{
-   // ----- random generators
-//     Rep& NONZEROGIVRANDOM(Rep&) const ;
-//     Rep& GIVRANDOM(Rep&) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
-
-    typedef GIV_randIter< Modular<IntType> , Rep > randIter;
+	typedef ModularRandIter<Self_t> RandIter;
+	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+    template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
     //@}
 
     //! Misc.
@@ -261,11 +251,6 @@ protected:
   //! data representation of the domain:
     Residu_t _p;
 
-    //! @internal ??
-    //@{
-    static void Init(){}
-    static void End() {}
-    //@}
 };
 
 } // namespace Givaro

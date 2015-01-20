@@ -327,40 +327,40 @@ inline Montgomery<int32_t>::Rep& Montgomery<int32_t>::init ( Rep& r ) const
 { return r = zero; }
 
 
-template< class RandIter >
-inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::random(RandIter& g, Rep& a) const
+template< class Random >
+inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::random(Random& g, Rep& a) const
 {
 	        return init(a, g());
 }
 
-template< class RandIter >
-inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::random(RandIter& g, Rep& a, const Rep& b) const
+template< class Random >
+inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::random(Random& g, Rep& a, const Rep& b) const
 {
 	        return init(a, g());
 }
-template< class RandIter >
-inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::random(RandIter& g, Rep& a, long b) const
+template< class Random >
+inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::random(Random& g, Rep& a, long b) const
 {
 	        return init(a, g() %(uint32_t) b);
 
 }
 
-template< class RandIter >
-inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::nonzerorandom(RandIter& g, Rep& a) const
+template< class Random >
+inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::nonzerorandom(Random& g, Rep& a) const
 {
 	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
-template< class RandIter >
-inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const
+template< class Random >
+inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::nonzerorandom(Random& g, Rep& a, const Rep& b) const
 {
 	        while (isZero(init(a, g()))) {};
 		return a;
 }
 
-template< class RandIter >
-inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::nonzerorandom(RandIter& g, Rep& a, long b) const
+template< class Random >
+inline  Montgomery<int32_t>::Rep& Montgomery<int32_t>::nonzerorandom(Random& g, Rep& a, long b) const
 {
 	        while (isZero(init(a, g() %(uint32_t) b))) {};
 		return a;

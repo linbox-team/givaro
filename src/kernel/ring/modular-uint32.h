@@ -39,7 +39,9 @@ template<>
 class Modular<uint32_t> {
 public:
   // ----- Exported Types and constantes
+  typedef Modular<uint32_t> Self_t;
   typedef uint32_t Residu_t;         // - type to store residue
+  typedef uint32_t Compute_t;         // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
   // ----- Representation of Element of the domain Modular
   typedef uint32_t Rep;
@@ -89,12 +91,12 @@ public:
   }
 
   // ----- Access to the modulus
-  Residu_t residu() const;
-  Residu_t size() const {return _p;}
-  Rep access( const Rep a ) const { return a; }
-  Residu_t characteristic() const { return _p; }
-  Integer& characteristic(Integer& p) const { return p=_p; }
-  Residu_t cardinality() const { return _p; }
+	inline Residu_t residu() const { return _p; }
+	inline Residu_t size() const { return _p; }
+	inline Residu_t characteristic() const { return _p; }
+	inline Integer& characteristic(Integer& p) const { return p = _p; }
+	inline Residu_t cardinality() const { return _p; }
+	inline Integer& cardinality(Integer& p) const { return p = _p; }
 
 
   // ----- Access to the modulus
@@ -121,6 +123,9 @@ public:
         unsigned long ur;
         return i = (Integer)convert(ur, a);
     }
+
+	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
+	inline Element& reduce (Element& x) const { return x %= _p; }
 
   // ----- Misc methods
   int isZero( const Rep a ) const;
@@ -184,29 +189,19 @@ public:
 
   // -- Misc: r <- a mod p
   void assign ( const size_t sz, Array r, constArray a ) const;
-#if 0 /* JGD 26.10.99 */
-  void assign ( Rep& r, const Rep a) const;
-  void assign ( Rep& r, const long a ) const;
-  void assign ( Rep& r, const unsigned long a ) const;
-  void assign ( Rep& r, const int a ) const;
-  void assign ( Rep& r, const unsigned int a ) const;
-#endif
   Rep& assign ( Rep& r, const Rep a) const;
   Rep& assign ( Rep& r, const long a ) const;
   Rep& assign ( Rep& r, const unsigned long a ) const;
   Rep& assign ( Rep& r, const short a ) const;
   Rep& assign ( Rep& r, const unsigned short a ) const;
-   // ----- random generators
-//     Rep& NONZEROGIVRANDOM(Rep&) const ;
-//     Rep& GIVRANDOM(Rep&) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< Modular<uint32_t> , Rep > randIter;
+	// ----- Random generators
+	typedef ModularRandIter<Self_t> RandIter;
+	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+    template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
+    template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+    	{ while (isZero(init(a, g())));
+    	  return a; }
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
   Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;
@@ -241,10 +236,8 @@ protected:
     Residu_t _p;
     double _dp;
 
-    static void Init();
-    static void End();
-
 public: static inline Residu_t getMaxModulus() { return 65536; }
+	static inline Residu_t getMinModulus() { return 2; }
 
 };
 

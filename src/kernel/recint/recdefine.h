@@ -99,6 +99,10 @@ namespace RecInt
    then template enable and return value is RET */
 #define IS_SIGNED(T, ...)   typename std::enable_if<std::is_signed<T>::value, __VA_ARGS__>::type
 
+/* If typename T is not a fundamental type,
+   then template enable and return value is RET */
+#define IS_NOT_FUNDAMENTAL(T, ...)   typename std::enable_if<!std::is_fundamental<T>::value, __VA_ARGS__>::type
+
 
 // --------------------------------------------------------------
 // --------------------- Debug stuff ----------------------------

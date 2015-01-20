@@ -239,14 +239,6 @@ Modular<Log16>::~Modular()
   }
 }
 
-void Modular<Log16>::Init()
-{
-}
-
-void Modular<Log16>::End()
-{
-}
-
 } // namespace Givaro
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

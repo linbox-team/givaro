@@ -74,8 +74,6 @@ namespace Givaro {
 		typedef Rep* Array;
 		typedef const Rep* constArray;
 
-		typedef GIV_randIter< GFqExtFast<TT> , Rep> RandIter;
-
 		GFqExtFast():
 			Father_t()
 			// , balanced(false)
@@ -343,8 +341,6 @@ namespace Givaro {
 
 		typedef Rep* Array;
 		typedef const Rep* constArray;
-
-		typedef GIV_randIter< GFqExt<TT> , Rep> RandIter;
 
 		GFqExt(): DirectFather_t(),
 		_fMODOUT(static_cast<double>(this->_MODOUT)) {}

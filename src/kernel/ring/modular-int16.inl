@@ -16,321 +16,271 @@
 #ifndef __GIVARO_zpz16std_INL
 #define __GIVARO_zpz16std_INL
 
-// r = a - b
-//#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) { r = (a-b); r= (r < 0 ? r+p : r);}
-#define __GIVARO_ZPZ16_N_SUB(r,p,a,b) ( r = Rep(a>=b? a-b: (p-b)+a) )
-
-// r -= a
-// #define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r = Rep(r-a); r= Rep(r < 0 ? r+p : r);}
-#define __GIVARO_ZPZ16_N_SUBIN(r,p,a) { r = Rep(r>=a?r-a:(p-a)+r);}
-// r = a+b
-#define __GIVARO_ZPZ16_N_ADD(r,p,a,b) { r = Rep(a+b); r= Rep(r < p ? r : r-p);}
-// r += a
-#define __GIVARO_ZPZ16_N_ADDIN(r,p,a) { r = Rep(r+a);  r= Rep(r < p ? r : r-p);}
-
-#define __GIVARO_ZPZ16_N_NEG(r,p,a) ( r = Rep(a == 0 ? 0 : p-a) )
-#define __GIVARO_ZPZ16_N_NEGIN(r,p) ( r = Rep(r == 0 ? 0 : p-r) )
-
+#include "modular-defines.h"
 
 namespace Givaro {
 
-
-	inline Modular<int16_t>::Residu_t Modular<int16_t>::residu( ) const
+	// ------------------------
+	// ----- Classic arithmetic
+	
+	inline Modular<int16_t>::Element& Modular<int16_t>::mul
+		(Element& r, const Element& a, const Element& b) const
 	{
-		return _p;
+		return  __GIVARO_MODULAR_INTEGER_MUL(r,_p,a,b);
 	}
 
-	inline Modular<int16_t>::Rep& Modular<int16_t>::mul (Rep& r, const Rep a, const Rep b) const
+	inline Modular<int16_t>::Element& Modular<int16_t>::sub
+		(Element& r, const Element& a, const Element& b) const
 	{
-		int32_t tmp;
-		__GIVARO_ZPZ32_N_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)b);
-		return r = (Modular<int16_t>::Rep)tmp;
+		return __GIVARO_MODULAR_INTEGER_SUB(r,_p,a,b);
 	}
 
-	inline Modular<int16_t>::Rep& Modular<int16_t>::neg (Rep& r, const Rep a) const
+	inline Modular<int16_t>::Element& Modular<int16_t>::add
+		(Element& r, const Element& a, const Element& b) const
 	{
-		return __GIVARO_ZPZ16_N_NEG(r,_p,a);
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::inv (Rep& r, const Rep a) const
-	{
-		int32_t u;
-		Modular<int16_t>::invext(u, a, _p);
-		//   if ((d != 1) && (d != -1)) std::cerr << "GivMathDivZero(Zpz::inv)" << std::endl;
-		return r = (u<0)?(Modular<int16_t>::Rep)(u+_p):(Modular<int16_t>::Rep)u;
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::div (Rep& r, const Rep a, const Rep b) const
-	{
-		int32_t tmp;
-		Rep ib;
-		inv(ib, b);
-		__GIVARO_ZPZ32_N_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)ib);
-		return r = (Modular<int16_t>::Rep)tmp;
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::sub (Rep& r, const Rep a, const Rep b) const
-	{
-
-		return __GIVARO_ZPZ16_N_SUB(r,_p,a,b);
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::add (Rep& r, const Rep a, const Rep b) const
-	{
-		__GIVARO_ZPZ16_N_ADD(r,_p,a,b);
+		__GIVARO_MODULAR_INTEGER_ADD(r,_p,a,b);
 		return r;
 	}
 
+	inline Modular<int16_t>::Element& Modular<int16_t>::neg
+		(Element& r, const Element& a) const
+	{
+		return __GIVARO_MODULAR_INTEGER_NEG(r,_p,a);
+	}
 
-	// -- inline array operations between Modular<int16_t>::Rep
-	inline void Modular<int16_t>::mul (const size_t sz, Array r, constArray a, constArray b) const
+	inline Modular<int16_t>::Element& Modular<int16_t>::inv
+		(Element& r, const Element& a) const
+	{
+		int32_t u;
+		Modular<int16_t>::invext(u, int32_t(a), int32_t(_p));
+		return r = (u<0)?(Modular<int16_t>::Element)u + (int16_t)_p:(Modular<int16_t>::Element)u;
+	}
+
+	inline Modular<int16_t>::Element& Modular<int16_t>::div
+		(Element& r, const Element& a, const Element& b) const
+	{
+		return mulin( inv(r,b), a );
+	}
+	
+	inline Modular<int16_t>::Element& Modular<int16_t>::mulin
+		(Element& r, const Element& a) const
+	{
+		return __GIVARO_MODULAR_INTEGER_MULIN(r,_p,a);
+	}
+
+	inline Modular<int16_t>::Element& Modular<int16_t>::divin
+		(Element& r, const Element& a) const
+	{
+		Element ia;
+		return mulin(r, inv(ia, a));
+	}
+
+	inline Modular<int16_t>::Element& Modular<int16_t>::addin
+		(Element& r, const Element& a) const
+	{
+		__GIVARO_MODULAR_INTEGER_ADDIN(r,_p,a);
+		return r;
+	}
+
+	inline Modular<int16_t>::Element& Modular<int16_t>::subin
+		(Element& r, const Element& a) const
+	{
+		__GIVARO_MODULAR_INTEGER_SUBIN(r,_p,a);
+		return r;
+	}
+
+	inline Modular<int16_t>::Element& Modular<int16_t>::negin
+		(Element& r) const
+	{
+		return __GIVARO_MODULAR_INTEGER_NEGIN(r,_p);
+	}
+
+	inline Modular<int16_t>::Element& Modular<int16_t>::invin
+		(Element& r) const
+	{
+		int32_t u;
+		Modular<int16_t>::invext(u, int32_t(r), int32_t(_p));
+		return r = (u<0)? (Element)u + (int16_t)_p : (Element)u;
+	}
+	
+	inline Modular<int16_t>::Element& Modular<int16_t>::axpy
+		(Element& r, const Element& a, const Element& b, const Element& c) const
+	{
+		return __GIVARO_MODULAR_INTEGER_MULADD(r,_p,a,b,c);
+	}
+
+	inline Modular<int16_t>::Element&  Modular<int16_t>::axpyin
+		(Element& r, const Element& a, const Element& b) const
+	{
+		return __GIVARO_MODULAR_INTEGER_MULADDIN(r,_p,a,b);
+	}
+	
+	inline Modular<int16_t>::Element& Modular<int16_t>::maxpy
+		(Element& r, const Element& a, const Element& b, const Element& c) const
+	{
+		int16_t tmp;
+		__GIVARO_MODULAR_INTEGER_MUL(tmp,_p,a,b);
+		__GIVARO_MODULAR_INTEGER_SUB(r,_p,c,tmp);
+		return r;
+	}
+
+	inline Modular<int16_t>::Element&  Modular<int16_t>::axmy
+		(Element& r, const Element& a, const Element& b, const Element& c) const
+	{
+		return __GIVARO_MODULAR_INTEGER_MULSUB(r,_p,a,b,c);
+	}
+
+	inline Modular<int16_t>::Element&  Modular<int16_t>::maxpyin
+		(Element& r, const Element& a, const Element& b) const
+	{
+		__GIVARO_MODULAR_INTEGER_SUBMULIN(r,_p,a,b);
+		return r;
+	}
+
+	inline Modular<int16_t>::Element&  Modular<int16_t>::axmyin
+		(Element& r, const Element& a, const Element& b) const
+	{
+		return __GIVARO_MODULAR_INTEGER_MULSUB(r,_p,a,b,r);
+	}
+
+	// ----------------------------------
+	// ----- Classic arithmetic on arrays
+
+	inline void Modular<int16_t>::mul
+		(const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int32_t tmp;
-			__GIVARO_ZPZ32_N_MUL(tmp, (int32_t)_p,(int32_t)a[i], (int32_t)b[i]);
-			r[i] = (Modular<int16_t>::Rep)tmp;
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_MUL(tmp,_p,a[i],b[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
 		}
 	}
 
-	inline void Modular<int16_t>::mul (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<int16_t>::mul
+		(const size_t sz, Array r, constArray a, Element b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int32_t tmp;
-			__GIVARO_ZPZ32_N_MUL(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)b);
-			r[i] = (Modular<int16_t>::Rep)tmp;
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_MUL(tmp,_p,a[i],b);
+			r[i] = (Modular<int16_t>::Element)tmp;
 		}
 	}
 
-	inline void Modular<int16_t>::div (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<int16_t>::div
+		(const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			div( r[i], a[i], b[i]);
 		}
 	}
 
-	inline void Modular<int16_t>::div (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<int16_t>::div
+		(const size_t sz, Array r, constArray a, Element b) const
 	{
-		Modular<int16_t>::Rep ib;
+		Modular<int16_t>::Element ib;
 		inv(ib, b);
 		mul(sz, r, a, ib);
 	}
 
-	inline void Modular<int16_t>::add (const size_t sz, Array r, constArray a, constArray b) const
-	{
-		for ( size_t i=sz ; --i ; )
-			__GIVARO_ZPZ16_N_ADD(r[i], _p, a[i], b[i]);
-	}
-
-	inline void Modular<int16_t>::add (const size_t sz, Array r, constArray a, Rep b) const
-	{
-		for ( size_t i=sz ; --i ; )
-			__GIVARO_ZPZ16_N_ADD(r[i], _p, a[i], b);
-	}
-
-	inline void Modular<int16_t>::sub (const size_t sz, Array r, constArray a, constArray b) const
-	{
-		for ( size_t i=sz ; --i ; )
-			__GIVARO_ZPZ16_N_SUB(r[i], _p, a[i], b[i]);
-	}
-
-	inline void Modular<int16_t>::sub (const size_t sz, Array r, constArray a, Rep b) const
-	{
-		for ( size_t i=sz ; --i ; )
-			__GIVARO_ZPZ16_N_SUB(r[i], _p, a[i], b);
-	}
-
-	inline void Modular<int16_t>::neg (const size_t sz, Array r, constArray a) const
-	{
-		for ( size_t i=sz ; --i ; )
-			__GIVARO_ZPZ16_N_NEG(r[i], _p, a[i]);
-	}
-
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::mulin (Rep& r, const Rep a) const
-	{
-		int32_t tmp = (int32_t)r;
-		__GIVARO_ZPZ32_N_MULIN(tmp,(int32_t)_p, (int32_t)a);
-		return r = (Modular<int16_t>::Rep)tmp;
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::divin (Rep& r, const Rep a) const
-	{
-		Modular<int16_t>::Rep ia;
-		inv(ia, a);
-		return mulin(r, ia);
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::addin (Rep& r, const Rep a) const
-	{
-		__GIVARO_ZPZ16_N_ADDIN(r,_p, a);
-		return r;
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::subin (Rep& r, const Rep a) const
-	{
-		__GIVARO_ZPZ16_N_SUBIN(r,_p,a);
-		return r;
-	}
-
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::negin (Rep& r) const
-	{
-		return __GIVARO_ZPZ16_N_NEGIN(r,_p);
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::invin (Rep& r) const
-	{
-		int32_t u;
-		Modular<int16_t>::invext(u, r, _p);
-		//   if ((d != 1) && (d != -1)) std::cerr << "GivMathDivZero(Zpz::inv)" << std::endl;
-		return r = (u<0)?(Modular<int16_t>::Rep)(u+_p):(Modular<int16_t>::Rep)u;
-	}
-
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::axpy
-	(Rep& r, const Rep a, const Rep b, const Rep c) const
-	{
-		int32_t tmp;
-		__GIVARO_ZPZ32_N_MULADD(tmp, (int32_t)_p, (int32_t)a, (int32_t)b, (int32_t)c);
-		return r = (Modular<int16_t>::Rep)tmp;
-	}
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::axpyin
-	(Rep& r, const Rep a, const Rep b) const
-	{
-		int32_t tmp = (int32_t)r;
-		__GIVARO_ZPZ32_N_MULADDIN(tmp, (int32_t)_p, (int32_t)a, (int32_t)b);
-		return r = (Modular<int16_t>::Rep)tmp;
-	}
-
-
-	inline void Modular<int16_t>::axpy
-	(const size_t sz, Array r, constArray a, constArray x, constArray y) const
+	inline void Modular<int16_t>::add
+		(const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int32_t tmp;
-			__GIVARO_ZPZ32_N_MULADD(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i], (int32_t)y[i]);
-			r[i] = (Modular<int16_t>::Rep)tmp;
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_ADD(tmp,_p,a[i],b[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
+		}
+	}
+
+	inline void Modular<int16_t>::add
+		(const size_t sz, Array r, constArray a, Element b) const
+	{
+		for ( size_t i=sz ; --i ; ) {
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_ADD(tmp,_p,a[i],b);
+			r[i] = (Modular<int16_t>::Element)tmp;
+		}
+	}
+
+	inline void Modular<int16_t>::sub
+		(const size_t sz, Array r, constArray a, constArray b) const
+	{
+		for ( size_t i=sz ; --i ; ) {
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_SUB(tmp,_p,a[i],b[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
+		}
+	}
+
+	inline void Modular<int16_t>::sub
+		(const size_t sz, Array r, constArray a, Element b) const
+	{
+		for ( size_t i=sz ; --i ; ) {
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_SUB(tmp,_p,a[i],b);
+			r[i] = (Modular<int16_t>::Element)tmp;
+		}
+	}
+
+	inline void Modular<int16_t>::neg
+		(const size_t sz, Array r, constArray a) const
+	{
+		for ( size_t i=sz ; --i ; ) {
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_NEG(tmp,_p,a[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
+		}
+	}
+
+	inline void Modular<int16_t>::axpy
+		(const size_t sz, Array r, constArray a, constArray x, constArray y) const
+	{
+		for ( size_t i=sz ; --i ; ) {
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_MULADD(tmp,_p,a[i],x[i],y[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
 		}
 	}
 
 	inline void Modular<int16_t>::axpyin
-	(const size_t sz, Array r, constArray a, constArray x) const
+		(const size_t sz, Array r, constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int32_t tmp = (int32_t)r[i];
-			__GIVARO_ZPZ32_N_MULADDIN(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i]);
-			r[i] = (Modular<int16_t>::Rep)tmp;
+			int16_t tmp = (int16_t)r[i];
+			__GIVARO_MODULAR_INTEGER_MULADDIN(tmp,_p,a[i],x[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
 		}
 	}
 
-	inline Modular<int16_t>::Rep& Modular<int16_t>::maxpy
-	(Rep& r, const Rep a, const Rep b, const Rep c) const
+	inline void Modular<int16_t>::axmy
+		(const size_t sz, Array r, constArray a, constArray x, constArray y) const
 	{
-		int32_t tmp;
-		__GIVARO_ZPZ32_N_MUL(tmp, (int32_t)_p, (int32_t)a, (int32_t)b);
-		return __GIVARO_ZPZ16_N_SUB(r, _p, c, (Rep)tmp);
-	}
-
-
-	inline Modular<int16_t>::Rep& Modular<int16_t>::axmy
-	(Rep& r, const Rep a, const Rep b, const Rep c) const
-	{
-		int32_t tmp;
-		__GIVARO_ZPZ32_N_MULSUB(tmp, (int32_t)_p, (int32_t)a, (int32_t)b, (int32_t)c);
-		return r = (Modular<int16_t>::Rep)tmp;
-	}
-
-	// r -= a*b
-	inline Modular<int16_t>::Rep&  Modular<int16_t>::maxpyin
-	(Rep& r, const Rep a, const Rep b) const
-	{
-		int32_t tmp = (int32_t)r;
-		__GIVARO_ZPZ32_N_SUBMULIN(tmp, (int32_t)_p, (int32_t)a, (int32_t)b );
-		return r = (Modular<int16_t>::Rep)tmp;
-		//    int32_t tmp = (int32_t)r;
-		//   __GIVARO_ZPZ16_N_SUBMULIN(tmp, (int32_t)_p, (int32_t)a, (int32_t)b );
-		//   return r = (Modular<int16_t>::Rep)tmp;
-	}
-
-	// r = a*b - r
-	inline Modular<int16_t>::Rep&  Modular<int16_t>::axmyin (Rep& r,
-							   const Rep a, const Rep b) const
-	{
-		int32_t tmp = (int32_t)r;
-		__GIVARO_ZPZ32_N_MULSUB(tmp, (int32_t)_p, (int32_t)a, (int32_t)b , tmp);
-		return r = (Modular<int16_t>::Rep)tmp;
-	}
-
-
-	inline void Modular<int16_t>::axmy (const size_t sz, Array r,
-					 constArray a, constArray x, constArray y) const
-	{
-		for ( size_t i=sz ; --i ; ) {
-			int32_t tmp;
-			__GIVARO_ZPZ32_N_MULSUB(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i], (int32_t)y[i]);
-			r[i] = (Modular<int16_t>::Rep)tmp;
+		for ( size_t i=sz; i--; ) {
+			int16_t tmp;
+			__GIVARO_MODULAR_INTEGER_MULSUB(tmp,_p,a[i],x[i],y[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
 		}
 	}
 
-	// r -= a*b
-	inline void Modular<int16_t>::maxpyin (const size_t sz, Array r,
-					    constArray a, constArray x) const
+	inline void Modular<int16_t>::maxpyin
+		(const size_t sz, Array r, constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int32_t tmp = (int32_t)r[i];
-			__GIVARO_ZPZ32_N_SUBMULIN(tmp, (int32_t)_p, (int32_t)a[i], (int32_t)x[i]);
-			r[i] = (Modular<int16_t>::Rep)tmp;
+			int16_t tmp = (int16_t)r[i];
+			__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp,_p,a[i],x[i]);
+			r[i] = (Modular<int16_t>::Element)tmp;
 		}
 	}
-
-	// ------------------------- Miscellaneous functions
-
-	inline int Modular<int16_t>::areEqual(const Rep a, const Rep b) const
+	
+	// --------------------
+	// ----- Initialisation
+	
+	inline  Modular<int16_t>::Element&  Modular<int16_t>::init ( Element& r, const unsigned long a ) const
 	{
-		return a == b;
+		return r = (Element)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
 	}
 
-	inline int Modular<int16_t>::areNEqual(const Rep a, const Rep b) const
-	{
-		return a != b;
-	}
-
-	inline int Modular<int16_t>::isZero(const Rep a) const
-	{
-		return a == Modular<int16_t>::zero;
-	}
-
-	inline int Modular<int16_t>::isnzero(const Rep a) const
-	{
-		return a != Modular<int16_t>::zero;
-	}
-
-	inline int Modular<int16_t>::isOne(const Rep a) const
-	{
-		return a == Modular<int16_t>::one;
-	}
-
-inline int Modular<int16_t>::isMOne(const Rep a) const
-	{
-		return a == Modular<int16_t>::mOne;
-	}
-
-
-	inline size_t Modular<int16_t>::length(const Rep ) const
-	{
-		return Modular<int16_t>::size_rep;
-	}
-
-	// ---------
-	// -- misc operations
-	// ---------
-	inline  Modular<int16_t>::Rep&  Modular<int16_t>::init ( Rep& r, const unsigned long a ) const
-	{
-		return r = (Rep)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
-	}
-
-	inline  Modular<int16_t>::Rep&  Modular<int16_t>::init ( Rep& r, const long a ) const
+	inline  Modular<int16_t>::Element&  Modular<int16_t>::init ( Element& r, const long a ) const
 	{
 		int sign; long ua;
 		if (a <0) {
@@ -341,48 +291,48 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 			ua = a;
 			sign =1;
 		}
-		r = Rep( (ua >=_p) ? ua % (uint16_t)_p : ua );
+		r = Element( (ua >=_p) ? ua % (uint16_t)_p : ua );
 		if (r && (sign ==-1))
-			r = (Rep)(_p - r);
+			r = (Element)(_p - r);
 		return r;
 	}
 
-	inline Modular<int16_t>::Rep&  Modular<int16_t>::init ( Rep& r, const Integer& Residu ) const
+	inline Modular<int16_t>::Element&  Modular<int16_t>::init ( Element& r, const Integer& Residu ) const
 	{
-		Rep tr;
+		Element tr;
 		if (Residu <0) {
 			// -a = b [p]
 			// a = p-b [p]
-			if ( Residu <= (Integer)(-_p) ) tr = Rep( (-Residu) % (uint16_t)_p) ;
-			else tr = Rep(-Residu);
+			if ( Residu <= (Integer)(-_p) ) tr = Element( (-Residu) % (uint16_t)_p) ;
+			else tr = Element(-Residu);
 			if (tr)
-				return r = Rep((uint16_t)_p - (uint16_t)tr);
+				return r = Element((uint16_t)_p - (uint16_t)tr);
 			else
 				return r = zero;
 		}
 		else {
-			if (Residu >= (Integer)_p ) tr =   Rep(Residu % _p) ;
-			else tr = Rep(Residu);
-			return r = (Rep)tr;
+			if (Residu >= (Integer)_p ) tr =   Element(Residu % _p) ;
+			else tr = Element(Residu);
+			return r = (Element)tr;
 		}
 	}
 
 
 
 
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const int i) const
+	inline  Modular<int16_t>::Element& Modular<int16_t>::init( Element& a, const int i) const
 	{
 		return init(a,(long)i);
 	}
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const double i) const
+	inline  Modular<int16_t>::Element& Modular<int16_t>::init( Element& a, const double i) const
 	{
 		return init(a,(long)i);
 	}
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const float i) const
+	inline  Modular<int16_t>::Element& Modular<int16_t>::init( Element& a, const float i) const
 	{
 		return init(a,(double)i);
 	}
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::init( Rep& a, const unsigned int i) const
+	inline  Modular<int16_t>::Element& Modular<int16_t>::init( Element& a, const unsigned int i) const
 	{
 		return init(a,(unsigned long)i);
 	}
@@ -395,47 +345,8 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 			r[i] = a[i];
 	}
 
-	inline  Modular<int16_t>::Rep&  Modular<int16_t>::assign ( Rep& r, const Rep a ) const
+	inline  Modular<int16_t>::Element&  Modular<int16_t>::assign ( Element& r, const Element a ) const
 	{  return r=a;
-	}
-
-	template< class RandIter >
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::random(RandIter& g, Rep& a) const
-	{
-		return init(a, g());
-	}
-
-	template< class RandIter >
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::random(RandIter& g, Rep& a, const Rep&) const
-	{
-		return init(a, g());
-	}
-
-	template< class RandIter >
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::random(RandIter& g, Rep& a, long b) const
-	{
-		return init(a, g() %(uint16_t) b);
-	}
-
-	template< class RandIter >
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::nonzerorandom(RandIter& g, Rep& a) const
-	{
-		while (isZero(init(a, g()))) {};
-		return a;
-	}
-
-	template< class RandIter >
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
-	{
-		while (isZero(init(a, g()))) {};
-		return a;
-	}
-
-	template< class RandIter >
-	inline  Modular<int16_t>::Rep& Modular<int16_t>::nonzerorandom(RandIter& g, Rep& a, long b) const
-	{
-		while (isZero(init(a, g() %(uint16_t) b))) {};
-		return a;
 	}
 
 	inline void Modular<int16_t>::init
@@ -445,13 +356,13 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 			r[i] = a[i];
 	}
 
-	inline Modular<int16_t>::Rep& Modular<int16_t>::init ( Rep& r ) const
+	inline Modular<int16_t>::Element& Modular<int16_t>::init ( Element& r ) const
 	{
 		return r = zero;
 	}
 
-	inline void Modular<int16_t>::dotprod
-	( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
+	inline Modular<int16_t>::Element& Modular<int16_t>::dotprod
+	( Element& r, const int bound, const size_t sz, constArray a, constArray b ) const
 	{
 		unsigned int stride = 1;
 		if ((unsigned long)bound < GIVARO_MAXUINT16)
@@ -460,9 +371,9 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 		if ((sz <10) && (sz <stride)) {
 			for(  size_t i= sz; i--; )
 				dot += (unsigned long)a[i] * (unsigned long)b[i];
-			if (dot > _p) r = (Rep)(dot % (uint16_t)_p);
-			else r = (Rep)dot;
-			return;
+			if (dot > _p) r = (Element)(dot % (uint16_t)_p);
+			else r = (Element)dot;
+			return r;
 		}
 		unsigned int i_begin=0;
 		stride &= (unsigned int)~0x1;
@@ -471,8 +382,8 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 				dot += (unsigned long)a[i] * (unsigned long)b[i];
 				if (dot>_p) dot %= _p;
 			}
-			r = (Rep)dot;
-			return;
+			r = (Element)dot;
+			return r;
 		}
 		do {
 			size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
@@ -490,11 +401,12 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 			if (dot>_p) dot %= (uint16_t)_p;
 			i_begin += (unsigned int) min_sz;
 		} while (i_begin <sz);
-		r = (Rep)dot;
+		
+		return r = (Element)dot;
 	}
 
-	inline void Modular<int16_t>::dotprod
-	( Rep& r, const size_t sz, constArray a, constArray b ) const
+	inline Modular<int16_t>::Element& Modular<int16_t>::dotprod
+	( Element& r, const size_t sz, constArray a, constArray b ) const
 	{
 		return Modular<int16_t>::dotprod(r, _p, sz, a, b);
 	}
@@ -522,9 +434,9 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 			d_2_l tmp;
 			// - normalization: put fractional part at the end of the representation
 			tmp.d = a[i] + offset;
-			r[i] = (Rep) tmp.r[1];
+			r[i] = (Element) tmp.r[1];
 			if (r[i] <_p)
-				r[i] = Rep(r[i]%_p);
+				r[i] = Element(r[i]%_p);
 		}
 		//    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
 		//    r[i] = (r[i] <_p ? r[i] : r[i]%_p);
@@ -564,10 +476,10 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 
 	inline std::ostream& Modular<int16_t>::write (std::ostream& s ) const
 	{
-		return s << "int16_t Givaro Z/pZ modulo " << residu();
+		return s << "Modular<int16_t> modulo " << residu();
 	}
 
-	inline std::istream& Modular<int16_t>::read (std::istream& s, Rep& a) const
+	inline std::istream& Modular<int16_t>::read (std::istream& s, Element& a) const
 	{
         	Integer tmp;
 		s >> tmp;
@@ -575,7 +487,7 @@ inline int Modular<int16_t>::isMOne(const Rep a) const
 		return s;
 	}
 
-	inline std::ostream& Modular<int16_t>::write (std::ostream& s, const Rep a) const
+	inline std::ostream& Modular<int16_t>::write (std::ostream& s, const Element a) const
 	{
 		return s << a;
 	}

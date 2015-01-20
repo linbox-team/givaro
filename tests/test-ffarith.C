@@ -6,12 +6,18 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
+
 #include <givaro/modular.h>
+#include <givaro/modular-balanced.h>
+#include <givaro/unparametric.h>
 #include <givaro/montgomery.h>
+
 #include <givaro/gfq.h>
 #include <givaro/gfqext.h>
 #include <givaro/extension.h>
 #include <givaro/givintprime.h>
+
+#include <recint/recint.h>
 
 using namespace Givaro;
 
@@ -84,7 +90,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
         TESTE_EG(ma, F.mOne);
 
 	F.init(a, FIRSTINT);
-    double invertible=(FIRSTFLOAT<0?-FIRSTFLOAT:FIRSTFLOAT);
+    double invertible=floor(FIRSTFLOAT<0?-FIRSTFLOAT:FIRSTFLOAT);
     do {
         invertible += 1;
         F.init(b, invertible);
@@ -260,9 +266,9 @@ Ints previousprime(const Ints& a) {
     static IntPrimeDom IPD;
     Integer aI(a);
     IPD.prevprimein(aI);
-    return (Ints)aI;
+	
+	return (Ints)aI;
 }
-
 
 
 int main(int argc, char ** argv)
@@ -273,164 +279,274 @@ int main(int argc, char ** argv)
 #endif
     Integer::seeding((unsigned long)seed);
 
-
 #ifdef NDEBUG
     assert(0);
 #endif
 
-	// modulo 13 over 16 bits
+	//---------------------//
+	//----- Modulo 13 -----//
+
+	Modular<int8_t> S13(13);
+	JETESTE(S13,seed);
+
+	Modular<uint8_t> US13(13);
+	JETESTE(US13,seed);
+
 	Modular<int16_t> C13(13);
 	JETESTE(C13,seed);
 
-	// modulo 13 over 32 bits
+	Modular<uint16_t> UC13(13);
+	JETESTE(UC13,seed);
+
 	Modular<int32_t> Z13(13);
 	JETESTE(Z13,seed);
 
-	// modulo 13 over unsigned 32 bits
+	ModularBalanced<int32_t> BZ13(13);
+	JETESTE(Z13,seed);
+
 	Modular<uint32_t> U13(13);
 	JETESTE(U13,seed);
 
-#ifdef __USE_Givaro_SIXTYFOUR__
-	// modulo 13 over 64 bits
-	Modular<int64_t> LL13(13UL);
-	JETESTE(LL13,seed);
-#endif
-
-	// modulo 13 fully tabulated
 	Modular<Log16> L13(13);
 	JETESTE(L13,seed);
 
-	// modulo 13 over 32 bits with Montgomery reduction
 	Montgomery<int32_t> M13(13);
 	JETESTE(M13,seed);
 
-// Maximal prime values
+#ifdef __USE_Givaro_SIXTYFOUR__
+	Modular<int64_t> LL13(13UL);
+	JETESTE(LL13,seed);
+	
+	Modular<uint64_t> ULL13(13UL);
+	JETESTE(ULL13,seed);
+	
+	ModularBalanced<int64_t> BULL13(13UL);
+	JETESTE(BULL13,seed);
+#endif
 
-	// prime modulo max over 15 bits
-	Modular<int16_t> CUpmax( previousprime(Modular<int16_t>::getMaxModulus()) ); // 16381
+	Modular<Integer> I13(13);
+	JETESTE(I13,seed);
+
+	Modular<float> F13(13);
+	JETESTE(F13,seed);
+
+	ModularBalanced<float> BF13(13);
+	JETESTE(BF13,seed);
+
+	Modular<double> D13(13);
+	JETESTE(D13,seed);
+
+	ModularBalanced<double> BD13(13);
+	JETESTE(BD13,seed);
+	
+	Modular<RecInt::ruint256> R13(13);
+	JETESTE(R13,seed);
+
+	//--------------------------------//
+	//----- Modulo maximal prime -----//
+
+	Modular<int8_t> Spmax(previousprime(Modular<int8_t>::getMaxModulus() ) );
+	JETESTE(Spmax,seed);
+
+	Modular<uint8_t> USpmax(previousprime(Modular<uint8_t>::getMaxModulus() ) );
+	JETESTE(USpmax,seed);
+
+	Modular<int16_t> CUpmax( previousprime(Modular<int16_t>::getMaxModulus()) );
 	JETESTE(CUpmax,seed);
 
-	// previous prime modulo max fully tabulated
-	Modular<Log16> Lpmax( previousprime(Modular<Log16>::getMaxModulus() ) ); // 16369
+	Modular<uint16_t> UCUpmax( previousprime(Modular<int16_t>::getMaxModulus()) );
+	JETESTE(UCUpmax,seed);
+
+	Modular<Log16> Lpmax( previousprime(Modular<Log16>::getMaxModulus() ) );
 	JETESTE(Lpmax,seed);
 
-	// prime modulo max over 31 bits
-	Modular<int32_t> Zpmax( previousprime(Modular<int32_t>::getMaxModulus() ) ); // 46337
+	Modular<int32_t> Zpmax( previousprime(Modular<int32_t>::getMaxModulus() ) );
 	JETESTE(Zpmax,seed);
 
-	// prime modulo max over 32 bits
-	Modular<uint32_t> Upmax(previousprime(Modular<uint32_t>::getMaxModulus() ) ); // 65521
+	ModularBalanced<int32_t> BZpmax( previousprime(ModularBalanced<int32_t>::getMaxModulus() ) );
+	JETESTE(BZpmax,seed);
+
+	Modular<uint32_t> Upmax(previousprime(Modular<uint32_t>::getMaxModulus() ) );
 	JETESTE(Upmax,seed);
 
-	// prime modulo max over 32 bits with Montgomery reduction
-	Montgomery<int32_t> Mpmax(previousprime(Montgomery<int32_t>::getMaxModulus() ) ); // 40499
+	Montgomery<int32_t> Mpmax(previousprime(Montgomery<int32_t>::getMaxModulus() ) );
 	JETESTE(Mpmax,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
-	// prime modulo max over 63 bits
-	Modular<int64_t> LLpmax(previousprime(Modular<int64_t>::getMaxModulus() ) ); // 3037000493ULL
+	Modular<int64_t> LLpmax(previousprime(Modular<int64_t>::getMaxModulus() ) );
 	JETESTE(LLpmax,seed);
+	
+	ModularBalanced<int64_t> BLLpmax(previousprime(ModularBalanced<int64_t>::getMaxModulus() ) );
+	JETESTE(BLLpmax,seed);
+	
+	Modular<uint64_t> ULLpmax(previousprime(Modular<uint64_t>::getMaxModulus() ) );
+	JETESTE(ULLpmax,seed);
 #endif
 
-	// Zech log prime field with prime max
-	GFqDom<int> GFpmax( 65521UL );
-	JETESTE(GFpmax,seed);
+	Modular<float> Fpmax(previousprime(Modular<float>::getMaxModulus() ) );
+	JETESTE(Fpmax,seed);
 
-	// Zech log prime field with prime max (memory limited)
-	GFqDom<long long> GFLLpmax( 4194301ULL );
-	JETESTE(GFLLpmax,seed);
+	ModularBalanced<float> BFpmax(previousprime(ModularBalanced<float>::getMaxModulus() ) );
+	JETESTE(BFpmax,seed);
 
+	Modular<double> Dpmax(previousprime(Modular<double>::getMaxModulus() ) );
+	JETESTE(Dpmax,seed);
 
-// Maximal values
-	// prime modulo max over 15 bits
+	ModularBalanced<double> BDpmax(previousprime(ModularBalanced<double>::getMaxModulus() ) );
+	JETESTE(BDpmax,seed);
+
+	//--------------------------//
+	//----- Modulo maximal -----//
+
+	Modular<int8_t> Smax(Modular<int8_t>::getMaxModulus() );
+	JETESTE(Smax,seed);
+
+	Modular<uint8_t> USmax(Modular<uint8_t>::getMaxModulus() );
+	JETESTE(USmax,seed);
+
 	Modular<int16_t> CUmax(Modular<int16_t>::getMaxModulus() );
 	JETESTE(CUmax,seed);
 
-	// prime modulo max fully tabulated
+	Modular<uint16_t> UCUmax(Modular<uint16_t>::getMaxModulus() );
+	JETESTE(UCUmax,seed);
+
 	Modular<Log16> Lmax( Modular<Log16>::getMaxModulus()  );
 	JETESTE(Lmax,seed);
 
-	// prime modulo max over 31 bits
 	Modular<int32_t> Zmax(Modular<int32_t>::getMaxModulus());
 	JETESTE(Zmax,seed);
 
-	// modulo max over 32 bits
+	ModularBalanced<int32_t> BZmax(ModularBalanced<int32_t>::getMaxModulus());
+	JETESTE(BZmax,seed);
+
 	Modular<uint32_t> Umax(Modular<uint32_t>::getMaxModulus() );
 	JETESTE(Umax,seed);
-	// prime modulo max over 32 bits with Montgomery reduction
+
 	Montgomery<int32_t> Mmax(Montgomery<int32_t>::getMaxModulus() );
 	JETESTE(Mmax,seed);
 
 #ifdef __USE_Givaro_SIXTYFOUR__
-	// prime modulo max over 63 bits
 	Modular<int64_t> LLmax(Modular<int64_t>::getMaxModulus());
 	JETESTE(LLmax,seed);
+	
+	ModularBalanced<int64_t> BLLmax(ModularBalanced<int64_t>::getMaxModulus());
+	JETESTE(BLLmax,seed);
+	
+	Modular<uint64_t> ULLmax(Modular<uint64_t>::getMaxModulus());
+	JETESTE(ULLmax,seed);
 #endif
+	
+	Modular<float> Fmax(Modular<float>::getMaxModulus());
+	JETESTE(Fmax,seed);
+	
+	ModularBalanced<float> BFmax(ModularBalanced<float>::getMaxModulus());
+	JETESTE(BFmax,seed);
+	
+	Modular<double> Dmax(Modular<double>::getMaxModulus());
+	JETESTE(Dmax,seed);
+	
+	ModularBalanced<double> BDmax(ModularBalanced<double>::getMaxModulus());
+	JETESTE(BDmax,seed);
 
+	//--------------------//
+	//----- Modulo 2 -----//
 
+	Modular<int8_t> S2(2);
+	JETESTE(S2,seed);
 
-// Characteristic 2
+	Modular<uint8_t> US2(2);
+	JETESTE(US2,seed);
 
-
-	// modulo 2 over 16 bits
 	Modular<int16_t> C2(2);
 	JETESTE(C2,seed);
 
-	// modulo 2 over 32 bits
+	Modular<uint16_t> UC2(2);
+	JETESTE(UC2,seed);
+
 	Modular<int32_t> Z2(2);
 	JETESTE(Z2,seed);
 
-	// modulo 2 over unsigned 32 bits
 	Modular<uint32_t> U2(2);
 	JETESTE(U2,seed);
 
-#ifdef __USE_Givaro_SIXTYFOUR__
-	// modulo 2 over 64 bits
-	Modular<int64_t> LL2(2UL);
-	JETESTE(LL2,seed);
-#endif
-
-	// modulo 2 fully tabulated
 	Modular<Log16> L2(2);
 	JETESTE(L2,seed);
 
 	Modular<Log16> L2b( L2 );
 	JETESTE(L2b,seed);
 
-// Other Characteristics
+#ifdef __USE_Givaro_SIXTYFOUR__
+	Modular<int64_t> LL2(2UL);
+	JETESTE(LL2,seed);
+	
+	Modular<uint64_t> ULL2(2UL);
+	JETESTE(ULL2,seed);
+#endif
 
+	Modular<Integer> I2(2);
+	JETESTE(I2,seed);
+	
+	Modular<float> F2(2);
+	JETESTE(F2,seed);
+	
+	Modular<double> D2(2);
+	JETESTE(D2,seed);
+	
+	Modular<RecInt::ruint256> R2(2);
+	JETESTE(R2,seed);
 
-	// modulo 3 over 32 bits with Montgomery reduction
-	Montgomery<int32_t> M2(3);
-	JETESTE(M2,seed);
+	//--------------------//
+	//----- Modulo 3 -----//
 
-	Montgomery<int32_t> M3(39989);
+	Montgomery<int32_t> M3(3);
 	JETESTE(M3,seed);
 
-	// modulo 13 with primitive root representation
+	ModularBalanced<int32_t> BZ3(3);
+	JETESTE(BZ3,seed);
+	
+#ifdef __USE_Givaro_SIXTYFOUR__
+	ModularBalanced<int64_t> BLL3(3UL);
+	JETESTE(BLL3,seed);
+#endif
+	
+	ModularBalanced<float> BF3(3);
+	JETESTE(BF3,seed);
+	
+	ModularBalanced<double> BD3(3);
+	JETESTE(BD3,seed);
+
+	//---------------------------------//
+	//----- Other Characteristics -----//
+
+	Montgomery<int32_t> MR(39989);
+	JETESTE(MR,seed);
+
 	GFqDom<int> GF13( 13 );
 	JETESTE(GF13,seed);
 
-	// modulo 13 over arbitrary size
-	Modular<Integer> IntZ13(13);
-	JETESTE(IntZ13,seed);
+	// Zech log prime field with prime max
+	GFqDom<int> GFpmax( 65521UL );
+	JETESTE(GFpmax,seed);
 
-	// modulo 13 with generic implementation over signed integral type
-	Modular<long long> GenZ13(13);
-	JETESTE(GenZ13,seed);
+#ifndef __GIVARO__DONOTUSE_longlong__
+	// Zech log prime field with prime max (memory limited)
+	GFqDom<long long> GFLLpmax( 4194301ULL );
+	JETESTE(GFLLpmax,seed);
+#endif
 
-	// modulo 101 with generic implementation over unsigned signed integral type
-	Modular<unsigned long long> GenZ101(101);
+#ifdef __USE_Givaro_SIXTYFOUR__
+	Modular<uint64_t> GenZ101(101);
 	JETESTE(GenZ101,seed);
+#endif
 
-        // Zech log finite field with 256 elements
-        // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
-        std::vector< GFqDom<long>::Residu_t > Irred(9);
-        Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
-        Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
-        Irred[8] = 1;
-        GFqDom<long> GF256(2,8, Irred);
-        JETESTE(GF256,seed);
+    // Zech log finite field with 256 elements
+    // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
+    std::vector< GFqDom<long>::Residu_t > Irred(9);
+    Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
+    Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
+    Irred[8] = 1;
+    GFqDom<long> GF256(2,8, Irred);
+    JETESTE(GF256,seed);
 
 	// Zech log finite field with 5^4 elements
 	GFqDom<int> GF625( 5, 4 );
@@ -444,38 +560,27 @@ int main(int argc, char ** argv)
 	// Zech log finite field with 2Mb tables
 #ifndef __GIVARO__DONOTUSE_longlong__
 	GFqDom<long long> GF2M( 2, 20 );
+	GFqDom<long long> GF2M1( 2, 2 );
+    GFqDom<long long> GF11e3( 11, 3 );
+    Extension<GFqDom<long long> > GF11e9(GF11e3,3);
 #else
 	GFqDom<long> GF2M( 2, 20) ;
-#endif
-	JETESTE(GF2M,seed);
-
-#ifndef __GIVARO__DONOTUSE_longlong__
-	GFqDom<long long> GF2M1( 2, 2 );
-#else
 	GFqDom<long> GF2M1( 2, 2) ;
+    GFqDom<long> GF11e3( 11, 3) ;
+    Extension<> GF11e9(GF11e3,3);
 #endif
+
+	JETESTE(GF2M,seed);
 	JETESTE(GF2M1,seed);
+	JETESTE(GF11e3,seed);
+	JETESTE(GF11e9,seed);
 
-
-        Extension<> GF13E8(13,8);
+    Extension<> GF13E8(13,8);
 	JETESTE(GF13E8,seed);
-
-#ifndef __GIVARO__DONOTUSE_longlong__
-        GFqDom<long long> GF11e3( 11, 3 );
-	JETESTE(GF11e3,seed);
-        Extension<GFqDom<long long> > GF11e9(GF11e3,3);
-	JETESTE(GF11e9,seed);
-#else
-        GFqDom<long> GF11e3( 11, 3) ;
-	JETESTE(GF11e3,seed);
-        Extension<> GF11e9(GF11e3,3);
-	JETESTE(GF11e9,seed);
-#endif
 
 #ifdef GIVARO_DEBUG
 	std::cerr << std::endl ;
 #endif
-
 
 	return 0;
 }

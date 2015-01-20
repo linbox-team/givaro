@@ -49,11 +49,11 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 namespace RecInt
 {
-    template <size_t K, size_t MG> void operator%=(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, void) operator%=(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG> rmint<K, MG>& operator%=(rmint<K, MG>&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) operator%=(rmint<K, MG>&, const T&);
     
-    template <size_t K, size_t MG> void operator/=(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, void) operator/=(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG> rmint<K, MG>& operator/=(rmint<K, MG>&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) operator/=(rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> rmint<K, MG> operator/(const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator/(const rmint<K, MG>&, const T&);
@@ -80,24 +80,28 @@ namespace RecInt
 {
     // Operator %=
     template <size_t K, size_t MG>
-    inline void operator%=(rmint<K, MG>& a, const rmint<K, MG>& b) {
+    inline rmint<K, MG>& operator%=(rmint<K, MG>& a, const rmint<K, MG>& b) {
         mod(a, b);
+        return a;
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, void) operator%=(rmint<K, MG>& a, const T& b) {
+    inline IS_ARITH(T, rmint<K, MG>&) operator%=(rmint<K, MG>& a, const T& b) {
         mod(a, b);
+        return a;
     }
     
     // Operator /=
     template <size_t K, size_t MG>
-    inline void operator/=(rmint<K, MG>& a, const rmint<K, MG>& b) {
+    inline rmint<K, MG>& operator/=(rmint<K, MG>& a, const rmint<K, MG>& b) {
         div(a, b);
+        return a;
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, void) operator/=(rmint<K, MG>& a, const T& b) {
+    inline IS_ARITH(T, rmint<K, MG>&) operator/=(rmint<K, MG>& a, const T& b) {
         div(a, b);
+        return a;
     }
 
     // Operator /

@@ -154,6 +154,7 @@ public:
 	}
 
 	UTT cardinality() const;
+	template<typename T> T& cardinality(T& p) const { return p = T(_q); };
 	UTT size() const;
 	UTT exponent() const;
 	// Internal representation of the used generator
@@ -311,13 +312,7 @@ public:
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, long s) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const ;
 
-	typedef GIV_randIter< GFqDom<TT> , Rep> randIter;
-#if 0
-	// - Set to a non zero random value
-	void set_nrand(Rep&) const;
-	// - Set to a random value
-	void set_rand(Rep&) const;
-#endif
+	typedef GIV_randIter< GFqDom<TT>, Rep> RandIter;
 
 #ifdef __GIVARO_COUNT__
 	void clear()
@@ -366,6 +361,9 @@ public:
 	static void Init();
 	static void End();
 };
+
+// Used by LinBox
+typedef GFqDom<int32_t> GFq;
 
 } // namespace Givaro
 

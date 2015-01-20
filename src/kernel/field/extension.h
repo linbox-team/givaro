@@ -21,6 +21,10 @@
 
 namespace Givaro {
 
+	// ----- Forward declaration
+	template <class ExtensionField, class Type>
+    class GIV_ExtensionrandIter;
+
 	//! XXX
     template<class Rt>
 	Rt FF_EXPONENT_MAX(const Rt p, const Rt maxe = _GIVARO_FF_MAXEXPONENT_)
@@ -368,6 +372,7 @@ namespace Givaro {
 	      	return _pD.nonzerorandom(g,r,b.size());
             }
 
+	typedef GIV_ExtensionrandIter< Self_t, Integer >  RandIter;
 
 
 

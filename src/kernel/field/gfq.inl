@@ -932,45 +932,41 @@ namespace Givaro {
 
 
         // ----- random generators
-    template<typename TT> template<typename RandIter> inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& a) const
+    template<typename TT> template<typename randIter>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& a) const
     {
-            //     do
-            //         a = Rep( (UTT)(lrand48()) % _q);
-            //     while (isZero(a));
-            //     a = (a<0?a+_q:a);
-            //     return a;
         a = Rep( ((UTT)(g()) % (_q-1)) + 1);
         return a = (a<0?a+(Rep)_q:a);
-
     }
 
-    template<typename TT> template<typename RandIter> inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(RandIter& g, Rep& a) const
+    template<typename TT> template<typename randIter>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& a) const
     {
         a = Rep( (UTT)(g()) % _q);
         return a = (a<0?a+(Rep)_q:a);
     }
 
-    template<typename TT> template<typename RandIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(RandIter& g, Rep& r, long s) const
+    template<typename TT> template<typename randIter>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, long s) const
     {
         return random(g,r);
     }
 
 
-    template<typename TT> template<typename RandIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(RandIter& g, Rep& r, const Rep& b) const
+    template<typename TT> template<typename randIter>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, const Rep& b) const
     {
         return random(g,r);
     }
 
-    template<typename TT> template<typename RandIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& r, long s) const
+    template<typename TT> template<typename randIter>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, long s) const
     {
         return nonzerorandom(g,r);
     }
 
-    template<typename TT> template<typename RandIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(RandIter& g, Rep& r, const Rep& b) const
+    template<typename TT> template<typename randIter>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, const Rep& b) const
     {
         return nonzerorandom(g,r);
     }

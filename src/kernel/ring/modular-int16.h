@@ -10,55 +10,26 @@
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
+//  Modified by Alexis Breust on 2015/01/06  (alexis.breust@imag.fr)
+
 /*! @file givzpz16std.h
  * @ingroup zpz
  * @brief   Arithmetic on Z/pZ, with p a prime number less than 2^14.
  *   Modulo typedef is a signed long number. In case it was modified
  *   then Bézout algorithm must be changed (coefficient can be negative).
  */
+ 
 #ifndef __GIVARO_zpz16std_H
 #define __GIVARO_zpz16std_H
 
-
-#if 0 /*  Thierry -> JG: Constantes necessaires: */
-(typedef) uint16_t : type des int sur 16bits non signe
-(typedef) uint32_t : type des int sur 16bits non signe
-(typedef) int16_t : type des int sur 16bits signe
-(typedef) int32_t : type des int sur 16bits signe
-(#define) GIVARO_MAXUINT16: 2^16 -1
-(#define) GIVARO_MAXUINT32: 2^32 -1
-(#define) GIVARO_MAXULONG: val max en unsigned long
-#endif
-#if 0
-#define GIVARO_BITS_PER_LONGINT        32
-#define GIVARO_BITS_PER_INT            32
-#define GIVARO_BITS_PER_SHORTINT       16
-#define GIVARO_BITS_PER_CHAR           16
-typedef char    int8_t;
-typedef short   int16_t;
-typedef int     int32_t;
-typedef unsigned char   uint8_t;
-typedef unsigned short  uint16_t;
-typedef unsigned int    uint32_t;
-
-#define GIVARO_MAXUINT8                255U            // 2^8-1
-#define GIVARO_MAXUINT16               65535U          // 2^16-1
-#define GIVARO_MAXUINT32               4294967295U     // 2^32-1
-#define GIVARO_MAXULONG                4294967295U     // 2^32-1
-#endif
 #include "givaro/givbasictype.h"
-
-/*
-   Classes d'erreurs:
-   GivError::throw_error + des classes d'exception dont les cstos prennent des chaines:
- * GivMathDivZero( " ... " )
- * GivBadFormat( " ... " )
- */
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
-#include "givaro/modular-int32.h" // For defines in *.inl
+#include "givaro/ring-interface.h"
 
 namespace Givaro {
+
+template<class TAG> class Modular;
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
@@ -67,202 +38,181 @@ namespace Givaro {
  * .
  */
 template<>
-class Modular<int16_t> {
+class Modular<int16_t> : public RingInterface<int16_t>
+{
 public:
+
 	// ----- Exported Types and constantes
-	typedef uint16_t Residu_t;                    // - type to store residue
-	enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-	// ----- Representation of Element of the domain Modular
-	typedef uint16_t Rep;
-	typedef uint16_t Element;
-	typedef Element* Element_ptr ;
-	typedef const Element* ConstElement_ptr;
-
-
+	typedef Modular<int16_t> Self_t;
+	typedef uint16_t Residu_t;
+	typedef uint32_t Compute_t;
+	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Representation of vector of the Element
-	typedef Rep* Array;
-	typedef const Rep* constArray;
+	typedef Element* Array;
+	typedef const Element* constArray;
 
 	// ----- Constantes
-	const Rep zero;
-	const Rep one;
-	const Rep mOne;
+	const Element zero;
+	const Element one;
+	const Element mOne;
 
-	// ----- Constructor
-	Modular() : zero(0), one(1), mOne((Rep)-1), _p(0) {}
-	Modular( Residu_t p ) : zero(0), one(1), mOne(Rep(p-1)), _p(p) {}
-	Modular( const Modular<int16_t>& F) : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
+	// ----- Constructors
+	Modular()
+	: zero(0), one(1), mOne(-1), _p(0) {}
 
- Rep minElement() const
-  {
-	  return zero ;
-  }
+	Modular(Residu_t p)
+	: zero(0), one(1), mOne((Element)p-1), _p(p) {}
 
-  Rep maxElement() const
-  {
-	  return mOne ;
-  }
+	Modular(const Self_t& F)
+	: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
 
-	int operator==( const Modular<int16_t>& BC) const { return _p == BC._p;}
-	int operator!=( const Modular<int16_t>& BC) const { return _p != BC._p;}
+	// ----- Accessors
+	inline Element minElement() const override { return zero; }
+	inline Element maxElement() const override { return mOne; }
 
-	Modular<int16_t>& operator=( const Modular<int16_t>& F)
+	// ----- Access to the modulus
+	inline Residu_t residu() const { return _p; }
+	inline Residu_t size() const { return _p; }
+	inline Residu_t characteristic() const { return _p; }
+	inline Residu_t cardinality() const { return _p; }
+	template<class T> inline T& characteristic(T& p) const { return p = _p; }
+	template<class T> inline T& cardinality(T& p) const { return p = _p; }
+	static inline Residu_t getMaxModulus() { return 32768; } // 2^15 (because all computations are done modulo 2^32)
+	static inline Residu_t getMinModulus() { return 2; }
+
+	// ----- Checkers
+	inline bool isZero(const Element& a) const override { return a == zero; }
+	inline bool isOne (const Element& a) const override { return a == one; }
+	inline bool isMOne(const Element& a) const override { return a == mOne; }
+	inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
+	inline size_t length(const Element a) const { return size_rep; }
+	
+	// ----- Ring-wise operators
+	inline bool operator==(const Self_t& F) const { return _p == F._p; }
+	inline bool operator!=(const Self_t& F) const { return _p != F._p; }
+	inline Self_t& operator=(const Self_t& F)
 	{
-
-		F.assign(const_cast<Element&>(one),F.one);
-		F.assign(const_cast<Element&>(zero),F.zero);
-		F.assign(const_cast<Element&>(mOne),F.mOne);
-
-		this->_p = F._p;
+		F.assign(const_cast<Element&>(one),  F.one);
+		F.assign(const_cast<Element&>(zero), F.zero);
+		F.assign(const_cast<Element&>(mOne), F.mOne);
+		_p = F._p;
 		return *this;
 	}
+	
+	// ----- Initialisation
+	Element& init(Element& a) const;
+	Element& init(Element& r, const long a) const ;
+	Element& init(Element& r, const unsigned long a) const ;
+	Element& init(Element& a, const int i) const ;
+	Element& init(Element& a, const unsigned int i) const ;
+	Element& init(Element& a, const Integer& i) const ;
+	Element& init(Element& a, const double i) const;
+	Element& init(Element& a, const float i) const;
+	void init(const size_t, Array a, constArray b) const;
+	
+	Element& assign(Element& r, const Element a) const;
+	void assign(const size_t sz, Array r, constArray a ) const;
 
-	// ----- Access to the modulus
-	Residu_t residu() const;
-	Residu_t size() const { return _p; }
-	Residu_t characteristic() const { return _p; }
-	Integer& characteristic( Integer& p) const { return p=_p; }
-	Rep access( const Rep a ) const { return a; }
+	// ----- Convert
+	float& convert(float& r, const Element a ) const { return r = (float)a ;}
+	double& convert(double& r, const Element a ) const { return r = (double)a ;}
+	long int& convert(long int& r, const Element a) const { return r = (long int)a;}
+	unsigned long int& convert(unsigned long int& r, const Element a) const { return r = (unsigned long int)a;}
+	int16_t& convert(int16_t& r, const Element a ) const { return r = (int16_t)a ;}
+	int32_t& convert(int32_t& r, const Element a ) const { return r = (int32_t)a ;}
+	uint16_t& convert(uint16_t& r, const Element a ) const { return r = (uint16_t)a ;}
+	uint32_t& convert(uint32_t& r, const Element a ) const { return r = (uint32_t)a ;}
+	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
 
-	// ----- Convert from Element to int
-	int16_t& convert( int16_t& x , const Rep a) const { return x=(int16_t)(a);}
-	uint16_t& convert( uint16_t& x , const Rep a) const { return x=(uint16_t)(a);}
-	unsigned long& convert( unsigned long& x , const Rep a) const { return x=(unsigned long)(a);}
-	double& convert( double& x , const Rep a) const { return x=(double)(a);}
-	int& convert( int& x , const Rep a) const { return x=int(a);}
-	Integer& convert(Integer& i, const Rep a) const {
-		unsigned long ur;
-		return i = (Integer)convert(ur, a);
-	}
+	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
+	inline Element& reduce (Element& x) const { return x %= _p; }
+	
+	// ----- Classic arithmetic
+	Element& mul(Element& r, const Element& a, const Element& b) const override;
+	Element& div(Element& r, const Element& a, const Element& b) const override;
+	Element& add(Element& r, const Element& a, const Element& b) const override;
+	Element& sub(Element& r, const Element& a, const Element& b) const override;
+	Element& neg(Element& r, const Element& a) const override;
+	Element& inv(Element& r, const Element& a) const override;
 
+	Element& mulin(Element& r, const Element& a) const override;
+	Element& divin(Element& r, const Element& a) const override;
+	Element& addin(Element& r, const Element& a) const override;
+	Element& subin(Element& r, const Element& a) const override;
+	Element& negin(Element& r) const override;
+	Element& invin(Element& r) const override;
+	
+	// -- axpy:   r <- a * x + y
+	// -- axpyin: r <- a * x + r
+	Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
+	Element& axpyin(Element& r, const Element& a, const Element& x) const override;
 
+	// -- axmy:   r <- a * x - y
+	// -- axmyin: r <- a * x - r
+	Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
+	Element& axmyin(Element& r, const Element& a, const Element& x) const override;
 
-	// ----- Access to the modulus
-	Rep& init( Rep& a ) const;
-	void init( const size_t, Array a, constArray b ) const;
-	Rep& init( Rep& a, const long i) const ;
-	Rep& init( Rep& a, const unsigned long i) const ;
-	Rep& init( Rep& a, const int i) const ;
-	Rep& init( Rep& a, const unsigned int i) const ;
-	Rep& init( Rep& a, const double i) const ;
-	Rep& init( Rep& a, const float i) const ;
-	Rep& init( Rep& a, const Integer& i) const ;
+	// -- maxpy:   r <- y - a * x
+	// -- maxpyin: r <- r - a * x
+	Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
+	Element& maxpyin(Element& r, const Element& a, const Element& x) const override;
+	
+	// ----- Classic arithmetic on arrays
+	void mul(const size_t sz, Array r, constArray a, constArray b) const;
+	void mul(const size_t sz, Array r, constArray a, Element b) const;
+	void div(const size_t sz, Array r, constArray a, constArray b) const;
+	void div(const size_t sz, Array r, constArray a, Element b) const;
+	void add(const size_t sz, Array r, constArray a, constArray b) const;
+	void add(const size_t sz, Array r, constArray a, Element b) const;
+	void sub(const size_t sz, Array r, constArray a, constArray b) const;
+	void sub(const size_t sz, Array r, constArray a, Element b) const;
+	void neg(const size_t sz, Array r, constArray a) const;
+	void inv(const size_t sz, Array r, constArray a) const;
 
-	// ----- Misc methods
-	int areEqual( const  Rep, const Rep) const;
-	int areNEqual( const Rep, const Rep) const;
-	int isZero( const Rep a ) const;
-	int isnzero( const Rep a ) const;
-	int isOne ( const Rep a ) const;
-	int isMOne ( const Rep a ) const;
-	size_t length ( const Rep a ) const;
-
-	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-	Rep& mul (Rep& r, const Rep a, const Rep b) const;
-	Rep& div (Rep& r, const Rep a, const Rep b) const;
-	Rep& add (Rep& r, const Rep a, const Rep b) const;
-	Rep& sub (Rep& r, const Rep a, const Rep b) const;
-	Rep& neg (Rep& r, const Rep a) const;
-	Rep& inv (Rep& r, const Rep a) const;
-
-	Rep& mulin (Rep& r, const Rep a) const;
-	Rep& divin (Rep& r, const Rep a) const;
-	Rep& addin (Rep& r, const Rep a) const;
-	Rep& subin (Rep& r, const Rep a) const;
-	Rep& negin (Rep& r) const;
-	Rep& invin (Rep& r) const;
-
-	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-	void mul (const size_t sz, Array r, constArray a, constArray b) const;
-	void mul (const size_t sz, Array r, constArray a, Rep b) const;
-
-	void div (const size_t sz, Array r, constArray a, constArray b) const;
-	void div (const size_t sz, Array r, constArray a, Rep b) const;
-
-	void add (const size_t sz, Array r, constArray a, constArray b) const;
-	void add (const size_t sz, Array r, constArray a, Rep b) const;
-
-	void sub (const size_t sz, Array r, constArray a, constArray b) const;
-	void sub (const size_t sz, Array r, constArray a, Rep b) const;
-
-	void neg (const size_t sz, Array r, constArray a) const;
-	void inv (const size_t sz, Array r, constArray a) const;
-
-	// -- axpy: r <- a * x + y mod p
-	Rep& axpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
-	void axpy
-	(const size_t sz, Array r, constArray a, constArray x, constArray c) const;
-	// -- axpyin: r <- r + a * x mod p
-	Rep& axpyin(Rep& r, const Rep a, const Rep b) const;
-	void axpyin
-	(const size_t sz, Array r, constArray a, constArray x) const;
-
-	// -- maxpy: r <- c - a * b mod p
-	Rep& maxpy (Rep& r, const Rep a, const Rep b, const Rep c) const;
-	// -- maxpyin: r <- r - a * x mod p
-	Rep& maxpyin (Rep& r, const Rep a, const Rep b) const;
+	void axpy (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
+	void axpyin (const size_t sz, Array r, constArray a, constArray x) const;
+	void axmy (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
 	void maxpyin (const size_t sz, Array r, constArray a, constArray x) const;
-
-	// -- axmy: r <- a * x - y mod p
-	Rep& axmy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
-	void axmy
-	(const size_t sz, Array r, constArray a, constArray x, constArray c) const;
-	// -- axmyin: r <-  a * x - r mod p
-	Rep& axmyin(Rep& r, const Rep a, const Rep b) const;
-	// void axmyin (const size_t sz, Array r, constArray a, constArray x) const;
-
-	// -- Misc: r <- a mod p
-	void assign ( const size_t sz, Array r, constArray a ) const;
-    	Rep& assign ( Rep& r, const Rep a) const;
-
-	// ----- random generators
-	template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
-	template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
-	template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;
-	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
-	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
-	template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
-
-	typedef GIV_randIter< Modular<int16_t>, Rep > randIter;
-
+	
 	// <- \sum_i a[i], return 1 if a.size() ==0,
-	void reduceadd ( Rep& r, const size_t sz, constArray a ) const;
+	Element& reduceadd ( Element& r, const size_t sz, constArray a ) const;
 
 	// <- \prod_i a[i], return 1 if a.size() ==0,
-	void reducemul ( Rep& r, const size_t sz, constArray a ) const;
+	Element& reducemul ( Element& r, const size_t sz, constArray a ) const;
 
 	// <- \sum_i a[i] * b[i]
-	void dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
-	void dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
+	Element& dotprod ( Element& r, const size_t sz, constArray a, constArray b ) const;
+	Element& dotprod ( Element& r, const int bound, const size_t sz, constArray a, constArray b ) const;
 
-	// ----- a -> r: uint16_t to double
+	// a -> r: uint32_t to double
 	void i2d ( const size_t sz, double* r, constArray a ) const;
 
-	// ----- a -> r % p: double to uint16_t % p
+	// a -> r % p: double to uint32_t % p
 	void d2i ( const size_t sz, Array r, const double* a ) const;
 
+	// ----- Random generators
+	typedef ModularRandIter<Self_t> RandIter;
+	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+    template< class Random > Element& random(const Random& g, Element& r) const	{ return init(r, g()); }
+    template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+    	{ while (isZero(init(a, g())));
+    	  return a; }
+	
 	// --- IO methods
-	std::istream& read ( std::istream& s );
-	std::ostream& write( std::ostream& s ) const;
-	std::istream& read ( std::istream& s, Rep& a ) const;
-	std::ostream& write( std::ostream& s, const Rep a ) const;
-
+	std::istream& read (std::istream& s);
+	std::ostream& write(std::ostream& s) const;
+	std::istream& read (std::istream& s, Element& a) const;
+	std::ostream& write(std::ostream& s, const Element a) const;
+	
 protected:
-	// -- based for modular inverse, d = a*u + b*v
-	//   static const int32_t gcdext ( int32_t& u, int32_t& v, const int32_t a, const int32_t b );
-	int32_t& gcdext (int32_t& d, int32_t& u, int32_t& v, const int32_t a, const int32_t b ) const;
-	int32_t& invext (int32_t& u, const int32_t a, const int32_t b ) const;
+	// -- Modular inverse, d = a*u + b*v
+	int32_t& gcdext(int32_t& d, int32_t& u, int32_t& v, const int32_t a, const int32_t b) const;
+	int32_t& invext(int32_t& u, const int32_t a, const int32_t b) const;
 
 protected:
 	// -- data representation of the domain:
 	Residu_t _p;
-
-	static void Init();
-	static void End();
-
-public: static inline Residu_t getMaxModulus() { return 32768; }
-
 };
 
 } // namespace Givaro

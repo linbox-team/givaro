@@ -43,8 +43,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef MISC_DISPLAY_H
 #define MISC_DISPLAY_H
 
-#include <ostream> /* For out streams */
-#include <iomanip> /* For setw and so on */
+#include <iostream> /* For streams */
 
 #include "rudisplay.h"
 
@@ -58,6 +57,9 @@ namespace RecInt
 {
     // Prints a rmint (de-montgomerized if necessary)
     template <size_t K, size_t MG> inline std::ostream& operator<<(std::ostream&, const rmint<K, MG>&);
+    
+    // Reads a rmint
+    template <size_t K, size_t MG> inline std::istream& operator>>(std::istream&, rmint<K, MG>&);
 }
 
 
@@ -70,6 +72,14 @@ namespace RecInt
     template <size_t K, size_t MG>
     inline std::ostream& operator<<(std::ostream& out, const rmint<K, MG>& a) {
         return operator<<(out, get_ruint(a));
+    }
+    
+    // Reads a rmint
+    template <size_t K, size_t MG>
+    inline std::istream& operator>>(std::istream& is, rmint<K, MG>& a) {
+    	operator>>(is, a.Value);
+    	get_ready(a);
+    	return is;
     }
 }
 

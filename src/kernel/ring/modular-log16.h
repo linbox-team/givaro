@@ -39,6 +39,7 @@ template<>
 class Modular<Log16> {
 public:
   // ----- Exported Types and constantes
+  typedef Modular<Log16> Self_t;
   typedef uint16_t Residu_t;                    // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
 
@@ -67,9 +68,12 @@ public:
 
   // ----- Access to the modulus
   Residu_t residu() const;
-  Residu_t characteristic() const { return _p;}
-  Integer& characteristic( Integer& p) const { return p=_p;}
   Residu_t size() const { return _p;}
+  
+	inline Residu_t characteristic() const { return _p; }
+	inline Residu_t cardinality() const { return _p; }
+	template<class T> inline T& characteristic(T& p) const { return p = _p; }
+	template<class T> inline T& cardinality(T& p) const { return p = _p; }
 
   // ----- Convert from Element to int
     int16_t& convert( int16_t& x , const Rep a) const {
@@ -197,15 +201,13 @@ public:
   // ----- a -> r % p: double to uint16_t % p
   void d2i ( const size_t sz, Array r, const double* a ) const;
 
-   // ----- random generators
-    template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
-
-    typedef GIV_randIter< Modular<int16_t>, Rep > randIter;
+	// ----- Random generators
+	typedef ModularRandIter<Self_t> RandIter;
+	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+    template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
+    template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+    	{ while (isZero(init(a, g())));
+    	  return a; }
 
 
   // --- IO methods
@@ -233,8 +235,6 @@ protected:
   Power_t* _tab_pone;   // table for -(ei+1)
   int* numRefs;
 
-  static void Init();
-  static void End();
 public:
  // ----- Constantes
   const Element zero;
@@ -242,6 +242,8 @@ public:
   const Element mOne;
 
 public: static inline Residu_t getMaxModulus() { return 16381; }
+	static inline Residu_t getMinModulus() { return 2; }
+
 
 
 };

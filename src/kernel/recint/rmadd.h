@@ -50,8 +50,8 @@ namespace RecInt
     template <size_t K, size_t MG> rmint<K, MG>& operator++(rmint<K, MG>&);
     template <size_t K, size_t MG> rmint<K, MG>  operator++(rmint<K, MG>&, int);
 
-    template <size_t K, size_t MG> void operator+=(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, void) operator+=(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG> rmint<K, MG>& operator+=(rmint<K, MG>&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) operator+=(rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> rmint<K, MG> operator+(const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator+(const rmint<K, MG>&, const T&);
@@ -85,13 +85,13 @@ namespace RecInt
 
     // Operator +=
     template <size_t K, size_t MG>
-    inline void operator+=(rmint<K, MG>& a, const rmint<K, MG>& b) {
-        add(a, b);
+    inline rmint<K, MG>& operator+=(rmint<K, MG>& a, const rmint<K, MG>& b) {
+        return add(a, b);
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, void) operator+=(rmint<K, MG>& a, const T& b) {
-        add(a, b);
+    inline IS_ARITH(T, rmint<K, MG>&) operator+=(rmint<K, MG>& a, const T& b) {
+        return add(a, b);
     }
 
     // Operator +

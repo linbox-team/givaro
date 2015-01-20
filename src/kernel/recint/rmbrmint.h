@@ -83,6 +83,11 @@ namespace RecInt
 
     /* Declaration of module */
     template <size_t K> ruint<K> rmint<K, MGI>::p = 0;
+    
+    typedef rmint<6> rmint64;
+    typedef rmint<7> rmint128;
+    typedef rmint<8> rmint256;
+    typedef rmint<9> rmint512;
 }
 
 #endif

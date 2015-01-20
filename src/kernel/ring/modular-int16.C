@@ -66,14 +66,6 @@ namespace Givaro {
 		return (u3<0?u=-u:u);
 	}
 
-	void Modular<int16_t>::Init()
-	{
-	}
-
-	void Modular<int16_t>::End()
-	{
-	}
-
 } // namespace Givaro
 
 #endif

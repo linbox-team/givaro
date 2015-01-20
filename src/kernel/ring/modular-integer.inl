@@ -429,43 +429,6 @@ inline void Modular<Integer>::init
 inline Modular<Integer>::Rep& Modular<Integer>::init ( Rep& r ) const
 { return r = zero; }
 
-
-template< class RandIter >
-inline  Modular<Integer>::Rep& Modular<Integer>::random(RandIter& g, Rep& a) const {
-	        return init(a, g());
-}
-
-template< class RandIter >
-inline  Modular<Integer>::Rep& Modular<Integer>::random(RandIter& , Rep& a, const Rep& b) const {
-	        Integer::random(a,b);
-                return Integer::modin(a,_p);
-}
-template< class RandIter >
-inline  Modular<Integer>::Rep& Modular<Integer>::random(RandIter& , Rep& a, long b) const {
-	        Integer::random(a,b);
-	        return Integer::modin(a,_p);
-
-}
-
-template< class RandIter >
-inline  Modular<Integer>::Rep& Modular<Integer>::nonzerorandom(RandIter& g, Rep& a) const {
-	        while (isZero( random(g,a) )) {};
-		return a;
-}
-
-template< class RandIter >
-inline  Modular<Integer>::Rep& Modular<Integer>::nonzerorandom(RandIter& g, Rep& a, const Rep& b) const {
-	        while (isZero( random(g,a,b))) {};
-		return a;
-}
-
-template< class RandIter >
-inline  Modular<Integer>::Rep& Modular<Integer>::nonzerorandom(RandIter& g, Rep& a, long b) const {
-	        while (isZero( random(g,a,b))) {};
-		return a;
-}
-
-
   //  a -> r: int32_t to double
 inline void
   Modular<Integer>::i2d ( const size_t sz, double* r, constArray a ) const

@@ -12,45 +12,7 @@
 #ifndef __GIVARO_zpz32_uns_INL
 #define __GIVARO_zpz32_uns_INL
 
-// Description:
-
-// ---------
-// -- normalized operations
-// ---------
-
-
-// r = a*b
-#define __GIVARO_ZPZ32_Uns_MUL(r,p,a,b) ( r = (a*b) % p )
-// r *= a
-#define __GIVARO_ZPZ32_Uns_MULIN(r,p,a) ( r = (r*a) % p )
-
-// r = a - b
-#define __GIVARO_ZPZ32_Uns_SUB(r,p,a,b) ( r = (a>=b) ? a-b: (p-b)+a )
-
-// r -= a
-#define __GIVARO_ZPZ32_Uns_SUBIN(r,p,a) { if (r<a) r+=(p-a); else r-=a; }
-
-// r = a+b
-#define __GIVARO_ZPZ32_Uns_ADD(r,p,a,b) { r = (a+b); r= (r < p ? r : r-p); }
-// r += a
-#define __GIVARO_ZPZ32_Uns_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p); }
-
-// r <- a*b+c % p
-#define __GIVARO_ZPZ32_Uns_MULADD(r,p,a,b,c) \
-{ r = (a*b+c) % p;  }
-
-#define __GIVARO_ZPZ32_Uns_MULADDIN(r,p,a,b) \
-{ r += a*b; r= (r < p ? r : r % p);  }
-
-#define __GIVARO_ZPZ32_Uns_NEG(r,p,a) ( r = (a == 0 ? 0 : p-a) )
-#define __GIVARO_ZPZ32_Uns_NEGIN(r,p) ( r = (r == 0 ? 0 : p-r) )
-
-// a*b-c
-#define __GIVARO_ZPZ32_Uns_MULSUB(r,p,a,b,c) \
-{ r = (a*b+p-c); r= (r<p ? r : r % p);  }
-// a*b-c
-#define __GIVARO_ZPZ32_Uns_SUBMULIN(r,p,a,b) \
-{ r = (a*b+p-r); r= (r<p ? r : r % p); __GIVARO_ZPZ32_Uns_NEGIN(r,p); }
+#include "givaro/modular-defines.h"
 
 namespace Givaro {
 
@@ -63,34 +25,29 @@ namespace Givaro {
 
 	{}
 
-	inline Modular<uint32_t>::Residu_t Modular<uint32_t>::residu( ) const
-	{
-		return _p;
-	}
-
 	inline Modular<uint32_t>::Modular(const Modular<uint32_t>& F) :
 		zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp)
 	{ }
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::mul (Rep& r, const Rep a, const Rep b) const
 	{
-		return __GIVARO_ZPZ32_Uns_MUL(r,_p,a,b);
+		return __GIVARO_MODULAR_INTEGER_MUL(r,_p,a,b);
 	}
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::sub (Rep& r, const Rep a, const Rep b) const
 	{
-		return __GIVARO_ZPZ32_Uns_SUB(r,_p,a,b);
+		return __GIVARO_MODULAR_INTEGER_SUB(r,_p,a,b);
 	}
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::add (Rep& r, const Rep a, const Rep b) const
 	{
-		__GIVARO_ZPZ32_Uns_ADD(r,_p,a,b);
+		__GIVARO_MODULAR_INTEGER_ADD(r,_p,a,b);
 		return r;
 	}
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::neg (Rep& r, const Rep a) const
 	{
-		return __GIVARO_ZPZ32_Uns_NEG(r,_p,a);
+		return __GIVARO_MODULAR_INTEGER_NEG(r,_p,a);
 	}
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::inv (Rep& r,
@@ -101,13 +58,6 @@ namespace Givaro {
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::div (Rep& r, const Rep a, const Rep b) const
 	{
-		/*
-		   uint32_t tmp;
-		   uint32_t ib;
-		   inv(ib, b);
-		   __GIVARO_ZPZ32_Uns_MUL(tmp,_p,a,ib);
-		   return r = (Modular<uint32_t>::Rep)tmp;
-		   */
 		return mulin( inv(r, b), a );
 	}
 
@@ -116,8 +66,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_MUL(tmp, _p,a[i], b[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_MUL(tmp, _p,a[i], b[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -125,8 +75,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_MUL(tmp, _p, a[i], b);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_MUL(tmp, _p, a[i], b);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -148,8 +98,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_ADD(tmp, _p, a[i], b[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_ADD(tmp, _p, a[i], b[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -157,8 +107,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_ADD(tmp, _p, a[i], b);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_ADD(tmp, _p, a[i], b);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -166,8 +116,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_SUB(tmp, _p, a[i], b[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_SUB(tmp, _p, a[i], b[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -175,8 +125,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_SUB(tmp, _p, a[i], b);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_SUB(tmp, _p, a[i], b);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -184,15 +134,15 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_NEG(tmp, _p, a[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_NEG(tmp, _p, a[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::mulin (Rep& r, const Rep a) const
 	{
-		return __GIVARO_ZPZ32_Uns_MULIN(r,_p, a);
+		return __GIVARO_MODULAR_INTEGER_MULIN(r,_p, a);
 	}
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::divin (Rep& r, const Rep a) const
@@ -205,21 +155,21 @@ namespace Givaro {
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::addin (Rep& r, const Rep a) const
 	{
 		uint32_t tmp = r;
-		__GIVARO_ZPZ32_Uns_ADDIN(tmp,_p, a);
-		return r = (Modular<uint32_t>::Rep)tmp;
+		__GIVARO_MODULAR_INTEGER_ADDIN(tmp,_p, a);
+		return r = (Element)tmp;
 	}
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::subin (Rep& r, const Rep a) const
 	{
 		uint32_t tmp = r;
-		__GIVARO_ZPZ32_Uns_SUBIN(tmp,_p, a);
-		return r = (Modular<uint32_t>::Rep)tmp;
+		__GIVARO_MODULAR_INTEGER_SUBIN(tmp,_p, a);
+		return r = (Element)tmp;
 	}
 
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::negin (Rep& r) const
 	{
-		return __GIVARO_ZPZ32_Uns_NEGIN(r,_p);
+		return __GIVARO_MODULAR_INTEGER_NEGIN(r,_p);
 	}
 
 	inline Modular<uint32_t>::Rep& Modular<uint32_t>::invin (Rep& r) const
@@ -232,16 +182,16 @@ namespace Givaro {
 								  const Rep a, const Rep b, const Rep c) const
 	{
 		uint32_t tmp;
-		__GIVARO_ZPZ32_Uns_MULADD(tmp, _p, a, b, c);
-		return r = (Modular<uint32_t>::Rep)tmp;
+		__GIVARO_MODULAR_INTEGER_MULADD(tmp, _p, a, b, c);
+		return r = (Element)tmp;
 	}
 
 	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::axpyin (Rep& r,
 								     const Rep a, const Rep b) const
 	{
 		uint32_t tmp = r;
-		__GIVARO_ZPZ32_Uns_MULADDIN(tmp, _p, a, b);
-		return r = (Modular<uint32_t>::Rep)tmp;
+		__GIVARO_MODULAR_INTEGER_MULADDIN(tmp, _p, a, b);
+		return r = (Element)tmp;
 	}
 
 
@@ -250,8 +200,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_MULADD(tmp, _p, a[i], x[i], y[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_MULADD(tmp, _p, a[i], x[i], y[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -260,8 +210,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp = r[i];
-			__GIVARO_ZPZ32_Uns_MULADDIN(tmp, _p, a[i], x[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_MULADDIN(tmp, _p, a[i], x[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -269,8 +219,8 @@ namespace Givaro {
 								   const Rep a, const Rep b, const Rep c) const
 	{
 		uint32_t tmp;
-		__GIVARO_ZPZ32_Uns_MULSUB(tmp, _p, a, b, c);
-		return r = (Modular<uint32_t>::Rep)tmp;
+		__GIVARO_MODULAR_INTEGER_MULSUB(tmp, _p, a, b, c);
+		return r = (Element)tmp;
 	}
 
 	// r = c-a*b
@@ -278,8 +228,8 @@ namespace Givaro {
 								    const Rep a, const Rep b, const Rep c) const
 	{
 		uint32_t tmp=c;
-		__GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a, b);
-		return r = (Modular<uint32_t>::Rep)tmp;
+		__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a, b);
+		return r = (Element)tmp;
 	}
 
 	// r -= a*b
@@ -287,8 +237,8 @@ namespace Givaro {
 								      const Rep a, const Rep b) const
 	{
 		uint32_t tmp = r;
-		__GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a, b );
-		return r = (Modular<uint32_t>::Rep)tmp;
+		__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a, b );
+		return r = (Element)tmp;
 	}
 
 	// r = a*b - r
@@ -305,8 +255,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
-			__GIVARO_ZPZ32_Uns_MULSUB(tmp, _p, a[i], x[i], y[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_MULSUB(tmp, _p, a[i], x[i], y[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -316,8 +266,8 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp = r[i];
-			__GIVARO_ZPZ32_Uns_SUBMULIN(tmp, _p, a[i], x[i]);
-			r[i] = (Modular<uint32_t>::Rep)tmp;
+			__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a[i], x[i]);
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -543,45 +493,6 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 			i_begin += min_sz;
 		} while (i_begin <sz);
 		return r = (Rep)dot;
-	}
-
-	template< class RandIter >
-	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::random(RandIter& g, Rep& a) const
-	{
-		return init(a, g());
-	}
-
-	template< class RandIter >
-	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::random(RandIter& g, Rep& a, const Rep& ) const
-	{
-		return init(a, g());
-	}
-	template< class RandIter >
-	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::random(RandIter& g, Rep& a, long b) const
-	{
-		return init(a, g() %(uint32_t) b);
-
-	}
-
-	template< class RandIter >
-	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::nonzerorandom(RandIter& g, Rep& a) const
-	{
-		while (isZero(init(a, g()))) {};
-		return a;
-	}
-
-	template< class RandIter >
-	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::nonzerorandom(RandIter& g, Rep& a, const Rep& ) const
-	{
-		while (isZero(init(a, g()))) {};
-		return a;
-	}
-
-	template< class RandIter >
-	inline  Modular<uint32_t>::Rep& Modular<uint32_t>::nonzerorandom(RandIter& g, Rep& a, long b) const
-	{
-		while (isZero(init(a, g() %(uint32_t) b))) {};
-		return a;
 	}
 
 	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::dotprod

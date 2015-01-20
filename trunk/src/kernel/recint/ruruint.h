@@ -55,12 +55,14 @@ namespace RecInt
         ruint<K-1> High, Low;
 
         // Constructors
-        ruint() : High(0), Low(0) {}
+        ruint() {}
         ruint(const ruint<K>& r) : High(r.High), Low(r.Low) {}
-        ruint(const double b) : High(0), Low((b < 0)? -b : b) { if (b < 0) *this = -*this; }
-        template <typename T, IS_UNSIGNED(T, int) = 0> ruint(const T b) : High(0), Low(b) {}
-        template <typename T, IS_SIGNED(T, int) = 0>   ruint(const T b) : High(0), Low((b < 0)? -b : b)
+        ruint(const double b) : Low((b < 0)? -b : b) { if (b < 0) *this = -*this; }
+        template <typename T, IS_UNSIGNED(T, int) = 0> ruint(const T b) : Low(b) {}
+        template <typename T, IS_SIGNED(T, int) = 0>   ruint(const T b) : Low((b < 0)? -b : b)
             { if (b < 0) *this = -*this; }
+        template <typename T, IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
+        	{ *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
 
         // Cast
         template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
@@ -86,6 +88,7 @@ namespace RecInt
         cr_iterator rbegin() const { return cr_iterator(NBLIMB<K>::value-1, this); }
         cr_iterator rend() const { return cr_iterator(); }
         UDItype size() { return NBLIMB<K>::value; }
+        static ruint<K> getMaxModulus() { ruint<K> max; max.High = 1; return max; }
     };
 
     /* ruint of size 64 bits */
@@ -94,7 +97,7 @@ namespace RecInt
         limb Value;
 
         // Constructors
-        ruint() : Value(0) {}
+        ruint() : Value(0u) {}
         ruint(const ruint<LIMB_SIZE>& r) : Value(r.Value) {}
         ruint(const double b) : Value(static_cast<limb>(b)) {}
         template <typename T, IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(b) {}
@@ -124,6 +127,7 @@ namespace RecInt
         cr_iterator rbegin() const { return cr_iterator(&Value); }
         cr_iterator rend() const { return cr_iterator(); }
         UDItype size() { return 1; }
+        static ruint<LIMB_SIZE> getMaxModulus() { return 4294967296; }
     };
     
     typedef ruint<6> ruint64;

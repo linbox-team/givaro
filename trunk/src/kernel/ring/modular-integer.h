@@ -35,6 +35,7 @@ template<>
 class Modular<Integer> {
 public:
   // ----- Exported Types and constantes
+  typedef Modular<Integer> Self_t;
   typedef Integer Residu_t;                    // - type to store residue
   enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
   // ----- Representation of Element of the domain Modular
@@ -80,6 +81,10 @@ public:
       this->_p = F._p;
       return *this;
   }
+  
+  
+	static inline Residu_t getMaxModulus() { return -1; }
+	static inline Residu_t getMinModulus() { return 2; }
 
   // ----- Access to the modulus
   Residu_t residu() const;
@@ -88,6 +93,7 @@ public:
   Residu_t characteristic() const { return _p; }
   Residu_t characteristic(Residu_t p) const { return p=_p; }
   Residu_t cardinality() const { return _p; }
+  Residu_t cardinality(Residu_t p) const { return p=_p; }
 
 
   // ----- Access to the modulus
@@ -112,6 +118,9 @@ public:
   Integer& convert(Integer& i, const Rep& a) const {
       return i = a;
   }
+
+	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
+	inline Element& reduce (Element& x) const { return x %= _p; }
 
   // ----- Misc methods
   int isZero( const Rep& a ) const;
@@ -175,29 +184,19 @@ public:
 
   // -- Misc: r <- a mod p
   void assign ( const size_t sz, Array r, constArray a ) const;
-#if 0 /* JGD 26.10.99 */
-  void assign ( Rep& r, const Rep& a) const;
-  void assign ( Rep& r, const long a ) const;
-  void assign ( Rep& r, const unsigned long a ) const;
-  void assign ( Rep& r, const int a ) const;
-  void assign ( Rep& r, const unsigned int a ) const;
-#endif
   Rep& assign ( Rep& r, const Rep& a) const;
   Rep& assign ( Rep& r, const long a ) const;
   Rep& assign ( Rep& r, const unsigned long a ) const;
   Rep& assign ( Rep& r, const short a ) const;
   Rep& assign ( Rep& r, const unsigned short a ) const;
-   // ----- random generators
-//     Rep& NONZEROGIVRANDOM(Rep&) const ;
-//     Rep& GIVRANDOM(Rep&) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
-    template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
 
-    typedef GIV_randIter< Modular<Integer> , Rep > randIter;
+	// ----- Random generators
+	typedef ModularRandIter<Self_t> RandIter;
+	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+    template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
+    template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+    	{ while (isZero(init(a, g())));
+    	  return a; }
 
   // <- \sum_i a[i], return 1 if a.size() ==0,
   Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;
@@ -224,9 +223,6 @@ public:
 protected:
   // -- data representation of the domain:
     Residu_t _p;
-
-    static void Init();
-    static void End();
 };
 
 } // namespace Givaro

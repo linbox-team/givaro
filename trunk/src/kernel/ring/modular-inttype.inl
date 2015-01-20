@@ -500,54 +500,6 @@ inline typename Modular<IntType>::Rep& Modular<IntType>::init ( Rep& r ) const
 { return r = zero; }
 
 
-template<typename IntType>
-template< class RandIter >
-inline  typename Modular<IntType>::Rep& Modular<IntType>::random(RandIter& g,
-							       Rep& a) const {
-	        return init(a, g());
-}
-
-template<typename IntType>
-template< class RandIter >
-inline  typename Modular<IntType>::Rep& Modular<IntType>::random(RandIter& ,
-							       Rep& a, const Rep& b) const {
-	        IntType::random(a,b);
-                return a %= _p;
-}
-template<typename IntType>
-template< class RandIter >
-inline  typename Modular<IntType>::Rep& Modular<IntType>::random(RandIter& ,
-							       Rep& a, long b) const {
-	        IntType::random(a,b);
-	        return a %= _p;
-
-}
-
-template<typename IntType>
-template< class RandIter >
-inline  typename Modular<IntType>::Rep& Modular<IntType>::nonzerorandom(RandIter& g,
-								      Rep& a) const {
-	        while (isZero( random(g,a) )) {};
-		return a;
-}
-
-template<typename IntType>
-template< class RandIter >
-inline  typename Modular<IntType>::Rep& Modular<IntType>::nonzerorandom(RandIter& g,
-								      Rep& a, const Rep& b) const {
-	        while (isZero( random(g,a,b))) {};
-		return a;
-}
-
-template<typename IntType>
-template< class RandIter >
-inline  typename Modular<IntType>::Rep& Modular<IntType>::nonzerorandom(RandIter& g,
-								      Rep& a, long b) const {
-	        while (isZero( random(g,a,b))) {};
-		return a;
-}
-
-
   //  a -> r: int32_t to double
 template<typename IntType>
 inline void
@@ -615,7 +567,7 @@ inline std::istream& Modular<IntType>::read (std::istream& s)
 template<typename IntType>
 inline std::ostream& Modular<IntType>::write (std::ostream& s ) const
 {
-  return s << "(z," << residu() << ')';
+	return s << "Modular<[IntType]> modulo " << residu();
 }
 
 template<typename IntType>

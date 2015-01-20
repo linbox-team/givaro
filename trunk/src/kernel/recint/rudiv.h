@@ -176,7 +176,7 @@ namespace RecInt
                         const ruint<K>& a2, const ruint<K>& a1, const ruint<K>& a0,
                         const ruint<K>& b1, const ruint<K>& b0) {
         ruint<K> c, d1, d0;
-        bool ret, ret_sub, ret1 = false;
+        bool ret_sub, ret1 = false;
 
         if (a2 < b1) {
             div_2_1(q, c, a2, a1, b1);
@@ -190,6 +190,7 @@ namespace RecInt
         sub_wc(r1, c, d1, ret_sub);
 
         if ((ret1 == 0) && (d1 > c || (d1 == c && d0 > a0))) {
+        	bool ret;
             sub_1(q);
             add(ret_sub, r0, b0);
             add_wc(ret, r1, b1, ret_sub);

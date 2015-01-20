@@ -95,16 +95,13 @@ namespace Givaro {
 
 		// ----- Access to the modulus
 		Residu_t residu() const;
-		Residu_t size() const
-		{return _p;}
-		Rep access( const Rep a ) const
-		{ return a; }
-		Residu_t characteristic() const
-		{ return _p; }
-		Residu_t characteristic(Residu_t p) const
-		{ return p=_p; }
-		Residu_t cardinality() const
-		{ return _p; }
+		Residu_t size() const {return _p;}
+		Rep access( const Rep a ) const	{ return a; }
+		
+		inline Residu_t characteristic() const { return _p; }
+		inline Residu_t cardinality() const { return _p; }
+		template<class T> inline T& characteristic(T& p) const { return p = _p; }
+		template<class T> inline T& cardinality(T& p) const { return p = _p; }
 
 
 		// ----- Access to the modulus
@@ -201,14 +198,14 @@ namespace Givaro {
 					Rep& assign ( Rep& r, const Rep a) const;
 
 					// ----- random generators
-					template< class RandIter > Rep& random(RandIter&, Rep& r) const ;
-					template< class RandIter > Rep& random(RandIter&, Rep& r, long s) const ;
-					template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const ;
-					template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r) const ;
-					template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s) const ;
-					template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, const Rep& b) const ;
+					template< class Random > Rep& random(Random&, Rep& r) const ;
+					template< class Random > Rep& random(Random&, Rep& r, long s) const ;
+					template< class Random > Rep& random(Random&, Rep& r, const Rep& b) const ;
+					template< class Random > Rep& nonzerorandom(Random&, Rep& r) const ;
+					template< class Random > Rep& nonzerorandom(Random&, Rep& r, long s) const ;
+					template< class Random > Rep& nonzerorandom(Random&, Rep& r, const Rep& b) const ;
 
-					typedef GIV_randIter< Montgomery<int32_t> , Rep > randIter;
+					typedef ModularRandIter< Montgomery<int32_t> > RandIter;
 
 					// --- IO methods
 					std::istream& read ( std::istream& s );

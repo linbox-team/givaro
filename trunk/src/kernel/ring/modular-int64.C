@@ -56,12 +56,4 @@ int64_t& Modular<int64_t>::invext
    return (u3<0?u=-u:u);
 }
 
-void Modular<int64_t>::Init()
-{
-}
-
-void Modular<int64_t>::End()
-{
-}
-
  } // namespace Givaro

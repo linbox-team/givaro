@@ -49,7 +49,7 @@ public:
     typedef Rep* Array;
     typedef const Rep* constArray;
 
-    typedef GIV_randIter< Father_t , Rep> RandIter;
+    typedef ModularRandIter< Father_t , Rep> RandIter;
 
     GFqKronecker(): Father_t() {}
 

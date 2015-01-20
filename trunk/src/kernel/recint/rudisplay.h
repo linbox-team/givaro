@@ -43,10 +43,11 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RUINT_DISPLAY_H
 #define RUINT_DISPLAY_H
 
-#include <ostream> /* For out streams */
+#include <iostream> /* For streams */
 #include <iomanip> /* For setw and so on */
 
 #include "ruruint.h"
+#include "ruconvert.h"
 #include "rucmp.h"
 
 // --------------------------------------------------------------
@@ -56,6 +57,9 @@ namespace RecInt
 {
     // Prints a ruint
     template <size_t K> inline std::ostream& operator<<(std::ostream&, const ruint<K>&);
+    
+    // Reads a ruint
+    template <size_t K> inline std::istream& operator>>(std::istream&, ruint<K>&);
 }
 
 
@@ -65,19 +69,22 @@ namespace RecInt
 namespace RecInt
 {
     // Out stream
-    template <size_t K> inline std::ostream& operator<<(std::ostream& out, const ruint<K>& a) {
+    template <size_t K>
+    inline std::ostream& operator<<(std::ostream& out, const ruint<K>& a) {
         std::ios_base::fmtflags ff(out.flags());
         if (ff & out.hex) return display_hex(out, a);
         else return display_dec(out, a);
         out.flags(ff);
     }
 
-    template <> inline std::ostream& operator<<(std::ostream& out, const ruint<LIMB_SIZE>& a) {
+    template <>
+    inline std::ostream& operator<<(std::ostream& out, const ruint<LIMB_SIZE>& a) {
         return out << a.Value;
     }
 
     // Display the ruint in decimal mode
-    template <size_t K> inline std::ostream& display_dec(std::ostream& out, const ruint<K>& a) {
+    template <size_t K>
+    inline std::ostream& display_dec(std::ostream& out, const ruint<K>& a) {
         ruint<K> b(a);
         char result[1024];
         limb m(0), ten(10);
@@ -95,12 +102,22 @@ namespace RecInt
     }
 
     // Display the ruint a in hexadecimal mode
-    template <size_t K> inline std::ostream& display_hex(std::ostream& out, const ruint<K>& a) {
+    template <size_t K>
+    inline std::ostream& display_hex(std::ostream& out, const ruint<K>& a) {
         return display_hex(display_hex(out, a.High), a.Low);
     }
 
-    template <> inline std::ostream& display_hex(std::ostream& out, const ruint<LIMB_SIZE>& a) {
+    template <>
+    inline std::ostream& display_hex(std::ostream& out, const ruint<LIMB_SIZE>& a) {
         return out << std::setw(NB_BITS/4) << std::setfill('0') << a.Value;
+    }
+    
+    // Reads a ruint
+    template <size_t K> inline std::istream& operator>>(std::istream& is, ruint<K>& a) {
+    	mpz_class g;
+    	is >> g;
+    	mpz_to_ruint(a, g);
+    	return is;
     }
 }
 

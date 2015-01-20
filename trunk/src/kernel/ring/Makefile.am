@@ -11,27 +11,51 @@ AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(
 
 pkginclude_HEADERS=     \
 	modular.h		    \
+	modular-defines.h	\
+	modular-int8.h		\
 	modular-int16.h		\
 	modular-int32.h		\
 	modular-int64.h		\
+	modular-uint8.h		\
+	modular-uint16.h	\
 	modular-uint32.h	\
+	modular-uint64.h	\
+	modular-float.h		\
+	modular-double.h	\
 	modular-integer.h	\
 	modular-inttype.h	\
 	modular-log16.h		\
+	modular-balanced.h 			\
+	modular-balanced-int32.h 	\
+	modular-balanced-int64.h 	\
+	modular-balanced-integer.h 	\
+	modular-balanced-float.h 	\
+	modular-balanced-double.h 	\
+	unparametric-operations.h	\
+	unparametric.h		\
+	zring.h				\
 	montgomery.h	    \
 	montgomery-int32.h	\
+	modular-int8.inl	\
 	modular-int16.inl	\
 	modular-int32.inl	\
 	modular-int64.inl	\
+	modular-uint8.inl	\
+	modular-uint16.inl	\
 	modular-uint32.inl	\
+	modular-uint64.inl	\
+	modular-float.inl	\
+	modular-double.inl	\
 	modular-integer.inl	\
 	modular-inttype.inl	\
 	modular-log16.inl	\
-	montgomery-int32.inl
+	montgomery-int32.inl\
+	ring-interface.h
 
 noinst_LTLIBRARIES=libgivring.la
 
 libgivring_la_SOURCES=   \
+	modular-int8.C		\
 	modular-int16.C		\
 	modular-int32.C		\
 	modular-int64.C		\

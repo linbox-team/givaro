@@ -93,48 +93,6 @@ namespace Givaro {
 		return r;
 	}
 
-
-	template< class RandIter >
-	inline  Modular<Log16>::Rep& Modular<Log16>::random(RandIter& g, Rep& a) const
-	{
-		return init(a, g());
-	}
-
-	template< class RandIter >
-	inline  Modular<Log16>::Rep& Modular<Log16>::random(RandIter& g, Rep& a, const Rep&) const
-	{
-		return init(a, g());
-	}
-
-	template< class RandIter >
-	inline  Modular<Log16>::Rep& Modular<Log16>::random(RandIter& g, Rep& a, long b) const
-	{
-		return init(a, g() %(uint16_t) b);
-	}
-
-	template< class RandIter >
-	inline  Modular<Log16>::Rep& Modular<Log16>::nonzerorandom(RandIter& g, Rep& a) const
-	{
-		while (iszero(init(a, g()))) {};
-		return a;
-	}
-
-	template< class RandIter >
-	inline  Modular<Log16>::Rep& Modular<Log16>::nonzerorandom(RandIter& g, Rep& a, const Rep&) const
-	{
-		while (iszero(init(a, g()))) {};
-		return a;
-	}
-
-	template< class RandIter >
-	inline  Modular<Log16>::Rep& Modular<Log16>::nonzerorandom(RandIter& g, Rep& a, long b) const
-	{
-		while (iszero(init(a, g() %(uint16_t) b))) {};
-		return a;
-	}
-
-
-
 	// -- inline array operations between Modular<Log16>::Rep
 	inline void Modular<Log16>::mul (const size_t sz, Array r, constArray a, constArray b) const
 	{

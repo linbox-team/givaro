@@ -24,6 +24,8 @@
 #include <assert.h>
 // #include <iostream>
 
+#include "recint/ruconvert.h" // For ruint_to_mpz()
+
 #ifndef __GIVARO_GMPplusplus_H
 #warning "you should include <gmp++/gmp++.h> before <gmp++/gmp++_int.h> (or prepare for the worse)"
 #endif
@@ -179,6 +181,14 @@ namespace Givaro {
 		giv_all_inlined Integer(double n);
 		//! @overload Givaro::Integer(int)
 		giv_all_inlined Integer(const char *n);
+		//! @overload Givaro::Integer(RecInt::ruint<K>)
+		template<size_t K> Integer(const RecInt::ruint<K>& n)
+		{
+			// Maybe not the fastest way to do it
+			mpz_class a;
+			RecInt::ruint_to_mpz(a, n);
+			mpz_init_set((mpz_ptr)&gmp_rep, a.get_mpz_t()) ;
+		}
 
 		/*! Copy constructor
 		 * @param n input to be constructed from
@@ -1569,6 +1579,12 @@ namespace Givaro {
 		giv_all_inlined operator float() const ;
 		giv_all_inlined operator double() const ;
 		giv_all_inlined operator vect_t() const ;
+		template<size_t K> operator RecInt::ruint<K>() const
+		{
+			mpz_class a((mpz_ptr)&gmp_rep);
+			RecInt::ruint<K> r;
+			return RecInt::mpz_to_ruint(r, a);
+		}
 		///@}
 
 		// (FILE gmp++_int_other.C)

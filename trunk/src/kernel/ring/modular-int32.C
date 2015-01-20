@@ -59,13 +59,4 @@ int32_t& Modular<int32_t>::invext
 	return (u3<0?u=-u:u);
 }
 
-
-void Modular<int32_t>::Init()
-{
-}
-
-void Modular<int32_t>::End()
-{
-}
-
 } // namespace Givaro

@@ -66,15 +66,10 @@ namespace Givaro {
 	
 	// -------------
 	// ----- Convert
-
-	inline double &Modular<uint64_t>::convert (double &x, const Element &y) const
+    template<typename X>
+	inline X &Modular<uint64_t>::convert (X &x, const Element &y) const
 	{
-		return x = (double)y;
-	}
-
-	inline float &Modular<uint64_t>::convert (float &x, const Element &y) const
-	{
-		return x = (float)y;
+		return x = (X)y;
 	}
 
 	// ------------------------

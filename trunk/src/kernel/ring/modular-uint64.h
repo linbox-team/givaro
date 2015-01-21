@@ -119,8 +119,7 @@ public:
 	Element &assign (Element &x, const Element &y) const;
 	
 	// ----- Convert
-	double &convert (double &x, const Element &y) const;
-	float &convert (float &x, const Element &y) const;
+    template<typename X> X &convert(X& x, const Element &y) const;
 
 	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
 	inline Element& reduce (Element& x) const { return x %= _p; }

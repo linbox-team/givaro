@@ -129,21 +129,21 @@ namespace RecInt
 {
     // Initialize the module of rmint to p (must be odd !)
     template <size_t K>
-    inline void rmint<K, MGA>::init_module(const ruint<K>& p) {
+    inline void rmint<K, MGA>::init_module(const ruint<K>& _p) {
         // p is the new module
-        copy(rmint<K, MGA>::p, p);
+        copy(rmint<K, MGA>::p, _p);
 
         // p1 = -inv(p) mod 2^(2^K)
-        arazi_qi(rmint<K, MGA>::p1, -p);
+        arazi_qi(rmint<K, MGA>::p1, -_p);
 
         // r = 2^(2^K) mod p
-        div_r(rmint<K, MGA>::r, -p, p);
+        div_r(rmint<K, MGA>::r, -_p, _p);
     }
     
     // Get the module of rmint to p
     template <size_t K>
-    inline void rmint<K, MGA>::get_module(ruint<K>& p) {
-        copy(p, rmint<K, MGA>::p);
+    inline void rmint<K, MGA>::get_module(ruint<K>& _p) {
+        copy(_p, rmint<K, MGA>::p);
     }
 }
 

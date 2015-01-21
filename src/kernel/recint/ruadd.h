@@ -255,7 +255,7 @@ namespace RecInt
     }
     template <typename T>
     inline IS_ARITH(T, void) add(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const T& c) {
-        add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, c);
+        add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, (UWtype)(c));
         r = (a < c);
     }
     template <typename T>
@@ -278,7 +278,7 @@ namespace RecInt
     }
     template <typename T>
     inline IS_ARITH(T, void) add(bool& r, ruint<LIMB_SIZE>& a, const T& b) {
-        a.Value += b;
+        a.Value += limb(b);
         r = (a.Value < limb(b));
     }
 

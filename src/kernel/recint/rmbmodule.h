@@ -49,14 +49,14 @@ namespace RecInt
 {
     // Initialize the module of rmint to p
     template <size_t K>
-    inline void rmint<K, MGI>::init_module(const ruint<K>& p) {
-        copy(rmint<K, MGI>::p, p);
+    inline void rmint<K, MGI>::init_module(const ruint<K>& _p) {
+        copy(rmint<K, MGI>::p, _p);
     }
     
     // Get the module of rmint to p
     template <size_t K>
-    inline void rmint<K, MGI>::get_module(ruint<K>& p) {
-        copy(p, rmint<K, MGI>::p);
+    inline void rmint<K, MGI>::get_module(ruint<K>& _p) {
+        copy(_p, rmint<K, MGI>::p);
     }
 }
 

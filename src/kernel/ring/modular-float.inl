@@ -24,21 +24,21 @@ namespace Givaro {
 
 	inline Modular<float>::Element &Modular<float>::init (Element &x, const int32_t &y) const
 	{
-		x = (Element)(std::abs(y) % (uint32_t)(_lp));
+		x = (Element)(Residu_t(std::abs(y)) % _lp);
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
 	inline Modular<float>::Element &Modular<float>::init (Element &x, const int64_t &y) const
 	{
-		x = (Element)(std::abs(y) % (uint64_t)(_lp));
+		x = (Element)(Residu_t(std::abs(y)) % (uint64_t)(_lp));
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
 	inline Modular<float>::Element &Modular<float>::init(Element &x, const uint32_t &y) const
 	{
-		return x = (Element)( y >= (uint32_t)_lp ? y % (uint32_t)(_lp) : y);
+		return x = (Element)( y >= _lp ? y % _lp : y);
 	}
 
 	inline Modular<float>::Element &Modular<float>::init (Element &x, const uint64_t &y) const
@@ -48,7 +48,7 @@ namespace Givaro {
 
 	inline Modular<float>::Element &Modular<float>::init (Element &x, const float &y) const
 	{
-		x = fmod(y, _p);
+		x = std::fmod(y, _p);
 		if (x < 0) x += _p;
 		return x;
 	}
@@ -89,14 +89,14 @@ namespace Givaro {
 
 	inline Modular<float>::Element& Modular<float>::reduce (Element& x) const
 	{
-		x = fmod (x, _p);
+		x = std::fmod(x, _p);
 		if (x < 0) x += _p;
 		return x;
 	}
 	
 	inline Modular<float>::Element& Modular<float>::reduce (Element& x, const Element& y) const
 	{
-		x = fmod (y, _p);
+		x = std::fmod(y, _p);
 		if (x < 0) x += _p;
 		return x;
 	}
@@ -139,9 +139,9 @@ namespace Givaro {
 		(Element &x, const Element &y) const
 	{
 		// The extended Euclidean algorithm
-		int64_t x_int, y_int, tx, ty;
-		x_int = _p;
-		y_int = y;
+		int32_t x_int, y_int, tx, ty;
+		x_int = int32_t(_lp);
+		y_int = int32_t(y);
 		tx = 0;
 		ty = 1;
 
@@ -149,8 +149,8 @@ namespace Givaro {
 			// always: gcd (modulus,residue) = gcd (x_int,y_int)
 			//         sx*modulus + tx*residue = x_int
 			//         sy*modulus + ty*residue = y_int
-			int64_t q = x_int / y_int; // integer quotient
-			int64_t temp = y_int;  y_int  = x_int  - q * y_int;
+			int32_t q = x_int / y_int; // integer quotient
+			int32_t temp = y_int;  y_int  = x_int  - q * y_int;
 			x_int  = temp;
 			temp = ty; ty = tx - q * ty;
 			tx = temp;

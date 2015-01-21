@@ -125,7 +125,7 @@ public:
 	uint32_t& convert(uint32_t& r, const Element a ) const { return r = (uint32_t)a ;}
 	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
 
-	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
+	inline Element& reduce (Element& x, const Element& y) const { return x = Element(y % _p); }
 	inline Element& reduce (Element& x) const { return x %= _p; }
 	
 	// ----- Classic arithmetic

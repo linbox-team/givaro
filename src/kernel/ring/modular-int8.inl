@@ -53,7 +53,7 @@ namespace Givaro {
 	{
 		int32_t u;
 		Modular<int8_t>::invext(u, int32_t(a), int32_t(_p));
-		return r = (u<0)?(Modular<int8_t>::Element)u + (int16_t)_p:(Modular<int8_t>::Element)u;
+		return r = Element((u<0)? u + _p : u);
 	}
 
 	inline Modular<int8_t>::Element& Modular<int8_t>::div
@@ -100,7 +100,7 @@ namespace Givaro {
 	{
 		int32_t u;
 		Modular<int8_t>::invext(u, int32_t(r), int32_t(_p));
-		return r = (u<0)? (Element)u + (int16_t)_p : (Element)u;
+		return r = Element((u<0)? u + _p : u);
 	}
 	
 	inline Modular<int8_t>::Element& Modular<int8_t>::axpy
@@ -118,7 +118,7 @@ namespace Givaro {
 	inline Modular<int8_t>::Element& Modular<int8_t>::maxpy
 		(Element& r, const Element& a, const Element& b, const Element& c) const
 	{
-		int16_t tmp;
+		Element tmp;
 		__GIVARO_MODULAR_INTEGER_MUL(tmp,_p,a,b);
 		__GIVARO_MODULAR_INTEGER_SUB(r,_p,c,tmp);
 		return r;

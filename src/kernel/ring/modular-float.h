@@ -54,7 +54,6 @@ public:
 	// ----- Exported Types and constantes
 	typedef Modular<float> Self_t;
 	typedef uint32_t Residu_t;
-    typedef float Element;
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Constantes

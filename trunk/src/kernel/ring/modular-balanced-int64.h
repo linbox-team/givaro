@@ -246,7 +246,7 @@ namespace Givaro
 
 		inline Element& init (Element& x, uint64_t y) const
 		{
-			x = (Element)y % (uint64_t)modulus;
+			x = Element(y % (uint64_t)modulus);
 			NORMALISE_HI(x);
 			return x;
 		}

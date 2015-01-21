@@ -1144,7 +1144,7 @@ namespace Givaro {
             _plus1[i] = (TT)_pol2log[b] - (TT)_qm1;
         }
 
-        _plus1[mOne] = 0;
+        _plus1[size_t(mOne)] = 0;
     }
 
 

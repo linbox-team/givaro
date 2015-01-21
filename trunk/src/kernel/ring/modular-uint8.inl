@@ -26,26 +26,26 @@ namespace Givaro {
 
 	inline Modular<uint8_t>::Element &Modular<uint8_t>::init (Element &x, const int32_t &y) const
 	{
-		x = (Element)(std::abs(y) % (uint64_t)(_p));
+		x = (Element)(std::abs(y) % _p);
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
 	inline Modular<uint8_t>::Element &Modular<uint8_t>::init (Element &x, const int64_t &y) const
 	{
-		x = (Element)(std::abs(y) % (uint64_t)(_p));
+		x = (Element)(std::abs(y) % _p);
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
 	inline Modular<uint8_t>::Element &Modular<uint8_t>::init(Element &x, const uint32_t &y) const
 	{
-		return x = (Element)( y >= (uint64_t)_p ? y % (uint64_t)(_p) : y);
+		return x = (Element)( y >= _p ? y % _p : y);
 	}
 
 	inline Modular<uint8_t>::Element &Modular<uint8_t>::init (Element &x, const uint64_t &y) const
 	{
-		return x = (Element)( y >= (uint64_t)_p ? y % (uint64_t)(_p) : y);
+		return x = (Element)( y >= _p ? y % _p : y);
 	}
 
 	inline Modular<uint8_t>::Element &Modular<uint8_t>::init (Element &x, const double &y) const

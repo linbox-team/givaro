@@ -24,26 +24,26 @@ namespace Givaro {
 
 	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const int32_t &y) const
 	{
-		x = (Element)(std::abs(y) % (uint64_t)(_p));
+		x = (Element)(uint32_t(std::abs(y)) % _p);
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
 	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const int64_t &y) const
 	{
-		x = (Element)(std::abs(y) % (uint64_t)(_p));
+		x = (Element)(uint64_t(std::abs(y)) % _p);
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
 	inline Modular<uint64_t>::Element &Modular<uint64_t>::init(Element &x, const uint32_t &y) const
 	{
-		return x = (Element)( y >= (uint64_t)_p ? y % (uint64_t)(_p) : y);
+		return x = (Element)( y >= (uint64_t)_p ? y % _p : y);
 	}
 
 	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const uint64_t &y) const
 	{
-		return x = (Element)( y >= (uint64_t)_p ? y % (uint64_t)(_p) : y);
+		return x = (Element)( y >= (uint64_t)_p ? y % _p : y);
 	}
 
 	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const double &y) const
@@ -111,8 +111,8 @@ namespace Givaro {
 	{
 		// The extended Euclidean algorithm
 		int64_t x_int, y_int, tx, ty;
-		x_int = _p;
-		y_int = y;
+		x_int = int64_t(_p);
+		y_int = int64_t(y);
 		tx = 0;
 		ty = 1;
 

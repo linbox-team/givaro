@@ -77,8 +77,8 @@ namespace RecInt
             cr_iterator  operator++(int) { cr_iterator i(*this); --_index; return i; }
             bool operator==(cr_iterator rhs) { return (rhs._index == _index); }
             bool operator!=(cr_iterator rhs) { return (rhs._index != _index); }
-            const limb* operator->() { return get_limb_p(*_ptr, _index); }
-            const limb& operator*() { return *get_limb_p(*_ptr, _index); }
+            const limb* operator->() { return get_limb_p(*_ptr, (unsigned int)(_index)); }
+            const limb& operator*() { return *get_limb_p(*_ptr, (unsigned int)(_index)); }
         private:
             int _index;
             const ruint<K> *_ptr;
@@ -100,8 +100,8 @@ namespace RecInt
         ruint() : Value(0u) {}
         ruint(const ruint<LIMB_SIZE>& r) : Value(r.Value) {}
         ruint(const double b) : Value(static_cast<limb>(b)) {}
-        template <typename T, IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(b) {}
-        template <typename T, IS_SIGNED(T, int) = 0> ruint(const T b) : Value(b) {}
+        template <typename T, IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
+        template <typename T, IS_SIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
 
         // Cast
         template <typename T, IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }

@@ -66,7 +66,7 @@ public:
 	
 	// ----- Constructors
 	Modular()
-	: zero(0), one(1), mOne(-1), _p(0) {}
+	: zero(0), one(1), mOne(0), _p(0) {}
 
 	Modular(Residu_t p)
 	: zero(0), one(1), mOne((Element)p-1), _p(p) {}

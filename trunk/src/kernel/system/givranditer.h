@@ -203,7 +203,7 @@ public:
 		* @param seed constant integer reference from which to seed random number
 		*             generator (default = 0)
 		*/
-		ModularRandIter(const  Field& F, const size_t& seed = 0)
+		ModularRandIter(const  Field& F, const size_t& size = 0, const size_t& seed = 0)
 			: _givrand( GivRandom(seed) ), _field(F) {}
 
 		/** Copy constructor.

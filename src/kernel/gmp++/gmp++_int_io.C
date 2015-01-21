@@ -48,16 +48,16 @@ namespace Givaro {
 	// Sortie signee : +321321 ou -321321, par exemple
 	std::ostream& Integer::print(std::ostream &o) const
 	{
-#ifdef __GIVARO_GMP_NO_CXX
+// For some reason, ekopath does an undefined reference to the GMP-streams - A. Breust 2015-01-21
+#if defined(__GIVARO_GMP_NO_CXX) || defined(__PATHCC__)
 		int base = 10;
 		long unsigned strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
 		char *str = new char[strSize];
 		mpz_get_str(str, base, (mpz_srcptr)&(gmp_rep));
-		// JGD 08.11.1999 : temporaire
-		//   if (sign(*this) > 0) o << '+' ;
 		o << str;
 		delete [] str ;
 		return o;
+		
 #else
 		return o << (mpz_srcptr)&gmp_rep;
 #endif
@@ -66,7 +66,7 @@ namespace Givaro {
 	// Entree au format de la sortie
 	std::istream& operator>> (std::istream& inp, Integer& a)
 	{
-#ifdef __GIVARO_GMP_NO_CXX
+#if defined(__GIVARO_GMP_NO_CXX) || defined(__PATHCC__)
 		static long int base[10] = {
 			10,
 			100,
@@ -129,8 +129,9 @@ namespace Givaro {
 		}
 		if (sign == -1) a = -a ;
 		return inp ;
+		
 #else
-		return inp >>  (mpz_ptr)a.get_mpz();
+		return inp >> (mpz_ptr)a.get_mpz();
 #endif
 	}
 

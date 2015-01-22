@@ -126,8 +126,8 @@ namespace Givaro {
 			return *this;
 		}
 		
-		template<class T> inline T& characteristic(T& p) const { return p = modulus; }
-		template<class T> inline T& cardinality(T& p) const { return p = modulus; }
+		template<class T> inline T& characteristic(T& p) const { return p = T(modulus); }
+		template<class T> inline T& cardinality(T& p) const { return p = T(modulus); }
 
 		inline FieldInt cardinality () const
 		{

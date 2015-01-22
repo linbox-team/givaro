@@ -25,7 +25,7 @@ int main(void)
     mpz_class ga, gb, gc, gd, gz, gp, gcmp;
       
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     do { rand(p); } while (p % 2 == 0);
     a.init_module(p);
     ruint_to_mpz(gp, p);

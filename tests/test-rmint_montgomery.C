@@ -31,7 +31,7 @@ int main(void)
     mpz_class ga, gb, gc, gp, gcmp;
       
     // Init. size = p
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     ruint<STD_RECINT_SIZE> p;
 
     // Loop

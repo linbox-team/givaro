@@ -235,7 +235,7 @@ namespace RecInt
     }
     template<typename T>
     inline IS_ARITH(T, void) lmul(limb& ret, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const T& c) {
-        umul_ppmm(ret, a.Value, b.Value, c);
+        umul_ppmm(ret, a.Value, b.Value, limb(c));
     }
 
     // a = b*c

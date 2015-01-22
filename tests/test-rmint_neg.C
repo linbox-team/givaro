@@ -20,14 +20,14 @@ int main(void)
     DItype r;
       
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype i = 1; i < LOOPS; i++) {
         do { rand(p); } while(p % 2 == 0);
         a.init_module(p);
     
-        r = rand_gen();    
+        r = DItype(rand_gen());    
         a = -r;
         b = r;
         if (a != -b) return 1;

@@ -27,13 +27,13 @@ int main(void)
     // Init. size = 2 ^ (2 ^ STD_RECINT_SIZE)
     mpz_ui_pow_ui(size.get_mpz_t(), 2, STD_RECINT_SIZE); 
     mpz_ui_pow_ui(size.get_mpz_t(), 2, size.get_ui());
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {
         // Left shift
         rand(x);
-        r = rand() % (2 * NBBITS<STD_RECINT_SIZE>::value);
+        r = USItype(rand()) % (2 * NBBITS<STD_RECINT_SIZE>::value);
         ruint_to_mpz(gx, x);
         y = x << (UDItype)r; gy = gx << r; gy %= size;
         ruint_to_mpz(gcmp, y);
@@ -45,7 +45,7 @@ int main(void)
         
         // Right shift
         rand(x);
-        r = rand() % (2 * NBBITS<STD_RECINT_SIZE>::value);
+        r = USItype(rand()) % (2 * NBBITS<STD_RECINT_SIZE>::value);
         ruint_to_mpz(gx, x);
         y = x >> (UDItype)r; gy = gx >> r;
         ruint_to_mpz(gcmp, y);

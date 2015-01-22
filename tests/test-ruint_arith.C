@@ -30,7 +30,7 @@ int main(void)
     // Init. size = 2 ^ (2 ^ STD_RECINT_SIZE)
     mpz_ui_pow_ui(size.get_mpz_t(), 2, STD_RECINT_SIZE); 
     mpz_ui_pow_ui(size.get_mpz_t(), 2, size.get_ui());
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {
@@ -59,8 +59,8 @@ int main(void)
         
 
         // Second test: with unsigned int
-        r = rand();
-        while (x < r) { rand(x); r = rand(); }
+        r = USItype(rand());
+        while (x < r) { rand(x); r = USItype(rand()); }
         RI_OP(z, x, r);
         ruint_to_mpz(gx, x);
         ruint_to_mpz(gz, z);
@@ -103,8 +103,8 @@ int main(void)
         
         
         // Fifth test: in place with unsigned int
-        r = rand();
-        while (x < r) { rand(x); r = rand(); }
+        r = USItype(rand());
+        while (x < r) { rand(x); r = USItype(rand()); }
         ruint_to_mpz(gx, x);
         
         RI_OP(x, r);

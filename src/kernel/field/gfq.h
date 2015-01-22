@@ -154,7 +154,7 @@ public:
 	}
 
 	UTT cardinality() const;
-	template<typename T> T& cardinality(T& p) const { return p = T(_q); };
+	template<typename T> T& cardinality(T& p) const { return p = T(_q); }
 	UTT size() const;
 	UTT exponent() const;
 	// Internal representation of the used generator

@@ -22,34 +22,34 @@ namespace Givaro {
 	inline Modular<int64_t>::Element& Modular<int64_t>::mul
 		(Element& r, const Element& a, const Element& b) const
 	{
-		return  __GIVARO_MODULAR_INTEGER_MUL(r,(int64_t)_p,(int64_t)a,(int64_t)b);
+		return  __GIVARO_MODULAR_INTEGER_MUL(r,_p,a,b);
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::sub
 		(Element& r, const Element& a, const Element& b) const
 	{
-		return __GIVARO_MODULAR_INTEGER_SUB(r,(int64_t)_p,(int64_t)a,(int64_t)b);
+		return __GIVARO_MODULAR_INTEGER_SUB(r,_p,a,b);
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::add
 		(Element& r, const Element& a, const Element& b) const
 	{
-		__GIVARO_MODULAR_INTEGER_ADD(r,(int64_t)_p,(int64_t)a,(int64_t)b);
+		__GIVARO_MODULAR_INTEGER_ADD(r,_p,a,b);
 		return r;
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::neg
 		(Element& r, const Element& a) const
 	{
-		return __GIVARO_MODULAR_INTEGER_NEG(r,(int64_t)_p,(int64_t)a);
+		return __GIVARO_MODULAR_INTEGER_NEG(r,_p,a);
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::inv
 		(Element& r, const Element& a) const
 	{
 		int64_t u;
-		Modular<int64_t>::invext(u, a, (int64_t)_p);
-		return r = (u<0)?(Modular<int64_t>::Element)u + (int64_t)_p:(Modular<int64_t>::Element)u;
+		Modular<int64_t>::invext(u, a, int64_t(_p));
+		return r = (u < 0) ? Element(Compute_t(u) + Compute_t(_p)) : u;
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::div
@@ -60,7 +60,7 @@ namespace Givaro {
 	inline Modular<int64_t>::Element& Modular<int64_t>::mulin
 		(Element& r, const Element& a) const
 	{
-		return __GIVARO_MODULAR_INTEGER_MULIN(r,(int64_t)_p, (int64_t)a);
+		return __GIVARO_MODULAR_INTEGER_MULIN(r,_p, a);
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::divin
@@ -75,7 +75,7 @@ namespace Givaro {
 		(Element& r, const Element& a) const
 	{
 		int64_t tmp = (int64_t)r;
-		__GIVARO_MODULAR_INTEGER_ADDIN(tmp,(int64_t)_p, (int64_t)a);
+		__GIVARO_MODULAR_INTEGER_ADDIN(tmp ,_p, a);
 		return r = (Modular<int64_t>::Element)tmp;
 	}
 
@@ -83,42 +83,42 @@ namespace Givaro {
 		(Element& r, const Element& a) const
 	{
 		int64_t tmp = (int64_t)r;
-		__GIVARO_MODULAR_INTEGER_SUBIN(tmp,(int64_t)_p, (int64_t)a);
+		__GIVARO_MODULAR_INTEGER_SUBIN(tmp, _p, a);
 		return r = (Modular<int64_t>::Element)tmp;
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::negin
 		(Element& r) const
 	{
-		return __GIVARO_MODULAR_INTEGER_NEGIN(r,(int64_t)_p);
+		return __GIVARO_MODULAR_INTEGER_NEGIN(r,_p);
 	}
 
 	inline Modular<int64_t>::Element& Modular<int64_t>::invin
 		(Element& r) const
 	{
 		int64_t u;
-		Modular<int64_t>::invext(u, r, (int64_t)_p);
-		return r = (u<0)?(Modular<int64_t>::Element)u + (int64_t)_p:(Modular<int64_t>::Element)u;
+		Modular<int64_t>::invext(u, r, int64_t(_p));
+		return r = (u < 0) ? Element(Compute_t(u) + Compute_t(_p)) : u;
 	}
 	
 	inline Modular<int64_t>::Element& Modular<int64_t>::axpy
 		(Element& r, const Element& a, const Element& b, const Element& c) const
 	{
-		return __GIVARO_MODULAR_INTEGER_MULADD(r, (int64_t)_p, (int64_t)a, (int64_t)b, (int64_t)c);
+		return __GIVARO_MODULAR_INTEGER_MULADD(r, _p, a, b, c);
 	}
 
 	inline Modular<int64_t>::Element&  Modular<int64_t>::axpyin
 		(Element& r, const Element& a, const Element& b) const
 	{
-		return __GIVARO_MODULAR_INTEGER_MULADDIN(r, (int64_t)_p, (int64_t)a, (int64_t)b);
+		return __GIVARO_MODULAR_INTEGER_MULADDIN(r, _p, a, b);
 	}
 	
 	inline Modular<int64_t>::Element& Modular<int64_t>::maxpy
 		(Element& r, const Element& a, const Element& b, const Element& c) const
 	{
 		int64_t tmp;
-		__GIVARO_MODULAR_INTEGER_MUL(tmp, (int64_t)_p, (int64_t)a, (int64_t)b);
-		__GIVARO_MODULAR_INTEGER_SUB(r, (int64_t)_p, (int64_t)c, tmp);
+		__GIVARO_MODULAR_INTEGER_MUL(tmp, _p, a, b);
+		__GIVARO_MODULAR_INTEGER_SUB(r, _p, c, tmp);
 		return r;
 	}
 
@@ -126,21 +126,21 @@ namespace Givaro {
 		(Element& r, const Element& a, const Element& b, const Element& c) const
 	{
 		int64_t tmp;
-		__GIVARO_MODULAR_INTEGER_MULSUB(tmp, (int64_t)_p, (int64_t)a, (int64_t)b, (int64_t)c);
+		__GIVARO_MODULAR_INTEGER_MULSUB(tmp, _p, a, b, c);
 		return r = (Modular<int64_t>::Element)tmp;
 	}
 
 	inline Modular<int64_t>::Element&  Modular<int64_t>::maxpyin
 		(Element& r, const Element& a, const Element& b) const
 	{
-		__GIVARO_MODULAR_INTEGER_SUBMULIN(r, (int64_t)_p, (int64_t)a, (int64_t)b );
+		__GIVARO_MODULAR_INTEGER_SUBMULIN(r, _p, a, b );
 		return r;
 	}
 
 	inline Modular<int64_t>::Element&  Modular<int64_t>::axmyin
 		(Element& r, const Element& a, const Element& b) const
 	{
-		return __GIVARO_MODULAR_INTEGER_MULSUB(r, (int64_t)_p, (int64_t)a, (int64_t)b, r );
+		return __GIVARO_MODULAR_INTEGER_MULSUB(r, _p, a, b, r );
 	}
 	
 	// ----------------------------------
@@ -151,7 +151,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_MUL(tmp, (int64_t)_p,(int64_t)a[i], (int64_t)b[i]);
+			__GIVARO_MODULAR_INTEGER_MUL(tmp, _p,a[i], b[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -161,7 +161,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_MUL(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b);
+			__GIVARO_MODULAR_INTEGER_MUL(tmp, _p, a[i], b);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -187,7 +187,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_ADD(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b[i]);
+			__GIVARO_MODULAR_INTEGER_ADD(tmp, _p, a[i], b[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -197,7 +197,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_ADD(tmp,(int64_t)_p, (int64_t)a[i], (int64_t)b);
+			__GIVARO_MODULAR_INTEGER_ADD(tmp,_p, a[i], b);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -207,7 +207,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_SUB(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b[i]);
+			__GIVARO_MODULAR_INTEGER_SUB(tmp, _p, a[i], b[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -217,7 +217,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_SUB(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)b);
+			__GIVARO_MODULAR_INTEGER_SUB(tmp, _p, a[i], b);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -227,7 +227,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_NEG(tmp, (int64_t)_p, (int64_t)a[i]);
+			__GIVARO_MODULAR_INTEGER_NEG(tmp, _p, a[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -237,7 +237,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_MULADD(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i], (int64_t)y[i]);
+			__GIVARO_MODULAR_INTEGER_MULADD(tmp, _p, a[i], (int64_t)x[i], (int64_t)y[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -247,7 +247,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp = (int64_t)r[i];
-			__GIVARO_MODULAR_INTEGER_MULADDIN(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i]);
+			__GIVARO_MODULAR_INTEGER_MULADDIN(tmp, _p, a[i], (int64_t)x[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -257,7 +257,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz; i--; ) {
 			int64_t tmp;
-			__GIVARO_MODULAR_INTEGER_MULSUB(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i], (int64_t)y[i]);
+			__GIVARO_MODULAR_INTEGER_MULSUB(tmp, _p, a[i], (int64_t)x[i], (int64_t)y[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -267,7 +267,7 @@ namespace Givaro {
 	{
 		for ( size_t i=sz ; --i ; ) {
 			int64_t tmp = (int64_t)r[i];
-			__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, (int64_t)_p, (int64_t)a[i], (int64_t)x[i]);
+			__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a[i], (int64_t)x[i]);
 			r[i] = (Modular<int64_t>::Element)tmp;
 		}
 	}
@@ -321,7 +321,7 @@ namespace Givaro {
 
 	inline  Modular<int64_t>::Element&  Modular<int64_t>::init ( Element& r, const unsigned long long a ) const
 	{
-		return r = (Element)( a >= (uint64_t)_p ? a % (uint64_t)_p : a);
+		return r = (Element)( a >= _p ? a % _p : a);
 	}
 
 	inline  Modular<int64_t>::Element&  Modular<int64_t>::init ( Element& r, const double a ) const
@@ -394,7 +394,7 @@ inline Modular<int64_t>::Element& Modular<int64_t>::dotprod
   ( Element& r, const int bound, const size_t sz, constArray a, constArray b ) const
 {
   unsigned int stride = 1;
-  if ((int64_t)bound < Signed_Trait<Element>::max() )
+  if (bound < Signed_Trait<Element>::max() )
    stride = (unsigned int) ( GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound) );
   unsigned long dot = (unsigned long) zero; // this is intented !
   if ((sz <10) && (sz <stride)) {
@@ -490,7 +490,8 @@ inline void
       // - normalization: put fractional part at the end of the representation
       tmp.d = a[i] + offset;
       r[i] = tmp.r[1];
-      if (r[i] <(int64_t)_p) r[i] %= _p;
+      if (Compute_t(r[i]) < Compute_t(_p))
+      	r[i] %= Compute_t(_p);
   }
   //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
   //    r[i] = (r[i] <_p ? r[i] : r[i]%_p);

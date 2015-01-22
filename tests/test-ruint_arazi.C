@@ -24,7 +24,7 @@ int main(void)
     ruint<STD_RECINT_SIZE+1> P, P1, R;
     
     // Random
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     for (UDItype l = 0; l < LOOPS; l++) {
         rand(p); if (p % 2 == 0) p++;

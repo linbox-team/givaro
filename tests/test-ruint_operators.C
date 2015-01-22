@@ -27,7 +27,7 @@ int main(void)
     // Init. size = 2 ^ (2 ^ STD_RECINT_SIZE)
     mpz_ui_pow_ui(size.get_mpz_t(), 2, STD_RECINT_SIZE); 
     mpz_ui_pow_ui(size.get_mpz_t(), 2, size.get_ui());
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {
@@ -66,7 +66,7 @@ int main(void)
         // add and sub in place
         x += y; gx += gy; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 3;
-        r = rand(); x += r; gx += r; gx %= size; ruint_to_mpz(gcmp, x);
+        r = USItype(rand()); x += r; gx += r; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 3;
         rand(s); ruint_to_mpz(gs, s); s += s; gs += gs; gs %= size; ruint_to_mpz(gcmp, s);
         if (gs != gcmp) return 3;
@@ -78,7 +78,7 @@ int main(void)
             x -= z; gx -= gz; ruint_to_mpz(gcmp, x);
             if (gcmp != gx) return 4;
         }
-        while (y < r) { rand(y); r = rand(); }
+        while (y < r) { rand(y); r = USItype(rand()); }
         ruint_to_mpz(gy, y); y -= r; gy -= r; ruint_to_mpz(gcmp, y);
         if (gcmp != gy) return 4;
         rand(s); ruint_to_mpz(gs, s); s -= s; gs -= gs; ruint_to_mpz(gcmp, s);
@@ -89,14 +89,15 @@ int main(void)
         x %= z; gx %= gz;
         ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 5;
-        while ((r = rand()) < 2); z %= r; gz %= r; ruint_to_mpz(gcmp, z);
+        while ((r = USItype(rand())) < 2);
+        z %= r; gz %= r; ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 5;
         while (s == 0) rand(s); ruint_to_mpz(gs, s); s %= s; gs %= gs; ruint_to_mpz(gcmp, s);
         if (gs != gcmp) return 5;
         
         x *= y; gx *= gy; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 6;
-        r = rand(); x *= r; gx *= r; gx %= size; ruint_to_mpz(gcmp, x);
+        r = USItype(rand()); x *= r; gx *= r; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 6;
         rand(s); ruint_to_mpz(gs, s); s *= s; gs *= gs; gs %= size; ruint_to_mpz(gcmp, s);
         if (gs != gcmp) return 6;
@@ -105,7 +106,8 @@ int main(void)
         z /= y; gz /= gy;
         ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 7;
-        while ((r = rand()) < 2); y /= r; gy /= r; ruint_to_mpz(gcmp, y);
+        while ((r = USItype(rand())) < 2);
+        y /= r; gy /= r; ruint_to_mpz(gcmp, y);
         if (gcmp != gy) return 7;
         while (s == 0) rand(s); ruint_to_mpz(gs, s); s /= s; gs /= gs; ruint_to_mpz(gcmp, s);
         if (gs != gcmp) return 7;
@@ -118,19 +120,19 @@ int main(void)
         // + symbol
         x = y + z; gx = gy + gz; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 8;
-        r = rand(); x = (UDItype)r + z; gx = r + gz; gx %= size; ruint_to_mpz(gcmp, x);
+        r = USItype(rand()); x = (UDItype)r + z; gx = r + gz; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 8;
-        r = rand(); x = y + (UDItype)r; gx = gy + r; gx %= size; ruint_to_mpz(gcmp, x);
+        r = USItype(rand()); x = y + (UDItype)r; gx = gy + r; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 8;
         
         // - symbol
         while (y < z) { rand(y); rand(z); }
         ruint_to_mpz(gy, y); ruint_to_mpz(gz, z); x = y - z; gx = gy - gz; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 9;
-        while (r < z) { r = rand(); z = rand(); }
+        while (r < z) { r = USItype(rand()); z = rand(); }
         ruint_to_mpz(gz, z); x = (UDItype)r - z; gx = r - gz; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 9;
-        while (y < r) { r = rand(); rand(y); }
+        while (y < r) { r = USItype(rand()); rand(y); }
         ruint_to_mpz(gy, y); x = y - (UDItype)r; gx = gy - r; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 9;
         
@@ -143,22 +145,24 @@ int main(void)
         z = x % y;
         gz = gx % gy; ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 10;
-        while ((r = rand()) < 2); z = (x % (UDItype)r); gz = gx % r; ruint_to_mpz(gcmp, z);
+        while ((r = USItype(rand())) < 2);
+        z = (x % (UDItype)r); gz = gx % r; ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 10;
         if (x % x != 0) return 10;
         
         // * symbol
         x = y * z; gx = gy * gz; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 11;
-        r = rand(); x = (UDItype)r * z; gx = r * gz; gx %= size; ruint_to_mpz(gcmp, x);
+        r = USItype(rand()); x = (UDItype)r * z; gx = r * gz; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 11;
-        r = rand(); x = y * (UDItype)r; gx = gy * r; gx %= size; ruint_to_mpz(gcmp, x);
+        r = USItype(rand()); x = y * (UDItype)r; gx = gy * r; gx %= size; ruint_to_mpz(gcmp, x);
         if (gcmp != gx) return 11;
         
         // / symbol
         z = x / y; gz = gx / gy; ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 12;
-        while ((r = rand()) < 2); z = x / (UDItype)r; gz = gx / r; ruint_to_mpz(gcmp, z);
+        while ((r = USItype(rand())) < 2);
+        z = x / (UDItype)r; gz = gx / r; ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 12;
         if (x / x != 1) return 12;
     }

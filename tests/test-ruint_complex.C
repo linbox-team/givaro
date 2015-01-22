@@ -27,7 +27,7 @@ int main(void)
     // Init. size = 2 ^ (2 ^ STD_RECINT_SIZE)
     mpz_ui_pow_ui(size.get_mpz_t(), 2, STD_RECINT_SIZE); 
     mpz_ui_pow_ui(size.get_mpz_t(), 2, size.get_ui());
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {

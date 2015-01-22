@@ -27,7 +27,7 @@ int main(void)
     limb lb;
       
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype i = 1; i < LOOPS; i++) {

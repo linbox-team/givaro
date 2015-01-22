@@ -66,10 +66,12 @@ do
 
 	AC_TRY_LINK(
 		[
-		// Check was there, added version control - A. Breust 2015-01-21 
+		// Check was there, added version control - A. Breust 2015-01-21
+		#ifdef __PATHCC__
 		#if __PATHCC__ < 5
 			#include <rw/_defs.h>
 			#include <ansi/_cstddef.h>
+		#endif
 		#endif
 		
 		#include "stddef.h"

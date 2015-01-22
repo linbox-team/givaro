@@ -25,7 +25,7 @@ namespace Givaro {
 	inline Modular<uint16_t>::Element &Modular<uint16_t>::init (Element &x, const int32_t &y) const
 	{
 		x = (Element)(std::abs(y) % _p);
-		if (y < 0) x = _p - x;
+		if (y < 0) x = Element(Compute_t(_p) - Compute_t(x));
 		return x;
 	}
 

@@ -290,7 +290,7 @@ namespace RecInt
     }
     template <typename T>
     inline IS_ARITH(T, void) sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const T& c) {
-        a.Value = b.Value - c;
+        a.Value = b.Value - limb(c);
     }
 
     // a -= b    (the borrow is lost)

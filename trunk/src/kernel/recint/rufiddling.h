@@ -125,7 +125,7 @@ namespace RecInt
         return b;
     }
     template <typename T> inline IS_ARITH(T, ruint<LIMB_SIZE>&) operator|=(ruint<LIMB_SIZE>& b, const T& c) {
-        b.Value |= c;
+        b.Value |= limb(c);
         return b;
     }
 
@@ -144,7 +144,7 @@ namespace RecInt
         return b;
     }
     template <typename T> inline IS_ARITH(T, ruint<LIMB_SIZE>&) operator^=(ruint<LIMB_SIZE>& b, const T& c) {
-        b.Value ^= c;
+        b.Value ^= limb(c);
         return b;
     }
 
@@ -164,7 +164,7 @@ namespace RecInt
         return b;
     }
     template <typename T> inline IS_ARITH(T, ruint<LIMB_SIZE>&) operator&=(ruint<LIMB_SIZE>& b, const T& c) {
-        b.Value &= c;
+        b.Value &= limb(c);
         return b;
     }
 

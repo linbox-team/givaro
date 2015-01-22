@@ -14,7 +14,7 @@ int main(void)
     ruint<10> p10;
     ruint<LIMB_SIZE> pLS;
     
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     rand(p10); if ((p10 % 2) == 0) p10++;
     rand(pLS); if ((pLS % 2) == 0) pLS++;
     

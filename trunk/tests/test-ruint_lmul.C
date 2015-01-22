@@ -25,7 +25,7 @@ int main(void)
     mpz_class gx, gy, gz, gcmp;
       
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {

@@ -24,7 +24,7 @@ int main(void)
     limb su = 0, tu = 0, uu = 0, vu = 0, tm = 0, lb = 0;
       
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     do { rand(p); } while(p % 2 == 0);
     w.init_module(p);
     
@@ -32,7 +32,7 @@ int main(void)
     for (UDItype l = 1; l < LOOPS; l++) {
         // ruint
         rand(x);
-        tu += x & 1;
+        tu += limb(x & 1);
         uu += bool(x & MAXPOWTWO);
         
         lb = get_limb(x, NBLIMB<STD_RECINT_SIZE>::value-1);
@@ -41,7 +41,7 @@ int main(void)
         
         // rmint
         rand(w);
-        tm += w.Value & 1;
+        tm += limb(w.Value & 1);
         
         if (w.Value > p) return -1; // No use of module
     }

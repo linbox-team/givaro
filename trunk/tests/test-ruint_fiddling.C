@@ -24,8 +24,8 @@ int main(void)
     UDItype rUDI, rUDI2, rUDI3;
     limb rlimb;
     
-    RecInt::srand(time(NULL));
-    rand64.seed(time(NULL));
+    RecInt::srand(limb(time(NULL)));
+    rand64.seed(limb(time(NULL)));
     
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {

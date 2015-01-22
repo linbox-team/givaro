@@ -23,7 +23,7 @@ int main(void)
     mpz_class ga, gb;
       
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     do { rand(p); } while(p % 2 == 0);
     b.init_module(p);
     

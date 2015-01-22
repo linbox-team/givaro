@@ -25,7 +25,7 @@ int main(void)
     USItype r;
       
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {
@@ -40,22 +40,22 @@ int main(void)
         if (cmp(x, y) > 0 && gx <= gy) return 1;
         if (cmp(x, y) < 0 && gx >= gy) return 1;
         
-        r = rand();
+        r = USItype(rand());
         if (cmp(x, (UDItype)r) == 0 && gx != r) return 1;
         if (cmp(x, (UDItype)r) > 0 && gx <= r) return 1;
         if (cmp(x, (UDItype)r) < 0 && gx >= r) return 1;
         
-        r = rand();
+        r = USItype(rand());
         if (cmp(x, (USItype)r) == 0 && gx != r) return 1;
         if (cmp(x, (USItype)r) > 0 && gx <= r) return 1;
         if (cmp(x, (USItype)r) < 0 && gx >= r) return 1;
         
-        r = rand();
+        r = USItype(rand());
         if (cmp(x, (DItype)r) == 0 && gx != r) return 1;
         if (cmp(x, (DItype)r) > 0 && gx <= r) return 1;
         if (cmp(x, (DItype)r) < 0 && gx >= r) return 1;
         
-        r = rand();
+        r = USItype(rand());
         if (cmp(x, (SItype)r) == 0 && gx != r) return 1;
         if (cmp(x, (SItype)r) > 0 && gx <= r) return 1;
         if (cmp(x, (SItype)r) < 0 && gx >= r) return 1;

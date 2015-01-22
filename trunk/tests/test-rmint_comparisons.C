@@ -26,7 +26,7 @@ int main(void)
     USItype r;
     
     // Init.
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     do { rand(p); } while (p % 2 == 0);
     x.init_module(p);
     rmint<STD_RECINT_SIZE> zero(0), one(1);
@@ -37,7 +37,7 @@ int main(void)
         rand(x); rand(y);
         rmint_to_mpz(gx, x);
         rmint_to_mpz(gy, y);
-        r = rand();
+        r = USItype(rand());
 
         // Comp with UDItype
         if (x != r && gx == r) return 1;

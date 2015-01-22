@@ -28,7 +28,7 @@ int main(void)
     USItype r;
       
     // Init. size = p
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     ruint<STD_RECINT_SIZE> p;
 
     // Loop
@@ -61,7 +61,7 @@ int main(void)
 
 
         // Second test: with unsigned int
-        r = rand();
+        r = USItype(rand());
         rmint_to_mpz(gx, x);
         
         RI_OP(z, x, r);
@@ -100,7 +100,7 @@ int main(void)
         
         
         // Fifth test: in place with unsigned int
-        r = rand();
+        r = USItype(rand());
         rmint_to_mpz(gx, x);
         
         RI_OP(x, r);

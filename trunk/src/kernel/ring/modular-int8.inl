@@ -196,7 +196,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a, Element b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int16_t tmp;
+			int8_t tmp;
 			__GIVARO_MODULAR_INTEGER_ADD(tmp,_p,a[i],b);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}
@@ -206,7 +206,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int16_t tmp;
+			int8_t tmp;
 			__GIVARO_MODULAR_INTEGER_SUB(tmp,_p,a[i],b[i]);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}
@@ -216,7 +216,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a, Element b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int16_t tmp;
+			int8_t tmp;
 			__GIVARO_MODULAR_INTEGER_SUB(tmp,_p,a[i],b);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}
@@ -226,7 +226,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int16_t tmp;
+			int8_t tmp;
 			__GIVARO_MODULAR_INTEGER_NEG(tmp,_p,a[i]);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}
@@ -236,7 +236,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int16_t tmp;
+			int8_t tmp;
 			__GIVARO_MODULAR_INTEGER_MULADD(tmp,_p,a[i],x[i],y[i]);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}
@@ -246,7 +246,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int16_t tmp = (int16_t)r[i];
+			int8_t tmp = (int8_t)r[i];
 			__GIVARO_MODULAR_INTEGER_MULADDIN(tmp,_p,a[i],x[i]);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}
@@ -256,7 +256,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a, constArray x, constArray y) const
 	{
 		for ( size_t i=sz; i--; ) {
-			int16_t tmp;
+			int8_t tmp;
 			__GIVARO_MODULAR_INTEGER_MULSUB(tmp,_p,a[i],x[i],y[i]);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}
@@ -266,7 +266,7 @@ namespace Givaro {
 		(const size_t sz, Array r, constArray a, constArray x) const
 	{
 		for ( size_t i=sz ; --i ; ) {
-			int16_t tmp = (int16_t)r[i];
+			int8_t tmp = (int8_t)r[i];
 			__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp,_p,a[i],x[i]);
 			r[i] = (Modular<int8_t>::Element)tmp;
 		}

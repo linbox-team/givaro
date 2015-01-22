@@ -23,7 +23,7 @@ int main(void)
     UDItype r;
       
     // Init. size = p
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     ruint<STD_RECINT_SIZE> p;
 
     // Loop
@@ -46,7 +46,7 @@ int main(void)
         if (z != 1) return 2;
         
         // Not in place inv with UDItype
-        do { r = rand(); } while (gcd(ruint<STD_RECINT_SIZE>(r), p) != 1);
+        do { r = UDItype(rand()); } while (gcd(ruint<STD_RECINT_SIZE>(r), p) != 1);
         inv(x, r);
         z = x * r;
         if (z != 1 && z != 0) return 3;

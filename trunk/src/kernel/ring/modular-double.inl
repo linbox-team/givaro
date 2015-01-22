@@ -156,7 +156,7 @@ namespace Givaro {
 			tx = temp;
 		}
 
-		if (tx < 0) tx += _p;
+		if (tx < 0) tx += int64_t(_p);
 
 		// now x_int = gcd (modulus,residue)
 		return x = Element(tx);

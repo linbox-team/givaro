@@ -27,7 +27,7 @@ int main(void)
     USItype r;
       
     // Init. size = p
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     ruint<STD_RECINT_SIZE> p;
 
     // Loop
@@ -39,7 +39,7 @@ int main(void)
         //------- Exp ---------
         
         // With USItype
-        rand(b); r = rand();
+        rand(b); r = USItype(rand());
         rmint_to_mpz(gb, b);
         exp(a, b, r);
         mpz_powm_ui(ga.get_mpz_t(), gb.get_mpz_t(), r, gp.get_mpz_t());
@@ -47,7 +47,7 @@ int main(void)
         if (gcmp != ga) return 1;
         
         // With ruint
-        rand(c); r = rand();
+        rand(c); r = USItype(rand());
         ruint_to_mpz(gc, c);
         exp(a, b, c);
         mpz_powm(ga.get_mpz_t(), gb.get_mpz_t(), gc.get_mpz_t(), gp.get_mpz_t());

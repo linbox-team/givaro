@@ -161,7 +161,7 @@ namespace Givaro
 		template <typename T>
 		T& convert (T &x, const Element &y) const
 		{
-			return x = static_cast<const T&>(y);
+			return x = static_cast<T>(y);
 		}
 
 		size_t minElement() const { return 0 ; }

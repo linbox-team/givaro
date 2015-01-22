@@ -21,7 +21,7 @@ int main(void)
     ruint<STD_RECINT_SIZE> a, ma, sa;
     ruint<STD_RECINT_SIZE+1> m, s;
     
-    RecInt::srand(time(NULL));
+    RecInt::srand(limb(time(NULL)));
     
     // Loop
     for (UDItype i = 1; i < LOOPS; i++) {

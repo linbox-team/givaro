@@ -5,7 +5,7 @@
 # see the COPYRIGHT file for more details.
 
 SUBDIRS =
-benchmarks: $(BENCHMARKS)
+benchmarks: $(EXTRA_PROGRAMS)
 
 AM_CPPFLAGS=-I$(top_srcdir)
 
@@ -26,7 +26,7 @@ BENCHMARKS=				\
 	benchmark-recint_inv_naive	\
 	benchmark-recint_mul
 
-CLEANFILES = $(BENCHMARKS) $(PERFPUBLISHERFILE)
+CLEANFILES = $(EXTRA_PROGRAMS) $(PERFPUBLISHERFILE)
 
 EXTRA_PROGRAMS = $(BENCHMARKS)
 

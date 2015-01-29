@@ -65,8 +65,11 @@ namespace RecInt
         	{ *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
 
         // Cast
-        template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
+        // Note: Please keep this order (bool before).
+        // There is a clang bug in which bool() is called
+        // whatever cast you want to make
         operator bool() const { return (High != 0) || (Low != 0); }
+        template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
 
         // Const reverse iterator
         class cr_iterator {

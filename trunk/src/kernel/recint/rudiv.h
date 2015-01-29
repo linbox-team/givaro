@@ -265,7 +265,7 @@ namespace RecInt
         } else {
             ruint<K> bb(b), rr;
             div(q, rr, a, bb);
-            r = T(rr);
+            r = static_cast<T>(rr);
         }
     }
 

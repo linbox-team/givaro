@@ -54,12 +54,12 @@ struct Pair {
 
 //! IO
 template<class T1, class T2>
-ostream& operator<< (ostream& o, const Pair<T1,T2>& p )
+std::ostream& operator<< (std::ostream& o, const Pair<T1,T2>& p )
 { return o << '(' << p._val1 << ',' << p._val2 << ')'; }
 
 //! IO
 template<class T1, class T2>
-istream& operator>> (istream& fin, Pair<T1,T2>& p )
+std::istream& operator>> (std::istream& fin, Pair<T1,T2>& p )
 {
   char ch;
   // Skip the first blanks:

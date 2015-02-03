@@ -13,6 +13,7 @@ pkginclude_HEADERS=     \
 	givstorage.h		\
 	givvectorsparse.h	\
 	givstoragedense.h	\
+	givstoragesparse.h	\
 	givvector.h		    \
 	givvectorsparse.inl	\
 	givvectsparseops.inl\

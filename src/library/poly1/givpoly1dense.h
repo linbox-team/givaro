@@ -50,6 +50,12 @@ namespace Givaro {
 		givvector(const Self_t& p, givWithCopy xxx) :
 			__GIV_STANDARD_VECTOR<T,A>(p)
 		{}
+
+        template <class InputIterator>
+        givvector(InputIterator first, InputIterator last) 
+                : __GIV_STANDARD_VECTOR<T,A>(first,last)
+        {}
+
 		Self_t& reallocate (size_t s)
 		{
 			this->resize(s);

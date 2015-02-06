@@ -36,7 +36,7 @@ namespace Givaro {
 	}
 #else
 #error "not implemented"
-#error "please include gmp++/gmp++.h very high in your inlcude list"
+#error "please include gmp++/gmp++.h very high in your include list"
 #endif
 
 	inline void Integer::seeding(long unsigned int s)

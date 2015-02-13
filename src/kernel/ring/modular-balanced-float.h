@@ -376,7 +376,7 @@ namespace Givaro {
 
 		static inline Element getMaxModulus()
 		{
-			return 5792.0f;  // floor( 2^12.5 ) (A.B+betaC must fit in the float mantissa)
+			return 5791.0f;  // floor( 2^12.5 ) (A.B+betaC must fit in the float mantissa)
 		}
 
 		static  Element getMinModulus()	{return 3.0;}

@@ -367,7 +367,7 @@ namespace Givaro {
 
 		static inline double getMaxModulus()
 		{
-			return 134217728.0f;  // 2^27 as 2((p-1)/2)^2 < 2^53
+			return 134217727.0f;  // 2^27 as 2((p-1)/2)^2 < 2^53
 		}
 
 		static  Element getMinModulus()	{return 3.0;}

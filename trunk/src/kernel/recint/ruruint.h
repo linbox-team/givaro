@@ -40,12 +40,11 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RUINT_RUINT_H
 #define RUINT_RUINT_H
 
-// #include <recint/config/config.h>
 #include "recdefine.h"
 
 // --------------------------------------------------------------
 // ---------------- Declaration of class ruint ------------------
-#include <iostream>
+
 namespace RecInt
 {
     /* Basic definition of ruint */
@@ -65,11 +64,22 @@ namespace RecInt
         	{ *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
 
         // Cast
-        // Note: Please keep this order (bool before).
-        // There is a clang bug in which bool() is called
-        // whatever cast you want to make
+        // Note: Templated operators and specialization make compilers clang + icpc
+		// completely bug (they do not use the template operator somehow)
+		// This fix is brutal, but, it works - AB 2015/02/11
         operator bool() const { return (High != 0) || (Low != 0); }
-        template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
+        operator char() const { return char(Low); }
+        operator short() const { return short(Low); }
+        operator int() const { return int(Low); }
+        operator long() const { return long(Low); }
+        operator long long() const { return (long long)(Low); }
+        operator unsigned char() const { return (unsigned char)(Low); }
+        operator unsigned short() const { return (unsigned short)(Low); }
+        operator unsigned int() const { return (unsigned int)(Low); }
+        operator unsigned long() const { return (unsigned long)(Low); }
+        operator unsigned long long() const { return (unsigned long long)(Low); }
+        // operator bool() const { return (High != 0) || (Low != 0); }
+        // template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
 
         // Const reverse iterator
         class cr_iterator {

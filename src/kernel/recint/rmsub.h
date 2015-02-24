@@ -128,13 +128,24 @@ namespace RecInt
     // a = b - c mod a.p
     template <size_t K, size_t MG>
     inline rmint<K, MG>& sub(rmint<K, MG>& a, const rmint<K, MG>& b, const rmint<K, MG>& c) {
-        return add(a, b, -c);
+    	if (b.Value < c.Value) { // c > 0 and (b - c) < p
+		    sub(a.Value, a.p, c.Value);
+		    add(a.Value, b.Value);
+		} else {
+    		sub(a.Value, b.Value, c.Value);
+		}				
+		return a;
     }
 
     // a -= c mod a.p
     template <size_t K, size_t MG>
     inline rmint<K, MG>& sub(rmint<K, MG>& a, const rmint<K, MG>& b) {
-        return add(a, -b);
+    	if (a.Value < b.Value) {
+		    add(a.Value, a.p - b.Value);
+		} else {
+    		sub(a.Value, b.Value);
+		}
+		return a;
     }
 
     // a = b - c mod a.p

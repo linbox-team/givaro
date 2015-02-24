@@ -313,8 +313,8 @@ namespace RecInt
     template <size_t K>
     inline ruint<K>& div_r(ruint<K>& r, const ruint<K>& a, const ruint<K>& b) {
         ruint<K> q;
-        div(q, r, a, b);
-        return r;
+    	div(q, r, a, b);
+    	return r;
     }
     template <size_t K, typename T>
     inline IS_ARITH(T, T&) div_r(T& r, const ruint<K>& a, const T& b) {

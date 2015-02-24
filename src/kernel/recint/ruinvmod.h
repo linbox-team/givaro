@@ -51,7 +51,7 @@ namespace RecInt
     template <size_t K> void bezout_mod(ruint<K>& x, ruint<K>& y, const ruint<K>& c, const ruint<K>& d);
 
     // a = b^{-1} mod c (if b is not invertible, a = 0)
-    template <size_t K> void inv_mod(ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
+    template <size_t K> ruint<K>& inv_mod(ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
 }
 
 
@@ -118,7 +118,7 @@ namespace RecInt
 
     // a = b^(-1) mod c if b invertible
     template <size_t K>
-    inline void inv_mod(ruint<K>& a, const ruint<K>& b, const ruint<K>& c) {
+    inline ruint<K>& inv_mod(ruint<K>& a, const ruint<K>& b, const ruint<K>& c) {
         ruint<K+1> resmul;
         ruint<K> x(0), a2, b2, q, r, temp;
         bool ret;
@@ -144,6 +144,8 @@ namespace RecInt
             copy(a, x);
             copy(x, temp);
         }
+        
+        return a;
     }
 }
 

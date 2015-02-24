@@ -39,3 +39,10 @@ benchmark_recint_mul_SOURCES = benchmark-recint_mul.C
 perfpublisher:
 	+./perfpublisher.sh "$(PERFPUBLISHERFILE)" "$(BENCHMARKS)" "$(CXX)"
 
+#=====
+# For compilation of new benchmarks
+
+GIVARO_BIN=@bindir@
+%:%.C
+	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) $*.C -o $* `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD) `$(GIVARO_BIN)/givaro-config --libs`
+

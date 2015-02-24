@@ -66,8 +66,8 @@ namespace RecInt
     // r is the borrow
     template <size_t K> void sub(bool& r, ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
     template <size_t K> void sub(bool& r, ruint<K>& a, const ruint<K>& c);
-    template <size_t K> void sub(ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
-    template <size_t K> void sub(ruint<K>& a, const ruint<K>& c);
+    template <size_t K> ruint<K>& sub(ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
+    template <size_t K> ruint<K>& sub(ruint<K>& a, const ruint<K>& c);
 
     // a = b - c    or  a -= c  (a, b are ruint and c is integer)
     // r is the borrow
@@ -208,35 +208,41 @@ namespace RecInt
 
     // a = b - c    (the borrow is lost)
     template <size_t K>
-    inline void sub(ruint<K>& a, const ruint<K>& b, const ruint<K>& c) {
+    inline ruint<K>& sub(ruint<K>& a, const ruint<K>& b, const ruint<K>& c) {
         bool rl;
         sub(rl, a.Low, b.Low, c.Low);
         sub_wc(a.High, b.High, c.High, rl);
+        return a;
     }
     template<>
-    inline void sub(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c) {
+    inline ruint<LIMB_SIZE+1>& sub(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c) {
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+        return a;
     }
     template<>
-    inline void sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline ruint<LIMB_SIZE>& sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
         a.Value = b.Value - c.Value;
+        return a;
     }
 
     // a -= b    (the borrow is lost)
     template <size_t K>
-    inline void sub(ruint<K>& a, const ruint<K>& b) {
+    inline ruint<K>& sub(ruint<K>& a, const ruint<K>& b) {
         bool rl;
         sub(rl, a.Low, b.Low);
         sub_wc(a.High, b.High, rl);
+        return a;
     }
     template<>
-    inline void sub(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
+    inline ruint<LIMB_SIZE+1>& sub(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+        return a;
       
     }
     template<>
-    inline void sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline ruint<LIMB_SIZE>& sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
         a.Value -= b.Value;
+        return a;
     }
 
 

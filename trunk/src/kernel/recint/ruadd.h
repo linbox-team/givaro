@@ -181,15 +181,35 @@ namespace RecInt
     }
     template<>
     inline void add(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c) {
-        ruint<LIMB_SIZE+1> bp(b);
-        add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
-        r = (a < bp);
+    	if (&a != &b) {
+		    add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+		    r = (a < b);
+        }
+        else if (&a != &c) {
+		    add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+		    r = (a < c);
+	    }
+	    else {
+    		auto bp(b);
+		    add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+		    r = (a < bp);
+        }
     }
     template<>
     inline void add(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
-        limb bp(b.Value);
-        a.Value = b.Value + c.Value;
-        r = (a < bp);
+    	if (&a != &b) {
+		    a.Value = b.Value + c.Value;
+		    r = (a < b);
+	    }
+        else if (&a != &c) {
+		    a.Value = b.Value + c.Value;
+		    r = (a < c);
+        }
+	    else {
+		    auto bp(b.Value);
+		    a.Value = b.Value + c.Value;
+		    r = (a < bp);
+	    }
     }
 
     // a += b    (r stores the carry)
@@ -201,15 +221,27 @@ namespace RecInt
     }
     template<>
     inline void add(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
-        ruint<LIMB_SIZE+1> bp(b);
-        add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
-        r = (a < bp);
+    	if (&a != &b) {
+		    add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+		    r = (a < b);
+        }
+        else {
+		    auto bp(b);
+		    add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+		    r = (a < bp);
+        }
     }
     template<>
     inline void add(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
-        limb bp(b.Value);
-        a.Value += b.Value;
-        r = (a.Value < bp);
+    	if (&a != &b) {
+		    a.Value += b.Value;
+		    r = (a.Value < b);
+    	}
+    	else {
+		    auto bp(b.Value);
+		    a.Value += b.Value;
+		    r = (a.Value < bp);
+        }
     }
 
     // a = b + c    (the carry is lost)

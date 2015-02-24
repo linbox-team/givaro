@@ -48,10 +48,10 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 namespace RecInt
 {
-    template <size_t K> void inv(rmint<K, MGI>&, const rmint<K, MGI>&);
-    template <size_t K> void inv(rmint<K, MGI>&);
+    template <size_t K> rmint<K, MGI>& inv(rmint<K, MGI>&, const rmint<K, MGI>&);
+    template <size_t K> rmint<K, MGI>& inv(rmint<K, MGI>&);
 
-    template <size_t K, typename T> IS_ARITH(T, void) inv(rmint<K, MGI>&, const T&);
+    template <size_t K, typename T> IS_ARITH(T, rmint<K, MGI>&) inv(rmint<K, MGI>&, const T&);
 }
 
 
@@ -62,21 +62,24 @@ namespace RecInt
 {
     // a = b^(-1) mod a.p or a = 0 if b not invertible
     template <size_t K>
-    inline void inv(rmint<K, MGI>& a, const rmint<K, MGI>& b) {
+    inline rmint<K, MGI>& inv(rmint<K, MGI>& a, const rmint<K, MGI>& b) {
         inv_mod(a.Value, b.Value, a.p);
+        return a;
     }
 
     // a = a^(-1) mod a.p or a = 0 if a not invertible
     template <size_t K>
-    inline void inv(rmint<K, MGI>& a) {
+    inline rmint<K, MGI>& inv(rmint<K, MGI>& a) {
         inv_mod(a.Value, a.Value, a.p);
+        return a;
     }
 
     // a = b^(-1) mod a.p or a = 0 if b not invertible
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) inv(rmint<K, MGI>& a, const T& b) {
+    inline IS_ARITH(T, rmint<K, MGI>&) inv(rmint<K, MGI>& a, const T& b) {
         ruint<K> br(b);
         inv_mod(a.Value, br, a.p);
+        return a;
     }
 }
 

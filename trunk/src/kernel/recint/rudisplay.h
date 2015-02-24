@@ -94,7 +94,7 @@ namespace RecInt
         
         for (i = 0; b != 0 && i < 1024; i++) {
             div(b, m, b, ten);
-            result[i] = static_cast<char>('0' + m);
+            result[i] = char('0' + m);
         }
         
         for (i--; i >= 0; i--) out << result[i];

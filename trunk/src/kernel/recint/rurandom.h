@@ -75,7 +75,7 @@ namespace RecInt
 
     // Set the random seed for RecInt library
     inline void srand(const limb& s) {  
-        std::srand(static_cast<unsigned int>(s));
+        std::srand((unsigned int)(s));
         rand_gen.seed(s);
     }
 }

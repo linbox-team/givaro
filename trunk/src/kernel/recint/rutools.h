@@ -88,7 +88,7 @@ namespace RecInt
     // a = b mod n
     template <size_t K>
     inline void mod_n(ruint<K>& a, const ruint<K>& b, const ruint<K>& n) {
-        div_r(a, b, n);  
+        a = b % n;  
     }
 
     // a = b mod n
@@ -114,7 +114,7 @@ namespace RecInt
     // a = a mod n
     template <size_t K>
     inline void mod_n(ruint<K>& a, const ruint<K>& n) {
-        div_r(a, a, n);  
+        a %= n;
     }
 }
 

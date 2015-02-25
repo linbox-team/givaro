@@ -51,13 +51,13 @@ namespace RecInt
 }
 
 /* Set here the threshold above which Karatsuba method of multiplication is used.
-   Changing this value may be interesting for some machines. (Default: 9) */
+   Changing this value may be interesting for some machines. (Default: 10) */
 #if not defined(THRESHOLD_KARA)
-#define THRESHOLD_KARA 9
+#define THRESHOLD_KARA 10
 #endif
 
 /* All computations assume this is a 64 bits machine.
-   However, the code will work fine on a 32 bits machine. */
+   However, the code will work fine (but slower) on a 32 bits machine. */
 #define NB_BITS 64
 #define LIMB_SIZE 6
 
@@ -108,8 +108,8 @@ namespace RecInt
 // --------------------- Debug stuff ----------------------------
 
 /* Speed print in hexadecimal and line */
-#define LINE()  std::cout << "------" << std::endl
-#define SHOW(X) std::cout << std::hex << (X) << std::dec << std::endl
+#define __RECINT_DEBUG_LINE()  std::cout << "------" << std::endl
+#define __RECINT_DEBUG_SHOW(X) std::cout << std::hex << (X) << std::dec << std::endl
 
 
 // --------------------------------------------------------------

@@ -35,7 +35,7 @@ int main(void)
     for (UDItype l = 1; l < LOOPS; l++) {
         // Init module
         do { rand(p); } while(p % 2 == 0);
-        x.init_module(p);
+        rmint<STD_RECINT_SIZE>::init_module(p);
         ruint_to_mpz(size, p);
         
         // Random sur rmint

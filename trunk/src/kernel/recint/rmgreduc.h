@@ -99,40 +99,36 @@ namespace RecInt
     // where r1 = r^(-1) mod p, r = 2^(2^k) and p is the module of rmint
     template <size_t K>
     inline rmint<K, MGA>& reduction(rmint<K, MGA>& t, const ruint<K+1>& a) {
-        bool ret;
-        ruint<K+1> a0;
+        bool rl, r;
+        ruint<K> a0;
 
         // m = a.Low * p1 mod r
-        mul(a0.Low, a.Low, rmint<K, MGA>::p1);
+        mul(a0, a.Low, rmint<K, MGA>::p1);
         // a0 = a.Low * p1 * p
-        lmul(a0, a0.Low, rmint<K, MGA>::p);
+        lmul(t.Value, a0, a0, rmint<K, MGA>::p);
         // a0 = a.High + a.Low * (p1 * p + 1)
-        add(ret, a0, a);
-        // t = a0.High
-        copy(t.Value, a0.High);
+        add(rl, a0, a.Low);
+        add_wc(r, t.Value, a.High, rl);
 
-        if (ret || t.Value >= rmint<K, MGA>::p) sub(t.Value, rmint<K, MGA>::p);
+        if (r || t.Value >= rmint<K, MGA>::p) sub(t.Value, rmint<K, MGA>::p);
         return t;
     }
 
     // t = a * r1 mod p
     // where r1 = r^(-1) mod p, r = 2^(2^k)
+    // Note: this function is safe, the result is correct
+    // even if &a == &t.Value
     template <size_t K>
     inline rmint<K, MGA>& reduction(rmint<K, MGA>& t, const ruint<K>& a) {
-        bool ret = false, ret2;
-        ruint<K+1> a0;
+        bool r;
+        ruint<K> a0(a);
 
         // m = a * p1 mod r
-        mul(a0.Low, a, rmint<K, MGA>::p1);
-        // a0 = a * p1 * p
-        lmul(a0, a0.Low, rmint<K, MGA>::p);
-        // a0 = a * (p1 + p + 1)
-        add(ret2, a0.Low, a);
-        if (ret2) add_1(ret, a0.High);
-        // t = a0.High
-        copy(t.Value, a0.High);
+        mul(t.Value, a, rmint<K, MGA>::p1);
+        // t|a0 = a * (p1 * p + 1)
+        laddmul(r, t.Value, a0, t.Value, rmint<K, MGA>::p, a0);
 
-        if (ret || t.Value >= rmint<K, MGA>::p) sub(t.Value, rmint<K, MGA>::p);
+        if (r || t.Value >= rmint<K, MGA>::p) sub(t.Value, rmint<K, MGA>::p);
         return t;
     }
 
@@ -167,8 +163,7 @@ namespace RecInt
     // Reduction or montgomerizing
     template <size_t K>
     inline rmint<K, MGA>& get_ready(rmint<K, MGA>& a) {
-        to_mg(a);
-        return a;
+        return to_mg(a);
     }
 }
 

@@ -145,25 +145,29 @@ namespace RecInt
 namespace RecInt
 {
     // a = ahal = b*c   with naive method
-    // Need ah and al != b and c
+    // Note: this function is safe, ah|al is correctly computed
+    // even if b, c are really ah or al
     template <size_t K>
     inline void lmul_naive(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c) {
-        bool ret2, ret3;
-        ruint<K> bhcl_blch;
-
-        // bhcl = bh * cl
-        lmul(ah, b.High, c.Low);
-        // (ret2|bhcl_blch) = bhcl + bl * ch
-        laddmul(ret2, bhcl_blch, b.Low, c.High, ah);
-        // ah = bhcl_blch.High + bh * ch 
-        laddmul(ah, b.High, c.High, bhcl_blch.High);
+        bool rmid, rlow;
+        ruint<K> bcmid, blcl;
         
-        // al = bhcl_blch.Low * 2^2^(K-1) + bl * cl
-        lmul(al, b.Low, c.Low);
-        add(ret3, al.High, bhcl_blch.Low);
+        // Low part
+        lmul_naive(blcl, b.Low, c.Low);
         
-        if (ret3) add_1(ah);
-        if (ret2) add_1(ah.High);
+        // Middle part
+        lmul_naive(bcmid, b.High, c.Low);
+        laddmul(rmid, bcmid, b.Low, c.High, bcmid);
+        
+        // High part
+        laddmul(ah, b.High, c.High, bcmid.High);
+        
+        // Below, we do not need b, c, d anymore, go fill ah|al no problem
+        copy(al.Low, blcl.Low);
+        add(rlow, al.High, blcl.High, bcmid.Low);
+        
+        if (rlow)  add_1(ah);
+        if (rmid)  add_1(rmid, ah.High);
     }
     template<>
     inline void lmul_naive(ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
@@ -175,6 +179,7 @@ namespace RecInt
     }
 
     // a = ahal = b*c   with Karatsuba method
+    // Note: FIXME NOT safe - if al or ah is the variable than b or c, then pb
     template <size_t K>
     inline void lmul_kara(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c) {
         ruint<K-1> bb, cc;
@@ -200,7 +205,7 @@ namespace RecInt
     }
     template<>
     inline void lmul_kara(ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
-        umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
+        lmul_naive(ah, al, b, c);
     }
     template <size_t K>
     inline void lmul_kara(ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c) {
@@ -216,7 +221,7 @@ namespace RecInt
     }
     template<>
     inline void lmul(ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
-        umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
+        lmul_naive(ah, al, b, c);
     }
     template <size_t K>
     inline void lmul(ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c) {
@@ -248,13 +253,15 @@ namespace RecInt
 
     // al = (b*c).Low
     // The higher part is lost
+    // Note: this function is safe, al is correctly computed
+    // even if b, c are really al
     template <size_t K>
     inline ruint<K>& mul(ruint<K>& al, const ruint<K>& b, const ruint<K>& c) {
-        ruint<K-1> b0c1b1c0;
-        mul(b0c1b1c0, b.Low, c.High);
-        addmul(b0c1b1c0, b.High, c.Low);
-        lmul(al.High, al.Low, b.Low, c.Low);
-        add(al.High, b0c1b1c0);
+        ruint<K-1> bcmid;
+        mul(bcmid, b.Low, c.High);
+        addmul(bcmid, b.High, c.Low);
+        lmul(al, b.Low, c.Low);
+        add(al.High, bcmid);
         return al;
     }
     template<>
@@ -265,13 +272,15 @@ namespace RecInt
 
     // al = (al*c).Low
     // The higher part is lost
+    // Note: this function is safe, al is correctly computed
+    // even if c is really al
     template <size_t K>
     inline ruint<K>& mul(ruint<K>& al, const ruint<K>& c) {
-        ruint<K-1> b0c1b1c0;
-        mul(b0c1b1c0, al.Low, c.High);
-        addmul(b0c1b1c0, al.High, c.Low);
-        lmul(al.High, al.Low, al.Low, c.Low);
-        add(al.High, b0c1b1c0);
+        ruint<K-1> acmid;
+        mul(acmid, al.Low, c.High);
+        addmul(acmid, al.High, c.Low);
+        lmul(al, al.Low, c.Low);
+        add(al.High, acmid);
         return al;
     }
     template<>

@@ -86,9 +86,9 @@ namespace RecInt
     };
 
     /* Declarations for rmint<K, MG_ACTIVE> module */
-    template <size_t K> ruint<K> rmint<K, MGA>::p  = 0;
-    template <size_t K> ruint<K> rmint<K, MGA>::p1 = 0;
-    template <size_t K> ruint<K> rmint<K, MGA>::r  = 0;
+    template <size_t K> ruint<K>   rmint<K, MGA>::p    = 0;
+    template <size_t K> ruint<K>   rmint<K, MGA>::p1   = 0;
+    template <size_t K> ruint<K>   rmint<K, MGA>::r    = 0;
 }
 
 #endif

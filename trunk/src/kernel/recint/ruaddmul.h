@@ -83,33 +83,48 @@ namespace RecInt
 namespace RecInt
 {
     // a = b*c + d (r stores the carry)
+    // Note: this function is safe, ah|al is correctly computed
+    // even if b, c, d are really ah or al
     template <size_t K>
     inline void laddmul(bool& r, ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c, const ruint<K>& d) {
         laddmul(r, a.High, a.Low, b, c, d);
     }
 
     // (ah|al) = b*c + d (r stores the carry)
+    // Note: this function is safe, ah|al is correctly computed
+    // even if b, c, d are really ah or al
     template <size_t K>
     inline void laddmul(bool& r, ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c, const ruint<K>& d) {
-        unsigned int ret1, ret2, ret3, ret4;
-        ruint<K> bhcl, blch;
+        bool rlow, rlow2, rmid, rhigh;
+        ruint<K> bcmid, blcld;
 
-        laddmul(ret1, al, b.Low, c.Low, d);
-        lmul(bhcl, b.High, c.Low);
-        laddmul(ret2, blch, b.Low, c.High, bhcl);
-        laddmul(r, ah, b.High, c.High, blch.High);
-        add(ret3, al.High, blch.Low);
-        add(ret4, ah, ret1+ret3);
-        r+=ret4;
-        add(ret4, ah.High, ret2);
-        r+=ret4;
+        // Low part
+        laddmul(rlow, blcld, b.Low, c.Low, d);
+        
+        // Middle part
+        lmul(bcmid, b.High, c.Low);
+        laddmul(rmid, bcmid, b.Low, c.High, bcmid);
+        
+        // High part
+        laddmul(rhigh, ah, b.High, c.High, bcmid.High);
+        
+        // Below, we do not need b, c, d anymore, go fill ah|al no problem
+        copy(al.Low, blcld.Low);
+        add(rlow2, al.High, blcld.High, bcmid.Low);
+        
+        if (rlow)  add_1(rlow, ah);
+        if (rlow2) add_1(rlow2, ah);
+        if (rmid)  add_1(rmid, ah.High);
+        
+        r = (rlow || rlow2 || rmid || rhigh);
     }
 
-    template <size_t K>
+    template <>
     inline void laddmul(bool& r, ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c, const ruint<LIMB_SIZE>& d) {
+        auto dp(d.Value);
         umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
-        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, d.Value);
-        r = ((ah.Value == 0) && (al.Value < d.Value));
+        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, dp);
+        r = ((ah.Value == 0) && (al.Value < dp));
     }
 
     // a = b*c + d (the carry is lost)
@@ -119,24 +134,37 @@ namespace RecInt
     }
 
     // (ah|al) = b*c + d (the carry is lost)
+    // Note: this function is safe, ah|al is correctly computed
+    // even if b, c, d are really ah or al
     template <size_t K>
     inline void laddmul(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c, const ruint<K>& d) {
-        bool ret1, ret2, ret3;
-        ruint<K> bhcl, blch;
+        bool rlow, rlow2, rmid;
+        ruint<K> bcmid, blcld;
 
-        laddmul(ret1, al, b.Low, c.Low, d);
-        lmul(bhcl, b.High, c.Low);
-        laddmul(ret2, blch, b.Low, c.High, bhcl);
-        laddmul(ah, b.High, c.High, blch.High);
-        add(ret3, al.High, blch.Low);
-        if (ret1 || ret3) add(ah, ret1 + ret3);
-        if (ret2) add_1(ah.High);
+        // Low part
+        laddmul(rlow, blcld, b.Low, c.Low, d);
+        
+        // Middle part
+        lmul(bcmid, b.High, c.Low);
+        laddmul(rmid, bcmid, b.Low, c.High, bcmid);
+        
+        // High part
+        laddmul(ah, b.High, c.High, bcmid.High);
+        
+        // Below, we do not need b, c, d anymore, go fill ah|al no problem
+        copy(al.Low, blcld.Low);
+        add(rlow2, al.High, blcld.High, bcmid.Low);
+        
+        if (rlow)  add_1(ah);
+        if (rlow2) add_1(ah);
+        if (rmid)  add_1(ah.High);
     }
 
     template <> 
     inline void laddmul(ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c, const ruint<LIMB_SIZE>& d) {
+        auto dp(d.Value);
         umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
-        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, d.Value);
+        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, dp);
     }
 
     // a = b*c + d (r stores the carry)
@@ -146,30 +174,44 @@ namespace RecInt
     }
 
     // (ah|al) = b*c + d (r stores the carry)
+    // Note: this function is safe, ah|al is correctly computed
+    // even if b, c, d.High, d.Low are really ah or al
     template <size_t K>
     inline void laddmul(bool& r, ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c, const ruint<K+1>& d) {
-        bool ret1, ret2, ret3, ret4;
-        ruint<K> bhcl, blch;
+        bool rlow, rlow2, rmid, rmid2, rhigh;
+        ruint<K> bcmid, blcldl;
+    
+        // Low part
+        laddmul(rlow, blcldl, b.Low, c.Low, d.Low);
 
-        laddmul(ret1, al, b.Low, c.Low, d.Low);
-        lmul(bhcl, b.High, c.Low);
-        laddmul(ret2, blch, b.Low, c.High, bhcl);
-        laddmul(r, ah, b.High, c.High, d.High);
-        add(ret3, al.High, blch.Low);
-        add(ret4, ah, ret1+ret3);
-        r += ret4;
-        add(ret3, ah.Low, blch.High);
-        if (ret2 || ret3) {
-            add(ret4, ah.High, ret2 + ret3);
-            r += ret4;
-        }
+        // Middle part
+        lmul(bcmid, b.High, c.Low);
+        laddmul(rmid, bcmid, b.Low, c.High, bcmid);
+        
+        // High part
+        laddmul(rhigh, ah, b.High, c.High, d.High);
+        
+        // Below, we do not need b, c, d anymore, go fill ah|al no problem
+        copy(al.Low, blcldl.Low);
+        add(rlow2, al.High, blcldl.High, bcmid.Low);
+        add(rmid2, ah.Low, bcmid.High);
+        
+        if (rlow)  add_1(rlow,  ah);
+        if (rlow2) add_1(rlow2, ah);
+        if (rmid)  add_1(rmid,  ah.High);
+        if (rmid2) add_1(rmid2, ah.High);
+        
+        r = (rlow || rlow2 || rmid || rmid2 || rhigh);
     }
 
     template <> inline void
     laddmul(bool& r, ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c, const ruint<LIMB_SIZE+1>& d) {
+        auto dph(d.High.Value);
+        auto dpl(d.Low.Value);
+
         umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
-        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, d.High.Value, d.Low.Value);
-        r = ((ah.Value < d.High.Value) || ((ah.Value == d.High.Value) && (al.Value < d.Low.Value)));
+        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, dph, dpl);
+        r = ((ah.Value < dph) || ((ah.Value == dph) && (al.Value < dpl)));
     }
 
     // a += b*c (r stores the carry)

@@ -99,16 +99,13 @@ namespace RecInt
     // where r1 = r^(-1) mod p, r = 2^(2^k) and p is the module of rmint
     template <size_t K>
     inline rmint<K, MGA>& reduction(rmint<K, MGA>& t, const ruint<K+1>& a) {
-        bool rl, r;
+        bool r;
         ruint<K> a0;
 
         // m = a.Low * p1 mod r
         mul(a0, a.Low, rmint<K, MGA>::p1);
-        // a0 = a.Low * p1 * p
-        lmul(t.Value, a0, a0, rmint<K, MGA>::p);
-        // a0 = a.High + a.Low * (p1 * p + 1)
-        add(rl, a0, a.Low);
-        add_wc(r, t.Value, a.High, rl);
+        // t|a0 = a * (p1 * p + 1)
+        laddmul(r, t.Value, a0, a0, rmint<K, MGA>::p, a);
 
         if (r || t.Value >= rmint<K, MGA>::p) sub(t.Value, rmint<K, MGA>::p);
         return t;
@@ -121,12 +118,12 @@ namespace RecInt
     template <size_t K>
     inline rmint<K, MGA>& reduction(rmint<K, MGA>& t, const ruint<K>& a) {
         bool r;
-        ruint<K> a0(a);
+        ruint<K> a0;
 
         // m = a * p1 mod r
-        mul(t.Value, a, rmint<K, MGA>::p1);
+        mul(a0, a, rmint<K, MGA>::p1);
         // t|a0 = a * (p1 * p + 1)
-        laddmul(r, t.Value, a0, t.Value, rmint<K, MGA>::p, a0);
+        laddmul(r, t.Value, a0, a0, rmint<K, MGA>::p, a);
 
         if (r || t.Value >= rmint<K, MGA>::p) sub(t.Value, rmint<K, MGA>::p);
         return t;

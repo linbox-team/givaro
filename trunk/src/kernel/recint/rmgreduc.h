@@ -102,7 +102,7 @@ namespace RecInt
         bool r;
         ruint<K> a0;
 
-        // m = a.Low * p1 mod r
+        // m = a * p1 mod r
         mul(a0, a.Low, rmint<K, MGA>::p1);
         // t|a0 = a * (p1 * p + 1)
         laddmul(r, t.Value, a0, a0, rmint<K, MGA>::p, a);

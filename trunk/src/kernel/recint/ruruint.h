@@ -78,6 +78,8 @@ namespace RecInt
         operator unsigned int() const { return (unsigned int)(Low); }
         operator unsigned long() const { return (unsigned long)(Low); }
         operator unsigned long long() const { return (unsigned long long)(Low); }
+        operator float() const { return (float)(Low); }
+        operator double() const { return (double)(Low); }
         // operator bool() const { return (High != 0) || (Low != 0); }
         // template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
 
@@ -117,6 +119,8 @@ namespace RecInt
         template <typename T, IS_SIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
 
         // Cast
+        operator float() const { return (float)(Value); }
+        operator double() const { return (double)(Value); }
         template <typename T, IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
         template <typename T, IS_SIGNED(T, int) = 0> operator T() const
             { T ret = T(Value); if (ret < 0) return T(ret & TYPENOTMAXPOWTWO(T)); else return ret; }

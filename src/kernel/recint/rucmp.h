@@ -46,36 +46,36 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K> bool operator==(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator==(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator==(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator==(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator==(const T&, const ruint<K>&);
 
     template <size_t K> bool operator!=(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator!=(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator!=(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator!=(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator!=(const T&, const ruint<K>&);
 
     template <size_t K> bool operator>(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator>(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator>(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator>(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator>(const T&, const ruint<K>&);
 
     template <size_t K> bool operator>=(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator>=(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator>=(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator>=(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator>=(const T&, const ruint<K>&);
 
     template <size_t K> bool operator<(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator<(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator<(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator<(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator<(const T&, const ruint<K>&);
 
     template <size_t K> bool operator<=(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator<=(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_ARITH(T, bool) operator<=(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator<=(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, bool) operator<=(const T&, const ruint<K>&);
 
     // Compare a and b
     // returns -1 if a < b
     // returns  0 if a == b
     // returns +1 if a > b
     template <size_t K> char cmp(const ruint<K>& a, const ruint<K>& b);
-    template <size_t K, typename T> inline IS_UNSIGNED(T, char) cmp(const ruint<K>& a, const T& b);
-    template <size_t K, typename T> inline IS_SIGNED(T, char) cmp(const ruint<K>& a, const T& b);
+    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const ruint<K>& a, const T& b);
+    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const ruint<K>& a, const T& b);
 }
 
 
@@ -89,11 +89,11 @@ namespace RecInt
         return cmp(a, b) == 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator==(const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator==(const ruint<K>& a, const T& b) {
         return cmp(a, b) == 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator==(const T& b, const ruint<K>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator==(const T& b, const ruint<K>& a) {
         return cmp(a, b) == 0;
     }
 
@@ -102,11 +102,11 @@ namespace RecInt
         return cmp(a, b) != 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator!=(const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator!=(const ruint<K>& a, const T& b) {
         return cmp(a, b) != 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator!=(const T& b, const ruint<K>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator!=(const T& b, const ruint<K>& a) {
         return cmp(a, b) != 0;
     }
 
@@ -115,11 +115,11 @@ namespace RecInt
         return cmp(a, b) > 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>(const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator>(const ruint<K>& a, const T& b) {
         return cmp(a, b) > 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>(const T& b, const ruint<K>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator>(const T& b, const ruint<K>& a) {
         return cmp(a, b) < 0;
     }
 
@@ -128,11 +128,11 @@ namespace RecInt
         return cmp(a, b) >= 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>=(const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator>=(const ruint<K>& a, const T& b) {
         return cmp(a, b) >= 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>=(const T& b, const ruint<K>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator>=(const T& b, const ruint<K>& a) {
         return cmp(a, b) <= 0;
     }
 
@@ -141,11 +141,11 @@ namespace RecInt
         return cmp(a, b) < 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<(const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator<(const ruint<K>& a, const T& b) {
         return cmp(a, b) < 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<(const T& b, const ruint<K>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator<(const T& b, const ruint<K>& a) {
         return cmp(a, b) > 0;
     }
 
@@ -154,11 +154,11 @@ namespace RecInt
         return cmp(a, b) <= 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<=(const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator<=(const ruint<K>& a, const T& b) {
         return cmp(a, b) <= 0;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<=(const T& b, const ruint<K>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator<=(const T& b, const ruint<K>& a) {
         return cmp(a, b) >= 0;
     }
 
@@ -174,30 +174,30 @@ namespace RecInt
         if (ch == 0) return cmp(a.Low, b.Low);
         return ch;
     }
-    template <> inline char cmp(const ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    template <> inline char cmp(const ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         if (a.Value < b.Value) return -1;
         else if (a.Value == b.Value) return 0;
         else return 1;
     }
 
     //---- Unsigned ----
-    template <size_t K, typename T> inline IS_UNSIGNED(T, char) cmp(const ruint<K>& a, const T& b) {
+    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const ruint<K>& a, const T& b) {
         if (a.High == 0) return cmp(a.Low, b);
         else return 1;
     }
-    template <typename T> inline IS_UNSIGNED(T, char) cmp(const ruint<LIMB_SIZE>& a, const T& b) {
+    template <typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
         if (a.Value < b) return -1;
         else if (a.Value == b) return 0;
         else return 1;
     }
 
     //---- Signed ----
-    template <size_t K, typename T> inline IS_SIGNED(T, char) cmp(const ruint<K>& a, const T& b) {
+    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const ruint<K>& a, const T& b) {
         if (b < 0) return 1;
         else if (a.High == 0) return cmp(a.Low, b);
         else return 1;
     }
-    template <typename T> inline IS_SIGNED(T, char) cmp(const ruint<LIMB_SIZE>& a, const T& b) {
+    template <typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
         if (b < 0) return 1;
         else if (a.Value < limb(b)) return -1;
         else if (a.Value == limb(b)) return 0;

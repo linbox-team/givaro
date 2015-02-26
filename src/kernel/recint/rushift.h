@@ -145,9 +145,9 @@ namespace RecInt
     }
 
     template <typename T>
-    inline ruint<LIMB_SIZE>& left_shift(ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& a, const T& d) {
+    inline ruint<__RECINT_LIMB_SIZE>& left_shift(ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& a, const T& d) {
         if (d == 0) b.Value = a.Value;
-        else if (d < NB_BITS)  b.Value = a.Value << d;
+        else if (d < __RECINT_LIMB_BITS)  b.Value = a.Value << d;
         else b.Value = 0;
         return b;
     }
@@ -165,8 +165,8 @@ namespace RecInt
     }
 
     template <>
-    inline ruint<LIMB_SIZE>& left_shift_1(bool& z, ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& a) {
-        z = (a.Value & MAXPOWTWO);
+    inline ruint<__RECINT_LIMB_SIZE>& left_shift_1(bool& z, ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& a) {
+        z = (a.Value & __RECINT_MAXPOWTWO);
         b.Value = a.Value << 1;
         return b;
     }
@@ -219,9 +219,9 @@ namespace RecInt
     }
 
     template <typename T>
-    inline ruint<LIMB_SIZE>& right_shift(ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& a, const T& d) {
+    inline ruint<__RECINT_LIMB_SIZE>& right_shift(ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& a, const T& d) {
         if (d == 0) b.Value = a.Value;
-        else if (d < NB_BITS)  b.Value = a.Value >> d;
+        else if (d < __RECINT_LIMB_BITS)  b.Value = a.Value >> d;
         else b.Value = 0;
         return b;
     }
@@ -239,7 +239,7 @@ namespace RecInt
     }
 
     template <>
-    inline ruint<LIMB_SIZE>& right_shift_1(bool& z, ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& a) {
+    inline ruint<__RECINT_LIMB_SIZE>& right_shift_1(bool& z, ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& a) {
         z = (a.Value & 1);
         b.Value = a.Value >> 1;
         return b;

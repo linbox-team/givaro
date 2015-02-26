@@ -52,19 +52,19 @@ namespace RecInt
 
 /* Set here the threshold above which Karatsuba method of multiplication is used.
    Changing this value may be interesting for some machines. (Default: 10) */
-#if not defined(THRESHOLD_KARA)
-#define THRESHOLD_KARA 10
+#if not defined(__RECINT_THRESHOLD_KARA)
+#define __RECINT_THRESHOLD_KARA 10
 #endif
 
 /* All computations assume this is a 64 bits machine.
    However, the code will work fine (but slower) on a 32 bits machine. */
-#define NB_BITS 64
-#define LIMB_SIZE 6
+#define __RECINT_LIMB_BITS 64
+#define __RECINT_LIMB_SIZE 6
 
 /* Some useful defines. */
-#define MINUSONE limb(0xffffffffffffffffULL)
-#define MAXPOWTWO limb(0x8000000000000000ULL)
-#define TYPENOTMAXPOWTWO(T) ~(T(1) << (8 * sizeof(T) - 1))
+#define __RECINT_MINUSONE limb(0xffffffffffffffffULL)
+#define __RECINT_MAXPOWTWO limb(0x8000000000000000ULL)
+#define __RECINT_TYPENOTMAXPOWTWO(T) ~(T(1) << (8 * sizeof(T) - 1))
 
 
 // --------------------------------------------------------------
@@ -74,11 +74,11 @@ namespace RecInt
 {
     /* NBLIMB<K>::value gives the number of limbs of a ruint<K> */
     template <size_t K> struct NBLIMB   { static const uint32_t value = NBLIMB<K-1>::value << 1; };
-    template<> struct NBLIMB<LIMB_SIZE> { static const uint32_t value = 1; };
+    template<> struct NBLIMB<__RECINT_LIMB_SIZE> { static const uint32_t value = 1; };
 
     /* NBBITS<K>::value gives the total size of a ruint<K> */
     template <size_t K> struct NBBITS   { static const uint32_t value = NBBITS<K-1>::value << 1; };
-    template<> struct NBBITS<LIMB_SIZE> { static const uint32_t value = NB_BITS; };
+    template<> struct NBBITS<__RECINT_LIMB_SIZE> { static const uint32_t value = __RECINT_LIMB_BITS; };
 }
 
 
@@ -89,19 +89,19 @@ namespace RecInt
 
 /* If typename T is an arithmetic type,
    then template enable and return value is RET */
-#define IS_ARITH(T, ...)    typename std::enable_if<std::is_arithmetic<T>::value, __VA_ARGS__>::type
+#define __RECINT_IS_ARITH(T, ...)    typename std::enable_if<std::is_arithmetic<T>::value, __VA_ARGS__>::type
 
 /* If typename T is an unsigned type,
    then template enable and return value is RET */
-#define IS_UNSIGNED(T, ...) typename std::enable_if<std::is_unsigned<T>::value, __VA_ARGS__>::type
+#define __RECINT_IS_UNSIGNED(T, ...) typename std::enable_if<std::is_unsigned<T>::value, __VA_ARGS__>::type
 
 /* If typename T is a signed type,
    then template enable and return value is RET */
-#define IS_SIGNED(T, ...)   typename std::enable_if<std::is_signed<T>::value, __VA_ARGS__>::type
+#define __RECINT_IS_SIGNED(T, ...)   typename std::enable_if<std::is_signed<T>::value, __VA_ARGS__>::type
 
 /* If typename T is not a fundamental type,
    then template enable and return value is RET */
-#define IS_NOT_FUNDAMENTAL(T, ...)   typename std::enable_if<!std::is_fundamental<T>::value, __VA_ARGS__>::type
+#define __RECINT_IS_NOT_FUNDAMENTAL(T, ...)   typename std::enable_if<!std::is_fundamental<T>::value, __VA_ARGS__>::type
 
 
 // --------------------------------------------------------------
@@ -127,8 +127,15 @@ namespace RecInt
     typedef int64_t  DItype;
     typedef int32_t  SItype;
     
+    #ifdef W_TYPE_SIZE
+        #undef W_TYPE_SIZE
+    #endif
+    
+    #ifndef NO_ASM
+        #define NO_ASM
+    #endif
+    
     #define W_TYPE_SIZE 64
-    #define NO_ASM
     #include "reclonglong.h"
 }
 

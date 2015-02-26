@@ -67,14 +67,14 @@ namespace RecInt
         rmint(const ruint<K>& c) : Value(c) {}
         rmint(const rmint<K, MGI>& c) : Value(c.Value) {}
         rmint(const rmint<K, MGA>& c) : Value(c.Value) { reduction(*this); }
-        template <typename T, IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { mod_n(Value, p); }
-        template <typename T, IS_SIGNED(T, int) = 0>   rmint(const T b) : Value((b < 0)? -b : b)
+        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { mod_n(Value, p); }
+        template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   rmint(const T b) : Value((b < 0)? -b : b)
             { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
         rmint(const double& b) : Value((b < 0)? -b : b)
             { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
 
         // Cast
-        template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Value); }
+        template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Value); }
         
         // Module functions
         static void init_module(const ruint<K>& p);

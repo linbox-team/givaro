@@ -25,11 +25,11 @@ int mainTest(void)
     if (x1 != x5) return 4;
     
     // Small ruint, small value
-    ruint<LIMB_SIZE> y1(bool(true));
-    ruint<LIMB_SIZE> y2(UDItype(1));
-    ruint<LIMB_SIZE> y3(USItype(1));
-    ruint<LIMB_SIZE> y4(DItype(1));
-    ruint<LIMB_SIZE> y5(SItype(1));
+    ruint<__RECINT_LIMB_SIZE> y1(bool(true));
+    ruint<__RECINT_LIMB_SIZE> y2(UDItype(1));
+    ruint<__RECINT_LIMB_SIZE> y3(USItype(1));
+    ruint<__RECINT_LIMB_SIZE> y4(DItype(1));
+    ruint<__RECINT_LIMB_SIZE> y5(SItype(1));
     
     if (y1 != y2) return 5;
     if (y1 != y3) return 6;
@@ -46,15 +46,15 @@ int mainTest(void)
     if (v1 != v3) return 10;
     
     // Small ruint, negative value
-    ruint<LIMB_SIZE> w1(DItype(-1));
-    ruint<LIMB_SIZE> w2(SItype(-1));
+    ruint<__RECINT_LIMB_SIZE> w1(DItype(-1));
+    ruint<__RECINT_LIMB_SIZE> w2(SItype(-1));
     
     if (w1 != w2) return 11;
-    if (w1 != MINUSONE) return 12;
+    if (w1 != __RECINT_MINUSONE) return 12;
     
     // Copy test
     ruint<SIZEOFTEST> xi1(x1), vi1(v1);
-    ruint<LIMB_SIZE> yi1(y1), wi1(w1);
+    ruint<__RECINT_LIMB_SIZE> yi1(y1), wi1(w1);
 
     if (xi1 != x1) return 13;
     if (vi1 != v1) return 14;

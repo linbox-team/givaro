@@ -51,8 +51,8 @@ int main(void)
         if (y != 1) return 2;
         
         fill_with_1(y);
-        y &= MAXPOWTWO;
-        if (y != MAXPOWTWO) return 2;
+        y &= __RECINT_MAXPOWTWO;
+        if (y != __RECINT_MAXPOWTWO) return 2;
         
         fill_with_1(y);
         rUDI = rand64();
@@ -75,8 +75,8 @@ int main(void)
         if (y != 1) return 3;
         
         reset(y);
-        y |= MAXPOWTWO;
-        if (y != MAXPOWTWO) return 3;
+        y |= __RECINT_MAXPOWTWO;
+        if (y != __RECINT_MAXPOWTWO) return 3;
         
         // Bitwise and
         rand(x);

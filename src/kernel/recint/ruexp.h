@@ -56,7 +56,7 @@ namespace RecInt
     template <size_t K> void exp_mod(ruint<K>& a, const ruint<K>& b, const ruint<K>& c, const ruint<K>& n);
     
     // a = b^c mod n
-    template <size_t K, typename T> IS_UNSIGNED(T, void) exp_mod(ruint<K>& a, const ruint<K>& b, const T& c, const ruint<K>& n);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, void) exp_mod(ruint<K>& a, const ruint<K>& b, const T& c, const ruint<K>& n);
 }
 
 
@@ -92,7 +92,7 @@ namespace RecInt
     
     // a = b^c mod n
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, void) exp_mod(ruint<K>& a, const ruint<K>& b, const T& c, const ruint<K>& n) {
+    inline __RECINT_IS_UNSIGNED(T, void) exp_mod(ruint<K>& a, const ruint<K>& b, const T& c, const ruint<K>& n) {
         ruint<K+1> resmul;
         ruint<K> x(b);
         T j;

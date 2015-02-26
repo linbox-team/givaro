@@ -12,14 +12,14 @@ using namespace RecInt;
 int main(void)
 {
     ruint<10> p10;
-    ruint<LIMB_SIZE> pLS;
+    ruint<__RECINT_LIMB_SIZE> pLS;
     
     RecInt::srand(limb(time(NULL)));
     rand(p10); if ((p10 % 2) == 0) p10++;
     rand(pLS); if ((pLS % 2) == 0) pLS++;
     
     rmint<10>::init_module(p10); // Initializing module for rmint<10>
-    rmint<LIMB_SIZE>::init_module(pLS); // The same but for rmint<LIMB_SIZE>
+    rmint<__RECINT_LIMB_SIZE>::init_module(pLS); // The same but for rmint<__RECINT_LIMB_SIZE>
 
     // Large ruint, small value
     rmint<10> x1(1);
@@ -35,11 +35,11 @@ int main(void)
     if (x1 != 1)  return 5;
     
     // Small ruint, small value
-    rmint<LIMB_SIZE> y1(1);
-    rmint<LIMB_SIZE> y2(UDItype(1));
-    rmint<LIMB_SIZE> y3(USItype(1));
-    rmint<LIMB_SIZE> y4(DItype(1));
-    rmint<LIMB_SIZE> y5(SItype(1));
+    rmint<__RECINT_LIMB_SIZE> y1(1);
+    rmint<__RECINT_LIMB_SIZE> y2(UDItype(1));
+    rmint<__RECINT_LIMB_SIZE> y3(USItype(1));
+    rmint<__RECINT_LIMB_SIZE> y4(DItype(1));
+    rmint<__RECINT_LIMB_SIZE> y5(SItype(1));
     
     if (y1 != y2) return 6;
     if (y1 != y3) return 7;
@@ -56,16 +56,16 @@ int main(void)
     if (v1 != v3) return 12;
     
     // Small ruint, negative value
-    rmint<LIMB_SIZE> w1(DItype(-1));
-    rmint<LIMB_SIZE> w2(SItype(-1));
-    rmint<LIMB_SIZE> w3(pLS - 1);
+    rmint<__RECINT_LIMB_SIZE> w1(DItype(-1));
+    rmint<__RECINT_LIMB_SIZE> w2(SItype(-1));
+    rmint<__RECINT_LIMB_SIZE> w3(pLS - 1);
     
     if (w1 != w2) return 13;
     if (w1 != w3) return 14;
     
     // Copy
     rmint<10> xi1(x1), vi1(v1);
-    rmint<LIMB_SIZE> yi1(y1), wi1(w1);
+    rmint<__RECINT_LIMB_SIZE> yi1(y1), wi1(w1);
 
     if (xi1 != x1) return 15;
     if (vi1 != v1) return 16;
@@ -74,7 +74,7 @@ int main(void)
     
     // ruint from rmint and vice versa
     rmint<10> pi(p10);
-    rmint<LIMB_SIZE> li(pLS);
+    rmint<__RECINT_LIMB_SIZE> li(pLS);
     
     if (pi != p10) return 19;
     if (li != pLS) return 20;

@@ -53,14 +53,14 @@ namespace RecInt
     template <size_t K> ruint<K>  operator++(ruint<K>&, int);
 
     template <size_t K> ruint<K>& operator+=(ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>&) operator+=(ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>&)   operator+=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>&) operator+=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>&)   operator+=(ruint<K>&, const T&);
     
     template <size_t K> ruint<K> operator+(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>) operator+(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>) operator+(const T&, const ruint<K>&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>)   operator+(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>)   operator+(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>) operator+(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>) operator+(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>)   operator+(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>)   operator+(const T&, const ruint<K>&);
 
     // a = b + c    or  a += c  (a, b, c are ruint)
     // r is the carry
@@ -71,10 +71,10 @@ namespace RecInt
 
     // a = b + c    or  a += c  (a, b are ruint and c is an integer)
     // r is the carry
-    template <size_t K, typename T> IS_ARITH(T, void) add(bool& r, ruint<K>& a, const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, void) add(bool& r, ruint<K>& a, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, void) add(ruint<K>& a, const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, void) add(ruint<K>& a, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) add(bool& r, ruint<K>& a, const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) add(bool& r, ruint<K>& a, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) add(ruint<K>& a, const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) add(ruint<K>& a, const T& c);
 
     // a = b + 1    or  a += 1  (a, b are ruint)
     // r is the carry
@@ -117,12 +117,12 @@ namespace RecInt
         return a;
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>&) operator+=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>&) operator+=(ruint<K>& a, const T& b) {
         add(a, b);
         return a;
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>&) operator+=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>&) operator+=(ruint<K>& a, const T& b) {
         if (b < 0) sub(a, -b);
         else add(a, b);
         return a;
@@ -137,26 +137,26 @@ namespace RecInt
         return a;
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>) operator+(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator+(const ruint<K>& b, const T& c) {
         ruint<K> a;
         add(a, b, c);
         return a;
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>) operator+(const T& c, const ruint<K>& b) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator+(const T& c, const ruint<K>& b) {
         ruint<K> a;
         add(a, b, c);
         return a;
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>) operator+(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>) operator+(const ruint<K>& b, const T& c) {
         ruint<K> a;
         if (c < 0) sub(a, b, -c);
         else add(a, b, c);
         return a;
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>) operator+(const T& c, const ruint<K>& b) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>) operator+(const T& c, const ruint<K>& b) {
         ruint<K> a;
         if (c < 0) sub(a, b, -c);
         else add(a, b, c);
@@ -180,13 +180,13 @@ namespace RecInt
         add_wc(r, a.High, b.High, c.High, rl);
     }
     template<>
-    inline void add(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c) {
+    inline void add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
 		auto bp(b);
 	    add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
 	    r = (a < bp);
     }
     template<>
-    inline void add(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline void add(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
 	    auto bp(b.Value);
 	    a.Value = b.Value + c.Value;
 	    r = (a.Value < bp);
@@ -200,13 +200,13 @@ namespace RecInt
         add_wc(r, a.High, b.High, rl);
     }
     template<>
-    inline void add(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
+    inline void add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
 	    auto bp(b);
 	    add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
 	    r = (a < bp);
     }
     template<>
-    inline void add(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline void add(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
 	    auto bp(b.Value);
 	    a.Value += b.Value;
 	    r = (a.Value < bp);
@@ -220,11 +220,11 @@ namespace RecInt
         add_wc(a.High, b.High, c.High, rl);
     }
     template<>
-    inline void add(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c) {
+    inline void add(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
     }
     template<>
-    inline void add(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline void add(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         a.Value = b.Value + c.Value;
     }
 
@@ -236,11 +236,11 @@ namespace RecInt
         add_wc(a.High, b.High, rl);
     }
     template<>
-    inline void add(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
+    inline void add(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
     }
     template<>
-    inline void add(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline void add(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value += b.Value;
     }
 
@@ -248,49 +248,49 @@ namespace RecInt
     // Add with integer
     // a = b + c    (r stores the carry)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) add(bool& r, ruint<K>& a, const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) add(bool& r, ruint<K>& a, const ruint<K>& b, const T& c) {
         bool rl;
         add(rl, a.Low, b.Low, c);
         add(r, a.High, b.High, rl);
     }
     template <typename T>
-    inline IS_ARITH(T, void) add(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const T& c) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, (UWtype)(c));
         r = (a < c);
     }
     template <typename T>
-    inline IS_ARITH(T, void) add(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const T& c) { 
+    inline __RECINT_IS_ARITH(T, void) add(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const T& c) { 
         a.Value = b.Value + limb(c);
         r = (a.Value < limb(c));
     }
 
     // a += b    (r stores the carry)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) add(bool& r, ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) add(bool& r, ruint<K>& a, const T& b) {
         bool rl;
         add(rl, a.Low, b);
         add(r, a.High, rl);
     }
     template <typename T>
-    inline IS_ARITH(T, void) add(bool& r, ruint<LIMB_SIZE+1>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const T& b) {
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, (UWtype)(b));
         r = (a < b);
     }
     template <typename T>
-    inline IS_ARITH(T, void) add(bool& r, ruint<LIMB_SIZE>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) add(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
         a.Value += limb(b);
         r = (a.Value < limb(b));
     }
 
     // a = b + c    (the carry is lost)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) add(ruint<K>& a, const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) add(ruint<K>& a, const ruint<K>& b, const T& c) {
         bool r;
         add(r, a, b, c);
     }
     // a += b    (the carry is lost)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) add(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) add(ruint<K>& a, const T& b) {
         bool r;
         add(r, a, b);
     }
@@ -304,12 +304,12 @@ namespace RecInt
         add_wc(r, a.High, b.High, rl);
     }
     template<>
-    inline void add_1(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
+    inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
         r = (a == 0);
     }
     template<>
-    inline void add_1(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value = b.Value + 1;
         r = (a.Value == 0);
     }
@@ -322,12 +322,12 @@ namespace RecInt
         add(r, a.High, rl);
     }
     template<>
-    inline void add_1(bool& r, ruint<LIMB_SIZE+1>& a) {
+    inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a) {
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
         r = (a == 0);
     }
     template<>
-    inline void add_1(bool& r, ruint<LIMB_SIZE>& a) {
+    inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value = a.Value + 1;
         r = (a.Value == 0);
     }
@@ -356,8 +356,8 @@ namespace RecInt
         add_wc(r, a.High, b.High, c.High, ret);
     }
     template<>
-    inline void add_wc(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c, const bool& cy) {
-        ruint<LIMB_SIZE+1> bp(b);
+    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
+        ruint<__RECINT_LIMB_SIZE+1> bp(b);
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         if (cy) {
             add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
@@ -367,8 +367,8 @@ namespace RecInt
         }
     }
     template<>
-    inline void add_wc(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c, const bool& cy) {
-        ruint<LIMB_SIZE> bp(b);
+    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const bool& cy) {
+        ruint<__RECINT_LIMB_SIZE> bp(b);
         a.Value = b.Value + c.Value;
         if (cy) {
             a.Value += 1;
@@ -386,8 +386,8 @@ namespace RecInt
         add_wc(r, a.High, b.High, ret);
     }
     template<>
-    inline void add_wc(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const bool& cy) {
-        ruint<LIMB_SIZE> bp(b);
+    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const bool& cy) {
+        ruint<__RECINT_LIMB_SIZE> bp(b);
         a.Value += b.Value;
         if (cy) {
             a.Value += 1;
@@ -406,12 +406,12 @@ namespace RecInt
       
     }
     template<>
-    inline void add_wc(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c, const bool& cy) {
+    inline void add_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         if (cy) add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
     template<>
-    inline void add_wc(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c, const bool& cy) {
+    inline void add_wc(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const bool& cy) {
         a = b + c + cy;
     }
 
@@ -423,12 +423,12 @@ namespace RecInt
         add_wc(a.High, b.High, ret);
     }
     template<>
-    inline void add_wc(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const bool& cy) {
+    inline void add_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);    
     }
     template<>
-    inline void add_wc(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const bool& cy) {
+    inline void add_wc(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const bool& cy) {
         a.Value += b.Value + cy;
     }
 }

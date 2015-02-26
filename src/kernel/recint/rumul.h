@@ -50,14 +50,14 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K> ruint<K>& operator*=(ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>&) operator*=(ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>&)   operator*=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>&) operator*=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>&)   operator*=(ruint<K>&, const T&);
 
     template <size_t K> ruint<K> operator*(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>) operator*(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>) operator*(const T&, const ruint<K>&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>)   operator*(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>)   operator*(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>) operator*(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>) operator*(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>)   operator*(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>)   operator*(const T&, const ruint<K>&);
 
     // a = (ahal) = b*c with naive method
     template <size_t K> void lmul_naive(ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c);
@@ -67,19 +67,19 @@ namespace RecInt
     template <size_t K> void lmul_kara(ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c);
     template <size_t K> void lmul_kara(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c);
 
-    // Choose between naive and Karatsuba methods according to THRESHOLD_KARA constant
+    // Choose between naive and Karatsuba methods according to __RECINT_THRESHOLD_KARA constant
     // a = (ahal) = b*c
     template <size_t K> void lmul(ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c);
     template <size_t K> void lmul(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c);
-    template <size_t K, typename T> IS_ARITH(T, void) lmul(ruint<K+1>& a, const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, void) lmul(limb& ah, ruint<K>& al, const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) lmul(ruint<K+1>& a, const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) lmul(limb& ah, ruint<K>& al, const ruint<K>& b, const T& c);
 
     // a = (b*c).Low    or a = (a*c).Low
     // The higher part is lost
     template <size_t K> ruint<K>& mul(ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
     template <size_t K> ruint<K>& mul(ruint<K>& a, const ruint<K>& c);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const T& c);
 
     // a = b*b
     template <size_t K> void lsquare(ruint<K+1>& a, const ruint<K>& b);
@@ -97,11 +97,11 @@ namespace RecInt
         return mul(a, b);
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>&) operator*=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>&) operator*=(ruint<K>& a, const T& b) {
         return mul(a, b);
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>&) operator*=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>&) operator*=(ruint<K>& a, const T& b) {
         if (b < 0) {
             mul(a, -b);
             return (a = -a);
@@ -115,23 +115,23 @@ namespace RecInt
         return mul(a, b, c);
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>) operator*(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator*(const ruint<K>& b, const T& c) {
         ruint<K> a;
         return mul(a, b, c);
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>) operator*(const T& c, const ruint<K>& b) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator*(const T& c, const ruint<K>& b) {
         ruint<K> a;
         return mul(a, b, c);
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>) operator*(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>) operator*(const ruint<K>& b, const T& c) {
         ruint<K> a;
         if (c < 0) return -mul(a, b, -c);
         else return mul(a, b, c);
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>) operator*(const T& c, const ruint<K>& b) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>) operator*(const T& c, const ruint<K>& b) {
         ruint<K> a;
         if (c < 0) return -mul(a, b, -c);
         else return mul(a, b, c);
@@ -170,7 +170,7 @@ namespace RecInt
         if (rmid)  add_1(rmid, ah.High);
     }
     template<>
-    inline void lmul_naive(ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline void lmul_naive(ruint<__RECINT_LIMB_SIZE>& ah, ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
     }
     template <size_t K>
@@ -204,7 +204,7 @@ namespace RecInt
         if (rt6 || r) add(ah.High, rt6 + r);
     }
     template<>
-    inline void lmul_kara(ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline void lmul_kara(ruint<__RECINT_LIMB_SIZE>& ah, ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         lmul_naive(ah, al, b, c);
     }
     template <size_t K>
@@ -212,15 +212,15 @@ namespace RecInt
         lmul_kara(a.High, a.Low, b, c);
     }
 
-    // Choose between naive and Karatsuba methods according to THRESHOLD_KARA constant
+    // Choose between naive and Karatsuba methods according to __RECINT_THRESHOLD_KARA constant
     // a = ahal = b*c
     template <size_t K>
     inline void lmul(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c) {
-        if (K < THRESHOLD_KARA) lmul_naive(ah, al, b, c);
+        if (K < __RECINT_THRESHOLD_KARA) lmul_naive(ah, al, b, c);
         else lmul_kara(ah, al, b, c);
     }
     template<>
-    inline void lmul(ruint<LIMB_SIZE>& ah, ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline void lmul(ruint<__RECINT_LIMB_SIZE>& ah, ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         lmul_naive(ah, al, b, c);
     }
     template <size_t K>
@@ -230,7 +230,7 @@ namespace RecInt
      
     // ret|a = b*c
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) lmul(limb& ret, ruint<K>& a, const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) lmul(limb& ret, ruint<K>& a, const ruint<K>& b, const T& c) {
         limb retl;
         bool ret_temp;
         lmul(retl, a.Low, b.Low, c);
@@ -239,13 +239,13 @@ namespace RecInt
         ret += ret_temp;
     }
     template<typename T>
-    inline IS_ARITH(T, void) lmul(limb& ret, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) lmul(limb& ret, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
         umul_ppmm(ret, a.Value, b.Value, limb(c));
     }
 
     // a = b*c
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) lmul(ruint<K+1>& a, const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) lmul(ruint<K+1>& a, const ruint<K>& b, const T& c) {
         limb ret;
         lmul(ret, a.Low, b, c);
         a.High = ret;
@@ -265,7 +265,7 @@ namespace RecInt
         return al;
     }
     template<>
-    inline ruint<LIMB_SIZE>& mul(ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline ruint<__RECINT_LIMB_SIZE>& mul(ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         al.Value = b.Value * c.Value;
         return al;
     }
@@ -284,14 +284,14 @@ namespace RecInt
         return al;
     }
     template<>
-    inline ruint<LIMB_SIZE>& mul(ruint<LIMB_SIZE>& al, const ruint<LIMB_SIZE>& c) {
+    inline ruint<__RECINT_LIMB_SIZE>& mul(ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& c) {
         al.Value *= c.Value;
         return al;
     }
 
     // a = (b*c).Low
     template <size_t K, typename T>
-    inline IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const ruint<K>& b, const T& c) {
         limb ret;
         lmul(ret, a, b, c);
         return a;
@@ -299,7 +299,7 @@ namespace RecInt
 
     // a = (a*b).Low
     template <size_t K, typename T>
-    inline IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const T& b) {
         limb ret;
         lmul(ret, a, a, b);
         return a;
@@ -333,7 +333,7 @@ namespace RecInt
         if (rbah || rbb) add(a.High.High, rbah + rbb);
     }
     template<>
-    inline void lsquare(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE>& b) {
+    inline void lsquare(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         umul_ppmm(a.High.Value, a.Low.Value, b.Value, b.Value);
     }
 }

@@ -49,29 +49,29 @@ namespace RecInt
 {
     template <size_t K, size_t MG> bool operator==(const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG> bool operator==(const rmint<K, MG>&, const ruint<K>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator==(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator==(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator==(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator==(const T&, const rmint<K, MG>&);
 
     template <size_t K, size_t MG> bool operator!=(const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG> bool operator!=(const rmint<K, MG>&, const ruint<K>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator!=(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator!=(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator!=(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator!=(const T&, const rmint<K, MG>&);
 
     template <size_t K, size_t MG> bool operator>(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator>(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator>(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator>(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator>(const T&, const rmint<K, MG>&);
 
     template <size_t K, size_t MG> bool operator>=(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator>=(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator>=(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator>=(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator>=(const T&, const rmint<K, MG>&);
 
     template <size_t K, size_t MG> bool operator<(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator<(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator<(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator<(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator<(const T&, const rmint<K, MG>&);
 
     template <size_t K, size_t MG> bool operator<=(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator<=(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, bool) operator<=(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator<=(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, bool) operator<=(const T&, const rmint<K, MG>&);
 }
 
 
@@ -95,20 +95,20 @@ namespace RecInt
         return operator==(a.Value, br.Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator==(const rmint<K, MGI>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator==(const rmint<K, MGI>& a, const T& b) {
        return operator==(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator==(const T& b, const rmint<K, MGI>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator==(const T& b, const rmint<K, MGI>& a) {
        return operator==(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator==(const rmint<K, MGA>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator==(const rmint<K, MGA>& a, const T& b) {
         rmint<K, MGA> br(b);
         return operator==(a.Value, br.Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator==(const T& b, const rmint<K, MGA>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator==(const T& b, const rmint<K, MGA>& a) {
         rmint<K, MGA> br(b);
         return operator==(a.Value, br.Value);
     }
@@ -128,20 +128,20 @@ namespace RecInt
         return operator!=(a.Value, br.Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator!=(const rmint<K, MGI>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator!=(const rmint<K, MGI>& a, const T& b) {
         return operator!=(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator!=(const T& b, const rmint<K, MGI>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator!=(const T& b, const rmint<K, MGI>& a) {
         return operator!=(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator!=(const rmint<K, MGA>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator!=(const rmint<K, MGA>& a, const T& b) {
         rmint<K, MGA> br(b);
         return operator!=(a.Value, br.Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator!=(const T& b, const rmint<K, MGA>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator!=(const T& b, const rmint<K, MGA>& a) {
         rmint<K, MGA> br(b);
         return operator!=(a.Value, br.Value);
     }
@@ -157,20 +157,20 @@ namespace RecInt
         return operator>(reduction(ar).Value, reduction(br).Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>(const rmint<K, MGI>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator>(const rmint<K, MGI>& a, const T& b) {
         return operator>(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>(const T& b, const rmint<K, MGI>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator>(const T& b, const rmint<K, MGI>& a) {
         return operator<(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>(const rmint<K, MGA>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator>(const rmint<K, MGA>& a, const T& b) {
         rmint<K, MGA> ar(a);
         return operator>(reduction(ar).Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>(const T& b, const rmint<K, MGA>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator>(const T& b, const rmint<K, MGA>& a) {
         rmint<K, MGA> ar(a);
         return operator<(reduction(ar).Value, b);
     }
@@ -186,20 +186,20 @@ namespace RecInt
         return operator>=(reduction(ar).Value, reduction(br).Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>=(const rmint<K, MGI>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator>=(const rmint<K, MGI>& a, const T& b) {
         return operator>=(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>=(const T& b, const rmint<K, MGI>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator>=(const T& b, const rmint<K, MGI>& a) {
         return operator<=(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>=(const rmint<K, MGA>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator>=(const rmint<K, MGA>& a, const T& b) {
         rmint<K, MGA> ar(a);
         return operator>=(reduction(ar).Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator>=(const T& b, const rmint<K, MGA>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator>=(const T& b, const rmint<K, MGA>& a) {
         rmint<K, MGA> ar(a);
         return operator<=(reduction(ar).Value, b);
     }
@@ -215,20 +215,20 @@ namespace RecInt
         return operator<(reduction(ar).Value, reduction(br).Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<(const rmint<K, MGI>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator<(const rmint<K, MGI>& a, const T& b) {
         return operator<(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<(const T& b, const rmint<K, MGI>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator<(const T& b, const rmint<K, MGI>& a) {
         return operator>(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<(const rmint<K, MGA>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator<(const rmint<K, MGA>& a, const T& b) {
         rmint<K, MGA> ar(a);
         return operator<(reduction(ar).Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<(const T& b, const rmint<K, MGA>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator<(const T& b, const rmint<K, MGA>& a) {
         rmint<K, MGA> ar(a);
         return operator>(reduction(ar).Value, b);
     }
@@ -244,20 +244,20 @@ namespace RecInt
         return operator<=(reduction(ar).Value, reduction(br).Value);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<=(const rmint<K, MGI>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator<=(const rmint<K, MGI>& a, const T& b) {
         return operator<=(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<=(const T& b, const rmint<K, MGI>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator<=(const T& b, const rmint<K, MGI>& a) {
         return operator>=(a.Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<=(const rmint<K, MGA>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, bool) operator<=(const rmint<K, MGA>& a, const T& b) {
         rmint<K, MGA> ar(a);
         return operator<=(reduction(ar).Value, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, bool) operator<=(const T& b, const rmint<K, MGA>& a) {
+    inline __RECINT_IS_ARITH(T, bool) operator<=(const T& b, const rmint<K, MGA>& a) {
         rmint<K, MGA> ar(a);
         return operator>=(reduction(ar).Value, b);
     }

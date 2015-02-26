@@ -48,7 +48,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K> void exp(rmint<K, MGI>&, const rmint<K, MGI>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, void) exp(rmint<K, MGI>&, const rmint<K, MGI>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, void) exp(rmint<K, MGI>&, const rmint<K, MGI>&, const T&);
 }
 
 
@@ -65,7 +65,7 @@ namespace RecInt
 
     // a = b^c mod a.p
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, void) exp(rmint<K, MGI>& a, const rmint<K, MGI>& b, const T& c) {
+    inline __RECINT_IS_UNSIGNED(T, void) exp(rmint<K, MGI>& a, const rmint<K, MGI>& b, const T& c) {
         exp_mod(a.Value, b.Value, c, a.p);
     }
 }

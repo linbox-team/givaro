@@ -51,16 +51,16 @@ namespace RecInt
     template <size_t K, size_t MG> rmint<K, MG>  operator++(rmint<K, MG>&, int);
 
     template <size_t K, size_t MG> rmint<K, MG>& operator+=(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) operator+=(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>&) operator+=(rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> rmint<K, MG> operator+(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator+(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator+(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>) operator+(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>) operator+(const T&, const rmint<K, MG>&);
 
     template <size_t K, size_t MG> rmint<K, MG>& add(rmint<K, MG>&, const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG> rmint<K, MG>& add(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>&, const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>&, const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>&, const T&);
 }
 
 
@@ -90,7 +90,7 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>&) operator+=(rmint<K, MG>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>&) operator+=(rmint<K, MG>& a, const T& b) {
         return add(a, b);
     }
 
@@ -102,13 +102,13 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>) operator+(const rmint<K, MG>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>) operator+(const rmint<K, MG>& b, const T& c) {
         rmint<K, MG> a;
         return add(a, b, c);
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>) operator+(const T& c, const rmint<K, MG>& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>) operator+(const T& c, const rmint<K, MG>& b) {
         rmint<K, MG> a;
         return add(a, b, c);
     }
@@ -140,7 +140,7 @@ namespace RecInt
 
     // a = b + c mod a.p
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>& a, const rmint<K, MG>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>& a, const rmint<K, MG>& b, const T& c) {
         bool r;
         rmint<K, MG> cp(c);
         add(r, a.Value, b.Value, cp.Value);
@@ -150,7 +150,7 @@ namespace RecInt
 
     // a += b mod a.p
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>&) add(rmint<K, MG>& a, const T& b) {
         bool r;
         rmint<K, MG> bp(b);
         add(r, a.Value, bp.Value);

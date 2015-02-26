@@ -53,14 +53,14 @@ namespace RecInt
     template <size_t K> ruint<K>  operator--(ruint<K>&, int);
 
     template <size_t K> ruint<K>& operator-=(ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>&) operator-=(ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>&)   operator-=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>&) operator-=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>&)   operator-=(ruint<K>&, const T&);
 
     template <size_t K> ruint<K> operator-(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>) operator-(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>) operator-(const T&, const ruint<K>&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>)   operator-(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>)   operator-(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>) operator-(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>) operator-(const T&, const ruint<K>&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>)   operator-(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>)   operator-(const T&, const ruint<K>&);
 
     // a = b - c    or  a -= c  (a, b, c are ruint)
     // r is the borrow
@@ -71,10 +71,10 @@ namespace RecInt
 
     // a = b - c    or  a -= c  (a, b are ruint and c is integer)
     // r is the borrow
-    template <size_t K, typename T> IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, void) sub(ruint<K>& a, const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, void) sub(ruint<K>& a, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) sub(ruint<K>& a, const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) sub(ruint<K>& a, const T& c);
 
     // a = b - 1    or  a -= 1  (a, b are ruint)
     // r is the borrow
@@ -117,12 +117,12 @@ namespace RecInt
         return a;
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>&) operator-=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>&) operator-=(ruint<K>& a, const T& b) {
         sub(a, b);
         return a;
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>&) operator-=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>&) operator-=(ruint<K>& a, const T& b) {
         if (b < 0) add(a, -b);
         else sub(a, b);
         return a;
@@ -136,26 +136,26 @@ namespace RecInt
         return a;
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>) operator-(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator-(const ruint<K>& b, const T& c) {
         ruint<K> a;
         sub(a, b, c);
         return a;
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>) operator-(const T& c, const ruint<K>& b) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator-(const T& c, const ruint<K>& b) {
         ruint<K> a;
         sub(a, b, c);
         return -a;  
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>) operator-(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>) operator-(const ruint<K>& b, const T& c) {
         ruint<K> a;
         if (c < 0) add(a, b, -c);
         else sub(a, b, c);
         return a;
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>) operator-(const T& c, const ruint<K>& b) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>) operator-(const T& c, const ruint<K>& b) {
         ruint<K> a;
         if (c < 0) add(a, b, -c);
         else sub(a, b, c);
@@ -178,12 +178,12 @@ namespace RecInt
         sub_wc(r, a.High, b.High, c.High, rl);
     }
     template<>
-    inline void sub(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c) {
+    inline void sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
         r = (b < c);
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
     }
     template<>
-    inline void sub(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline void sub(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         r = (b.Value < c.Value);
         a.Value = b.Value - c.Value;
     }
@@ -196,12 +196,12 @@ namespace RecInt
         sub_wc(r, a.High, b.High, rl);
     }
     template<>
-    inline void sub(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
+    inline void sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         r = (a < b);  
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
     }
     template<>
-    inline void sub(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline void sub(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         r = (a < b);
         a.Value -= b.Value;
     }
@@ -215,12 +215,12 @@ namespace RecInt
         return a;
     }
     template<>
-    inline ruint<LIMB_SIZE+1>& sub(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c) {
+    inline ruint<__RECINT_LIMB_SIZE+1>& sub(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         return a;
     }
     template<>
-    inline ruint<LIMB_SIZE>& sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    inline ruint<__RECINT_LIMB_SIZE>& sub(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         a.Value = b.Value - c.Value;
         return a;
     }
@@ -234,13 +234,13 @@ namespace RecInt
         return a;
     }
     template<>
-    inline ruint<LIMB_SIZE+1>& sub(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {
+    inline ruint<__RECINT_LIMB_SIZE+1>& sub(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
         return a;
       
     }
     template<>
-    inline ruint<LIMB_SIZE>& sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline ruint<__RECINT_LIMB_SIZE>& sub(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value -= b.Value;
         return a;
     }
@@ -249,69 +249,69 @@ namespace RecInt
     // Substract with integer
     // a = b - c    (r stores the borrow)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const ruint<K>& b, const T& c) {
         bool rl;  
         sub(rl, a.Low, b.Low, c);
         sub(r, a.High, b.High, rl);
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const T& c) {
         r = (b < c);
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, limb(c));
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
         r = (b.Value < limb(c));
         a.Value = b.Value - c;
     }
 
     // a -= b    (r stores the borrow)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const T& b) {
         bool rl;
         sub(rl, a.Low, b);
         sub(r, a.High, rl);
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(bool& r, ruint<LIMB_SIZE+1>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const T& b) {
         r = (a < b);
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, limb(b));
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(bool& r, ruint<LIMB_SIZE>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
         r = (a.Value < limb(b));
         a.Value = a.Value - b;
     }
 
     // a = b - c    (the borrow is lost)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) sub(ruint<K>& a, const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) sub(ruint<K>& a, const ruint<K>& b, const T& c) {
         bool rl;  
         sub(rl, a.Low, b.Low, c);
         sub(a.High, b.High, rl);
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const T& c) {
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, limb(c));
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
         a.Value = b.Value - limb(c);
     }
 
     // a -= b    (the borrow is lost)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) sub(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) sub(ruint<K>& a, const T& b) {
         bool rl;
         sub(rl, a.Low, b);
         sub(a.High, rl);
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(ruint<LIMB_SIZE+1>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE+1>& a, const T& b) {
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, limb(b));
     }
     template <typename T>
-    inline IS_ARITH(T, void) sub(ruint<LIMB_SIZE>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
         a.Value = a.Value - b;
     }
 
@@ -325,12 +325,12 @@ namespace RecInt
         sub(r, a.High, b.High, rl);
     }
     template<>
-    inline void sub_1(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) {  
+    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {  
         r = (b == 0);
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
     }
     template<>
-    inline void sub_1(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         r = (b.Value == 0);
         a.Value = b.Value - 1;
     }
@@ -343,12 +343,12 @@ namespace RecInt
         sub(r, a.High, rl);
     }
     template<>
-    inline void sub_1(bool& r, ruint<LIMB_SIZE+1>& a) {
+    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a) {
         r = (a == 0);
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
     template<>
-    inline void sub_1(bool& r, ruint<LIMB_SIZE>& a) {
+    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE>& a) {
         r = (a.Value == 0);
         a.Value = a.Value - 1;
     }
@@ -361,11 +361,11 @@ namespace RecInt
         sub(a.High, b.High, rl);
     }
     template<>
-    inline void sub_1(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b) { 
+    inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) { 
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
     }
     template<>
-    inline void sub_1(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline void sub_1(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value = b.Value - 1;
     }
 
@@ -377,11 +377,11 @@ namespace RecInt
         sub(a.High, rl);
     }
     template<>
-    inline void sub_1(ruint<LIMB_SIZE+1>& a) {
+    inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a) {
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
     template<>
-    inline void sub_1(ruint<LIMB_SIZE>& a) {
+    inline void sub_1(ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value = a.Value - 1;
     }
 
@@ -395,14 +395,14 @@ namespace RecInt
         sub_wc(r, a.High, b.High, c.High, ret);
     }
     template<>
-    inline void sub_wc(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c, const bool& cy) {
+    inline void sub_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
         if (cy) r = (b <= c);
         else r = (b < c);
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         if (cy) sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
     template<>
-    inline void sub_wc(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c, const bool& cy) {
+    inline void sub_wc(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const bool& cy) {
         if (cy) r = (b.Value <= c.Value);
         else r = (b.Value < c.Value);
         a.Value = b.Value - c.Value - cy;
@@ -416,14 +416,14 @@ namespace RecInt
         sub_wc(r, a.High, b.High, ret);
     }
     template<>
-    inline void sub_wc(bool& r, ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const bool& cy) {
+    inline void sub_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
         if (cy) r = (a <= b);
         else r = (a < b);
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
         if (cy) sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
     template<>
-    inline void sub_wc(bool& r, ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const bool& cy) {
+    inline void sub_wc(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const bool& cy) {
         if (cy) r = (a.Value <= b.Value);
         else r = (a.Value < b.Value);
         a.Value = a.Value - b.Value - cy;
@@ -437,12 +437,12 @@ namespace RecInt
         sub_wc(a.High, b.High, c.High, ret);
     }
     template<>
-    inline void sub_wc(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const ruint<LIMB_SIZE+1>& c, const bool& cy) {
+    inline void sub_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);
     }
     template<>
-    inline void sub_wc(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c, const bool& cy) {
+    inline void sub_wc(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const bool& cy) {
         a.Value = b.Value - c.Value - cy;
     }
 
@@ -454,12 +454,12 @@ namespace RecInt
         sub_wc(a.High, b.High, ret);
     }
     template<>
-    inline void sub_wc(ruint<LIMB_SIZE+1>& a, const ruint<LIMB_SIZE+1>& b, const bool& cy) {
+    inline void sub_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
     }
     template<>
-    inline void sub_wc(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b, const bool& cy) {
+    inline void sub_wc(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const bool& cy) {
         a.Value = a.Value - b.Value - cy;
     }
 }

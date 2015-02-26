@@ -78,7 +78,7 @@ namespace RecInt
     }
 
     template <>
-    inline std::ostream& operator<<(std::ostream& out, const ruint<LIMB_SIZE>& a) {
+    inline std::ostream& operator<<(std::ostream& out, const ruint<__RECINT_LIMB_SIZE>& a) {
         return out << a.Value;
     }
 
@@ -108,8 +108,8 @@ namespace RecInt
     }
 
     template <>
-    inline std::ostream& display_hex(std::ostream& out, const ruint<LIMB_SIZE>& a) {
-        return out << std::setw(NB_BITS/4) << std::setfill('0') << a.Value;
+    inline std::ostream& display_hex(std::ostream& out, const ruint<__RECINT_LIMB_SIZE>& a) {
+        return out << std::setw(__RECINT_LIMB_BITS/4) << std::setfill('0') << a.Value;
     }
     
     // Reads a ruint

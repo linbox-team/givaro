@@ -57,10 +57,10 @@ namespace RecInt
         ruint() {}
         ruint(const ruint<K>& r) : High(r.High), Low(r.Low) {}
         ruint(const double b) : Low((b < 0)? -b : b) { if (b < 0) *this = -*this; }
-        template <typename T, IS_UNSIGNED(T, int) = 0> ruint(const T b) : Low(b) {}
-        template <typename T, IS_SIGNED(T, int) = 0>   ruint(const T b) : Low((b < 0)? -b : b)
+        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Low(b) {}
+        template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   ruint(const T b) : Low((b < 0)? -b : b)
             { if (b < 0) *this = -*this; }
-        template <typename T, IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
+        template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
         	{ *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
 
         // Cast
@@ -81,7 +81,7 @@ namespace RecInt
         operator float() const { return (float)(Low); }
         operator double() const { return (double)(Low); }
         // operator bool() const { return (High != 0) || (Low != 0); }
-        // template <typename T, IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
+        // template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
 
         // Const reverse iterator
         class cr_iterator {
@@ -107,23 +107,23 @@ namespace RecInt
     };
 
     /* ruint of size 64 bits */
-    template <> class ruint<LIMB_SIZE> {
+    template <> class ruint<__RECINT_LIMB_SIZE> {
     public:
         limb Value;
 
         // Constructors
         ruint() : Value(0u) {}
-        ruint(const ruint<LIMB_SIZE>& r) : Value(r.Value) {}
+        ruint(const ruint<__RECINT_LIMB_SIZE>& r) : Value(r.Value) {}
         ruint(const double b) : Value(static_cast<limb>(b)) {}
-        template <typename T, IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
-        template <typename T, IS_SIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
+        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
+        template <typename T, __RECINT_IS_SIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
 
         // Cast
         operator float() const { return (float)(Value); }
         operator double() const { return (double)(Value); }
-        template <typename T, IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
-        template <typename T, IS_SIGNED(T, int) = 0> operator T() const
-            { T ret = T(Value); if (ret < 0) return T(ret & TYPENOTMAXPOWTWO(T)); else return ret; }
+        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
+        template <typename T, __RECINT_IS_SIGNED(T, int) = 0> operator T() const
+            { T ret = T(Value); if (ret < 0) return T(ret & __RECINT_TYPENOTMAXPOWTWO(T)); else return ret; }
         
         // Const reverse iterator
         class cr_iterator {
@@ -144,7 +144,7 @@ namespace RecInt
         cr_iterator rbegin() const { return cr_iterator(&Value); }
         cr_iterator rend() const { return cr_iterator(); }
         UDItype size() { return 1; }
-        static ruint<LIMB_SIZE> getMaxModulus() { return 4294967296; }
+        static ruint<__RECINT_LIMB_SIZE> getMaxModulus() { return 4294967296; }
     };
     
     typedef ruint<6> ruint64;

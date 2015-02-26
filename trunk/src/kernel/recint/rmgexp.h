@@ -70,7 +70,7 @@ namespace RecInt
         int i, j, NB_WIN;
 
         UDItype exp, mask=0xf;
-        NB_WIN=NB_BITS/4;
+        NB_WIN=__RECINT_LIMB_BITS/4;
 
         copy(g[0].Value, rmint<K, MG_ACTIVE>::r);
         for (i=1;i<16;i++) mul(g[i], g[i-1], b);

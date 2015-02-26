@@ -55,7 +55,7 @@ namespace RecInt
     template <size_t K> rmint<K, MGA>& inv(rmint<K, MGA>& a);
 
     // a = b^(-1) mod a.p or a = 0 if b not invertible
-    template <size_t K, typename T> IS_ARITH(T, rmint<K, MGA>&) inv(rmint<K, MGA>& a, const T& b);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, rmint<K, MGA>&) inv(rmint<K, MGA>& a, const T& b);
 }
 
 
@@ -82,7 +82,7 @@ namespace RecInt
 
     // a = b^(-1) mod a.p or a = 0 if b not invertible
     template <size_t K, typename T>
-    inline IS_ARITH(T, rmint<K, MGA>& ) inv(rmint<K, MGA>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MGA>& ) inv(rmint<K, MGA>& a, const T& b) {
         ruint<K> br(b);
         inv_mod(a.Value, br, a.p);
         return to_mg(a);

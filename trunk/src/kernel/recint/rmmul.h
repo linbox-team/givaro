@@ -48,11 +48,11 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K, size_t MG> rmint<K, MG>& operator*=(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) operator*=(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>&) operator*=(rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> rmint<K, MG> operator*(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator*(const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator*(const T&, const rmint<K, MG>&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>) operator*(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>) operator*(const T&, const rmint<K, MG>&);
 
     template <size_t K, size_t MG> void mul(rmint<K, MG>&, const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG> void mul(rmint<K, MG>&, const rmint<K, MG>&);
@@ -80,7 +80,7 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>&) operator*=(rmint<K, MG>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>&) operator*=(rmint<K, MG>& a, const T& b) {
         mul(a, a, b);
         return a;
     }
@@ -94,14 +94,14 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>) operator*(const rmint<K, MG>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>) operator*(const rmint<K, MG>& b, const T& c) {
         rmint<K, MG> a;
         mul(a, b, c);
         return a;
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>) operator*(const T& c, const rmint<K, MG>& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>) operator*(const T& c, const rmint<K, MG>& b) {
         rmint<K, MG> a;
         mul(a, b, c);
         return a;

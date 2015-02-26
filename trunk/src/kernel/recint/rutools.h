@@ -68,9 +68,9 @@ namespace RecInt
         limb mask;
         
         for (d = 0; it != b.rend(); it++) {
-            if (*it == 0) d += NB_BITS;
+            if (*it == 0) d += __RECINT_LIMB_BITS;
             else {
-                for (mask = MAXPOWTWO; mask != 0; mask >>= 1) {
+                for (mask = __RECINT_MAXPOWTWO; mask != 0; mask >>= 1) {
                     if ((*it) & mask) return;
                     else ++d;
                 }

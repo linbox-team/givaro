@@ -101,7 +101,7 @@ namespace RecInt
 
     // If a is odd, u = inv(a) mod 2^64
     template <>
-    inline ruint<LIMB_SIZE>& arazi_qi(ruint<LIMB_SIZE>& u, const ruint<LIMB_SIZE>& a) {
+    inline ruint<__RECINT_LIMB_SIZE>& arazi_qi(ruint<__RECINT_LIMB_SIZE>& u, const ruint<__RECINT_LIMB_SIZE>& a) {
         if (a.Value == 1) {
             u.Value = 1;
             return u;
@@ -110,7 +110,7 @@ namespace RecInt
         UDItype amone(a.Value-1);
         u.Value = 1;
         
-        for (size_t i = 2; i < NB_BITS; i <<= 1) {
+        for (size_t i = 2; i < __RECINT_LIMB_BITS; i <<= 1) {
             amone *= amone;
             u.Value *= ++amone;
             --amone;

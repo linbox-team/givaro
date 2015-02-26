@@ -80,7 +80,7 @@ namespace RecInt
         reset(a.High);
         reset(a.Low);
     }
-    template <> inline void reset(ruint<LIMB_SIZE>& a) {
+    template <> inline void reset(ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value = 0;
     }
 
@@ -89,8 +89,8 @@ namespace RecInt
         fill_with_1(a.High);
         fill_with_1(a.Low);
     }
-    template <>  inline void fill_with_1(ruint<LIMB_SIZE>& a) {
-        a.Value = MINUSONE;
+    template <>  inline void fill_with_1(ruint<__RECINT_LIMB_SIZE>& a) {
+        a.Value = __RECINT_MINUSONE;
     }
 
     // a = b
@@ -99,7 +99,7 @@ namespace RecInt
         copy(a.High, b.High);
         copy(a.Low, b.Low);  
     }
-    template <> inline void copy(ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    template <> inline void copy(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value = b.Value;
     }
 }
@@ -115,7 +115,7 @@ namespace RecInt
         pointers_list(tab, a.Low);
         pointers_list(&tab[NBLIMB<K-1>::value], a.High);
     }
-    template <> inline void pointers_list(limb **tab, const ruint<LIMB_SIZE>& a) {
+    template <> inline void pointers_list(limb **tab, const ruint<__RECINT_LIMB_SIZE>& a) {
         const limb* toto = static_cast<const limb*>( &(a.Value) );
         *tab = const_cast<limb*>(toto);
     }
@@ -126,7 +126,7 @@ namespace RecInt
         if (index < NBLIMB<K-1>::value) set_limb(a.Low, b, index);
         else set_limb(a.High, b, index-NBLIMB<K-1>::value);    
     }
-    template <> inline void set_limb(ruint<LIMB_SIZE>& a, const limb& b, unsigned int index) {
+    template <> inline void set_limb(ruint<__RECINT_LIMB_SIZE>& a, const limb& b, unsigned int index) {
         if (index == 0) a.Value = b;
     }
 
@@ -136,7 +136,7 @@ namespace RecInt
         if (index < NBLIMB<K-1>::value) return get_limb(a.Low, index);
         else return get_limb(a.High, index - NBLIMB<K-1>::value);    
     }
-    template <> inline limb get_limb(const ruint<LIMB_SIZE>& a, unsigned int index) {
+    template <> inline limb get_limb(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int index) {
         (void) index;
         return a.Value;
     }
@@ -145,7 +145,7 @@ namespace RecInt
         if (index < NBLIMB<K-1>::value) return get_limb_p(a.Low, index);
         else return get_limb_p(a.High, index - NBLIMB<K-1>::value);    
     }
-    template <> inline const limb* get_limb_p(const ruint<LIMB_SIZE>& a, unsigned int index) {
+    template <> inline const limb* get_limb_p(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int index) {
         (void) index;
         return &(a.Value);
     }

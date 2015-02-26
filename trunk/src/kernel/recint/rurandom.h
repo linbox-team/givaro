@@ -69,7 +69,7 @@ namespace RecInt
         rand(a.High);
         rand(a.Low);
     }
-    template <> inline void rand(ruint<LIMB_SIZE>& a) {
+    template <> inline void rand(ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value = rand_gen();
     }
 

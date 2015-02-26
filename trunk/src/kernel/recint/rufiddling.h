@@ -54,17 +54,17 @@ namespace RecInt
     template <size_t K> ruint<K>& operator^=(ruint<K>& b, const ruint<K>& c);
     template <size_t K> ruint<K>& operator&=(ruint<K>& b, const ruint<K>& c);
     
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>&) operator|=(ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>&) operator^=(ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>&) operator&=(ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) operator|=(ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) operator^=(ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) operator&=(ruint<K>& b, const T& c);
     
     template <size_t K> ruint<K> operator|(const ruint<K>& b, const ruint<K>& c);
     template <size_t K> ruint<K> operator^(const ruint<K>& b, const ruint<K>& c);
     template <size_t K> ruint<K> operator&(const ruint<K>& b, const ruint<K>& c);
     
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>) operator|(const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>) operator^(const ruint<K>& b, const T& c);
-    template <size_t K, typename T> IS_ARITH(T, T) operator&(const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>) operator|(const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>) operator^(const ruint<K>& b, const T& c);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, T) operator&(const ruint<K>& b, const T& c);
 
     // a = 2^(2^(K-1))
     template<size_t K> ruint<K>& max_pow_two(ruint<K>& a);
@@ -91,8 +91,8 @@ namespace RecInt
         b.Low = ~c.Low;
         return b;
     }
-    template <> ruint<LIMB_SIZE> inline operator~(const ruint<LIMB_SIZE>& c) {
-        ruint<LIMB_SIZE> b;
+    template <> ruint<__RECINT_LIMB_SIZE> inline operator~(const ruint<__RECINT_LIMB_SIZE>& c) {
+        ruint<__RECINT_LIMB_SIZE> b;
         b.Value = ~c.Value;
         return b;
     }
@@ -104,8 +104,8 @@ namespace RecInt
         b.Low = ~c.Low;
         return ++b;
     }
-    template <> inline ruint<LIMB_SIZE> operator-(const ruint<LIMB_SIZE>& c) {
-        ruint<LIMB_SIZE> b;
+    template <> inline ruint<__RECINT_LIMB_SIZE> operator-(const ruint<__RECINT_LIMB_SIZE>& c) {
+        ruint<__RECINT_LIMB_SIZE> b;
         b.Value = ~c.Value;
         return ++b;
     }
@@ -116,15 +116,15 @@ namespace RecInt
         b.Low |= c.Low;
         return b;
     }
-    template <> inline ruint<LIMB_SIZE>& operator|=(ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    template <> inline ruint<__RECINT_LIMB_SIZE>& operator|=(ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         b.Value |= c.Value;
         return b;
     }
-    template <size_t K, typename T> inline IS_ARITH(T, ruint<K>&) operator|=(ruint<K>& b, const T& c) {
+    template <size_t K, typename T> inline __RECINT_IS_ARITH(T, ruint<K>&) operator|=(ruint<K>& b, const T& c) {
         b.Low |= c;
         return b;
     }
-    template <typename T> inline IS_ARITH(T, ruint<LIMB_SIZE>&) operator|=(ruint<LIMB_SIZE>& b, const T& c) {
+    template <typename T> inline __RECINT_IS_ARITH(T, ruint<__RECINT_LIMB_SIZE>&) operator|=(ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
         b.Value |= limb(c);
         return b;
     }
@@ -135,15 +135,15 @@ namespace RecInt
         b.Low ^= c.Low;
         return b;
     }
-    template <> inline ruint<LIMB_SIZE>& operator^=(ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    template <> inline ruint<__RECINT_LIMB_SIZE>& operator^=(ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         b.Value ^= c.Value;
         return b;
     }
-    template <size_t K, typename T> inline IS_ARITH(T, ruint<K>&) operator^=(ruint<K>& b, const T& c) {
+    template <size_t K, typename T> inline __RECINT_IS_ARITH(T, ruint<K>&) operator^=(ruint<K>& b, const T& c) {
         b.Low ^= c;
         return b;
     }
-    template <typename T> inline IS_ARITH(T, ruint<LIMB_SIZE>&) operator^=(ruint<LIMB_SIZE>& b, const T& c) {
+    template <typename T> inline __RECINT_IS_ARITH(T, ruint<__RECINT_LIMB_SIZE>&) operator^=(ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
         b.Value ^= limb(c);
         return b;
     }
@@ -154,16 +154,16 @@ namespace RecInt
         b.Low &= c.Low;
         return b;
     }
-    template <> inline ruint<LIMB_SIZE>& operator&=(ruint<LIMB_SIZE>& b, const ruint<LIMB_SIZE>& c) {
+    template <> inline ruint<__RECINT_LIMB_SIZE>& operator&=(ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         b.Value &= c.Value;
         return b;
     }
-    template <size_t K, typename T> inline IS_ARITH(T, ruint<K>&) operator&=(ruint<K>& b, const T& c) {
+    template <size_t K, typename T> inline __RECINT_IS_ARITH(T, ruint<K>&) operator&=(ruint<K>& b, const T& c) {
         reset(b.High);
         b.Low &= c;
         return b;
     }
-    template <typename T> inline IS_ARITH(T, ruint<LIMB_SIZE>&) operator&=(ruint<LIMB_SIZE>& b, const T& c) {
+    template <typename T> inline __RECINT_IS_ARITH(T, ruint<__RECINT_LIMB_SIZE>&) operator&=(ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
         b.Value &= limb(c);
         return b;
     }
@@ -173,7 +173,7 @@ namespace RecInt
         ruint<K> a(b);
         return (a |= c);
     }
-    template <size_t K, typename T> inline IS_ARITH(T, ruint<K>) operator|(const ruint<K>& b, const T& c) {
+    template <size_t K, typename T> inline __RECINT_IS_ARITH(T, ruint<K>) operator|(const ruint<K>& b, const T& c) {
         ruint<K> a(b);
         return (a |= c);
     }
@@ -183,7 +183,7 @@ namespace RecInt
         ruint<K> a(b);
         return (a &= c);
     }
-    template <size_t K, typename T> inline IS_ARITH(T, T) operator&(const ruint<K>& b, const T& c) {
+    template <size_t K, typename T> inline __RECINT_IS_ARITH(T, T) operator&(const ruint<K>& b, const T& c) {
         ruint<K> a(b);
         return (a &= c);
     }
@@ -193,7 +193,7 @@ namespace RecInt
         ruint<K> a(b);
         return (a ^= c);
     }
-    template <size_t K, typename T> inline IS_ARITH(T, ruint<K>) operator^(const ruint<K>& b, const T& c) {
+    template <size_t K, typename T> inline __RECINT_IS_ARITH(T, ruint<K>) operator^(const ruint<K>& b, const T& c) {
         ruint<K> a(b);
         return (a ^= c);
     }
@@ -211,8 +211,8 @@ namespace RecInt
         reset(a.Low);
         return a;
     }
-    template<> inline ruint<LIMB_SIZE>& max_pow_two(ruint<LIMB_SIZE>& a) {
-        a.Value = MAXPOWTWO;
+    template<> inline ruint<__RECINT_LIMB_SIZE>& max_pow_two(ruint<__RECINT_LIMB_SIZE>& a) {
+        a.Value = __RECINT_MAXPOWTWO;
         return a;
     }
     
@@ -220,15 +220,15 @@ namespace RecInt
     template<size_t K> inline bool highest_bit(const ruint<K>& a) {
         return highest_bit(a.High);
     }
-    template<> inline bool highest_bit(const ruint<LIMB_SIZE>& a) {
-        return bool(a.Value & MAXPOWTWO);
+    template<> inline bool highest_bit(const ruint<__RECINT_LIMB_SIZE>& a) {
+        return bool(a.Value & __RECINT_MAXPOWTWO);
     }
 
     // returns a's lowest bit
     template<size_t K> inline bool lowest_bit(const ruint<K>& a) {
         return lowest_bit(a.Low);
     }
-    template<> inline bool lowest_bit(const ruint<LIMB_SIZE>& a) {
+    template<> inline bool lowest_bit(const ruint<__RECINT_LIMB_SIZE>& a) {
         return bool(a.Value & (limb)1);
     }
     
@@ -236,15 +236,15 @@ namespace RecInt
     template<size_t K> inline void set_highest_bit(ruint<K>& a) {
         set_highest_bit(a.High);
     }
-    template<> inline void set_highest_bit(ruint<LIMB_SIZE>& a) {
-        a.Value |= MAXPOWTWO;
+    template<> inline void set_highest_bit(ruint<__RECINT_LIMB_SIZE>& a) {
+        a.Value |= __RECINT_MAXPOWTWO;
     }
     
     // set a's lowest bit to 1
     template<size_t K> inline void set_lowest_bit(ruint<K>& a) {
         set_lowest_bit(a.Low);
     }
-    template<> inline void set_lowest_bit(ruint<LIMB_SIZE>& a) {
+    template<> inline void set_lowest_bit(ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value |= 1;
     }
 }

@@ -50,26 +50,26 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K, size_t MG> rmint<K, MG>& operator%=(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) operator%=(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>&) operator%=(rmint<K, MG>&, const T&);
     
     template <size_t K, size_t MG> rmint<K, MG>& operator/=(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>&) operator/=(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>&) operator/=(rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> rmint<K, MG> operator/(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator/(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>) operator/(const rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> rmint<K, MG> operator%(const rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, rmint<K, MG>) operator%(const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, rmint<K, MG>) operator%(const rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> void div(rmint<K, MG>&, const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG> void div(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, void) div(rmint<K, MG>&, const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, void) div(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, void) div(rmint<K, MG>&, const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, void) div(rmint<K, MG>&, const T&);
 
     template <size_t K, size_t MG> void mod(rmint<K, MG>&, const rmint<K, MG>&, const rmint<K, MG>&);
     template <size_t K, size_t MG> void mod(rmint<K, MG>&, const rmint<K, MG>&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, void) mod(rmint<K, MG>&, const rmint<K, MG>&, const T&);
-    template <size_t K, size_t MG, typename T> IS_ARITH(T, void) mod(rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, void) mod(rmint<K, MG>&, const rmint<K, MG>&, const T&);
+    template <size_t K, size_t MG, typename T> __RECINT_IS_ARITH(T, void) mod(rmint<K, MG>&, const T&);
 }
 
 
@@ -86,7 +86,7 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>&) operator%=(rmint<K, MG>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>&) operator%=(rmint<K, MG>& a, const T& b) {
         mod(a, b);
         return a;
     }
@@ -99,7 +99,7 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>&) operator/=(rmint<K, MG>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>&) operator/=(rmint<K, MG>& a, const T& b) {
         div(a, b);
         return a;
     }
@@ -113,7 +113,7 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>) operator/(const rmint<K, MG>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>) operator/(const rmint<K, MG>& b, const T& c) {
         rmint<K, MG> a;
         div(a, b, c);
         return a;
@@ -128,7 +128,7 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, rmint<K, MG>) operator%(const rmint<K, MG>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, rmint<K, MG>) operator%(const rmint<K, MG>& b, const T& c) {
         rmint<K, MG> a;
         mod(a, b, c);
         return a;
@@ -158,14 +158,14 @@ namespace RecInt
 
     // a = b * c^(-1) mod a.p
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, void) div(rmint<K, MG>& a, const rmint<K, MG>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) div(rmint<K, MG>& a, const rmint<K, MG>& b, const T& c) {
         rmint<K, MG> cr(c);
         div(a, b, cr);
     }
 
     // a *= b^(-1) mod a.p
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, void) div(rmint<K, MG>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) div(rmint<K, MG>& a, const T& b) {
         rmint<K, MG> br(b);
         div(a, a, br);
     }
@@ -193,14 +193,14 @@ namespace RecInt
 
     // a = b mod c
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, void) mod(rmint<K, MG>& a, const rmint<K, MG>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) mod(rmint<K, MG>& a, const rmint<K, MG>& b, const T& c) {
         rmint<K, MG> cr(c);
         mod(a, b, cr);
     }
 
     // a = a mod b
     template <size_t K, size_t MG, typename T>
-    inline IS_ARITH(T, void) mod(rmint<K, MG>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) mod(rmint<K, MG>& a, const T& b) {
         rmint<K, MG> br(b);
         mod(a, a, br);
     }

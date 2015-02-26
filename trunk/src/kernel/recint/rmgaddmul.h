@@ -45,7 +45,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K> rmint<K, MGA>& addmul(rmint<K, MGA>&, const rmint<K, MGA>&, const rmint<K, MGA>&);
-    template <size_t K, typename T> IS_ARITH(T, void) addmul(rmint<K, MGA>&, const rmint<K, MGA>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) addmul(rmint<K, MGA>&, const rmint<K, MGA>&, const T&);
 }
 
 
@@ -64,7 +64,7 @@ namespace RecInt
 
     // a += b * c mod a.p
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) addmul(rmint<K, MGA>& a, const rmint<K, MGA>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, void) addmul(rmint<K, MGA>& a, const rmint<K, MGA>& b, const T& c) {
         rmint<K, MGA> cr(c);
         addmul(a, b, cr);
     }

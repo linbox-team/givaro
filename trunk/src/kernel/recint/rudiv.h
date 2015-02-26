@@ -52,18 +52,18 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K> ruint<K>& operator%=(ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>&) operator%=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) operator%=(ruint<K>&, const T&);
     
     template <size_t K> ruint<K>& operator/=(ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>&) operator/=(ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>&)   operator/=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>&) operator/=(ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>&)   operator/=(ruint<K>&, const T&);
 
     template <size_t K> ruint<K> operator%(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>) operator%(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>) operator%(const ruint<K>&, const T&);
 
     template <size_t K> ruint<K> operator/(const ruint<K>&, const ruint<K>&);
-    template <size_t K, typename T> IS_UNSIGNED(T, ruint<K>) operator/(const ruint<K>&, const T&);
-    template <size_t K, typename T> IS_SIGNED(T, ruint<K>)   operator/(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, ruint<K>) operator/(const ruint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_SIGNED(T, ruint<K>)   operator/(const ruint<K>&, const T&);
 
     // Euclidean division of the 3-ruint integer (a2|a1|a0) by the 2-ruint integer (b1|b0)
     // the 1-ruint quotient is stored in q
@@ -80,15 +80,15 @@ namespace RecInt
 
     // computes (q, r) such that a = q*b + r (0 <= r < b)
     template <size_t K> void div(ruint<K>& q, ruint<K>& r, const ruint<K>& a, const ruint<K>& b);
-    template <size_t K, typename T> IS_ARITH(T, void) div(ruint<K>& q, T& r, const ruint<K>& a, const T& b);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, void) div(ruint<K>& q, T& r, const ruint<K>& a, const T& b);
 
     // q = floor(a/b)
     template <size_t K> ruint<K>& div_q(ruint<K>& q, const ruint<K>& a, const ruint<K>& b);
-    template <size_t K, typename T> IS_ARITH(T, ruint<K>&) div_q(ruint<K>& q, const ruint<K>& a, const T& b);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) div_q(ruint<K>& q, const ruint<K>& a, const T& b);
 
     // r = a mod b
     template <size_t K> ruint<K>& div_r(ruint<K>& r, const ruint<K>& a, const ruint<K>& b);
-    template <size_t K, typename T> IS_ARITH(T, T&) div_r(T& r, const ruint<K>& a, const T& b);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, T&) div_r(T& r, const ruint<K>& a, const T& b);
 }
 
 
@@ -103,7 +103,7 @@ namespace RecInt
         return div_r(a, a, b);
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, ruint<K>&) operator%=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, ruint<K>&) operator%=(ruint<K>& a, const T& b) {
         T aa;
         div_r(aa, a, b);
         return (a = aa);
@@ -115,11 +115,11 @@ namespace RecInt
         return div_q(a, a, b);
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>&) operator/=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>&) operator/=(ruint<K>& a, const T& b) {
         return div_q(a, a, b);
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>&) operator/=(ruint<K>& a, const T& b) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>&) operator/=(ruint<K>& a, const T& b) {
         if (b < 0) {
             div_q(a, a, -b);
             return (a = -a);
@@ -134,7 +134,7 @@ namespace RecInt
         return a;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, ruint<K>) operator%(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_ARITH(T, ruint<K>) operator%(const ruint<K>& b, const T& c) {
         ruint<K> a;
         T aa;
         div_r(aa, b, c);
@@ -149,12 +149,12 @@ namespace RecInt
         return a;
     }
     template <size_t K, typename T>
-    inline IS_UNSIGNED(T, ruint<K>) operator/(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator/(const ruint<K>& b, const T& c) {
         ruint<K> a;
         return div_q(a, b, c);
     }
     template <size_t K, typename T>
-    inline IS_SIGNED(T, ruint<K>) operator/(const ruint<K>& b, const T& c) {
+    inline __RECINT_IS_SIGNED(T, ruint<K>) operator/(const ruint<K>& b, const T& c) {
         ruint<K> a;
         if (c < 0) {
             div_q(a, b, -c);
@@ -203,16 +203,16 @@ namespace RecInt
         }
     }
     template <>
-    inline void div_3_2(ruint<LIMB_SIZE>& q, ruint<LIMB_SIZE>& r1, ruint<LIMB_SIZE>& r0,
-                        const ruint<LIMB_SIZE>& a2, const ruint<LIMB_SIZE>& a1, const ruint<LIMB_SIZE>& a0,
-                        const ruint<LIMB_SIZE>& b1, const ruint<LIMB_SIZE>& b0) {
+    inline void div_3_2(ruint<__RECINT_LIMB_SIZE>& q, ruint<__RECINT_LIMB_SIZE>& r1, ruint<__RECINT_LIMB_SIZE>& r0,
+                        const ruint<__RECINT_LIMB_SIZE>& a2, const ruint<__RECINT_LIMB_SIZE>& a1, const ruint<__RECINT_LIMB_SIZE>& a0,
+                        const ruint<__RECINT_LIMB_SIZE>& b1, const ruint<__RECINT_LIMB_SIZE>& b0) {
         limb c, d1, d0;
         bool ret = false;
 
         if (a2.Value < b1.Value) {
             udiv_qrnnd(q.Value, c, a2.Value, a1.Value, b1.Value);
         } else {
-            q.Value = MINUSONE;
+            q.Value = __RECINT_MINUSONE;
             c = a1.Value + b1.Value;
             if (c < a1.Value)
             ret = true;
@@ -249,15 +249,15 @@ namespace RecInt
         div_3_2(q.Low, r.High, r.Low, s.High, s.Low, al.Low, b.High, b.Low);
     }
     template <>
-    inline void div_2_1(ruint<LIMB_SIZE>& q, ruint<LIMB_SIZE>& r,
-                        const ruint<LIMB_SIZE>& ah, const ruint<LIMB_SIZE>& al,
-                        const ruint<LIMB_SIZE>& b) {
+    inline void div_2_1(ruint<__RECINT_LIMB_SIZE>& q, ruint<__RECINT_LIMB_SIZE>& r,
+                        const ruint<__RECINT_LIMB_SIZE>& ah, const ruint<__RECINT_LIMB_SIZE>& al,
+                        const ruint<__RECINT_LIMB_SIZE>& b) {
         udiv_qrnnd(q.Value, r.Value, ah.Value, al.Value, b.Value);
     }
 
     // computes (q, r) such that a = q*b + r (0 <= r < b)
     template <size_t K, typename T>
-    inline IS_ARITH(T, void) div(ruint<K>& q, T& r, const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, void) div(ruint<K>& q, T& r, const ruint<K>& a, const T& b) {
         if (b == 2) {
             bool z;
             right_shift_1(z, q, a);
@@ -291,7 +291,7 @@ namespace RecInt
         q = x.quot; r = x.rem;
     }
     template <>
-    inline void div(ruint<LIMB_SIZE>& q, ruint<LIMB_SIZE>& r, const ruint<LIMB_SIZE>& a, const ruint<LIMB_SIZE>& b) {
+    inline void div(ruint<__RECINT_LIMB_SIZE>& q, ruint<__RECINT_LIMB_SIZE>& r, const ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         udiv_qrnd(q.Value, r.Value, a.Value, b.Value);
     }
 
@@ -303,7 +303,7 @@ namespace RecInt
         return q;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, ruint<K>&) div_q(ruint<K>& q, const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, ruint<K>&) div_q(ruint<K>& q, const ruint<K>& a, const T& b) {
         ruint<K> r, bb(b);
         div(q, r, a, bb);
         return q;
@@ -317,7 +317,7 @@ namespace RecInt
     	return r;
     }
     template <size_t K, typename T>
-    inline IS_ARITH(T, T&) div_r(T& r, const ruint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, T&) div_r(T& r, const ruint<K>& a, const T& b) {
         ruint<K> q;
         div(q, r, a, b);
         return r;

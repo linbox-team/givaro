@@ -33,11 +33,11 @@ int main(void)
         // ruint
         rand(x);
         tu += limb(x & 1);
-        uu += bool(x & MAXPOWTWO);
+        uu += bool(x & __RECINT_MAXPOWTWO);
         
         lb = get_limb(x, NBLIMB<STD_RECINT_SIZE>::value-1);
         su += lb & 1;
-        vu += bool(lb & MAXPOWTWO);
+        vu += bool(lb & __RECINT_MAXPOWTWO);
         
         // rmint
         rand(w);

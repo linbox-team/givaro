@@ -21,7 +21,7 @@ class RingInterface
 {
 public:
 
-	virtual ~RingInterface() {}
+	virtual ~RingInterface() = default;
 
 	// ----- Typedefs
 	typedef _Element Element;

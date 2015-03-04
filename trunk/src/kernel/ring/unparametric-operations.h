@@ -66,7 +66,7 @@ namespace Givaro
         
 		UnparametricOperations(){}
 		//@{
-		virtual ~UnparametricOperations () = default;
+		virtual ~UnparametricOperations () {}
 
 		/* Assignment operator.
 		 * Assigns UnparametricRing object F to field.

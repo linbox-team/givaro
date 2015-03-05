@@ -51,10 +51,10 @@ namespace RecInt
     static std::mt19937_64 rand_gen;
 
     // a is set to a random value (0 <= a < 2^(2^K))
-    template <size_t K> void rand(ruint<K>& a);
+    template <size_t K> ruint<K>& rand(ruint<K>& a);
 
     // Set the random seed for RecInt library
-    void srand(const limb& s);
+    void srand(const limb s);
 }
 
 
@@ -65,16 +65,18 @@ namespace RecInt
 {
 
     // a is set to a random value
-    template <size_t K> inline void rand(ruint<K>& a) {
+    template <size_t K> inline ruint<K>& rand(ruint<K>& a) {
         rand(a.High);
         rand(a.Low);
+        return a;
     }
-    template <> inline void rand(ruint<__RECINT_LIMB_SIZE>& a) {
+    template <> inline ruint<__RECINT_LIMB_SIZE>& rand(ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value = rand_gen();
+        return a;
     }
 
     // Set the random seed for RecInt library
-    inline void srand(const limb& s) {  
+    inline void srand(const limb s) {  
         std::srand((unsigned int)(s));
         rand_gen.seed(s);
     }

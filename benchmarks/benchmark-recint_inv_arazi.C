@@ -18,7 +18,7 @@
 #endif
 
 #if not defined(LOOPS)
-#define LOOPS 10000
+#define LOOPS 1000000
 #endif
 
 #define ALEA_MAX  64

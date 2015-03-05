@@ -21,28 +21,40 @@
 #define LOOPS 10000
 #endif
 
+#define ALEA_MAX  64
+#define ALEA_MASK 63
+
 using namespace RecInt;
 
-int main(void)
+int main(int argc, char ** argv)
 {
-    ruint<STD_RECINT_SIZE> p, pinv;
+    size_t nbloops = (argc>1?atoi(argv[1]):LOOPS);
+    
     Givaro::Timer tim;
     
+    ruint<STD_RECINT_SIZE> a[ALEA_MAX];
+    ruint<STD_RECINT_SIZE> pinv[ALEA_MAX];
+    // Randomness
+    for (unsigned int i = 0; i < ALEA_MAX; i++) {
+        rand(a[i]);
+        if (a[i] % 2 == 0) ++a[i];
+    }
+    
+ 
+
     // Random
     RecInt::srand(time(NULL));
     
 	tim.clear(); tim.start();
-    for (UDItype l = 0; l < LOOPS; l++) {
-        rand(p); if (p % 2 == 0) p++;
-
-        arazi_qi(pinv, p);
+    for (UDItype l = 0; l < nbloops; l++) {
+        arazi_qi(pinv[l&ALEA_MASK], a[l&ALEA_MASK]);
     }
     tim.stop();
     
 	// -----------
 	// Standard output for benchmark - Alexis Breust 2014/12/11
 	std::cout << "Time: " << tim.usertime()
-			  << " Gflops: " << "Irrelevant" << std::endl;
+			  << " Gflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0/1000.0 << ' ' << a[(int)(rand(a[0]))& ALEA_MASK] << std::endl ;
     
     return 0; 
 }

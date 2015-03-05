@@ -179,12 +179,21 @@ namespace RecInt
         add(rl, a.Low, b.Low, c.Low);
         add_wc(r, a.High, b.High, c.High, rl);
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
+		auto bp(b.Value);
+	    a.Value = b.Value + c.Value;
+	    r = (a.Value < bp);
+    }
+#else
     template<>
     inline void add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
 		auto bp(b);
 	    add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
 	    r = (a < bp);
     }
+#endif
     template<>
     inline void add(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
 	    auto bp(b.Value);
@@ -199,12 +208,21 @@ namespace RecInt
         add(rl, a.Low, b.Low);
         add_wc(r, a.High, b.High, rl);
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
+		auto bp(b.Value);
+	    a.Value += b.Value;
+	    r = (a.Value < bp);
+    }
+#else
     template<>
     inline void add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
 	    auto bp(b);
 	    add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
 	    r = (a < bp);
     }
+#endif
     template<>
     inline void add(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
 	    auto bp(b.Value);
@@ -219,10 +237,17 @@ namespace RecInt
         add(rl, a.Low, b.Low, c.Low);
         add_wc(a.High, b.High, c.High, rl);
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
+	    a.Value = b.Value + c.Value;
+    }
+#else
     template<>
     inline void add(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
     }
+#endif
     template<>
     inline void add(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         a.Value = b.Value + c.Value;
@@ -235,10 +260,17 @@ namespace RecInt
         add(rl, a.Low, b.Low);
         add_wc(a.High, b.High, rl);
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
+	    a.Value += b.Value;
+    }
+#else
     template<>
     inline void add(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
     }
+#endif
     template<>
     inline void add(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value += b.Value;
@@ -253,6 +285,7 @@ namespace RecInt
         add(rl, a.Low, b.Low, c);
         add(r, a.High, b.High, rl);
     }
+    // TODO Use __RECINT_USE_FAST_128 here too
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) add(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const T& c) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, (UWtype)(c));
@@ -303,11 +336,19 @@ namespace RecInt
         add_1(rl, a.Low, b.Low);
         add_wc(r, a.High, b.High, rl);
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
+        a.Value = b.Value + 1;
+        r = (a == 0);
+    }
+#else
     template<>
     inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
         r = (a == 0);
     }
+#endif
     template<>
     inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value = b.Value + 1;
@@ -321,11 +362,19 @@ namespace RecInt
         add_1(rl, a.Low);
         add(r, a.High, rl);
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a) {
+        ++a.Value;
+        r = (a == 0);
+    }
+#else
     template<>
     inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a) {
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
         r = (a == 0);
     }
+#endif
     template<>
     inline void add_1(bool& r, ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value = a.Value + 1;
@@ -335,15 +384,47 @@ namespace RecInt
     // a = b + 1    (the carry is lost)
     template <size_t K>
     inline void add_1(ruint<K>& a, const ruint<K>& b) {
-        bool r;
-        add_1(r, a, b);
+        bool rl;
+        add_1(rl, a.Low, b.Low);
+        add_wc(a.High, b.High, rl);
+    }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
+        a.Value = b.Value + 1;
+    }
+#else
+    template<>
+    inline void add_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
+        add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
+    }
+#endif
+    template<>
+    inline void add_1(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
+        a.Value = b.Value + 1;
     }
 
     // a += 1    (the carry is lost)
     template <size_t K>
     inline void add_1(ruint<K>& a) {
-        bool r;
-        add_1(r, a);
+        bool rl;
+        add_1(rl, a.Low);
+        add(a.High, rl);
+    }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add_1(ruint<__RECINT_LIMB_SIZE+1>& a) {
+        ++a.Value;
+    }
+#else
+    template<>
+    inline void add_1(ruint<__RECINT_LIMB_SIZE+1>& a) {
+        add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
+    }
+#endif
+    template<>
+    inline void add_1(ruint<__RECINT_LIMB_SIZE>& a) {
+        a.Value = a.Value + 1;
     }
 
 
@@ -355,9 +436,22 @@ namespace RecInt
         add_wc(ret, a.Low, b.Low, c.Low, cy);
         add_wc(r, a.High, b.High, c.High, ret);
     }
+#if defined(__RECINT_USE_FAST_128)
     template<>
     inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
-        ruint<__RECINT_LIMB_SIZE+1> bp(b);
+        auto bp(b.Value);
+        a.Value = b.Value + c.Value;
+        if (cy) {
+            ++a.Value;
+            r = (a.Value <= bp);
+        } else {
+            r = (a.Value < bp);
+        }
+    }
+#else
+    template<>
+    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
+        auto bp(b);
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         if (cy) {
             add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
@@ -366,15 +460,16 @@ namespace RecInt
             r = (a < bp);
         }
     }
+#endif
     template<>
     inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const bool& cy) {
-        ruint<__RECINT_LIMB_SIZE> bp(b);
+        auto bp(b.Value);
         a.Value = b.Value + c.Value;
         if (cy) {
-            a.Value += 1;
-            r = (a <= bp);
+            ++a.Value;
+            r = (a.Value <= bp);
         } else {
-            r = (a < bp);
+            r = (a.Value < bp);
         }
     }
 
@@ -385,15 +480,40 @@ namespace RecInt
         add_wc(ret, a.Low, b.Low, cy);
         add_wc(r, a.High, b.High, ret);
     }
+#if defined(__RECINT_USE_FAST_128)
     template<>
-    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const bool& cy) {
-        ruint<__RECINT_LIMB_SIZE> bp(b);
+    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
+        auto bp(b.Value);
         a.Value += b.Value;
         if (cy) {
-            a.Value += 1;
+            ++a.Value;
+            r = (a.Value <= bp);
+        } else {
+            r = (a.Value < bp);
+        }
+    }
+#else
+    template<>
+    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
+        auto bp(b);
+        add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+        if (cy) {
+            add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
             r = (a <= bp);
         } else {
             r = (a < bp);
+        }
+    }
+#endif
+    template<>
+    inline void add_wc(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const bool& cy) {
+        auto bp(b.Value);
+        a.Value += b.Value;
+        if (cy) {
+            ++a.Value;
+            r = (a.Value <= bp);
+        } else {
+            r = (a.Value < bp);
         }
     }
 
@@ -405,14 +525,21 @@ namespace RecInt
         add_wc(a.High, b.High, c.High, ret);
       
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
+        a.Value = b.Value + c.Value + cy;
+    }
+#else
     template<>
     inline void add_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
         add_ssaaaa(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         if (cy) add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
+#endif
     template<>
     inline void add_wc(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const bool& cy) {
-        a = b + c + cy;
+        a.Value = b.Value + c.Value + cy;
     }
 
     // a += b + cy   (the carry is lost, cy is 0 or 1)
@@ -422,11 +549,18 @@ namespace RecInt
         add_wc(ret, a.Low, b.Low, cy);
         add_wc(a.High, b.High, ret);
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline void add_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
+        a.Value += b.Value + cy;
+    }
+#else
     template<>
     inline void add_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
         add_ssaaaa(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);    
     }
+#endif
     template<>
     inline void add_wc(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const bool& cy) {
         a.Value += b.Value + cy;

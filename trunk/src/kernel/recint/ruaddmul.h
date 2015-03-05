@@ -63,16 +63,9 @@ namespace RecInt
     template <size_t K> void laddmul(bool& r, ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c, const ruint<K+1>& d);
     template <size_t K> void laddmul(bool& r, ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c, const ruint<K+1>& d);
 
-    // a += b*c  (a, b, c are ruint)
-    // r is the carry
+    // a += b*c  (a, b are ruint and is ruint or UDItype)
     // The higher part is lost
-    template <size_t K> void addmul(bool& r, ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
     template <size_t K> void addmul(ruint<K>& a, const ruint<K>& b, const ruint<K>& c);
-
-    // a += b*c  (a, b are ruint and c is UDItype)
-    // r is the carry
-    // The higher part is lost
-    template <size_t K> void addmul(bool& r, ruint<K>& a, const ruint<K>& b, const UDItype& c);
     template <size_t K> void addmul(ruint<K>& a, const ruint<K>& b, const UDItype& c);
 }
 
@@ -214,16 +207,7 @@ namespace RecInt
         r = ((ah.Value < dph) || ((ah.Value == dph) && (al.Value < dpl)));
     }
 
-    // a += b*c (r stores the carry)
-    // The higher part is lost
-    template <size_t K>
-    inline void addmul(bool& r, ruint<K>& a, const ruint<K>& b, const ruint<K>& c) {
-        ruint<K> bc;
-        mul(bc, b, c);
-        add(r, a, bc);
-    }
-
-    // a += b*c  (the carry is lost)
+    // a += b*c
     // The higher part is lost
     template <size_t K>
     inline void addmul(ruint<K>& a, const ruint<K>& b, const ruint<K>& c) {
@@ -231,17 +215,18 @@ namespace RecInt
         mul(bc, b, c);
         add(a, bc);
     }
-
-    // a += b*c  (r stores the carry)
-    // The higher part is lost
-    template <size_t K>
-    inline void addmul(bool& r, ruint<K>& a, const ruint<K>& b, const UDItype& c) {
-        ruint<K> bc;
-        mul(bc, b, c);
-        add(r, a, bc);
+#if defined(__RECINT_USE_FAST_128)
+    template <>
+    inline void addmul(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
+        a.Value += b.Value * c.Value;
+    }
+#endif
+    template <>
+    inline void addmul(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
+        a.Value += b.Value * c.Value;
     }
 
-    // a += b*c  (the carry is lost)
+    // a += b*c with c an integer
     // The higher part is lost
     template <size_t K>
     inline void addmul(ruint<K>& a, const ruint<K>& b, const UDItype& c) {

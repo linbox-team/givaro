@@ -264,6 +264,13 @@ namespace RecInt
         add(al.High, bcmid);
         return al;
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline ruint<__RECINT_LIMB_SIZE+1>& mul(ruint<__RECINT_LIMB_SIZE+1>& al, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
+        al.Value = b.Value * c.Value;
+        return al;
+    }
+#endif
     template<>
     inline ruint<__RECINT_LIMB_SIZE>& mul(ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         al.Value = b.Value * c.Value;
@@ -283,6 +290,13 @@ namespace RecInt
         add(al.High, acmid);
         return al;
     }
+#if defined(__RECINT_USE_FAST_128)
+    template<>
+    inline ruint<__RECINT_LIMB_SIZE+1>& mul(ruint<__RECINT_LIMB_SIZE+1>& al, const ruint<__RECINT_LIMB_SIZE+1>& c) {
+        al.Value *= c.Value;
+        return al;
+    }
+#endif
     template<>
     inline ruint<__RECINT_LIMB_SIZE>& mul(ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& c) {
         al.Value *= c.Value;

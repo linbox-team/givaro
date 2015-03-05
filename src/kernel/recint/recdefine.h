@@ -35,14 +35,19 @@ knowledge of the CeCILL-B license and that you accept its terms.
 */
 
 
-#ifndef CONFIG_DEFINE_H
-#define CONFIG_DEFINE_H
+#ifndef __RECINTCONFIG_DEFINE_H
+#define __RECINTCONFIG_DEFINE_H
 
 // --------------------------------------------------------------
 // --------------------- Various defines ------------------------
 
 #include <cstdlib> /* For size_t */
 #include <cstdint> /* For uint64_t and so on */
+
+// FIXME Get info at configure-time - A.B.
+// Check for anonymous unions + anonymous structs + __uint128_t
+// + constructor variables in aggregate
+// #define __RECINT_USE_FAST_128
 
 namespace RecInt
 {

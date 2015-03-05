@@ -105,6 +105,14 @@ namespace RecInt
         UDItype size() { return NBLIMB<K>::value; }
         static ruint<K> getMaxModulus() { ruint<K> max; max.High = 1; return max; }
     };
+    
+    // Break points
+    template <> class ruint<0> {};
+    template <> class ruint<1> {};
+    template <> class ruint<2> {};
+    template <> class ruint<3> {};
+    template <> class ruint<4> {};
+    template <> class ruint<5> {}; // 2^32 
 
     /* ruint of size 64 bits */
     template <> class ruint<__RECINT_LIMB_SIZE> {
@@ -146,11 +154,64 @@ namespace RecInt
         UDItype size() { return 1; }
         static ruint<__RECINT_LIMB_SIZE> getMaxModulus() { return 4294967296; }
     };
+
+#if defined(__RECINT_USE_FAST_128)
+    /* ruint of size 128 bits */
+    template <> class ruint<__RECINT_LIMB_SIZE+1> {
+    public:
+        // Anonymous structs/unions put definitions in parent scope - A.B. 05-03-2015
+        union {
+            // FIXME Check BYTE_ORDER, invert Low, High if needed
+            struct {
+                ruint<__RECINT_LIMB_SIZE> Low;
+                ruint<__RECINT_LIMB_SIZE> High;
+            };
+            __uint128_t Value;
+        };
+
+        // Constructors
+        ruint() : Value(0u) {}
+        ruint(const ruint<__RECINT_LIMB_SIZE>& r) : Value(r.Value) {}
+        ruint(const double b) : Value(static_cast<__uint128_t>(b)) {}
+        ruint(const ruint<__RECINT_LIMB_SIZE+1>& r) : Value(r.Value) {}
+        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(__uint128_t(b)) {}
+        template <typename T, __RECINT_IS_SIGNED(T, int) = 0> ruint(const T b) : Value(__uint128_t(b)) {}
+
+        // Cast
+        operator float() const { return (float)(Value); }
+        operator double() const { return (double)(Value); }
+        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
+        template <typename T, __RECINT_IS_SIGNED(T, int) = 0> operator T() const
+            { T ret = T(Value); if (ret < 0) return T(ret & __RECINT_TYPENOTMAXPOWTWO(T)); else return ret; }
+
+        // Const reverse iterator
+        class cr_iterator {
+        public:
+            cr_iterator() : _index(-1), _ptr(NULL) {}
+            cr_iterator(int index, const ruint<__RECINT_LIMB_SIZE+1> *ptr) : _index(index), _ptr(ptr) {}
+            cr_iterator& operator++() { --_index; return *this; }
+            cr_iterator  operator++(int) { cr_iterator i(*this); --_index; return i; }
+            bool operator==(cr_iterator rhs) { return (rhs._index == _index); }
+            bool operator!=(cr_iterator rhs) { return (rhs._index != _index); }
+            const limb* operator->() { return (_index)? &_ptr->High.Value : &_ptr->Low.Value; }
+            const limb& operator*() { return (_index)? _ptr->High.Value : _ptr->Low.Value; }
+        private:
+            int _index;
+            const ruint<__RECINT_LIMB_SIZE+1> *_ptr;
+        };
+
+        // Const reverse iterator functions
+        cr_iterator rbegin() const { return cr_iterator(NBLIMB<__RECINT_LIMB_SIZE+1>::value-1, this); }
+        cr_iterator rend() const { return cr_iterator(); }
+        UDItype size() { return NBLIMB<__RECINT_LIMB_SIZE+1>::value; }
+        static ruint<__RECINT_LIMB_SIZE+1> getMaxModulus() { ruint<__RECINT_LIMB_SIZE+1> max; max.High = 1; return max; }
+    };
+#endif
     
-    typedef ruint<6> ruint64;
-    typedef ruint<7> ruint128;
-    typedef ruint<8> ruint256;
-    typedef ruint<9> ruint512;
+    using ruint64 =  ruint<6>;
+    using ruint128 = ruint<7>;
+    using ruint256 = ruint<8>;
+    using ruint512 = ruint<9>;
 }
 
 #endif

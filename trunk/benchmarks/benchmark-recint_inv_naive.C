@@ -20,10 +20,16 @@
 #define LOOPS 10000
 #endif
 
+
+#define ALEA_MAX  64
+#define ALEA_MASK 63
+
 using namespace RecInt;
 
-int main(void)
+int main(int argc, char ** argv)
 {
+    size_t nbloops = (argc>1?atoi(argv[1]):LOOPS);
+    
     ruint<STD_RECINT_SIZE> p, pinv;
     ruint<STD_RECINT_SIZE+1> P, P1, R;
     Givaro::Timer tim;

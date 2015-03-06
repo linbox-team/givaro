@@ -127,11 +127,24 @@ namespace RecInt
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
 
         // Cast
+		// Brutal too, but icc is kind of peaky - AB 2015/02/11
+        operator bool() const { return bool(Value); }
+        operator char() const { return char(Value); }
+        operator short() const { return short(Value); }
+        operator int() const { return int(Value); }
+        operator long() const { return long(Value); }
+        operator long long() const { return (long long)(Value); }
+        operator unsigned char() const { return (unsigned char)(Value); }
+        operator unsigned short() const { return (unsigned short)(Value); }
+        operator unsigned int() const { return (unsigned int)(Value); }
+        operator unsigned long() const { return (unsigned long)(Value); }
+        operator unsigned long long() const { return (unsigned long long)(Value); }
         operator float() const { return (float)(Value); }
         operator double() const { return (double)(Value); }
-        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
+        
+        /*template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0> operator T() const
-            { T ret = T(Value); if (ret < 0) return T(ret & __RECINT_TYPENOTMAXPOWTWO(T)); else return ret; }
+            { T ret = T(Value); if (ret < 0) return T(ret & __RECINT_TYPENOTMAXPOWTWO(T)); else return ret; }*/
         
         // Const reverse iterator
         class cr_iterator {

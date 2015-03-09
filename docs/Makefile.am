@@ -19,6 +19,7 @@ all all-local: $(USE_TARGETS)
 install install-data-local: $(USE_TARGETS) $(INSTALL_TARGETS)
 
 if GIVARO_DOXYGEN_FOUND
+
 docs:
 	sed -i 's/^\\version.*/\\version\ $(VERSION)/' mainpage.doxy
 	if test -d givaro-html ; then echo exists; else mkdir givaro-html ; fi
@@ -45,13 +46,16 @@ docs_dev:
 #  cp install-dist.html givaro-dev-html/
 #  cp install-dev.html givaro-dev-html/
 
-
-
 install-doc:
 	mkdir -p               $(DESTDIR)/$(docdir)
 	cp -rp givaro-html     $(DESTDIR)/$(docdir)/givaro-html
 	cp -rp givaro-dev-html $(DESTDIR)/$(docdir)/givaro-dev-html
 	cp -p givaro.html      $(DESTDIR)/$(docdir)/givaro.html
+
+uninstall-hook:
+	(test -d "$(DESTDIR)/$(docdir)/givaro-html" && rm -r "$(DESTDIR)/$(docdir)/givaro-html") || true
+	(test -d "$(DESTDIR)/$(docdir)/givaro-dev-html" && rm -r "$(DESTDIR)/$(docdir)/givaro-dev-html") || true
+	(test -f "$(DESTDIR)/$(docdir)/givaro.html" && rm "$(DESTDIR)/$(docdir)/givaro.html") || true
 
 else
 

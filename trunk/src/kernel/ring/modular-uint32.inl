@@ -13,58 +13,151 @@
 #define __GIVARO_zpz32_uns_INL
 
 #include "givaro/modular-defines.h"
+#include <cmath>
 
 namespace Givaro {
 
-	inline Modular<uint32_t>::Modular( ) :
-		zero(0), one(1), mOne(0), _p(0), _dp(0.0)
-	{}
+	// ------------------------
+	// ----- Classic arithmetic
 
-	inline Modular<uint32_t>::Modular( Residu_t p ) :
-		zero(0), one(1), mOne(Rep(p-1)),_p(p), _dp((double)p)
-	{
-	    assert(_p >= getMinModulus());
-	    assert(_p <= getMaxModulus());
-	}
-
-	inline Modular<uint32_t>::Modular(const Modular<uint32_t>& F) :
-		zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp)
-	{ }
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::mul (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::mul
+	    (Element& r, const Element& a, const Element& b) const
 	{
 		return __GIVARO_MODULAR_INTEGER_MUL(r,_p,a,b);
 	}
 
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::sub (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::sub
+	    (Element& r, const Element& a, const Element& b) const
 	{
 		return __GIVARO_MODULAR_INTEGER_SUB(r,_p,a,b);
 	}
 
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::add (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::add
+	    (Element& r, const Element& a, const Element& b) const
 	{
 		__GIVARO_MODULAR_INTEGER_ADD(r,_p,a,b);
 		return r;
 	}
 
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::neg (Rep& r, const Rep a) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::neg
+	    (Element& r, const Element& a) const
 	{
 		return __GIVARO_MODULAR_INTEGER_NEG(r,_p,a);
 	}
 
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::inv (Rep& r,
-								 const Rep a) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::inv
+	    (Element& r, const Element& a) const
 	{
 		return Modular<uint32_t>::invext(r, a, _p);
 	}
 
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::div (Rep& r, const Rep a, const Rep b) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::div
+	    (Element& r, const Element& a, const Element& b) const
 	{
 		return mulin( inv(r, b), a );
 	}
 
-	// -- inline array operations between Modular<uint32_t>::Rep
-	inline void Modular<uint32_t>::mul (const size_t sz, Array r, constArray a, constArray b) const
+
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::mulin
+	    (Element& r, const Element& a) const
+	{
+		return __GIVARO_MODULAR_INTEGER_MULIN(r,_p, a);
+	}
+
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::divin
+	    (Element& r, const Element& a) const
+	{
+		Modular<uint32_t>::Element ia;
+		inv(ia, a);
+		return mulin(r, ia);
+	}
+
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::addin
+	    (Element& r, const Element& a) const
+	{
+		uint32_t tmp = r;
+		__GIVARO_MODULAR_INTEGER_ADDIN(tmp,_p, a);
+		return r = (Element)tmp;
+	}
+
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::subin
+	    (Element& r, const Element& a) const
+	{
+		uint32_t tmp = r;
+		__GIVARO_MODULAR_INTEGER_SUBIN(tmp,_p, a);
+		return r = (Element)tmp;
+	}
+
+
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::negin
+	    (Element& r) const
+	{
+		return __GIVARO_MODULAR_INTEGER_NEGIN(r,_p);
+	}
+
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::invin
+	    (Element& r) const
+	{
+		return Modular<uint32_t>::invext(r, r, _p);
+	}
+
+
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::axpy
+	    (Element& r, const Element& a, const Element& b, const Element& c) const
+	{
+		uint32_t tmp;
+		__GIVARO_MODULAR_INTEGER_MULADD(tmp, _p, a, b, c);
+		return r = (Element)tmp;
+	}
+
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::axpyin
+	    (Element& r, const Element& a, const Element& b) const
+	{
+		uint32_t tmp = r;
+		__GIVARO_MODULAR_INTEGER_MULADDIN(tmp, _p, a, b);
+		return r = (Element)tmp;
+	}
+
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::axmy
+	    (Element& r, const Element& a, const Element& b, const Element& c) const
+	{
+		uint32_t tmp;
+		__GIVARO_MODULAR_INTEGER_MULSUB(tmp, _p, a, b, c);
+		return r = (Element)tmp;
+	}
+
+	// r = c-a*b
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::maxpy
+	    (Element& r, const Element& a, const Element& b, const Element& c) const
+	{
+		uint32_t tmp=c;
+		__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a, b);
+		return r = (Element)tmp;
+	}
+
+	// r -= a*b
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::maxpyin
+	    (Element& r, const Element& a, const Element& b) const
+	{
+		uint32_t tmp = r;
+		__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a, b );
+		return r = (Element)tmp;
+	}
+
+	// r = a*b - r
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::axmyin
+	    (Element& r, const Element& a, const Element& b) const
+	{
+		maxpyin(r,a,b);
+		return negin(r);
+	}
+	
+	// ----------------------------------
+	// ----- Classic arithmetic on arrays
+
+	// -- inline array operations between Modular<uint32_t>::Element
+	inline void Modular<uint32_t>::mul
+	    (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
@@ -73,7 +166,8 @@ namespace Givaro {
 		}
 	}
 
-	inline void Modular<uint32_t>::mul (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::mul
+	    (const size_t sz, Array r, constArray a, Element b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
@@ -82,21 +176,24 @@ namespace Givaro {
 		}
 	}
 
-	inline void Modular<uint32_t>::div (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<uint32_t>::div
+	    (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			div( r[i], a[i], b[i]);
 		}
 	}
 
-	inline void Modular<uint32_t>::div (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::div
+	    (const size_t sz, Array r, constArray a, Element b) const
 	{
-		Modular<uint32_t>::Rep ib;
+		Modular<uint32_t>::Element ib;
 		inv(ib, b);
 		mul(sz, r, a, ib);
 	}
 
-	inline void Modular<uint32_t>::add (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<uint32_t>::add
+	    (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
@@ -105,7 +202,8 @@ namespace Givaro {
 		}
 	}
 
-	inline void Modular<uint32_t>::add (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::add
+	    (const size_t sz, Array r, constArray a, Element b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
@@ -114,7 +212,8 @@ namespace Givaro {
 		}
 	}
 
-	inline void Modular<uint32_t>::sub (const size_t sz, Array r, constArray a, constArray b) const
+	inline void Modular<uint32_t>::sub
+	    (const size_t sz, Array r, constArray a, constArray b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
@@ -123,7 +222,8 @@ namespace Givaro {
 		}
 	}
 
-	inline void Modular<uint32_t>::sub (const size_t sz, Array r, constArray a, Rep b) const
+	inline void Modular<uint32_t>::sub
+	    (const size_t sz, Array r, constArray a, Element b) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
@@ -132,68 +232,14 @@ namespace Givaro {
 		}
 	}
 
-	inline void Modular<uint32_t>::neg (const size_t sz, Array r, constArray a) const
+	inline void Modular<uint32_t>::neg
+	    (const size_t sz, Array r, constArray a) const
 	{
 		for ( size_t i=sz ; --i ; ) {
 			uint32_t tmp;
 			__GIVARO_MODULAR_INTEGER_NEG(tmp, _p, a[i]);
 			r[i] = (Element)tmp;
 		}
-	}
-
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::mulin (Rep& r, const Rep a) const
-	{
-		return __GIVARO_MODULAR_INTEGER_MULIN(r,_p, a);
-	}
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::divin (Rep& r, const Rep a) const
-	{
-		Modular<uint32_t>::Rep ia;
-		inv(ia, a);
-		return mulin(r, ia);
-	}
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::addin (Rep& r, const Rep a) const
-	{
-		uint32_t tmp = r;
-		__GIVARO_MODULAR_INTEGER_ADDIN(tmp,_p, a);
-		return r = (Element)tmp;
-	}
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::subin (Rep& r, const Rep a) const
-	{
-		uint32_t tmp = r;
-		__GIVARO_MODULAR_INTEGER_SUBIN(tmp,_p, a);
-		return r = (Element)tmp;
-	}
-
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::negin (Rep& r) const
-	{
-		return __GIVARO_MODULAR_INTEGER_NEGIN(r,_p);
-	}
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::invin (Rep& r) const
-	{
-		return Modular<uint32_t>::invext(r, r, _p);
-	}
-
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::axpy (Rep& r,
-								  const Rep a, const Rep b, const Rep c) const
-	{
-		uint32_t tmp;
-		__GIVARO_MODULAR_INTEGER_MULADD(tmp, _p, a, b, c);
-		return r = (Element)tmp;
-	}
-
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::axpyin (Rep& r,
-								     const Rep a, const Rep b) const
-	{
-		uint32_t tmp = r;
-		__GIVARO_MODULAR_INTEGER_MULADDIN(tmp, _p, a, b);
-		return r = (Element)tmp;
 	}
 
 
@@ -217,40 +263,6 @@ namespace Givaro {
 		}
 	}
 
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::axmy (Rep& r,
-								   const Rep a, const Rep b, const Rep c) const
-	{
-		uint32_t tmp;
-		__GIVARO_MODULAR_INTEGER_MULSUB(tmp, _p, a, b, c);
-		return r = (Element)tmp;
-	}
-
-	// r = c-a*b
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::maxpy (Rep& r,
-								    const Rep a, const Rep b, const Rep c) const
-	{
-		uint32_t tmp=c;
-		__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a, b);
-		return r = (Element)tmp;
-	}
-
-	// r -= a*b
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::maxpyin (Rep& r,
-								      const Rep a, const Rep b) const
-	{
-		uint32_t tmp = r;
-		__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp, _p, a, b );
-		return r = (Element)tmp;
-	}
-
-	// r = a*b - r
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::axmyin (Rep& r,
-								     const Rep a, const Rep b) const
-	{
-		maxpyin(r,a,b);
-		return negin(r);
-	}
-
 
 	inline void Modular<uint32_t>::axmy (const size_t sz, Array r,
 					      constArray a, constArray x, constArray y) const
@@ -272,35 +284,11 @@ namespace Givaro {
 			r[i] = (Element)tmp;
 		}
 	}
+	
+	// --------------------
+	// ----- Initialisation
 
-	// ------------------------- Miscellaneous functions
-
-	inline int Modular<uint32_t>::isZero(const Rep a) const
-	{
-		return a == Modular<uint32_t>::zero;
-	}
-
-	inline int Modular<uint32_t>::isOne(const Rep a) const
-	{
-		return a == Modular<uint32_t>::one;
-	}
-
-inline int Modular<uint32_t>::isMOne(const Rep a) const
-	{
-		return a == Modular<uint32_t>::mOne;
-	}
-
-	inline size_t Modular<uint32_t>::length(const Rep ) const
-	{
-		return Modular<uint32_t>::size_rep;
-	}
-
-	// ---------
-	// -- misc operations
-	// ---------
-
-
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const double a ) const
+	inline  Modular<uint32_t>::Element&  Modular<uint32_t>::init ( Element& r, const double a ) const
 	{
 		int sign; double ua;
 		if (a < 0.0) { sign =-1; ua = -a;}
@@ -308,26 +296,24 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 		if ( ua > Signed_Trait<uint32_t>::max()){
 			//     ua -= (double)floor(ua * _invdp)*_dp;
 			ua = fmod(ua,_dp);
-			r = (Rep) ua;
+			r = (Element) ua;
 		} else
 			r = (ua >=_p) ? (uint32_t) ua % _p : (uint32_t) ua;
 		if (r && (sign ==-1)) r = _p - r;
 		return r;
 	}
 
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const float a ) const
+	inline  Modular<uint32_t>::Element&  Modular<uint32_t>::init ( Element& r, const float a ) const
 	{
 		return init(r, (double)a);
 	}
 
-
-
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const unsigned long a ) const
+	inline  Modular<uint32_t>::Element&  Modular<uint32_t>::init ( Element& r, const unsigned long a ) const
 	{
-		return r = (Rep)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
+		return r = (Element)( a >= (unsigned long)_p ? a % (unsigned long)_p : a);
 	}
 
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const long a ) const
+	inline  Modular<uint32_t>::Element&  Modular<uint32_t>::init ( Element& r, const long a ) const
 	{
 		int sign;
 		unsigned long ua;
@@ -339,13 +325,13 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 			ua = (unsigned long)a;
 			sign =1;
 		}
-		r = Rep( (ua >=_p) ? ua % _p : ua );
+		r = Element( (ua >=_p) ? ua % _p : ua );
 		if (r && (sign ==-1))
 			r = _p - r;
 		return r;
 	}
 
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::init ( Rep& r, const Integer& Residu ) const
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::init ( Element& r, const Integer& Residu ) const
 	{
 		long tr;
 		if (Residu <0) {
@@ -356,7 +342,7 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 			else
 				tr = long(-Residu);
 			if (tr)
-				return r = Rep( _p - (unsigned long)tr );
+				return r = Element( _p - (unsigned long)tr );
 			else
 				return r = zero;
 		} else {
@@ -364,20 +350,16 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 				tr =   long(Residu % _p) ;
 			else
 				tr = long(Residu);
-			return r = Rep(tr);
+			return r = Element(tr);
 		}
 	}
 
-
-
-
-
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::init( Rep& a, const int i) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::init( Element& a, const int i) const
 	{
 		return init(a,(long)i);
 	}
 
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::init( Rep& a, const unsigned int i) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::init( Element& a, const unsigned int i) const
 	{
 		return init(a,(unsigned long)i);
 	}
@@ -399,44 +381,10 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 		}
 	}
 
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign ( Rep& r, const long a ) const
+	inline  Modular<uint32_t>::Element&  Modular<uint32_t>::assign
+	( Element& r, const Element a ) const
 	{
-		int sign;
-		uint32_t ua;
-		if (a <0) {
-			sign =-1;
-			ua = (uint32_t) -a;
-		}
-		else {
-			ua = uint32_t(a);
-			sign = 1;
-		}
-		r = Rep( (ua >=_p) ? (ua % _p) : ua );
-		if (sign ==-1)
-			r = _p - r;
-		return r;
-	}
-
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign ( Rep& r, const short a ) const
-	{
-		return Modular<uint32_t>::assign( r, (long)a);
-	}
-
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign ( Rep& r, const unsigned long a ) const
-	{
-		return r = Rep( (a >=_p) ? (a % _p) : a );
-	}
-
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign
-	( Rep& r, const unsigned short a ) const
-	{
-		return r = Rep( (a >=_p) ? (a % _p) : a );
-	}
-
-	inline  Modular<uint32_t>::Rep&  Modular<uint32_t>::assign
-	( Rep& r, const Rep a ) const
-	{
-		return assign(r, (long)a);
+		return r = (a % _p);
 	}
 
 
@@ -447,13 +395,13 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 			r[i] = a[i];
 	}
 
-	inline Modular<uint32_t>::Rep& Modular<uint32_t>::init ( Rep& r ) const
+	inline Modular<uint32_t>::Element& Modular<uint32_t>::init ( Element& r ) const
 	{
 		return r = zero;
 	}
 
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::dotprod
-	( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::dotprod
+	( Element& r, const int bound, const size_t sz, constArray a, constArray b ) const
 	{
 		unsigned int stride = 1;
 		if ((unsigned long)bound < GIVARO_MAXUINT32)
@@ -464,9 +412,9 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 			for(  size_t i= sz; i--; )
 				dot += a[i] * b[i];
 			if (dot > _p)
-				return r = (Rep)(dot % _p);
+				return r = (Element)(dot % _p);
 			else
-				return r = (Rep)dot;
+				return r = (Element)dot;
 		}
 		size_t i_begin=0;
 		stride &= (unsigned int)~0x1;
@@ -475,7 +423,7 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 				dot += a[i] * b[i];
 				if (dot>_p) dot %= _p;
 			}
-			return r = (Rep)dot;
+			return r = (Element)dot;
 		}
 		do {
 			size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
@@ -494,11 +442,11 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 				dot %= _p;
 			i_begin += min_sz;
 		} while (i_begin <sz);
-		return r = (Rep)dot;
+		return r = (Element)dot;
 	}
 
-	inline Modular<uint32_t>::Rep&  Modular<uint32_t>::dotprod
-	( Rep& r, const size_t sz, constArray a, constArray b ) const
+	inline Modular<uint32_t>::Element&  Modular<uint32_t>::dotprod
+	( Element& r, const size_t sz, constArray a, constArray b ) const
 	{
 		return Modular<uint32_t>::dotprod(r, (int)_p, sz, a, b);
 	}
@@ -570,7 +518,7 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 		return s << "Uns32 Givaro Z/pZ modulo " << residu();
 	}
 
-	inline std::istream& Modular<uint32_t>::read (std::istream& s, Rep& a) const
+	inline std::istream& Modular<uint32_t>::read (std::istream& s, Element& a) const
 	{
 		Integer tmp;
 		s >> tmp;
@@ -578,7 +526,7 @@ inline int Modular<uint32_t>::isMOne(const Rep a) const
 		return s;
 	}
 
-	inline std::ostream& Modular<uint32_t>::write (std::ostream& s, const Rep a) const
+	inline std::ostream& Modular<uint32_t>::write (std::ostream& s, const Element a) const
 	{
 		return s << a;
 	}

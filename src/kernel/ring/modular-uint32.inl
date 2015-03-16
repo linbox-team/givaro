@@ -22,8 +22,10 @@ namespace Givaro {
 
 	inline Modular<uint32_t>::Modular( Residu_t p ) :
 		zero(0), one(1), mOne(Rep(p-1)),_p(p), _dp((double)p)
-
-	{}
+	{
+	    assert(_p >= getMinModulus());
+	    assert(_p <= getMaxModulus());
+	}
 
 	inline Modular<uint32_t>::Modular(const Modular<uint32_t>& F) :
 		zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp)

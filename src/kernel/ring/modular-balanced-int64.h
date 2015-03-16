@@ -105,6 +105,8 @@ namespace Givaro
 			half_mod = (modulus >> 1);
 			mhalf_mod = half_mod-modulus+1;
 			modulusinv = 1 / ((double) value);
+		    assert(modulus >= getMinModulus());
+		    assert(modulus <= getMaxModulus());
 		}
 
 		ModularBalanced (const ModularBalanced<Element>& mf) :

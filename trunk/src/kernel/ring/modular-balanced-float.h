@@ -92,7 +92,10 @@ namespace Givaro {
 			mhalf_mod(half_mod-modulus+1.f),
 			lmodulus ((unsigned int)(p)),
 			one(1.f),zero(0.f),mOne(-1.f)
-		{}
+		{
+		    assert(modulus >= getMinModulus());
+		    assert(modulus <= getMaxModulus());
+		}
 
 		ModularBalanced<float>(const ModularBalanced<float>& mf) :
 			modulus(mf.modulus),

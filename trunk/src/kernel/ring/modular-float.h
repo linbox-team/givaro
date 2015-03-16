@@ -66,7 +66,11 @@ public:
 	: zero(0.f), one(1.f), mOne(-1.f), _p(0.f), _lp(0) {}
 
 	template<class XXX> Modular(const XXX& p)
-	: zero(0.f), one(1.f), mOne((Element)p - 1.f), _p((float)p), _lp((Residu_t)p) {}
+	: zero(0.f), one(1.f), mOne((Element)p - 1.f), _p((float)p), _lp((Residu_t)p)
+	{
+	    assert(_p >= getMinModulus());
+	    assert(_p <= getMaxModulus());
+	}
 
 	Modular(const Self_t& F)
 	: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _lp(F._lp) {}

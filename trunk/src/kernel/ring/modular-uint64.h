@@ -69,7 +69,11 @@ public:
 	: zero(0), one(1), mOne(0), _p(0) {}
 
 	Modular(Residu_t p)
-	: zero(0), one(1), mOne((Element)p-1), _p(p) {}
+	: zero(0), one(1), mOne((Element)p-1), _p(p)
+	{
+	    assert(_p >= getMinModulus());
+	    assert(_p <= getMaxModulus());
+	}
 
 	Modular(const Self_t& F)
 	: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}

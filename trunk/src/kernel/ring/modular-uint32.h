@@ -53,7 +53,8 @@ public:
 	const Element mOne;
 
 	// ----- Constructors
-	Modular() = delete; // As no modulus does not mean anything.
+	Modular() : zero(0), one(1), mOne(0), _p(0), _dp(0.) {} // Problem with test-crt, need to have an null constructor.
+	// Modular() = delete; // As no modulus does not mean anything.
 
 	Modular(Residu_t p)
 	: zero(0), one(1), mOne((Element)p-1), _p(p), _dp((double)p)

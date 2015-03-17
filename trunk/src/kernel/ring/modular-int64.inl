@@ -370,24 +370,6 @@ namespace Givaro {
 	{
 		return r = a;
 	}
-	
-	// ----------
-	// -- Convert
-	
-	template<class XXX> inline XXX& Modular<int64_t>::convert(XXX& s, const Element a) const
-	{
-		return s = XXX(a);
-	}
-	
-	template<> inline Integer& Modular<int64_t>::convert(Integer& i, const Element a) const
-	{
-		unsigned long ur;
-		return i = (Integer)convert(ur, a);
-	}
-
-
-
-
 
 
 inline Modular<int64_t>::Element& Modular<int64_t>::dotprod

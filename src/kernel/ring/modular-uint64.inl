@@ -63,14 +63,6 @@ namespace Givaro {
 	{
 		return x = y;
 	}
-	
-	// -------------
-	// ----- Convert
-    template<typename X>
-	inline X &Modular<uint64_t>::convert (X &x, const Element &y) const
-	{
-		return x = (X)y;
-	}
 
 	// ------------------------
 	// ----- Classic arithmetic

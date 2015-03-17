@@ -22,14 +22,20 @@
 
 using namespace Givaro;
 
-typedef GFqDom<long>         Field1;
-typedef Modular<int16_t>      Field2;
-typedef Modular<Log16>        Field3;
-typedef Modular<int32_t>      Field4;
-typedef Modular<int64_t>      Field5;
-typedef Modular<uint32_t>     Field6;
-typedef Montgomery<int32_t>  Field7;
-typedef Modular<Integer>      Field8;
+typedef GFqDom<long>            Field1;
+
+typedef Modular<int8_t>         Field2;
+typedef Modular<int16_t>        Field3;
+typedef Modular<int32_t>        Field4;
+typedef Modular<int64_t>        Field5;
+typedef Modular<uint8_t>        Field6;
+typedef Modular<uint16_t>       Field7;
+typedef Modular<uint32_t>       Field8;
+typedef Modular<uint64_t>       Field9;
+typedef Modular<Log16>          Field10;
+typedef Modular<Integer>        Field11;
+
+typedef Montgomery<int32_t>     Field12;
 
 template <typename Field>
 Integer tmain(int argc, char ** argv, const GivRandom& generator)
@@ -37,7 +43,6 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 	typedef RNSsystem<Integer, Field >      CRTSystem;
 	typedef typename CRTSystem::domains	  Domains;
 	typedef typename CRTSystem::array	 Elements;
-// 	typedef typename CRTSystem::ring	     Ring;
 
 	typedef RNSsystemFixed<Integer>    CRTSystemFixed;
 	typedef CRTSystemFixed::array             Prime_t;
@@ -46,14 +51,14 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 	Integer a( generator() >>(argc>2?atoi(argv[2]):17) ), M(1), b;
 
 	Prime_t  Primes( argc>1 ? (size_t)atoi(argv[1]):15);
-	Domains  PrimeDoms( Primes.size() );
 	Elements Moduli( Primes.size() );
 	Prime_t  ModuliInts( Primes.size() );
+	Domains PrimeDoms( Primes.size() );
 
-	typename Prime_t::iterator  p = Primes.begin();
-	typename Domains::iterator  i = PrimeDoms.begin();
-	typename Elements::iterator e = Moduli.begin();
-	typename Prime_t::iterator  m = ModuliInts.begin();
+	auto p = Primes.begin();
+	auto i = PrimeDoms.begin();
+	auto e = Moduli.begin();
+	auto m = ModuliInts.begin();
 	for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
 		*i = Field( ID.nextprimein( a ) );
 		*p = a;
@@ -98,6 +103,8 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator)
 
 	// #ifdef GIVARO_DEBUG
 	if (a != b) {
+	    std::cerr << "Field: ";
+	    PrimeDoms[0].write(std::cerr) << std::endl;
 		std::cerr << "incoherency between normal : " << a
 		<< " and fixed : " << b << std::endl;
 		return 0 ; // très peu probable que res=0 pour de vrai.
@@ -161,8 +168,13 @@ int main(int argc, char ** argv)
 	Integer a6 = tmain<Field6>(argc, argv, GivRandom(seed));
 	Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed));
 	Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed));
+    
+	Integer a9 = tmain<Field9>(argc, argv, GivRandom(seed));
+	Integer a10 = tmain<Field10>(argc, argv, GivRandom(seed));
+	Integer a11 = tmain<Field11>(argc, argv, GivRandom(seed));
+	Integer a12 = tmain<Field12>(argc, argv, GivRandom(seed));
 
-	if (!(a1 & a2 & a3 & a4 & a5 & a6 & a7 & a8)) {
+	if (!(a1 & a2 & a3 & a4 & a5 & a6 & a7 & a8 & a9 & a10 & a11 & a12)) {
 #ifdef GIVARO_DEBUG
 		std::cerr << "one test failed" << std::endl;
 #endif
@@ -174,18 +186,27 @@ int main(int argc, char ** argv)
 	if (! success) std::cerr << "ERROR a1 != a2" << std::endl;
 	success &= (a3 == a4);
 	if (! success) std::cerr << "ERROR a3 != a4" << std::endl;
-	success &= (a6 == a5);
+	success &= (a5 == a6);
 	if (! success) std::cerr << "ERROR a5 != a6" << std::endl;
 	success &= (a7 == a8);
 	if (! success) std::cerr << "ERROR a7 != a8" << std::endl;
+	success &= (a9 == a10);
+	if (! success) std::cerr << "ERROR a9 != a10" << std::endl;
+	success &= (a11 == a12);
+	if (! success) std::cerr << "ERROR a11 != a12" << std::endl;
+	
 	success &= (a1 == a3);
 	if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
 	success &= (a5 == a7);
 	if (! success) std::cerr << "ERROR a5 != a7" << std::endl;
+	success &= (a9 == a11);
+	if (! success) std::cerr << "ERROR a9 != a11" << std::endl;
+	
 	success &= (a1 == a5);
 	if (! success) std::cerr << "ERROR a1 != a5" << std::endl;
 
-
+	success &= (a1 == a9);
+	if (! success) std::cerr << "ERROR a1 != a9" << std::endl;
 
 #ifdef GIVARO_DEBUG
 	if (! success)

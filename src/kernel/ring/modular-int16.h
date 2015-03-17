@@ -119,15 +119,8 @@ public:
 	void assign(const size_t sz, Array r, constArray a ) const;
 
 	// ----- Convert
-	float& convert(float& r, const Element a ) const { return r = (float)a ;}
-	double& convert(double& r, const Element a ) const { return r = (double)a ;}
-	long int& convert(long int& r, const Element a) const { return r = (long int)a;}
-	unsigned long int& convert(unsigned long int& r, const Element a) const { return r = (unsigned long int)a;}
-	int16_t& convert(int16_t& r, const Element a ) const { return r = (int16_t)a ;}
-	int32_t& convert(int32_t& r, const Element a ) const { return r = (int32_t)a ;}
-	uint16_t& convert(uint16_t& r, const Element a ) const { return r = (uint16_t)a ;}
-	uint32_t& convert(uint32_t& r, const Element a ) const { return r = (uint32_t)a ;}
 	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
+	template<typename XXX> XXX& convert(XXX& r, const Element a) const { return r = static_cast<XXX>(a) ;}
 
 	inline Element& reduce (Element& x, const Element& y) const { return x = Element(y % _p); }
 	inline Element& reduce (Element& x) const { return x %= _p; }

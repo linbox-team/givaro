@@ -120,7 +120,8 @@ public:
 	void assign(const size_t sz, Array r, constArray a ) const;
 
 	// ----- Convert
-	template<class XXX> inline XXX& convert(XXX& s, const Element a) const;
+	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
+	template<typename XXX> XXX& convert(XXX& r, const Element a ) const { return r = static_cast<XXX>(a) ;}
 
 	inline Element& reduce (Element& x, const Element& y) const { return init(x, y); }
 	inline Element& reduce (Element& x) const { return init(x, x); }

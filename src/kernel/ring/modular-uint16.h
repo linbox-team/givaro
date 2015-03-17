@@ -123,8 +123,8 @@ public:
 	Element &assign (Element &x, const Element &y) const;
 	
 	// ----- Convert
-	double &convert (double &x, const Element &y) const;
-	float &convert (float &x, const Element &y) const;
+	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
+	template<typename XXX> XXX& convert(XXX& r, const Element a ) const { return r = static_cast<XXX>(a) ;}
 
 	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
 	inline Element& reduce (Element& x) const { return x %= _p; }

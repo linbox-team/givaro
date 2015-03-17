@@ -65,19 +65,6 @@ namespace Givaro {
 	{
 		return x = y;
 	}
-	
-	// -------------
-	// ----- Convert
-
-	inline double &Modular<uint8_t>::convert (double &x, const Element &y) const
-	{
-		return x = (double)y;
-	}
-
-	inline float &Modular<uint8_t>::convert (float &x, const Element &y) const
-	{
-		return x = (float)y;
-	}
 
 	// ------------------------
 	// ----- Classic arithmetic

@@ -24,18 +24,19 @@ using namespace Givaro;
 
 typedef GFqDom<long>            Field1;
 
-typedef Modular<int8_t>         Field2;
-typedef Modular<int16_t>        Field3;
-typedef Modular<int32_t>        Field4;
-typedef Modular<int64_t>        Field5;
-typedef Modular<uint8_t>        Field6;
-typedef Modular<uint16_t>       Field7;
-typedef Modular<uint32_t>       Field8;
-typedef Modular<uint64_t>       Field9;
-typedef Modular<Log16>          Field10;
-typedef Modular<Integer>        Field11;
+typedef Modular<int16_t>        Field2;
+typedef Modular<int32_t>        Field3;
+typedef Modular<int64_t>        Field4;
+typedef Modular<uint16_t>       Field5;
+typedef Modular<uint32_t>       Field6;
+typedef Modular<uint64_t>       Field7;
+typedef Modular<Log16>          Field8;
+typedef Modular<Integer>        Field9;
 
-typedef Montgomery<int32_t>     Field12;
+typedef Montgomery<int32_t>     Field10;
+
+//typedef Modular<int8_t>         Field11; Too small for the test
+//typedef Modular<uint8_t>        Field12; Too small for the test
 
 template <typename Field>
 Integer tmain(int argc, char ** argv, const GivRandom& generator)
@@ -171,10 +172,8 @@ int main(int argc, char ** argv)
     
 	Integer a9 = tmain<Field9>(argc, argv, GivRandom(seed));
 	Integer a10 = tmain<Field10>(argc, argv, GivRandom(seed));
-	Integer a11 = tmain<Field11>(argc, argv, GivRandom(seed));
-	Integer a12 = tmain<Field12>(argc, argv, GivRandom(seed));
 
-	if (!(a1 & a2 & a3 & a4 & a5 & a6 & a7 & a8 & a9 & a10 & a11 & a12)) {
+	if (!(a1 & a2 & a3 & a4 & a5 & a6 & a7 & a8 & a9 & a10)) {
 #ifdef GIVARO_DEBUG
 		std::cerr << "one test failed" << std::endl;
 #endif
@@ -192,15 +191,11 @@ int main(int argc, char ** argv)
 	if (! success) std::cerr << "ERROR a7 != a8" << std::endl;
 	success &= (a9 == a10);
 	if (! success) std::cerr << "ERROR a9 != a10" << std::endl;
-	success &= (a11 == a12);
-	if (! success) std::cerr << "ERROR a11 != a12" << std::endl;
 	
 	success &= (a1 == a3);
 	if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
 	success &= (a5 == a7);
 	if (! success) std::cerr << "ERROR a5 != a7" << std::endl;
-	success &= (a9 == a11);
-	if (! success) std::cerr << "ERROR a9 != a11" << std::endl;
 	
 	success &= (a1 == a5);
 	if (! success) std::cerr << "ERROR a1 != a5" << std::endl;

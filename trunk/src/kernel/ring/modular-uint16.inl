@@ -241,27 +241,27 @@ namespace Givaro {
 	// ----- IO methods
 
 	template<>
-	inline std::ostream& Modular<int16_t, int16_t>::write (std::ostream& s) const
+	inline std::ostream& Modular<uint16_t, int16_t>::write (std::ostream& s) const
 	{
-		return s << "Modular<int16_t, uint16_t> modulo " << residu();
+		return s << "Modular<uint16_t, uint16_t> modulo " << residu();
 	}
 
 	template<>
-	inline std::ostream& Modular<int16_t, uint16_t>::write (std::ostream& s) const
+	inline std::ostream& Modular<uint16_t, uint16_t>::write (std::ostream& s) const
 	{
-		return s << "Modular<int16_t, uint16_t> modulo " << residu();
+		return s << "Modular<uint16_t, uint16_t> modulo " << residu();
 	}
 
 	template<>
-	inline std::ostream& Modular<int16_t, int32_t>::write (std::ostream& s) const
+	inline std::ostream& Modular<uint16_t, int32_t>::write (std::ostream& s) const
 	{
-		return s << "Modular<int16_t, uint32_t> modulo " << residu();
+		return s << "Modular<uint16_t, uint32_t> modulo " << residu();
 	}
 
 	template<>
-	inline std::ostream& Modular<int16_t, uint32_t>::write (std::ostream& s) const
+	inline std::ostream& Modular<uint16_t, uint32_t>::write (std::ostream& s) const
 	{
-		return s << "Modular<int16_t, uint32_t> modulo " << residu();
+		return s << "Modular<uint16_t, uint32_t> modulo " << residu();
 	}
 	
 	template<typename COMP>

@@ -12,54 +12,74 @@
 
 #include "givaro/modular-defines.h"
 
-namespace Givaro {
+namespace Givaro
+{
+
+	// -------------
+	// ----- Modular 
+
+    template<>
+	inline Modular<uint64_t, uint64_t>::Residu_t
+	Modular<uint64_t, uint64_t>::getMaxModulus() { return 4294967295u; } // 2^32 - 1
+
+    template<>
+	inline Modular<uint64_t, int64_t>::Residu_t
+	Modular<uint64_t, int64_t>::getMaxModulus() { return 4294967295u; }
 
 	// --------------------
 	// ----- Initialisation
 	
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x) const
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init (Element &x) const
 	{
 		return x = zero ;
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const int32_t &y) const
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init (Element &x, const int32_t &y) const
 	{
 		x = (Element)(uint32_t(std::abs(y)) % _p);
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const int64_t &y) const
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init (Element &x, const int64_t &y) const
 	{
 		x = (Element)(uint64_t(std::abs(y)) % _p);
 		if (y < 0) x = _p - x;
 		return x;
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::init(Element &x, const uint32_t &y) const
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init(Element &x, const uint32_t &y) const
 	{
 		return x = (Element)( y >= (uint64_t)_p ? y % _p : y);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const uint64_t &y) const
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init (Element &x, const uint64_t &y) const
 	{
 		return x = (Element)( y >= (uint64_t)_p ? y % _p : y);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::init (Element &x, const double &y) const
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init (Element &x, const double &y) const
 	{
 		double z = fmod(y, (double)_p);
 		if (z < 0) z += (double) _p;
 		return x = (Element) (z);
 	}
 
+	template<typename COMP>
 	template <class XXX>
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::init(Element &x, const XXX &y) const
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init(Element &x, const XXX &y) const
 	{
 		return init(x, double(y));
 	}
 	
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::assign (Element &x, const Element &y) const
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::assign (Element &x, const Element &y) const
 	{
 		return x = y;
 	}
@@ -67,38 +87,44 @@ namespace Givaro {
 	// ------------------------
 	// ----- Classic arithmetic
 	
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::add
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::add
 		(Element &x, const Element &y, const Element &z) const
 	{
 		__GIVARO_MODULAR_INTEGER_ADD(x,_p,y,z);
 		return x;
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::sub
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::sub
 		(Element &x, const Element &y, const Element &z) const
 	{
 		return __GIVARO_MODULAR_INTEGER_SUB(x,_p,y,z);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::mul
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::mul
 		(Element &x, const Element &y, const Element &z) const
 	{
 		return __GIVARO_MODULAR_INTEGER_MUL(x,_p,y,z);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::div
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::div
 		(Element &x, const Element &y, const Element &z) const
 	{
 		return mulin(inv(x, z), y);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::neg
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::neg
 		(Element &x, const Element &y) const
 	{
 		return __GIVARO_MODULAR_INTEGER_NEG(x,_p,y);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::inv
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::inv
 		(Element &x, const Element &y) const
 	{
 		// The extended Euclidean algorithm
@@ -125,54 +151,62 @@ namespace Givaro {
 		return x = Element(tx);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::addin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::addin
 		(Element &x, const Element &y) const
 	{
 		__GIVARO_MODULAR_INTEGER_ADDIN(x,_p,y);
 		return x;
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::subin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::subin
 		(Element &x, const Element &y) const
 	{
 		__GIVARO_MODULAR_INTEGER_SUBIN(x,_p,y);
 		return x;
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::mulin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::mulin
 		(Element &x, const Element &y) const
 	{
 		return __GIVARO_MODULAR_INTEGER_MULIN(x,_p,y);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::divin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::divin
 		(Element &x, const Element &y) const
 	{
-		Modular<uint64_t>::Element iy;
+		typename Modular<uint64_t, COMP>::Element iy;
 		return mulin(x, inv(iy, y));
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::negin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::negin
 		(Element &x) const
 	{
 		return __GIVARO_MODULAR_INTEGER_NEGIN(x,_p);
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::invin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::invin
 		(Element &x) const
 	{
 		return inv(x, x);
 	}
 
 	// -- axpy: r <- a * x + y
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::axpy
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::axpy
 		(Element &r, const Element &a, const Element &x, const Element &y) const
 	{
 		__GIVARO_MODULAR_INTEGER_MULADD(r, _p, a, x, y);
 		return r;
 	}
 
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::axpyin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::axpyin
 		(Element &r, const Element &a, const Element &x) const
 	{
 		__GIVARO_MODULAR_INTEGER_MULADDIN(r, _p, a, x);
@@ -180,14 +214,16 @@ namespace Givaro {
 	}
 	
 	// -- axmy: r <- a * x - y
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::axmy
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::axmy
 		(Element& r, const Element &a, const Element &x, const Element &y) const
 	{
 		__GIVARO_MODULAR_INTEGER_MULSUB(r, _p, a, x, y);
 		return r;
 	}
 	
-	inline Modular<uint64_t>::Element &Modular<uint64_t>::axmyin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::axmyin
 		(Element& r, const Element &a, const Element &x) const
 	{
 		maxpyin(r,a,x);
@@ -195,7 +231,8 @@ namespace Givaro {
 	}
 	
 	// -- maxpy:   r <- y - a * x
-	inline Modular<uint64_t>::Element& Modular<uint64_t>::maxpy
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element& Modular<uint64_t, COMP>::maxpy
 		(Element& r, const Element& a, const Element& x, const Element& y) const
 	{
 		r = y;
@@ -203,7 +240,8 @@ namespace Givaro {
 		return r;
 	}
 		
-	inline Modular<uint64_t>::Element& Modular<uint64_t>::maxpyin
+	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element& Modular<uint64_t, COMP>::maxpyin
 		(Element& r, const Element& a, const Element& x) const
 	{
 		__GIVARO_MODULAR_INTEGER_SUBMULIN(r, _p, a, x);
@@ -213,23 +251,27 @@ namespace Givaro {
 	// ----------------
 	// ----- IO methods
 
-	std::ostream &Modular<uint64_t>::write (std::ostream &os) const
+	template<typename COMP>
+    inline std::ostream &Modular<uint64_t, COMP>::write (std::ostream &os) const
 	{
-		return os << "Modular<uint64_t> mod " << _p;
+		return os << "Modular<uint64_t, COMP> mod " << _p;
 	}
 
-	std::istream &Modular<uint64_t>::read (std::istream &is)
+	template<typename COMP>
+    inline std::istream &Modular<uint64_t, COMP>::read (std::istream &is)
 	{
 		is >> _p;
 		return is;
 	}
 
-	std::ostream &Modular<uint64_t>::write (std::ostream &os, const Element &x) const
+	template<typename COMP>
+    inline std::ostream &Modular<uint64_t, COMP>::write (std::ostream &os, const Element &x) const
 	{
 		return os << x;
 	}
 
-	std::istream &Modular<uint64_t>::read (std::istream &is, Element &x) const
+	template<typename COMP>
+    inline std::istream &Modular<uint64_t, COMP>::read (std::istream &is, Element &x) const
 	{
 		int64_t tmp;
 		is >> tmp;

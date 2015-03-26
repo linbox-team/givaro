@@ -125,7 +125,9 @@ inline Montgomery<int32_t>::Rep& Montgomery<int32_t>::inv (Rep& r, const Rep a) 
 	// % * B^3    --> B²/a
 	// redc       --> B/a
     int32_t t;
-    return redc(r, uint32_t( invext( t,int32_t(a),int32_t(_p)) ) * _B3p) ;
+    invext(t, int32_t(a), int32_t(_p));
+    if (t < 0) t += _p;
+    return redc(r, uint32_t(t) * _B3p) ;
 }
 
 inline Montgomery<int32_t>::Rep& Montgomery<int32_t>::div (Rep& r, const Rep a, const Rep b) const

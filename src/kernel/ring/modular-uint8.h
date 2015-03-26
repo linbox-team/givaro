@@ -32,19 +32,20 @@
 #define __GIVARO_modular_uint8_H
 
 #include "givaro/givranditer.h"
+#include "givaro/modular-general.h"
+#include "givaro/ring-interface.h"
 
 namespace Givaro {
 
-template<class TAG> class Modular;
-
-template <>
-class Modular<uint8_t> : public RingInterface<uint8_t>
+template <typename COMP>
+class Modular<uint8_t, COMP> : public RingInterface<uint8_t>
 {
 public:
 	// ----- Exported Types and constantes
-	typedef Modular<uint8_t> Self_t;
-	typedef uint8_t Residu_t;
-	typedef uint32_t Compute_t;
+	using Self_t = Modular<uint8_t, COMP>;
+	using Compute_t = typename std::make_unsigned<COMP>::type;
+	using Residu_t = uint8_t;
+	
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Constantes
@@ -77,7 +78,7 @@ public:
 	inline Integer& characteristic(Integer& p) const { return p = _p; }
 	inline Residu_t cardinality() const { return _p; }
 	inline Integer& cardinality(Integer& p) const { return p = _p; }
-	static inline Residu_t getMaxModulus() { return 127; }
+	static inline Residu_t getMaxModulus();
 	static inline Residu_t getMinModulus() { return 2; }
 
 	// ----- Checkers

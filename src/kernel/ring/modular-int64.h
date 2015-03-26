@@ -24,10 +24,9 @@
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
+#include "givaro/modular-general.h"
 
 namespace Givaro {
-
-template<class TAG> class Modular;
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
@@ -35,15 +34,15 @@ template<class TAG> class Modular;
  * - p max is 3037000493
  * .
  */
-template<>
-class Modular<int64_t> : public RingInterface<int64_t>
+template<typename COMP>
+class Modular<int64_t, COMP> : public RingInterface<int64_t>
 {
 public:
 
 	// ----- Exported Types and constantes
-	typedef Modular<int64_t> Self_t;
-	typedef uint64_t Residu_t;
-	typedef uint64_t Compute_t;
+	using Self_t = Modular<int64_t, COMP>;
+	using Residu_t = uint64_t;
+	using Compute_t = typename std::make_unsigned<COMP>::type;
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Representation of vector of the Element
@@ -202,11 +201,6 @@ public:
 	std::ostream& write(std::ostream& s) const;
 	std::istream& read (std::istream& s, Element& a) const;
 	std::ostream& write(std::ostream& s, const Element a) const;
-	
-protected:
-	// -- Modular inverse, d = a*u + b*v
-	int64_t& gcdext (int64_t& d, int64_t& u, int64_t& v, const int64_t a, const int64_t b ) const;
-	int64_t& invext (int64_t& u, const int64_t a, const int64_t b ) const;
 
 protected:
 	// -- data representation of the domain:

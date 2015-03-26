@@ -22,10 +22,10 @@
 
 #include "givaro/ring-interface.h"
 #include "givaro/givranditer.h"
+#include "givaro/modular-general.h"
 
-namespace Givaro {
-
-template<class TAG> class Modular;
+namespace Givaro
+{
 
 /*! @brief This class implement the standard arithmetic with Modulo Elements.
  * - The representation of an integer a in Zpz is the value a % p
@@ -33,14 +33,15 @@ template<class TAG> class Modular;
  * - p max is 65521
  * .
  */
-template<>
-class Modular<uint32_t> : public RingInterface<uint32_t>
+template<typename COMP>
+class Modular<uint32_t, COMP> : public RingInterface<uint32_t>
 {
 public:
 	// ----- Exported Types and constantes
-	typedef Modular<uint32_t> Self_t;
-	typedef uint32_t Residu_t;
-	typedef uint32_t Compute_t;
+	using Self_t = Modular<uint32_t, COMP>;
+	using Compute_t = typename std::make_unsigned<COMP>::type;
+	using Residu_t = uint32_t;
+
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Representation of vector of the Element
@@ -77,7 +78,7 @@ public:
 	inline Integer& characteristic(Integer& p) const { return p = _p; }
 	inline Residu_t cardinality() const { return _p; }
 	inline Integer& cardinality(Integer& p) const { return p = _p; }
-	static inline Residu_t getMaxModulus() { return 32768; } // 2^15
+	static inline Residu_t getMaxModulus();
 	static inline Residu_t getMinModulus() { return 2; }
 
 	// ----- Checkers
@@ -199,11 +200,6 @@ public:
 	std::ostream& write(std::ostream& s) const;
 	std::istream& read (std::istream& s, Element& a) const;
 	std::ostream& write(std::ostream& s, const Element a) const;
-
-protected:
-	// -- Modular inverse, d = a*u + b*v
-	int32_t& gcdext(int32_t& d, int32_t& u, int32_t& v, const int32_t a, const int32_t b) const;
-	Element& invext(Element& u, const Element a, const Element b) const;
 	
 protected:
 	// -- data representation of the domain:

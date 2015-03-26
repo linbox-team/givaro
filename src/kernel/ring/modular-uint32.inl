@@ -581,10 +581,28 @@ namespace Givaro
 		return s;
 	}
 
-	template<typename COMP>
-    inline std::ostream& Modular<uint32_t, COMP>::write (std::ostream& s ) const
+	template<>
+	inline std::ostream& Modular<uint32_t, int32_t>::write (std::ostream& s) const
 	{
-		return s << "Uns32 Givaro Z/pZ modulo " << residu();
+		return s << "Modular<uint32_t, uint32_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<uint32_t, uint32_t>::write (std::ostream& s) const
+	{
+		return s << "Modular<uint32_t, uint32_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<uint32_t, int64_t>::write (std::ostream& s) const
+	{
+		return s << "Modular<uint32_t, uint64_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<uint32_t, uint64_t>::write (std::ostream& s) const
+	{
+		return s << "Modular<uint32_t, uint64_t> modulo " << residu();
 	}
 
 	template<typename COMP>

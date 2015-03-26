@@ -251,10 +251,16 @@ namespace Givaro
 	// ----------------
 	// ----- IO methods
 
-	template<typename COMP>
-    inline std::ostream &Modular<uint64_t, COMP>::write (std::ostream &os) const
+	template<>
+    inline std::ostream &Modular<uint64_t, int64_t>::write (std::ostream &os) const
 	{
-		return os << "Modular<uint64_t, COMP> mod " << _p;
+		return os << "Modular<uint64_t, uint64_t> mod " << _p;
+	}
+
+	template<>
+    inline std::ostream &Modular<uint64_t, uint64_t>::write (std::ostream &os) const
+	{
+		return os << "Modular<uint64_t, uint64_t> mod " << _p;
 	}
 
 	template<typename COMP>

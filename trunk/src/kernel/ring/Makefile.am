@@ -11,6 +11,7 @@ AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(
 
 pkginclude_HEADERS=     \
 	modular.h		    \
+	modular-general.h	\
 	modular-defines.h	\
 	modular-int8.h		\
 	modular-int16.h		\
@@ -36,6 +37,7 @@ pkginclude_HEADERS=     \
 	zring.h				\
 	montgomery.h	    \
 	montgomery-int32.h	\
+	modular-general.inl	\
 	modular-int8.inl	\
 	modular-int16.inl	\
 	modular-int32.inl	\
@@ -51,16 +53,5 @@ pkginclude_HEADERS=     \
 	modular-log16.inl	\
 	montgomery-int32.inl\
 	ring-interface.h
-
-noinst_LTLIBRARIES=libgivring.la
-
-libgivring_la_SOURCES=   \
-	modular-int8.C		\
-	modular-int16.C		\
-	modular-int32.C		\
-	modular-int64.C		\
-	modular-uint32.C	\
-	modular-log16.C		\
-	montgomery-int32.C
 
 EXTRA_DIST=ring.doxy

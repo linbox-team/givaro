@@ -42,13 +42,13 @@
 
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
+#include "givaro/modular-general.h"
 
-namespace Givaro {
-
-template<class TAG> class Modular;
+namespace Givaro
+{
 
 template <>
-class Modular<float> : public RingInterface<float>
+class Modular<float, float> : public RingInterface<float>
 {
 public:
 	// ----- Exported Types and constantes

@@ -32,10 +32,11 @@
 #define __GIVARO_modular_uint64_H
 
 #include "givaro/givranditer.h"
+#include "givaro/ring-interface.h"
+#include "givaro/modular-general.h"
 
-namespace Givaro {
-
-template<class TAG> class Modular;
+namespace Givaro
+{
 
 /** \brief Specialization of Modular to uint64_t element type with efficient dot product.
  *
@@ -49,14 +50,15 @@ template<class TAG> class Modular;
  * Intended use: 2^15 < prime modulus < 2^30.
  * \ingroup field
  */
-template <>
-class Modular<uint64_t> : public RingInterface<uint64_t>
+template<typename COMP>
+class Modular<uint64_t, COMP> : public RingInterface<uint64_t>
 {
 public:
 	// ----- Exported Types and constantes
-	typedef Modular<uint64_t> Self_t;
-	typedef uint64_t Residu_t;
-	typedef uint64_t Compute_t;
+	using Self_t = Modular<uint64_t, COMP>;
+	using Compute_t = typename std::make_unsigned<COMP>::type;
+	using Residu_t = uint64_t;
+
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Constantes
@@ -89,7 +91,7 @@ public:
 	inline Integer& characteristic(Integer& p) const { return p = _p; }
 	inline Residu_t cardinality() const { return _p; }
 	inline Integer& cardinality(Integer& p) const { return p = _p; }
-	static inline Residu_t getMaxModulus() { return 1073741824; } // 2^31
+	static inline Residu_t getMaxModulus();
 	static inline Residu_t getMinModulus() { return 2; }
 
 	// ----- Checkers

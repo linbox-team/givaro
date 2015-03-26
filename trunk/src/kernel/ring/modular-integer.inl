@@ -475,7 +475,7 @@ inline std::istream& Modular<Integer>::read (std::istream& s)
 
 inline std::ostream& Modular<Integer>::write (std::ostream& s ) const
 {
-  return s << "Arbitrary length (z," << residu() << ')';
+  return s << "Modular<Integer> modulo " << residu();
 }
 
 inline std::istream& Modular<Integer>::read (std::istream& s, Rep& a) const

@@ -424,172 +424,170 @@ namespace Givaro {
 	}
 
 
-template<typename COMP>
-    inline typename Modular<int64_t, COMP>::Element& Modular<int64_t, COMP>::dotprod
-  ( Element& r, const int bound, const size_t sz, constArray a, constArray b ) const
-{
-  unsigned int stride = 1;
-  if (bound < Signed_Trait<Element>::max() )
-   stride = (unsigned int) ( GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound) );
-  unsigned long dot = (unsigned long) zero; // this is intented !
-  if ((sz <10) && (sz <stride)) {
-    for(  size_t i= sz; i--; )
-#ifdef __x86_64__
-      dot += (unsigned long)a[i] * (unsigned long)b[i];
-#else
-      dot = (unsigned long) (dot + a[i] * b[i]);
-#endif
-    if (dot > _p) r = (Element)(dot % (uint64_t)_p);
-    else r = (Element)dot;
-    return r;
-  }
-  unsigned int i_begin=0;
-  stride &= (unsigned int)~0x1;
-  if (stride ==0) {
-    for(  size_t i= sz; --i; ) {
-#ifdef __x86_64__
-      dot += (unsigned long)a[i] * (unsigned long)b[i];
-      if (dot>_p) dot %= _p;
-#else
-      dot = (unsigned long) (dot + a[i] * b[i]);
-      if (dot>_p) dot = (unsigned long) (dot % _p);
-#endif
+    template<typename COMP>
+        inline typename Modular<int64_t, COMP>::Element& Modular<int64_t, COMP>::dotprod
+      ( Element& r, const int bound, const size_t sz, constArray a, constArray b ) const
+    {
+      unsigned int stride = 1;
+      if (bound < Signed_Trait<Element>::max() )
+       stride = (unsigned int) ( GIVARO_MAXULONG/((unsigned long)bound * (unsigned long)bound) );
+      unsigned long dot = (unsigned long) zero; // this is intented !
+      if ((sz <10) && (sz <stride)) {
+        for(  size_t i= sz; i--; )
+    #ifdef __x86_64__
+          dot += (unsigned long)a[i] * (unsigned long)b[i];
+    #else
+          dot = (unsigned long) (dot + a[i] * b[i]);
+    #endif
+        if (dot > _p) r = (Element)(dot % (uint64_t)_p);
+        else r = (Element)dot;
+        return r;
+      }
+      unsigned int i_begin=0;
+      stride &= (unsigned int)~0x1;
+      if (stride ==0) {
+        for(  size_t i= sz; --i; ) {
+    #ifdef __x86_64__
+          dot += (unsigned long)a[i] * (unsigned long)b[i];
+          if (dot>_p) dot %= _p;
+    #else
+          dot = (unsigned long) (dot + a[i] * b[i]);
+          if (dot>_p) dot = (unsigned long) (dot % _p);
+    #endif
+        }
+        r = (Element)dot;
+        return r;
+      }
+      do {
+        size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
+        if ((min_sz & 0x1) !=0)
+          {
+	          --min_sz;
+	          ++i_begin;
+    #ifdef __x86_64__
+	          dot += (unsigned long)a++[min_sz] * (unsigned long)b++[min_sz];
+    #else
+	          dot = (unsigned long) (dot + a++[min_sz] * b++[min_sz]);
+    #endif
+          }
+        if (min_sz > 1)
+          for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) //!@todo o_O
+          {
+    #ifdef __x86_64__
+            dot += (unsigned long)a[0] * (unsigned long)b[0];
+            dot += (unsigned long)a[1] * (unsigned long)b[1];
+    #else
+	    dot = (unsigned long) (dot +  a[0] * b[0] );
+	    dot = (unsigned long) (dot +  a[1] * b[1] );
+    #endif
+
+          }
+    #ifdef __x86_64__
+        if (dot>(uint64_t)_p) dot %= (uint64_t)_p;
+    #else
+        if (dot>_p) dot = (unsigned long) (dot % _p);
+    #endif
+        i_begin += (unsigned int) min_sz;
+      } while (i_begin <sz);
+      r = (Element)dot;
+      return r;
     }
-    r = (Element)dot;
-    return r;
-  }
-  do {
-    size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
-    if ((min_sz & 0x1) !=0)
-      {
-	      --min_sz;
-	      ++i_begin;
-#ifdef __x86_64__
-	      dot += (unsigned long)a++[min_sz] * (unsigned long)b++[min_sz];
-#else
-	      dot = (unsigned long) (dot + a++[min_sz] * b++[min_sz]);
-#endif
-      }
-    if (min_sz > 1)
-      for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b ) //!@todo o_O
-      {
-#ifdef __x86_64__
-        dot += (unsigned long)a[0] * (unsigned long)b[0];
-        dot += (unsigned long)a[1] * (unsigned long)b[1];
-#else
-	dot = (unsigned long) (dot +  a[0] * b[0] );
-	dot = (unsigned long) (dot +  a[1] * b[1] );
-#endif
 
-      }
-#ifdef __x86_64__
-    if (dot>(uint64_t)_p) dot %= (uint64_t)_p;
-#else
-    if (dot>_p) dot = (unsigned long) (dot % _p);
-#endif
-    i_begin += (unsigned int) min_sz;
-  } while (i_begin <sz);
-  r = (Element)dot;
-  return r;
-}
-
-template<typename COMP>
+    template<typename COMP>
     inline typename Modular<int64_t, COMP>::Element& Modular<int64_t, COMP>::dotprod
-  ( Element& r, const size_t sz, constArray a, constArray b ) const
-{
-	return Modular<int64_t, COMP>::dotprod(r, int(_p), sz, a, b);
-}
+      ( Element& r, const size_t sz, constArray a, constArray b ) const
+    {
+	    return Modular<int64_t, COMP>::dotprod(r, int(_p), sz, a, b);
+    }
 
 
-  //  a -> r: int64_t to double
-template<typename COMP>
-    inline void
-  Modular<int64_t, COMP>::i2d ( const size_t sz, double* r, constArray a ) const
-{
-  for (size_t i=0; i<sz; ++i)  {
-	  r[i] = (double) a[i];
-  }
-}
+      //  a -> r: int64_t to double
+    template<typename COMP>
+    inline void Modular<int64_t, COMP>::i2d ( const size_t sz, double* r, constArray a ) const
+    {
+      for (size_t i=0; i<sz; ++i)  {
+	      r[i] = (double) a[i];
+      }
+    }
 
-  //  a -> r: double to int64_t
-template<typename COMP>
-    inline void
-  Modular<int64_t, COMP>::d2i ( const size_t sz, Array r, const double* a ) const
-{
-  union d_2_l {
-    double d;
-    int64_t r[2];
-  };
-//  static const double offset = 4503599627370496.0; // 2^52
-  double offset = 4503599627370496.0; // 2^52
-  for (size_t i=0; i<sz; ++i)
-  {
-       d_2_l tmp;
-      // - normalization: put fractional part at the end of the representation
-      tmp.d = a[i] + offset;
-      r[i] = tmp.r[1];
-      if (Compute_t(r[i]) < Compute_t(_p))
-      	r[i] %= Compute_t(_p);
-  }
-  //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
-  //    r[i] = (r[i] <_p ? r[i] : r[i]%_p);
-  //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]%_p);
-}
+      //  a -> r: double to int64_t
+    template<typename COMP>
+    inline void Modular<int64_t, COMP>::d2i ( const size_t sz, Array r, const double* a ) const
+    {
+      union d_2_l {
+        double d;
+        int64_t r[2];
+      };
+    //  static const double offset = 4503599627370496.0; // 2^52
+      double offset = 4503599627370496.0; // 2^52
+      for (size_t i=0; i<sz; ++i)
+      {
+           d_2_l tmp;
+          // - normalization: put fractional part at the end of the representation
+          tmp.d = a[i] + offset;
+          r[i] = tmp.r[1];
+          if (Compute_t(r[i]) < Compute_t(_p))
+          	r[i] %= Compute_t(_p);
+      }
+      //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
+      //    r[i] = (r[i] <_p ? r[i] : r[i]%_p);
+      //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]%_p);
+    }
 
 
- // -- Input: (z, <_p>)
-template<typename COMP>
+     // -- Input: (z, <_p>)
+    template<typename COMP>
     inline std::istream& Modular<int64_t, COMP>::read (std::istream& s)
-{
-  char ch;
-  s >> std::ws >> ch;
-  if (ch != '(')
-//    GivError::throw_error( GivBadFormat("Modular<int64_t, COMP>::read: syntax error: no '('"));
-    std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: syntax error: no '('))" << std::endl;
+    {
+      char ch;
+      s >> std::ws >> ch;
+      if (ch != '(')
+        std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: syntax error: no '('))" << std::endl;
 
-  s >> std::ws >> ch;
-  if (ch != 'z')
-//    GivError::throw_error( GivBadFormat("Modular<int64_t, COMP>::read: bad domain object"));
-    std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: bad domain object))" << std::endl;
+      s >> std::ws >> ch;
+      if (ch != 'z')
+        std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: bad domain object))" << std::endl;
 
-  s >> std::ws >> ch;
-  if (ch != ',')
-//    GivError::throw_error( GivBadFormat("Modular<int64_t, COMP>::read: syntax error: no ','"));
-    std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: syntax error: no ',')) " << std::endl;
+      s >> std::ws >> ch;
+      if (ch != ',')
+        std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: syntax error: no ',')) " << std::endl;
 
-  s >> std::ws >> _p;
+      s >> std::ws >> _p;
 
 
-  s >> std::ws >> ch;
-  if (ch != ')')
-//    GivError::throw_error( GivBadFormat("Modular<int64_t, COMP>::read: syntax error: no ')'"));
-    std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: syntax error: no ')')) " << std::endl;
+      s >> std::ws >> ch;
+      if (ch != ')')
+        std::cerr << "GivBadFormat(Modular<int64_t, COMP>::read: syntax error: no ')')) " << std::endl;
 
-  return s;
-}
+      return s;
+    }
 
-template<typename COMP>
-    inline std::ostream& Modular<int64_t, COMP>::write (std::ostream& s ) const
-{
-  	return s << "Modular<int64_t, COMP> modulo " << residu();
-}
+    template<>
+    inline std::ostream& Modular<int64_t, int64_t>::write (std::ostream& s ) const
+    {
+      	return s << "Modular<int64_t, uint64_t> modulo " << residu();
+    }
 
-template<typename COMP>
-    inline std::istream& Modular<int64_t, COMP>::read (std::istream& s, Element& a) const
-{
-	Integer tmp;
-	s >> tmp;
-	init(a, tmp);
-	return s;
-}
+    template<>
+    inline std::ostream& Modular<int64_t, uint64_t>::write (std::ostream& s ) const
+    {
+      	return s << "Modular<int64_t, uint64_t> modulo " << residu();
+    }
 
-template<typename COMP>
+    template<typename COMP>
+        inline std::istream& Modular<int64_t, COMP>::read (std::istream& s, Element& a) const
+    {
+	    Integer tmp;
+	    s >> tmp;
+	    init(a, tmp);
+	    return s;
+    }
+
+    template<typename COMP>
     inline std::ostream& Modular<int64_t, COMP>::write (std::ostream& s, const Element a) const
-{
-  	return s << a;
-}
-
-
+    {
+      	return s << a;
+    }
 } // namespace Givaro
 
 #endif // __GIVARO_zpz64std_INL

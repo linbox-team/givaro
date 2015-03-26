@@ -514,33 +514,47 @@ namespace Givaro {
 		char ch;
 		s >> std::ws >> ch;
 		if (ch != '(')
-			//    GivError::throw_error( GivBadFormat("Modular<int16_t, COMP>::read: syntax error: no '('"));
 			std::cerr << "GivBadFormat(Modular<int16_t, COMP>::read: syntax error: no '('))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != 'z')
-			//    GivError::throw_error( GivBadFormat("Modular<int16_t, COMP>::read: bad domain object"));
 			std::cerr << "GivBadFormat(Modular<int16_t, COMP>::read: bad domain object))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != ',')
-			//    GivError::throw_error( GivBadFormat("Modular<int16_t, COMP>::read: syntax error: no ','"));
 			std::cerr << "GivBadFormat(Modular<int16_t, COMP>::read: syntax error: no ',')) " << std::endl;
 
 		s >> std::ws >> _p;
 
 		s >> std::ws >> ch;
 		if (ch != ')')
-			//    GivError::throw_error( GivBadFormat("Modular<int16_t, COMP>::read: syntax error: no ')'"));
 			std::cerr << "GivBadFormat(Modular<int16_t, COMP>::read: syntax error: no ')')) " << std::endl;
 
 		return s;
 	}
 
-	template<typename COMP>
-    inline std::ostream& Modular<int16_t, COMP>::write (std::ostream& s ) const
+	template<>
+	inline std::ostream& Modular<int16_t, int16_t>::write (std::ostream& s) const
 	{
-		return s << "Modular<int16_t, COMP> modulo " << residu();
+		return s << "Modular<int16_t, uint16_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<int16_t, uint16_t>::write (std::ostream& s) const
+	{
+		return s << "Modular<int16_t, uint16_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<int16_t, int32_t>::write (std::ostream& s) const
+	{
+		return s << "Modular<int16_t, uint32_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<int16_t, uint32_t>::write (std::ostream& s) const
+	{
+		return s << "Modular<int16_t, uint32_t> modulo " << residu();
 	}
 
 	template<typename COMP>

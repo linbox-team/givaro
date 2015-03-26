@@ -529,24 +529,20 @@ namespace Givaro {
 		char ch;
 		s >> std::ws >> ch;
 		if (ch != '(')
-			//    GivError::throw_error( GivBadFormat("Modular<int32_t, COMP>::read: syntax error: no '('"));
 			std::cerr << "GivBadFormat(Modular<int32_t, COMP>::read: syntax error: no '('))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != 'z')
-			//    GivError::throw_error( GivBadFormat("Modular<int32_t, COMP>::read: bad domain object"));
 			std::cerr << "GivBadFormat(Modular<int32_t, COMP>::read: bad domain object))" << std::endl;
 
 		s >> std::ws >> ch;
 		if (ch != ',')
-			//    GivError::throw_error( GivBadFormat("Modular<int32_t, COMP>::read: syntax error: no ','"));
 			std::cerr << "GivBadFormat(Modular<int32_t, COMP>::read: syntax error: no ',')) " << std::endl;
 
 		s >> std::ws >> _p;
 
 		s >> std::ws >> ch;
 		if (ch != ')')
-			//    GivError::throw_error( GivBadFormat("Modular<int32_t, COMP>::read: syntax error: no ')'"));
 			std::cerr << "GivBadFormat(Modular<int32_t, COMP>::read: syntax error: no ')')) " << std::endl;
 
 		return s;

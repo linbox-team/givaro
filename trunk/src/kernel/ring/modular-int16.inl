@@ -21,7 +21,7 @@
 namespace Givaro {
 
 	// -------------
-	// ----- Modular 
+	// ----- Modular
 
     template<>
 	inline Modular<int16_t, int16_t>::Residu_t
@@ -41,7 +41,7 @@ namespace Givaro {
 
 	// ------------------------
 	// ----- Classic arithmetic
-	
+
 	template<typename COMP>
     inline typename Modular<int16_t, COMP>::Element& Modular<int16_t, COMP>::mul
 		(Element& r, const Element& a, const Element& b) const
@@ -85,7 +85,7 @@ namespace Givaro {
 	{
 		return mulin( inv(r,b), a );
 	}
-	
+
 	template<typename COMP>
     inline typename Modular<int16_t, COMP>::Element& Modular<int16_t, COMP>::mulin
 		(Element& r, const Element& a) const
@@ -130,7 +130,7 @@ namespace Givaro {
 	{
 		return inv(r, r);
 	}
-	
+
 	template<typename COMP>
     inline typename Modular<int16_t, COMP>::Element& Modular<int16_t, COMP>::axpy
 		(Element& r, const Element& a, const Element& b, const Element& c) const
@@ -144,7 +144,7 @@ namespace Givaro {
 	{
 		return __GIVARO_MODULAR_INTEGER_MULADDIN(r,_p,a,b);
 	}
-	
+
 	template<typename COMP>
     inline typename Modular<int16_t, COMP>::Element& Modular<int16_t, COMP>::maxpy
 		(Element& r, const Element& a, const Element& b, const Element& c) const
@@ -187,7 +187,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_MUL(tmp,_p,a[i],b[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -198,7 +198,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_MUL(tmp,_p,a[i],b);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -215,7 +215,7 @@ namespace Givaro {
     inline void Modular<int16_t, COMP>::div
 		(const size_t sz, Array r, constArray a, Element b) const
 	{
-		typename Modular<int16_t, COMP>::Element ib;
+		Element ib;
 		inv(ib, b);
 		mul(sz, r, a, ib);
 	}
@@ -227,7 +227,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_ADD(tmp,_p,a[i],b[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -238,7 +238,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_ADD(tmp,_p,a[i],b);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -249,7 +249,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_SUB(tmp,_p,a[i],b[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -260,7 +260,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_SUB(tmp,_p,a[i],b);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -271,7 +271,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_NEG(tmp,_p,a[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -282,7 +282,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_MULADD(tmp,_p,a[i],x[i],y[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -293,7 +293,7 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp = (int16_t)r[i];
 			__GIVARO_MODULAR_INTEGER_MULADDIN(tmp,_p,a[i],x[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -304,7 +304,7 @@ namespace Givaro {
 		for ( size_t i=sz; i--; ) {
 			int16_t tmp;
 			__GIVARO_MODULAR_INTEGER_MULSUB(tmp,_p,a[i],x[i],y[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
 
@@ -315,13 +315,13 @@ namespace Givaro {
 		for ( size_t i=sz ; --i ; ) {
 			int16_t tmp = (int16_t)r[i];
 			__GIVARO_MODULAR_INTEGER_SUBMULIN(tmp,_p,a[i],x[i]);
-			r[i] = (typename Modular<int16_t, COMP>::Element)tmp;
+			r[i] = (Element)tmp;
 		}
 	}
-	
+
 	// --------------------
 	// ----- Initialisation
-	
+
 	template<typename COMP>
     inline  typename Modular<int16_t, COMP>::Element&  Modular<int16_t, COMP>::init ( Element& r, const unsigned long a ) const
 	{
@@ -460,7 +460,7 @@ namespace Givaro {
 			if (dot>_p) dot %= (uint16_t)_p;
 			i_begin += (unsigned int) min_sz;
 		} while (i_begin <sz);
-		
+
 		return r = (Element)dot;
 	}
 

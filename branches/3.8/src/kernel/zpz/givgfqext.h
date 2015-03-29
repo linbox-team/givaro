@@ -65,6 +65,10 @@ namespace Givaro {
 		typedef GFqExtFast<TT> Self_t;
 
 		typedef Rep Element;
+		typedef Element* Element_ptr ;
+		typedef const Element* ConstElement_ptr;
+
+
 		typedef UTT Residu_t;
 
 		typedef Rep* Array;
@@ -184,7 +188,7 @@ namespace Givaro {
 			uint64_t tll( static_cast<uint64_t>(d/this->_dcharacteristic) );
 			UTT prec(0);
 			UTT padl = (UTT)(rll - tll*this->_characteristic);
-  
+
 			if (padl == this->_characteristic) {
 				padl -= this->_characteristic;
 				tll += 1;

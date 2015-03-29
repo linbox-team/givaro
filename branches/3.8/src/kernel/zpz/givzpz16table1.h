@@ -44,6 +44,10 @@ public:
   typedef int16_t Power_t;
   typedef Power_t Rep;
   typedef int16_t Element;
+ typedef Element* Element_ptr ;
+	typedef const Element* ConstElement_ptr;
+
+
 
   // ----- Representation of vector of the Element
   typedef Residu_t* Array;

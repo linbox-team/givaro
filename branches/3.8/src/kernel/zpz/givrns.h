@@ -42,6 +42,7 @@ namespace Givaro {
 	public:
 		typedef RING   ring;
 		typedef typename Domain::Element modulo;
+
 		typedef Array0<modulo> array;
 		typedef Array0<Domain> domains;
 

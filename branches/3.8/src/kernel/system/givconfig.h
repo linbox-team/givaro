@@ -66,8 +66,8 @@
 // - zz: revision number
 #define GIVARO_MAJOR_VERSION    3
 #define GIVARO_MINOR_VERSION    8
-#define GIVARO_REVISION_VERSION 0
-#define GIVARO_VERSION          30800
+#define GIVARO_REVISION_VERSION 1
+#define GIVARO_VERSION          30801
 
 // -- Defines this value both to compile the library of user program
 // value: integer that defines debug level trace information (not well defined)
@@ -293,16 +293,18 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 
 // -- Signed Traits (JGD 15.12.1999)
 // JGD 11.06.03
-#if !defined(__GNUC__) || (__GNUC__ != 2)
+#if !defined( __GNUC__ ) || ( __GNUC__ != 2 )
 // JGD 21.03.03
 #include <limits>
-template<class XXX> struct GIVARO_numeric_limits {
+template<class XXX>
+struct GIVARO_numeric_limits {
     	typedef XXX self_type;
 	static XXX max() { return  std::numeric_limits<XXX>::max(); }
 };
 #else
 #include <limits.h>
-template<class XXX> struct GIVARO_numeric_limits {
+template<class XXX>
+struct GIVARO_numeric_limits {
     	typedef XXX self_type;
 	static XXX max() { return (XXX)(pow(2,8*sizeof(XXX))-1); }
 };
@@ -427,9 +429,11 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
 
 
 #if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H) || defined(__pmp_omp_h)
-#define GIVAVO_USES_OMP 1
+#  ifndef __GIVARO_USE_OPENMP
+#    define __GIVARO_USE_OPENMP 1
+#  endif
 #else
-#undef GIVAVO_USES_OMP
+#  undef __GIVARO_USE_OPENMP
 #endif
 
 

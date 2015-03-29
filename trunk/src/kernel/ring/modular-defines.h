@@ -1,10 +1,11 @@
 // ==========================================================================
-// Copyright(c)'1994-2014 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: A. Breust
+// Authors: A. Breust <Alexis.Breust@imag.fr>
+//          BB <brice.boyer@lip6.fr>
 // ==========================================================================
 
 #ifndef __GIVARO_modular_defines_H
@@ -30,8 +31,10 @@
 Compute_t(a)-Compute_t(b) : Compute_t(p)-Compute_t(b)+Compute_t(a)) )
 #define __GIVARO_MODULAR_FLOATING_SUB(r,p,a,b) ( r = (a>=b) ? a-b: (p-b)+a )
 // r <- r - a
-#define __GIVARO_MODULAR_INTEGER_SUBIN(r,p,a) { if (Compute_t(r) < Compute_t(a)) \
-r += Element(Compute_t(p)-Compute_t(a)); else r = Element(Compute_t(r) - Compute_t(a)); }
+#define __GIVARO_MODULAR_INTEGER_SUBIN(r,p,a) { \
+	if (Compute_t(r) < Compute_t(a)) \
+	r += Element(Compute_t(p)-Compute_t(a)); \
+	else r = Element(Compute_t(r) - Compute_t(a)); }
 #define __GIVARO_MODULAR_FLOATING_SUBIN(r,p,a) { if (r<a) r+=(p-a); else r-=a; }
 
 // r <- a + b

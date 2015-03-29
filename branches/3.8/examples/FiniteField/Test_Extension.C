@@ -18,8 +18,7 @@ using namespace Givaro;
 
 
 
-template<class FField>
-void FaireEssai(const FField & F) {
+template<class FField> void FaireEssai(const FField & F) {
 
   F.write( std::cout << "Working in : " ) << std::endl;
 
@@ -35,17 +34,19 @@ void FaireEssai(const FField & F) {
 
 }
 
+template void FaireEssai< Extension<> >(const Extension<> & F) ;
+template void FaireEssai< GFqDom<long> >(const GFqDom<long> & F) ;
 
 
 int main (int argc, char * * argv) {
 
     unsigned long q = (argc>1?(unsigned long)atoi(argv[1]):13);
     unsigned long expo = (argc>2?(unsigned long)atoi(argv[2]):8);
-
+/*
     GFqDom<long> Toto(q,1);
     Toto.write( std::cout << "This is ") << std::endl ;
     FaireEssai( Toto );
-
+*/
     std::cerr << "Exponent max for zech logs with characteristic " << q << " : " << FF_EXPONENT_MAX(q,expo) << std::endl;
     std::cerr << "Sub-Exponent max for zech logs " << q << "^" << expo << " : " << FF_SUBEXPONENT_MAX(q,expo) << std::endl;
     std::cerr << "NEED polynomial representation : " << NEED_POLYNOMIAL_REPRESENTATION(q,expo) << std::endl;
@@ -54,6 +55,6 @@ int main (int argc, char * * argv) {
     else
         FaireEssai( GFqDom<long>(q, expo) );
 
-
+    FaireEssai( EXTENSION(q, expo) );
     return 0;
 }

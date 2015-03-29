@@ -40,6 +40,10 @@ public:
     typedef GFqKronecker<TT,Ints> Self_t;
 
     typedef Rep Element;
+    typedef Element* Element_ptr ;
+  typedef const Element* ConstElement_ptr;
+
+
     typedef UTT Residu_t;
 
     typedef Rep* Array;

@@ -99,6 +99,10 @@ namespace Givaro {
             }
 
 	typedef PolElement Element;
+	typedef Element* Element_ptr ;
+	typedef const Element* ConstElement_ptr;
+
+
 
 	Element zero;
 	Element one;

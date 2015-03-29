@@ -51,6 +51,11 @@ exponentiation_SOURCES          = exponentiation.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@
+examp_comp = $(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $< -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD) $(shell $(GIVARO_BIN)/givaro-config --libs)
+
 %:%.C
-	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $*.C -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD) $(shell $(GIVARO_BIN)/givaro-config --libs)
+	$(examp_comp)
+
+%:%.cpp
+	$(examp_comp)
 

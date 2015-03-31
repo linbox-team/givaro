@@ -85,7 +85,7 @@ namespace Givaro {
 		typedef ModularBalanced<Element> Self_t;
 		typedef GeneralRingRandIter<Self_t> RandIter;
 		typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-		
+
 		template<class XXX> ModularBalanced(const XXX& p) :
 			modulus(float(p)),
 			half_mod (float((p-1)/2)),
@@ -128,7 +128,7 @@ namespace Givaro {
 			F.assign(const_cast<Element&>(mOne),F.mOne);
 			return *this;
 		}
-		
+
 		template<class T> inline T& characteristic(T& p) const { return p = T(modulus); }
 		template<class T> inline T& cardinality(T& p) const { return p = T(modulus); }
 
@@ -141,12 +141,12 @@ namespace Givaro {
 		{
 			return (FieldInt) modulus;
 		}
-		
-		template<class T> inline T& convert(T& x, const Element& y) const { return x = T(y); } 
+
+		template<class T> inline T& convert(T& x, const Element& y) const { return x = T(y); }
 
 		inline std::ostream &write (std::ostream &os) const
 		{
-			return os << "balanced float mod " << int(modulus);
+			return os << "ModularBalanced<float> mod " << int(modulus);
 		}
 
 		inline std::istream &read (std::istream &is)

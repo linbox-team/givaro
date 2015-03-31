@@ -143,7 +143,7 @@ namespace Givaro
 			F.assign(const_cast<Element&>(mOne),F.mOne);
 			return *this;
 		}
-		
+
 		template<class T> inline T& characteristic(T& p) const { return p = modulus; }
 		template<class T> inline T& cardinality(T& p) const { return p = modulus; }
 
@@ -156,12 +156,12 @@ namespace Givaro
 		{
 		       	return (uint64_t)modulus;
 		}
-		
-		template<class T> inline T& convert(T& x, const Element& y) const { return x = T(y); } 
+
+		template<class T> inline T& convert(T& x, const Element& y) const { return x = T(y); }
 
 		inline std::ostream &write (std::ostream &os) const
 		{
-			return os << "balanced int64_t mod " << modulus;
+			return os << "ModularBalanced<int64_t> mod " << modulus;
 		}
 
 		inline std::istream &read (std::istream &is)

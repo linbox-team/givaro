@@ -10,7 +10,7 @@ AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/bstruct
 
 pkginclude_HEADERS=     \
-	modular.h		    \
+	modular.h		\
 	modular-general.h	\
 	modular-defines.h	\
 	modular-int8.h		\

@@ -182,6 +182,10 @@ namespace Givaro {
 		//! @overload Givaro::Integer(int)
 		giv_all_inlined Integer(const char *n);
 		//! @overload Givaro::Integer(RecInt::ruint<K>)
+		giv_all_inlined Integer(const mpz_class& a) {
+			mpz_init_set((mpz_ptr)&gmp_rep, a.get_mpz_t()) ;
+		}
+		//! @overload Givaro::Integer(RecInt::ruint<K>)
 		template<size_t K> Integer(const RecInt::ruint<K>& n)
 		{
 			// Maybe not the fastest way to do it
@@ -189,6 +193,7 @@ namespace Givaro {
 			RecInt::ruint_to_mpz(a, n);
 			mpz_init_set((mpz_ptr)&gmp_rep, a.get_mpz_t()) ;
 		}
+
 
 		/*! Copy constructor
 		 * @param n input to be constructed from

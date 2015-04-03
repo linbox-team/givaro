@@ -10,7 +10,7 @@
 // =================================================================== //
 #ifndef __GIVARO_primality_INL
 #define __GIVARO_primality_INL
-#include <math.h>
+#include <cmath>
 #include "givaro/givintprime.h"
 
 // =================================================================== //

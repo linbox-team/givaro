@@ -14,7 +14,7 @@
 #include "givaro/givrational.h"
 #include "givaro/giverror.h"
 #include "givaro/givpower.h"
-#include <math.h>
+#include <cmath>
 #include <float.h>
 #include <iostream>
 

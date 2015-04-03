@@ -16,7 +16,7 @@
 #ifndef __GIVARO_gfq_INL
 #define __GIVARO_gfq_INL
 
-#include <math.h>
+#include <cmath>
 #include <givaro/givinteger.h>
 #include <givaro/givintnumtheo.h>
 #include <givaro/givpower.h>

@@ -24,7 +24,7 @@
 #include "givaro/givintrns.h"
 #include "givaro/givrandom.h"
 #include "givaro/givpower.h"
-#include <math.h>
+#include <cmath>
 
 namespace Givaro {
 

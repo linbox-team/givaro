@@ -15,7 +15,7 @@
 #ifndef __GIVARO_integer_givintprime_C
 #define __GIVARO_integer_givintprime_C
 
-#include <math.h>
+#include <cmath>
 #include "givaro/givintprime.h"
 #include "givaro/givtimer.h"
 

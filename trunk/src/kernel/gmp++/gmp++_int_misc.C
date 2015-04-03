@@ -17,7 +17,7 @@
 #define __GIVARO_gmpxx_gmpxx_int_misc_C
 
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
 #endif

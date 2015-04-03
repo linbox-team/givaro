@@ -98,7 +98,7 @@ TT& dom_power(TT& res, const TT& n, long l, const D& F)
 
 
 #if 0
-#include <math.h>
+#include <cmath>
 
 template<> double power<double>(const double a, const double e) {
    return pow(a,e);

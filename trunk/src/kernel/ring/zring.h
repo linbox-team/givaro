@@ -104,6 +104,8 @@ namespace Givaro
 
 		ZRing<Element> operator=(const ZRing<Element> &e) {return *this ;}
 
+		Element& init (Element& x) const { return x;}
+		
 		template <typename Src>
 		Element& init (Element& x, const Src& s) const { return x = static_cast<const Element&>(s); }
 
@@ -118,6 +120,10 @@ namespace Givaro
 		size_t maxElement() const {return 0;}
 
 	};
+	/* Representations of Z with floating point elements*/
+	typedef ZRing<float> FloatDomain;
+	typedef ZRing<double> DoubleDomain;
+
 
 } // Givaro
 

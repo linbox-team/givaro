@@ -48,13 +48,13 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 #include "rutools.h" /* mod_n() */
 #include "rmdefine.h"
-
+#include "givaro/unparametric.h"
 // --------------------------------------------------------------
 // -------- Declaration of class rmint (no Montgomery) ----------
 
 namespace RecInt
 {
-    /* For modular calculus in non-Montgomery mode */
+     /* For modular calculus in non-Montgomery mode */
     template <size_t K> class rmint<K, MGI> {
     public:
         // p is the module (must be > 1)
@@ -64,9 +64,9 @@ namespace RecInt
         
         // Constructors
         rmint() : Value(0) {}
-        rmint(const ruint<K>& c) : Value(c) {}
-        rmint(const rmint<K, MGI>& c) : Value(c.Value) {}
-        rmint(const rmint<K, MGA>& c) : Value(c.Value) { reduction(*this); }
+        rmint(const ruint<K>& c) : Value(c) {reduction(*this);}
+        rmint(const rmint<K, MGI>& c) : Value(c.Value) {reduction(*this);}
+        rmint(const rmint<K, MGA>& c) : Value(c.Value) {reduction(*this);}
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { mod_n(Value, p); }
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   rmint(const T b) : Value((b < 0)? -b : b)
             { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
@@ -75,19 +75,25 @@ namespace RecInt
 
         // Cast
         template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Value); }
-        
+        operator ruint<K> () const { return Value; }  
         // Module functions
         static void init_module(const ruint<K>& p);
         static void get_module(ruint<K>& p);
+        
+//        template <size_t MG>
+            //friend rmint<K>& Givaro::UnparametricRing<rmint<K> >::reduce(rmint<K>&x) const {  mod_n(Value, p); return Value;}   
     };
 
-    /* Declaration of module */
+    /* Declaration of modulo */
     template <size_t K> ruint<K> rmint<K, MGI>::p = 0;
+
+    
     
     using rmint64  = rmint<6>;
     using rmint128 = rmint<7>;
     using rmint256 = rmint<8>;
     using rmint512 = rmint<9>;
+
 }
 
 #endif

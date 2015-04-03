@@ -63,7 +63,7 @@ namespace Givaro
 	template<class _Element>
 	class UnparametricRing : public UnparametricOperations<_Element> {
 	protected:
-		long int _p ; long int _card ;
+		Givaro::Integer _p ; Givaro::Integer _card ;
 	public:
 
 		/** The field's element type.
@@ -91,14 +91,15 @@ namespace Givaro
 		/** Builds this field to have characteristic q and cardinality q<sup>e</sup>.
 		 *  This constructor must be defined in a specialization.
 		 */
-		UnparametricRing(long int q = 0, size_t e = 1) :
-			_p(q), _card((long)(q == 0 ? -1 : std::pow((double)q, (double)e)) )
-			,one(1),zero(0),mOne(-one)
+		UnparametricRing(Givaro::Integer q = 0, long int e = 1) :
+				_p(q), _card((q == 0) ? Givaro::Integer(-1) : Givaro::pow(q, e)) 
+				,one(1),zero(0),mOne(-one)
 			{}
 		//@}
 
 		template<class T>
 		UnparametricRing (const T& ) : _p(0), _card(-1), one(1), zero(0), mOne(-one) {}
+
 
 		/// construct this field as copy of F.
 		UnparametricRing (const UnparametricRing &F) :
@@ -147,7 +148,8 @@ namespace Givaro
 		template <typename Src>
 		Element& init (Element& x, const Src& s) const
 		{
-			return x = static_cast<const Element&>(s);
+			return x = (Element) s ;
+			    //return x = static_cast<const Element&>(s);
 		}
 		
 		Element& init (Element& x) const
@@ -165,13 +167,9 @@ namespace Givaro
 		}
 
 		size_t minElement() const { return 0 ; }
-		size_t maxElement() const { return 0 ; }
+		size_t maxElement() const { return _card-1; }
 	};
 	
-	/* Representations of Z with floating point elements*/
-	typedef UnparametricRing<float> FloatDomain;
-	typedef UnparametricRing<double> DoubleDomain;
-
 } // Givaro
 
 #endif // __FIELD_UNPARAMETRIC_H_

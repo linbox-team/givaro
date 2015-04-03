@@ -40,13 +40,19 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RUINT_RUINT_H
 #define RUINT_RUINT_H
 
-#include "recdefine.h"
+#if not defined(MG_DEFAULT)
+#define MG_DEFAULT MG_INACTIVE
+#endif
 
+#include "recdefine.h"
+#include "rmdefine.h"
 // --------------------------------------------------------------
 // ---------------- Declaration of class ruint ------------------
 
 namespace RecInt
 {
+//template <size_t K, class M>G class rmint ;
+
     /* Basic definition of ruint */
     template <size_t K> class ruint {
     public:
@@ -56,12 +62,13 @@ namespace RecInt
         // Constructors
         ruint() {}
         ruint(const ruint<K>& r) : High(r.High), Low(r.Low) {}
+            //ruint(const rmint<K,MGI>& r) : High(r.Value.High), Low(r.Value.Low) {}
         ruint(const double b) : Low((b < 0)? -b : b) { if (b < 0) *this = -*this; }
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Low(b) {}
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   ruint(const T b) : Low((b < 0)? -b : b)
             { if (b < 0) *this = -*this; }
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
-        	{ *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
+            { *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
 
         // Cast
         // Note: Templated operators and specialization make compilers clang + icpc
@@ -81,7 +88,7 @@ namespace RecInt
         operator float() const { return (float)(Low); }
         operator double() const { return (double)(Low); }
         // operator bool() const { return (High != 0) || (Low != 0); }
-        // template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
+        template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Low); }
 
         // Const reverse iterator
         class cr_iterator {

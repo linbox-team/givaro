@@ -421,14 +421,14 @@ namespace Givaro
 		static inline Element getMaxModulus()
 		{
 #ifdef __x86_64__
-			return 6074000999L;
+			return 6074000999L; // s.t. 2((p-1)/2)^2 < 2^64
 #else
 			return 6074000999LL;
 #endif
 		}
 
 		static  Element getMinModulus()	{return 3;}
-
+		
 		Element minElement() const
 		{
 			return mhalf_mod ;

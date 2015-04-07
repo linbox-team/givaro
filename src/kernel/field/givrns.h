@@ -70,7 +70,7 @@ namespace Givaro {
 		// ------------- Access methods
 
 		// -- Returns the number of primes of this ctxt
-		int size() const { return _primes.size(); }
+		size_t size() const { return _primes.size(); }
 
 		// -- Returns a array to the begin of the array of primes
 		const domains& Primes() const;

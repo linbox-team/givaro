@@ -16,8 +16,8 @@ namespace Givaro
 
         while (v3 != 0)
         {
-            Compute_t q, t1, t2 , t3;
-            q = u3 / v3;
+            Compute_t q = u3 / v3;
+            Compute_t t1, t2 , t3;
 
             t1 = u1 - q * v1;
             t2 = u2 - q * v2;

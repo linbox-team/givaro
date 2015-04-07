@@ -72,6 +72,22 @@ namespace Givaro
 	}
 
 	template<typename COMP>
+    inline typename Modular<uint64_t, COMP>::Element&  Modular<uint64_t, COMP>::init (Element& r, const Integer& a) const
+	{
+		if (a < 0) {
+			// -a = b [p]
+			r = static_cast<Element>((-a) % _p) ;
+
+			// a = p-b [p]
+			if (r) return r = static_cast<Element>(_p) - r;
+			else   return r = zero;
+		}
+		else {
+			return r = static_cast<Element>(a % _p) ;
+		}
+	}
+
+	template<typename COMP>
 	template <class XXX>
     inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::init(Element &x, const XXX &y) const
 	{
@@ -254,13 +270,13 @@ namespace Givaro
 	template<>
     inline std::ostream &Modular<uint64_t, int64_t>::write (std::ostream &os) const
 	{
-		return os << "Modular<uint64_t, uint64_t> mod " << _p;
+		return os << "Modular<uint64_t, uint64_t> modulo " << _p;
 	}
 
 	template<>
     inline std::ostream &Modular<uint64_t, uint64_t>::write (std::ostream &os) const
 	{
-		return os << "Modular<uint64_t, uint64_t> mod " << _p;
+		return os << "Modular<uint64_t, uint64_t> modulo " << _p;
 	}
 
 	template<typename COMP>

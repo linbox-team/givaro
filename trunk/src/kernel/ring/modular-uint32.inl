@@ -347,7 +347,6 @@ namespace Givaro
 		if (a < 0.0) { sign =-1; ua = -a;}
 		else { ua = a; sign =1; }
 		if ( ua > Signed_Trait<uint32_t>::max()){
-			//     ua -= (double)floor(ua * _invdp)*_dp;
 			ua = fmod(ua,_dp);
 			r = (Element) ua;
 		} else
@@ -388,26 +387,18 @@ namespace Givaro
 	}
 
 	template<typename COMP>
-    inline typename Modular<uint32_t, COMP>::Element&  Modular<uint32_t, COMP>::init ( Element& r, const Integer& Residu ) const
+    inline typename Modular<uint32_t, COMP>::Element&  Modular<uint32_t, COMP>::init ( Element& r, const Integer& a ) const
 	{
-		long tr;
-		if (Residu <0) {
+		if (a < 0) {
 			// -a = b [p]
+			r = static_cast<Element>((-a) % _p) ;
+
 			// a = p-b [p]
-			if ( Residu <= (Integer)(-_p) )
-				tr = long( (-Residu) % _p) ;
-			else
-				tr = long(-Residu);
-			if (tr)
-				return r = Element( _p - (unsigned long)tr );
-			else
-				return r = zero;
-		} else {
-			if (Residu >= (Integer)_p )
-				tr =   long(Residu % _p) ;
-			else
-				tr = long(Residu);
-			return r = Element(tr);
+			if (r) return r = static_cast<Element>(_p) - r;
+			else   return r = zero;
+		}
+		else {
+			return r = static_cast<Element>(a % _p) ;
 		}
 	}
 

@@ -743,7 +743,7 @@ label1:
 
     inline std::ostream& Modular<Log16, Log16>::write (std::ostream& s ) const
     {
-        return s << "Log16 Givaro Z/pZ modulo " << residu();
+        return s << "Modular<Log16> modulo " << residu();
     }
 
     inline std::istream& Modular<Log16, Log16>::read (std::istream& s, Rep& a) const

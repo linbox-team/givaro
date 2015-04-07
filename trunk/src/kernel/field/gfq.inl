@@ -597,7 +597,7 @@ namespace Givaro {
             if (ch != ')')
                 std::cerr << "GFqDom::read: syntax error: no ')'" << std::endl;
 
-            *this = GFqDom<TT>(p,k);
+            *this = GFqDom<TT>(p,k); // Seems like a useless copy... better have a reinit function.
         }
         return s;
     }
@@ -605,12 +605,12 @@ namespace Givaro {
     template<typename TT>
     inline std::ostream& GFqDom<TT>::write (std::ostream& o) const
     {
-        return o << "Givaro Gfq of (" <<  GFqDom<TT>::_characteristic << '^' << GFqDom<TT>::_exponent << ')';
+        return o << "GFqDom<> (" <<  _characteristic << '^' << _exponent << ")";
     }
     template<typename TT>
     inline std::ostream& GFqDom<TT>::write (std::ostream& o, const std::string& s) const
     {
-	return this->write(o) << s;
+		return this->write(o) << s;
     }
 
         // ------------------------------------

@@ -114,13 +114,14 @@ public:
 	}
 	
 	// ----- Initialisation
-	Element &init (Element &x) const;
-	Element &init (Element &x, const int32_t &y ) const;
-	Element &init (Element &x, const int64_t &y ) const;
-	Element &init (Element &x, const uint32_t &y ) const;
-	Element &init (Element &x, const uint64_t &y ) const;
-	Element &init (Element &x, const double &y) const;
-	template<class XXX> Element& init(Element & x, const XXX & y) const;
+	Element& init (Element &x) const;
+	Element& init (Element &x, const int32_t& y ) const;
+	Element& init (Element &x, const int64_t& y ) const;
+	Element& init (Element &x, const uint32_t& y ) const;
+	Element& init (Element &x, const uint64_t& y ) const;
+	Element& init (Element &x, const double& y) const;
+	Element& init (Element& r, const Integer& a) const;
+	template<class XXX> Element& init(Element& x, const XXX& y) const;
 
 	Element &assign (Element &x, const Element &y) const;
 	

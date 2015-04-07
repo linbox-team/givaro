@@ -400,7 +400,7 @@ inline std::istream& Montgomery<int32_t>::read (std::istream& s)
 
 inline std::ostream& Montgomery<int32_t>::write (std::ostream& s ) const
 {
-  return s << "Givaro Montgomery Z/pZ, p=" << residu();
+  return s << "Montgomery<int32_t> modulo " << residu();
 }
 
 inline std::istream& Montgomery<int32_t>::read (std::istream& s, Rep& a) const

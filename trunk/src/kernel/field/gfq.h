@@ -122,7 +122,7 @@ public:
 	//    ~GFqDom() {};
 
 
-	GFqDom<TT> operator=( const GFqDom<TT>& F)
+	GFqDom<TT>& operator=( const GFqDom<TT>& F)
 	{
 		this->zero = F.zero;
 		this->one = F.one;

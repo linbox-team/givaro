@@ -17,7 +17,7 @@ namespace Givaro {
 	template<class Ints>
 	template<class smallIntVector>
 	Ints& RNSsystemFixed<Ints>::RnsToRingLeft( Ints& I, const smallIntVector& residues, const int level, const int col )
-{
+	{
 		if (level) {
 			int lowercol=col<<1, lowercolnext=lowercol+1;
 			int lowerlevel=level-1;

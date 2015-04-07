@@ -48,7 +48,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 #include "rutools.h" /* mod_n() */
 #include "rmdefine.h"
-#include "givaro/unparametric.h"
+
 // --------------------------------------------------------------
 // -------- Declaration of class rmint (no Montgomery) ----------
 
@@ -79,9 +79,6 @@ namespace RecInt
         // Module functions
         static void init_module(const ruint<K>& p);
         static void get_module(ruint<K>& p);
-        
-//        template <size_t MG>
-            //friend rmint<K>& Givaro::UnparametricRing<rmint<K> >::reduce(rmint<K>&x) const {  mod_n(Value, p); return Value;}   
     };
 
     /* Declaration of modulo */

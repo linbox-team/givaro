@@ -72,12 +72,13 @@ int main(void)
     if (yi1 != y1) return 17;
     if (wi1 != w1) return 18;
     
-    // ruint from rmint and vice versa
+    // rmint from ruint
+    // check that it is correctly reduced
     rmint<10> pi(p10);
     rmint<__RECINT_LIMB_SIZE> li(pLS);
     
-    if (pi != p10) return 19;
-    if (li != pLS) return 20;
+    if (pi != 0) return 19;
+    if (li != 0) return 20;
 
     return 0; 
 }

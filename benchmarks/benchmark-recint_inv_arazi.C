@@ -28,8 +28,7 @@ using namespace RecInt;
 
 int main(int argc, char ** argv)
 {
-    size_t nbloops = (argc>1?atoi(argv[1]):LOOPS);
-    
+    size_t nbloops = static_cast<size_t>((argc > 1)? atoi(argv[1]) : LOOPS);
     Givaro::Timer tim;
     
     ruint<STD_RECINT_SIZE> a[ALEA_MAX];
@@ -39,11 +38,9 @@ int main(int argc, char ** argv)
         rand(a[i]);
         if (a[i] % 2 == 0) ++a[i];
     }
-    
- 
 
     // Random
-    RecInt::srand(time(NULL));
+    RecInt::srand(static_cast<unsigned long>(time(NULL)));
     
 	tim.clear(); tim.start();
     for (UDItype l = 0; l < nbloops; l++) {

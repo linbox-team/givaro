@@ -28,18 +28,18 @@ using namespace RecInt;
 
 int main(int argc, char ** argv)
 {
-    size_t nbloops = (argc>1?atoi(argv[1]):LOOPS);
+    size_t nbloops = static_cast<size_t>((argc > 1)? atoi(argv[1]) : LOOPS);
     
     ruint<STD_RECINT_SIZE> p, pinv;
     ruint<STD_RECINT_SIZE+1> P, P1, R;
     Givaro::Timer tim;
     
     // Random
-    RecInt::srand(time(NULL));
+    RecInt::srand(static_cast<unsigned long>(time(NULL)));
     
     R.High = 1;
 	tim.clear(); tim.start();
-    for (UDItype l = 0; l < LOOPS; l++) {
+    for (UDItype l = 0; l < nbloops; l++) {
         rand(P.Low); if (P.Low % 2 == 0) P.Low++;
 
         // P1 = inv(P) mod R

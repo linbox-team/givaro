@@ -63,5 +63,5 @@ docs_dev:docs/givaro-dev-html/index.html
 docs/givaro-dev-html/index.html:
 	(cd docs; ${MAKE} docs_dev)
 
-VERSION=3.9.0
+VERSION=3.9.1
 

@@ -1,7 +1,7 @@
 /* misc/display.h - Display functions for r(u/m)int
 
 Copyright Université Joseph Fourier - Grenoble
-Contributors : 
+Contributors :
     Alexis BREUST (alexis.breust@gmail.com 2014)
 	Christophe CHABOT (christophechabotcc@gmail.com 2011)
     Jean-Guillaume DUMAS
@@ -13,16 +13,16 @@ This software is a computer program whose purpose is to provide a
 fixed precision arithmetic library.
 
 This software is governed by the CeCILL-B license under French law and
-abiding by the rules of distribution of free software.  You can  use, 
+abiding by the rules of distribution of free software.  You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL-B
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
 As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
@@ -31,9 +31,9 @@ that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-B license and that you accept its terms.
@@ -57,7 +57,7 @@ namespace RecInt
 {
     // Prints a rmint (de-montgomerized if necessary)
     template <size_t K, size_t MG> inline std::ostream& operator<<(std::ostream&, const rmint<K, MG>&);
-    
+
     // Reads a rmint
     template <size_t K, size_t MG> inline std::istream& operator>>(std::istream&, rmint<K, MG>&);
 }
@@ -73,13 +73,24 @@ namespace RecInt
     inline std::ostream& operator<<(std::ostream& out, const rmint<K, MG>& a) {
         return operator<<(out, get_ruint(a));
     }
-    
+
     // Reads a rmint
     template <size_t K, size_t MG>
     inline std::istream& operator>>(std::istream& is, rmint<K, MG>& a) {
     	operator>>(is, a.Value);
     	get_ready(a);
     	return is;
+    }
+
+    // Raw rmint (not demontgomerized!)
+    template <size_t K, size_t MG>
+    inline std::ostream& write_raw(std::ostream& out, const rmint<K, MG>& a) {
+        return display_raw(out, a.Value);
+    }
+
+    template <size_t K, size_t MG>
+    inline std::istream& read_raw(std::istream& is, const rmint<K, MG>& a) {
+        return read_raw(is, a.Value);
     }
 }
 

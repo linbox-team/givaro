@@ -85,7 +85,7 @@ namespace RecInt
     // Raw rmint (not demontgomerized!)
     template <size_t K, size_t MG>
     inline std::ostream& write_raw(std::ostream& out, const rmint<K, MG>& a) {
-        return display_raw(out, a.Value);
+        return write_raw(out, a.Value);
     }
 
     template <size_t K, size_t MG>

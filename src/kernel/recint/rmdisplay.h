@@ -89,7 +89,7 @@ namespace RecInt
     }
 
     template <size_t K, size_t MG>
-    inline std::istream& read_raw(std::istream& is, const rmint<K, MG>& a) {
+    inline std::istream& read_raw(std::istream& is, rmint<K, MG>& a) {
         return read_raw(is, a.Value);
     }
 }

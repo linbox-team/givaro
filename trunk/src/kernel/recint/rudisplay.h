@@ -127,7 +127,7 @@ namespace RecInt
     }
 
     template <size_t K>
-    inline std::istream& read_raw(std::istream& is, const ruint<K>& a) {
+    inline std::istream& read_raw(std::istream& is, ruint<K>& a) {
         return is.read(reinterpret_cast<char*>(&a), sizeof(a));
     }
 }

@@ -75,7 +75,8 @@ namespace RecInt
 
         // Cast
         template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Value); }
-        operator ruint<K> () const { return Value; }  
+        operator ruint<K> () const { return Value; }
+
         // Module functions
         static void init_module(const ruint<K>& p);
         static void get_module(ruint<K>& p);

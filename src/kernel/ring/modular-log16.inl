@@ -180,7 +180,7 @@ namespace Givaro
       (*numRefs)++;
     }
 
-    Modular<Log16, Log16>& Modular<Log16, Log16>::operator=( const Modular<Log16, Log16>& F)
+    inline Modular<Log16, Log16>& Modular<Log16, Log16>::operator=( const Modular<Log16, Log16>& F)
     {
 
         F.assign(const_cast<Element&>(one),F.one);

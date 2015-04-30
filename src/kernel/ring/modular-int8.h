@@ -59,12 +59,12 @@ public:
 
 	// ----- Constructors
 	Modular()
-	    : zero(0), one(1), mOne(-1), _p(0) {}
+	    : _p(static_cast<Residu_t>(0)) {}
 
 	Modular(const Residu_t p)
 	    : zero(static_cast<Element>(0))
 	    , one(static_cast<Element>(1))
-	    , mOne(static_cast<Element>(p)-static_cast<Element>(1))
+	    , mOne(static_cast<Element>(p-1))
 	    , _p(static_cast<Residu_t>(p))
 	{
 	    assert(_p >= getMinModulus());

@@ -29,6 +29,12 @@ int main(void)
     mpz_ui_pow_ui(size.get_mpz_t(), 2, size.get_ui());
     RecInt::srand(limb(time(NULL)));
     
+    a = 0;
+    b = -a;
+    
+    if (a != b)
+        return -1;
+    
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {
         rand(a); rand(b); rand(c); rand(d);

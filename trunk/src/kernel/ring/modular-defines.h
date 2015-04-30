@@ -39,12 +39,12 @@ Compute_t(a)-Compute_t(b) : Compute_t(p)-Compute_t(b)+Compute_t(a)) )
 
 // r <- a + b
 #define __GIVARO_MODULAR_INTEGER_ADD(r,p,a,b) \
-{ r = Element(Compute_t(a)+Compute_t(b)); \
-r = (Compute_t(r) < Compute_t(p)) ? Element(r) : Element(Compute_t(r) - Compute_t(p)); }
+{ r = Element(Compute_t(a) + Compute_t(b)); \
+r = Element((Compute_t(r) < Compute_t(p)) ? r : Compute_t(r) - Compute_t(p)); }
 #define __GIVARO_MODULAR_FLOATING_ADD(r,p,a,b) { r = (a+b); r= (r < p ? r : r-p); }
 // r <- r + a
 #define __GIVARO_MODULAR_INTEGER_ADDIN(r,p,a) \
-{ r += Element(a); r = (Compute_t(r) < Compute_t(p)) ? Element(r) : Element(Compute_t(r) - Compute_t(p)); }
+{ r += Element(a); r = Element((Compute_t(r) < Compute_t(p)) ? r : Compute_t(r) - Compute_t(p)); }
 #define __GIVARO_MODULAR_FLOATING_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p); }
 
 // r <- c + a*b

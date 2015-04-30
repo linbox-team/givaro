@@ -16,12 +16,14 @@ namespace Givaro
 
         while (v3 != 0)
         {
-            Compute_t q = u3 / v3;
+            Compute_t q = static_cast<Compute_t>(u3 / v3);
             Compute_t t1, t2 , t3;
 
-            t1 = u1 - q * v1;
-            t2 = u2 - q * v2;
-            t3 = u3 - q * v3;
+            // Weirdly, all the casts are needed when used with uint8_t,
+            // as gcc operators on this type returns an int, not a uint8_t.
+            t1 = static_cast<Compute_t>(u1 - q * v1);
+            t2 = static_cast<Compute_t>(u2 - q * v2);
+            t3 = static_cast<Compute_t>(u3 - q * v3);
 
             u1 = v1;
             u2 = v2;
@@ -42,20 +44,20 @@ namespace Givaro
     {
         using Compute_t = typename std::make_signed<Storage_t>::type;
 
-        Compute_t u1 = 1, u3 = static_cast<Compute_t>(a);
-        Compute_t v1 = 0, v3 = static_cast<Compute_t>(b);
+        Compute_t u1(1), u3 = static_cast<Compute_t>(a);
+        Compute_t v1(0), v3 = static_cast<Compute_t>(b);
 
-        while (v3 != 0)
+        while (v3 != static_cast<Compute_t>(0))
         {
-            Compute_t q = u3 / v3;
+            Compute_t q = static_cast<Compute_t>(u3 / v3);
             Compute_t t;
 
             t = v1;
-            v1 = u1 - q * v1;
+            v1 = static_cast<Compute_t>(u1 - q * v1);
             u1 = t;
 
             t = v3;
-            v3 = u3 - q * v3;
+            v3 = static_cast<Compute_t>(u3 - q * v3);
             u3 = t;
         }
 

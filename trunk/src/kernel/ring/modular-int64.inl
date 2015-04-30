@@ -575,7 +575,7 @@ namespace Givaro {
     }
 
     template<typename COMP>
-        inline std::istream& Modular<int64_t, COMP>::read (std::istream& s, Element& a) const
+    inline std::istream& Modular<int64_t, COMP>::read (std::istream& s, Element& a) const
     {
 	    Integer tmp;
 	    s >> tmp;

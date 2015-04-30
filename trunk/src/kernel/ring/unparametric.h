@@ -50,14 +50,14 @@
 namespace Givaro
 {
     /** Class UnparametricRing
-     * Provides the implementation of a field/ring (of char >0 or 0) using 
+     * Provides the implementation of a field/ring (of char >0 or 0) using
      * the arithmetic provided by UnparametricOperations.
-     * UnparametricOperations is an empty class wrapping infix +,*,-,/,etc 
+     * UnparametricOperations is an empty class wrapping infix +,*,-,/,etc
      * operations into add, mul, sub, div, etc.
      * UnparametricRing contains characteristic and cardinality members and accessors.
      * This is used for instance to represent Z/pZ with NTL's implementation
      * - UnparametricRing<NTL::zz_p>
-     * @warning: prefer ZZ<double>, ZZ<integer> over UnparametricRing<double> 
+     * @warning: prefer ZZ<double>, ZZ<integer> over UnparametricRing<double>
      * and UnparametricRing<integer>
      */
 	template<class _Element>
@@ -76,7 +76,7 @@ namespace Givaro
 		typedef UnparametricRing<Element> Self_t;
 		typedef GeneralRingRandIter<Self_t> RandIter;
 		typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-		
+
 		typedef Element* Element_ptr;
 		typedef const Element* ConstElement_ptr;
 
@@ -92,13 +92,13 @@ namespace Givaro
 		 *  This constructor must be defined in a specialization.
 		 */
 		UnparametricRing(Givaro::Integer q = 0, long int e = 1) :
-				_p(q), _card((q == 0) ? Givaro::Integer(-1) : Givaro::pow(q, e)) 
+				_p(q), _card((q == 0) ? Givaro::Integer(-1) : Givaro::pow(q, e))
 				,one(1),zero(0),mOne(-one)
 			{}
 		//@}
 
 		template<class T>
-		UnparametricRing (const T& ) : _p(0), _card(-1), one(1), zero(0), mOne(-one) {}
+		UnparametricRing (const T& q = 0) : _p(q), _card(q), one(1), zero(0), mOne(-one) {}
 
 
 		/// construct this field as copy of F.
@@ -107,7 +107,7 @@ namespace Givaro
 			,one(F.one),zero(F.zero),mOne(F.mOne)
 		{
 		}
-		
+
 		Integer &cardinality (Integer &c) const
 		{
 			return c = _card ;
@@ -151,12 +151,12 @@ namespace Givaro
 			return x = (Element) s ;
 			    //return x = static_cast<const Element&>(s);
 		}
-		
+
 		Element& init (Element& x) const
 		{
 			return x = 0;
 		}
-		
+
 		Element& reduce (Element& x, const Element& y) const {return init (x,y);}
 		Element& reduce (Element& x) const {return init (x,x);}
 
@@ -169,7 +169,7 @@ namespace Givaro
 		size_t minElement() const { return 0 ; }
 		size_t maxElement() const { return _card-1; }
 	};
-	
+
 } // Givaro
 
 #endif // __FIELD_UNPARAMETRIC_H_

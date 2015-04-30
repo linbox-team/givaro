@@ -250,22 +250,26 @@ namespace Givaro {
 	// ----------------
 	// ----- IO methods
 
+    inline
 	std::ostream &Modular<float>::write (std::ostream &os) const
 	{
 		return os << "Modular<float> mod " << _lp;
 	}
 
+    inline
 	std::istream &Modular<float>::read (std::istream &is)
 	{
 		is >> _p;
 		return is;
 	}
 
+    inline
 	std::ostream &Modular<float>::write (std::ostream &os, const Element &x) const
 	{
 		return os << x;
 	}
 
+    inline
 	std::istream &Modular<float>::read (std::istream &is, Element &x) const
 	{
 		int64_t tmp;

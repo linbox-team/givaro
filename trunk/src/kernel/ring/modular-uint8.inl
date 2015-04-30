@@ -48,7 +48,7 @@ namespace Givaro {
     inline typename Modular<uint8_t, COMP>::Element &Modular<uint8_t, COMP>::init (Element &x, const int32_t &y) const
 	{
 		x = (Element)(std::abs(y) % _p);
-		if (y < 0) x = _p - x;
+		if (y < 0) x = static_cast<Element>(_p - static_cast<Residu_t>(x));
 		return x;
 	}
 

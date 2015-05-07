@@ -82,7 +82,7 @@
 #ifdef __GIVARO_HAVE_STDINT_H
 #ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS
-#endif
+#endif 
 #include <stdint.h>
 #if !defined(INT64_MAX)
 #if !defined(__CYGWIN__) && !defined(__PATHCC__)

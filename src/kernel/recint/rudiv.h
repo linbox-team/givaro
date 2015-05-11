@@ -8,7 +8,8 @@ Contributors :
 
 Time-stamp: <20 Jun 12 10:28:29 Jean-Guillaume.Dumas@imag.fr>
 
-This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
+This software is a computer program whose purpose is to provide an
+fixed precision arithmetic library.  
 
 This software is governed by the CeCILL-B license under French law and
 abiding by the rules of distribution of free software.  You can  use, 

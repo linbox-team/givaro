@@ -88,7 +88,7 @@ namespace Givaro {
 			r = static_cast<Element>((-a) % _p) ;
 
 			// a = p-b [p]
-			if (r) return r = static_cast<Element>(_p) - r;
+			if (r) return r = static_cast<Element>(static_cast<Element>(_p) - r);
 			else   return r = zero;
 		}
 		else {

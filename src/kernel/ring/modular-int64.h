@@ -76,10 +76,9 @@ public:
 	inline Residu_t residu() const { return _p; }
 	inline Residu_t size() const { return _p; }
 	inline Residu_t characteristic() const { return _p; }
-	inline Residu_t& characteristic(Residu_t& p) const { return p = _p; }
-	inline Integer& characteristic(Integer& p) const { return p = _p; }
 	inline Residu_t cardinality() const { return _p; }
-	inline Integer& cardinality(Integer& c) const { return c = _p; }
+	template<class T> inline T& characteristic(T& p) const { return p = _p; }
+	template<class T> inline T& cardinality(T& p) const { return p = _p; }
 	static inline Residu_t getMaxModulus() { return 3037000499ULL; } 
 	static inline Residu_t getMinModulus() { return 2; }
 

@@ -115,27 +115,27 @@ namespace Givaro
 
 		Integer &characteristic (Integer &c) const
 		{
-			return c = (unsigned long)_p ;
+			return c = (uint64_t)_p ;
 		}
 
-		unsigned long &cardinality (unsigned long &c) const
+		uint64_t &cardinality (uint64_t &c) const
 		{
 			return c = _card ;
 		}
 
-		unsigned long &characteristic (unsigned long &c) const
+		uint64_t &characteristic (uint64_t &c) const
 		{
-			return c = (unsigned long)_p ;
+			return c = (uint64_t)_p ;
 		}
 
-		unsigned long cardinality () const
+		uint64_t cardinality () const
 		{
-			return (unsigned long)_card ;
+			return (uint64_t)_card ;
 		}
 
-		unsigned long characteristic () const
+		uint64_t characteristic () const
 		{
-			return (unsigned long)_p ;
+			return (uint64_t)_p ;
 		}
 
 		UnparametricRing<Element> operator=(const UnparametricRing<Element> &e)

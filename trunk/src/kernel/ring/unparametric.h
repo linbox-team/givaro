@@ -46,6 +46,7 @@
 #include "givaro/unparametric-operations.h"
 #include "givaro/givranditer.h"
 #include "givaro/givinteger.h"
+#include "givaro/givcaster.h"
 
 namespace Givaro
 {
@@ -163,7 +164,7 @@ namespace Givaro
 		template <typename T>
 		T& convert (T &x, const Element &y) const
 		{
-			return x = static_cast<T>(y);
+                    return Caster(x,y);
 		}
 
 		size_t minElement() const { return 0 ; }

@@ -19,6 +19,5 @@ pkginclude_HEADERS=         \
 	givmatdenseops.inl	    \
 	givmatstorage.h
 
-noinst_LTLIBRARIES=libgivmatrix.la
-
-libgivmatrix_la_SOURCES=givmatrix.C
+#noinst_LTLIBRARIES=libgivmatrix.la
+#libgivmatrix_la_SOURCES=givmatrix.C

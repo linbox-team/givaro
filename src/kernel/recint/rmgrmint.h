@@ -76,6 +76,8 @@ namespace RecInt
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { to_mg(*this); }
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   rmint(const T b) : Value((b < 0)? -b : b)
             { mod_n(Value, p); if (b < 0) sub(Value, p, Value); to_mg(*this); }
+            
+        rmint<K, MGA>& random();
 
         // Cast
         template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(get_ruint(*this)); }

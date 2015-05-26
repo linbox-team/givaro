@@ -36,12 +36,13 @@ knowledge of the CeCILL-B license and that you accept its terms.
 */
 
 
-#ifndef RUINT_CONVERT_H
-#define RUINT_CONVERT_H
+#ifndef RINT_CONVERT_H
+#define RINT_CONVERT_H
 
 #include <gmpxx.h>
 
-#include "rumanip.h" /* reset() */
+#include "ruconvert.h"
+#include "rufiddling.h" // Unary operator
 
 // --------------------------------------------------------------
 // ----------------------- DEFINTIONS ---------------------------
@@ -49,9 +50,9 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     // Converts a mpz_class to a ruint<K> and vice-versa
-    template <size_t K> ruint<K>& mpz_to_ruint(ruint<K>&, const mpz_class&);
-    template <size_t K> mpz_class& ruint_to_mpz(mpz_class&, const ruint<K>&);
-    template <size_t K> mpz_class& ruint_to_mpz(mpz_class&, const ruint<K>&);
+    template <size_t K> rint<K>& mpz_to_rint(ruint<K>&, const mpz_class&);
+    template <size_t K> mpz_class& rint_to_mpz(mpz_class&, const rint<K>&);
+    template <size_t K> mpz_class& rint_to_mpz(mpz_class&, const rint<K>&);
 }
 
 
@@ -62,40 +63,31 @@ namespace RecInt
 {
     // Convert a GMP integer into a ruint
     template <size_t K>
-    inline ruint<K>& mpz_to_ruint(ruint<K>& a, const mpz_class& b) {
-	    unsigned int i;
-	    mpz_class c(b);
-
-        reset(a);
-	    for (i = 0; i < NBLIMB<K>::value; i++) {
-#if GMP_LIMB_BITS != 64
-		    limb l = c.get_ui(); c >>= 32;
-		    l |= (limb(c.get_ui()) << 32);
-		    set_limb(a, l, i); c >>= 32;
-#else
-            limb l = c.get_ui();
-            set_limb(a, l, i); c >>= 64;
-#endif
-	    }
+    inline rint<K>& mpz_to_rint(rint<K>& a, const mpz_class& b) {
+        // If negative, get positive one and reinverse
+        if (b < 0) {
+            mpz_to_ruint(a.Value, -b);
+            a.Value = -a.Value;
+        }
+        // If positive, no problem
+        else {
+            mpz_to_ruint(a.Value, b);
+        }
 
         return a;
     }
 
     // Convert a ruint into a GMP integer
     template <size_t K>
-    inline mpz_class& ruint_to_mpz(mpz_class& a, const ruint<K>& b) {
-        a = 0;
-        for (auto it(b.rbegin()); it != b.rend(); ++it) {
-#if GMP_LIMB_BITS != 64
-		    // GMP does not handle uint64_t, need to break it
-            a <<= 32;
-            a += mp_limb_t((*it) >> 32);
-            a <<= 32;
-		    a += mp_limb_t(*it);
-#else
-            a <<= 64;
-            a += mp_limb_t(*it);
-#endif
+    inline mpz_class& rint_to_mpz(mpz_class& a, const rint<K>& b) {
+        // If negative, get positive one and reinverse
+        if (b.isNegative()) {
+	        ruint_to_mpz(a, -b.Value);
+            a = -a;
+        }
+        // If positive, no problem
+        else {
+	        ruint_to_mpz(a, b.Value);
         }
 
         return a;

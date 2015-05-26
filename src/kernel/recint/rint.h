@@ -38,23 +38,45 @@ knowledge of the CeCILL-B license and that you accept its terms.
 */
 
 
-#ifndef RECINT_H
-#define RECINT_H
+#ifndef RINT_H
+#define RINT_H
 
-/* Classic ruint (unsigned integer) */
-#include "ruint.h"
+/* Class definition */
+#include "rrint.h"
 
-/* Classic rint (signed integer) */
-#include "rint.h"
+/* Arithmetics in rint */
+#include "radd.h"
+#include "rsub.h"
+#include "rmul.h"
+#include "rdiv.h"
+//#include "rexp.h"
+//#include "rgcd.h"
+//#include "rinvmod.h"
+//#include "raddmul.h"
 
-/* Modular calculus
-   Note: This will set MG_DEFAULT to MG_INACTIVE
-   if not previously defined. */
-#include "rmint.h"
+/* Comparisons of rint */
+#include "rcmp.h"
 
-/* Modular in Montgomery
-   (faster for successive multiplication or exponentiation) */
-#include "rmintmg.h"
+/* Bit manipulation of rint */
+//#include "rfiddling.h"
+
+/* Limb manipulation in rint */
+//#include "rumanip.h"
+
+/* Random in rint */
+#include "rrandom.h"
+
+/* Shift for rint */
+//#include "rshift.h"
+
+/* Display for rint */
+//#include "rdisplay.h"
+
+/* Internal use for rint */
+//#include "rtools.h"
+
+/* GMP conversion system */
+#include "rconvert.h"
 
 #endif
 

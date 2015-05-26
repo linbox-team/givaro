@@ -39,6 +39,8 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RMINT_COMMON_RANDOM_H
 #define RMINT_COMMON_RANDOM_H
 
+#include "rmbrmint.h"
+#include "rmgrmint.h"
 #include "rurandom.h" /* rand() */
 
 /** NOTE : For this common file, either basic/reduc.h or mg/reduc.h
@@ -63,6 +65,20 @@ namespace RecInt
     inline void rand(rmint<K, MG>& a) {
         rand(a.Value);
         get_ready(a);
+    }
+    
+    template <size_t K>
+    inline rmint<K, MGI>& rmint<K, MGI>::random()
+    {
+        rand(*this);
+        return *this;
+    }
+    
+    template <size_t K>
+    inline rmint<K, MGA>& rmint<K, MGA>::random()
+    {
+        rand(*this);
+        return *this;
     }
 }
 

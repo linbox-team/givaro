@@ -158,6 +158,12 @@ namespace Givaro
 			return x = 0;
 		}
 
+		Element& random (Element& x) const
+		{
+		    x.random();
+			return x;
+		}
+
 		Element& reduce (Element& x, const Element& y) const {return init (x,y);}
 		Element& reduce (Element& x) const {return init (x,x);}
 

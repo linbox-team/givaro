@@ -65,6 +65,7 @@ namespace RecInt
     template <size_t K> void set_limb(ruint<K>& a, const limb& b, unsigned int index);
     
     // Get the index-th limb of a
+    template <size_t K> limb ms_limb(const ruint<K>& a); // Most significant limb
     template <size_t K> limb get_limb(const ruint<K>& a, unsigned int index);
     template <size_t K> const limb* get_limb_p(const ruint<K>& a, unsigned int index);
 }
@@ -132,12 +133,18 @@ namespace RecInt
 
 
     // Get the index-th limb of a
+    template <size_t K> inline limb ms_limb(const ruint<K>& a) {
+        return ms_limb(a.High);  
+    }
+    template <> inline limb ms_limb(const ruint<__RECINT_LIMB_SIZE>& a) {
+        return a.Value;
+    }
+    
     template <size_t K> inline limb get_limb(const ruint<K>& a, unsigned int index) {
         if (index < NBLIMB<K-1>::value) return get_limb(a.Low, index);
         else return get_limb(a.High, index - NBLIMB<K-1>::value);    
     }
-    template <> inline limb get_limb(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int index) {
-        (void) index;
+    template <> inline limb get_limb(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int) {
         return a.Value;
     }
     
@@ -145,8 +152,7 @@ namespace RecInt
         if (index < NBLIMB<K-1>::value) return get_limb_p(a.Low, index);
         else return get_limb_p(a.High, index - NBLIMB<K-1>::value);    
     }
-    template <> inline const limb* get_limb_p(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int index) {
-        (void) index;
+    template <> inline const limb* get_limb_p(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int) {
         return &(a.Value);
     }
 }

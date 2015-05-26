@@ -14,6 +14,15 @@ pkgincludesub_HEADERS= \
     recint.h        \
     recdefine.h     \
     reclonglong.h   \
+    rcmp.h          \
+    rconvert.h      \
+    rrandom.h       \
+    rdiv.h          \
+    radd.h          \
+    rsub.h          \
+    rmul.h          \
+    rrint.h         \
+    rint.h          \
     rmadd.h         \
     rmbaddmul.h     \
     rmbexp.h        \

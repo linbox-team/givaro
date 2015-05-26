@@ -42,6 +42,7 @@ RECINT_TESTS=                    \
     test-rmint_arith_add_mg      \
     test-rmint_arith_add         \
     test-ruint_arith_add         \
+    test-rint_arith_add          \
     test-rmint_arith_sub_mg      \
     test-rmint_arith_sub         \
     test-ruint_arith_sub         \
@@ -107,6 +108,7 @@ test_ruint_arith_addmul_SOURCES      = test-ruint_arith.C
 test_rmint_arith_add_mg_SOURCES      = test-rmint_arith.C
 test_rmint_arith_add_SOURCES         = test-rmint_arith.C
 test_ruint_arith_add_SOURCES         = test-ruint_arith.C
+test_rint_arith_add_SOURCES          = test-rint_arith.C
 test_rmint_arith_sub_mg_SOURCES      = test-rmint_arith.C
 test_rmint_arith_sub_SOURCES         = test-rmint_arith.C
 test_ruint_arith_sub_SOURCES         = test-ruint_arith.C
@@ -157,6 +159,7 @@ test_ruint_arith_addmul_CXXFLAGS     = $(AM_CXXFLAGS) -DNOT_IN_PLACE -DRI_OP=add
 test_rmint_arith_add_mg_CXXFLAGS     = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE -DRI_OP=add -DGMP_OP=mpz_add -DGMP_OPUI=mpz_add_ui
 test_rmint_arith_add_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=add -DGMP_OP=mpz_add -DGMP_OPUI=mpz_add_ui
 test_ruint_arith_add_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=add -DGMP_OP=mpz_add -DGMP_OPUI=mpz_add_ui
+test_rint_arith_add_CXXFLAGS         = $(AM_CXXFLAGS) -DRI_OP=add -DGMP_OP=mpz_add -DGMP_OPUI=mpz_add_ui
 test_rmint_arith_sub_mg_CXXFLAGS     = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE -DRI_OP=sub -DGMP_OP=mpz_sub -DGMP_OPUI=mpz_sub_ui
 test_rmint_arith_sub_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=sub -DGMP_OP=mpz_sub -DGMP_OPUI=mpz_sub_ui
 test_ruint_arith_sub_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=sub -DGMP_OP=mpz_sub -DGMP_OPUI=mpz_sub_ui

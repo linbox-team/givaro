@@ -1,4 +1,4 @@
-/* rmint/rmint.h - Class definition of rmint<K,MG_INACTIVE> from RecInt library
+/* ruint/ruint.h - Class definition of ruint<K> from RecInt library
 
 Copyright Université Joseph Fourier - Grenoble
 Contributors :
@@ -37,60 +37,44 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-B license and that you accept its terms.
 */
 
-#ifndef RMINT_BASIC_RMINT_H
-#define RMINT_BASIC_RMINT_H
+#ifndef RINT_RINT_H
+#define RINT_RINT_H
 
-/* If not previously defined, MG_DEFAULT is set
-   for this file to run well. */
-#if not defined(MG_DEFAULT)
-#define MG_DEFAULT MG_INACTIVE
-#endif
-
-#include "rutools.h" /* mod_n() */
-#include "rmdefine.h"
+#include "recdefine.h"
+#include "ruruint.h"
+#include "rumanip.h" // ms_limb
 
 // --------------------------------------------------------------
-// -------- Declaration of class rmint (no Montgomery) ----------
+// ---------------- Declaration of class ruint ------------------
 
 namespace RecInt
 {
-     /* For modular calculus in non-Montgomery mode */
-    template <size_t K> class rmint<K, MGI> {
+    /* Basic definition of ruint */
+    template <size_t K> class rint {
     public:
-        // p is the module (must be > 1)
-        static ruint<K> p;
-        // Current value (always < p)
+        // A rint is stored as a ruint
         ruint<K> Value;
 
         // Constructors
-        rmint() : Value(0) {}
-        rmint(const ruint<K>& c) : Value(c) { reduction(*this); }
-        rmint(const rmint<K, MGI>& c) : Value(c.Value) { reduction(*this); }
-        rmint(const rmint<K, MGA>& c) : Value(c.Value) { reduction(*this); }
-        template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { mod_n(Value, p); }
-        template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   rmint(const T b) : Value((b < 0)? -b : b)
-            { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
-        rmint(const double& b) : Value((b < 0)? -b : b)
-            { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
-            
-        rmint<K, MGI>& random();        
+        rint() {}
+        rint(const ruint<K>& r) : Value(r) {}
+        rint(const rint<K>& r) : Value(r.Value) {}
+        template <typename T> rint(const T& b) : Value(b) {}
 
         // Cast
-        template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Value); }
-        operator ruint<K> () const { return Value; }
+        template <typename T> operator T() const { return static_cast<T>(Value); }
 
-        // Module functions
-        static void init_module(const ruint<K>& p);
-        static void get_module(ruint<K>& p);
+        // Quick sign evaluation
+        // *this < 0
+        inline bool isNegative() const { return ms_limb(Value) & __RECINT_MAXPOWTWO; }
+        // *this >= 0
+        inline bool isPositive() const { return !(isNegative()); }
     };
 
-    /* Declaration of modulo */
-    template <size_t K> ruint<K> rmint<K, MGI>::p = 0;
-
-    using rmint64  = rmint<6>;
-    using rmint128 = rmint<7>;
-    using rmint256 = rmint<8>;
-    using rmint512 = rmint<9>;
+    using rint64 =  rint<6>;
+    using rint128 = rint<7>;
+    using rint256 = rint<8>;
+    using rint512 = rint<9>;
 }
 
 #endif

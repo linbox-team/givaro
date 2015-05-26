@@ -1,12 +1,9 @@
-/* recint.h - RecInt library for fixed precision arithmetic
+/* ruint/misc.h - Miscellaneous functions for ruint
 
 Copyright Université Joseph Fourier - Grenoble
 Contributors :
     Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
-
-Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
+    Christophe CHABOT (christophechabotcc@gmail.com 2011)
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -38,23 +35,25 @@ knowledge of the CeCILL-B license and that you accept its terms.
 */
 
 
-#ifndef RECINT_H
-#define RECINT_H
+#ifndef RINT_RANDOM_H
+#define RINT_RANDOM_H
 
-/* Classic ruint (unsigned integer) */
-#include "ruint.h"
+#include "rrint.h"
+#include "rurandom.h"
 
-/* Classic rint (signed integer) */
-#include "rint.h"
 
-/* Modular calculus
-   Note: This will set MG_DEFAULT to MG_INACTIVE
-   if not previously defined. */
-#include "rmint.h"
+// --------------------------------------------------------------
+// ------------------------- Random -----------------------------
 
-/* Modular in Montgomery
-   (faster for successive multiplication or exponentiation) */
-#include "rmintmg.h"
+namespace RecInt
+{
+
+    // a is set to a random value (may be negative!)
+    template <size_t K> inline rint<K>& rand(rint<K>& a) {
+        rand(a.Value);
+        return a;
+    }
+}
 
 #endif
 

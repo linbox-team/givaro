@@ -178,7 +178,7 @@ namespace RecInt
         if (posA != posB) return posA;
 
         // If a and b are both positive, return 1 * ch, else -1 * ch;
-        else return posA * cmp(a.Value, b.Value);
+        else return static_cast<char>(posA * cmp(a.Value, b.Value));
     }
 
     //---- Unsigned ----
@@ -194,7 +194,7 @@ namespace RecInt
         char posB = (b >= 0)? 1 : -1;
 
         if (posA != posB) return posA;
-        else return posA * cmp(a.Value, b);
+        else return static_cast<char>(posA * cmp(a.Value, b));
     }
 }
 

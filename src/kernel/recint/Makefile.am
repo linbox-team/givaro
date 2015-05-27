@@ -15,6 +15,8 @@ pkgincludesub_HEADERS= \
     recdefine.h     \
     reclonglong.h   \
     rcmp.h          \
+    rdisplay.h      \
+    rfiddling.h     \
     rconvert.h      \
     rrandom.h       \
     rdiv.h          \
@@ -44,7 +46,7 @@ pkgincludesub_HEADERS= \
     rmgmul.h        \
     rmgreduc.h      \
     rmgrmint.h      \
-    rmint.h      \
+    rmint.h         \
     rmintmg.h       \
     rmmanip.h       \
     rmmul.h         \
@@ -60,7 +62,7 @@ pkgincludesub_HEADERS= \
     ruexp.h         \
     rufiddling.h    \
     rugcd.h         \
-    ruint.h      \
+    ruint.h         \
     ruinvmod.h      \
     rumanip.h       \
     rumul.h         \

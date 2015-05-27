@@ -26,7 +26,7 @@ using namespace RecInt;
 
 int main(void)
 {
-    rint<STD_RECINT_SIZE> x, y, z;
+    RecInt::rint<STD_RECINT_SIZE> x, y, z;
     mpz_class size, gx, gy, gz, gxy;
     USItype r;
 
@@ -42,28 +42,31 @@ int main(void)
         rand(y);
         rand(z);
 
+        #if defined(ARITH_MOD)
+        // Used by div and mod to be sure that the divisor is positive
+        if (y.isNegative()) y = -y;
+        #endif
+
         // rint_to_mpz x, y and the result to GMP
         rint_to_mpz(gx, x);
         rint_to_mpz(gy, y);
         rint_to_mpz(gxy, z);
 
-        // Do RecInt operation
-        if (x > y) RI_OP(z, x, y);
-        else RI_OP(z, y, x);
+        RI_OP(z, x, y);
+        GMP_OP(gxy.get_mpz_t(), gx.get_mpz_t(), gy.get_mpz_t());
         rint_to_mpz(gz, z);
 
-        // Do GMP operation
-        if (gx > gy) GMP_OP(gxy.get_mpz_t(), gx.get_mpz_t(), gy.get_mpz_t());
-        else GMP_OP(gxy.get_mpz_t(), gy.get_mpz_t(), gx.get_mpz_t());
-
         // Overflow correction
+        #if not defined(ARITH_MOD)
         gxy %= size;
         if (gxy < - size / 2u) gxy += size;
         if (gxy >= size / 2u)  gxy -= size;
+        #endif
 
         // Compare both results
         if (gz != gxy) return 1;
 
+        #if defined(GMP_OPUI)
         // Second test: with unsigned int
         r = USItype(rand());
         while (x < r) { rand(x); r = USItype(rand()); }
@@ -79,10 +82,15 @@ int main(void)
         if (gxy >= size / 2u)  gxy -= size;
 
         if (gz != gxy) return 2;
+        #endif
 
 
         // Third test: with repetition
+        #if defined(ARITH_MOD)
+        while (x < 0) rand(x);
+        #else
         while (x == 0) rand(x);
+        #endif
         rint_to_mpz(gx, x);
 
         RI_OP(x, x, x);
@@ -91,9 +99,11 @@ int main(void)
         GMP_OP(gx.get_mpz_t(), gx.get_mpz_t(), gx.get_mpz_t());
 
         // Overflow correction
+        #if not defined(ARITH_MOD)
         gx %= size;
         if (gx < - size / 2u) gx += size;
         if (gx >= size / 2u)  gx -= size;
+        #endif
 
         if (gz != gx) return 3;
 
@@ -104,15 +114,9 @@ int main(void)
         rint_to_mpz(gx, x);
         rint_to_mpz(gy, y);
 
-        if (x > y) {
-            RI_OP(x, y);
-            rint_to_mpz(gz, x);
-            GMP_OP(gxy.get_mpz_t(), gx.get_mpz_t(), gy.get_mpz_t());
-        } else {
-            RI_OP(y, x);
-            rint_to_mpz(gz, y);
-            GMP_OP(gxy.get_mpz_t(), gy.get_mpz_t(), gx.get_mpz_t());
-        }
+        RI_OP(x, y);
+        rint_to_mpz(gz, x);
+        GMP_OP(gxy.get_mpz_t(), gx.get_mpz_t(), gy.get_mpz_t());
 
         // Overflow correction
         gxy %= size;

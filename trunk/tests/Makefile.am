@@ -46,12 +46,15 @@ RECINT_TESTS=                    \
     test-rmint_arith_sub_mg      \
     test-rmint_arith_sub         \
     test-ruint_arith_sub         \
+    test-rint_arith_sub          \
     test-rmint_arith_mul_mg      \
     test-rmint_arith_mul         \
     test-ruint_arith_mul         \
+    test-rint_arith_mul          \
     test-rmint_arith_mod_mg      \
     test-rmint_arith_mod         \
     test-ruint_arith_div         \
+    test-rint_arith_mod          \
     test-rmint_inv_div_mg        \
     test-rmint_inv_div           \
     test-rmint_constructors_mg   \
@@ -112,12 +115,15 @@ test_rint_arith_add_SOURCES          = test-rint_arith.C
 test_rmint_arith_sub_mg_SOURCES      = test-rmint_arith.C
 test_rmint_arith_sub_SOURCES         = test-rmint_arith.C
 test_ruint_arith_sub_SOURCES         = test-ruint_arith.C
+test_rint_arith_sub_SOURCES          = test-rint_arith.C
 test_rmint_arith_mul_mg_SOURCES      = test-rmint_arith.C
 test_rmint_arith_mul_SOURCES         = test-rmint_arith.C
 test_ruint_arith_mul_SOURCES         = test-ruint_arith.C
+test_rint_arith_mul_SOURCES          = test-rint_arith.C
 test_rmint_arith_mod_mg_SOURCES      = test-rmint_arith.C
 test_rmint_arith_mod_SOURCES         = test-rmint_arith.C
 test_ruint_arith_div_SOURCES         = test-ruint_arith.C
+test_rint_arith_mod_SOURCES          = test-rint_arith.C
     
 test_rmint_inv_div_mg_SOURCES        = test-rmint_inv_div.C
 test_rmint_inv_div_SOURCES           = test-rmint_inv_div.C
@@ -163,12 +169,15 @@ test_rint_arith_add_CXXFLAGS         = $(AM_CXXFLAGS) -DRI_OP=add -DGMP_OP=mpz_a
 test_rmint_arith_sub_mg_CXXFLAGS     = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE -DRI_OP=sub -DGMP_OP=mpz_sub -DGMP_OPUI=mpz_sub_ui
 test_rmint_arith_sub_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=sub -DGMP_OP=mpz_sub -DGMP_OPUI=mpz_sub_ui
 test_ruint_arith_sub_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=sub -DGMP_OP=mpz_sub -DGMP_OPUI=mpz_sub_ui
+test_rint_arith_sub_CXXFLAGS         = $(AM_CXXFLAGS) -DRI_OP=sub -DGMP_OP=mpz_sub -DGMP_OPUI=mpz_sub_ui
 test_rmint_arith_mul_mg_CXXFLAGS     = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE -DRI_OP=mul -DGMP_OP=mpz_mul -DGMP_OPUI=mpz_mul_ui
 test_rmint_arith_mul_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=mul -DGMP_OP=mpz_mul -DGMP_OPUI=mpz_mul_ui
 test_ruint_arith_mul_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=mul -DGMP_OP=mpz_mul -DGMP_OPUI=mpz_mul_ui
+test_rint_arith_mul_CXXFLAGS         = $(AM_CXXFLAGS) -DRI_OP=mul -DGMP_OP=mpz_mul -DGMP_OPUI=mpz_mul_ui
 test_rmint_arith_mod_mg_CXXFLAGS     = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE -DRI_OP=mod -DGMP_OP=mpz_mod -DGMP_OPUI=mpz_mod_ui
 test_rmint_arith_mod_CXXFLAGS        = $(AM_CXXFLAGS) -DRI_OP=mod -DGMP_OP=mpz_mod -DGMP_OPUI=mpz_mod_ui
 test_ruint_arith_div_CXXFLAGS        = $(AM_CXXFLAGS) -DNOT_IN_PLACE -DRI_OP=div_q -DGMP_OP=mpz_fdiv_q -DGMP_OPUI=mpz_fdiv_q_ui
+test_rint_arith_mod_CXXFLAGS         = $(AM_CXXFLAGS) -DARITH_MOD -DNOT_IN_PLACE -DRI_OP=div_r -DGMP_OP=mpz_tdiv_r
 
 test_rmint_inv_div_mg_CXXFLAGS        = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE
 test_rmint_constructors_mg_CXXFLAGS   = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE

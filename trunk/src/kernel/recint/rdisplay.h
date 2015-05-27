@@ -1,14 +1,16 @@
-/* ruint/ruint.h - Class definition of ruint<K> from RecInt library
+/* rint/display.h - Display functions for rint
 
 Copyright Université Joseph Fourier - Grenoble
 Contributors :
     Alexis BREUST (alexis.breust@gmail.com 2014)
 	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
+    Jean-Guillaume DUMAS
 
-Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <19 Jun 12 18:22:16 Jean-Guillaume.Dumas@imag.fr>
 
-This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
+
+This software is a computer program whose purpose is to provide a
+fixed precision arithmetic library.
 
 This software is governed by the CeCILL-B license under French law and
 abiding by the rules of distribution of free software.  You can  use,
@@ -37,44 +39,49 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-B license and that you accept its terms.
 */
 
-#ifndef RINT_RINT_H
-#define RINT_RINT_H
 
-#include "recdefine.h"
-#include "ruruint.h"
-#include "rumanip.h" // ms_limb
+#ifndef RINT_DISPLAY_H
+#define RINT_DISPLAY_H
+
+#include "rrint.h"
+#include "rudisplay.h"
 
 // --------------------------------------------------------------
-// ---------------- Declaration of class ruint ------------------
+// ----------------------- DEFINTIONS ---------------------------
 
 namespace RecInt
 {
-    /* Basic definition of ruint */
-    template <size_t K> class rint {
-    public:
-        // A rint is stored as a ruint
-        ruint<K> Value;
+    // Prints a rint
+    template <size_t K> inline std::ostream& operator<<(std::ostream&, const rint<K>&);
+}
 
-        // Constructors
-        rint() {}
-        rint(const rint<K>& r) : Value(r.Value) {}
-        rint(const ruint<K>& r) : Value(r) {}
-        template <typename T> rint(const T& b) : Value(b) {}
 
-        // Cast
-        template <typename T> operator T() const { return static_cast<T>(Value); }
+// --------------------------------------------------------------
+// ----------------------- rint print --------------------------
 
-        // Quick sign evaluation
-        // *this < 0
-        inline bool isNegative() const { return ms_limb(Value) & __RECINT_MAXPOWTWO; }
-        // *this >= 0
-        inline bool isPositive() const { return !(isNegative()); }
-    };
+namespace RecInt
+{
+    // Out stream
+    template <size_t K>
+    inline std::ostream& operator<<(std::ostream& out, const rint<K>& a) {
+        std::ios_base::fmtflags ff(out.flags());
+        if (ff & out.hex) return display_hex(out, a.Value);
+        else return display_dec(out, a);
+        out.flags(ff);
+    }
 
-    using rint64 =  rint<6>;
-    using rint128 = rint<7>;
-    using rint256 = rint<8>;
-    using rint512 = rint<9>;
+    // Display the rint in decimal mode
+    template <size_t K>
+    inline std::ostream& display_dec(std::ostream& out, const rint<K>& a) {
+        if (a.isNegative()) {
+            out << '-';
+            display_dec(out, (-a).Value);
+        }
+        else {
+            display_dec(out, a.Value);
+        }
+        return out;
+    }
 }
 
 #endif

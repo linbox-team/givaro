@@ -58,10 +58,10 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #include "rcmp.h"
 
 /* Bit manipulation of rint */
-//#include "rfiddling.h"
+#include "rfiddling.h"
 
 /* Limb manipulation in rint */
-//#include "rumanip.h"
+//#include "rmanip.h"
 
 /* Random in rint */
 #include "rrandom.h"
@@ -70,7 +70,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 //#include "rshift.h"
 
 /* Display for rint */
-//#include "rdisplay.h"
+#include "rdisplay.h"
 
 /* Internal use for rint */
 //#include "rtools.h"

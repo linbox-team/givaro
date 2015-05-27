@@ -95,12 +95,13 @@ namespace Givaro
 		Integer &characteristic (Integer &c) const{return c = 0;}
 
 		int64_t &cardinality (int64_t &c) const {return c = 0;}
-
 		int64_t &characteristic (int64_t &c) const {return c = 0;}
-
 		int64_t cardinality () const {return 0;}
-
 		int64_t characteristic () const {return 0;}
+		uint64_t &cardinality (uint64_t &c) const {return c = 0;}
+		uint64_t &characteristic (uint64_t &c) const {return c = 0;}
+		uint64_t cardinality () const {return 0;}
+		uint64_t characteristic () const {return 0;}
 
 		ZRing<Element> operator=(const ZRing<Element> &e) {return *this ;}
 

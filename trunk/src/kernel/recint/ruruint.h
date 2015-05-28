@@ -144,10 +144,6 @@ namespace RecInt
         operator double() const { return (double)(Value); }
         template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Value); }
 
-        /*template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
-        template <typename T, __RECINT_IS_SIGNED(T, int) = 0> operator T() const
-            { T ret = T(Value); if (ret < 0) return T(ret & __RECINT_TYPENOTMAXPOWTWO(T)); else return ret; }*/
-
         // Const reverse iterator
         class cr_iterator {
         public:

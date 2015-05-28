@@ -1,11 +1,19 @@
-// bb: c'est quoi ce fichier sans guardes, sans licence, sans auteur, sans modeline , etc ?
+// ========================================================================
+// Copyright(c)'1994-2015 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software.
+// see the COPYRIGHT file for more details.
+// Authors: A. Breust
+// Time-stamp: <28 May 15 09:40:00 Alexis.Breust@imag.fr>
+// ========================================================================
+// Description:
+// Forward declarations for Givaro::Modular and associated functions
 
 #pragma once
 
 namespace Givaro
 {
-    //---- GCD
-
     template<typename Storage_t>
     inline Storage_t& gcdext(Storage_t& d, Storage_t& u, Storage_t& v, const Storage_t a, const Storage_t b)
     {

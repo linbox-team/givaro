@@ -1,13 +1,12 @@
 // ==========================================================================
-// $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpzGen.h,v $
-// Copyright(c)'1994-2012 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.11 2011-02-02 16:23:56 bboyer Exp $
-// ==========================================================================
+//          A. Breust (adapted)
+// ========================================================================
 
 /*! @file givzpzInt.h
  * @ingroup zpz
@@ -37,7 +36,7 @@ public:
     typedef Modular<IntType> Self_t;
     typedef IntType Residu_t;                    //!<  type to store residue
     enum { size_rep = sizeof(Residu_t) };      //!<  size of the storage type
-    
+
     //! Representation of Element of the domain Modular
     typedef IntType Rep;
     typedef IntType Element;

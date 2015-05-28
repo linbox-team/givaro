@@ -1,12 +1,11 @@
 // ==========================================================================
-// $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpzInt.h,v $
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.h,v 1.11 2011-02-02 16:23:56 bboyer Exp $
+//          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
 /*! @file givzpzInt.h
@@ -45,7 +44,7 @@ namespace Givaro
       typedef Element* Element_ptr ;
       typedef const Element* ConstElement_ptr;
 
-      
+
       // ----- Representation of vector of the Element
       typedef Rep* Array;
       typedef const Rep* constArray;
@@ -234,7 +233,7 @@ namespace Givaro
     public:
       typedef Modular<Integer, Integer>  Field;
       typedef Field::Element Element;
-      
+
     ModularRandIter(const Field& F, const size_t& size = 0, const size_t& seed = 0)
       {
 	F.characteristic(_p);
@@ -242,25 +241,25 @@ namespace Givaro
 	if (! seed) {
 	  struct timeval tp;
 	  gettimeofday(&tp, 0) ;
-	  s = (unsigned long)(tp.tv_usec);	
+	  s = (unsigned long)(tp.tv_usec);
 	}
 	Givaro::Integer::seeding(s);
       }
     Element& random(Element& elt) const
       {
-	// Create new random Elements	  
+	// Create new random Elements
 	Givaro::Integer::random_lessthan(elt,_p);
-	
+
 	return elt;
 	}
-      
+
     private:
       Givaro::Integer _p;
-      
+
     }; //  class ModularRandIter<Integer>
 
 
- 
+
 }// namespace Givaro
 
 #include "givaro/modular-integer.inl"

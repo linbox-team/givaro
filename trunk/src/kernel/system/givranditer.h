@@ -1,11 +1,11 @@
-//==================================================================
-// Copyright(c)'1994-2009 by The Givaro group
+// ==========================================================================
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Author : Giorgi Pascal   pascal.giorgi@ens-lyon.fr
-//==================================================================
+// Authors: Giorgi Pascal <pascal.giorgi@ens-lyon.fr>
+// ==========================================================================
 
 /** @file givranditer.h
  * @ingroup zpz
@@ -18,7 +18,7 @@
 
 #include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
-	
+
 // For ModularBalancedRandIter
 #include <sys/time.h>
 #ifndef _XOPEN_SOURCE
@@ -284,7 +284,7 @@ namespace Givaro {
     class GeneralRingRandIter {
   public:
     typedef typename Ring::Element Element;
-		
+
   GeneralRingRandIter(const Ring &F, size_t seed = 0) : _F(F)
     {
       if (seed == 0) {
@@ -292,12 +292,12 @@ namespace Givaro {
 	gettimeofday(&tp, 0) ;
 	seed = (size_t)tp.tv_usec;
       }
-			
+
       srand48((long)seed);
     }
   GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F) {}
     ~GeneralRingRandIter() {}
-		
+
     Element& random (Element& a) const
       {
 	return _F.init(a, lrand48());
@@ -334,7 +334,7 @@ namespace Givaro {
     Ring     _F;
     RandIter _r;
     };
-	
+
 } // namespace Givaro
 
 #endif // __GIVARO_randiter_H

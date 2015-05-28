@@ -1,11 +1,12 @@
 // ==========================================================================
-// Copyright(c)'1994-2014 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: A. Breust (taken from FFLAS-FFPACK) //bb: then cite the authors...
-// ==========================================================================
+// Authors: BB <brice.boyer@lip6.fr>
+//          A. Breust (taken from FFLAS-FFPACK)
+// ========================================================================
 
 #ifndef __GIVARO_modular_uint16_INL
 #define __GIVARO_modular_uint16_INL

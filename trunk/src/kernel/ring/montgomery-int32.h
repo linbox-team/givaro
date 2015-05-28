@@ -1,11 +1,11 @@
 // ==========================================================================
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// author: JG Dumas (from P. Zimmermann's Montgomery implementation)
-// $Id: givmontg32.h,v 1.15 2011-02-04 14:11:46 jgdumas Exp $
+// Authors: JG Dumas (from P. Zimmermann's Montgomery implementation)
+//          A. Breust (adapted)
 // ==========================================================================
 
 /*! @file givmontg32.h
@@ -45,7 +45,7 @@ namespace Givaro
         // ----- Exported Types and constantes
         typedef uint32_t Residu_t;                    // - type to store residue
         enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
-    
+
         // ----- Representation of Element of the domain Montgomery
         typedef uint32_t Rep;
         typedef uint32_t Element;
@@ -94,7 +94,7 @@ namespace Givaro
         Residu_t residu() const;
         Residu_t size() const {return _p;}
         Rep access( const Rep a ) const    { return a; }
-        
+
         inline Residu_t characteristic() const { return _p; }
         inline Residu_t cardinality() const { return _p; }
         template<class T> inline T& characteristic(T& p) const { return p = _p; }
@@ -147,7 +147,7 @@ namespace Givaro
             unsigned long ur;
             return r = (float)convert(ur, a);
         }
-                
+
         double& convert(double& r, const Rep a ) const
         {
             unsigned long ur;
@@ -240,7 +240,7 @@ namespace Givaro
         const Rep mOne;
 
     public:
-        
+
         static inline Residu_t getMaxModulus() { return 40503; }
     };
 

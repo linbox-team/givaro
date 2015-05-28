@@ -1,10 +1,11 @@
 // ==========================================================================
-// Copyright(c)'1994-2014 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: A. Breust (taken from FFLAS-FFPACK)
+// Authors: BB <brice.boyer@lip6.fr>
+//          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
 #ifndef __GIVARO_modular_uint8_INL
@@ -17,7 +18,7 @@
 namespace Givaro {
 
 	// -------------
-	// ----- Modular 
+	// ----- Modular
 
     template<>
 	inline Modular<uint8_t, int8_t>::Residu_t
@@ -37,7 +38,7 @@ namespace Givaro {
 
 	// --------------------
 	// ----- Initialisation
-	
+
 	template<typename COMP>
     inline typename Modular<uint8_t, COMP>::Element &Modular<uint8_t, COMP>::init (Element &x) const
 	{
@@ -86,7 +87,7 @@ namespace Givaro {
 	{
 		return init(x, double(y));
 	}
-	
+
 	template<typename COMP>
     inline typename Modular<uint8_t, COMP>::Element &Modular<uint8_t, COMP>::assign (Element &x, const Element &y) const
 	{
@@ -95,7 +96,7 @@ namespace Givaro {
 
 	// ------------------------
 	// ----- Classic arithmetic
-	
+
 	template<typename COMP>
     inline typename Modular<uint8_t, COMP>::Element &Modular<uint8_t, COMP>::add
 		(Element &x, const Element &y, const Element &z) const
@@ -201,7 +202,7 @@ namespace Givaro {
 		__GIVARO_MODULAR_INTEGER_MULADDIN(r, _p, a, x);
 		return r;
 	}
-	
+
 	// -- axmy: r <- a * x - y
 	template<typename COMP>
     inline typename Modular<uint8_t, COMP>::Element &Modular<uint8_t, COMP>::axmy
@@ -210,7 +211,7 @@ namespace Givaro {
 		__GIVARO_MODULAR_INTEGER_MULSUB(r, _p, a, x, y);
 		return r;
 	}
-	
+
 	template<typename COMP>
     inline typename Modular<uint8_t, COMP>::Element &Modular<uint8_t, COMP>::axmyin
 		(Element& r, const Element &a, const Element &x) const
@@ -218,7 +219,7 @@ namespace Givaro {
 		maxpyin(r,a,x);
 		return negin(r);
 	}
-	
+
 	// -- maxpy:   r <- y - a * x
 	template<typename COMP>
     inline typename Modular<uint8_t, COMP>::Element& Modular<uint8_t, COMP>::maxpy
@@ -228,7 +229,7 @@ namespace Givaro {
 		__GIVARO_MODULAR_INTEGER_SUBMULIN(r, _p, a, x);
 		return r;
 	}
-		
+
 	template<typename COMP>
     inline typename Modular<uint8_t, COMP>::Element& Modular<uint8_t, COMP>::maxpyin
 		(Element& r, const Element& a, const Element& x) const
@@ -236,7 +237,7 @@ namespace Givaro {
 		__GIVARO_MODULAR_INTEGER_SUBMULIN(r, _p, a, x);
 		return r;
 	}
-	
+
 	// ----------------
 	// ----- IO methods
 

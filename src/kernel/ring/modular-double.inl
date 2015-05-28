@@ -1,10 +1,11 @@
 // ==========================================================================
-// Copyright(c)'1994-2014 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: A. Breust (taken from FFLAS-FFPACK)
+// Authors: BB <brice.boyer@lip6.fr>
+//          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
 #ifndef __GIVARO_modular_double_INL
@@ -16,7 +17,7 @@ namespace Givaro {
 
 	// --------------------
 	// ----- Initialisation
-	
+
 	inline Modular<double>::Element &Modular<double>::init (Element &x) const
 	{
 		return x = zero ;
@@ -58,12 +59,12 @@ namespace Givaro {
 	{
 		return init(x, double(y));
 	}
-	
+
 	inline Modular<double>::Element &Modular<double>::assign (Element &x, const Element &y) const
 	{
 		return x = y;
 	}
-	
+
 	// ------------------------
 	// ----- Convert and reduce
 
@@ -93,7 +94,7 @@ namespace Givaro {
 		if (x < 0) x += _p;
 		return x;
 	}
-	
+
 	inline Modular<double>::Element& Modular<double>::reduce (Element& x, const Element& y) const
 	{
 		x = fmod (y, _p);
@@ -103,7 +104,7 @@ namespace Givaro {
 
 	// ------------------------
 	// ----- Classic arithmetic
-	
+
 	inline Modular<double>::Element &Modular<double>::add
 		(Element &x, const Element &y, const Element &z) const
 	{
@@ -215,7 +216,7 @@ namespace Givaro {
 		__GIVARO_MODULAR_FLOATING_MULADDIN(r, _p, a, x);
 		return r;
 	}
-	
+
 	// -- axmy: r <- a * x - y
 	inline Modular<double>::Element &Modular<double>::axmy
 		(Element& r, const Element &a, const Element &x, const Element &y) const
@@ -223,14 +224,14 @@ namespace Givaro {
 		__GIVARO_MODULAR_FLOATING_MULSUB(r, _p, a, x, y);
 		return r;
 	}
-	
+
 	inline Modular<double>::Element &Modular<double>::axmyin
 		(Element& r, const Element &a, const Element &x) const
 	{
 		maxpyin(r,a,x);
 		return negin(r);
 	}
-	
+
 	// -- maxpy:   r <- y - a * x
 	inline Modular<double>::Element& Modular<double>::maxpy
 		(Element& r, const Element& a, const Element& x, const Element& y) const
@@ -239,14 +240,14 @@ namespace Givaro {
 		__GIVARO_MODULAR_FLOATING_SUBMULIN(r, _p, a, x);
 		return r;
 	}
-		
+
 	inline Modular<double>::Element& Modular<double>::maxpyin
 		(Element& r, const Element& a, const Element& x) const
 	{
 		__GIVARO_MODULAR_FLOATING_SUBMULIN(r, _p, a, x);
 		return r;
 	}
-	
+
 	// ----------------
 	// ----- IO methods
 

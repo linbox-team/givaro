@@ -1,34 +1,13 @@
-/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
-
-/* fflas-ffpack/modular-positive.h
- * Copyright (C) 2003 Pascal Giorgi
- *               2008 Clement Pernet
- * Written by Clement Pernet <clement.pernet@gmail.com>
- *            Pascal Giorgi  <pascal.giorgi@ens-lyon.fr>
- *
- * ------------------------------------
- *
- *
- * ========LICENCE========
- * This file is part of the library FFLAS-FFPACK.
- *
- * FFLAS-FFPACK is free software: you can redistribute it and/or modify
- * it under the terms of the  GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * ========LICENCE========
- *
- */
+// ==========================================================================
+// Copyright(c)'1994-2015 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software.
+// see the COPYRIGHT file for more details.
+// Authors: Clement Pernet <clement.pernet@gmail.com>
+//          Pascal Giorgi  <pascal.giorgi@ens-lyon.fr>
+//          A. Breust (taken from FFLAS-FFPACK)
+// ==========================================================================
 
 /*! @file field/modular-float.h
  * @ingroup field
@@ -95,7 +74,7 @@ public:
 	inline bool isMOne(const Element& a) const final { return a == mOne; }
 	inline bool areEqual(const Element& a, const Element& b) const final { return a == b; }
 	inline size_t length(const Element a) const { return size_rep; }
-	
+
 	// ----- Ring-wise operators
 	inline bool operator==(const Self_t& F) const { return _p == F._p; }
 	inline bool operator!=(const Self_t& F) const { return _p != F._p; }
@@ -143,7 +122,7 @@ public:
 	Element& subin(Element& r, const Element& a) const final;
 	Element& negin(Element& r) const final;
 	Element& invin(Element& r) const final;
-	
+
 	// -- axpy:   r <- a * x + y
 	// -- axpyin: r <- a * x + r
 	Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
@@ -172,7 +151,7 @@ public:
 	std::ostream& write(std::ostream& s) const;
 	std::istream& read (std::istream& s, Element& a) const;
 	std::ostream& write(std::ostream& s, const Element& a) const;
-	
+
 protected:
 	float _p;
 	Residu_t _lp;

@@ -1,34 +1,14 @@
-/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
-
-/* field/unparametric.h
- * Copyright (C) 1999-2005 William J Turner,
- *               2001 Bradford Hovinen
- *               2005 Clement Pernet
- *
- * Written by W. J. Turner <wjturner@acm.org>,
- *            Bradford Hovinen <hovinen@cis.udel.edu>
- * Modified By C. Pernet and inserted into Fflas_Ffpack
- *
- * ========LICENCE========
- * This file is part of the library FFLAS-FFPACK.
- *
- * FFLAS-FFPACK is free software: you can redistribute it and/or modify
- * it under the terms of the  GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * ========LICENCE========
- *
- */
+// ==========================================================================
+// Copyright(c)'1994-2015 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software.
+// see the COPYRIGHT file for more details.
+// Authors: W. J. Turner <wjturner@acm.org>
+//          Bradford Hovinen <hovinen@cis.udel.edu>
+//          Clement Pernet <clement.pernet@gmail.com> (inserted into FFLAS-FFPACK)
+//          A. Breust (taken from FFLAS-FFPACK)
+// ==========================================================================
 
 
 /*! @file field/unparametric.h
@@ -65,7 +45,7 @@ namespace Givaro
 		typedef ZRing<Element> Self_t;
 		typedef GeneralRingRandIter<Self_t> RandIter;
 		typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-		
+
 		typedef Element* Element_ptr;
 		typedef const Element* ConstElement_ptr;
 		const Element one  ;
@@ -81,7 +61,7 @@ namespace Givaro
 		 */
 		ZRing(long int q = 0, size_t e = 1):
 				one(1),zero(0),mOne(-one)
-			{}  
+			{}
 		//@}
 
 		template<class T>
@@ -102,7 +82,7 @@ namespace Givaro
 		ZRing<Element> operator=(const ZRing<Element> &e) {return *this ;}
 
 		Element& init (Element& x) const { return x;}
-		
+
 		template <typename Src>
 		Element& init (Element& x, const Src& s) const { return x = static_cast<const Element&>(s); }
 

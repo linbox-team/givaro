@@ -1,27 +1,12 @@
-/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
-/* Copyright (C) 2014 LinBox
-* Written by BB <brice.boyer@lip6.fr>
-*
-* ========LICENCE========
-* This file is part of the library FFLAS-FFPACK.
-*
-* FFLAS-FFPACK is free software: you can redistribute it and/or modify
-* it under the terms of the  GNU Lesser General Public
-* License as published by the Free Software Foundation; either
-* version 2.1 of the License, or (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-* ========LICENCE========
-*
-*/
+// ==========================================================================
+// Copyright(c)'1994-2015 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software.
+// see the COPYRIGHT file for more details.
+// Authors: BB <brice.boyer@lip6.fr>
+//          A. Breust (adapted)
+// ==========================================================================
 
 /*! @file field/modular-uint64.h
 * @ingroup field
@@ -58,14 +43,14 @@ public:
 	using Self_t = Modular<uint16_t, COMP>;
 	using Compute_t = typename std::make_unsigned<COMP>::type;
 	using Residu_t = uint16_t;
-	
+
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Constantes
 	const Element zero;
 	const Element one;
 	const Element mOne;
-	
+
 	// ----- Constructors
 	Modular()
 	: zero(Element(0)), one(Element(1)), mOne(Element(0)), _p(Element(0)) {}
@@ -100,7 +85,7 @@ public:
 	inline bool isMOne(const Element& a) const final { return a == mOne; }
 	inline bool areEqual(const Element& a, const Element& b) const final { return a == b; }
 	inline size_t length(const Element a) const { return size_rep; }
-	
+
 	// ----- Ring-wise operators
 	bool operator==(const Self_t& F) const { return _p == F._p; }
 	bool operator!=(const Self_t& F) const { return _p != F._p; }
@@ -112,7 +97,7 @@ public:
 		_p = F._p;
 		return *this;
 	}
-	
+
 	// ----- Initialisation
 	Element& init (Element &x) const;
 	Element& init (Element &x, const int32_t& y ) const;
@@ -124,7 +109,7 @@ public:
 	template<class XXX> Element& init(Element& x, const XXX& y) const;
 
 	Element &assign (Element &x, const Element &y) const;
-	
+
 	// ----- Convert
 	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
 	template<typename XXX> XXX& convert(XXX& r, const Element a ) const { return r = static_cast<XXX>(a) ;}
@@ -146,7 +131,7 @@ public:
 	Element& subin(Element& r, const Element& a) const final;
 	Element& negin(Element& r) const final;
 	Element& invin(Element& r) const final;
-	
+
 	// -- axpy:   r <- a * x + y
 	// -- axpyin: r <- a * x + r
 	Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;

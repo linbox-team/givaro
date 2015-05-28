@@ -1,18 +1,13 @@
 // ==========================================================================
-// $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz16std.inl,v $
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.18 2011-02-02 17:16:43 bboyer Exp $
+//          A. Breust (adapted)
 // ==========================================================================
-// Description:
 
-// ---------
-// -- normalized operations
-// ---------
 #ifndef __GIVARO_zpz16std_INL
 #define __GIVARO_zpz16std_INL
 

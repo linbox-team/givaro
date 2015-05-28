@@ -1,0 +1,208 @@
+
+<HTML>
+<HEAD>
+   <TITLE>Givaro:a C++ library for arithmetic and algebraic computations.</TITLE>
+   <META NAME="Author" CONTENT="Jean-Guillaume Dumas">
+   <META NAME="Description" CONTENT="Givaro, a C++ library for arithmetic and algebraic computations.">
+   <META NAME="Keywords" CONTENT="Givaro,Algebraic numbers,Calcul formel, C++ library, parallelism, Integers, Polynomials, Matrices.">
+   <META NAME="Classification" CONTENT="software">
+    <script type="text/javascript" src="Scripts/base_scr.js"></script>
+  </HEAD>
+<!BODY TEXT="#FFFFFF" BGCOLOR="#008080" LINK="#0000FF" VLINK="#800080" ALINK="#FF0000">
+<!BODY TEXT="#FFFFFF" BGCOLOR="#60A0A0" LINK="#0000FF" VLINK="#800080" ALINK="#FF0000">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" VLINK="#800080" LINK="#551A8B" ALINK="#FF0000" >
+
+<!-- header -->
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<table style="border:0;" cellpadding="0" cellspacing="2"  width="100%">
+  <tbody>
+    <tr>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr">Givaro</a> </td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro-html">Documentation</a> </td>
+      <td style="text-align: center;font-size:small;"> <a
+ href="https://forge.imag.fr/frs/?group_id=187">Download</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro_install.html">Installation</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro_examples.html">Examples</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/index.html#Contact">Contacts</a></td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<!-- header -->
+
+<CENTER>Givaro: C++ library for arithmetic and algebraic computations<br>
+<P>
+<IMG SRC="Images/logo_givaro.gif" WIDTH=323 HSPACE=2 ALIGN=BOTTOM>
+<BR>
+<!-- IMG SRC="Images/apache.gif" HEIGHT=16 WIDTH=130>, -->
+<a href="http://packages.debian.org/source/givaro">Givaro within DEBIAN</a>,
+<a href="http://cvsweb.se.netbsd.org/cgi-bin/bsdweb.cgi/wip/givaro">Givaro within BSD</a>,
+<a href="https://admin.fedoraproject.org/pkgdb/acls/name/givaro">Givaro within FEDORA</a>,
+<a href="http://www.projet-plume.org/relier/givaro">Givaro on PLUME</a>.
+</CENTER>
+
+<FONT SIZE=+1>
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+
+<H3>Key Features</H3>
+<P>In the joint <A HREF="http://www.cnrs.fr">CNRS</A>-<A HREF="http://www.inrialpes.fr">INRIA</A>
+/ <A HREF="http://www.inpg.fr">INPG</A>-<A HREF="http://www.ujf-grenoble.fr">UJF</A>&nbsp;project
+<A HREF="http://www-id.imag.fr/apache/">APACHE</A>, 
+Givaro is a C++ library for arithmetic and algebraic computations.<BR>
+Its main features are implementations of the basic arithmetic of many mathematical entities: Primes fields, Extensions Fields, Finite Fields, Finite Rings,
+Polynomials, Algebraic numbers, Arbitrary precision integers and rationals
+(C++ wrappers over gmp)
+It also provides data-structures and templated classes for the manipulation of basic
+algebraic objects, such as vectors, matrices (dense,
+sparse, structured), univariate polynomials (and therefore recursive multivariate).<BR>
+
+ It contains
+different program modules
+and is fully compatible with the 
+<A HREF="http://linalg.org">LinBox</A> linear algebra library and the
+<A HREF="http://kaapi.gforge.inria.fr">KAAPI</A>
+kernel for Adaptative, Asynchronous Parallel and Interactive programming.</P>
+
+
+<FONT COLOR=BLUE>
+<UL>
+	<LI> Integers and Number Theory :<FONT COLOR=BLACK> Arithmetic with arbitrary precision over Z; Primality Testing, Factorization (Lenstra elliptic curves, Pollard's rho), Cryptography (RSA module), Euler's phi, Primitive roots, Chinese Remainder.</FONT>
+	<LI> GF(q) and Z/pZ :<FONT COLOR=BLACK> Fast arithmetic in finite fields (representations as machine integers, floating point numbers,
+		polynomials, Zech logarithms, Montgomery reduction, centered representation and fully tabulated).</FONT>
+<LI> Rationals :<FONT COLOR=BLACK> Arithmetic with arbitrary precision over Q.</FONT>
+<LI> Fractions
+<LI> Vectors
+<LI> Matrices (bi dimensional containers), linear algebra is done with the <a href="http://linalg.org">LinBox</a> library.</FONT>
+<LI> Polynomials :<FONT COLOR=BLACK> Karatsuba Arithmetic over K[X]; Square-free, Sturm-Query, Factorization (Berlekamp, Cantor-Zassenhaus), truncated arithmetics.</FONT>
+<!-- LI> Algebraic Numbers :<FONT COLOR=BLACK> Equality Testing, Sign Testing.</FONT -->
+</UL>
+</FONT>
+More <A HREF="givaro_features.html">Details</A>.<BR>
+<BR>
+<P>
+<img alt="Jean-Guillaume Dumas" src="Images/blue.gif" border="0" height="2" width="100%"></P>
+
+Givaro Integers' are based upon 
+<A HREF="http://gmplib.org">GNU Multiprecision Package</A>. 
+Therefore, GMP is required to install Givaro. This library is also available from
+the <A HREF="http://www.gnu.org">Gnu</a> web site and 
+via <A HREF="ftp://ftp.gnu.org/pub/gnu/gmp">ftp</A>.
+
+<UL>
+<li><A HREF="https://forge.imag.fr/frs/?group_id=187">Givaro Downloads</A> on <A HREF="https://forge.imag.fr/projects/givaro">Givaro forge</A>.</li>
+<br>
+<li><A HREF="">Givaro Binaries</A>
+<ul>
+<li><a href="http://packages.debian.org/source/givaro">Debian</a></li>
+<li><a href="http://cvsweb.se.netbsd.org/cgi-bin/bsdweb.cgi/wip/givaro">NetBsd</a></li>
+<li><a href="https://admin.fedoraproject.org/pkgdb/acls/name/givaro">Fedora</a></li>
+</ul>
+</li>
+<br>
+<LI><A HREF="http://givaro.forge.imag.fr/givaro-html">Givaro Documentation</A>: <a href="http://givaro.forge.imag.fr/givaro-html/index.html">user</a> and <a href="http://givaro.forge.imag.fr/givaro-dev-html/index.html">developer</a> manuals.</LI>
+<br>
+<LI><A HREF="givaro_install.html">Install Givaro</A> on your Computer.</LI>
+<br>
+<LI><A HREF="givaro_examples.html">Givaro Examples</A>.</LI>
+</UL>
+
+<UL>
+<LI>Help: <script type="text/javascript"><!-- 
+		    		CryptMail(""); 
+		    		// -->
+</script></LI>
+</UL>
+<UL>
+<li>Previous Givaro versions:</A>
+<ul>
+<LI><A HREF="https://forge.imag.fr/frs/?group_id=187">Versions from 3.3.5</A> on <A HREF="https://forge.imag.fr/projects/givaro">Givaro forge</A>.
+<LI><A HREF="http://ljk.imag.fr/CASYS/LOGICIELS/givaro/Downloads">Versions before 3.3.5</A> of
+the Sequential Givaro Library (<I>last update: Friday, November 23rd 2010</I>).</LI>
+<!-- LI><A HREF="Downloads/givaro-3.3.5rc3.tar.gz">Try</A> next candidate (version 3.3.5rc3, February 7th 2011).</LI -->
+<LI><A HREF="givaro-2.0.html">Givaro version 2.0</A> is also still available.</LI>
+</ul>
+</li>
+</UL>
+<P>
+<img alt="Jean-Guillaume Dumas" src="Images/blue.gif" border="0" height="2" width="100%"></P>
+
+<H3>The team:<a name="Contact"></a></H3>
+<CENTER>
+<TABLE BORDER=0 CELLPADDING=15><TR>
+
+<TD>
+<A HREF="http://www-id.imag.fr/~gautier"><IMG SRC="Images/spman.gif" HSPACE=20 BORDER=0 HEIGHT=56 WIDTH=40 ALIGN=TOP></A>
+</TD>
+
+<TD>
+<A HREF="http://www-id.imag.fr/~jlroch"><IMG SRC="Images/leclan.gif" HSPACE=20 BORDER=0 HEIGHT=53 WIDTH=39 ALIGN=TOP></A>
+</TD>
+
+<TD>
+<A HREF="http://perso.ens-lyon.fr/gilles.villard"><IMG SRC="Images/asteris2.gif" HSPACE=20 BORDER=0 HEIGHT=40 WIDTH=40 ALIGN=TOP></A>
+</TD>
+</TR>
+<TR>
+<TD>
+<B><A HREF="http://www-id.imag.fr/~gautier">Thierry Gautier</A></B>
+</TD>
+<TD>
+<B><A HREF="http://www-id.imag.fr/~jlroch">Jean-Louis Roch</A></B>
+</TD>
+<TD>
+<B><A HREF="http://perso.ens-lyon.fr/gilles.villard/">Gilles Villard</A></B>
+</TD>
+</TR>
+</TABLE></CENTER>
+<H3>Additional slaves:</H3>
+<CENTER>
+<TABLE BORDER=0 CELLPADDING=15>
+  <TR> <TD><B><A HREF="http://ljk.imag.fr/membres/Brice.Boyer">Brice Boyer</A> </B>
+    </TD>
+<TD><B><A HREF="http://ljk.imag.fr/membres/Jean-Guillaume.Dumas">Jean-Guillaume Dumas</A> </B>
+    </TD>
+    <TD> <B>
+      <A HREF="http://www.lirmm.fr/~giorgi">Pascal Giorgi</A></B>
+     </TD>
+    <TD> <B>
+      <A HREF="http://membres-liglab.imag.fr/pernet">Cl&eacute;ment Pernet</A></B>
+     </TD>
+     </TR>
+</TABLE></CENTER>
+
+<!-- footer -->
+<p><div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td align="left"><i> <font face="Arial,Helvetica"> <font
+ size="-1">
+Last update: Wednesday, October 17th 2012
+      </font></font> </i> </td>
+      <td align="center">
+      <address> <font face="Arial,Helvetica"><font size="-1"> <a
+ href="http://givaro.forge.imag.fr">Givaro</a>
+      </font></font> </address>
+      </td>
+      <td align="right">
+      <address> <font face="Arial,Helvetica"><font size="-1">
+<script type="text/javascript"><!-- 
+		    		CryptMail(""); 
+		    		// -->
+</script>
+      </font></font> </address>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+</p>
+<!-- footer -->
+
+</BODY>
+</HTML>

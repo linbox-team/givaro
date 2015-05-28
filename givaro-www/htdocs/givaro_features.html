@@ -1,0 +1,157 @@
+
+<HTML>
+<HEAD>
+   <TITLE>Givaro Features</TITLE>
+   <META NAME="Author" CONTENT="Jean-Guillaume Dumas">
+   <META NAME="Description" CONTENT="Givaro, a C++ library for algebraic computations.">
+   <META NAME="Keywords" CONTENT="Givaro,Algebraic Numbers,C++,Polynomials">
+<script type="text/javascript" src="http://ljk.imag.fr/membres/Jean-Guillaume.Dumas/Scripts/base_scr.js"></script>
+</HEAD>
+<!BODY TEXT="#FFFFFF" BGCOLOR="#60A0A0" LINK="#0000FF" VLINK="#800080" ALINK="#FF0000">
+<BODY TEXT="#000000" 
+VLINK="#800080" LINK="#551A8B" ALINK="#FF0000" >
+
+<!-- header -->
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<table style="border:0;" cellpadding="0" cellspacing="2"  width="100%">
+  <tbody>
+    <tr>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr">Givaro</a> </td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro-html">Documentation</a> </td>
+      <td style="text-align: center;font-size:small;"> <a
+ href="https://forge.imag.fr/frs/?group_id=187">Download</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro_install.html">Installation</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro_examples.html">Examples</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/index.html#Contact">Contacts</a></td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<!-- header -->
+
+
+<CENTER><H1>More details on <IMG SRC="Images/small_logo.gif" ALIGN=ABSMIDDLE WIDTH=99 HEIGHT=36 Alt="Givaro"></H1></CENTER>
+
+<P>
+<img alt="Jean-Guillaume Dumas" src="Images/blue.gif" border="0" height="2" width="100%"></P>
+<FONT SIZE=+0>
+<!PRE>
+<UL>
+<LI> Basic Structures : <FONT COLOR=BLUE>array</FONT> (0, 1, 2 dimensional), <FONT COLOR=BLUE>bit array</FONT>, <FONT COLOR=BLUE>hashtable</FONT>, <FONT COLOR=BLUE>stack</FONT>.
+<BR><BR>
+<LI> Arithmetic with arbitrary precision over the <FONT COLOR=BLUE>Integers</FONT> (<FONT COLOR=GREEN>Karatsuba</FONT> with GMP) plus
+<UL>
+	<LI> Chinese remaindering.
+	<LI> Primality testing (<FONT COLOR=GREEN>Miller</FONT>, <FONT COLOR=GREEN>Lehmann</FONT>, <FONT COLOR=GREEN>Pepin</FONT> for <FONT COLOR=GREEN>Fermat</FONT> numbers, ...).
+	<LI> Factorization (<FONT COLOR=GREEN>Pollard</FONT>, ...).
+	<LI> <FONT COLOR=GREEN>Euler</FONT>'s phi.
+	<LI> Primitive roots.
+	<LI> <FONT COLOR=GREEN>RSA</FONT> coding system.
+</UL>
+<BR>
+<LI> Arithmetic over <FONT COLOR=BLUE>Z/mZ</FONT>.
+
+<BR><BR>
+<LI> Arithmetic with arbitrary precision over the <FONT COLOR=BLUE>Rationals</FONT>.
+
+<BR><BR>
+<LI> <FONT COLOR=BLUE>Fractions</FONT>.
+
+<BR><BR>
+<LI> Linear Algebra : dense and sparse (reduced coordinate format) <FONT COLOR=BLUE>vectors</FONT>, dense <FONT COLOR=BLUE>matrices</FONT> and <FONT COLOR=BLUE>submatrices</FONT>.
+<UL>
+	<LI> Visualisation tools.
+	<LI> Linear recurring sequence :
+<UL>
+		<LI> <FONT COLOR=GREEN>Pade</FONT>/<FONT COLOR=GREEN>Euclide</FONT> algorithm over a field.
+		<LI> <FONT COLOR=GREEN>Reeds-Sloane</FONT> algorithm modulo any integer.
+</UL>
+	<LI> System solving :
+<UL>
+		<LI> Elimination (<FONT COLOR=GREEN>Gauss</FONT>) over a field.
+		<LI> Fraction-free elimination (<FONT COLOR=GREEN>Gauss-Bareiss</FONT>) over a ring.
+		<LI> Matrix-Free algorithm (<FONT COLOR=GREEN>Coppersmith's Block Wiedemann</FONT>) over a field .
+</UL>
+	<LI> Rank computation :
+<UL>
+		<LI> Elimination over a field.
+		<LI> Fraction-free elimination over a ring.
+		<LI> Specialized elimination implementations (GF(2), GF(p^k)).
+		<LI> Matrix-Free algorithm over a field
+		  with <FONT COLOR=GREEN>Toepliz</FONT>, diagonal and/or tranpose precondtionning.
+</UL>
+	<LI> Valence computation over the Integers :
+<UL>
+		<LI> Fraction-free elimination (Heuristic <FONT COLOR=GREEN>Storjohan</FONT>).
+		<LI> Matrix-Free and Chinese remaindering.
+</UL>
+	<LI> Smith form :
+<UL>
+		<LI> Elimination or Matrix-Free over a field, elimination over GF(p^k) and Fraction-free elimination (Heuristic <FONT COLOR=GREEN>Storjohan</FONT>).
+		<LI> Elimination or Matrix-Free over a field, elimination over GF(p^k) and Valence computation.
+</UL>
+</UL>
+<BR>
+<LI> <FONT COLOR=BLUE>Polynomial</FONT> arithmetic.
+<UL>
+	<LI> Square free decomposition.
+	<LI> <FONT COLOR=GREEN>Sturm</FONT> query.
+	<LI> Factorization (<FONT COLOR=GREEN>Berlekamp</FONT>, <FONT COLOR=GREEN>Cantor-Zassenhaus</FONT>).
+</UL>	
+<BR>
+<LI> Arithmetic with <FONT COLOR=BLUE>algebraic numbers</FONT>.
+<UL><UL>
+	<LI> Equality testing (<FONT COLOR=GREEN>D5</FONT>, <FONT COLOR=GREEN>lazy</FONT>).
+	<LI> Sign testing (<FONT COLOR=GREEN>Sylvester-Habicht</FONT>).
+</UL></UL>
+<BR>
+<LI> <FONT COLOR=BLUE>Timer</FONT> (microseconds).
+<UL>
+	<LI> user time, system time, real time.
+</UL>
+<BR>
+</UL>
+
+<IMG SRC="Images/round.gif">, <IMG SRC="Images/circle.gif"> :
+<A HREF="Givaro-3.0.tgz">Distributed</A>.
+<BR>
+<IMG SRC="Images/square.gif">    : Available via 
+<a  href="javascript:emailtomecrypted()">e-mail</A>.
+<!/PRE>
+
+<!-- footer -->
+<p><div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td align="left"><i> <font face="Arial,Helvetica"> <font
+ size="-1">
+Last update: Tuesday, January 10th 2012
+      </font></font> </i> </td>
+      <td align="center">
+      <address> <font face="Arial,Helvetica"><font size="-1"> <a
+ href="http://givaro.forge.imag.fr">Givaro</a>
+      </font></font> </address>
+      </td>
+      <td align="right">
+      <address> <font face="Arial,Helvetica"><font size="-1">
+<script type="text/javascript"><!-- 
+		    		CryptMail(""); 
+		    		// -->
+</script>
+      </font></font> </address>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+</p>
+<!-- footer -->
+
+</BODY>
+</HTML>

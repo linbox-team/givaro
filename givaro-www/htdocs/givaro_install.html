@@ -1,0 +1,126 @@
+
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (X11; I; Linux 2.2.14-15mdk i686) [Netscape]">
+   <meta name="Author" content="Jean-Guillaume Dumas">
+   <meta name="Description" content="Givaro, a C++ library for algebraic computations.">
+   <meta name="Keywords" content="Givaro,Algebraic Numbers,C++,Polynomials">
+   <title>Install Givaro</title>
+<!BODY TEXT="#FFFFFF" BGCOLOR="#60A0A0" LINK="#0000FF" VLINK="#800080" ALINK="#FF0000">
+    <script type="text/javascript" src="Scripts/base_scr.js"></script>
+</head>
+<body text="#000000" link="#551A8B" vlink="#800080" alink="#FF0000" background="paper10a.jpg">
+
+<!-- header -->
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<table style="border:0;" cellpadding="0" cellspacing="2"  width="100%">
+  <tbody>
+    <tr>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr">Givaro</a> </td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro-html">Documentation</a> </td>
+      <td style="text-align: center;font-size:small;"> <a
+ href="https://forge.imag.fr/frs/?group_id=187">Download</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro_install.html">Installation</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/givaro_examples.html">Examples</a></td>
+      <td style="text-align: center;font-size:small;"><a
+ href="http://givaro.forge.imag.fr/index.html#Contact">Contacts</a></td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<!-- header -->
+
+<center>
+<h1>
+How to install&nbsp;<img SRC="Images/small_logo.gif" ALT="Givaro" height=36 width=99 align=ABSCENTER>
+?</h1></center>
+
+<hr WIDTH="100%">
+<h3>
+<b>Quick Start:</b></h3>
+
+<center><table BORDER=5 CELLSPACING=0 CELLPADDING=10 BGCOLOR="#60A0A0" >
+<tr>
+<td>
+<pre><font color="#FFFFFF"><font size=+1>>&nbsp;tar -zxvf Givaro.tar.gz</font></font></pre>
+
+<pre><font color="#FFFFFF"><font size=+1>> cd givaro-3.XX</font></font></pre>
+
+<pre><font color="#FFFFFF"><font size=+1>> configure --prefix=/tmp/givaro-exec</font></font></pre>
+
+<pre><font color="#FFFFFF"><font size=+1>> make; make install</font></font></pre>
+</td>
+</tr>
+</table></center>
+<ul><font size=+1>Configuration can be adapted. <I>&gt; configure --help</I>,
+will print the parameter choices.
+<br> In particular if GMP is not installed to the default location you might need to add e.g. <I>--with-gmp=/mypathforgmp/gmp-4.3.1</I> to the configure line.
+<br> Also, on non-Linux systems you might need to use 'gmake' instead of 'make'.</font></ul>
+
+
+
+<p>
+<hr WIDTH="100%">
+<p><b><font size=+1>Compilation :</font></b>
+<br><b><font size=+1></font></b>&nbsp;
+<blockquote><font size=+1>An optional compilation help file is provided : just add the following line to your Makefile !</font></blockquote>
+
+<center><table BORDER=5 CELLSPACING=0 CELLPADDING=10 BGCOLOR="#60A0A0" >
+<tr>
+<td>
+<pre><font color="#FFFFFF"><font size=+1>include ##GIVAROROOT##/bin/givaro-makefile</font></font></pre>
+</td>
+</tr>
+</table></center>
+
+<ul><font size=+1></font>&nbsp;
+	<br><font size=+1>Then a simple call will compile your C++&nbsp;files&nbsp; (here <font size=+1>ifactor.C</font>, with a gazillion number of optional optimization flags) :</font></ul>
+
+<center><table BORDER=5 CELLSPACING=0 CELLPADDING=10 BGCOLOR="#60A0A0" >
+<tr>
+<td>
+<font color="#FFFFFF"><font size=+1><pre>&nbsp;cd examples/Integer; make ifactor "OPTFLAGS=-O7 -funroll-all-loops</pre>
+				<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-felide-constructors -fstrict-aliasing</pre>
+				<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-frerun-loop-opt -fexpensive-optimizations</pre>
+				<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-fforce-addr -fforce-mem -fstrength-reduce -march=i686"</pre>
+</font></font>
+</td>
+</tr>
+</table></center>
+
+<!-- footer -->
+<p><div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td align="left"><i> <font face="Arial,Helvetica"> <font
+ size="-1">
+Last update: Tuesday, January 10th 2012
+      </font></font> </i> </td>
+      <td align="center">
+      <address> <font face="Arial,Helvetica"><font size="-1"> <a
+ href="http://givaro.forge.imag.fr">Givaro</a>
+      </font></font> </address>
+      </td>
+      <td align="right">
+      <address> <font face="Arial,Helvetica"><font size="-1">
+<script type="text/javascript"><!-- 
+		    		CryptMail(""); 
+		    		// -->
+</script>
+      </font></font> </address>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="font-size:1px;"><img alt="Jean-Guillaume Dumas" src="Images/blue.gif"  height="2" width="100%" style="border:0;font-size:xx-small;vertical-align:bottom;"></div>
+</p>
+<!-- footer -->
+
+</body>
+</html>

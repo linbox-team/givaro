@@ -33,7 +33,7 @@ Compute_t(a)-Compute_t(b) : Compute_t(p)-Compute_t(b)+Compute_t(a)) )
 // r <- r - a
 #define __GIVARO_MODULAR_INTEGER_SUBIN(r,p,a) { \
 	if (Compute_t(r) < Compute_t(a)) \
-	r += Element(Compute_t(p)-Compute_t(a)); \
+	r = Element(Compute_t(r) + Compute_t(p) - Compute_t(a)); \
 	else r = Element(Compute_t(r) - Compute_t(a)); }
 #define __GIVARO_MODULAR_FLOATING_SUBIN(r,p,a) { if (r<a) r+=(p-a); else r-=a; }
 
@@ -44,7 +44,7 @@ r = Element((Compute_t(r) < Compute_t(p)) ? r : Compute_t(r) - Compute_t(p)); }
 #define __GIVARO_MODULAR_FLOATING_ADD(r,p,a,b) { r = (a+b); r= (r < p ? r : r-p); }
 // r <- r + a
 #define __GIVARO_MODULAR_INTEGER_ADDIN(r,p,a) \
-{ r += Element(a); r = Element((Compute_t(r) < Compute_t(p)) ? r : Compute_t(r) - Compute_t(p)); }
+{ r = Element(r + a); r = Element((Compute_t(r) < Compute_t(p)) ? r : Compute_t(r) - Compute_t(p)); }
 #define __GIVARO_MODULAR_FLOATING_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p); }
 
 // r <- c + a*b

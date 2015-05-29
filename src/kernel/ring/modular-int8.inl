@@ -75,8 +75,8 @@ namespace Givaro {
     inline typename Modular<int8_t, COMP>::Element& Modular<int8_t, COMP>::inv
 		(Element& r, const Element& a) const
 	{
-		invext(r, a, int8_t(_p));
-		return (r < 0)? r += (int8_t)_p : r;
+		invext(r, a, Element(_p));
+		return (r < 0)? r = Element(r + _p) : r;
 	}
 
 	template<typename COMP>

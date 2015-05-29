@@ -71,7 +71,7 @@ namespace Givaro {
 		(Element& r, const Element& a) const
 	{
 		invext(r, a, int16_t(_p));
-		return (r < 0)? r += static_cast<Element>(_p) : r;
+		return (r < 0)? r = static_cast<Element>(r + _p) : r;
 	}
 
 	template<typename COMP>

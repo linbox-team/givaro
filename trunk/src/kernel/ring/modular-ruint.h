@@ -41,16 +41,16 @@ public:
 
 	// ----- Constructors
 	Modular()
-	    :  zero(static_cast<Element>(0))
-	    , one(static_cast<Element>(1))
-	    , mOne(static_cast<Element>(-1))
-        , _p(static_cast<Residu_t>(0)) {}
+	    :  zero(0)
+	    , one(1)
+	    , mOne(-1)
+        , _p(0) {}
 
 	Modular(const Residu_t p)
-	    : zero(static_cast<Element>(0))
-	    , one(static_cast<Element>(1))
-	    , mOne(static_cast<Element>(p-1))
-	    , _p(static_cast<Residu_t>(p))
+	    : zero(0)
+	    , one(1)
+	    , mOne(p-1)
+	    , _p(p)
 	{
 	    assert(_p >= getMinModulus());
 	    assert(_p <= getMaxModulus());
@@ -95,16 +95,11 @@ public:
 	}
 
 	// ----- Initialisation
-	Element& init(Element& a) const;
-	Element& init(Element& r, const long a) const ;
-	Element& init(Element& r, const unsigned long a) const ;
-	Element& init(Element& a, const int i) const ;
-	Element& init(Element& a, const unsigned int i) const ;
-	Element& init(Element& a, const Integer& i) const ;
-	Element& init(Element& a, const double i) const;
-	Element& init(Element& a, const float i) const;
+	Element& init(Element& r) const;
+	Element& init(Element& r, const double a)   const;
+	Element& init(Element& r, const Integer& a) const;
 
-	Element& assign(Element& r, const Element a) const;
+	Element& assign(Element& r, const Element& a) const;
 
 	// ----- Convert
 	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}

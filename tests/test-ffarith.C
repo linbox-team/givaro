@@ -266,7 +266,7 @@ Ints previousprime(const Ints& a) {
     static IntPrimeDom IPD;
     Integer aI(a);
     IPD.prevprimein(aI);
-	
+
 	return (Ints)aI;
 }
 
@@ -316,10 +316,10 @@ int main(int argc, char ** argv)
 #ifdef __USE_Givaro_SIXTYFOUR__
 	Modular<int64_t> LL13(13UL);
 	JETESTE(LL13,seed);
-	
+
 	Modular<uint64_t> ULL13(13UL);
 	JETESTE(ULL13,seed);
-	
+
 	ModularBalanced<int64_t> BULL13(13UL);
 	JETESTE(BULL13,seed);
 #endif
@@ -338,8 +338,8 @@ int main(int argc, char ** argv)
 
 	ModularBalanced<double> BD13(13);
 	JETESTE(BD13,seed);
-	
-	Modular<RecInt::ruint256> R13(13);
+
+	Modular<RecInt::ruint128> R13(13);
 	JETESTE(R13,seed);
 
 	//--------------------------------//
@@ -375,10 +375,10 @@ int main(int argc, char ** argv)
 #ifdef __USE_Givaro_SIXTYFOUR__
 	Modular<int64_t> LLpmax(previousprime(Modular<int64_t>::getMaxModulus() ) );
 	JETESTE(LLpmax,seed);
-	
+
 	ModularBalanced<int64_t> BLLpmax(previousprime(ModularBalanced<int64_t>::getMaxModulus() ) );
 	JETESTE(BLLpmax,seed);
-	
+
 	Modular<uint64_t> ULLpmax(previousprime(Modular<uint64_t>::getMaxModulus() ) );
 	JETESTE(ULLpmax,seed);
 #endif
@@ -394,6 +394,9 @@ int main(int argc, char ** argv)
 
 	ModularBalanced<double> BDpmax(previousprime(ModularBalanced<double>::getMaxModulus() ) );
 	JETESTE(BDpmax,seed);
+
+	Modular<RecInt::ruint128> Rpmax(previousprime(Modular<RecInt::ruint128>::getMaxModulus()));
+	JETESTE(Rpmax,seed);
 
 	//--------------------------//
 	//----- Modulo maximal -----//
@@ -428,25 +431,29 @@ int main(int argc, char ** argv)
 #ifdef __USE_Givaro_SIXTYFOUR__
 	Modular<int64_t> LLmax(Modular<int64_t>::getMaxModulus());
 	JETESTE(LLmax,seed);
-	
+
 	ModularBalanced<int64_t> BLLmax(ModularBalanced<int64_t>::getMaxModulus());
 	JETESTE(BLLmax,seed);
-	
+
 	Modular<uint64_t> ULLmax(Modular<uint64_t>::getMaxModulus());
 	JETESTE(ULLmax,seed);
 #endif
-	
+
 	Modular<float> Fmax(Modular<float>::getMaxModulus());
 	JETESTE(Fmax,seed);
-	
+
 	ModularBalanced<float> BFmax(ModularBalanced<float>::getMaxModulus());
 	JETESTE(BFmax,seed);
-	
+
 	Modular<double> Dmax(Modular<double>::getMaxModulus());
 	JETESTE(Dmax,seed);
-	
+
 	ModularBalanced<double> BDmax(ModularBalanced<double>::getMaxModulus());
 	JETESTE(BDmax,seed);
+
+    // Not a prime
+	// Modular<RecInt::ruint128> Rmax(Modular<RecInt::ruint128>::getMaxModulus());
+	// JETESTE(Rmax,seed);
 
 	//--------------------//
 	//----- Modulo 2 -----//
@@ -478,21 +485,21 @@ int main(int argc, char ** argv)
 #ifdef __USE_Givaro_SIXTYFOUR__
 	Modular<int64_t> LL2(2UL);
 	JETESTE(LL2,seed);
-	
+
 	Modular<uint64_t> ULL2(2UL);
 	JETESTE(ULL2,seed);
 #endif
 
 	Modular<Integer> I2(2);
 	JETESTE(I2,seed);
-	
+
 	Modular<float> F2(2);
 	JETESTE(F2,seed);
-	
+
 	Modular<double> D2(2);
 	JETESTE(D2,seed);
-	
-	Modular<RecInt::ruint256> R2(2);
+
+	Modular<RecInt::ruint128> R2(2);
 	JETESTE(R2,seed);
 
 	//--------------------//
@@ -503,17 +510,20 @@ int main(int argc, char ** argv)
 
 	ModularBalanced<int32_t> BZ3(3);
 	JETESTE(BZ3,seed);
-	
+
 #ifdef __USE_Givaro_SIXTYFOUR__
 	ModularBalanced<int64_t> BLL3(3UL);
 	JETESTE(BLL3,seed);
 #endif
-	
+
 	ModularBalanced<float> BF3(3);
 	JETESTE(BF3,seed);
-	
+
 	ModularBalanced<double> BD3(3);
 	JETESTE(BD3,seed);
+
+	Modular<RecInt::ruint128> R3(3);
+	JETESTE(R3,seed);
 
 	//---------------------------------//
 	//----- Other Characteristics -----//

@@ -21,6 +21,12 @@ namespace Givaro {
     Target& Caster (Target& t, const Source& s) {
         return t = static_cast<Target>(s);
     }
+
+    template <typename Target, typename Source>
+    Target Caster (const Source& s) {
+        Target tmp;
+        return Caster(tmp, s);
+    }
 }
 
 #endif // __GIVARO_caster_H

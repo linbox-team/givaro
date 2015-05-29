@@ -8,8 +8,8 @@
 #include <iostream>
 #include <givaro/modular.h>
 #include <givaro/givpoly1.h>
-
 #include <givaro/givinteger.h>
+
 using namespace Givaro;
 
 
@@ -302,6 +302,10 @@ int main(int argc, char ** argv)
 	// modulo 13 over arbitrary size
 	Modular<Integer> IntZ2(2);
 	JETESTE(IntZ2,seed);
+
+	// modulo 13 over 128 bits
+	Modular<RecInt::ruint128> RU1282(2);
+	JETESTE(RU1282,seed);
 
 // --------------------------------------------
 	// modulo 4 over 16 bits

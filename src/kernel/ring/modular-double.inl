@@ -11,6 +11,7 @@
 #ifndef __GIVARO_modular_double_INL
 #define __GIVARO_modular_double_INL
 
+#include "givaro/givcaster.h"
 #include "givaro/modular-defines.h"
 
 namespace Givaro {
@@ -57,7 +58,7 @@ namespace Givaro {
 	template <class XXX>
 	inline Modular<double>::Element &Modular<double>::init(Element &x, const XXX &y) const
 	{
-		return init(x, double(y));
+		return init(x, Caster<double>(y));
 	}
 
 	inline Modular<double>::Element &Modular<double>::assign (Element &x, const Element &y) const

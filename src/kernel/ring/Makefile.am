@@ -10,7 +10,7 @@ AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/bstruct
 
 pkginclude_HEADERS=     \
-	modular.h		\
+	modular.h		    \
 	modular-general.h	\
 	modular-defines.h	\
 	modular-int8.h		\
@@ -26,6 +26,7 @@ pkginclude_HEADERS=     \
 	modular-integer.h	\
 	modular-inttype.h	\
 	modular-log16.h		\
+	modular-ruint.h		\
 	modular-balanced.h 			\
 	modular-balanced-int32.h 	\
 	modular-balanced-int64.h 	\
@@ -51,6 +52,7 @@ pkginclude_HEADERS=     \
 	modular-integer.inl	\
 	modular-inttype.inl	\
 	modular-log16.inl	\
+	modular-ruint.inl   \
 	montgomery-int32.inl\
 	ring-interface.h
 

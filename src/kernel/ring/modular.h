@@ -33,6 +33,7 @@
 #include "givaro/modular-integer.h"
 #include "givaro/modular-inttype.h"
 #include "givaro/modular-log16.h"
+#include "givaro/modular-ruint.h"
 
 #ifndef __USE_Givaro_SIXTYFOUR__
 #ifdef __USE_64_bits__

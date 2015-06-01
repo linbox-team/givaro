@@ -405,9 +405,11 @@ namespace Givaro
 		static inline Element getMaxModulus()
 		{
 #ifdef __x86_64__
-			return 6074000999L; // s.t. 2((p-1)/2)^2 < 2^64
+			return 4294967296L;  // s.t. (p-1)/2 < 2^31 (a field element need to fit on a signed 32 bits int for the SIMD instruction _mm_mul_epi32)
+			    //return 6074000999L; // s.t. (p-1)/2 < 2^31
 #else
-			return 6074000999LL;
+			return 4294967296LL;
+//			return 6074000999LL;
 #endif
 		}
 

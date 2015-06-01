@@ -30,7 +30,7 @@ LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDF
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder
+EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder bivariate
 
 CLEANFILES=$(EXTRA_PROGRAMS)
 
@@ -43,8 +43,9 @@ pol_eval_SOURCES      = pol_eval.C
 pol_factor_SOURCES    = pol_factor.C
 PolynomialCRT_SOURCES = PolynomialCRT.C
 highorder_SOURCES     = highorder.C
+bivariate_SOURCES     = bivariate.C
 
 # for compilation of new examples
 GIVARO_BIN=@bindir@
 %:%.C
-	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)    `$(GIVARO_BIN)/givaro-config --libs`
+	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)    `$(GIVARO_BIN)/givaro-config --libs`

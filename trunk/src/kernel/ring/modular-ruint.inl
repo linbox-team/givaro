@@ -60,7 +60,7 @@ namespace Givaro
     inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::inv
 		(Element& r, const Element& a) const
 	{
-		return r = inv_mod(r, a, _p);
+		return inv_mod(r, a, _p);
 	}
 
 	template<size_t K>

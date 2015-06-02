@@ -27,6 +27,7 @@ namespace Givaro {
 }
 
 #include "givaro/montgomery-int32.h"
+#include "givaro/montgomery-ruint.h"
 
 #endif // __GIVARO_montgomery_H
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

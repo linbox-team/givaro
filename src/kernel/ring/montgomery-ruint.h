@@ -44,7 +44,7 @@ public:
 	// ----- Constructors
 	Montgomery()
 	    :  zero(0), one(1), mOne(-1)
-        , _p(0), _p1(0), _r(0), _r3(0)
+        , _p(0), _p1(0), _r(0), _r2(0), _r3(0)
     {}
 
 	Montgomery(const Residu_t& p)
@@ -54,8 +54,8 @@ public:
         RecInt::arazi_qi(_p1, -_p); // p1 = -inv(p) mod 2^(2^K)
         RecInt::mod_n(_r, -_p, _p); // r = 2^(2^K) mod p
 
-        RecInt::mul(_r3, _r, _r);
-        RecInt::mul(_r3, _r);       // r3 = r^3 mod p
+        RecInt::mul(_r2, _r, _r);   // r2 = r^2 mod p
+        RecInt::mul(_r3, _r2, _r);  // r3 = r^3 mod p
 
         RecInt::copy(const_cast<Element&>(one), _r);
         to_mg(const_cast<Element&>(mOne), _p - 1u);
@@ -180,6 +180,8 @@ protected:
     RecInt::ruint<K> _p1;
     // r = 2^(2^K) mod p
     RecInt::ruint<K> _r;
+    // r2 = r^2 mod p - used to initialize elements
+    RecInt::ruint<K> _r2;
     // r3 = r^3 mod p - used to compute inverse
     RecInt::ruint<K> _r3;
 };

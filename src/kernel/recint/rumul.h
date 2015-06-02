@@ -11,27 +11,27 @@ Time-stamp: <20 Jun 12 10:28:29 Jean-Guillaume.Dumas@imag.fr>
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
 This software is governed by the CeCILL-B license under French law and
-abiding by the rules of distribution of free software.  You can  use, 
+abiding by the rules of distribution of free software.  You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL-B
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
-As a counterpart to the access to the source code and  rights to copy, 
+As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
-software by the user in light of its specific status of free software, 
+software by the user in light of its specific status of free software,
 that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-B license and that you accept its terms.
@@ -82,7 +82,8 @@ namespace RecInt
     template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>&) mul(ruint<K>& a, const T& c);
 
     // a = b*b
-    template <size_t K> void lsquare(ruint<K+1>& a, const ruint<K>& b);
+    template <size_t K> ruint<K+1>& lsquare(ruint<K+1>& a, const ruint<K>& b);
+    template <size_t K> ruint<K>& square(ruint<K>& al, const ruint<K>& b);
 }
 
 
@@ -151,21 +152,21 @@ namespace RecInt
     inline void lmul_naive(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c) {
         bool rmid, rlow;
         ruint<K> bcmid, blcl;
-        
+
         // Low part
         lmul_naive(blcl, b.Low, c.Low);
-        
+
         // Middle part
         lmul_naive(bcmid, b.High, c.Low);
         laddmul(rmid, bcmid, b.Low, c.High, bcmid);
-        
+
         // High part
         laddmul(ah, b.High, c.High, bcmid.High);
-        
+
         // Below, we do not need b, c, d anymore, go fill ah|al no problem
         copy(al.Low, blcl.Low);
         add(rlow, al.High, blcl.High, bcmid.Low);
-        
+
         if (rlow)  add_1(ah);
         if (rmid)  add_1(rmid, ah.High);
     }
@@ -227,7 +228,7 @@ namespace RecInt
     inline void lmul(ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c) {
         lmul(a.High, a.Low, b, c);
     }
-     
+
     // ret|a = b*c
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, void) lmul(limb& ret, ruint<K>& a, const ruint<K>& b, const T& c) {
@@ -328,27 +329,49 @@ namespace RecInt
 {
     // a = b*b
     template <size_t K>
-    inline void lsquare(ruint<K+1>& a, const ruint<K>& b) {
+    inline ruint<K+1>& lsquare(ruint<K+1>& a, const ruint<K>& b) {
         bool rbb, ralb, rbah;
         ruint<K> bhbl;
-        
+
         // a = bh*bh*B*B + 2*B*bh*bl + bl*bl
         lmul(bhbl, b.High, b.Low);
         lsquare(a.High, b.High);
         lsquare(a.Low, b.Low);
-        
+
         rbb = highest_bit(bhbl);
         left_shift_1(bhbl, bhbl);
-        
+
         add(ralb, a.Low.High, bhbl.Low);
         add(rbah, a.High.Low, bhbl.High);
-        
+
         if (ralb) add_1(a.High);
         if (rbah || rbb) add(a.High.High, rbah + rbb);
+        return a;
     }
     template<>
-    inline void lsquare(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
+    inline ruint<__RECINT_LIMB_SIZE+1>& lsquare(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         umul_ppmm(a.High.Value, a.Low.Value, b.Value, b.Value);
+        return a;
+    }
+
+    // <>|al = b*b
+    template <size_t K>
+    inline ruint<K>& square(ruint<K>& al, const ruint<K>& b) {
+        ruint<K-1> bhbll;
+
+        // al = (2*bh*bl).Low * B + bl*bl
+        mul(bhbll, b.High, b.Low);
+        lsquare(al, b.Low);
+
+        left_shift_1(bhbll, bhbll);
+        add(al.High, bhbll);
+
+        return al;
+    }
+    template<>
+    inline ruint<__RECINT_LIMB_SIZE>& square(ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b) {
+        al.Value = b.Value * b.Value;
+        return al;
     }
 }
 

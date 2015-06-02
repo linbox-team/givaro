@@ -102,7 +102,7 @@ int TestOneField(const Field& F, const int FIRSTINT, const float FIRSTFLOAT)
 	F.init(d);            // empty constructor
 
 	F.add(c, a, b);       // c = a+b
-	F.init(c_);           //! @warning F.init(c_,c); ne marche pas !
+	F.init(c_);           // F.init(c_,c); does not work, and it is expected behavior.
 	F.assign(c_,c);       // c_ <- c
 
 //         F.write(std::cerr) << std::endl;
@@ -342,6 +342,9 @@ int main(int argc, char ** argv)
 	Modular<RecInt::ruint128> R13(13);
 	JETESTE(R13,seed);
 
+	Modular<RecInt::ruint128> MR13(13);
+	JETESTE(MR13,seed);
+
 	//--------------------------------//
 	//----- Modulo maximal prime -----//
 
@@ -397,6 +400,9 @@ int main(int argc, char ** argv)
 
 	Modular<RecInt::ruint128> Rpmax(previousprime(Modular<RecInt::ruint128>::getMaxModulus()));
 	JETESTE(Rpmax,seed);
+
+	Montgomery<RecInt::ruint128> MRpmax(previousprime(Montgomery<RecInt::ruint128>::getMaxModulus()));
+	JETESTE(MRpmax,seed);
 
 	//--------------------------//
 	//----- Modulo maximal -----//
@@ -524,6 +530,9 @@ int main(int argc, char ** argv)
 
 	Modular<RecInt::ruint128> R3(3);
 	JETESTE(R3,seed);
+
+	Montgomery<RecInt::ruint128> MR3(3);
+	JETESTE(MR3,seed);
 
 	//---------------------------------//
 	//----- Other Characteristics -----//

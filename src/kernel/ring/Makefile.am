@@ -38,6 +38,7 @@ pkginclude_HEADERS=     \
 	zring.h				\
 	montgomery.h	    \
 	montgomery-int32.h	\
+	montgomery-ruint.h	\
 	modular-general.inl	\
 	modular-int8.inl	\
 	modular-int16.inl	\
@@ -54,6 +55,7 @@ pkginclude_HEADERS=     \
 	modular-log16.inl	\
 	modular-ruint.inl   \
 	montgomery-int32.inl\
+	montgomery-ruint.inl\
 	ring-interface.h
 
 EXTRA_DIST=ring.doxy

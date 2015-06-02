@@ -13,6 +13,10 @@
 #include <iostream>
 #include <givaro/modular-integer.h>
 #include <givaro/givpoly1.h>
+#include <givaro/givpower.h>
+#include <givaro/givquotientdomain.h>
+#include <string>
+#include <sstream>
 
 using namespace Givaro;
 
@@ -30,21 +34,38 @@ int main(int argc, char ** argv) {
     Bivariates  PPZp( PZp, Indeter("Y") );
     
     Field::Element tmp;
-    Polynomials::Element P, R; 
-    PZp.init(P, Degree(1), Zp.init(tmp,5) ); // 5X
+    Polynomials::Element P, R, S; 
+    PZp.init(P, Degree(1), 5 ); // 5X, PZp.init will call Zp.init on 5
     PZp.addin(P, Zp.init(tmp,7) ); // 5X+7
+    
+    std::istringstream stream(std::string("3 1 2 3 4"));
+    PZp.read( stream, S );
+    PZp.write(std::cout << "S: ", S ) << std::endl;
 
-    PZp.init(R, Degree(3), Zp.init(tmp,11) ); // 11X^3
+    PZp.assign(R, Degree(3), Zp.init(tmp,11) ); // 11X^3, PZp.assign will call Zp.assign on tmp
     PZp.addin(R, Zp.init(tmp,13) ); // 11X^3+13
 
-    Bivariates::Element Q;
+    Bivariates::Element Q; 
     PPZp.init(Q, Degree(2)); 
     PZp.assign(Q[0], R);
     PZp.assign(Q[2], P);// (5X+7)Y^2 + 11X^3+13
-    
 
     PPZp.write(std::cout << "Q: ", Q) << std::endl;
     
+
+    typedef QuotientDom<Bivariates> BivMods;
+    BivMods QD(PPZp, Q);
+    BivMods::Element Res, G; QD.init(Res); QD.init(G);
+
+    PZp.assign(P, Degree(1), 1 ); 	// X
+    PPZp.init(G, Degree(1), 1); 	// Y
+    PPZp.addin(G, P);				// Y+X
+    QD.write(std::cout << "Y+X: ", G) << std::endl;
+    
+    long l = 15;
+    dom_power(Res, G, l, QD); 		// G^l mod Q
+
+    QD.write(std::cout << "(Y+X)^" << l << ": ", Res) << std::endl;
 
     return 0;
     

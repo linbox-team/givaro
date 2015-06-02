@@ -49,9 +49,7 @@ namespace Givaro
     inline typename Montgomery<RecInt::ruint<K>>::Element&
         Montgomery<RecInt::ruint<K>>::to_mg(Element& a, const Element& b) const
     {
-        LargeElement res;
-        RecInt::copy(res.High, b);
-        RecInt::mod_n(a, res, _p);
+        mul(a, b, _r2);
         return a;
     }
 

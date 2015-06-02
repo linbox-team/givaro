@@ -96,6 +96,15 @@ namespace Givaro
 		size_t minElement() const {return 0;}
 		size_t maxElement() const {return 0;}
 
+		/** Print field.
+		 * @return output stream to which field is written.
+		 * @param  os  output stream to which field is written.
+		 */
+		std::ostream &write (std::ostream &os) const
+		{
+			return os << "ZRing<" << sizeof(Element) <<',' << typeid(Element).name() << ')';
+		}
+
 	};
 	/* Representations of Z with floating point elements*/
 	typedef ZRing<float> FloatDomain;

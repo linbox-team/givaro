@@ -62,7 +62,7 @@ int main(int argc, char ** argv) {
     PPZp.addin(G, P);				// Y+X
     QD.write(std::cout << "Y+X: ", G) << std::endl;
     
-    long l = 15;
+    long l = 5;
     dom_power(Res, G, l, QD); 		// G^l mod Q
 
     QD.write(std::cout << "(Y+X)^" << l << ": ", Res) << std::endl;

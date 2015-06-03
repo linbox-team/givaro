@@ -76,8 +76,7 @@ public :
 	}
 	std::ostream& write( std::ostream& o ) const
 	{
-		return Ring_t::write(
-				     Ring_t::write(o) << '/', o);
+		return Ring_t::write( Ring_t::write(o) << '/', _modulo);
 	}
 	std::istream& read ( std::istream& i, Rep& n) const
 	{

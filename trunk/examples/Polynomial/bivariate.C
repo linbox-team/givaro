@@ -55,6 +55,8 @@ int main(int argc, char ** argv) {
 
     typedef QuotientDom<Bivariates> BivMods;
     BivMods QD(PPZp, Q);
+    QD.write(std::cout << "Quotient: ") << std::endl;
+    
     BivMods::Element Res, G; QD.init(Res); QD.init(G);
 
     PZp.assign(P, Degree(1), 1 ); 	// X

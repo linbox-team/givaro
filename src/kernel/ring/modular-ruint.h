@@ -11,8 +11,10 @@
 #define __GIVARO_modular_ruint_H
 
 #include "recint/ruint.h"
+#include "givaro/givinteger.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
+#include "givaro/givranditer.h"
 
 namespace Givaro
 {
@@ -141,9 +143,9 @@ public:
 	// ----- Random generators
 	typedef ModularRandIter<Self_t> RandIter;
 	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-    template< class Random > Element& random(const Random& g, Element& r) const	{ return init(r, g()); }
+    template< class Random > Element& random(const Random& g, Element& r) const	{ RecInt::rand(r); mod_n(r, _p); return r; }
     template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
-    	{ while (isZero(init(a, g())));
+    	{ while (isZero(random(g, a)));
     	  return a; }
 
 	// --- IO methods

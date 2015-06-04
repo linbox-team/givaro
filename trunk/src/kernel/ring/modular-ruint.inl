@@ -175,11 +175,25 @@ namespace Givaro
     init(Element& r, const double a) const
 	{
 		if (a < 0) {
-		    mod_n(r, static_cast<Element>(-a), _p);
+		    RecInt::mod_n(r, static_cast<Element>(-a), _p);
 		    RecInt::sub(r, _p, r);
 		}
 		else {
-		    mod_n(r, static_cast<Element>(a), _p);
+		    RecInt::mod_n(r, static_cast<Element>(a), _p);
+		}
+		return r;
+	}
+
+	template<size_t K>
+    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K>>::
+	    init (Element& r, const RecInt::ruint<K>& a) const
+	{
+		if (a < 0) {
+		    RecInt:: mod_n(r, -a, _p);
+		    RecInt::sub(r, _p, r);
+		}
+		else {
+		    RecInt::mod_n(r, a, _p);
 		}
 		return r;
 	}
@@ -189,11 +203,11 @@ namespace Givaro
     init (Element& r, const Integer& a) const
 	{
 		if (a < 0) {
-		    mod_n(r, static_cast<Element>(-a), _p);
+		    RecInt::mod_n(r, static_cast<Element>(-a), _p);
 		    RecInt::sub(r, _p, r);
 		}
 		else {
-		    mod_n(r, static_cast<Element>(a), _p);
+		    RecInt::mod_n(r, static_cast<Element>(a), _p);
 		}
 		return r;
 	}

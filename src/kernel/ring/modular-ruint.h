@@ -99,6 +99,7 @@ public:
 	// ----- Initialisation
 	Element& init(Element& r) const;
 	Element& init(Element& r, const double a)   const;
+	Element& init(Element& r, const RecInt::ruint<K>& a)   const;
 	Element& init(Element& r, const Integer& a) const;
 
 	Element& assign(Element& r, const Element& a) const;

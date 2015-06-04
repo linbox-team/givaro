@@ -151,9 +151,9 @@ public:
 	// ----- Random generators
 	typedef ModularRandIter<Self_t> RandIter;
 	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-    template< class Random > Element& random(const Random& g, Element& r) const	{ return init(r, g()); }
+    template< class Random > Element& random(const Random& g, Element& r) const	{ RecInt::rand(r); mod_n(r, _p); return r; }
     template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
-    	{ while (isZero(init(a, g())));
+    	{ while (isZero(random(g, a)));
     	  return a; }
 
 	// --- IO methods

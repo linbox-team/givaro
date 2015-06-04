@@ -77,15 +77,22 @@ namespace Givaro
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::sub
 		(Element& r, const Element& a, const Element& b) const
 	{
-		__GIVARO_MODULAR_RECINT_SUB(r,_p,a,b);
-		return r;
+	    if (a < b) { // b > 0 and (a - b) < p
+		RecInt::sub(r, _p, b);
+		RecInt::add(r, a);
+	    } else {
+    		RecInt::sub(r, a, b);
+	    }				
+	    return r;
 	}
 
 	template<size_t K>
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::add
 		(Element& r, const Element& a, const Element& b) const
 	{
-		__GIVARO_MODULAR_RECINT_ADD(r,_p,a,b);
+		bool ret;
+		RecInt::add(ret, r, a, b);
+		if (ret || r > _p) RecInt::sub(r, _p);
 		return r;
 	}
 
@@ -133,7 +140,9 @@ namespace Givaro
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::addin
 		(Element& r, const Element& a) const
 	{
-		__GIVARO_MODULAR_RECINT_ADDIN(r,_p,a);
+		bool ret;
+		RecInt::add(ret, r, a);
+		if (ret || r > _p) RecInt::sub(r, _p);
 		return r;
 	}
 
@@ -141,8 +150,12 @@ namespace Givaro
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::subin
 		(Element& r, const Element& a) const
 	{
-		__GIVARO_MODULAR_RECINT_SUBIN(r,_p,a);
-		return r;
+	    if (r < a) {
+		RecInt::add(r, _p - a);
+	    } else {
+    		RecInt::sub(r, a);
+	    }
+	    return r;
 	}
 
 	template<size_t K>
@@ -165,7 +178,7 @@ namespace Givaro
 		(Element& r, const Element& a, const Element& b, const Element& c) const
 	{
         mul(r, a, b);
-        return add(r, c, r);
+        return addin(r, c);
 	}
 
 	template<size_t K>
@@ -260,23 +273,23 @@ namespace Givaro
 	template<size_t K>
 	inline std::ostream& Montgomery<RecInt::ruint<K>>::write (std::ostream& s) const
 	{
-		return s << "Montgomery<RecInt::ruint<" << K << ">> modulo " << residu();
+	    return s << "Montgomery<RecInt::ruint<" << K << ">> modulo " << residu();
 	}
 
 	template<size_t K>
-    inline std::istream& Montgomery<RecInt::ruint<K>>::read (std::istream& s, Element& a) const
+	inline std::istream& Montgomery<RecInt::ruint<K>>::read (std::istream& s, Element& a) const
 	{
-        Integer tmp;
-		s >> tmp;
-		init(a, tmp);
-		return s;
+	    Integer tmp;
+	    s >> tmp;
+	    init(a, tmp);
+	    return s;
 	}
 
 	template<size_t K>
-    inline std::ostream& Montgomery<RecInt::ruint<K>>::write (std::ostream& s, const Element& a) const
+	inline std::ostream& Montgomery<RecInt::ruint<K>>::write (std::ostream& s, const Element& a) const
 	{
 	    Element ar;
-		return s << mg_reduc(ar, a);
+	    return s << mg_reduc(ar, a);
 	}
 }
 

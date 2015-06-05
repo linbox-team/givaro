@@ -324,10 +324,10 @@ namespace Givaro {
     inline  typename Modular<int64_t, COMP>::Element&  Modular<int64_t, COMP>::init ( Element& r, const long a ) const
 	{
 		int64_t sign; uint64_t ua;
-		if (a <0) { sign =-1; ua = (unsigned int)-a;}
-		else { ua = (unsigned int)a; sign =1; }
+		if (a <0) { sign =-1; ua = (uint64_t)-a;}
+		else { ua = (uint64_t)a; sign =1; }
 		r = (Element)((ua >=_p) ? ua % (uint64_t)_p : ua);
-		if (r && (sign ==-1)) r = (Element)_p - r;
+                if (r && (sign ==-1)) r = (Element)_p - r;
 		return r;
 	}
 
@@ -389,7 +389,7 @@ namespace Givaro {
 		else { ua = (unsigned int)a; sign =1; }
 		r = (Element) ( (ua >=_p) ? ua % (uint64_t)_p : ua) ;
 		if (r && (sign ==-1)) r = (Element)_p - r;
-		return r;
+                return r;
 	}
 
 	template<typename COMP>

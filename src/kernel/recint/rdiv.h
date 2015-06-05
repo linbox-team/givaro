@@ -42,6 +42,8 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RINT_ARITH_DIV_H
 #define RINT_ARITH_DIV_H
 
+#include <cassert>
+
 #include "rrint.h"
 #include "rfiddling.h"
 #include "rudiv.h"
@@ -55,27 +57,19 @@ namespace RecInt
     template <size_t K> rint<K>& operator%=(rint<K>&, const rint<K>&);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>&) operator%=(rint<K>&, const T&);
 
-    /* TODO Division not done yet
     template <size_t K> rint<K>& operator/=(rint<K>&, const rint<K>&);
-    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, rint<K>&) operator/=(rint<K>&, const T&);
-    template <size_t K, typename T> __RECINT_IS_SIGNED(T, rint<K>&)   operator/=(rint<K>&, const T&);
-    */
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>&) operator/=(rint<K>&, const T&);
 
     template <size_t K> rint<K> operator%(const rint<K>&, const rint<K>&);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>) operator%(const rint<K>&, const T&);
 
-    /*
     template <size_t K> rint<K> operator/(const rint<K>&, const rint<K>&);
-    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, rint<K>) operator/(const rint<K>&, const T&);
-    template <size_t K, typename T> __RECINT_IS_SIGNED(T, rint<K>)   operator/(const rint<K>&, const T&);
-    */
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>) operator/(const rint<K>&, const T&);
 
-    /*
     // q = floor(a/b)
     template <size_t K> rint<K>& div_q(rint<K>& q, const rint<K>& a, const rint<K>& b);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>&) div_q(rint<K>& q, const rint<K>& a, const T& b);
-    */
-
+    
     // r = a mod b
     template <size_t K> rint<K>& div_r(rint<K>& r, const rint<K>& a, const rint<K>& b);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, T&) div_r(T& r, const rint<K>& a, const T& b);
@@ -99,24 +93,15 @@ namespace RecInt
         return (a = aa);
     }
 
-    /*
     // Operator /=
     template <size_t K>
     inline rint<K>& operator/=(rint<K>& a, const rint<K>& b) {
         return div_q(a, a, b);
     }
     template <size_t K, typename T>
-    inline __RECINT_IS_UNSIGNED(T, rint<K>&) operator/=(rint<K>& a, const T& b) {
+    inline __RECINT_IS_ARITH(T, rint<K>&) operator/=(rint<K>& a, const T& b) {
         return div_q(a, a, b);
     }
-    template <size_t K, typename T>
-    inline __RECINT_IS_SIGNED(T, rint<K>&) operator/=(rint<K>& a, const T& b) {
-        if (b < 0) {
-            div_q(a, a, -b);
-            return (a = -a);
-        } else return div_q(a, a, b);
-    }
-    */
 
     // Operator %
     template <size_t K>
@@ -126,7 +111,6 @@ namespace RecInt
         return a;
     }
 
-    /*
     // Operator /
     template <size_t K>
     inline rint<K> operator/(const rint<K>& b, const rint<K>& c) {
@@ -134,7 +118,6 @@ namespace RecInt
         div_q(a, b, c);
         return a;
     }
-    */
 }
 
 
@@ -145,7 +128,40 @@ namespace RecInt
 {
     // r = a mod b
     template <size_t K>
+    inline rint<K>& div_q(rint<K>& q, const rint<K>& a, const rint<K>& b) {
+        if (a.isNegative()) {
+	    if (b.isNegative()) {
+		div_q(q.Value, (-a).Value, (-b).Value);
+	    }
+	    else {
+		div_q(q.Value, (-a).Value, b.Value);
+		q = -q;
+	    }
+        }
+        else {
+	    if (b.isNegative()) {
+		div_q(q.Value, a.Value, (-b).Value);
+		q = -q;
+	    }
+	    else {
+		div_q(q.Value, a.Value, b.Value);
+	    }
+        }
+	
+    	return q;
+    }
+    template <size_t K, typename T>
+    inline __RECINT_IS_ARITH(T, rint<K>&) div_q(rint<K>& q, const rint<K>& a, const T& b) {
+        // TODO
+	std::cerr << "DIV with rint not implemented yet." << std::endl;
+	return q;
+    }
+    
+    // r = a mod b
+    template <size_t K>
     inline rint<K>& div_r(rint<K>& r, const rint<K>& a, const rint<K>& b) {
+	assert(b > 1);
+	
         if (a.isNegative()) {
             div_r(r.Value, (-a).Value, b.Value);
             r = -r;
@@ -158,6 +174,8 @@ namespace RecInt
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, T&) div_r(T& r, const rint<K>& a, const T& b) {
+	assert(b > 1);
+	
         if (a.isNegative()) {
             rint<K> aa(-a);
             div_r(r, aa.Value, b);

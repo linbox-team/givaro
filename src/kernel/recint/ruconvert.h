@@ -51,7 +51,6 @@ namespace RecInt
     // Converts a mpz_class to a ruint<K> and vice-versa
     template <size_t K> ruint<K>& mpz_to_ruint(ruint<K>&, const mpz_class&);
     template <size_t K> mpz_class& ruint_to_mpz(mpz_class&, const ruint<K>&);
-    template <size_t K> mpz_class& ruint_to_mpz(mpz_class&, const ruint<K>&);
 }
 
 
@@ -89,16 +88,34 @@ namespace RecInt
 #if GMP_LIMB_BITS != 64
 		    // GMP does not handle uint64_t, need to break it
             a <<= 32;
-            a += mp_limb_t((*it) >> 32);
+            a ^= mp_limb_t((*it) >> 32);
             a <<= 32;
 		    a += mp_limb_t(*it);
 #else
             a <<= 64;
-            a += mp_limb_t(*it);
+            a ^= mp_limb_t(*it);
 #endif
         }
 
         return a;
+    }
+
+    // Convert a ruint into a GMP integer
+    template <size_t K>
+    inline mpz_ptr ruint_to_mpz_t(mpz_ptr a, const ruint<K>& b) {
+	// TODO Optimize...
+	mpz_class r;
+	RecInt::ruint_to_mpz(r, b);
+	mpz_init_set(a, r.get_mpz_t()) ;
+        return a;
+    }
+
+    // Convert a ruint into a GMP integer
+    template <size_t K>
+    inline ruint<K>& mpz_t_to_ruint(ruint<K>& a, mpz_srcptr b) {
+	// TODO Optimize...
+	mpz_class r(b);
+	return RecInt::mpz_to_ruint(a, r);
     }
 }
 

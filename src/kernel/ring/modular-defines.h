@@ -77,9 +77,9 @@
 #define __GIVARO_MODULAR_FLOATING_ADDIN(r,p,a) { r += a;  r= (r < p ? r : r-p); }
 
 // r <- c + a*b
-#define __GIVARO_MODULAR_RECINT_MULADD(r,p,a,b,c) { \
-    r = c; \
-    RecInt::addmul(r, a, b); \
+#define __GIVARO_MODULAR_RECINT_MULADD(r,p,a,b,c) {	\
+    RecInt::copy(r, c);					\
+    RecInt::addmul(r, a, b);				\
     RecInt::mod_n(r, p); }
 #define __GIVARO_MODULAR_INTEGER_MULADD(r,p,a,b,c) ( \
     r = static_cast<Element>((static_cast<Compute_t>(a)*static_cast<Compute_t>(b) \

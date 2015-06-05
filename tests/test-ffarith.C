@@ -218,281 +218,131 @@ int main(int argc, char ** argv)
 #endif
     Integer::seeding((unsigned long)seed);
     RecInt::srand(seed);
+    
+    using ModularCUS = Modular<int8_t, uint16_t>;
+    using ModularSUZ = Modular<int16_t, uint32_t>;
+    using ModularZULL = Modular<int32_t, uint64_t>;
+    using ModularUCUS = Modular<uint8_t, uint16_t>;
+    using ModularUSUZ = Modular<uint16_t, uint32_t>;
+    using ModularUZULL = Modular<uint32_t, uint64_t>;
+    //using ModularFD = Modular<float, double>;
+    //using ModularBalancedFD = ModularBalanced<float, double>;
+    //using ModularBalancedZULL = ModularBalanced<int32_t, uint64_t>;
+    //using MontgomeryZULL = Montgomery<int32_t, uint64_t>;
 
-#ifdef NDEBUG
-    assert(0);
-#endif
+#define TEST_SPECIFIC(Field, Name, Modulus...)		\
+    Field Name(Modulus);				\
+    JETESTE(Name, seed);
+
+    //--------------------//
+    //----- Modulo 2 -----//
+    
+    TEST_SPECIFIC(Modular<int8_t>, C2, 2);
+    TEST_SPECIFIC(Modular<int16_t>, S2, 2);
+    TEST_SPECIFIC(Modular<int32_t>, Z2, 2);
+    TEST_SPECIFIC(Modular<int64_t>, LL2, 2);
+    TEST_SPECIFIC(Modular<uint8_t>, UC2, 2);
+    TEST_SPECIFIC(Modular<uint16_t>, US2, 2);
+    TEST_SPECIFIC(Modular<uint32_t>, UZ2, 2);
+    TEST_SPECIFIC(Modular<uint64_t>, ULL2, 2);
+    TEST_SPECIFIC(ModularCUS, CUS2, 2);
+    TEST_SPECIFIC(ModularSUZ, SUZ2, 2);
+    TEST_SPECIFIC(ModularZULL, ZULL2, 2);
+    TEST_SPECIFIC(ModularUCUS, UCUS2, 2);
+    TEST_SPECIFIC(ModularUSUZ, USUZ2, 2);
+    TEST_SPECIFIC(ModularUZULL, UZULL2, 2);
+    TEST_SPECIFIC(Modular<Log16>, L2, 2);
+    // Not implemented TEST_SPECIFIC(ModularFD, FD2, 2);
+    TEST_SPECIFIC(Modular<float>, F2, 2);
+    TEST_SPECIFIC(Modular<double>, D2, 2);
+    TEST_SPECIFIC(Modular<Integer>, I2, 2);
+    TEST_SPECIFIC(Modular<RecInt::ruint128>, RU2, 2);
+
+    //--------------------//
+    //----- Modulo 3 -----//
+    
+    TEST_SPECIFIC(ModularBalanced<int32_t>, BZ3, 3);
+    TEST_SPECIFIC(ModularBalanced<int64_t>, BLL3, 3);
+    // Not with Balanced TEST_SPECIFIC(ModularBalancedZULL, BZULL3, 3);
+    TEST_SPECIFIC(ModularBalanced<float>, BF3, 3);
+    TEST_SPECIFIC(ModularBalanced<double>, BD3, 3);
+    // Not with Balanced TEST_SPECIFIC(ModularBalancedFD, BFD3, 3);
+    
+    TEST_SPECIFIC(Montgomery<int32_t>, MZ3, 3);
+    // Not with Montgomery TEST_SPECIFIC(MontgomeryZULL, MZULL3, 3);
+    TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU3, 3);
 
     //---------------------//
     //----- Modulo 13 -----//
-
-    Modular<int8_t> S13(13);
-    JETESTE(S13,seed);
-
-    Modular<uint8_t> US13(13);
-    JETESTE(US13,seed);
-
-    Modular<int16_t> C13(13);
-    JETESTE(C13,seed);
-
-    Modular<uint16_t> UC13(13);
-    JETESTE(UC13,seed);
-
-    Modular<int32_t> Z13(13);
-    JETESTE(Z13,seed);
-
-    ModularBalanced<int32_t> BZ13(13);
-    JETESTE(Z13,seed);
-
-    Modular<uint32_t> U13(13);
-    JETESTE(U13,seed);
-
-    Modular<Log16> L13(13);
-    JETESTE(L13,seed);
-
-    Montgomery<int32_t> M13(13);
-    JETESTE(M13,seed);
-
-#ifdef __USE_Givaro_SIXTYFOUR__
-    Modular<int64_t> LL13(13UL);
-    JETESTE(LL13,seed);
-
-    Modular<uint64_t> ULL13(13UL);
-    JETESTE(ULL13,seed);
-
-    ModularBalanced<int64_t> BULL13(13UL);
-    JETESTE(BULL13,seed);
-#endif
-
-    Modular<Integer> I13(13);
-    JETESTE(I13,seed);
-
-    Modular<float> F13(13);
-    JETESTE(F13,seed);
-
-    ModularBalanced<float> BF13(13);
-    JETESTE(BF13,seed);
-
-    Modular<double> D13(13);
-    JETESTE(D13,seed);
-
-    ModularBalanced<double> BD13(13);
-    JETESTE(BD13,seed);
-
-    Modular<RecInt::ruint128> R13(13);
-    JETESTE(R13,seed);
-
-    Montgomery<RecInt::ruint128> MR13(13);
-    JETESTE(MR13,seed);
+    
+    TEST_SPECIFIC(Modular<int8_t>, C13, 13);
+    TEST_SPECIFIC(Modular<int16_t>, S13, 13);
+    TEST_SPECIFIC(Modular<int32_t>, Z13, 13);
+    TEST_SPECIFIC(Modular<int64_t>, LL13, 13);
+    TEST_SPECIFIC(Modular<uint8_t>, UC13, 13);
+    TEST_SPECIFIC(Modular<uint16_t>, US13, 13);
+    TEST_SPECIFIC(Modular<uint32_t>, UZ13, 13);
+    TEST_SPECIFIC(Modular<uint64_t>, ULL13, 13);
+    TEST_SPECIFIC(ModularCUS, CUS13, 13);
+    TEST_SPECIFIC(ModularSUZ, SUZ13, 13);
+    TEST_SPECIFIC(ModularZULL, ZULL13, 13);
+    TEST_SPECIFIC(ModularUCUS, UCUS13, 13);
+    TEST_SPECIFIC(ModularUSUZ, USUZ13, 13);
+    TEST_SPECIFIC(ModularUZULL, UZULL13, 13);
+    TEST_SPECIFIC(Modular<Log16>, L13, 13);
+    TEST_SPECIFIC(Modular<float>, F13, 13);
+    TEST_SPECIFIC(Modular<double>, D13, 13);
+    TEST_SPECIFIC(Modular<Integer>, I13, 13);
+    TEST_SPECIFIC(Modular<RecInt::ruint128>, RU13, 13);
+    
+    TEST_SPECIFIC(ModularBalanced<int32_t>, BZ13, 13);
+    TEST_SPECIFIC(ModularBalanced<int64_t>, BLL13, 13);
+    TEST_SPECIFIC(ModularBalanced<float>, BF13, 13);
+    TEST_SPECIFIC(ModularBalanced<double>, BD13, 13);
+    
+    TEST_SPECIFIC(Montgomery<int32_t>, MZ13, 13);
+    TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU13, 13);
 
     //--------------------------------//
     //----- Modulo maximal prime -----//
 
-    Modular<int8_t> Spmax(previousprime(Modular<int8_t>::getMaxModulus() ) );
-    JETESTE(Spmax,seed);
+#define TEST_LAST_PRIME(Field, Name)			\
+    Field Name(previousprime(Field::getMaxModulus()));	\
+    JETESTE(Name, seed);
+    
+    TEST_LAST_PRIME(Modular<int8_t>, Cpmax);
+    TEST_LAST_PRIME(Modular<int16_t>, Spmax);
+    TEST_LAST_PRIME(Modular<int32_t>, Zpmax);
+    TEST_LAST_PRIME(Modular<int64_t>, LLpmax);
+    TEST_LAST_PRIME(Modular<uint8_t>, UCpmax);
+    TEST_LAST_PRIME(Modular<uint16_t>, USpmax);
+    TEST_LAST_PRIME(Modular<uint32_t>, UZpmax);
+    TEST_LAST_PRIME(Modular<uint64_t>, ULLpmax);
+    TEST_LAST_PRIME(ModularCUS, CUSpmax);
+    TEST_LAST_PRIME(ModularSUZ, SUZpmax);
+    TEST_LAST_PRIME(ModularZULL, ZULLpmax);
+    TEST_LAST_PRIME(ModularUCUS, UCUSpmax);
+    TEST_LAST_PRIME(ModularUSUZ, USUZpmax);
+    TEST_LAST_PRIME(ModularUZULL, UZULLpmax);
+    TEST_LAST_PRIME(Modular<Log16>, Lpmax);
+    TEST_LAST_PRIME(Modular<float>, Fpmax);
+    TEST_LAST_PRIME(Modular<double>, Dpmax);
+    TEST_LAST_PRIME(Modular<RecInt::ruint128>, RUpmax);
+    
+    TEST_LAST_PRIME(ModularBalanced<int32_t>, BZpmax);
+    TEST_LAST_PRIME(ModularBalanced<int64_t>, BLLpmax);
+    TEST_LAST_PRIME(ModularBalanced<float>, BFpmax);
+    TEST_LAST_PRIME(ModularBalanced<double>, BDpmax);
+    
+    TEST_LAST_PRIME(Montgomery<int32_t>, MZpmax);
+    TEST_LAST_PRIME(Montgomery<RecInt::ruint128>, MRUpmax);
 
-    Modular<uint8_t> USpmax(previousprime(Modular<uint8_t>::getMaxModulus() ) );
-    JETESTE(USpmax,seed);
-
-    Modular<int16_t> CUpmax( previousprime(Modular<int16_t>::getMaxModulus()) );
-    JETESTE(CUpmax,seed);
-
-    Modular<uint16_t> UCUpmax( previousprime(Modular<int16_t>::getMaxModulus()) );
-    JETESTE(UCUpmax,seed);
-
-    Modular<Log16> Lpmax( previousprime(Modular<Log16>::getMaxModulus() ) );
-    JETESTE(Lpmax,seed);
-
-    Modular<int32_t> Zpmax( previousprime(Modular<int32_t>::getMaxModulus() ) );
-    JETESTE(Zpmax,seed);
-
-    ModularBalanced<int32_t> BZpmax( previousprime(ModularBalanced<int32_t>::getMaxModulus() ) );
-    JETESTE(BZpmax,seed);
-
-    Modular<uint32_t> Upmax(previousprime(Modular<uint32_t>::getMaxModulus() ) );
-    JETESTE(Upmax,seed);
-
-    Montgomery<int32_t> Mpmax(previousprime(Montgomery<int32_t>::getMaxModulus() ) );
-    JETESTE(Mpmax,seed);
-
-#ifdef __USE_Givaro_SIXTYFOUR__
-    Modular<int64_t> LLpmax(previousprime(Modular<int64_t>::getMaxModulus() ) );
-    JETESTE(LLpmax,seed);
-
-    ModularBalanced<int64_t> BLLpmax(previousprime(ModularBalanced<int64_t>::getMaxModulus() ) );
-    JETESTE(BLLpmax,seed);
-
-    Modular<uint64_t> ULLpmax(previousprime(Modular<uint64_t>::getMaxModulus() ) );
-    JETESTE(ULLpmax,seed);
-#endif
-
-    Modular<float> Fpmax(previousprime(Modular<float>::getMaxModulus() ) );
-    JETESTE(Fpmax,seed);
-
-    ModularBalanced<float> BFpmax(previousprime(ModularBalanced<float>::getMaxModulus() ) );
-    JETESTE(BFpmax,seed);
-
-    Modular<double> Dpmax(previousprime(Modular<double>::getMaxModulus() ) );
-    JETESTE(Dpmax,seed);
-
-    ModularBalanced<double> BDpmax(previousprime(ModularBalanced<double>::getMaxModulus() ) );
-    JETESTE(BDpmax,seed);
-
-    Modular<RecInt::ruint128> Rpmax(previousprime(Modular<RecInt::ruint128>::getMaxModulus()));
-    JETESTE(Rpmax,seed);
-
-    Montgomery<RecInt::ruint128> MRpmax(previousprime(Montgomery<RecInt::ruint128>::getMaxModulus()));
-    JETESTE(MRpmax,seed);
-
-    //--------------------------//
-    //----- Modulo maximal -----//
-
-    Modular<int8_t> Smax(Modular<int8_t>::getMaxModulus() );
-    JETESTE(Smax,seed);
-
-    Modular<uint8_t> USmax(Modular<uint8_t>::getMaxModulus() );
-    JETESTE(USmax,seed);
-
-    Modular<int16_t> CUmax(Modular<int16_t>::getMaxModulus() );
-    JETESTE(CUmax,seed);
-
-    Modular<uint16_t> UCUmax(Modular<uint16_t>::getMaxModulus() );
-    JETESTE(UCUmax,seed);
-
-    Modular<Log16> Lmax( Modular<Log16>::getMaxModulus()  );
-    JETESTE(Lmax,seed);
-
-    Modular<int32_t> Zmax(Modular<int32_t>::getMaxModulus());
-    JETESTE(Zmax,seed);
-
-    ModularBalanced<int32_t> BZmax(ModularBalanced<int32_t>::getMaxModulus());
-    JETESTE(BZmax,seed);
-
-    Modular<uint32_t> Umax(Modular<uint32_t>::getMaxModulus() );
-    JETESTE(Umax,seed);
-
-    Montgomery<int32_t> Mmax(Montgomery<int32_t>::getMaxModulus() );
-    JETESTE(Mmax,seed);
-
-#ifdef __USE_Givaro_SIXTYFOUR__
-    Modular<int64_t> LLmax(Modular<int64_t>::getMaxModulus());
-    JETESTE(LLmax,seed);
-
-    ModularBalanced<int64_t> BLLmax(ModularBalanced<int64_t>::getMaxModulus());
-    JETESTE(BLLmax,seed);
-
-    Modular<uint64_t> ULLmax(Modular<uint64_t>::getMaxModulus());
-    JETESTE(ULLmax,seed);
-#endif
-
-    Modular<float> Fmax(Modular<float>::getMaxModulus());
-    JETESTE(Fmax,seed);
-
-    ModularBalanced<float> BFmax(ModularBalanced<float>::getMaxModulus());
-    JETESTE(BFmax,seed);
-
-    Modular<double> Dmax(Modular<double>::getMaxModulus());
-    JETESTE(Dmax,seed);
-
-    ModularBalanced<double> BDmax(ModularBalanced<double>::getMaxModulus());
-    JETESTE(BDmax,seed);
-
-    //--------------------//
-    //----- Modulo 2 -----//
-
-    Modular<int8_t> S2(2);
-    JETESTE(S2,seed);
-
-    Modular<uint8_t> US2(2);
-    JETESTE(US2,seed);
-
-    Modular<int16_t> C2(2);
-    JETESTE(C2,seed);
-
-    Modular<uint16_t> UC2(2);
-    JETESTE(UC2,seed);
-
-    Modular<int32_t> Z2(2);
-    JETESTE(Z2,seed);
-
-    Modular<uint32_t> U2(2);
-    JETESTE(U2,seed);
-
-    Modular<Log16> L2(2);
-    JETESTE(L2,seed);
-
-    Modular<Log16> L2b( L2 );
-    JETESTE(L2b,seed);
-
-#ifdef __USE_Givaro_SIXTYFOUR__
-    Modular<int64_t> LL2(2UL);
-    JETESTE(LL2,seed);
-
-    Modular<uint64_t> ULL2(2UL);
-    JETESTE(ULL2,seed);
-#endif
-
-    Modular<Integer> I2(2);
-    JETESTE(I2,seed);
-
-    Modular<float> F2(2);
-    JETESTE(F2,seed);
-
-    Modular<double> D2(2);
-    JETESTE(D2,seed);
-
-    Modular<RecInt::ruint128> R2(2);
-    JETESTE(R2,seed);
-
-    //--------------------//
-    //----- Modulo 3 -----//
-
-    Montgomery<int32_t> M3(3);
-    JETESTE(M3,seed);
-
-    ModularBalanced<int32_t> BZ3(3);
-    JETESTE(BZ3,seed);
-
-#ifdef __USE_Givaro_SIXTYFOUR__
-    ModularBalanced<int64_t> BLL3(3UL);
-    JETESTE(BLL3,seed);
-#endif
-
-    ModularBalanced<float> BF3(3);
-    JETESTE(BF3,seed);
-
-    ModularBalanced<double> BD3(3);
-    JETESTE(BD3,seed);
-
-    Modular<RecInt::ruint128> R3(3);
-    JETESTE(R3,seed);
-
-    Montgomery<RecInt::ruint128> MR3(3);
-    JETESTE(MR3,seed);
-
-    //---------------------------------//
-    //----- Other Characteristics -----//
-
-    Montgomery<int32_t> MR(39989);
-    JETESTE(MR,seed);
-
-    GFqDom<int> GF13( 13 );
-    JETESTE(GF13,seed);
-
-    // Zech log prime field with prime max
-    GFqDom<int> GFpmax( 65521UL );
-    JETESTE(GFpmax,seed);
-
-#ifndef __GIVARO__DONOTUSE_longlong__
-    // Zech log prime field with prime max (memory limited)
-    GFqDom<long long> GFLLpmax( 4194301ULL );
-    JETESTE(GFLLpmax,seed);
-#endif
-
-#ifdef __USE_Givaro_SIXTYFOUR__
-    Modular<uint64_t> GenZ101(101);
-    JETESTE(GenZ101,seed);
-#endif
+    //-------------------------//
+    //----- Galois fields -----//
+    
+    TEST_SPECIFIC(GFqDom<int>, GF13, 13);
+    TEST_SPECIFIC(GFqDom<int>, GFpmax, 65521UL);
+    TEST_SPECIFIC(GFqDom<long long>, GFLLpmax, 4194301ULL);
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
@@ -500,42 +350,17 @@ int main(int argc, char ** argv)
     Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
     Irred[8] = 1;
-    GFqDom<long> GF256(2,8, Irred);
-    JETESTE(GF256,seed);
+    TEST_SPECIFIC(GFqDom<long>, GF256, 2, 8, Irred);
 
-    // Zech log finite field with 5^4 elements
-    GFqDom<int> GF625( 5, 4 );
-    JETESTE(GF625,seed);
-
-    // Zech log finite field with 3^4 elements
-    // Using the Q-adic Transform
-    GFqExt<int> GF81( 3, 4 );
-    JETESTE(GF81,seed);
+    TEST_SPECIFIC(GFqDom<int>, GF625, 5, 4);
+    TEST_SPECIFIC(GFqExt<int>, GF81, 3, 4);
 
     // Zech log finite field with 2Mb tables
-#ifndef __GIVARO__DONOTUSE_longlong__
-    GFqDom<long long> GF2M( 2, 20 );
-    GFqDom<long long> GF2M1( 2, 2 );
-    GFqDom<long long> GF11e3( 11, 3 );
-    Extension<GFqDom<long long> > GF11e9(GF11e3,3);
-#else
-    GFqDom<long> GF2M( 2, 20) ;
-    GFqDom<long> GF2M1( 2, 2) ;
-    GFqDom<long> GF11e3( 11, 3) ;
-    Extension<> GF11e9(GF11e3,3);
-#endif
-
-    JETESTE(GF2M,seed);
-    JETESTE(GF2M1,seed);
-    JETESTE(GF11e3,seed);
-    JETESTE(GF11e9,seed);
-
-    Extension<> GF13E8(13,8);
-    JETESTE(GF13E8,seed);
-
-#ifdef GIVARO_DEBUG
-    std::cerr << std::endl ;
-#endif
+    TEST_SPECIFIC(GFqDom<long long>, GF2M, 2, 20);
+    TEST_SPECIFIC(GFqDom<long long>, GF2M1, 2, 2);
+    TEST_SPECIFIC(GFqDom<long long>, GF11E3, 11, 3);
+    TEST_SPECIFIC(Extension<GFqDom<long long>>, GF11E9, GF11E3, 3);
+    TEST_SPECIFIC(Extension<>, GF13E8, 13, 8);
 
     return 0;
 }

@@ -392,7 +392,7 @@ namespace Givaro {
 
 		static inline Element getMaxModulus()
 		{
-                    return 92681;
+                    return 92681; // 2^16.5
 		}
 
 		static  Element getMinModulus()	{return 3.0;}

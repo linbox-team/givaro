@@ -54,10 +54,8 @@ namespace RecInt
     template <size_t K, typename T> __RECINT_IS_SIGNED(T, rint<K>&)   operator*=(rint<K>&, const T&);
 
     template <size_t K> rint<K> operator*(const rint<K>&, const rint<K>&);
-    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, rint<K>) operator*(const rint<K>&, const T&);
-    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, rint<K>) operator*(const T&, const rint<K>&);
-    template <size_t K, typename T> __RECINT_IS_SIGNED(T, rint<K>)   operator*(const rint<K>&, const T&);
-    template <size_t K, typename T> __RECINT_IS_SIGNED(T, rint<K>)   operator*(const T&, const rint<K>&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>) operator*(const rint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>) operator*(const T&, const rint<K>&);
 
     // a = (b*c).Low    or a = (a*c).Low
     // The higher part is lost

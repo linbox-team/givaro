@@ -163,8 +163,9 @@ namespace Givaro
     inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K>>::axmyin
 		(Element& r, const Element& a, const Element& b) const
 	{
-	    __GIVARO_MODULAR_RECINT_MULSUB(r,_p,a,b,r);
-		return r;
+	    Element rc(r);
+	    __GIVARO_MODULAR_RECINT_MULSUB(r,_p,a,b,rc);
+	    return r;
 	}
 
 	// --------------------
@@ -226,27 +227,27 @@ namespace Givaro
         return r = a;
 	}
 
-	// -- Input: (z, <_p>)
-	template<size_t K>
-	inline std::ostream& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::write (std::ostream& s) const
-	{
-		return s << "Modular<RecInt::ruint<" << K << ">, RecInt::ruint<" << K << ">> modulo " << residu();
-	}
+    // -- Input: (z, <_p>)
+    template<size_t K>
+    inline std::ostream& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::write (std::ostream& s) const
+    {
+	return s << "Modular<RecInt::ruint<" << K << ">, RecInt::ruint<" << K << ">> modulo " << residu();
+    }
 
-	template<size_t K>
+    template<size_t K>
     inline std::istream& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::read (std::istream& s, Element& a) const
-	{
+    {
         Integer tmp;
-		s >> tmp;
-		init(a, tmp);
-		return s;
-	}
+	s >> tmp;
+	init(a, tmp);
+	return s;
+    }
 
-	template<size_t K>
+    template<size_t K>
     inline std::ostream& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::write (std::ostream& s, const Element a) const
-	{
-		return s << a;
-	}
+    {
+	return s << a;
+    }
 }
 
 #endif

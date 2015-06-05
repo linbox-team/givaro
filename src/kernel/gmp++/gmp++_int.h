@@ -1586,7 +1586,7 @@ namespace Givaro {
 		giv_all_inlined operator vect_t() const ;
 		template<size_t K> operator RecInt::ruint<K>() const
 		{
-			mpz_class a((mpz_ptr)&gmp_rep);
+			mpz_class a((mpz_srcptr)&gmp_rep);
 			RecInt::ruint<K> r;
 			return RecInt::mpz_to_ruint(r, a);
 		}

@@ -10,6 +10,7 @@
 #include <givaro/montgomery.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givinteger.h>
+#include <givaro/gfq.h>
 
 using namespace Givaro;
 
@@ -285,9 +286,11 @@ int main(int argc, char ** argv)
 
     // modulo 13 over 128 bits
     Modular<RecInt::ruint128> UR13(13); JETESTE(UR13,seed);
+    Montgomery<int32_t> MZ13(13); JETESTE(MZ13,seed);
     Montgomery<RecInt::ruint128> UM13(13); JETESTE(UM13,seed);
 
     // Polynomial
+    GFqDom<int> GF13(13, 2);
     Poly1Dom< Modular<int8_t>, Dense > CP13(C13, "X"); JEPOLTESTE(CP13,seed);
     Poly1Dom< Modular<uint8_t>, Dense > UCP13(UC13, "X"); JEPOLTESTE(UCP13,seed);
     Poly1Dom< Modular<int16_t>, Dense > SP13(S13, "X"); JEPOLTESTE(SP13,seed);
@@ -298,6 +301,9 @@ int main(int argc, char ** argv)
     Poly1Dom< Modular<uint64_t>, Dense > ULLP13(ULL13, "X"); JEPOLTESTE(ULLP13,seed);
     Poly1Dom< Modular<Integer>, Dense > IntZP13(IntZ13, "X"); JEPOLTESTE(IntZP13,seed);
     Poly1Dom< Modular<RecInt::ruint128>, Dense > URP13(UR13, "X"); JEPOLTESTE(URP13,seed);
+    //Poly1Dom< Montgomery<RecInt::ruint128>, Dense > URP13(UM13, "X"); JEPOLTESTE(URP13,seed);
+    Poly1Dom< Montgomery<int32_t>, Dense > MZP13(MZ13, "X"); JEPOLTESTE(MZP13,seed);
+    Poly1Dom< GFqDom<int>, Dense > GFP13(GF13, "X"); JEPOLTESTE(GFP13,seed);
 
     //--------------//
     //----- 75 -----//

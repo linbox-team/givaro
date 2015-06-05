@@ -41,6 +41,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 #include <gmpxx.h>
 
+#include "rrint.h"
 #include "ruconvert.h"
 #include "rufiddling.h" // Unary operator
 
@@ -51,7 +52,6 @@ namespace RecInt
 {
     // Converts a mpz_class to a ruint<K> and vice-versa
     template <size_t K> rint<K>& mpz_to_rint(ruint<K>&, const mpz_class&);
-    template <size_t K> mpz_class& rint_to_mpz(mpz_class&, const rint<K>&);
     template <size_t K> mpz_class& rint_to_mpz(mpz_class&, const rint<K>&);
 }
 
@@ -91,6 +91,24 @@ namespace RecInt
         }
 
         return a;
+    }
+
+    // Convert a rint into a GMP integer
+    template <size_t K>
+    inline mpz_ptr rint_to_mpz_t(mpz_ptr a, const rint<K>& b) {
+	// TODO Optimize...
+	mpz_class r;
+	RecInt::rint_to_mpz(r, b);
+	mpz_init_set(a, r.get_mpz_t()) ;
+        return a;
+    }
+
+    // Convert a rint into a GMP integer
+    template <size_t K>
+    inline rint<K>& mpz_t_to_rint(rint<K>& a, mpz_srcptr b) {
+	// TODO Optimize...
+	mpz_class r(b);
+	return RecInt::mpz_to_rint(a, r);
     }
 }
 

@@ -59,7 +59,7 @@ public:
     //! Constructor
     //@{
     Modular() : zero(0), one(1), mOne(-1), _p(0) {}
-    Modular( Residu_t p ) : zero(0), one(1), mOne(p-1), _p(p) {}
+    Modular( Residu_t p ) : zero(0), one(1), mOne(p-Residu_t(1)), _p(p) {}
     Modular( const Modular<IntType>& F) : zero(F.zero), one(F.one), mOne(F.mOne),_p(F._p) { }
     //@}
 
@@ -220,6 +220,10 @@ public:
     typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
     template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
     //@}
+
+
+    static inline Residu_t getMaxModulus() { return -1; }
+    static inline Residu_t getMinModulus() { return 2; }
 
     //! Misc.
     //@{

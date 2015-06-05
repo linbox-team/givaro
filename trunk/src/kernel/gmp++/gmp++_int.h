@@ -25,6 +25,7 @@
 // #include <iostream>
 
 #include "recint/ruconvert.h" // For ruint_to_mpz()
+#include "recint/rconvert.h" // For rint_to_mpz()
 
 #ifndef __GIVARO_GMPplusplus_H
 #warning "you should include <gmp++/gmp++.h> before <gmp++/gmp++_int.h> (or prepare for the worse)"
@@ -181,17 +182,19 @@ namespace Givaro {
 		giv_all_inlined Integer(double n);
 		//! @overload Givaro::Integer(int)
 		giv_all_inlined Integer(const char *n);
-		//! @overload Givaro::Integer(RecInt::ruint<K>)
+		//! @overload Givaro::Integer(mpz_class)
 		giv_all_inlined Integer(const mpz_class& a) {
 			mpz_init_set((mpz_ptr)&gmp_rep, a.get_mpz_t()) ;
 		}
 		//! @overload Givaro::Integer(RecInt::ruint<K>)
 		template<size_t K> Integer(const RecInt::ruint<K>& n)
 		{
-			// Maybe not the fastest way to do it
-			mpz_class a;
-			RecInt::ruint_to_mpz(a, n);
-			mpz_init_set((mpz_ptr)&gmp_rep, a.get_mpz_t()) ;
+		    RecInt::ruint_to_mpz_t(get_mpz(), n);
+		}
+		//! @overload Givaro::Integer(RecInt::ruint<K>)
+		template<size_t K> Integer(const RecInt::rint<K>& n)
+		{
+			RecInt::rint_to_mpz_t(get_mpz(), n);
 		}
 
 
@@ -1586,9 +1589,13 @@ namespace Givaro {
 		giv_all_inlined operator vect_t() const ;
 		template<size_t K> operator RecInt::ruint<K>() const
 		{
-			mpz_class a((mpz_srcptr)&gmp_rep);
 			RecInt::ruint<K> r;
-			return RecInt::mpz_to_ruint(r, a);
+			return RecInt::mpz_t_to_ruint(r, get_mpz_const());
+		}
+		template<size_t K> operator RecInt::rint<K>() const
+		{
+			RecInt::rint<K> r;
+			return RecInt::mpz_t_to_rint(r, get_mpz_const());
 		}
 		///@}
 

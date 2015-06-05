@@ -189,11 +189,12 @@ template<class Field>
 int TestField(const Field& F, const int seed)
 {
     typename Field::Element x;
+    typename Field::RandIter g(F, seed);
+    
     F.init(x, 7UL);
     JEONETESTE(F,x);
     
     for (size_t i = 0; i< NBITER; ++i) {
-	typename Field::RandIter g(F, seed);
 	while (F.isZero(g.random(x)));
         JEONETESTE(F,x);
     }

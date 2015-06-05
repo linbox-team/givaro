@@ -92,7 +92,7 @@ namespace Givaro
 	{
 		bool ret;
 		RecInt::add(ret, r, a, b);
-		if (ret || r > _p) RecInt::sub(r, _p);
+		if (ret || r >= _p) RecInt::sub(r, _p);
 		return r;
 	}
 
@@ -142,7 +142,7 @@ namespace Givaro
 	{
 		bool ret;
 		RecInt::add(ret, r, a);
-		if (ret || r > _p) RecInt::sub(r, _p);
+		if (ret || r >= _p) RecInt::sub(r, _p);
 		return r;
 	}
 
@@ -165,7 +165,6 @@ namespace Givaro
 	    __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
 		return r;
 	}
-
 	template<size_t K>
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::invin
 		(Element& r) const
@@ -212,7 +211,8 @@ namespace Givaro
 		(Element& r, const Element& a, const Element& b, const Element& c) const
 	{
 		mul(r, a, b);
-		return subin(r, c);
+		subin(r, c);
+		return r;
 	}
 
 	template<size_t K>

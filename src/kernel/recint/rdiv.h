@@ -48,7 +48,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #include "rfiddling.h"
 #include "rudiv.h"
 #include "rcmp.h"
-
+#include <iostream>
 // --------------------------------------------------------------
 // ----------------------- DEFINTIONS ---------------------------
 

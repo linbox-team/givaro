@@ -44,6 +44,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #define RINT_DISPLAY_H
 
 #include "rrint.h"
+#include "rconvert.h"
 #include "rudisplay.h"
 
 // --------------------------------------------------------------
@@ -81,6 +82,14 @@ namespace RecInt
             display_dec(out, a.Value);
         }
         return out;
+    }
+
+    // Reads a rint
+    template <size_t K> inline std::istream& operator>>(std::istream& is, rint<K>& a) {
+    	mpz_class g;
+    	is >> g;
+    	mpz_to_rint(a, g);
+    	return is;
     }
 }
 

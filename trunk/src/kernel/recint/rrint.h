@@ -58,6 +58,8 @@ namespace RecInt
         // Constructors
         rint() {}
         rint(const rint<K>& r) : Value(r.Value) {}
+        rint(const rint<K-1>& rl) : Value(rl.Value)
+        { if (rl < 0) { Value.Low = -Value.Low; Value = -Value; } }
         rint(const ruint<K>& r) : Value(r) {}
         template <typename T> rint(const T& b) : Value(b) {}
 

@@ -6,370 +6,165 @@
 // see the COPYRIGHT file for more details.
 // Authors: Pascal Giorgi <pascal.giorgi@ens-lyon.fr>
 //          Clement Pernet <clement.pernet@gmail.com>
-//          Brice Boyer <bboyer@imag.fr>
+//          Brice Boyer <bboyer@imag.fr> (modified)
 //          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
-
-/*! @file field/modular-balanced-double.h
- * @ingroup field
- * @brief Balanced representation of <code>Z/mZ</code> over \c double .
- * @warning NOT DEFINED for EVEN modulus
- */
 
 #ifndef __GIVARO_modular_balanced_double_H
 #define __GIVARO_modular_balanced_double_H
 
-#include <cmath>
+#include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
+#include "givaro/ring-interface.h"
+#include "givaro/modular-general.h"
 
-#define NORMALISE(x) \
-{ \
-	if (x < mhalf_mod) return x += modulus; \
-	else if (x > half_mod) return x -= modulus; \
+namespace Givaro
+{
+    template<class TAG> class ModularBalanced;
+
+    template <>
+    class ModularBalanced<double> : public RingInterface<double>
+    {
+    public:
+	
+	// ----- Exported types
+	using Self_t = ModularBalanced<double>;
+	enum { size_rep = sizeof(Element) };
+
+	// ----- Constantes
+	const Element zero = 0.0;
+	const Element one  = 1.0;
+	const Element mOne = -1.0;
+
+	// ----- Constructors
+	ModularBalanced()
+	    : _p(0), _halfp(0), _mhalfp(0), _up(0.0)
+	{}
+
+	ModularBalanced(double p)
+	    : _p(p)
+	    , _halfp((_p - 1.f) / 2.f)
+	    , _mhalfp(_halfp - _p + 1.f)
+	    , _up(static_cast<uint32_t>(_p))
+	{
+	    assert(_p >= getMinModulus());
+	    assert(_p <= getMaxModulus());
+	}
+
+	ModularBalanced(const Self_t& F)
+	    : _p(F._p), _halfp(F._halfp), _mhalfp(F._mhalfp), _up(F._up)
+	{}
+
+	// ----- Accessors
+	inline Element minElement() const final { return _mhalfp; }
+	inline Element maxElement() const final { return _halfp; }
+
+	// ----- Access to the modulus
+	inline Element residu() const { return _p; }
+	inline Element size() const { return _p; }
+	inline Element characteristic() const { return _p; }
+	inline Element cardinality() const { return _p; }
+	template<class T> inline T& characteristic(T& p) const { return p = _p; }
+	template<class T> inline T& cardinality(T& p) const { return p = _p; }
+	
+	static inline Element getMaxModulus() { return 134217727; } // 2^12.5
+	static inline Element getMinModulus() { return 3.f; }
+
+	// ----- Checkers
+	inline bool isZero(const Element& a) const final { return a == zero; }
+	inline bool isOne (const Element& a) const final { return a == one; }
+	inline bool isMOne(const Element& a) const final { return a == mOne; }
+	inline bool areEqual(const Element& a, const Element& b) const final { return a == b; }
+	inline size_t length(const Element a) const { return size_rep; }
+	
+	// ----- Ring-wise operators
+	inline bool operator==(const Self_t& F) const { return _p == F._p; }
+	inline bool operator!=(const Self_t& F) const { return _p != F._p; }
+	inline Self_t& operator=(const Self_t& F)
+	{
+	    F.assign(const_cast<Element&>(one),  F.one);
+	    F.assign(const_cast<Element&>(zero), F.zero);
+	    F.assign(const_cast<Element&>(mOne), F.mOne);
+	    _p = F._p;
+	    _halfp = F._halfp;
+	    _mhalfp = F._mhalfp;
+	    _up = F._up;
+	    return *this;
+	}
+
+	// ----- Initialisation
+	Element& init(Element& a) const;
+	Element& init(Element& r, const float a) const;
+	Element& init(Element& r, const double a) const;
+	Element& init(Element& r, const int64_t a) const;
+	Element& init(Element& r, const uint64_t a) const;
+	Element& init(Element& r, const Integer& a) const;
+	template<typename T> Element& init(Element& r, const T& a) const
+	{ r = Caster<Element>(a); return reduce(r); }
+
+	Element& assign(Element& r, const Element& a) const;
+
+	// ----- Convert
+	template<typename T> T& convert(T& r, const Element& a) const
+	{ return r = static_cast<T>(a); }
+	
+	Element& reduce(Element& r, const Element& a) const;
+	Element& reduce(Element& r) const;
+	
+	// ----- Classic arithmetic
+	Element& mul(Element& r, const Element& a, const Element& b) const final;
+	Element& div(Element& r, const Element& a, const Element& b) const final;
+	Element& add(Element& r, const Element& a, const Element& b) const final;
+	Element& sub(Element& r, const Element& a, const Element& b) const final;
+	Element& neg(Element& r, const Element& a) const final;
+	Element& inv(Element& r, const Element& a) const final;
+
+	Element& mulin(Element& r, const Element& a) const final;
+	Element& divin(Element& r, const Element& a) const final;
+	Element& addin(Element& r, const Element& a) const final;
+	Element& subin(Element& r, const Element& a) const final;
+	Element& negin(Element& r) const final;
+	Element& invin(Element& r) const final;
+	
+	// -- axpy:   r <- a * x + y
+	// -- axpyin: r <- a * x + r
+	Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+	Element& axpyin(Element& r, const Element& a, const Element& x) const final;
+
+	// -- axmy:   r <- a * x - y
+	// -- axmyin: r <- a * x - r
+	Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+	Element& axmyin(Element& r, const Element& a, const Element& x) const final;
+
+	// -- maxpy:   r <- y - a * x
+	// -- maxpyin: r <- r - a * x
+	Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+	Element& maxpyin(Element& r, const Element& a, const Element& x) const final;
+
+	// ----- Random generators
+	typedef ModularRandIter<Self_t> RandIter;
+	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+	template< class Random > Element& random(const Random& g, Element& r) const
+	{ return init(r, g()); }
+	template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+    	{ while (isZero(init(a, g())));
+	    return a; }
+
+	// --- IO methods
+	std::ostream& write(std::ostream& s) const;
+	std::istream& read (std::istream& s, Element& a) const;
+	std::ostream& write(std::ostream& s, const Element& a) const;
+	
+    protected:
+
+	Element _p;
+	Element _halfp;
+	Element _mhalfp;
+	uint64_t _up;
+    };
 }
 
-#define NORMALISE_HI(x) \
-{ \
-			if (x > half_mod) x -= modulus; \
-}
+#include "givaro/modular-balanced-double.inl"
 
-
-namespace Givaro {
-
-	template<class TAG> class ModularBalanced;
-
-	//! it is forbiden to have char 2
-	template<>
-	class ModularBalanced<double> {
-	protected:
-		double modulus;
-		double half_mod;
-		double mhalf_mod;
-		unsigned long lmodulus;
-
-	public:
-
-		typedef double Element;
-		typedef double* Element_ptr;
-		typedef const double* ConstElement_ptr;
-
-		const Element one  ;
-		const Element zero ;
-		const Element mOne ;
-
-	public:
-
-		static const bool balanced = true;
-
-		typedef unsigned long FieldInt;
-		typedef ModularBalanced<Element> Self_t;
-		typedef GeneralRingRandIter<Self_t> RandIter;
-		typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-
-		template<class XXX> ModularBalanced(const XXX& p) :
-			modulus(double(p)),
-			half_mod (double((p-1)/2)),
-			mhalf_mod(half_mod-modulus+1.0),
-			lmodulus ((unsigned int)(p)),
-			one(1.0),zero(0.0),mOne(-1.0)
-		{
-		    assert(modulus >= getMinModulus());
-		    assert(modulus <= getMaxModulus());
-		}
-
-		ModularBalanced<double>(const ModularBalanced<double>& mf) :
-			modulus(mf.modulus), half_mod(mf.half_mod)
-			,mhalf_mod(mf.mhalf_mod), lmodulus(mf.lmodulus)
-			,one(mf.one),zero(mf.zero),mOne(mf.mOne)
-		{}
-
-		ModularBalanced<Element> & assign(const ModularBalanced<Element> &F)
-		{
-			modulus = F.modulus;
-			half_mod  = F.half_mod;
-			mhalf_mod = F.mhalf_mod;
-			lmodulus   = F.lmodulus;
-			F.assign(const_cast<Element&>(one),F.one);
-			F.assign(const_cast<Element&>(zero),F.zero);
-			F.assign(const_cast<Element&>(mOne),F.mOne);
-			return *this;
-		}
-
-		const ModularBalanced<Element> &operator=(const ModularBalanced<Element> &F)
-		{
-			modulus = F.modulus;
-			half_mod  = F.half_mod;
-			mhalf_mod = F.mhalf_mod;
-			lmodulus   = F.lmodulus;
-			F.assign(const_cast<Element&>(one),F.one);
-			F.assign(const_cast<Element&>(zero),F.zero);
-			F.assign(const_cast<Element&>(mOne),F.mOne);
-			return *this;
-		}
-
-		template<class T> inline T& characteristic(T& p) const { return p = T(modulus); }
-		template<class T> inline T& cardinality(T& p) const { return p = T(modulus); }
-
-		inline FieldInt cardinality () const
-		{
-			return (FieldInt) modulus;
-		}
-
-		inline FieldInt characteristic() const
-		{
-			return lmodulus ;
-		}
-
-		template<class T> inline T& convert(T& x, const Element& y) const
-		{
-			return x = T(y);
-		}
-
-		inline std::ostream &write (std::ostream &os) const
-		{
-			return os << "ModularBalanced<double> mod " << (long int)modulus;
-		}
-
-		inline std::istream &read (std::istream &is)
-		{
-			is >> modulus;
-			return is;
-		}
-
-		inline std::ostream &write (std::ostream &os, const Element &x) const
-		{
-			return os << (long) x;
-		}
-
-		inline std::istream &read (std::istream &is, Element &x) const
-		{
-			Element tmp;
-			is >> tmp;
-			init(x,tmp);
-			return is;
-		}
-
-		inline Element &init (Element &x, const unsigned long &y) const
-		{
-			x  = Element(y % lmodulus);
-			NORMALISE_HI(x);
-			return x;
-		}
-
-		inline Element& init (Element& x, const double y) const
-		{
-			return reduce(x,y);
-		}
-
-		inline Element& reduce (Element& x, const double y) const
-		{
-			x = fmod (y, modulus);
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element& reduce (Element& x) const
-		{
-			x = fmod (x, modulus);
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element& init(Element& x) const
-		{
-			return x = 0.;
-		}
-
-		template<class T>
-		inline Element& init(Element& x, const T y)  const
-		{
-			return init(x,double(y));
-		}
-
-
-		inline Element& assign(Element& x, const Element& y) const
-		{
-			return x = y;
-		}
-
-		/*! Tests equality.
-		 * @param x element
-		 * @param y element
-		 * @warning \c x and \c y are supposed to be reduced.
-		 */
-		inline bool areEqual (const Element &x, const Element &y) const
-		{
-			return x == y;
-		}
-
-		inline  bool isZero (const Element &x) const
-		{
-			return x == 0.;
-		}
-
-		inline bool isOne (const Element &x) const
-		{
-			return x == 1.;
-		}
-
-		inline bool isMOne (const Element &x) const
-		{
-			return x == mOne ;
-		}
-
-		inline Element &add (Element &x, const Element &y, const Element &z) const
-		{
-			x = y + z;
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element &sub (Element &x, const Element &y, const Element &z) const
-		{
-			x = y - z;
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element &mul (Element &x, const Element &y, const Element &z) const
-		{
-			x = y * z;
-			return reduce (x);
-		}
-
-		inline Element &div (Element &x, const Element &y, const Element &z) const
-		{
-			Element temp;
-			return mul (x, y, inv(temp,z));
-		}
-
-		inline Element &neg (Element &x, const Element &y) const
-		{
-			return x = -y;
-		}
-
-		inline Element &inv (Element &x, const Element &y) const
-		{
-			// The extended Euclidean algoritm
-			int x_int, y_int, tx, ty;
-			x_int = int (modulus);
-			y_int = (y < 0.) ? int(y + modulus) : int(y);
-			tx = 0;
-			ty = 1;
-
-			while (y_int != 0) {
-				int q, temp;
-				// always: gcd (modulus,residue) = gcd (x_int,y_int)
-				//         sx*modulus + tx*residue = x_int
-				//         sy*modulus + ty*residue = y_int
-				q = x_int / y_int; // integer quotient
-				temp = y_int; y_int = x_int - q * y_int;
-				x_int = temp;
-				temp = ty; ty = tx - q * ty;
-				tx = temp;
-			}
-                        x = (Element)tx;
-			NORMALISE(x);
-			return x;
-
-		}
-
-		inline Element &axpy (Element &r,
-				      const Element &a,
-				      const Element &x,
-				      const Element &y) const
-		{
-			r = a * x + y;
-			return reduce (r);
-		}
-
-		inline Element &axmy (Element &r,
-				      const Element &a,
-				      const Element &x,
-				      const Element &y) const
-		{
-			r = a * x - y;
-			return reduce (r);
-		}
-
-		inline Element &maxpy (Element &r,
-				      const Element &a,
-				      const Element &x,
-				      const Element &y) const
-		{
-			r = y - a * x;
-			return reduce (r);
-		}
-
-		inline Element &addin (Element &x, const Element &y) const
-		{
-			x += y;
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element &subin (Element &x, const Element &y) const
-		{
-			x -= y;
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element &mulin (Element &x, const Element &y) const
-		{
-			return mul(x,x,y);
-		}
-
-		inline Element &divin (Element &x, const Element &y) const
-		{
-			return div(x,x,y);
-		}
-
-		inline Element &negin (Element &x) const
-		{
-			return x = -x;
-		}
-
-		inline Element &invin (Element &x) const
-		{
-			return inv (x, x);
-		}
-
-		inline Element &axpyin (Element &r, const Element &a, const Element &x) const
-		{
-			r += a * x;
-			return reduce (r);
-		}
-
-		inline Element &maxpyin (Element &r, const Element &a, const Element &x) const
-		{
-			r -= a * x;
-			return reduce (r);
-		}
-
-		static inline double getMaxModulus()
-		{
-			return 134217727.0f;  // 2^27 as 2((p-1)/2)^2 < 2^53
-		}
-
-		static  Element getMinModulus()	{return 3.0;}
-
-		Element minElement() const
-		{
-			return mhalf_mod ;
-		}
-
-		Element maxElement() const
-		{
-			return half_mod ;
-		}
-
-	};
-
-} // Givaro
-
-#undef NORMALISE
-#undef NORMALISE_HI
-
-#endif // __GIVARO_modular_balanced_double_H
+#endif 
 

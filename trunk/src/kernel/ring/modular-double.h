@@ -84,21 +84,18 @@ public:
 	}
 
 	// ----- Initialisation
-	Element &init (Element &x) const;
-	Element &init (Element &x, const int32_t &y ) const;
-	Element &init (Element &x, const int64_t &y ) const;
-	Element &init (Element &x, const uint32_t &y ) const;
-	Element &init (Element &x, const uint64_t &y ) const;
-	Element &init (Element &x, const double &y ) const;
-	template<class XXX> Element& init(Element & x, const XXX & y) const;
+	Element& init (Element& x) const;
+	Element& init (Element& x, const int64_t y) const;
+	Element& init (Element& x, const uint64_t y) const;
+	Element& init (Element& x, const Integer& y) const;
+	template<typename T> Element& init(Element& r, const T& a) const
+	{ r = Caster<Element>(a); return reduce(r); }
 
-	Element &assign (Element &x, const Element &y) const;
+	Element& assign (Element& x, const Element& y) const;
 
 	// ----- Convert and reduce
-	Integer& convert  (Integer &x, const Element &y) const;
-	Residu_t& convert (Residu_t &x, const Element &y) const;
-	double& convert   (double &x, const Element &y) const;
-	float& convert    (float &x, const Element &y) const;
+	template<typename T> T& convert(T& r, const Element& a) const
+	{ return r = static_cast<T>(a); }
 
 	Element& reduce (Element& x, const Element& y) const;
 	Element& reduce (Element& x) const;

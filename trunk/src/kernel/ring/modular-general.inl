@@ -60,7 +60,7 @@ namespace Givaro
             Compute_t q = static_cast<Compute_t>(u3 / v3);
             Compute_t t;
 
-            t = v1;
+	    t = v1;
             v1 = static_cast<Compute_t>(u1 - q * v1);
             u1 = t;
 
@@ -70,6 +70,52 @@ namespace Givaro
         }
 
         return x = static_cast<Storage_t>(u1);
+    }
+
+    template<>
+    inline float invext(const float a, const float b)
+    {
+        float u1(1.f), v1(0.f);
+	float u3(a), v3(b);
+
+        while (v3 != 0.f)
+        {
+	    float q = std::floor(u3 / v3);
+            float t;
+	    
+	    t = v1;
+            v1 = u1 - q * v1;
+            u1 = t;
+
+            t = v3;
+            v3 = u3 - q * v3;
+            u3 = t;
+        }
+
+        return u1;
+    }
+
+    template<>
+    inline double invext(const double a, const double b)
+    {
+        double u1(1.0), v1(0.0);
+	double u3(a), v3(b);
+
+        while (v3 != 0.0)
+        {
+	    double q = std::floor(u3 / v3);
+            double t;
+	    
+	    t = v1;
+            v1 = u1 - q * v1;
+            u1 = t;
+
+            t = v3;
+            v3 = u3 - q * v3;
+            u3 = t;
+        }
+
+        return u1;
     }
 
     template<typename Storage_t>

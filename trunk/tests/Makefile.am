@@ -124,7 +124,7 @@ test_rmint_arith_mod_mg_SOURCES      = test-rmint_arith.C
 test_rmint_arith_mod_SOURCES         = test-rmint_arith.C
 test_ruint_arith_div_SOURCES         = test-ruint_arith.C
 test_rint_arith_mod_SOURCES          = test-rint_arith.C
-    
+
 test_rmint_inv_div_mg_SOURCES        = test-rmint_inv_div.C
 test_rmint_inv_div_SOURCES           = test-rmint_inv_div.C
 test_rmint_constructors_mg_SOURCES   = test-rmint_constructors.C

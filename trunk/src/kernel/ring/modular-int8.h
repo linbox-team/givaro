@@ -24,6 +24,7 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
+#include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
@@ -106,29 +107,31 @@ public:
 		_p = F._p;
 		return *this;
 	}
-	
+
 	// ----- Initialisation
-	Element& init(Element& a) const;
-	Element& init(Element& r, const long a) const ;
-	Element& init(Element& r, const unsigned long a) const ;
-	Element& init(Element& a, const int i) const ;
-	Element& init(Element& a, const unsigned int i) const ;
-	Element& init(Element& a, const Integer& i) const ;
-	Element& init(Element& a, const double i) const;
-	Element& init(Element& a, const float i) const;
+	Element& init (Element& x) const;
+	Element& init (Element& x, const float y) const;
+	Element& init (Element& x, const double y) const;
+	Element& init (Element& x, const int16_t y) const;
+	Element& init (Element& x, const uint16_t y) const;
+	Element& init (Element& x, const int32_t y) const;
+	Element& init (Element& x, const uint32_t y) const;
+	Element& init (Element& x, const int64_t y) const;
+	Element& init (Element& x, const uint64_t y) const;
+	Element& init (Element& x, const Integer& y) const;
+	template<typename T> Element& init(Element& r, const T& a) const
+	{ r = Caster<Element>(a); return reduce(r); }
 	void init(const size_t, Array a, constArray b) const;
-	
-	Element& assign(Element& r, const Element a) const;
+
+	Element& assign (Element& x, const Element& y) const;
 	void assign(const size_t sz, Array r, constArray a ) const;
+    
+	// ----- Convert and reduce
+	template<typename T> T& convert(T& r, const Element& a) const
+	{ return r = static_cast<T>(a); }
 
-	// ----- Convert
-	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
-	template<typename XXX> XXX& convert(XXX& r, const Element a ) const { return r = static_cast<XXX>(a) ;}
-
-	inline Element& reduce (Element& x, const Element& y) const
-	    { return x = y % static_cast<Element>(_p); }
-	inline Element& reduce (Element& x) const
-	    { return x %= static_cast<Element>(_p); }
+	Element& reduce (Element& x, const Element& y) const;
+	Element& reduce (Element& x) const;
 	
 	// ----- Classic arithmetic
 	Element& mul(Element& r, const Element& a, const Element& b) const final;

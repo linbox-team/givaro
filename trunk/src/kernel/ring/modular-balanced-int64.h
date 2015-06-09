@@ -4,450 +4,162 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: BB <brice.boyer@lip6.fr>
+// Authors: Clement Pernet <clement.pernet@gmail.com>
 //          A. Breust (taken from FFLAS-FFPACK)
-// ========================================================================
+// ==========================================================================
 
-/*! @file field/modular-balanced-int64.h
- * @ingroup field
- * @brief Balanced representation of <code>Z/mZ</code> over \c int64_t .
- * @warning NOT DEFINED for EVEN modulus
+/*! @file field/modular-balanced-int32.h
  */
 
 #ifndef __GIVARO_modular_balanced_int64_H
 #define __GIVARO_modular_balanced_int64_H
 
-#include <cmath> // fmod
+#include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
-
-#ifndef LINBOX_MAX_INT64
-#ifdef __x86_64__
-#define LINBOX_MAX_INT64 INT64_MAX
-#else
-#define LINBOX_MAX_INT64 INT64_MAX
-#endif
-#endif
-
-#define NORMALISE(x) \
-{ \
-	if (x < mhalf_mod) return x += modulus; \
-	else if (x > half_mod) return x -= modulus; \
-}
-
-#define NORMALISE_HI(x) \
-{ \
-			if (x > half_mod) x -= modulus; \
-}
+#include "givaro/ring-interface.h"
 
 namespace Givaro
 {
-	template<class TAG> class ModularBalanced;
-
-	/// \ingroup field
-	template <>
-	class ModularBalanced<int64_t>  {
-
-	protected:
-
-		int64_t modulus;
-		int64_t half_mod;
-		int64_t mhalf_mod;
-		double modulusinv;
-
-	public:
-
-		typedef int64_t Element;
-		typedef int64_t* Element_ptr;
-		typedef const int64_t* ConstElement_ptr;
-
-		const Element one  ;
-		const Element zero ;
-		const Element mOne ;
-
-	public:
-
-		static const bool balanced = true ;
-
-		typedef ModularBalanced<Element> Self_t;
-		typedef GeneralRingRandIter<Self_t> RandIter;
-		typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-
-		//default modular field,taking 65521 as default modulus
-		ModularBalanced () :
-			modulus(65521)
-			,one(1),zero(0),mOne(-1)
-		{
-			modulusinv = 1/(double)65521;
-			half_mod = (65521 >> 1);
-			mhalf_mod = half_mod-65520;
-		}
-
-		ModularBalanced (Element value) :
-			modulus(value)
-			,one(1),zero(0),mOne(-1)
-		{
-			half_mod = (modulus >> 1);
-			mhalf_mod = half_mod-modulus+1;
-			modulusinv = 1 / ((double) value);
-		    assert(modulus >= getMinModulus());
-		    assert(modulus <= getMaxModulus());
-		}
-
-		ModularBalanced (const ModularBalanced<Element>& mf) :
-			modulus(mf.modulus),
-			half_mod(mf.half_mod),
-			mhalf_mod(mf.mhalf_mod),
-			modulusinv(mf.modulusinv)
-			,one(mf.one),zero(mf.zero),mOne(mf.mOne)
-		{
-		}
-
-		ModularBalanced<Element> & assign(const ModularBalanced<Element> &F)
-		{
-			modulus = F.modulus;
-			half_mod  = F.half_mod;
-			mhalf_mod = F.mhalf_mod;
-			// lmodulus   = F.lmodulus;
-			modulusinv = F.modulusinv;
-			F.assign(const_cast<Element&>(one),F.one);
-			F.assign(const_cast<Element&>(zero),F.zero);
-			F.assign(const_cast<Element&>(mOne),F.mOne);
-			return *this;
-		}
-
-		const ModularBalanced &operator=(const ModularBalanced<Element> &F)
-		{
-			modulus = F.modulus;
-			half_mod  = F.half_mod;
-			mhalf_mod = F.mhalf_mod;
-			// lmodulus   = F.lmodulus;
-			modulusinv = F.modulusinv;
-			F.assign(const_cast<Element&>(one),F.one);
-			F.assign(const_cast<Element&>(zero),F.zero);
-			F.assign(const_cast<Element&>(mOne),F.mOne);
-			return *this;
-		}
-
-		template<class T> inline T& characteristic(T& p) const { return p = modulus; }
-		template<class T> inline T& cardinality(T& p) const { return p = modulus; }
-
-		inline uint64_t cardinality () const
-		{
-			return (uint64_t) modulus;
-		}
-
-		inline uint64_t characteristic () const
-		{
-		       	return (uint64_t)modulus;
-		}
-
-		template<class T> inline T& convert(T& x, const Element& y) const { return x = T(y); }
-
-		inline std::ostream &write (std::ostream &os) const
-		{
-			return os << "ModularBalanced<int64_t> mod " << modulus;
-		}
-
-		inline std::istream &read (std::istream &is)
-		{
-			is >> modulus;
-			half_mod = modulus/2;
-			mhalf_mod = half_mod-modulus+1;
-			modulusinv = 1 /((double) modulus );
-			return is;
-		}
-
-		inline std::ostream &write (std::ostream &os, const Element &x) const
-		{
-			return os << x;
-		}
-
-		inline std::istream &read (std::istream &is, Element &x) const
-		{
-			Element tmp;
-			is >> tmp;
-			init(x,tmp);
-			return is;
-		}
-
-		inline Element &init (Element & x, const double &y) const
-		{
-			x = (Element) fmod(y,(double)modulus);
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element &init (Element & x, const float &y) const
-		{
-			return init(x , (double) y);
-		}
-
-		template<class Element1>
-		inline Element &init (Element & x, const Element1 &y) const
-		{
-			return reduce (x, Element(y));
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element& reduce (Element & x, const Element &y) const
-		{
-			x = (y % modulus);
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element& reduce (Element & x) const
-		{
-			x %= modulus;
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element& init(Element&x) const
-		{
-			return x = 0;
-		}
-
-		inline Element& init(Element& x, Element y) const
-		{
-			x = (y % modulus);
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element& init(Element& x, int32_t y ) const
-		{
-			x = (Element)y % modulus;
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element& init(Element& x, uint32_t y ) const
-		{
-			x = y % modulus;
-			NORMALISE_HI(x);
-			return x;
-		}
-
-		inline Element& init (Element& x, uint64_t y) const
-		{
-			x = Element(y % (uint64_t)modulus);
-			NORMALISE_HI(x);
-			return x;
-		}
-
-		inline Element& assign(Element& x, const Element& y) const
-		{
-			return x = y;
-		}
-
-		inline bool areEqual (const Element &x, const Element &y) const
-		{
-			return x == y;
-		}
-
-		inline  bool isZero (const Element &x) const
-		{
-			return x == 0;
-		}
-
-		inline bool isOne (const Element &x) const
-		{
-			return x == 1;
-		}
-
-		inline bool isMOne (const Element &x) const
-		{
-			return x == mOne ;
-		}
-
-		inline Element &add (Element &x, const Element &y, const Element &z) const
-		{
-			x = y + z;
-			NORMALISE(x);
-                        return x;
-		}
-
-		inline Element &sub (Element &x, const Element &y, const Element &z) const
-		{
-			x = y - z;
-			NORMALISE(x);
-			return x;
-		}
-
-		inline Element &mul (Element &x, const Element &y, const Element &z) const
-		{
-			Element q;
-
-			q  = (Element) ((((double) y) * ((double) z)) * modulusinv);  // q could be off by (+/-) 1
-			x = (Element) (y*z - q*modulus);
-
-			NORMALISE(x);
-                        return x;
-		}
-
-		inline Element &div (Element &x, const Element &y, const Element &z) const
-		{
-			Element temp;
-			return mul (x, y, inv(temp,z));
-		}
-
-		inline Element &neg (Element &x, const Element &y) const
-		{
-			return x = -y;
-		}
-
-		inline Element &inv (Element &x, const Element &y) const
-		{
-			Element d;
-			XINV(d, x, y, modulus);
-			NORMALISE(x);
-                        return x;
-
-		}
-
-		inline Element &axpy (Element &r,
-				      const Element &a,
-				      const Element &x,
-				      const Element &y) const
-		{
-			Element q;
-
-			q  = (Element) (((((double) a) * ((double) x)) + (double)y) * modulusinv);  // q could be off by (+/-) 1
-			r = (Element) (a * x + y - q*modulus);
-
-
-			NORMALISE(r);
-
-                        return r;
-
-		}
-
-		inline Element &axmy (Element &r,
-				      const Element &a,
-				      const Element &x,
-				      const Element &y) const
-		{
-			Element q;
-
-			q  = (Element) (((((double) a) * ((double) x)) - (double)y) * modulusinv);  // q could be off by (+/-) 1
-			r = (Element) (a * x - y - q*modulus);
-
-
-			NORMALISE(r);
-                        return r;
-
-		}
-
-		inline Element &maxpy (Element &r,
-				      const Element &a,
-				      const Element &x,
-				      const Element &y) const
-		{
-                    return negin(axmy(r,a,x,y));
-		}
-
-		inline Element &addin (Element &x, const Element &y) const
-		{
-			x += y;
-			NORMALISE(x);
-                        return x;
-		}
-
-		inline Element &subin (Element &x, const Element &y) const
-		{
-			x -= y;
-			NORMALISE(x);
-                        return x;
-		}
-
-		inline Element &mulin (Element &x, const Element &y) const
-		{
-			return mul(x,x,y);
-		}
-
-		inline Element &divin (Element &x, const Element &y) const
-		{
-			return div(x,x,y);
-		}
-
-		inline Element &negin (Element &x) const
-		{
-			return x = -x;
-		}
-
-		inline Element &invin (Element &x) const
-		{
-			return inv (x, x);
-		}
-
-		inline Element &axpyin (Element &r, const Element &a, const Element &x) const
-		{
-			Element q;
-
-			q  = (Element) (((((double) a) * ((double) x)) + (double) r) * modulusinv);  // q could be off by (+/-) 1
-			r = (Element) (a * x + r - q*modulus);
-
-
-			NORMALISE(r);
-
-                        return r;
-		}
-
-		inline Element &maxpyin (Element &r, const Element &a, const Element &x) const
-		{
-			Element q;
-                        maxpy(q,a,x,r);
-                        return assign(r,q);
-		}
-
-		static inline Element getMaxModulus()
-		{
-#ifdef __x86_64__
-			return 4294967296L;  // s.t. (p-1)/2 < 2^31 (a field element need to fit on a signed 32 bits int for the SIMD instruction _mm_mul_epi32)
-			    //return 6074000999L; // s.t. (p-1)/2 < 2^31
-#else
-			return 4294967296LL;
-//			return 6074000999LL;
-#endif
-		}
-
-		static  Element getMinModulus()	{return 3;}
-
-		Element minElement() const
-		{
-			return mhalf_mod ;
-		}
-
-		Element maxElement() const
-		{
-			return half_mod ;
-		}
-
-	private:
-            inline static Element& XINV(Element& q, Element& u, Element a, Element b) {
-                int64_t u3;
-                int64_t v1,v3;
-                u = 1; u3 = a;
-                v1 = 0; v3 = b;
-                while (v3 != 0)
-                {
-                    int64_t t1, t3;
-                    q = u3 / v3;
-                    t1 = u - q * v1; t3 = u3 - q * v3;
-                    u = v1; u3 = v3; v1 = t1; v3 = t3;
-                }
-                return (u3<0?u=-u:u);
-            }
-
-	};
-
+    template<class TAG> class ModularBalanced;
+
+    template <>
+    class ModularBalanced<int64_t> : public RingInterface<int64_t>
+    {
+    public:
+	
+	// ----- Exported types
+	using Self_t = ModularBalanced<int64_t>;
+	enum { size_rep = sizeof(Element) };
+
+	// ----- Constantes
+	const Element zero = 0;
+	const Element one  = 1;
+	const Element mOne = -1;
+
+	// ----- Constructors
+	ModularBalanced()
+	    : _p(0), _halfp(0), _mhalfp(0), _dinvp(0.0)
+	{}
+
+	ModularBalanced(Element p)
+	    : _p(p), _halfp(p >> 1), _mhalfp(_halfp - p + 1), _dinvp(1. / static_cast<double>(p))
+	{
+	    assert(_p >= getMinModulus());
+	    assert(_p <= getMaxModulus());
+	}
+
+	ModularBalanced(const Self_t& F)
+	    : _p(F._p), _halfp(F._halfp), _mhalfp(F._mhalfp), _dinvp(F._dinvp)
+	{}
+
+	// ----- Accessors
+	inline Element minElement() const final { return _mhalfp; }
+	inline Element maxElement() const final { return _halfp; }
+
+	// ----- Access to the modulus
+	inline Element residu() const { return _p; }
+	inline Element size() const { return _p; }
+	inline Element characteristic() const { return _p; }
+	inline Element cardinality() const { return _p; }
+	template<class T> inline T& characteristic(T& p) const { return p = _p; }
+	template<class T> inline T& cardinality(T& p) const { return p = _p; }
+	
+	static inline Element getMaxModulus() { return 6074000999; } // 2^32.5
+	static inline Element getMinModulus() { return 3; }
+
+	// ----- Checkers
+	inline bool isZero(const Element& a) const final { return a == zero; }
+	inline bool isOne (const Element& a) const final { return a == one; }
+	inline bool isMOne(const Element& a) const final { return a == mOne; }
+	inline bool areEqual(const Element& a, const Element& b) const final { return a == b; }
+	inline size_t length(const Element a) const { return size_rep; }
+	
+	// ----- Ring-wise operators
+	inline bool operator==(const Self_t& F) const { return _p == F._p; }
+	inline bool operator!=(const Self_t& F) const { return _p != F._p; }
+	inline Self_t& operator=(const Self_t& F)
+	{
+		F.assign(const_cast<Element&>(one),  F.one);
+		F.assign(const_cast<Element&>(zero), F.zero);
+		F.assign(const_cast<Element&>(mOne), F.mOne);
+		_p = F._p;
+		_halfp = F._halfp;
+		_mhalfp = F._mhalfp;
+		_dinvp = F._dinvp;
+		return *this;
+	}
+
+	// ----- Initialisation
+	Element& init(Element& a) const;
+	Element& init(Element& r, const float a) const;
+	Element& init(Element& r, const double a) const;
+	Element& init(Element& r, const Integer& a) const;
+	template<typename T> Element& init(Element& r, const T& a) const
+	{ r = Caster<Element>(a); return reduce(r); }
+
+	Element& assign(Element& r, const Element& a) const;
+
+	// ----- Convert
+	template<typename T> T& convert(T& r, const Element& a) const
+	{ return r = static_cast<T>(a); }
+	
+	Element& reduce(Element& r, const Element& a) const;
+	Element& reduce(Element& r) const;
+	
+	// ----- Classic arithmetic
+	Element& mul(Element& r, const Element& a, const Element& b) const final;
+	Element& div(Element& r, const Element& a, const Element& b) const final;
+	Element& add(Element& r, const Element& a, const Element& b) const final;
+	Element& sub(Element& r, const Element& a, const Element& b) const final;
+	Element& neg(Element& r, const Element& a) const final;
+	Element& inv(Element& r, const Element& a) const final;
+
+	Element& mulin(Element& r, const Element& a) const final;
+	Element& divin(Element& r, const Element& a) const final;
+	Element& addin(Element& r, const Element& a) const final;
+	Element& subin(Element& r, const Element& a) const final;
+	Element& negin(Element& r) const final;
+	Element& invin(Element& r) const final;
+	
+	// -- axpy:   r <- a * x + y
+	// -- axpyin: r <- a * x + r
+	Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+	Element& axpyin(Element& r, const Element& a, const Element& x) const final;
+
+	// -- axmy:   r <- a * x - y
+	// -- axmyin: r <- a * x - r
+	Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+	Element& axmyin(Element& r, const Element& a, const Element& x) const final;
+
+	// -- maxpy:   r <- y - a * x
+	// -- maxpyin: r <- r - a * x
+	Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+	Element& maxpyin(Element& r, const Element& a, const Element& x) const final;
+
+	// ----- Random generators
+	typedef ModularRandIter<Self_t> RandIter;
+	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+	template< class Random > Element& random(const Random& g, Element& r) const
+	{ return init(r, g()); }
+	template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+    	{ while (isZero(init(a, g())));
+	    return a; }
+
+	// --- IO methods
+	std::ostream& write(std::ostream& s) const;
+	std::istream& read (std::istream& s, Element& a) const;
+	std::ostream& write(std::ostream& s, const Element& a) const;
+	
+    protected:
+
+	Element _p;
+	Element _halfp;
+	Element _mhalfp;
+	double _dinvp;
+    };
 }
 
-#undef LINBOX_MAX_INT64
-#undef NORMALISE
-#undef NORMALISE_HI
+#include "givaro/modular-balanced-int64.inl"
 
-#endif //__GIVARO_modular_balanced_int64_H
+#endif // __GIVARO_modular_balanced_int64_H
 

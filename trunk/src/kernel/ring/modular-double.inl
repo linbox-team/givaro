@@ -19,87 +19,47 @@ namespace Givaro {
 	// --------------------
 	// ----- Initialisation
 
-	inline Modular<double>::Element &Modular<double>::init (Element &x) const
+	inline Modular<double>::Element& Modular<double>::init (Element& x) const
 	{
-		return x = zero ;
+		return x = zero;
 	}
 
-	inline Modular<double>::Element &Modular<double>::init (Element &x, const int32_t &y) const
+	inline Modular<double>::Element& Modular<double>::init (Element& x, const int64_t y) const
 	{
-		x = (Element)(uint64_t(std::abs(y)) % (uint64_t)(_lp));
-		if (y < 0) x = _p - x;
+		x = static_cast<Element>(std::abs(y) % _lp);
+		if (y < 0) negin(x);
 		return x;
 	}
 
-	inline Modular<double>::Element &Modular<double>::init (Element &x, const int64_t &y) const
+	inline Modular<double>::Element& Modular<double>::init (Element& x, const uint64_t y) const
 	{
-		x = (Element)(uint64_t(std::abs(y)) % (uint64_t)(_lp));
-		if (y < 0) x = _p - x;
-		return x;
+	    return x = static_cast<Element>(y % (uint64_t)(_lp));
 	}
 
-	inline Modular<double>::Element &Modular<double>::init(Element &x, const uint32_t &y) const
+	inline Modular<double>::Element& Modular<double>::init (Element& x, const Integer& y) const
 	{
-		return x = (Element)( y >= (uint64_t)_lp ? y % (uint64_t)(_lp) : y);
+	    return x = static_cast<Element>(y % _lp);
 	}
 
-	inline Modular<double>::Element &Modular<double>::init (Element &x, const uint64_t &y) const
+	inline Modular<double>::Element& Modular<double>::assign (Element& x, const Element& y) const
 	{
-		return x = (Element)( y >= (uint64_t)_lp ? y % (uint64_t)(_lp) : y);
-	}
-
-	inline Modular<double>::Element &Modular<double>::init (Element &x, const double &y) const
-	{
-		x = fmod(y, _p);
-		if (x < 0) x += _p;
-		return x;
-	}
-
-	template <class XXX>
-	inline Modular<double>::Element &Modular<double>::init(Element &x, const XXX &y) const
-	{
-		return init(x, Caster<double>(y));
-	}
-
-	inline Modular<double>::Element &Modular<double>::assign (Element &x, const Element &y) const
-	{
-		return x = y;
+	    return x = y;
 	}
 
 	// ------------------------
 	// ----- Convert and reduce
 
-	inline Integer& Modular<double>::convert (Integer &x, const Element &y) const
-	{
-		return x = (Integer)y;
-	}
-
-	inline Modular<double>::Residu_t &Modular<double>::convert (Residu_t &x, const Element &y) const
-	{
-		return x = (Residu_t)y;
-	}
-
-	inline double &Modular<double>::convert (double &x, const Element &y) const
-	{
-		return x = (double)y;
-	}
-
-	inline float &Modular<double>::convert (float &x, const Element &y) const
-	{
-		return x = (float)y;
-	}
-
 	inline Modular<double>::Element& Modular<double>::reduce (Element& x) const
 	{
 		x = fmod (x, _p);
-		if (x < 0) x += _p;
+		if (x < 0.0) x += _p;
 		return x;
 	}
 
 	inline Modular<double>::Element& Modular<double>::reduce (Element& x, const Element& y) const
 	{
 		x = fmod (y, _p);
-		if (x < 0) x += _p;
+		if (x < 0.0) x += _p;
 		return x;
 	}
 

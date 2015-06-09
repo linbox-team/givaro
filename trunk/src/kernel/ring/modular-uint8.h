@@ -9,9 +9,9 @@
 // ==========================================================================
 
 /*! @file field/modular-uint64.h
-* @ingroup field
-* @brief  representation of <code>Z/mZ</code> over \c uint64_t .
-*/
+ * @ingroup field
+ * @brief  representation of <code>Z/mZ</code> over \c uint64_t .
+ */
 
 #ifndef __GIVARO_modular_uint8_H
 #define __GIVARO_modular_uint8_H
@@ -22,10 +22,10 @@
 
 namespace Givaro {
 
-template <typename COMP>
-class Modular<uint8_t, COMP> : public RingInterface<uint8_t>
-{
-public:
+    template <typename COMP>
+    class Modular<uint8_t, COMP> : public RingInterface<uint8_t>
+    {
+    public:
 	// ----- Exported Types and constantes
 	using Self_t = Modular<uint8_t, COMP>;
 	using Compute_t = typename std::make_unsigned<COMP>::type;
@@ -53,7 +53,7 @@ public:
 	}
 
 	Modular(const Self_t& F)
-	: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
+            : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p) {}
 
 	// ----- Accessors
 	inline Element minElement() const final { return zero; }
@@ -81,30 +81,43 @@ public:
 	bool operator!=(const Self_t& F) const { return _p != F._p; }
 	Self_t& operator=(const Self_t& F)
 	{
-		F.assign(const_cast<Element&>(one),  F.one);
-		F.assign(const_cast<Element&>(zero), F.zero);
-		F.assign(const_cast<Element&>(mOne), F.mOne);
-		_p = F._p;
-		return *this;
+            F.assign(const_cast<Element&>(one),  F.one);
+            F.assign(const_cast<Element&>(zero), F.zero);
+            F.assign(const_cast<Element&>(mOne), F.mOne);
+            _p = F._p;
+            return *this;
 	}
 
-	// ----- Initialisation
-	Element &init (Element &x) const;
-	Element &init (Element &x, const int32_t &y ) const;
-	Element &init (Element &x, const int64_t &y ) const;
-	Element &init (Element &x, const uint32_t &y ) const;
-	Element &init (Element &x, const uint64_t &y ) const;
-	Element &init (Element &x, const double &y) const;
-	template<typename XXX> Element& init(Element & x, const XXX & y) const;
+        // ----- Initialisation
+        Element& init (Element& x) const
+        { return x = 0; }
+        Element& init (Element& x, const float a) const;
+        Element& init (Element& x, const double a) const;
+        Element& init (Element& x, const int16_t a) const;
+        Element& init (Element& x, const uint16_t a) const;
+        Element& init (Element& x, const int32_t a) const;
+        Element& init (Element& x, const uint32_t a) const;
+        Element& init (Element& x, const int64_t a) const;
+        Element& init (Element& x, const uint64_t a) const;
+        Element& init (Element& x, const Integer& a) const;
+        template<typename T> Element& init(Element& r, const T& a) const
+        {
+            reduce(r, Caster<Element>((a < 0)? -a : a));
+	    if (a < 0) negin(r);
+            return r;
+        }
 
-	Element &assign (Element &x, const Element &y) const;
+        Element& assign (Element& x, const Element& y) const
+        { return x = y; }
+    
+        // ----- Convert and reduce
+        template<typename T> T& convert(T& r, const Element& a) const
+        { return r = Caster<T>(a); }
 
-	// ----- Convert
-	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
-	template<typename XXX> XXX& convert(XXX& r, const Element a ) const { return r = static_cast<XXX>(a) ;}
-
-	inline Element& reduce (Element& x, const Element& y) const { return x = y % _p; }
-	inline Element& reduce (Element& x) const { return x %= _p; }
+        Element& reduce (Element& x, const Element& y) const
+        { x = y % _p; return x; }
+        Element& reduce (Element& x) const
+        { x %= _p; return x; }
 
 	// ----- Classic arithmetic
 	Element& mul(Element& r, const Element& a, const Element& b) const final;
@@ -139,10 +152,10 @@ public:
 	// ----- Random generators
 	typedef ModularRandIter<Self_t> RandIter;
 	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-    template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
-    template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+        template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
+        template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
     	{ while (isZero(init(a, g())));
-    	  return a; }
+            return a; }
 
 	// --- IO methods
 	std::istream& read (std::istream& s);
@@ -150,10 +163,10 @@ public:
 	std::istream& read (std::istream& s, Element& a) const;
 	std::ostream& write(std::ostream& s, const Element& a) const;
 
-protected:
-	// -- data representation of the domain:
+    protected:
+        
 	Residu_t _p;
-};
+    };
 
 }
 

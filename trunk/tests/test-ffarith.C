@@ -65,6 +65,10 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "1: ", F.one) << std::endl;
     TESTE_EG(a, F.one);
 
+    F.inv(a_, a);
+
+    TESTE_EG(a_, F.one);
+
     F.init(ma,-1L);
     //         F.write(std::cerr) << std::endl;
     //         F.write(std::cerr << "a: ", a) << std::endl;
@@ -72,6 +76,10 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "1: ", F.one) << std::endl;
     //         F.write(std::cerr << "-1: ", F.mOne) << std::endl;
     TESTE_EG(ma, F.mOne);
+
+    F.inv(a_, ma);
+
+    TESTE_EG(a_, F.mOne);
 
     F.assign(a, first);
 
@@ -110,6 +118,16 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "c: ", c) << std::endl;
     //         F.write(std::cerr << "c_: ", c_) << std::endl;
     TESTE_EG(a,c_);
+
+    F.assign(c, a);
+    F.mulin(c, b);     // c = a*b
+    F.divin(c,b);      // c_ == a ?
+
+    //         F.write(std::cerr) << std::endl;
+    //         F.write(std::cerr << "a: ", a) << std::endl;
+    //         F.write(std::cerr << "b: ", b) << std::endl;
+    //         F.write(std::cerr << "c: ", c) << std::endl;
+    TESTE_EG(a,c);
 
     F.axpy(d, a, b, c); // d = a*b + c;
     F.init(d_);
@@ -225,10 +243,7 @@ int main(int argc, char ** argv)
     using ModularUCUS = Modular<uint8_t, uint16_t>;
     using ModularUSUZ = Modular<uint16_t, uint32_t>;
     using ModularUZULL = Modular<uint32_t, uint64_t>;
-    //using ModularFD = Modular<float, double>;
-    //using ModularBalancedFD = ModularBalanced<float, double>;
-    //using ModularBalancedZULL = ModularBalanced<int32_t, uint64_t>;
-    //using MontgomeryZULL = Montgomery<int32_t, uint64_t>;
+    // using ModularFD = Modular<float, double>;
 
 #define TEST_SPECIFIC(Field, Name, Modulus...)		\
     Field Name(Modulus);				\
@@ -252,10 +267,11 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(ModularUSUZ, USUZ2, 2);
     TEST_SPECIFIC(ModularUZULL, UZULL2, 2);
     TEST_SPECIFIC(Modular<Log16>, L2, 2);
-    // Not implemented TEST_SPECIFIC(ModularFD, FD2, 2);
     TEST_SPECIFIC(Modular<float>, F2, 2);
     TEST_SPECIFIC(Modular<double>, D2, 2);
+    //TEST_SPECIFIC(ModularFD, FD2, 2);
     TEST_SPECIFIC(Modular<Integer>, I2, 2);
+    TEST_SPECIFIC(Modular<RecInt::rint128>, R2, 2);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU2, 2);
 
     //--------------------//
@@ -263,13 +279,10 @@ int main(int argc, char ** argv)
     
     TEST_SPECIFIC(ModularBalanced<int32_t>, BZ3, 3);
     TEST_SPECIFIC(ModularBalanced<int64_t>, BLL3, 3);
-    // Not with Balanced TEST_SPECIFIC(ModularBalancedZULL, BZULL3, 3);
     TEST_SPECIFIC(ModularBalanced<float>, BF3, 3);
     TEST_SPECIFIC(ModularBalanced<double>, BD3, 3);
-    // Not with Balanced TEST_SPECIFIC(ModularBalancedFD, BFD3, 3);
     
     TEST_SPECIFIC(Montgomery<int32_t>, MZ3, 3);
-    // Not with Montgomery TEST_SPECIFIC(MontgomeryZULL, MZULL3, 3);
     TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU3, 3);
 
     //---------------------//
@@ -292,7 +305,9 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Log16>, L13, 13);
     TEST_SPECIFIC(Modular<float>, F13, 13);
     TEST_SPECIFIC(Modular<double>, D13, 13);
+    //TEST_SPECIFIC(ModularFD, FD13, 13);
     TEST_SPECIFIC(Modular<Integer>, I13, 13);
+    TEST_SPECIFIC(Modular<RecInt::rint128>, R13, 13);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU13, 13);
     
     TEST_SPECIFIC(ModularBalanced<int32_t>, BZ13, 13);
@@ -327,6 +342,8 @@ int main(int argc, char ** argv)
     TEST_LAST_PRIME(Modular<Log16>, Lpmax);
     TEST_LAST_PRIME(Modular<float>, Fpmax);
     TEST_LAST_PRIME(Modular<double>, Dpmax);
+    //TEST_LAST_PRIME(ModularFD, FDpmax);
+    TEST_LAST_PRIME(Modular<RecInt::rint128>, Rpmax);
     TEST_LAST_PRIME(Modular<RecInt::ruint128>, RUpmax);
     
     TEST_LAST_PRIME(ModularBalanced<int32_t>, BZpmax);

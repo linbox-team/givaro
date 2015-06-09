@@ -23,11 +23,7 @@
 #include "givaro/modular-balanced-double.h"
 #include "givaro/modular-balanced-float.h"
 #include "givaro/modular-balanced-int32.h"
-#include "givaro/modular-balanced-integer.h"
-
-#ifndef __DONOTUSE_Givaro_SIXTYFOUR__
 #include "givaro/modular-balanced-int64.h"
-#endif
 
 #endif // __GIVARO_modular_balanced_double_H
 

@@ -30,7 +30,6 @@ pkginclude_HEADERS=     \
 	modular-balanced.h 			\
 	modular-balanced-int32.h 	\
 	modular-balanced-int64.h 	\
-	modular-balanced-integer.h 	\
 	modular-balanced-float.h 	\
 	modular-balanced-double.h 	\
 	unparametric-operations.h	\
@@ -54,6 +53,10 @@ pkginclude_HEADERS=     \
 	modular-inttype.inl	\
 	modular-log16.inl	\
 	modular-ruint.inl   \
+	modular-balanced-int32.inl  \
+	modular-balanced-int64.inl 	\
+	modular-balanced-float.inl 	\
+	modular-balanced-double.inl \
 	montgomery-int32.inl\
 	montgomery-ruint.inl\
 	ring-interface.h

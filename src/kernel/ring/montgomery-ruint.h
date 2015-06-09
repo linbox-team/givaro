@@ -16,15 +16,16 @@
 
 namespace Givaro
 {
+    template<class TYPE> class Montgomery;
 
-//! @brief The recint-based Montgomery ring.
-//! You can only odd moduli.
-//! An integer (a mod p) is stored as (a * r mod 2^{2^K}) with (r = 2^{2^K} mod p).
+    //! @brief The recint-based Montgomery ring.
+    //! You can only odd moduli.
+    //! An integer (a mod p) is stored as (a * r mod 2^{2^K}) with (r = 2^{2^K} mod p).
 
-template<size_t K>
-class Montgomery<RecInt::ruint<K>> : public RingInterface<RecInt::ruint<K>>
-{
-public:
+    template<size_t K>
+    class Montgomery<RecInt::ruint<K>> : public RingInterface<RecInt::ruint<K>>
+    {
+    public:
 
 	// ----- Exported Types and constantes
 	using Element = RecInt::ruint<K>;
@@ -44,23 +45,23 @@ public:
 	// ----- Constructors
 	Montgomery()
 	    :  zero(0), one(1), mOne(-1)
-        , _p(0), _p1(0), _r(0), _r2(0), _r3(0)
-    {}
+            , _p(0), _p1(0), _r(0), _r2(0), _r3(0)
+            {}
 
 	Montgomery(const Residu_t& p)
 	    : zero(0)
 	    , _p(p)
 	{
-        RecInt::arazi_qi(_p1, -_p); // p1 = -inv(p) mod 2^(2^K)
-        RecInt::mod_n(_r, -_p, _p); // r = 2^(2^K) mod p
+            RecInt::arazi_qi(_p1, -_p); // p1 = -inv(p) mod 2^(2^K)
+            RecInt::mod_n(_r, -_p, _p); // r = 2^(2^K) mod p
 
-        RecInt::mul(_r2, _r, _r);   // r2 = r^2 mod p
-        RecInt::mul(_r3, _r2, _r);  // r3 = r^3 mod p
+            RecInt::mul(_r2, _r, _r);   // r2 = r^2 mod p
+            RecInt::mul(_r3, _r2, _r);  // r3 = r^3 mod p
 
-        RecInt::copy(const_cast<Element&>(one), _r);
-        to_mg(const_cast<Element&>(mOne), _p - 1u);
+            RecInt::copy(const_cast<Element&>(one), _r);
+            to_mg(const_cast<Element&>(mOne), _p - 1u);
 
-        assert(_p & 1u != 0u);
+            assert(_p & 1u != 0u);
 	    assert(_p >= getMinModulus());
 	    assert(_p <= getMaxModulus());
 	}
@@ -68,7 +69,7 @@ public:
 	Montgomery(const Self_t& F)
 	    : zero(F.zero), one(F.one), mOne(F.mOne)
 	    , _p(F._p), _p1(F._p1), _r(F._r)
-	{}
+            {}
 
 	// ----- Accessors
 	inline Element minElement() const final { return zero; }
@@ -96,27 +97,35 @@ public:
 	inline bool operator==(const Self_t& F) const { return _p == F._p; }
 	inline bool operator!=(const Self_t& F) const { return _p != F._p; }
 	inline Self_t& operator=(const Self_t& F)
-	{
+            {
 		F.assign(const_cast<Element&>(one),  F.one);
 		F.assign(const_cast<Element&>(zero), F.zero);
 		F.assign(const_cast<Element&>(mOne), F.mOne);
 		_p = F._p;
 		return *this;
-	}
+            }
 
 	// ----- Initialisation
-	Element& init(Element& r) const;
-	Element& init(Element& r, const double a)   const;
-	Element& init(Element& r, const Integer& a) const;
+        Element& init (Element& x) const
+        { return x = 0; }
+        template<typename T> Element& init(Element& r, const T& a) const
+        {
+            reduce(r, Caster<Element>((a < 0)? -a : a));
+	    if (a < 0) negin(r);
+            return to_mg(r);
+        }
 
-	Element& assign(Element& r, const Element& a) const;
+        Element& assign (Element& x, const Element& y) const
+        { return x = y; }
+    
+        // ----- Convert and reduce
+        template<typename T> T& convert(T& r, const Element& a) const
+        { Element tmp; return r = Caster<T>(mg_reduc(tmp, a)); }
 
-	// ----- Convert
-	Integer& convert(Integer& i, const Element a) const { unsigned long ur; return i = (Integer)convert(ur, a);	}
-	template<typename XXX> XXX& convert(XXX& r, const Element a) const { return r = static_cast<XXX>(a) ;}
-
-	inline Element& reduce (Element& x, const Element& y) const { return x = Element(y % _p); }
-	inline Element& reduce (Element& x) const { return x %= _p; }
+        Element& reduce (Element& x, const Element& y) const
+        { x = y % _p; return x; }
+        Element& reduce (Element& x) const
+        { x %= _p; return x; }
 
 	// ----- Classic arithmetic
 	Element& mul(Element& r, const Element& a, const Element& b) const final;
@@ -151,10 +160,10 @@ public:
 	// ----- Random generators
 	typedef ModularRandIter<Self_t> RandIter;
 	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-    template< class Random > Element& random(const Random& g, Element& r) const	{ RecInt::rand(r); mod_n(r, _p); return r; }
-    template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+        template< class Random > Element& random(const Random& g, Element& r) const	{ RecInt::rand(r); mod_n(r, _p); return r; }
+        template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
     	{ while (isZero(random(g, a)));
-    	  return a; }
+            return a; }
 
 	// --- IO methods
 	std::istream& read (std::istream& s);
@@ -162,29 +171,29 @@ public:
 	std::istream& read (std::istream& s, Element& a) const;
 	std::ostream& write(std::ostream& s, const Element& a) const;
 
-protected:
+    protected:
 
-    // Internal montgomery-reduction. a <- b * r^{-1}
-    Element& mg_reduc(Element& a, const Element& b) const;
-    Element& mg_reduc(Element& a, const LargeElement& b) const;
+        // Internal montgomery-reduction. a <- b * r^{-1}
+        Element& mg_reduc(Element& a, const Element& b) const;
+        Element& mg_reduc(Element& a, const LargeElement& b) const;
 
-    // a <- b * r
-    Element& to_mg(Element& a, const Element& b) const;
-    Element& to_mg(Element& a) const;
+        // a <- b * r
+        Element& to_mg(Element& a, const Element& b) const;
+        Element& to_mg(Element& a) const;
 
-protected:
+    protected:
 
-    // p is the module (must be odd and > 1)
-    RecInt::ruint<K> _p;
-    // p1 = -inv(p) mod 2^(2^K)
-    RecInt::ruint<K> _p1;
-    // r = 2^(2^K) mod p
-    RecInt::ruint<K> _r;
-    // r2 = r^2 mod p - used to initialize elements
-    RecInt::ruint<K> _r2;
-    // r3 = r^3 mod p - used to compute inverse
-    RecInt::ruint<K> _r3;
-};
+        // p is the module (must be odd and > 1)
+        RecInt::ruint<K> _p;
+        // p1 = -inv(p) mod 2^(2^K)
+        RecInt::ruint<K> _p1;
+        // r = 2^(2^K) mod p
+        RecInt::ruint<K> _r;
+        // r2 = r^2 mod p - used to initialize elements
+        RecInt::ruint<K> _r2;
+        // r3 = r^3 mod p - used to compute inverse
+        RecInt::ruint<K> _r3;
+    };
 
 } // namespace Givaro
 

@@ -18,9 +18,12 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
+#include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/modular-general.h" // invext()
-#include <math.h>
+#include "givaro/ring-interface.h" // invext()
+
+#include <cmath>
 
 #define B32 65536UL
 #define MASK32 65535UL
@@ -39,178 +42,143 @@ namespace Givaro
      *   - p max is 40499
      */
     template<>
-    class Montgomery<int32_t>
+    class Montgomery<int32_t> : public RingInterface<uint32_t>
     {
     public:
         // ----- Exported Types and constantes
-        typedef uint32_t Residu_t;                    // - type to store residue
-        enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
+        using Self_t = Montgomery<int32_t>;
+        using Residu_t = uint32_t;
+        enum { size_rep = sizeof(Residu_t) };
 
-        // ----- Representation of Element of the domain Montgomery
-        typedef uint32_t Rep;
-        typedef uint32_t Element;
-        typedef Element* Element_ptr ;
-        typedef const uint32_t* ConstElement_ptr;
+        // ----- Constantes
+        const Element zero = 0;
+        const Element one;
+        const Element mOne;
 
-
-        // ----- Constructor
-        Montgomery() : _p(0UL), _dp(0.0), zero(0UL), one(1UL), mOne(0UL) {}
+        // ----- Constructors
+        Montgomery() : one(1UL), mOne(0UL), _p(0UL), _dp(0.0) {}
 
         Montgomery( Residu_t p, int = 1) :
+            one(0UL), mOne(0UL),
             _p(  (Residu_t)  p),
             _Bp( (Residu_t)  B32%p),
             _B2p((Residu_t)  (_Bp<<HALF_BITS32) % p),
             _B3p((Residu_t)  (_B2p<<HALF_BITS32) % p),
-            _nim((Residu_t)  -invext((unsigned long)(_p), B32)),
-            _dp( (double)    p),
-            zero((Residu_t)  0UL),
-            one( (Residu_t)  redcsal( _B2p ) ),
-            mOne( _p - one )
-        {}
-
-        Montgomery( const Montgomery<int32_t>& F)
-        : _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p), _nim(F._nim)
-        , _dp(F._dp), zero(0UL), one(F.one), mOne(F.mOne)
-        { }
-
-        int operator==( const Montgomery<int32_t>& BC) const { return _p == BC._p;}
-        int operator!=( const Montgomery<int32_t>& BC) const { return _p != BC._p;}
-
-        Montgomery<int32_t>& operator=( const Montgomery<int32_t>& F)
+            _nim((Residu_t)  -invext(uint64_t(_p), B32)),
+            _dp( (double)    p)
         {
-            this->_p = F._p;
-            this->_Bp = F._Bp;
-            this->_B2p = F._B2p;
-            this->_B3p = F._B3p;
-            this->_nim = F._nim;
-            this->_dp = F._dp;
-            assign(const_cast<Element&>(one),F.one);
-            assign(const_cast<Element&>(mOne),F.mOne);
-            assign(const_cast<Element&>(zero),F.zero);
-            return *this;
+            const_cast<Element&>(one) = _Bp;
+            const_cast<Element&>(mOne) = _p - one;
         }
 
-        // ----- Access to the modulus
-        Residu_t residu() const;
-        Residu_t size() const {return _p;}
-        Rep access( const Rep a ) const    { return a; }
+        Montgomery( const Montgomery<int32_t>& F)
+            : one(F.one), mOne(F.mOne)
+            , _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p)
+            , _nim(F._nim), _dp(F._dp)
+        {}
 
+        // ----- Accessors
+        inline Element minElement() const final { return zero; }
+        inline Element maxElement() const final { return mOne; }
+
+        // ----- Access to the modulus
+        inline Residu_t residu() const { return _p; }
+        inline Residu_t size() const { return _p; }
         inline Residu_t characteristic() const { return _p; }
         inline Residu_t cardinality() const { return _p; }
         template<class T> inline T& characteristic(T& p) const { return p = _p; }
         template<class T> inline T& cardinality(T& p) const { return p = _p; }
+        static inline Residu_t getMaxModulus() { return 40503; } // 2^15.3
+        static inline Residu_t getMinModulus() { return 2; }
 
-        // ----- Access to the modulus
-        Rep& init( Rep& a ) const;
-        Rep& init( Rep& r, const long a) const ;
-        Rep& init( Rep& r, const unsigned long a) const ;
-        Rep& init( Rep& a, const int i) const ;
-        Rep& init( Rep& a, const unsigned int i) const ;
-        Rep& init ( Rep& r, const Integer& residu ) const ;
+        // ----- Checkers
+        inline bool isZero(const Element& a) const final { return a == zero; }
+        inline bool isOne (const Element& a) const final { return a == one; }
+        inline bool isMOne(const Element& a) const final { return a == mOne; }
+        inline bool areEqual(const Element& a, const Element& b) const final { return a == b; }
+        inline size_t length(const Element a) const { return size_rep; }
 
-        // Initialisation from double ( added for FFLAS usage) (C Pernet)
-        Rep& init( Rep& a, const double i) const;
-        Rep& init( Rep& a, const float i) const;
-
-        unsigned long int& convert(unsigned long int& r, const Rep a) const
+        // ----- Ring-wise operators
+        bool operator==(const Self_t& F) const { return _p == F._p; }
+        bool operator!=(const Self_t& F) const { return _p != F._p; }
+        Self_t& operator=(const Self_t& F)
         {
-            uint32_t ur;
-            return r = (unsigned long)redc(ur,a);
+            F.assign(const_cast<Element&>(one),  F.one);
+            F.assign(const_cast<Element&>(zero), F.zero);
+            F.assign(const_cast<Element&>(mOne), F.mOne);
+            _p = F._p;
+            return *this;
         }
 
-        uint32_t& convert(uint32_t& r, const Rep a) const
+        // ----- Initialisation
+        Element& init (Element& x) const
+        { return x = 0; }
+        Element& init (Element& x, const double a) const;
+        Element& init (Element& x, const int64_t a) const;
+        Element& init (Element& x, const uint64_t a) const;
+        Element& init (Element& x, const Integer& a) const;
+        template<typename T> Element& init(Element& r, const T& a) const
         {
-            unsigned long ur;
-            return r = (uint32_t)convert(ur, a);
+            reduce(r, Caster<Element>((a < 0)? -a : a));
+	    if (a < 0) negin(r);
+            return redc(r, r * _B2p);
         }
 
-        int32_t& convert(int32_t& r, const Rep a) const
-        {
-            unsigned long ur;
-            return r = (int32_t)convert(ur, a);
-        }
+        Element& assign (Element& x, const Element& y) const
+        { return x = y; }
+    
+        // ----- Convert and reduce
+        template<typename T> T& convert(T& r, const Element& a) const
+        { Element c; return r = Caster<T>(redc(c, a)); }
 
-        long int& convert(long int& r, const Rep a) const
-        {
-            unsigned long ur;
-            return r = (long int)convert(ur, a);
-        }
+        Element& reduce (Element& x, const Element& y) const
+        { x = y % _p; return x; }
+        Element& reduce (Element& x) const
+        { x %= _p; return x; }
 
-        Integer& convert(Integer& i, const Rep a) const
-        {
-            unsigned long ur;
-            return i = (Integer)convert(ur, a);
-        }
+        // ----- Classic arithmetic
+        Element& mul(Element& r, const Element& a, const Element& b) const final;
+        Element& div(Element& r, const Element& a, const Element& b) const final;
+        Element& add(Element& r, const Element& a, const Element& b) const final;
+        Element& sub(Element& r, const Element& a, const Element& b) const final;
+        Element& neg(Element& r, const Element& a) const final;
+        Element& inv(Element& r, const Element& a) const final;
 
-        float& convert(float& r, const Rep a ) const
-        {
-            unsigned long ur;
-            return r = (float)convert(ur, a);
-        }
+        Element& mulin(Element& r, const Element& a) const final;
+        Element& divin(Element& r, const Element& a) const final;
+        Element& addin(Element& r, const Element& a) const final;
+        Element& subin(Element& r, const Element& a) const final;
+        Element& negin(Element& r) const final;
+        Element& invin(Element& r) const final;
 
-        double& convert(double& r, const Rep a ) const
-        {
-            unsigned long ur;
-            return r = (double)convert(ur, a);
-        }
+        // -- axpy:   r <- a * x + y
+        // -- axpyin: r <- a * x + r
+        Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+        Element& axpyin(Element& r, const Element& a, const Element& x) const final;
 
-        // ----- Misc methods
-        int isZero( const Rep a ) const;
-        int isOne ( const Rep a ) const;
-        int isMOne ( const Rep a ) const;
-        size_t length ( const Rep a ) const;
+        // -- axmy:   r <- a * x - y
+        // -- axmyin: r <- a * x - r
+        Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+        Element& axmyin(Element& r, const Element& a, const Element& x) const final;
 
-        // ----- Equality between two Elements
-        int areEqual(const  Rep& a, const Rep& b) const
-        {
-            return a==b;
-        }
+        // -- maxpy:   r <- y - a * x
+        // -- maxpyin: r <- r - a * x
+        Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const final;
+        Element& maxpyin(Element& r, const Element& a, const Element& x) const final;
 
-        // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-        Rep& mul (Rep& r, const Rep a, const Rep b) const;
-        Rep& div (Rep& r, const Rep a, const Rep b) const;
-        Rep& add (Rep& r, const Rep a, const Rep b) const;
-        Rep& sub (Rep& r, const Rep a, const Rep b) const;
-        Rep& neg (Rep& r, const Rep a) const;
-        Rep& inv (Rep& r, const Rep a) const;
-
-        Rep& mulin (Rep& r, const Rep a) const;
-        Rep& divin (Rep& r, const Rep a) const;
-        Rep& addin (Rep& r, const Rep a) const;
-        Rep& subin (Rep& r, const Rep a) const;
-        Rep& negin (Rep& r) const;
-        Rep& invin (Rep& r) const;
-
-        // -- axpy: r <- a * x + y mod p
-        Rep& axpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
-        // -- axpyin: r <- r + a * x mod p
-        Rep& axpyin(Rep& r, const Rep a, const Rep b) const;
-        // -- axmy: r <- a * x - y mod p
-        Rep& axmy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
-        // -- axmyin: r <- a * x - r  mod p
-        Rep& axmyin(Rep& r, const Rep a, const Rep b) const;
-        // -- maxpy: r <- c - a * b mod p
-        Rep& maxpy  (Rep& r, const Rep a, const Rep b, const Rep c) const;
-        // -- maxpyin: r <- r - a * x mod p
-        Rep& maxpyin(Rep& r, const Rep a, const Rep b) const;
-        // -- Misc: r <- a mod p
-        Rep& assign ( Rep& r, const Rep a) const;
-
-        // ----- random generators
-        template< class Random > Rep& random(Random&, Rep& r) const ;
-        template< class Random > Rep& random(Random&, Rep& r, long s) const ;
-        template< class Random > Rep& random(Random&, Rep& r, const Rep& b) const ;
-        template< class Random > Rep& nonzerorandom(Random&, Rep& r) const ;
-        template< class Random > Rep& nonzerorandom(Random&, Rep& r, long s) const ;
-        template< class Random > Rep& nonzerorandom(Random&, Rep& r, const Rep& b) const ;
-
-        typedef ModularRandIter< Montgomery<int32_t> > RandIter;
+        // ----- Random generators
+        typedef ModularRandIter<Self_t> RandIter;
+        typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+        template< class Random > Element& random(const Random& g, Element& r) const
+        { return init(r, g()); }
+        template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+        { while (isZero(init(a, g())));
+            return a; }
 
         // --- IO methods
-        std::istream& read ( std::istream& s );
-        std::ostream& write( std::ostream& s ) const;
-        std::istream& read ( std::istream& s, Rep& a ) const;
-        std::ostream& write( std::ostream& s, const Rep a ) const;
+        std::ostream& write(std::ostream& s) const;
+        std::istream& read (std::istream& s, Element& a) const;
+        std::ostream& write(std::ostream& s, const Element& a) const;
 
     protected:
 
@@ -228,27 +196,10 @@ namespace Givaro
         Residu_t _B3p;
         Residu_t _nim;
         double _dp;
-
-
-        static void Init();
-        static void End();
-
-    public:
-        // ----- Constantes
-        const Rep zero;
-        const Rep one;
-        const Rep mOne;
-
-    public:
-
-        static inline Residu_t getMaxModulus() { return 40503; }
     };
-
-
-} // namespace Givaro
+}
 
 #include "givaro/montgomery-int32.inl"
 
-#endif //  __GIVARO_montg32_H
+#endif
 
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

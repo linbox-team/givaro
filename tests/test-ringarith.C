@@ -7,10 +7,13 @@
 
 #include <iostream>
 #include <givaro/modular.h>
+#include <givaro/modular-balanced.h>
 #include <givaro/montgomery.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givinteger.h>
 #include <givaro/gfq.h>
+
+#include <recint/recint.h>
 
 using namespace Givaro;
 
@@ -102,6 +105,15 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     F.mul(a_,a,a); // a_ = a*a
     F.mul(b_,b,b); // b_ = b*b
     F.sub(e_,a_,b_); // e_ = a_ - b_
+    //         F.write(std::cerr) << std::endl;
+    //         F.write(std::cerr << "a: ", a) << std::endl;
+    //         F.write(std::cerr << "a_: ", a_) << std::endl;
+    //         F.write(std::cerr << "b: ", b) << std::endl;
+    //         F.write(std::cerr << "b_: ", b_) << std::endl;
+    //         F.write(std::cerr << "c: ", c) << std::endl;
+    //         F.write(std::cerr << "d: ", d) << std::endl;
+    //         F.write(std::cerr << "e: ", e) << std::endl;
+    //         F.write(std::cerr << "e_: ", e_) << std::endl;
     TESTE_EG(e,e_); // a^2 - b^2 = (a-b)(a+b)
 
     F.maxpy(e, a, b, d); // e = d-a*b
@@ -147,7 +159,7 @@ int TestRing(const Ring& F, const unsigned  long seed)
     typename Ring::RandIter g(F, seed);
     
     F.init(x, 7UL);
-    F.init(y, -29.3);
+    F.init(y, -29.0);
     JEONETESTE(F,x,y);
     
     for (size_t i = 0; i< NBITER; ++i) {
@@ -200,158 +212,141 @@ int main(int argc, char ** argv)
 #endif
     Integer::seeding(seed);
     RecInt::srand(seed);
+    
+    using ModularCUS = Modular<int8_t, uint16_t>;
+    using ModularSUZ = Modular<int16_t, uint32_t>;
+    using ModularZULL = Modular<int32_t, uint64_t>;
+    using ModularUCUS = Modular<uint8_t, uint16_t>;
+    using ModularUSUZ = Modular<uint16_t, uint32_t>;
+    using ModularUZULL = Modular<uint32_t, uint64_t>;
+    //using ModularFD = Modular<float, double>;
 
-    //-------------//
-    //----- 2 -----//
-
-    // modulo 2 over 8 bits
-    Modular<int8_t> C2(2); JETESTE(C2,seed);
-    Modular<uint8_t> UC2(2); JETESTE(UC2,seed);
-
-    // modulo 2 over 16 bits
-    Modular<int16_t> S2(2); JETESTE(S2,seed);
-    Modular<uint16_t> US2(2); JETESTE(US2,seed);
-
-    // modulo 2 over 32 bits
-    Modular<int32_t> Z2(2); JETESTE(Z2,seed);
-    Modular<uint32_t> UZ2(2); JETESTE(UZ2,seed);
-
-    // modulo 2 over 64 bits
-    Modular<int64_t> LL2(2); JETESTE(LL2,seed);
-    Modular<uint64_t> ULL2(2); JETESTE(ULL2,seed);
-
-    // modulo 2 fully tabulated
-    Modular<Log16> L2(2); JETESTE(L2,seed);
-
-    // modulo 2 over arbitrary size
-    Modular<Integer> IntZ2(2); JETESTE(IntZ2,seed);
-
-    // modulo 2 over 128 bits
-    Modular<RecInt::ruint128> UR2(2); JETESTE(UR2,seed);
-    // Not odd Montgomery<RecInt::ruint128> UM2(2); JETESTE(UM2,seed);
+#define TEST_SPECIFIC(Ring, Name, Modulus...)	\
+    Ring Name(Modulus);				\
+    JETESTE(Name, seed);
 
     //-------------//
     //----- 4 -----//
-
-    // modulo 4 over 8 bits
-    Modular<int8_t> C4(4); JETESTE(C4,seed);
-    Modular<uint8_t> UC4(4); JETESTE(UC4,seed);
-
-    // modulo 4 over 16 bits
-    Modular<int16_t> S4(4); JETESTE(S4,seed);
-    Modular<uint16_t> US4(4); JETESTE(US4,seed);
-
-    // modulo 4 over 32 bits
-    Modular<int32_t> Z4(4); JETESTE(Z4,seed);
-    Modular<uint32_t> UZ4(4); JETESTE(UZ4,seed);
-
-    // modulo 4 over 64 bits
-    Modular<int64_t> LL4(4); JETESTE(LL4,seed);
-    Modular<uint64_t> ULL4(4); JETESTE(ULL4,seed);
-
-    // modulo 4 fully tabulated
-    // Not prime Modular<Log16> L4(4); JETESTE(L4,seed);
-
-    // modulo 4 over arbitrary size
-    Modular<Integer> IntZ4(4); JETESTE(IntZ4,seed);
-
-    // modulo 4 over 128 bits
-    Modular<RecInt::ruint128> UR4(4); JETESTE(UR4,seed);
-    // Not odd Montgomery<RecInt::ruint128> UM4(4); JETESTE(UM4,seed);
-
-    //--------------//
-    //----- 13 -----//
-
-    // modulo 13 over 8 bits
-    Modular<int8_t> C13(13); JETESTE(C13,seed);
-    Modular<uint8_t> UC13(13); JETESTE(UC13,seed);
-
-    // modulo 13 over 16 bits
-    Modular<int16_t> S13(13); JETESTE(S13,seed);
-    Modular<uint16_t> US13(13); JETESTE(US13,seed);
-
-    // modulo 13 over 32 bits
-    Modular<int32_t> Z13(13); JETESTE(Z13,seed);
-    Modular<uint32_t> UZ13(13); JETESTE(UZ13,seed);
-
-    // modulo 13 over 64 bits
-    Modular<int64_t> LL13(13); JETESTE(LL13,seed);
-    Modular<uint64_t> ULL13(13); JETESTE(ULL13,seed);
-
-    // modulo 13 fully tabulated
-    Modular<Log16> L13(13); JETESTE(L13,seed);
-
-    // modulo 13 over arbitrary size
-    Modular<Integer> IntZ13(13); JETESTE(IntZ13,seed);
-
-    // modulo 13 over 128 bits
-    Modular<RecInt::ruint128> UR13(13); JETESTE(UR13,seed);
-    Montgomery<int32_t> MZ13(13); JETESTE(MZ13,seed);
-    Montgomery<RecInt::ruint128> UM13(13); JETESTE(UM13,seed);
-
-    // Polynomial
-    GFqDom<int> GF13(13, 2);
-    Poly1Dom< Modular<int8_t>, Dense > CP13(C13, "X"); JEPOLTESTE(CP13,seed);
-    Poly1Dom< Modular<uint8_t>, Dense > UCP13(UC13, "X"); JEPOLTESTE(UCP13,seed);
-    Poly1Dom< Modular<int16_t>, Dense > SP13(S13, "X"); JEPOLTESTE(SP13,seed);
-    Poly1Dom< Modular<uint16_t>, Dense > USP13(US13, "X"); JEPOLTESTE(USP13,seed);
-    Poly1Dom< Modular<int32_t>, Dense > ZP13(Z13, "X"); JEPOLTESTE(ZP13,seed);
-    Poly1Dom< Modular<uint32_t>, Dense > UZP13(UZ13, "X"); JEPOLTESTE(UZP13,seed);
-    Poly1Dom< Modular<int64_t>, Dense > LLP13(LL13, "X"); JEPOLTESTE(LLP13,seed);
-    Poly1Dom< Modular<uint64_t>, Dense > ULLP13(ULL13, "X"); JEPOLTESTE(ULLP13,seed);
-    Poly1Dom< Modular<Integer>, Dense > IntZP13(IntZ13, "X"); JEPOLTESTE(IntZP13,seed);
-    Poly1Dom< Modular<RecInt::ruint128>, Dense > URP13(UR13, "X"); JEPOLTESTE(URP13,seed);
-    //Poly1Dom< Montgomery<RecInt::ruint128>, Dense > URP13(UM13, "X"); JEPOLTESTE(URP13,seed);
-    Poly1Dom< Montgomery<int32_t>, Dense > MZP13(MZ13, "X"); JEPOLTESTE(MZP13,seed);
-    Poly1Dom< GFqDom<int>, Dense > GFP13(GF13, "X"); JEPOLTESTE(GFP13,seed);
+    
+    TEST_SPECIFIC(Modular<int8_t>, C4, 4);
+    TEST_SPECIFIC(Modular<int16_t>, S4, 4);
+    TEST_SPECIFIC(Modular<int32_t>, Z4, 4);
+    TEST_SPECIFIC(Modular<int64_t>, LL4, 4);
+    TEST_SPECIFIC(Modular<uint8_t>, UC4, 4);
+    TEST_SPECIFIC(Modular<uint16_t>, US4, 4);
+    TEST_SPECIFIC(Modular<uint32_t>, UZ4, 4);
+    TEST_SPECIFIC(Modular<uint64_t>, ULL4, 4);
+    TEST_SPECIFIC(ModularCUS, CUS4, 4);
+    TEST_SPECIFIC(ModularSUZ, SUZ4, 4);
+    TEST_SPECIFIC(ModularZULL, ZULL4, 4);
+    TEST_SPECIFIC(ModularUCUS, UCUS4, 4);
+    TEST_SPECIFIC(ModularUSUZ, USUZ4, 4);
+    TEST_SPECIFIC(ModularUZULL, UZULL4, 4);
+    //TEST_SPECIFIC(ModularFD, FD4, 4);
+    //TEST_SPECIFIC(Modular<float>, F4, 4);
+    //TEST_SPECIFIC(Modular<double>, D4, 4);
+    TEST_SPECIFIC(Modular<Integer>, I4, 4);
+    TEST_SPECIFIC(Modular<RecInt::ruint128>, RU4, 4);
+    TEST_SPECIFIC(Modular<RecInt::rint128>, R4, 4);
 
     //--------------//
     //----- 75 -----//
+    
+    TEST_SPECIFIC(Modular<int8_t>, C75, 75);
+    TEST_SPECIFIC(Modular<int16_t>, S75, 75);
+    TEST_SPECIFIC(Modular<int32_t>, Z75, 75);
+    TEST_SPECIFIC(Modular<int64_t>, LL75, 75);
+    TEST_SPECIFIC(Modular<uint8_t>, UC75, 75);
+    TEST_SPECIFIC(Modular<uint16_t>, US75, 75);
+    TEST_SPECIFIC(Modular<uint32_t>, UZ75, 75);
+    TEST_SPECIFIC(Modular<uint64_t>, ULL75, 75);
+    TEST_SPECIFIC(ModularCUS, CUS75, 75);
+    TEST_SPECIFIC(ModularSUZ, SUZ75, 75);
+    TEST_SPECIFIC(ModularZULL, ZULL75, 75);
+    TEST_SPECIFIC(ModularUCUS, UCUS75, 75);
+    TEST_SPECIFIC(ModularUSUZ, USUZ75, 75);
+    TEST_SPECIFIC(ModularUZULL, UZULL75, 75);
+    //TEST_SPECIFIC(ModularFD, FD75, 75);
+    TEST_SPECIFIC(Modular<float>, F75, 75);
+    TEST_SPECIFIC(Modular<double>, D75, 75);
+    TEST_SPECIFIC(Modular<Integer>, I75, 75);
+    TEST_SPECIFIC(Modular<RecInt::ruint128>, RU75, 75);
+    TEST_SPECIFIC(Modular<RecInt::rint128>, R75, 75);
+    
+    TEST_SPECIFIC(ModularBalanced<int32_t>, BZ75, 75);
+    TEST_SPECIFIC(ModularBalanced<int64_t>, BLL75, 75);
+    TEST_SPECIFIC(ModularBalanced<float>, BF75, 75);
+    TEST_SPECIFIC(ModularBalanced<double>, BD75, 75);
+    TEST_SPECIFIC(Montgomery<int32_t>, MZ75, 75);
+    TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU75, 75);
 
-    // modulo 75 over 8 bits
-    Modular<int8_t> C75(75); JETESTE(C75,seed);
-    Modular<uint8_t> UC75(75); JETESTE(UC75,seed);
+#define TEST_POLYNOMIAL(BaseRing, Name, BaseRingName)		\
+    Poly1Dom<BaseRing, Dense> Name(BaseRingName, "X");		\
+    JEPOLTESTE(Name, seed);
 
-    // modulo 75 over 16 bits
-    Modular<int16_t> S75(75); JETESTE(S75,seed);
-    Modular<uint16_t> US75(75); JETESTE(US75,seed);
+    TEST_POLYNOMIAL(Modular<int8_t>, PC75, C75);
+    TEST_POLYNOMIAL(Modular<int16_t>, PS75, S75);
+    TEST_POLYNOMIAL(Modular<int32_t>, PZ75, Z75);
+    TEST_POLYNOMIAL(Modular<int64_t>, PLL75, LL75);
+    TEST_POLYNOMIAL(Modular<uint8_t>, PUC75, UC75);
+    TEST_POLYNOMIAL(Modular<uint16_t>, PUS75, US75);
+    TEST_POLYNOMIAL(Modular<uint32_t>, PUZ75, UZ75);
+    TEST_POLYNOMIAL(Modular<uint64_t>, PULL75, ULL75);
+    TEST_POLYNOMIAL(ModularCUS, PCUS75, CUS75);
+    TEST_POLYNOMIAL(ModularSUZ, PSUZ75, SUZ75);
+    TEST_POLYNOMIAL(ModularZULL, PZULL75, ZULL75);
+    TEST_POLYNOMIAL(ModularUCUS, PUCUS75, UCUS75);
+    TEST_POLYNOMIAL(ModularUSUZ, PUSUZ75, USUZ75);
+    TEST_POLYNOMIAL(ModularUZULL, PUZULL75, UZULL75);
+    //TEST_POLYNOMIAL(ModularFD, PFD75, FD75);
+    TEST_POLYNOMIAL(Modular<float>, PF75, F75);
+    TEST_POLYNOMIAL(Modular<double>, PD75, D75);
+    TEST_POLYNOMIAL(Modular<Integer>, PI75, I75);
+    TEST_POLYNOMIAL(Modular<RecInt::ruint128>, PRU75, RU75);
+    
+    TEST_POLYNOMIAL(ModularBalanced<int32_t>, MBZ75, BZ75);
+    TEST_POLYNOMIAL(ModularBalanced<int64_t>, MBLL75, BLL75);
+    TEST_POLYNOMIAL(ModularBalanced<float>, MBF75, BF75);
+    TEST_POLYNOMIAL(ModularBalanced<double>, MBD75, BD75);
+    TEST_POLYNOMIAL(Montgomery<int32_t>, PMZ75, MZ75);
+    // @bug TEST_POLYNOMIAL(Montgomery<RecInt::ruint128>, PMRU75, MRU75);
+    
+    TEST_POLYNOMIAL(decltype(PI75), PPI75, PI75);
+    TEST_POLYNOMIAL(decltype(PPI75), PPPI75, PPI75);
 
-    // modulo 75 over 32 bits
-    Modular<int32_t> Z75(75); JETESTE(Z75,seed);
-    Modular<uint32_t> UZ75(75); JETESTE(UZ75,seed);
+    //--------------------------------//
+    //----- Modulo maximal prime -----//
 
-    // modulo 75 over 64 bits
-    Modular<int64_t> LL75(75); JETESTE(LL75,seed);
-    Modular<uint64_t> ULL75(75); JETESTE(ULL75,seed);
-
-    // modulo 75 fully tabulated
-    // Not prime Modular<Log16> L75(75); JETESTE(L75,seed);
-
-    // modulo 75 over arbitrary size
-    Modular<Integer> IntZ75(75); JETESTE(IntZ75,seed);
-
-    // modulo 75 over 128 bits
-    Modular<RecInt::ruint128> UR75(75); JETESTE(UR75,seed);
-    Montgomery<RecInt::ruint128> UM75(75); JETESTE(UM75,seed);
-
-    // Polynomial
-    Poly1Dom< Modular<int8_t>, Dense > CP75(C75, "X"); JEPOLTESTE(CP75,seed);
-    Poly1Dom< Modular<uint8_t>, Dense > UCP75(UC75, "X"); JEPOLTESTE(UCP75,seed);
-    Poly1Dom< Modular<int16_t>, Dense > SP75(S75, "X"); JEPOLTESTE(SP75,seed);
-    Poly1Dom< Modular<uint16_t>, Dense > USP75(US75, "X"); JEPOLTESTE(USP75,seed);
-    Poly1Dom< Modular<int32_t>, Dense > ZP75(Z75, "X"); JEPOLTESTE(ZP75,seed);
-    Poly1Dom< Modular<uint32_t>, Dense > UZP75(UZ75, "X"); JEPOLTESTE(UZP75,seed);
-    Poly1Dom< Modular<int64_t>, Dense > LLP75(LL75, "X"); JEPOLTESTE(LLP75,seed);
-    Poly1Dom< Modular<uint64_t>, Dense > ULLP75(ULL75, "X"); JEPOLTESTE(ULLP75,seed);
-    Poly1Dom< Modular<Integer>, Dense > IntZP75(IntZ75, "X"); JEPOLTESTE(IntZP75,seed);
-    Poly1Dom< Modular<RecInt::ruint128>, Dense > URP75(UR75, "X"); JEPOLTESTE(URP75,seed);
-
-    // Inception
-    Poly1Dom< Poly1Dom< Modular<Integer>, Dense >, Dense> IntZPP75(IntZP75, "Y");
-    JEPOLTESTE(IntZPP75,seed);
-
-    Poly1Dom< Poly1Dom< Poly1Dom< Modular<Integer>, Dense >, Dense>, Dense > IntZPPP75(IntZPP75, "Z");
-    JEPOLTESTE(IntZPPP75,seed);
+#define TEST_LAST(Field, Name)		\
+    Field Name(Field::getMaxModulus());	\
+    JETESTE(Name, seed);
+    
+    TEST_LAST(Modular<int8_t>, Cmax);
+    TEST_LAST(Modular<int16_t>, Smax);
+    TEST_LAST(Modular<int32_t>, Zmax);
+    TEST_LAST(Modular<int64_t>, LLmax);
+    TEST_LAST(Modular<uint8_t>, UCmax);
+    TEST_LAST(Modular<uint16_t>, USmax);
+    TEST_LAST(Modular<uint32_t>, UZmax);
+    TEST_LAST(Modular<uint64_t>, ULLmax);
+    TEST_LAST(ModularCUS, CUSmax);
+    TEST_LAST(ModularSUZ, SUZmax);
+    TEST_LAST(ModularZULL, ZULLmax);
+    TEST_LAST(ModularUCUS, UCUSmax);
+    TEST_LAST(ModularUSUZ, USUZmax);
+    TEST_LAST(ModularUZULL, UZULLmax);
+    TEST_LAST(Modular<float>, Fmax);
+    TEST_LAST(Modular<double>, Dmax);
+    //TEST_LAST(ModularFD, FDmax);
+    TEST_LAST(Modular<RecInt::ruint128>, RUmax);
+    
+    TEST_LAST(ModularBalanced<int32_t>, BZmax);
+    TEST_LAST(ModularBalanced<int64_t>, BLLmax);
+    TEST_LAST(ModularBalanced<float>, BFmax);
+    TEST_LAST(ModularBalanced<double>, BDmax);
+    
+    TEST_LAST(Montgomery<int32_t>, MZmax);
+    TEST_LAST(Montgomery<RecInt::ruint128>, MRUmax);
 
     return 0;
 }

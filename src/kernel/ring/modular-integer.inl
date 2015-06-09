@@ -44,453 +44,190 @@
 #define __GIVARO_ZPZInteger_N_NEGIN(r,p) { if (! isZero(r)) Integer::sub(r,p,r); }
 
 namespace Givaro {
-
-inline Modular<Integer>::Residu_t Modular<Integer>::residu( ) const
-{ return _p; }
-
-
-
- // ------------------------- Miscellaneous functions
-
-inline int Modular<Integer>::isZero(const Rep& a) const
-{ return ::Givaro::isZero(a); }
-
-inline int Modular<Integer>::isOne(const Rep& a) const
-{ return ::Givaro::isOne(a); }
-
-inline int Modular<Integer>::isMOne(const Rep& a) const
-{ return ::Givaro::isMOne(a); }
-
-
-
-inline size_t Modular<Integer>::length(const Rep& a) const
-{ return ::Givaro::length(a);}
-
-
-
- // ------------------------- Arithmetic functions
-
-
-
-
-inline Modular<Integer>::Rep& Modular<Integer>::mul (Rep& r, const Rep& a, const Rep& b) const
-{
-    __GIVARO_ZPZInteger_N_MUL(r,_p,a,b); return r;
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::sub (Rep& r, const Rep& a, const Rep& b) const
-{
-  __GIVARO_ZPZInteger_N_SUB(r,_p,a,b); return r;
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::add (Rep& r, const Rep& a, const Rep& b) const
-{
-    __GIVARO_ZPZInteger_N_ADD(r,_p,a,b); return r;
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::neg (Rep& r, const Rep& a) const
-{
-    __GIVARO_ZPZInteger_N_NEG(r,_p,a); return r;
-
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::negin (Rep& r) const
-{
-  __GIVARO_ZPZInteger_N_NEGIN(r,_p);
-  return r;
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::inv (Rep& r, const Rep& a) const
-{
-//  Rep d, v;
-//  d = gcd(a, _p, r, v);
-//  if (d == -1) negin(r);
-//  return r = (r<0)?r + _p:r;
-// JGD 03.06.2003
-	return ::Givaro::inv(r,a,_p);
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::div (Rep& r, const Rep& a, const Rep& b) const
-{
-  Rep ib;
-  inv(ib, b);
-  __GIVARO_ZPZInteger_N_MUL(r,_p,a,ib);
-  return r;
-}
-
- // -- inline array operations between Modular<Integer>::Rep
-inline void Modular<Integer>::mul (const size_t sz, Array r, constArray a, constArray b) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_MUL(r[i], _p,a[i], b[i]);
-  }
-}
-
-inline void Modular<Integer>::mul (const size_t sz, Array r, constArray a, const Rep& b) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_MUL(r[i], _p, a[i], b);
-  }
-}
-
-inline void Modular<Integer>::div (const size_t sz, Array r, constArray a, constArray b) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    div( r[i], a[i], b[i]);
-  }
-}
-
-inline void Modular<Integer>::div (const size_t sz, Array r, constArray a, const Rep& b) const
-{
-  Modular<Integer>::Rep ib;
-  inv(ib, b);
-  mul(sz, r, a, ib);
-}
-
-inline void Modular<Integer>::add (const size_t sz, Array r, constArray a, constArray b) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_ADD(r[i], _p, a[i], b[i]);
-  }
-}
-
-inline void Modular<Integer>::add (const size_t sz, Array r, constArray a, const Rep& b) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_ADD(r[i], _p, a[i], b);
-  }
-}
-
-inline void Modular<Integer>::sub (const size_t sz, Array r, constArray a, constArray b) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_SUB(r[i], _p, a[i], b[i]);
-  }
-}
-
-inline void Modular<Integer>::sub (const size_t sz, Array r, constArray a, const Rep& b) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_SUB(r[i], _p, a[i], b);
-  }
-}
-
-inline void Modular<Integer>::neg (const size_t sz, Array r, constArray a) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_NEG(r[i], _p, a[i]);
-  }
-}
-
-
-inline Modular<Integer>::Rep& Modular<Integer>::mulin (Rep& r, const Rep& a) const
-{
-  __GIVARO_ZPZInteger_N_MULIN(r,_p, a);
-  return r;
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::divin (Rep& r, const Rep& a) const
-{
-  Modular<Integer>::Rep ia;
-  inv(ia, a);
-  return mulin(r, ia);
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::addin (Rep& r, const Rep& a) const
-{
-  __GIVARO_ZPZInteger_N_ADDIN(r,_p, a);
-  return r;
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::subin (Rep& r, const Rep& a) const
-{
-  __GIVARO_ZPZInteger_N_SUBIN(r,_p, a);
-  return r;
-}
-
-
-inline Modular<Integer>::Rep& Modular<Integer>::invin (Rep& r) const
-{
-//  Rep d, u, v;
-//  d = gcd(r, _p, u, v);
-//  if (d == -1) negin(u);
-//  return r = (u<0)?u + _p:u;
-// JGD 03.06.2003
-   Rep t = r;
-   return ::Givaro::inv(r,t,_p);
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::axpy (Rep& r,
-						    const Rep& a, const Rep& b, const Rep& c) const
-{
-  __GIVARO_ZPZInteger_N_MULADD(r, _p, a, b, c);
-  return r;
-}
-
-inline Modular<Integer>::Rep&  Modular<Integer>::axpyin (Rep& r,
-						       const Rep& a, const Rep& b) const
-{
-//   Rep tmp = r;
-//   __GIVARO_ZPZInteger_N_MULADDIN(tmp, _p, a, b);
-//   return r = (Modular<Integer>::Rep)tmp;
-    __GIVARO_ZPZInteger_N_MULADDIN(r, _p, a, b);
-    return r;
-}
-
-
-inline void Modular<Integer>::axpy (const size_t sz, Array r,
-				   constArray a, constArray x, constArray y) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_MULADD(r[i], _p, a[i], x[i], y[i]);
-  }
-}
-
-inline void Modular<Integer>::axpyin (const size_t sz, Array r,
-				     constArray a, constArray x) const
-{
-  for ( size_t i=sz ; --i ; ) {
-//     Rep tmp = r[i];
-//     __GIVARO_ZPZInteger_N_MULADDIN(tmp, _p, a[i], x[i]);
-//     r[i] = (Modular<Integer>::Rep)tmp;
-    __GIVARO_ZPZInteger_N_MULADDIN(r[i], _p, a[i], x[i]);
-  }
-}
-
-inline Modular<Integer>::Rep&  Modular<Integer>::axmy (Rep& r,
-						     const Rep& a, const Rep& b, const Rep& c) const
-{
-  __GIVARO_ZPZInteger_N_MULSUB(r, _p, a, b, c);
-  return r;
-}
-
-// r = c - a*b
-inline Modular<Integer>::Rep&  Modular<Integer>::maxpy (Rep& r,
-						      const Rep& a, const Rep& b, const Rep& c) const
-{
-  Rep tmp = c;
-  __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a, b );
-  return r = (Modular<Integer>::Rep)tmp;
-}
-// r -= a*b
-inline Modular<Integer>::Rep&  Modular<Integer>::maxpyin (Rep& r,
-						       	const Rep& a, const Rep& b) const
-{
-  __GIVARO_ZPZInteger_N_SUBMULIN(r, _p, a, b );
-  return r;
-//   Rep tmp = r;
-//   __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a, b );
-//   return r = (Modular<Integer>::Rep)tmp;
-}
-// r = a*b - r
-inline Modular<Integer>::Rep&  Modular<Integer>::axmyin (Rep& r,
-						       const Rep& a, const Rep& b) const
-{
-    maxpyin(r,a,b);
-    return negin(r);
-}
-
-
-inline void Modular<Integer>::axmy (const size_t sz, Array r,
-				   constArray a, constArray x, constArray y) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    __GIVARO_ZPZInteger_N_MULSUB(r[i], _p, a[i], x[i], y[i]);
-  }
-}
-
-// r -= a*b
-inline void Modular<Integer>::maxpyin (const size_t sz, Array r,
-				     constArray a, constArray x) const
-{
-  for ( size_t i=sz ; --i ; ) {
-//     Rep tmp = r[i];
-//     __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a[i], x[i]);
-//     r[i] = (Modular<Integer>::Rep)tmp;
-    __GIVARO_ZPZInteger_N_SUBMULIN(r[i], _p, a[i], x[i]);
-  }
-}
-
-
-// ---------
-// -- misc operations
-// ---------
-
-
-inline  Modular<Integer>::Rep&  Modular<Integer>::init ( Rep& r, const double a ) const
-{
-  int sign; double ua;
-  if (a < 0.0) { sign =-1; ua = -a;}
-  else { ua = a; sign =1; }
-  r = Integer(ua);
-  if (r >=_p) Integer::modin(r,_p) ;
-  if (!isZero(r) && (sign == -1)) Integer::sub(r,_p,r) ;
-  return r;
-}
-
-inline  Modular<Integer>::Rep&  Modular<Integer>::init ( Rep& r, const float a ) const {
-    return init(r, (double)a);
-}
-
-
-
-inline  Modular<Integer>::Rep&  Modular<Integer>::init ( Rep& r, const unsigned long a ) const
-{
-    r = Integer(a);
-    if ( r >= _p ) Integer::modin(r,_p);
-    return r ;
-}
-
-inline  Modular<Integer>::Rep&  Modular<Integer>::init ( Rep& r, const long a ) const
-{
-  int sign;
-  if (a <0) { sign =-1; r = Integer(-a);}
-  else { r = Integer(a); sign =1; }
-  if (r >=_p) Integer::modin(r,_p);
-  if (!isZero(r) && (sign ==-1)) Integer::sub(r,_p,r);
-  return r;
-}
-
-inline  Modular<Integer>::Rep&  Modular<Integer>::init ( Rep& r, const Integer& a ) const
-{
-  int sign;
-  if (a <0) { sign =-1; r = Integer(-a);}
-  else { r = Integer(a); sign =1; }
-  if (r >=_p) Integer::modin(r,_p);
-  if (!isZero(r) && (sign ==-1)) Integer::sub(r, _p, r);
-  return r;
-}
-
-inline Modular<Integer>::Rep& Modular<Integer>::init( Rep& a, const int i) const { return init(a,(long)i); }
-
-inline Modular<Integer>::Rep& Modular<Integer>::init( Rep& a, const unsigned int i) const { return init(a,(unsigned long)i); }
-
-
-inline void Modular<Integer>::assign
-  ( const size_t sz, Array r, constArray a ) const
-{
-  for ( size_t i=sz ; --i ; ) {
-    if (a[i] <Modular<Integer>::zero) {
-	    Integer::add(r[i], a[i], _p);
-       if (r[i] <Modular<Integer>::zero) Integer::modin(r[i], _p);
+    
+    // ------------------------- Arithmetic functions
+
+    inline Modular<Integer>::Element&
+    Modular<Integer>::mul (Element& r, const Element& a, const Element& b) const
+    {
+        __GIVARO_ZPZInteger_N_MUL(r,_p,a,b); return r;
     }
-    else if (a[i] >_p) {
-	    Integer::sub(r[i],a[i],_p);
-       if (r[i] >=_p) Integer::modin(r[i],_p);
+
+    inline Modular<Integer>::Element&
+    Modular<Integer>::sub (Element& r, const Element& a, const Element& b) const
+    {
+        __GIVARO_ZPZInteger_N_SUB(r,_p,a,b); return r;
     }
-    else r[i] = a[i];
-  }
-}
 
-inline  Modular<Integer>::Rep&  Modular<Integer>::assign ( Rep& r, const long a ) const
-{
-  return r = Rep(a);
-}
+    inline Modular<Integer>::Element&
+    Modular<Integer>::add (Element& r, const Element& a, const Element& b) const
+    {
+        __GIVARO_ZPZInteger_N_ADD(r,_p,a,b); return r;
+    }
 
-inline  Modular<Integer>::Rep&  Modular<Integer>::assign ( Rep& r, const short a ) const
-{ return Modular<Integer>::assign( r, (long)a); }
+    inline Modular<Integer>::Element&
+    Modular<Integer>::neg (Element& r, const Element& a) const
+    {
+        __GIVARO_ZPZInteger_N_NEG(r,_p,a); return r;
 
-inline  Modular<Integer>::Rep&  Modular<Integer>::assign ( Rep& r, const unsigned long a ) const
-{ return r = Rep(a); }
+    }
 
-inline  Modular<Integer>::Rep&  Modular<Integer>::assign
-  ( Rep& r, const unsigned short a ) const
-{ return r = Rep(a); }
+    inline Modular<Integer>::Element&
+    Modular<Integer>::negin (Element& r) const
+    {
+        __GIVARO_ZPZInteger_N_NEGIN(r,_p);
+        return r;
+    }
 
-inline  Modular<Integer>::Rep&  Modular<Integer>::assign
-  ( Rep& r, const Rep& a ) const
-{ return r=a; }
+    inline Modular<Integer>::Element&
+    Modular<Integer>::inv (Element& r, const Element& a) const
+    {
+        return ::Givaro::inv(r,a,_p);
+    }
 
+    inline Modular<Integer>::Element&
+    Modular<Integer>::div (Element& r, const Element& a, const Element& b) const
+    {
+        Element ib;
+        inv(ib, b);
+        __GIVARO_ZPZInteger_N_MUL(r,_p,a,ib);
+        return r;
+    }
 
-inline void Modular<Integer>::init
-  ( const size_t sz, Array r, constArray a ) const
-{
-  for ( size_t i=sz ; --i ; )
-       r[i] = a[i];
-}
+    inline Modular<Integer>::Element&
+    Modular<Integer>::mulin (Element& r, const Element& a) const
+    {
+        __GIVARO_ZPZInteger_N_MULIN(r,_p, a);
+        return r;
+    }
 
-inline Modular<Integer>::Rep& Modular<Integer>::init ( Rep& r ) const
-{ return r = zero; }
+    inline Modular<Integer>::Element&
+    Modular<Integer>::divin (Element& r, const Element& a) const
+    {
+        Modular<Integer>::Element ia;
+        inv(ia, a);
+        return mulin(r, ia);
+    }
 
-  //  a -> r: int32_t to double
-inline void
-  Modular<Integer>::i2d ( const size_t sz, double* r, constArray a ) const
-{
-  for (size_t i=0; i<sz; ++i) r[i] = a[i];
-}
+    inline Modular<Integer>::Element&
+    Modular<Integer>::addin (Element& r, const Element& a) const
+    {
+        __GIVARO_ZPZInteger_N_ADDIN(r,_p, a);
+        return r;
+    }
 
-  //  a -> r: double to int32_t
-inline void
-  Modular<Integer>::d2i ( const size_t sz, Array r, const double* a ) const
-{
-  union d_2_l {
-    double d;
-    int32_t r[2];
-  };
-//  static const double offset = 4503599627370496.0; // 2^52
-  double offset = 4503599627370496.0; // 2^52
-  for (size_t i=0; i<sz; ++i)
-  {
-       d_2_l tmp;
-      // - normalization: put fractional part at the end of the representation
-      tmp.d = a[i] + offset;
-      r[i] = tmp.r[1];
-      if (r[i] <_p) Integer::modin(r[i],_p);
-  }
-  //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]-_p);
-  //    r[i] = (r[i] <_p ? r[i] : r[i]%_p);
-  //    r[i] = (tmp.r[1] <_p ? tmp.r[1] : tmp.r[1]%_p);
-}
+    inline Modular<Integer>::Element&
+    Modular<Integer>::subin (Element& r, const Element& a) const
+    {
+        __GIVARO_ZPZInteger_N_SUBIN(r,_p, a);
+        return r;
+    }
 
+    inline Modular<Integer>::Element&
+    Modular<Integer>::invin (Element& r) const
+    {
+        Element t = r;
+        return ::Givaro::inv(r,t,_p);
+    }
 
+    inline Modular<Integer>::Element&
+    Modular<Integer>::axpy (Element& r, const Element& a, const Element& b, const Element& c) const
+    {
+        __GIVARO_ZPZInteger_N_MULADD(r, _p, a, b, c);
+        return r;
+    }
 
- // -- Input: (z, <_p>)
-inline std::istream& Modular<Integer>::read (std::istream& s)
-{
-  char ch;
-  s >> std::ws >> ch;
-  if (ch != '(')
-//    GivError::throw_error( GivBadFormat("Modular<Integer>::read: syntax error: no '('"));
-    std::cerr << "GivBadFormat(Modular<Integer>::read: syntax error: no '('))" << std::endl;
+    inline Modular<Integer>::Element&
+    Modular<Integer>::axpyin (Element& r, const Element& a, const Element& b) const
+    {
+        __GIVARO_ZPZInteger_N_MULADDIN(r, _p, a, b);
+        return r;
+    }
 
-  s >> std::ws >> ch;
-  if (ch != 'z')
-//    GivError::throw_error( GivBadFormat("Modular<Integer>::read: bad domain object"));
-    std::cerr << "GivBadFormat(Modular<Integer>::read: bad domain object))" << std::endl;
+    inline Modular<Integer>::Element&
+    Modular<Integer>::axmy (Element& r, const Element& a, const Element& b, const Element& c) const
+    {
+        __GIVARO_ZPZInteger_N_MULSUB(r, _p, a, b, c);
+        return r;
+    }
 
-  s >> std::ws >> ch;
-  if (ch != ',')
-//    GivError::throw_error( GivBadFormat("Modular<Integer>::read: syntax error: no ','"));
-    std::cerr << "GivBadFormat(Modular<Integer>::read: syntax error: no ',')) " << std::endl;
+    // r = c - a*b
+    inline Modular<Integer>::Element&
+    Modular<Integer>::maxpy (Element& r, const Element& a, const Element& b, const Element& c) const
+    {
+        Element tmp = c;
+        __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a, b );
+        return r = (Modular<Integer>::Element)tmp;
+    }
+    // r -= a*b
+    inline Modular<Integer>::Element&
+    Modular<Integer>::maxpyin (Element& r, const Element& a, const Element& b) const
+    {
+        __GIVARO_ZPZInteger_N_SUBMULIN(r, _p, a, b );
+        return r;
+    }
+    // r = a*b - r
+    inline Modular<Integer>::Element&
+    Modular<Integer>::axmyin (Element& r, const Element& a, const Element& b) const
+    {
+        maxpyin(r,a,b);
+        return negin(r);
+    }
 
-  s >> std::ws >> _p;
+    // --------------------
+    // ----- Initialisation
+    
+    inline typename Modular<Integer>::Element&
+    Modular<Integer>::init(Element& x) const
+    {
+        return x = zero;
+    }
 
-  s >> std::ws >> ch;
-  if (ch != ')')
-//    GivError::throw_error( GivBadFormat("Modular<Integer>::read: syntax error: no ')'"));
-    std::cerr << "GivBadFormat(Modular<Integer>::read: syntax error: no ')')) " << std::endl;
+    inline typename Modular<Integer>::Element&
+    Modular<Integer>::assign ( Element& r, const Element& a ) const
+    {
+	return r = a;
+    }
 
-  return s;
-}
+    // ------------
+    // ----- Reduce
 
-inline std::ostream& Modular<Integer>::write (std::ostream& s ) const
-{
-  return s << "Modular<Integer> modulo " << residu();
-}
+    inline typename Modular<Integer>::Element&
+    Modular<Integer>::reduce(Element& r, const Element& a) const
+    {
+	r = a % static_cast<Element>(_p);
+	if (r < 0) r = static_cast<Element>(r + _p);
+	return r;
+    }
 
-inline std::istream& Modular<Integer>::read (std::istream& s, Rep& a) const
-{
-  s >> a;
-  init(a, a);
-  return s;
-}
+    inline typename Modular<Integer>::Element&
+    Modular<Integer>::reduce(Element& r) const
+    {
+	r %= static_cast<Element>(_p);
+	if (r < 0) r = static_cast<Element>(r + _p);
+	return r;
+    }
 
-inline std::ostream& Modular<Integer>::write (std::ostream& s, const Rep& a) const
-{
-  return s << a;
-}
+    //----- IO
+    
+    inline std::ostream& Modular<Integer>::write (std::ostream& s ) const
+    {
+        return s << "Modular<Integer> modulo " << residu();
+    }
+
+    inline std::istream& Modular<Integer>::read (std::istream& s, Element& a) const
+    {
+        s >> a;
+        init(a, a);
+        return s;
+    }
+
+    inline std::ostream& Modular<Integer>::write (std::ostream& s, const Element& a) const
+    {
+        return s << a;
+    }
 
 } // namespace Givaro
 
 #endif // __GIVARO_zpz_int_INL
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+

@@ -112,13 +112,13 @@ namespace Givaro {
         Element& init (Element& x, const uint64_t y) const;
         Element& init (Element& x, const Integer& y) const;
         template<typename T> Element& init(Element& r, const T& a) const
-        { r = Caster<Element>(a); return reduce(r); }
+        { return reduce(Caster<Element,T>(r,a)); }
 
         Element& assign (Element& x, const Element& y) const;
     
         // ----- Convert and reduce
         template<typename T> T& convert(T& r, const Element& a) const
-        { return r = static_cast<T>(a); }
+        { return Caster<T,Element>(r,a); }
 
         Element& reduce (Element& x, const Element& y) const;
         Element& reduce (Element& x) const;

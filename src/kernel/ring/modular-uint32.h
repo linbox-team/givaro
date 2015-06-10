@@ -104,9 +104,8 @@ namespace Givaro
         Element& init (Element& x, const Integer& a) const;
         template<typename T> Element& init(Element& r, const T& a) const
         {
-            reduce(r, Caster<Element>((a < 0)? -a : a));
-	    if (a < 0) negin(r);
-            return r;
+            reduce( Caster<Element,T>(r, (a < 0)? -a : a) );
+            return (a<0 ? negin(r) : r) ;
         }
 
         Element& assign (Element& x, const Element& y) const
@@ -114,12 +113,12 @@ namespace Givaro
     
         // ----- Convert and reduce
         template<typename T> T& convert(T& r, const Element& a) const
-        { return r = Caster<T>(a); }
+        { return Caster<T,Element>(r,a); }
 
         Element& reduce (Element& x, const Element& y) const
-        { x = y % _p; return x; }
+        { return x = y % _p;}
         Element& reduce (Element& x) const
-        { x %= _p; return x; }
+        { return x %= _p; }
         
         // ----- Classic arithmetic
         Element& mul(Element& r, const Element& a, const Element& b) const override;

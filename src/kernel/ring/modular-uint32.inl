@@ -197,32 +197,28 @@ namespace Givaro
     template<typename COMP> inline typename Modular<uint32_t, COMP>::Element&
     Modular<uint32_t, COMP>::init (Element& r, const double a) const
     {
-	r = static_cast<Element>(std::fmod((a < 0.0)? -a : a, double(_p)));
-        if (a < 0.0) negin(r);
-	return r;
+        Caster<Element,double>(r, std::fmod((a < 0.0)? -a : a, double(_p)));
+        return (a < 0.0 ? negin(r) : r);
     }
 
     template<typename COMP> inline typename Modular<uint32_t, COMP>::Element&
     Modular<uint32_t, COMP>::init (Element& r, const int64_t a) const
     {
-	r = static_cast<Element>(std::abs(a) % int64_t(_p));
-        if (a < 0) negin(r);
-	return r;
+        Caster<Element,int64_t>(r,std::abs(a) % int64_t(_p));
+        return (a < 0 ? negin(r) : r);
     }
 
     template<typename COMP> inline typename Modular<uint32_t, COMP>::Element&
     Modular<uint32_t, COMP>::init (Element& r, const uint64_t a) const
     {
-	r = static_cast<Element>(a % uint64_t(_p));
-	return r;
+        return Caster<Element,uint64_t>(r, a % uint64_t(_p));
     }
 
     template<typename COMP> inline typename Modular<uint32_t, COMP>::Element&
     Modular<uint32_t, COMP>::init (Element& r, const Integer& a) const
     {
-	r = static_cast<Element>(((a < 0)? -a : a) % _p);
-        if (a < 0) negin(r);
-	return r;
+        Caster<Element,Integer>(r,((a < 0)? -a : a) % _p);
+        return (a < 0 ? negin(r) : r);
     }
 
     //----- IO

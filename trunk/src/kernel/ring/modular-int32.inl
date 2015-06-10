@@ -191,40 +191,43 @@ namespace Givaro {
     template<typename COMP> inline typename Modular<int32_t, COMP>::Element&
     Modular<int32_t, COMP>::init (Element& x, const float y) const
     {
-        x = static_cast<Element>(std::fmod(y, float(_p)));
-        if (x < 0.f) x = static_cast<Element>(x + _p);
-        return x;
+        Caster<Element,float>(x, std::fmod(y, float(_p)));
+        return (x < 0.f ? Caster(x, (x+_p) ) : x);
+//         if (x < 0.f) x = static_cast<Element>(x + _p);
+//         return x;
     }
     
     template<typename COMP> inline typename Modular<int32_t, COMP>::Element&
     Modular<int32_t, COMP>::init (Element& x, const double y) const
     {
-        x = static_cast<Element>(std::fmod(y, double(_p)));
-        if (x < 0.0) x = static_cast<Element>(x + _p);
-        return x;
+        Caster<Element,double>(x,std::fmod(y, double(_p)));
+        return (x < 0.0 ? Caster(x, (x+_p) ) : x);
+//         if (x < 0.0) x = static_cast<Element>(x + _p);
+//         return x;
     }
     
     template<typename COMP> inline typename Modular<int32_t, COMP>::Element&
     Modular<int32_t, COMP>::init (Element& x, const int64_t y) const
     {
-        x = static_cast<Element>(y % int64_t(_p));
-        if (x < 0) x = static_cast<Element>(x + _p);
-        return x;
+        Caster<Element,int64_t>(x,y % int64_t(_p));
+        return (x < 0 ? Caster(x, (x+_p) ) : x);
+//         if (x < 0) x = static_cast<Element>(x + _p);
+//         return x;
     }
     
     template<typename COMP> inline typename Modular<int32_t, COMP>::Element&
     Modular<int32_t, COMP>::init (Element& x, const uint64_t y) const
     {
-        x = static_cast<Element>(y % uint64_t(_p));
-        return x;
+        return Caster<Element,uint64_t>(x,y % uint64_t(_p));
     }
     
     template<typename COMP> inline typename Modular<int32_t, COMP>::Element&
     Modular<int32_t, COMP>::init (Element& x, const Integer& y) const
     {
-        x = static_cast<Element>(y % _p);
-        if (x < 0) x = static_cast<Element>(x + _p);
-        return x;
+        Caster<Element,Residu_t>(x, y % _p);
+        return (x < 0 ? Caster(x, (x+_p) ) : x);
+//         if (x < 0) x = static_cast<Element>(x + _p);
+//         return x;
     }
 
     template<typename COMP> inline  typename Modular<int32_t, COMP>::Element&
@@ -240,16 +243,14 @@ namespace Givaro {
     Modular<int32_t, COMP>::reduce(Element& r, const Element& a) const
     {
         r = a % static_cast<Element>(_p);
-        if (r < 0) r = static_cast<Element>(r + _p);
-        return r;
+        return (r < 0 ? r = static_cast<Element>(r + _p) : r);
     }
 
     template<typename COMP> inline typename Modular<int32_t, COMP>::Element&
     Modular<int32_t, COMP>::reduce(Element& r) const
     {
         r %= static_cast<Element>(_p);
-        if (r < 0) r = static_cast<Element>(r + _p);
-        return r;
+        return (r < 0 ? r = static_cast<Element>(r + _p) : r);
     }
         
     // --------

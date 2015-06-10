@@ -55,6 +55,15 @@ namespace Givaro
             assert(_p >= getMinModulus());
         }
 
+        Modular(const Integer& p, const Integer& e=Integer::one)
+            : zero(0)
+            , one(1)
+            , mOne( Caster<Residu_t>(p-1) )
+            , _p( Caster<Residu_t>(p) )
+        {
+            assert(_p >= getMinModulus());
+        }
+
         Modular(const Self_t& F)
             : mOne(F.mOne), _p(F._p) {}
 

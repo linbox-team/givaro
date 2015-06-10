@@ -1480,6 +1480,11 @@ namespace Givaro {
 		}
 
 		//! get representation (constant)
+		mpz_srcptr get_mpz() const 
+		{
+			return (mpz_srcptr)&gmp_rep;
+		}
+
 		mpz_srcptr get_mpz_const() const
 		{
 			return (mpz_srcptr)&gmp_rep;
@@ -1776,6 +1781,28 @@ namespace Givaro {
 		// return (a<0)?-1:1 ;
 	}
 
+    template <size_t K>
+    Integer& Caster(Integer& t, const RecInt::ruint<K>& n) {
+        RecInt::ruint_to_mpz_t(t.get_mpz(), n);
+        return t;
+    }
+    
+    template <size_t K>
+    Integer& Caster(Integer& t, const RecInt::rint<K>& n) {
+        RecInt::rint_to_mpz_t(t.get_mpz(), n); 
+        return t;
+    }
+    
+    template <size_t K>
+    RecInt::ruint<K>& Caster(RecInt::ruint<K>& t, const Integer&  n) {
+        return RecInt::mpz_t_to_ruint(t, n.get_mpz_const());
+    }
+    
+    template <size_t K>
+    RecInt::rint<K>& Caster(RecInt::rint<K>& t, const Integer& n) {
+        return RecInt::mpz_t_to_rint(t, n.get_mpz_const());
+    }
+    
 
 } // Givaro
 

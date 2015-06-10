@@ -64,8 +64,8 @@ namespace Givaro
 	inline Element size() const { return _p; }
 	inline Element characteristic() const { return _p; }
 	inline Element cardinality() const { return _p; }
-	template<class T> inline T& characteristic(T& p) const { return p = _p; }
-	template<class T> inline T& cardinality(T& p) const { return p = _p; }
+	template<class T> inline T& characteristic(T& p) const { return Caster(p,_p); }
+	template<class T> inline T& cardinality(T& p) const { return Caster(p,_p); }
 	
 	static inline Element getMaxModulus() { return 134217727; } // 2^12.5
 	static inline Element getMinModulus() { return 3.f; }

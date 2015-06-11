@@ -46,6 +46,8 @@ namespace Givaro
 	const Element mOne;
 
         // ----- Constructors
+        ~Modular() noexcept {};
+        
         Modular()
             : zero(static_cast<Element>(0))
             , one(static_cast<Element>(1))

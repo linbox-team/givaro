@@ -9,17 +9,13 @@
 // $Id: givzpz.h,v 1.8 2011-02-02 16:23:56 bboyer Exp $
 // ==========================================================================
 
-/*!@file givzpz.h
- * @ingroup zpz
+/*!@file ring/modular.h
  * @brief   Family of arithmetics over Zpz (\f$\mathbf{Z}/p\mathbf{Z}\f$).
  */
 
 #ifndef __GIVARO_modular_H
 #define __GIVARO_modular_H
 
-// ==========================================================================
-// --
-// ==========================================================================
 #include <givaro/givconfig.h>
 
 #include "givaro/modular-int8.h"
@@ -33,9 +29,9 @@
 #include "givaro/modular-integer.h"
 #include "givaro/modular-inttype.h"
 #include "givaro/modular-log16.h"
-#include "givaro/modular-ruint.h"
 #include "givaro/modular-int64.h"
 #include "givaro/modular-uint64.h"
+#include "givaro/modular-ruint.h"
 
-#endif // __GIVARO_modular_H
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+#endif
+

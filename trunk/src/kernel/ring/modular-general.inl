@@ -11,7 +11,7 @@
 // Forward declarations for Givaro::Modular and associated functions
 
 #pragma once
-
+#include <cmath>
 namespace Givaro
 {
     template<typename Storage_t>

@@ -26,7 +26,7 @@ namespace Givaro
 
 	/** \brief Unparameterized field adapter.
 	 * \ingroup field
-	 * \defgroup UnparametricRing UnparametricRing
+	 * \defgroup ZRing ZRing
 	 *
 	 * A field having an interface similar to that of floats is adapted to LinBox.
 	 *
@@ -48,8 +48,8 @@ namespace Givaro
 		virtual ~UnparametricOperations () {}
 
 		/* Assignment operator.
-		 * Assigns UnparametricRing object F to field.
-		 * @param  F UnparametricRing object.
+		 * Assigns ZRing object F to field.
+		 * @param  F ZRing object.
 		 */
 		// I believe this should be virtual -bds
 		///
@@ -239,7 +239,7 @@ namespace Givaro
 		 */
 		std::ostream &write (std::ostream &os) const
 		{
-			return os << "UnparametricRing<" << sizeof(Element) <<',' << typeid(Element).name() << ')';
+			return os << "ZRing<" << sizeof(Element) <<',' << typeid(Element).name() << ')';
 		}
 
 		std::ostream &write (std::ostream &os, std::string F) const

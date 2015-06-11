@@ -243,8 +243,8 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(ModularUSUZ, USUZ4, 4);
     TEST_SPECIFIC(ModularUZULL, UZULL4, 4);
     //TEST_SPECIFIC(ModularFD, FD4, 4);
-    //TEST_SPECIFIC(Modular<float>, F4, 4);
-    //TEST_SPECIFIC(Modular<double>, D4, 4);
+    TEST_SPECIFIC(Modular<float>, F4, 4);
+    TEST_SPECIFIC(Modular<double>, D4, 4);
     TEST_SPECIFIC(Modular<Integer>, I4, 4);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU4, 4);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R4, 4);
@@ -309,7 +309,7 @@ int main(int argc, char ** argv)
     TEST_POLYNOMIAL(ModularBalanced<float>, MBF75, BF75);
     TEST_POLYNOMIAL(ModularBalanced<double>, MBD75, BD75);
     TEST_POLYNOMIAL(Montgomery<int32_t>, PMZ75, MZ75);
-    // @bug TEST_POLYNOMIAL(Montgomery<RecInt::ruint128>, PMRU75, MRU75);
+    // @bug Convert to double inside? TEST_POLYNOMIAL(Montgomery<RecInt::ruint128>, PMRU75, MRU75);
     
     TEST_POLYNOMIAL(decltype(PI75), PPI75, PI75);
     TEST_POLYNOMIAL(decltype(PPI75), PPPI75, PPI75);

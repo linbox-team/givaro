@@ -33,12 +33,12 @@ namespace Givaro {
     inline Montgomery<int32_t>::Element& Montgomery<int32_t>::redc(Element& r, const Element c) const
     {
         r = (Element)(c & MASK32);			/* c mod B */
-	r *= _nim;
-	r &= MASK32;
-	r *= _p;
-	r += c;
+        r *= _nim;
+        r &= MASK32;
+        r *= _p;
+        r += c;
         r >>= HALF_BITS32;
-	return (r>=_p?r-=_p:r);
+        return (r>=_p?r-=_p:r);
     }
 
     inline Montgomery<int32_t>::Element& Montgomery<int32_t>::redcs(Element& r, const Element c) const
@@ -239,6 +239,7 @@ namespace Givaro {
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::init (Element& r, const int64_t a) const
     {
+        
 	r = static_cast<Element>(std::abs(a) % int64_t(_p));
         if (a < 0) negin(r);
 	return redc(r, r * _B2p);
@@ -279,8 +280,11 @@ namespace Givaro {
     inline std::ostream&
     Montgomery<int32_t>::write (std::ostream& s, const Element& a) const
     {
+//         Element tmp;
+//         return s << redcs(tmp,a);
         Element tmp;
-        return s << redcs(tmp,a);
+        redcs(tmp,a);
+        return s << tmp;
     }
 
 } // namespace Givaro

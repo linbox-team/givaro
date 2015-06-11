@@ -30,30 +30,31 @@ void RNSsystem<RING,Domain>::RnsToMixedRadix
   // -- Size-1 steps
   modulo t2, t3, t4, tmp;
   _primes[0].assign(mixrad[0],residu[0]);
-//_primes[0].write(std::cout << "mixrad0 = ", mixrad[0]) << std::endl;
+// _primes[0].write(std::cerr << "mixrad0 = ", mixrad[0]) << std::endl;
   for (i=1; i < (int)Size; ++i)
   {  // - computes pp_i = r_0 + r_1*p_0 + ... + r_{i-1} \prod_{j<i-2} p_j [p_i]
      // Horner scheme
 
       _primes[i].init(tmp, _primes[i-1].convert(t4, mixrad[i-1]) );
-//_primes[i].write(std::cout << "mod " << _primes[i].characteristic() << "::  ", tmp) << std::endl;
+// _primes[i].write(std::cerr << "within ") << " --> ";
+// _primes[i].write(std::cerr << t4 << " mod " << _primes[i].characteristic() << "::  ", tmp) << std::endl;
      for (j= i-2; j>=0; --j) {
-//_primes[j].write(_primes[i].write(std::cout << "mod " << _primes[i].characteristic() << "::  ", tmp) << " * " << _primes[j].characteristic() << " + ", mixrad[j]) <<" =";
+// _primes[j].write(_primes[i].write(std::cerr << "mod " << _primes[i].characteristic() << "::  ", tmp) << " * " << _primes[j].characteristic() << " + ", mixrad[j]) <<" =";
 
        _primes[i].init(t3, _primes[j].convert(t4, mixrad[j]));
        _primes[i].init(t4, _primes[j].characteristic());
        _primes[i].axpy(t2, tmp, t4, t3);
        _primes[i].assign(tmp, t2);
-//_primes[i].write(std::cout << " ", tmp) << std::endl;
+// _primes[i].write(std::cerr << " ", tmp) << std::endl;
      }
-//_primes[i].write(std::cout << "\nmod" << _primes[i].characteristic() << ", sumprod = ", tmp) << std::endl;
+// _primes[i].write(std::cerr << "\nmod" << _primes[i].characteristic() << ", sumprod = ", tmp) << std::endl;
      // - m_i = (r_i - pp_i)*ck_i, ck is reciprocals
      _primes[i].sub(t2, residu[i], tmp);
      _primes[i].assign(tmp, t2);
-//_primes[i].write(std::cout << "mod " << _primes[i].characteristic() << ", sum - sumprod = ", tmp) << std::endl;
+// _primes[i].write(std::cerr << "mod " << _primes[i].characteristic() << ", sum - sumprod = ", tmp) << std::endl;
 
      _primes[i].mul(mixrad[i], tmp, _ck[i]);
-//_primes[i].write(std::cout << "mod " << _primes[i].characteristic() << ", mixrad = ", mixrad[i]) << std::endl;
+// _primes[i].write(std::cerr << "mod " << _primes[i].characteristic() << ", mixrad = ", mixrad[i]) << std::endl;
   }
 }
 

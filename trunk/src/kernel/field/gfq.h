@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <30 Sep 14 10:24:48 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <11 Jun 15 18:09:31 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -152,6 +152,9 @@ public:
 	{
 		return p=(unsigned long)_characteristic;
 	}
+
+    static inline Residu_t getMaxModulus() { return 65536u; }
+    static inline Residu_t getMinModulus() { return 2; }
 
 	UTT cardinality() const;
 	template<typename T> T& cardinality(T& p) const { return p = T(_q); }

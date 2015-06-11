@@ -66,16 +66,35 @@ namespace Givaro
             _nim((Residu_t)  -invext(_p, B32)),
             _dp( (double)    p)
         {
+//             std::cerr << "_p: " << _p << std::endl;
+//             std::cerr << "_Bp: " << _Bp << std::endl;
+//             std::cerr << "_B2p: " << _B2p << std::endl;
+//             std::cerr << "_B3p: " << _B3p << std::endl;
+//             std::cerr << "_nim: " << _nim << std::endl;
             const_cast<Element&>(one) = _Bp;
             const_cast<Element&>(mOne) = _p - one;
         }
 
-        Montgomery( const Montgomery<int32_t>& F)
+        Montgomery( const Self_t& F)
             : one(F.one), mOne(F.mOne)
             , _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p)
             , _nim(F._nim), _dp(F._dp)
         {}
 
+        Self_t& operator=(const Self_t& F)
+        {
+            _p = (F._p);
+            _Bp = (F._Bp);
+            _B2p = ( F._B2p);
+            _B3p = ( F._B3p);
+            _nim = (F._nim);
+            _dp = (F._dp);
+            F.assign(const_cast<Element&>(one),  F.one);
+            F.assign(const_cast<Element&>(zero), F.zero);
+            F.assign(const_cast<Element&>(mOne), F.mOne);
+            return *this;
+        }
+            
         // ----- Accessors
         inline Element minElement() const override { return zero; }
         inline Element maxElement() const override { return mOne; }
@@ -100,14 +119,6 @@ namespace Givaro
         // ----- Ring-wise operators
         bool operator==(const Self_t& F) const { return _p == F._p; }
         bool operator!=(const Self_t& F) const { return _p != F._p; }
-        Self_t& operator=(const Self_t& F)
-        {
-            F.assign(const_cast<Element&>(one),  F.one);
-            F.assign(const_cast<Element&>(zero), F.zero);
-            F.assign(const_cast<Element&>(mOne), F.mOne);
-            _p = F._p;
-            return *this;
-        }
 
         // ----- Initialisation
         Element& init (Element& x) const
@@ -118,9 +129,12 @@ namespace Givaro
         Element& init (Element& x, const Integer& a) const;
         template<typename T> Element& init(Element& r, const T& a) const
         {
-            reduce(r, Caster<Element>((a < 0)? -a : a));
-	    if (a < 0) negin(r);
-            return redc(r, r * _B2p);
+            Caster<Element,T>(r, (a < 0? -a : a) % _p);
+            if (a < 0) negin(r);
+//             return redc(r, r * _B2p);
+            Element c=r * _B2p;
+            redc(r, c);
+            return r;
         }
 
         Element& assign(Element& x, const Element& y) const

@@ -16,17 +16,16 @@
 #ifndef __GIVARO_montg32_H
 #define __GIVARO_montg32_H
 
-#include "givaro/givbasictype.h"
-#include "givaro/giverror.h"
+#include "givaro/udl.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/modular-general.h" // invext()
-#include "givaro/ring-interface.h" // invext()
+#include "givaro/ring-interface.h"
 
 #include <cmath>
 
-#define B32 65536UL
-#define MASK32 65535UL
+#define B32 65536_ui32
+#define MASK32 65535_ui32
 #define HALF_BITS32 16
 
 namespace Givaro
@@ -64,7 +63,7 @@ namespace Givaro
             _Bp( (Residu_t)  B32%p),
             _B2p((Residu_t)  (_Bp<<HALF_BITS32) % p),
             _B3p((Residu_t)  (_B2p<<HALF_BITS32) % p),
-            _nim((Residu_t)  -invext(uint64_t(_p), B32)),
+            _nim((Residu_t)  -invext(_p, B32)),
             _dp( (double)    p)
         {
             const_cast<Element&>(one) = _Bp;
@@ -124,16 +123,16 @@ namespace Givaro
             return redc(r, r * _B2p);
         }
 
-        Element& assign (Element& x, const Element& y) const
+        Element& assign(Element& x, const Element& y) const
         { return x = y; }
     
         // ----- Convert and reduce
         template<typename T> T& convert(T& r, const Element& a) const
         { Element c; return r = Caster<T>(redc(c, a)); }
 
-        Element& reduce (Element& x, const Element& y) const
+        Element& reduce(Element& x, const Element& y) const
         { x = y % _p; return x; }
-        Element& reduce (Element& x) const
+        Element& reduce(Element& x) const
         { x %= _p; return x; }
 
         // ----- Classic arithmetic

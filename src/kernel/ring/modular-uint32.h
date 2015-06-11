@@ -153,9 +153,11 @@ namespace Givaro
         // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-        template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
+        template< class Random > Element& random(const Random& g, Element& r) const
+        { return init(r, g()); }
         template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
-        { while (isZero(init(a, g())));
+        { while (isZero(init(a, g())))
+                ;
             return a; }
 
         // --- IO methods
@@ -164,15 +166,14 @@ namespace Givaro
         std::ostream& write(std::ostream& s, const Element a) const;
         
     protected:
-        // -- data representation of the domain:
+        
         Residu_t _p;
         double _dp;
 
     };
-
-} // namespace Givaro
+}
 
 #include "givaro/modular-uint32.inl"
 
-#endif // __GIVARO_zpz32unsigned_H
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+#endif
+

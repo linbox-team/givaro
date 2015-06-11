@@ -69,7 +69,7 @@ namespace Givaro
         }
 
         template<class IntConvType>
-        Modular(const IntConvType& p, const IntConvType& e=1)
+            Modular(const IntConvType& p, const IntConvType& e=1)
             : zero(0)
             , one(1)
             , mOne( Caster<Residu_t>(p-1) )
@@ -172,9 +172,11 @@ namespace Givaro
         // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-        template< class Random > Element& random(const Random& g, Element& r) const     { RecInt::rand(r); mod_n(r, _p); return r; }
+        template< class Random > Element& random(const Random& g, Element& r) const
+        { RecInt::rand(r); mod_n(r, _p); return r; }
         template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
-        { while (isZero(random(g, a)));
+        { while (isZero(random(g, a)))
+                ;
             return a; }
 
         // --- IO methods

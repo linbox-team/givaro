@@ -9,7 +9,6 @@
 
 #include <givaro/modular.h>
 #include <givaro/modular-balanced.h>
-#include <givaro/unparametric.h>
 #include <givaro/montgomery.h>
 
 #include <givaro/gfq.h>

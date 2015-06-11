@@ -11,7 +11,7 @@
 // ==========================================================================
 
 
-/*! @file field/unparametric.h
+/*! @file field/zring.h
  * @ingroup field
  * @brief  representation of a field of characteristic 0.
  */
@@ -28,89 +28,92 @@
 
 namespace Givaro
 {
-    /** Class ZRing
-     * Ring of integers, using the templatedElement base type
+    /** Class ZRing.
+     *  Ring of integers, using the _Element base type.
      */
-	template<class _Element>
-	class ZRing : public UnparametricOperations<_Element> {
+    template<class _Element>
+    class ZRing : public UnparametricOperations<_Element>
+    {
+    public:
 
-	public:
+        // ----- Exported Types and constantes
+        using Element = _Element;
+        using Self_t = ZRing<Element>;
+        using Residu_t = Element;
+        using Element_ptr = Element*;
+        using ConstElement_ptr = const Element*;
+        enum { size_rep = sizeof(Residu_t) };
+        
+        const Element one  = 1;
+        const Element zero = 0;
+        const Element mOne = -1;
 
-		/** The field's element type.
-		 * Type Element must provide a default constructor,
-		 * a copy constructor, a destructor, and an assignment operator.
-		 */
+        //----- Constructors
+        ZRing() {}
+        ZRing(const ZRing& F) {}
+        // Needed in FFLAS, when ZRing is used as delayed field.
+        template<class T> ZRing(const T&) {}
 
-		typedef _Element Element;
-		typedef ZRing<Element> Self_t;
-		typedef GeneralRingRandIter<Self_t> RandIter;
-		typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+        //----- Access
+        Residu_t residu() const { return static_cast<Residu_t>(0); }
+        Residu_t size() const { return static_cast<Residu_t>(0); }
+        Residu_t cardinality() const { return static_cast<Residu_t>(0); }
+        Residu_t characteristic() const { return static_cast<Residu_t>(0); }
+        template<typename T> T& cardinality(T& c) const { return c = static_cast<T>(0); }
+        template<typename T> T& characteristic(T& c) const { return c = static_cast<T>(0); }
+        
+        static inline Residu_t getMaxModulus() { return -1; }
+        static inline Residu_t getMinModulus() { return 2; }
 
-		typedef Element* Element_ptr;
-		typedef const Element* ConstElement_ptr;
-		const Element one  ;
-		const Element zero ;
-		const Element mOne ;
+        //----- Ring-wise operations
+        inline bool operator==(const Self_t& F) const { return true; }
+        inline bool operator!=(const Self_t& F) const { return false; }
+        inline ZRing<Element>& operator=(const ZRing<Element>&) { return *this; }
 
-		/** @name Field Object Basics.
-		*/
-		//@{
+        //----- Initialisation
+        Element& init(Element& x) const { return x; }
+        template <typename T> Element& init(Element& x, const T& s) const
+        { return x = static_cast<const Element&>(s); }
+        
+        Element& assign(Element& x, const Element& y) const { return x = y; }
 
-		/** Builds this field. Assumes q=0 and e = 1.
-		 * Ensures consistency with field interface.
-		 */
-		ZRing(long int q = 0, size_t e = 1):
-				one(1),zero(0),mOne(-one)
-			{}
-		//@}
+        //----- Convert
+        template <typename T> T& convert(T& x, const Element& y) const
+        { return x = static_cast<const T&>(y); }
+        
+        Element& reduce (Element& x, const Element& y) const { return x = y; }
+        Element& reduce (Element& x) const { return x; }
 
-		template<class T>
-		ZRing (const T& ) : one(1), zero(0), mOne(-one){}
+        // To ensure interface consistency
+        size_t minElement() const { return 0; }
+        size_t maxElement() const { return 0; }
 
-		/// construct this field as copy of F.
-		ZRing (const ZRing &F) : one(F.one),zero(F.zero),mOne(F.mOne){}
+        // ----- Random generators
+        typedef GeneralRingRandIter<Self_t> RandIter;
+        typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+        template< class Random > Element& random(const Random& g, Element& r) const
+        { return init(r, g()); }
+        template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+        { while (isZero(init(a, g())));
+            return a; }
 
-		Integer &cardinality (Integer &c) const {return c = 0;}
+        //----- IO
+        std::ostream& write(std::ostream &os) const
+        {
+            return os << "ZRing<" << typeid(Element).name() << ')';
+        }
+        std::ostream& write(std::ostream &os, const Element& a) const
+        {
+            return os << a;
+        }
+        std::istream& read(std::istream &is, Element& a) const
+        {
+            return is >> a;
+        }
+    };
+    
+    typedef ZRing<float> FloatDomain;
+    typedef ZRing<double> DoubleDomain;
+}
 
-		Integer &characteristic (Integer &c) const{return c = 0;}
-
-		uint64_t &cardinality (uint64_t &c) const {return c = 0U;}
-		uint64_t &characteristic (uint64_t &c) const {return c = 0U;}
-		uint64_t cardinality () const {return 0U;}
-		uint64_t characteristic () const {return 0U;}
-
-		ZRing<Element> operator=(const ZRing<Element> &e) {return *this ;}
-
-		Element& init (Element& x) const { return x;}
-
-		template <typename Src>
-		Element& init (Element& x, const Src& s) const { return x = static_cast<const Element&>(s); }
-
-		Element& reduce (Element& x, const Element& y) const {return init (x,y);}
-		Element& reduce (Element& x) const {return init (x,x);}
-
-		template <typename T>
-		T& convert (T &x, const Element &y) const {return x = static_cast<const T&>(y);}
-
-		    // To ensure interface consistency
-		size_t minElement() const {return 0;}
-		size_t maxElement() const {return 0;}
-
-		/** Print field.
-		 * @return output stream to which field is written.
-		 * @param  os  output stream to which field is written.
-		 */
-		std::ostream &write (std::ostream &os) const
-		{
-			return os << "ZRing<" << sizeof(Element) <<',' << typeid(Element).name() << ')';
-		}
-
-	};
-	/* Representations of Z with floating point elements*/
-	typedef ZRing<float> FloatDomain;
-	typedef ZRing<double> DoubleDomain;
-
-
-} // Givaro
-
-#endif // __FIELD_UNPARAMETRIC_H_
+#endif

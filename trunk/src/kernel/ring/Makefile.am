@@ -33,7 +33,6 @@ pkginclude_HEADERS=     \
 	modular-balanced-float.h 	\
 	modular-balanced-double.h 	\
 	unparametric-operations.h	\
-	unparametric.h		\
 	zring.h				\
 	montgomery.h	    \
 	montgomery-int32.h	\

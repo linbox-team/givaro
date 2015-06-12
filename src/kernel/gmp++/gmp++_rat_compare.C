@@ -53,18 +53,18 @@ namespace Givaro {
 		return mpz_cmp_si ( (mpz_srcptr)&gmp_rep, l ) != 0;
 	}
 
-	//long unsigned ops added by Dan Roche, 6-26-04
-	int Integer::operator != (const long unsigned int l) const
+	//uint64_t ops added by Dan Roche, 6-26-04
+	int Integer::operator != (const uint64_t l) const
 	{
 		return mpz_cmp_ui ( (mpz_srcptr)&gmp_rep, l ) != 0;
 	}
 
-	int Integer::operator > (const long unsigned int l) const
+	int Integer::operator > (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator < (const long unsigned int l) const
+	int Integer::operator < (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
 	}

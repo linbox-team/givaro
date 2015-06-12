@@ -33,7 +33,7 @@ namespace Givaro {
 	{
 		int base = 10;
 
-		long unsigned strSize = mpz_sizeinbase((mpz_srcptr)&(n.gmp_rep), base) + 2;
+		uint64_t strSize = mpz_sizeinbase((mpz_srcptr)&(n.gmp_rep), base) + 2;
 		char *str = ::new char[strSize];
 		mpz_get_str(str, base, (mpz_srcptr)&(n.gmp_rep));
 		if (sign(n) < 0) {
@@ -51,7 +51,7 @@ namespace Givaro {
 // For some reason, ekopath does an undefined reference to the GMP-streams - A. Breust 2015-01-21
 #if defined(__GIVARO_GMP_NO_CXX) || defined(__PATHCC__)
 		int base = 10;
-		long unsigned strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
+		uint64_t strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
 		char *str = new char[strSize];
 		mpz_get_str(str, base, (mpz_srcptr)&(gmp_rep));
 		o << str;

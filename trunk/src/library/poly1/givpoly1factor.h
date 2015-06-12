@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <27 Jun 05 11:35:32 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 18:37:48 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1factor.h
@@ -112,13 +112,13 @@ namespace Givaro {
 
 		template< template<class, class> class Container, template <class> class Alloc>
 		void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
-			       Container< unsigned long, Alloc<unsigned long> > & Le,
+			       Container< uint64_t, Alloc<uint64_t> > & Le,
 			       const Rep& f,
 			       Residu_t MOD)  const ;
 
 		template< template<class, class> class Container, template <class> class Alloc>
 		void CZfactor( Container< Rep, Alloc<Rep> > & Lf,
-			       Container< unsigned long, Alloc<unsigned long> > & Le,
+			       Container< uint64_t, Alloc<uint64_t> > & Le,
 			       const Rep& f )  const {
 			CZfactor(Lf, Le, f,_domain.residu());
 		}

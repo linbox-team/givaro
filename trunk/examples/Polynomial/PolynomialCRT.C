@@ -29,7 +29,7 @@
 using namespace Givaro;
 
 
-typedef GFqDom<long> 		Field1;
+typedef GFqDom<int64_t> 		Field1;
 typedef Modular<int16_t>     Field2;
 typedef Modular<Log16>       Field3;
 typedef Modular<int32_t>  	Field4;
@@ -105,7 +105,7 @@ bool tmain(int argc, char ** argv, GivRandom& generator) {
             break;
         }
 
-    CRT.getpolydom().random(generator, res, Degree((long)Primes.size()-1));
+    CRT.getpolydom().random(generator, res, Degree((int64_t)Primes.size()-1));
     CRT.RingToRns( Verifs, res );
     Poly nres;
 
@@ -187,7 +187,7 @@ F.write(std::cout, *it) << std::endl;
             break;
         }
 
-    CRT.getpolydom().random(generator, res, Degree((long)Primes.size()-1));
+    CRT.getpolydom().random(generator, res, Degree((int64_t)Primes.size()-1));
     CRT.RingToRns( Verifs, res );
     Poly nres;
 
@@ -213,8 +213,8 @@ int main(int argc, char ** argv) {
         // argv[2] : 2^{32-j} is size of primes
         // argv[3] : seed for generator
 
-    GivRandom seedor( argc>3 ? (unsigned long)atoi(argv[3]): (unsigned long)BaseTimer::seed() );
-    unsigned long seed = seedor.seed();
+    GivRandom seedor( argc>3 ? (uint64_t)atoi(argv[3]): (uint64_t)BaseTimer::seed() );
+    uint64_t seed = seedor.seed();
     std::cerr << "seed: " << seed << std::endl;
 
     Integer::seeding(seed);

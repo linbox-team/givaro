@@ -168,7 +168,7 @@ template<class Domain, class Tag, class RandIter>
 template< template<class, class> class Container, template <class> class Alloc>
 inline void
 Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & Lf,
-			   Container< unsigned long, Alloc<unsigned long> > & Le,
+			   Container< uint64_t, Alloc<uint64_t> > & Le,
 	       const Rep& P,
 	       Residu_t MOD)  const
 {
@@ -186,7 +186,7 @@ Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & L
         for( ; this_multiplicity < Lf.size(); ++this_multiplicity)
             Le[this_multiplicity] = i+1;
 // std::cerr << "multiplicities";
-// for (typename Container< unsigned long, Alloc<unsigned long> >::const_iterator e=Le.begin(); e!=Le.end(); ++e)
+// for (typename Container< uint64_t, Alloc<uint64_t> >::const_iterator e=Le.begin(); e!=Le.end(); ++e)
 // std::cerr << " " << *e;
 // std::cerr << std::endl;
 

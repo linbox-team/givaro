@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <11 Jun 10 14:43:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 18:27:22 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1padic.h
@@ -62,12 +62,12 @@ public:
 
         // Gain is 40% to 75% compared to Integers !!!
     template<class vect>
-    unsigned long& eval( unsigned long& E, const vect& P) {
+    uint64_t& eval( uint64_t& E, const vect& P) {
         typename vect::const_reverse_iterator pi = P.rbegin();
         _domain.convert(E,*pi);
         for (++pi;pi != P.rend();++pi) {
             E *= _domain.size();
-            E += (unsigned long)_domain.convert(*pi);
+            E += (uint64_t)_domain.convert(*pi);
         }
         return E;
     }
@@ -100,7 +100,7 @@ public:
         // See e.g. [von zur Gathen, Gerhard 1999], Modern Computer Algebra
 	// Algorithm 9.14
     template<class vect>
-    vect& radix(vect& P, const IntegerDom::Element& E, long n = 0) {
+    vect& radix(vect& P, const IntegerDom::Element& E, int64_t n = 0) {
         if (n < 1) n = logp(E,_domain.size()) + 1;
         if (n == 1) {
                 // Could also be
@@ -111,14 +111,14 @@ public:
         }
         IntegerDom::Element iq, ir;
         vect Q;
-            long t = (n+1)/2;
+            int64_t t = (n+1)/2;
             IntegerDom::Element q;
             IntegerDom::pow(q, _domain.size(), t);
             IntegerDom::divmod(iq, ir, E, q);
             radix(Q, iq, n-t);
             radix(P, ir, t);
             Degree dp; this->degree(dp,P); ++dp;
-            for(long i=t; dp<i; --i)
+            for(int64_t i=t; dp<i; --i)
                 P.push_back(_domain.zero);
         P.insert(P.end(),Q.begin(),Q.end());
         return this->setdegree(P);
@@ -128,7 +128,7 @@ public:
         // vect is supposed to be a vector of doubles
         // Therefore there is no automatic conversion
     template<class vect>
-    vect& fastradixdirect(vect& P, const double& E, unsigned long n) {
+    vect& fastradixdirect(vect& P, const double& E, uint64_t n) {
         if (n <= 1) {
             P.resize(0);
             typedef typename vect::value_type elem;
@@ -137,14 +137,14 @@ public:
         }
         double iq, ir;
         vect Q;
-            long t = (long)(n+1)/2;
+            int64_t t = (int64_t)(n+1)/2;
             double q = std::pow(double(_domain.size()), double(t));
             iq = floor( E / q );
             ir = E - iq*q;
             radixdirect(Q, iq, n-t);
             radixdirect(P, ir, t);
             Degree dp; degree(dp,P); ++dp;
-            for(long i=t; dp<i; --i)
+            for(int64_t i=t; dp<i; --i)
                 P.push_back(_domain.zero);
         P.insert(P.end(),Q.begin(),Q.end());
         return setdegree(P);
@@ -152,7 +152,7 @@ public:
 
 
     template<class vect, class TT>
-    vect& radixdirect(vect& P, const TT& E, unsigned long n) {
+    vect& radixdirect(vect& P, const TT& E, uint64_t n) {
         P.resize(n);
         TT r = E, s=r;
         for(typename vect::iterator pit=P.begin(); pit != P.end(); ++pit) {
@@ -164,7 +164,7 @@ public:
     }
 
     template<class vect>
-    vect& radixdirect(vect& P, const double& E, unsigned long n) {
+    vect& radixdirect(vect& P, const double& E, uint64_t n) {
         P.resize(n);
         double r = E, s;
         for(typename vect::iterator pit=P.begin(); pit != P.end(); ++pit) {

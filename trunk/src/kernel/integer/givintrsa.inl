@@ -25,9 +25,9 @@ namespace Givaro {
 	// =================================================================== //
 
 	template<class RandIter>
-	long IntRSADom<RandIter>::log(const Element& n, const long b ) const
+	int64_t IntRSADom<RandIter>::log(const Element& n, const int64_t b ) const
 	{
-		long res = 0;
+		int64_t res = 0;
 		for(Element p = n; p>=b; ++res, this->divin(p,b) ) {}
 		return res;
 	}
@@ -43,7 +43,7 @@ namespace Givaro {
 	{
 
 		Element p = n, a, b;
-		long i = _lm-1;
+		int64_t i = _lm-1;
 		// First char is ignored as it is zero or this->random enabling CBC
 		a = p >> (i<<3);
 		p -= a << (i<<3);
@@ -59,7 +59,7 @@ namespace Givaro {
 	std::ostream& IntRSADom<RandIter>::ecriture_str_last(std::ostream& o, const Element& n) const
 	{
 		Element p = n, a, b;
-		long i = _lm-1, nbzeroes(0);
+		int64_t i = _lm-1, nbzeroes(0);
 		// First char is ignored as it is zero or this->random enabling CBC
 		a = p >> (i<<3);
 		p -= a << (i<<3);
@@ -98,7 +98,7 @@ namespace Givaro {
 		Element res,r;
 		o << generator.seed() << std::endl;
 		Element ancien(generator());
-		long int imax = (_lm-1)<<3;
+		int64_t imax = (_lm-1)<<3;
 		do {
 			res = 0;
 			for(int i=0; i<_lm-1; ++i) {
@@ -132,7 +132,7 @@ namespace Givaro {
 		double Length = (double) _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
 		char * tmp = new char[(size_t)Length+2];
 		Element r;
-		unsigned long seed; in >> seed;
+		uint64_t seed; in >> seed;
 		GivRandom generator(seed);
 
 		if (_fast_impl) {
@@ -202,7 +202,7 @@ namespace Givaro {
 
 
 	template<class RandIter>
-	typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_generator& g, long psize, Element& p) const
+	typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_generator& g, int64_t psize, Element& p) const
 	{
 		Element q,t,r,s;
 
@@ -259,14 +259,14 @@ namespace Givaro {
 	// since for any x, x^(k.u) = x mod m
 	// =================================================================== //
 	template<class RandIter>
-	void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, Element& m, Element& k, Element& u) const
+	void IntRSADom<RandIter>::keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& m, Element& k, Element& u) const
 	{
 		Element p, q;
 		keys_gen(g,psize,qsize,m,k,u,p,q);
 	}
 
 	template<class RandIter>
-	void IntRSADom<RandIter>::keys_gen(random_generator& g, long psize, long qsize, Element& m, Element& k, Element& u, Element& p, Element& q) const
+	void IntRSADom<RandIter>::keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& m, Element& k, Element& u, Element& p, Element& q) const
 	{
 		Element d, l;
 

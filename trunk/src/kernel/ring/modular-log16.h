@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// Time-stamp: <12 Jun 15 09:12:18 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 18:46:28 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -81,15 +81,21 @@ namespace Givaro
         uint16_t& convert( uint16_t& x , const Rep a) const {
             return x = Residu_t((a >= _p)?0:_tab_rep2value[a]);
         }
-        unsigned long & convert( unsigned long& x , const Rep a) const {
+        uint32_t & convert( uint32_t& x , const Rep a) const {
+            return x = uint32_t((a >= _p)?0:_tab_rep2value[a]);
+        }
+        int32_t& convert( int32_t& x , const Rep a)  const {
+            return x = (int32_t)((a >= _p)?0:_tab_rep2value[a]);
+        }
+        uint64_t & convert( uint64_t& x , const Rep a) const {
             return x = ((a >= _p)?0:_tab_rep2value[a]);
+        }
+        int64_t& convert( int64_t& x , const Rep a)  const {
+            return x = (int64_t)((a >= _p)?0:_tab_rep2value[a]);
         }
 
         double& convert( double& x , const Rep a)  const {
             return x = (double)((a >= _p)?0:_tab_rep2value[a]);
-        }
-        long& convert( long& x , const Rep a)  const {
-            return x = (long)((a >= _p)?0:_tab_rep2value[a]);
         }
         Integer& convert(Integer& i, const Rep a) const {
             return i = (Integer)((a >= _p)?0:_tab_rep2value[a]);

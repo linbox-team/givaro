@@ -35,15 +35,15 @@ template<class FField> void FaireEssai(const FField & F) {
 }
 
 template void FaireEssai< Extension<> >(const Extension<> & F) ;
-template void FaireEssai< GFqDom<long> >(const GFqDom<long> & F) ;
+template void FaireEssai< GFqDom<int64_t> >(const GFqDom<int64_t> & F) ;
 
 
 int main (int argc, char * * argv) {
 
-    unsigned long q = (argc>1?(unsigned long)atoi(argv[1]):13);
-    unsigned long expo = (argc>2?(unsigned long)atoi(argv[2]):8);
+    uint64_t q = (argc>1?(uint64_t)atoi(argv[1]):13);
+    uint64_t expo = (argc>2?(uint64_t)atoi(argv[2]):8);
 /*
-    GFqDom<long> Toto(q,1);
+    GFqDom<int64_t> Toto(q,1);
     Toto.write( std::cout << "This is ") << std::endl ;
     FaireEssai( Toto );
 */
@@ -53,7 +53,7 @@ int main (int argc, char * * argv) {
     if ( NEED_POLYNOMIAL_REPRESENTATION(q,expo) )
         FaireEssai( Extension<>(q, expo) );
     else
-        FaireEssai( GFqDom<long>(q, expo) );
+        FaireEssai( GFqDom<int64_t>(q, expo) );
 
     FaireEssai( EXTENSION(q, expo) );
     return 0;

@@ -28,7 +28,7 @@ void TestField(const Field& F) {
     std::cerr  << " : " << std::flush;
 
     typename Field::Element a, b, c, d;
-    F.init(a, 7UL);
+    F.init(a, 7U);
     F.init(b, -29.3);
 
     F.init(c);            // empty constructor
@@ -154,7 +154,7 @@ int main(int argc, char ** argv) {
 
 #ifdef __USE_Givaro_SIXTYFOUR__
         // modulo 13 over 64 bits
-    Modular<int64_t> LL13(13UL); TestField( LL13 );
+    Modular<int64_t> LL13(13U); TestField( LL13 );
 #endif
 
         // modulo 13 fully tabulated

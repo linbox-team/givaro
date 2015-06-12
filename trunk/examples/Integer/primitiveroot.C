@@ -33,27 +33,27 @@ int main(int argc, char** argv)
   IntNumTheoDom<>::Element a,pr;
   if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
 
-        unsigned long runs;
+        uint64_t runs;
         Timer tim; tim.clear();
 	if (IP.isprime(a)) {
 		Integer phin; IP.sub(phin,a,IP.one);
 		std::vector<Integer> Lf;
 		IP.write(std::cout << "Totient : ", Lf,phin) << std::endl;
 		tim.start();
-		for(unsigned long i = 0; i < TIMING; ++i)
+		for(uint64_t i = 0; i < TIMING; ++i)
 			IP.prim_root_of_prime(pr, a);
         	tim.stop();
 		IP.write( std::cout << "Deterministic   : ", pr ) << std::endl;
 		std::cerr << tim << std::endl;
 	}
 	tim.start();
-for(unsigned long i = 0; i < TIMING; ++i)
+for(uint64_t i = 0; i < TIMING; ++i)
 	IP.prim_root(pr, runs, a);
         tim.stop();
 	IP.write( std::cout << "Random : ", pr ) << std::endl;
 	std::cerr << tim << " (" << runs << " runs)" << std::endl;
 	tim.start();
-for(unsigned long i = 0; i < TIMING; ++i)
+for(uint64_t i = 0; i < TIMING; ++i)
 	IP.lowest_prim_root(pr, a);
         tim.stop();
 	IP.write( std::cout << "Lowest : ", pr ) << std::endl;

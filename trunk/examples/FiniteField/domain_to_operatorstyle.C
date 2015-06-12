@@ -21,7 +21,7 @@ namespace Givaro
 {
 
 	// Finite Field with Domain style
-	typedef GFqDom<long> Field;
+	typedef GFqDom<int64_t> Field;
 
 	// Wrapper to give an operator style to the elements
 	typedef StaticElement< Field > Element;
@@ -35,7 +35,7 @@ namespace Givaro
 }
 
 int main(int argc, char ** argv) {
-    unsigned long P = (argc>1 ? (unsigned long)atoi(argv[1]) : 5009UL);
+    uint64_t P = (argc>1 ? (uint64_t)atoi(argv[1]) : 5009UL);
 
         // Initialization of static member
     Element::setDomain( Field(P) );

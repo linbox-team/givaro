@@ -24,8 +24,8 @@ using namespace Givaro;
 #define GIVMIN(a,b) (((a)<(b))?(a):(b))
 #endif
 
-typedef GFqDom<long> Domain;
-typedef GFqDom<long>::Element Modulo;
+typedef GFqDom<int64_t> Domain;
+typedef GFqDom<int64_t>::Element Modulo;
 
 // NB: number of iterations, TAILLE: vector size
 #ifndef NB
@@ -39,8 +39,8 @@ int main(int argc, char ** argv)
 {
 
 	GivRandom generator;
-	long P (65521);     // argv[1] : characteristic
-	long expo(1);       // argv[2] : exponent
+	int64_t P (65521);     // argv[1] : characteristic
+	int64_t expo(1);       // argv[2] : exponent
 	int offset = 0;
 	if (argc > ++offset) P = atoi( argv[ offset ] );
 	if (argc > ++offset) expo = atoi( argv[ offset ] );
@@ -48,11 +48,11 @@ int main(int argc, char ** argv)
 	Timer inver;
 	inver.clear();
 	inver.start();
-	Domain GFq((unsigned long)P, (unsigned long)expo);  // Buiding of finite field with P^expo Elements
+	Domain GFq((uint64_t)P, (uint64_t)expo);  // Buiding of finite field with P^expo Elements
 
     Modulo * z1 = new Modulo[TAILLE], * z2 = new Modulo[TAILLE], * z23 = new Modulo[TAILLE], * z3 = new Modulo[TAILLE];
 
-//    long seuil = GIVMIN(P*2,TAILLE);
+//    int64_t seuil = GIVMIN(P*2,TAILLE);
 
     std::cout << "."<< std::flush;
 

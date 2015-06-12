@@ -38,7 +38,7 @@ namespace Givaro {
 	}
 
 #if 0
-	Rationel& Rationel::addin(Rationel& res, const long int n)
+	Rationel& Rationel::addin(Rationel& res, const int64_t n)
 	{
 		if (isZero(n)) return res;
 		if (isZero(res)) return res = n;
@@ -62,7 +62,7 @@ namespace Givaro {
 		mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
 		return res;
 	}
-	Rationel& Rationel::add(Rationel& res, const Integer& n1, const long int n2)
+	Rationel& Rationel::add(Rationel& res, const Integer& n1, const int64_t n2)
 	{
 		if (isZero(n1)) return res = n2;
 		if (isZero(n2)) return res = n1;
@@ -97,7 +97,7 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator += (const long int l)
+	Integer& Integer::operator += (const int64_t l)
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return logcpy(Integer(l));
@@ -126,7 +126,7 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer Integer::operator + (const long int l) const
+	Integer Integer::operator + (const int64_t l) const
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return Integer(l);
@@ -147,13 +147,13 @@ namespace Givaro {
 
 	Integer operator + (const int l, const Integer& n)
 	{
-		return n + (long)l;
+		return n + (int64_t)l;
 	}
 	Integer operator + (const uint32_t l, const Integer& n)
 	{
 		return n + (uint64_t)l;
 	}
-	Integer operator + (const long int l, const Integer& n)
+	Integer operator + (const int64_t l, const Integer& n)
 	{
 		return n + l;
 	}
@@ -163,7 +163,7 @@ namespace Givaro {
 	}
 	Integer operator + (const Integer& n, const int l)
 	{
-		return n + (long)l;
+		return n + (int64_t)l;
 	}
 	Integer operator + (const Integer& n, const uint32_t l)
 	{
@@ -172,7 +172,7 @@ namespace Givaro {
 
 	Integer& operator += (Integer& n, const int l)
 	{
-		return n += (long)l;
+		return n += (int64_t)l;
 	}
 	Integer& operator += (Integer& n, const uint32_t l)
 	{

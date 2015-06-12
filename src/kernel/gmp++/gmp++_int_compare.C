@@ -54,7 +54,7 @@ namespace Givaro {
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t)b);
 	}
 
-	int absCompare(const Integer &a, const long int b)
+	int absCompare(const Integer &a, const int64_t b)
 	{
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t) std::abs(b));
 	}
@@ -90,7 +90,7 @@ namespace Givaro {
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) != 0;
 	}
 
-	int Integer::operator != (const long int l) const
+	int Integer::operator != (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
 	}
@@ -116,7 +116,7 @@ namespace Givaro {
 		return n.operator != (l);
 	}
 
-	int operator != (long int l, const Integer& n)
+	int operator != (int64_t l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
@@ -157,7 +157,7 @@ namespace Givaro {
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) == 0;
 	}
 
-	int Integer::operator == (const long int l) const
+	int Integer::operator == (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
 	}
@@ -183,7 +183,7 @@ namespace Givaro {
 		return n.operator == (l);
 	}
 
-	int operator == (long int l, const Integer& n)
+	int operator == (int64_t l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
@@ -224,7 +224,7 @@ namespace Givaro {
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) > 0;
 	}
 
-	int Integer::operator > (const long int l) const
+	int Integer::operator > (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
@@ -250,7 +250,7 @@ namespace Givaro {
 		return n.operator < (l);
 	}
 
-	int operator > (long int l, const Integer& n)
+	int operator > (int64_t l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
@@ -296,7 +296,7 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
-	int Integer::operator < (const long int l) const
+	int Integer::operator < (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
@@ -317,7 +317,7 @@ namespace Givaro {
 		return n.operator > (l);
 	}
 
-	int operator < (long int l, const Integer& n)
+	int operator < (int64_t l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
@@ -358,7 +358,7 @@ namespace Givaro {
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) >= 0;
 	}
 
-	int Integer::operator >= (const long int l) const
+	int Integer::operator >= (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
@@ -384,7 +384,7 @@ namespace Givaro {
 		return n.operator <= (l);
 	}
 
-	int operator >= (long int l, const Integer& n)
+	int operator >= (int64_t l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
@@ -430,7 +430,7 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
-	int Integer::operator <= (const long int l) const
+	int Integer::operator <= (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
@@ -451,7 +451,7 @@ namespace Givaro {
 		return n.operator >= (l);
 	}
 
-	int operator <= (long int l, const Integer& n)
+	int operator <= (int64_t l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
@@ -496,7 +496,7 @@ namespace Givaro {
 	{
 		return a ==0;
 	}
-	int isZero(const long int a)
+	int isZero(const int64_t a)
 	{
 		return a ==0;
 	}

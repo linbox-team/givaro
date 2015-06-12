@@ -41,7 +41,7 @@ namespace Givaro {
 		mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
 		return res;
 	}
-	Integer& Integer::modin(Integer& res, const long int n)
+	Integer& Integer::modin(Integer& res, const int64_t n)
 	{
 		if (isZero(res)) return res;
 		// int sgn = sign(n);
@@ -65,7 +65,7 @@ namespace Givaro {
 		assert(!(res<0) && (res<abs(n2)));
 		return res;
 	}
-	Integer& Integer::mod(Integer& res, const Integer& n1, const long int n2)
+	Integer& Integer::mod(Integer& res, const Integer& n1, const int64_t n2)
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		// int sgn = sign(n2);
@@ -114,7 +114,7 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator %= (const long int l)
+	Integer& Integer::operator %= (const int64_t l)
 	{
 		if (isZero(*this)) return *this;
 #ifdef DEBUG
@@ -141,7 +141,7 @@ namespace Givaro {
 		return res;
 	}
 
-	long Integer::operator % (const uint64_t l) const
+	int64_t Integer::operator % (const uint64_t l) const
 	{
 #if 0
 		if (isZero(*this)) return 0UL;
@@ -162,32 +162,32 @@ namespace Givaro {
 		uint64_t res = mpz_tdiv_ui( (mpz_srcptr)&gmp_rep, l);
 #ifdef DEBUG
 		Integer toto = res;
-		if (isneg) toto = -(long)res ;
+		if (isneg) toto = -(int64_t)res ;
 
 		// std::cout << toto << ',' << l << ',' << ',' << *this << std::endl;
 		assert((toto<l) && (-toto<l) && (toto.priv_sign()*(*this).priv_sign()>=0)) ;
 #endif
 		if (!res)
-			return (long)res ;
-		if (isneg) return (-(long)res) ;
+			return (int64_t)res ;
+		if (isneg) return (-(int64_t)res) ;
 
 
-		return (long)res ;
+		return (int64_t)res ;
 	}
 
-	long Integer::operator % (const long int l) const
+	int64_t Integer::operator % (const int64_t l) const
 	{
 #if 0
 		if (l ==0) {
 			GivMathDivZero("[Integer::/]: division by zero");
 		}
 #endif
-		long res ;
+		int64_t res ;
 		if (l>0) {
-			res = static_cast<long>(this->operator%( static_cast<uint64_t>(l) ) );
+			res = static_cast<int64_t>(this->operator%( static_cast<uint64_t>(l) ) );
 		}
 		else {
-			res = static_cast<long>(this->operator%( static_cast<uint64_t>( -l ) ) );
+			res = static_cast<int64_t>(this->operator%( static_cast<uint64_t>( -l ) ) );
 		}
 
 		// std::cout << res << ',' << l << ',' << *this << std::endl;
@@ -233,13 +233,13 @@ namespace Givaro {
 	{
 		return Integer(l) % n;
 	}
-	 Integer operator % (const long int l, const Integer& n)
+	 Integer operator % (const int64_t l, const Integer& n)
 	{
 		return Integer(l) % n;
 	}
 	 Integer operator % (const Integer& n, const int l)
 	{
-		return n % (long)l;
+		return n % (int64_t)l;
 	}
 	 Integer operator % (const Integer& n, const uint32_t l)
 	{
@@ -248,7 +248,7 @@ namespace Givaro {
 
 	 Integer& operator %= (Integer& n, const int l)
 	{
-		return n %= (long)l;
+		return n %= (int64_t)l;
 	}
 	 Integer& operator %= (Integer& n, const uint32_t l)
 	{

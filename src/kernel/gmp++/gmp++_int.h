@@ -118,7 +118,7 @@ namespace Givaro {
 	Integer& 	sqrtrem(Integer& r, const Integer& p, Integer& rem);
 	bool 		root(Integer& q, const Integer&, uint32_t n);
 
-	long 		logp(const Integer& a, const Integer& p) ;
+	int64_t		logp(const Integer& a, const Integer& p) ;
 	double 		logtwo(const Integer& a) ;
 	double 		naturallog(const Integer& a) ;
 
@@ -207,7 +207,7 @@ namespace Givaro {
 		 * @param d array
 		 * @param sz size
 		 */
-		giv_all_inlined Integer(uint64_t* d, long sz);
+		giv_all_inlined Integer(uint64_t* d, int64_t sz);
 		/*! Creates a new Integers for a vector of limbs
 		* @param v vector of limbs
 		*/
@@ -238,7 +238,7 @@ namespace Givaro {
 		giv_all_inlined Integer& copy(const Integer& n);
 		///@}
 
-		//------------------Equalities and inequalities between integers and longs
+		//------------------Equalities and inequalities between integers and basic
 		// (FILE gmp++_int_compare.C)
 		//! @name Comparisons functions.
 		///@{
@@ -692,7 +692,7 @@ namespace Givaro {
 		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const uint64_t n2);
 		///@}
 
-		//----------------Elementary arithmetic between Integers & longs
+		//----------------Elementary arithmetic between Integers and basic
 		// (FILE gmp++_int_add.C)
 		/*! @name Addition, substraction, multiplication operators*/
 		///@{
@@ -1059,7 +1059,7 @@ namespace Givaro {
 		static giv_all_inlined  Integer& divexact (Integer& q,
 							   const Integer& n, const uint64_t & d);
 		static giv_all_inlined  Integer& divexact (Integer& q,
-							   const Integer& n, const long & d);
+							   const Integer& n, const int64_t & d);
 
 		/*! Division when \c d divides \c n.
 		 * @param n dividend
@@ -1069,7 +1069,7 @@ namespace Givaro {
 		 */
 		static giv_all_inlined  Integer  divexact (const Integer& n, const Integer& d);
 		static giv_all_inlined  Integer  divexact (const Integer& n, const uint64_t & d);
-		static giv_all_inlined  Integer  divexact (const Integer& n, const long & d);
+		static giv_all_inlined  Integer  divexact (const Integer& n, const int64_t & d);
 
 		//! Stuff
 	static giv_all_inlined Integer& trem(Integer& r, const Integer &n , const Integer & d);
@@ -1217,9 +1217,9 @@ namespace Givaro {
 		 */
 		giv_all_inlined Integer  operator % (const Integer& n) const;
 		//! @overload Integer::operator%(Integer);
-		giv_all_inlined long     operator % (const uint64_t n) const;
+		giv_all_inlined int64_t     operator % (const uint64_t n) const;
 		//! @overload Integer::operator%(Integer);
-		giv_all_inlined long     operator % (const int64_t n) const;
+		giv_all_inlined int64_t     operator % (const int64_t n) const;
 		//! @overload Integer::operator%(Integer);
 		giv_all_inlined double   operator % (const double n) const;
 		//! @overload Integer::operator%(Integer);
@@ -1346,7 +1346,7 @@ namespace Givaro {
 		//! @overload Integer::pow(Integer,Integer,int64_t)
 		friend giv_all_inlined  Integer& pow(Integer& Res, const Integer& n, const int32_t l)
 		{
-			return pow(Res, n, (long)l );
+			return pow(Res, n, (int64_t)l );
 		}
 		//! @overload Integer::pow(Integer,Integer,int64_t)
 		friend giv_all_inlined  Integer& pow(Integer& Res, const Integer& n, const uint32_t l)
@@ -1362,7 +1362,7 @@ namespace Givaro {
 		//! @overload Integer::pow(Integer,int64_t)
 		friend giv_all_inlined  Integer pow(const Integer& n, const int32_t l)
 		{
-			return pow(n, (long)l );
+			return pow(n, (int64_t)l );
 		}
 		//! @overload Integer::pow(Integer,int64_t)
 		friend giv_all_inlined  Integer pow(const Integer& n, const uint32_t l)
@@ -1383,7 +1383,7 @@ namespace Givaro {
 		//! @overload Integer::powmod(Integer,Integer,uint64_t,Integer)
 		friend giv_all_inlined  Integer& powmod(Integer& Res, const Integer& n, const int32_t e, const Integer& m)
 		{
-			return powmod(Res, n, (long)e, m);
+			return powmod(Res, n, (int64_t)e, m);
 		}
 		//! @overload Integer::powmod(Integer,Integer,uint64_t,Integer)
 		friend giv_all_inlined  Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m);
@@ -1402,7 +1402,7 @@ namespace Givaro {
 		//! @overload Integer::powmod(Integer,uint64_t,Integer)
 		friend giv_all_inlined  Integer powmod(const Integer& n, const int32_t e, const Integer& m)
 		{
-			return powmod(n, (long)e, m);
+			return powmod(n, (int64_t)e, m);
 		}
 		//! @overload Integer::powmod(Integer,uint64_t,Integer)
 		friend giv_all_inlined  Integer powmod(const Integer& n, const Integer& e, const Integer& m);
@@ -1433,7 +1433,7 @@ namespace Givaro {
 
 		//! logs
 		//! @param a,p
-		friend giv_all_inlined  long logp(const Integer& a, const Integer& p) ;
+		friend giv_all_inlined  int64_t logp(const Integer& a, const Integer& p) ;
 		//! logs
 		//! @param a
 		friend giv_all_inlined  double logtwo(const Integer& a) ;
@@ -1464,7 +1464,7 @@ namespace Givaro {
 		} // but figure out the friend sign()
 
 		//! private sign
-		int32_t priv_sign() const // BB no longer protected.
+		int32_t priv_sign() const // BB not protected anymore.
 		{
 			return mpz_sgn( (mpz_srcptr)&gmp_rep );
 		}

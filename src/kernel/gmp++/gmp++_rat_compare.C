@@ -48,7 +48,7 @@ namespace Givaro {
 		return mpz_cmp_si ( (mpz_srcptr)&gmp_rep, l ) != 0;
 	}
 
-	int Integer::operator != (const long int l) const
+	int Integer::operator != (const int64_t l) const
 	{
 		return mpz_cmp_si ( (mpz_srcptr)&gmp_rep, l ) != 0;
 	}
@@ -74,7 +74,7 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator > (const long int l) const
+	int Integer::operator > (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
@@ -84,7 +84,7 @@ namespace Givaro {
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
-	int Integer::operator < (const long int l) const
+	int Integer::operator < (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}

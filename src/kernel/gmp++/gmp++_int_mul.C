@@ -29,7 +29,7 @@ Integer& Integer::mulin(Integer& res, const Integer& n)
   mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n.gmp_rep );
   return res;
 }
-Integer& Integer::mulin(Integer& res, const long int n)
+Integer& Integer::mulin(Integer& res, const int64_t n)
 {
   if (isZero(n)) return res = Integer::zero;
   if (isZero(res)) return res;
@@ -56,7 +56,7 @@ Integer& Integer::mul(Integer& res, const Integer& n1, const Integer& n2)
   mpz_mul( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, (mpz_srcptr)&n2.gmp_rep);
   return res;
 }
-Integer& Integer::mul(Integer& res, const Integer& n1, const long int n2)
+Integer& Integer::mul(Integer& res, const Integer& n1, const int64_t n2)
 {
   if (isZero(n1)) return res = Integer::zero;
   if (isZero(n2)) return res = Integer::zero;
@@ -191,7 +191,7 @@ Integer& Integer::operator *= (const uint64_t l)
   return *this;
 }
 
-Integer& Integer::operator *= (const long int l)
+Integer& Integer::operator *= (const int64_t l)
 {
   if (l==0) return *this =Integer::zero;
   if (isZero(*this)) return *this;
@@ -224,7 +224,7 @@ Integer Integer::operator * (const uint64_t l) const
   return res;
 }
 
-Integer Integer::operator * (const long int l) const
+Integer Integer::operator * (const int64_t l) const
 {
   if (l==0) return Integer::zero;
   if (isZero(*this)) return Integer::zero;
@@ -242,13 +242,13 @@ Integer Integer::operator * (const long int l) const
 	// -- operator *
 	 Integer operator * (const int l, const Integer& n)
 	{
-		return n * (long)l;
+		return n * (int64_t)l;
 	}
 	 Integer operator * (const uint32_t l, const Integer& n)
 	{
 		return n * (uint64_t)l;
 	}
-	 Integer operator * (const long int l, const Integer& n)
+	 Integer operator * (const int64_t l, const Integer& n)
 	{
 		return n * l;
 	}
@@ -258,7 +258,7 @@ Integer Integer::operator * (const long int l) const
 	}
 	 Integer operator * (const Integer& n, const int l)
 	{
-		return n * (long)l;
+		return n * (int64_t)l;
 	}
 	 Integer operator * (const Integer& n, const uint32_t l)
 	{
@@ -267,7 +267,7 @@ Integer Integer::operator * (const long int l) const
 
 	 Integer& operator *= (Integer& n, const int l)
 	{
-		return n *= (long)l;
+		return n *= (int64_t)l;
 	}
 	 Integer& operator *= (Integer& n, const uint32_t l)
 	{

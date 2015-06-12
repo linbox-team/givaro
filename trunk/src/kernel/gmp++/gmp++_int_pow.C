@@ -47,12 +47,12 @@ namespace Givaro {
 		return pow(Res,n,p);
 	}
 
-	Integer& pow(Integer& Res, const Integer& n, const long int l)
+	Integer& pow(Integer& Res, const Integer& n, const int64_t l)
 	{
 		// Beware of negative values
 		return pow(Res, n, (uint64_t) std::abs(l) );
 	}
-	Integer pow(const Integer& n, const long int l)
+	Integer pow(const Integer& n, const int64_t l)
 	{
 		if (l < 0)
 			return Integer::zero;
@@ -72,7 +72,7 @@ namespace Givaro {
 		return powmod(Res,n,p,m);
 	}
 
-	Integer& powmod(Integer& Res, const Integer& n, const long e, const Integer& m)
+	Integer& powmod(Integer& Res, const Integer& n, const int64_t e, const Integer& m)
 	{
 		if (e < 0) {
 			inv(Res, n, m);
@@ -82,7 +82,7 @@ namespace Givaro {
 			return powmod (Res, n, (uint64_t)(e), m);
 		}
 	}
-	Integer powmod(const Integer& n, const long e, const Integer& m)
+	Integer powmod(const Integer& n, const int64_t e, const Integer& m)
 	{
 		Integer Res;
 		return powmod(Res, n, e, m);

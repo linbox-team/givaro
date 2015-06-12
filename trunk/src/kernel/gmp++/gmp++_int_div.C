@@ -92,7 +92,7 @@ namespace Givaro {
 
 	Integer& Integer::div(Integer& res, const Integer& n1, const int32_t n2)
 	{
-		return div(res,n1,long(n2));
+		return div(res,n1,int64_t(n2));
 	}
 
 	Integer& Integer::div(Integer& res, const Integer& n1, const uint64_t n2)
@@ -124,7 +124,7 @@ namespace Givaro {
 		return q;
 	}
 
-	Integer& Integer::divexact  (Integer& q, const Integer& n1, const long & n2)
+	Integer& Integer::divexact  (Integer& q, const Integer& n1, const int64_t& n2)
 	{
 		if (isZero(n1)) return q = Integer::zero;
 		mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
@@ -156,7 +156,7 @@ namespace Givaro {
 		return q;
 	}
 
-	Integer  Integer::divexact  (const Integer& n1, const long& n2)
+	Integer  Integer::divexact  (const Integer& n1, const int64_t& n2)
 	{
 		if (isZero(n1)) return Integer::zero;
 		Integer q;
@@ -264,7 +264,7 @@ namespace Givaro {
 		// (mpz_ptr)&(a.gmp_rep), b);
 
 		if (a<0 && r) {
-			subin(q,(long)1) ;
+			subin(q,(int64_t)1) ;
 			r = b - r;
 		}
 
@@ -278,7 +278,7 @@ namespace Givaro {
 		//    GivMathDivZero("[Integer::divide]: division by zero");
 		//  }
 		// int32_t sgn = sign(b);
-		r = (long)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
+		r = (int64_t)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
 					 (mpz_srcptr)&(a.gmp_rep), std::abs(b));
 		// if (sgn <0) return negin(q);
 		// if (a>0)
@@ -288,7 +288,7 @@ namespace Givaro {
 		// mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
 		// (mpz_ptr)&(a.gmp_rep), b);
 		if (a<0 && r) {
-			subin(q,(long)1) ;
+			subin(q,(int64_t)1) ;
 			r = b - r ;
 		}
 
@@ -306,7 +306,7 @@ namespace Givaro {
 				   (mpz_srcptr)&(a.gmp_rep), b);
 
 		if (a<0 && r) {
-			subin(q,(long)1) ;
+			subin(q,(int64_t)1) ;
 			r = b - r;
 		}
 
@@ -441,7 +441,7 @@ namespace Givaro {
 	}
 	Integer operator / (const Integer& n, const int32_t l)
 	{
-		return n / (long)l;
+		return n / (int64_t)l;
 	}
 	Integer operator / (const Integer& n, const uint32_t l)
 	{

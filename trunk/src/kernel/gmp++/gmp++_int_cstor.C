@@ -51,8 +51,8 @@ namespace Givaro {
 		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
-	//-----------------------------Integer(long int n)
-	Integer::Integer(long int n)
+	//-----------------------------Integer(int64_t n)
+	Integer::Integer(int64_t n)
 	{
 		mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
 	}

@@ -78,7 +78,7 @@ namespace Givaro {
 	// log(2) being close to 0.69314718055994531
 	double naturallog(const Integer& a)
 	{
-		signed long int exp_;
+		int64_t exp_;
 		double d = mpz_get_d_2exp( &exp_, (mpz_srcptr)&(a.gmp_rep) );
 		return (double)exp_*0.69314718055994531+log(d);
 	}
@@ -95,7 +95,7 @@ namespace Givaro {
 	}
 
 	// base p logarithm of a
-	long logp(const Integer& a, const Integer& p)
+	int64_t logp(const Integer& a, const Integer& p)
 	{
 		std::list< Integer > pows;
 		Integer puiss = p, sq;
@@ -103,7 +103,7 @@ namespace Givaro {
 			pows.push_back( puiss );
 		} while ( (puiss *= puiss) <= a );
 		puiss = pows.back(); pows.pop_back();
-		long res = (1 << pows.size());
+		int64_t res = (1 << pows.size());
 		while (! pows.empty() ) {
 			if ((sq = puiss * pows.back()) <= a) {
 				puiss = sq;
@@ -119,7 +119,7 @@ namespace Givaro {
 	// 1/log(2) being close to 1.44269504088896341
 	double logtwo(const Integer& a)
 	{
-		signed long int exp;
+		int64_t exp;
 		double d = mpz_get_d_2exp( &exp, (mpz_srcptr)&(a.gmp_rep) );
 		return (double)exp+log(d)*1.44269504088896341;
 	}
@@ -184,7 +184,7 @@ namespace Givaro {
 	{
 		return this->operator<<( (uint64_t)l );
 	}
-	Integer Integer::operator << (long int l) const
+	Integer Integer::operator << (int64_t l) const
 	{
 		return this->operator<<( (uint64_t)l );
 	}
@@ -203,7 +203,7 @@ namespace Givaro {
 		return this->operator>>( (uint64_t)l );
 	}
 
-	Integer Integer::operator >> (long int l) const
+	Integer Integer::operator >> (int64_t l) const
 	{
 		return this->operator>>( (uint64_t)l );
 	}
@@ -229,7 +229,7 @@ namespace Givaro {
 	{
 		return this->operator<<= ( (uint64_t)l );
 	}
-	Integer& Integer::operator <<= (long int l)
+	Integer& Integer::operator <<= (int64_t l)
 	{
 		return this->operator<<= ( (uint64_t)l );
 	}
@@ -246,7 +246,7 @@ namespace Givaro {
 	{
 		return this->operator>>= ( (uint64_t)l );
 	}
-	Integer& Integer::operator >>= (long int l)
+	Integer& Integer::operator >>= (int64_t l)
 	{
 		return this->operator>>= ( (uint64_t)l );
 	}
@@ -376,7 +376,7 @@ namespace Givaro {
 	{
 		return (uint32_t) mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 	}
-	Integer::operator long() const
+	Integer::operator int64_t() const
 	{
 		return mpz_get_si ( (mpz_srcptr)&gmp_rep);
 	}

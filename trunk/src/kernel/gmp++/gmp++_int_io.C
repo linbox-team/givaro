@@ -67,7 +67,7 @@ namespace Givaro {
 	std::istream& operator>> (std::istream& inp, Integer& a)
 	{
 #if defined(__GIVARO_GMP_NO_CXX) || defined(__PATHCC__)
-		static long int base[10] = {
+		static int64_t base[10] = {
 			10,
 			100,
 			1000,
@@ -121,7 +121,7 @@ namespace Givaro {
 				else { noend = 0 ;  inp.putback(ch) ; }
 			}
 			if (counter >0) {
-				long int l ;
+				int64_t l ;
 				Tmp[counter] = '\0' ; // terminate the string
 				l = atol(Tmp) ;
 				a = a * base[counter-1] + l ;

@@ -35,7 +35,7 @@ namespace Givaro
 	Rationel::Rationel( int  n)
 	{
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int) n, 1L) ;
+		mpq_set_si((mpq_ptr)&gmp_rep,(int64_t) n, 1L) ;
 
 		num = mpq_numref((mpq_ptr)&gmp_rep) ;
 		den = mpq_denref((mpq_ptr)&gmp_rep) ;
@@ -169,9 +169,9 @@ namespace Givaro
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
 		if (d < 0)
-			mpq_set_si((mpq_ptr)&gmp_rep,(long int)-n, (uint64_t)-d);
+			mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)-n, (uint64_t)-d);
 		else
-			mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (uint64_t)d);
+			mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)n, (uint64_t)d);
 		if (red == Reduce)
 			reduce();
 
@@ -186,9 +186,9 @@ namespace Givaro
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
 		if (d < 0)
-			mpq_set_si((mpq_ptr)&gmp_rep,(long int)-n, (uint64_t)-d);
+			mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)-n, (uint64_t)-d);
 		else
-			mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (uint64_t)d);
+			mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)n, (uint64_t)d);
 		if (red == Reduce)
 			reduce();
 
@@ -238,7 +238,7 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (uint64_t)d);
+		mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)n, (uint64_t)d);
 		if (red == Reduce)
 			reduce();
 
@@ -253,9 +253,9 @@ namespace Givaro
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
 		if (d < 0 )
-			mpq_set_si((mpq_ptr)&gmp_rep,(long int)-n, (uint64_t)-d);
+			mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)-n, (uint64_t)-d);
 		else
-			mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (uint64_t)d);
+			mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)n, (uint64_t)d);
 		if (red == Reduce)
 			reduce();
 
@@ -269,7 +269,7 @@ namespace Givaro
 	{
 		assert(nonZero(d));
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(long int)n, (uint64_t)d);
+		mpq_set_si((mpq_ptr)&gmp_rep,(int64_t)n, (uint64_t)d);
 		if (red == Reduce)
 			reduce();
 

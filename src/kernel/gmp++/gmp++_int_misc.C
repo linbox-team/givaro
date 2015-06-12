@@ -368,7 +368,7 @@ namespace Givaro {
 
 	//------------------------------------------- convert method
 	//------------------------------------------- casting method
-	Integer::operator int() const
+	Integer::operator int32_t() const
 	{
 		return int32_t (mpz_get_si ( (mpz_srcptr)&gmp_rep));
 	}
@@ -378,11 +378,26 @@ namespace Givaro {
 	}
 	Integer::operator int64_t() const
 	{
+#if GMP_LIMB_BITS != 64
+		Integer absThis = abs(*this);
+		int64_t r = static_cast<int64_t>(absThis.operator uint32_t());
+		absThis >>= 32;
+		r |= static_cast<int64_t>(absThis.operator uint32_t()) << 32;
+		return (*this < 0)? -r : r;
+#else
 		return mpz_get_si ( (mpz_srcptr)&gmp_rep);
+#endif
 	}
 	Integer::operator uint64_t() const
 	{
+#if GMP_LIMB_BITS != 64
+		Integer absThis = abs(*this);
+		uint64_t r = static_cast<uint64_t>(absThis.operator uint32_t());
+		absThis >>= 32;
+		return r |= static_cast<uint64_t>(absThis.operator uint32_t()) << 32;
+#else
 		return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
+#endif
 	}
 	Integer::operator double() const
 	{
@@ -395,19 +410,9 @@ namespace Givaro {
 
 	Integer::operator std::string () const
 	{
-#ifdef __GIVARO_GMP_NO_CXX
-		std::string s;
-		uint64_t strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), 10) + 2;
-		char *str = new char[strSize + 2];
-		mpz_get_str(str, 10, (mpz_srcptr)&(gmp_rep));
-		s = std::string(str);
-		delete [] str ;
-		// return ??
-#else
 		std::ostringstream o ;
 		print(o);
 		return o.str();
-#endif
 	}
 
 	Integer::operator Integer::vect_t () const

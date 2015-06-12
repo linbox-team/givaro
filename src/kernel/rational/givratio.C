@@ -29,7 +29,7 @@ std::ostream& Rational::print(std::ostream& s) const
 std::istream& operator>> (std::istream& in, Rational& r)
 {
    Integer num ;
-   Integer den = 1L;
+   Integer den = 1;
    char ch ;
 
    in >> num ;

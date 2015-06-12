@@ -145,7 +145,7 @@ namespace Givaro {
 			ii= i << 1;
 			j = i+ii;
 			while (j<=n) {
-				Ip[j] = 1L;
+				Ip[j] = 1;
 				j+=ii;
 			}
 			if ((j-ii) == n) {
@@ -489,7 +489,7 @@ namespace Givaro {
 		// Initialize # curves
 		for (unsigned long i=0;i<curves;++i) {
 			a = 0, asq = 0;
-			while ((( a*(asq-1UL)*(9UL*asq-1UL) ) % n) == 0L ) {
+			while ((( a*(asq-1U)*(9UL*asq-1U) ) % n) == 0L ) {
 				this->random(gen,r,n);
 				//             kg = r*r + 6;
 				mul(kg,r,r); addin(kg,6UL);
@@ -516,7 +516,7 @@ namespace Givaro {
 		//     Rep s("6180339887498948482045868343656381177");
 		//     Rep si("10000000000000000000000000000000000000");
 		Rep s(618033988UL);
-		Rep si(1000000000UL);
+		Rep si(1000000000U);
 
 		// Begins search with curves on primes up to B1
 		Rep prime = 2, sp, f;

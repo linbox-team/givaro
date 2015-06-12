@@ -21,7 +21,7 @@ namespace Givaro
 	//------------------------------------- predefined null and one
 	const Integer Integer::zero(0U);
 	const Integer Integer::one(1U);
-	const Integer Integer::mOne(-1L);
+	const Integer Integer::mOne(-1);
 
 } // Givaro
 #endif

@@ -35,7 +35,7 @@ namespace Givaro
 	Rationel::Rationel( int32_t  n)
 	{
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep,(int64_t) n, 1L) ;
+		mpq_set_si((mpq_ptr)&gmp_rep,(int64_t) n, 1) ;
 
 		num = mpq_numref((mpq_ptr)&gmp_rep) ;
 		den = mpq_denref((mpq_ptr)&gmp_rep) ;
@@ -53,7 +53,7 @@ namespace Givaro
 	Rationel::Rationel( int64_t  n)
 	{
 		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_si((mpq_ptr)&gmp_rep, n, 1L) ;
+		mpq_set_si((mpq_ptr)&gmp_rep, n, 1) ;
 
 		num = mpq_numref((mpq_ptr)&gmp_rep) ;
 		den = mpq_denref((mpq_ptr)&gmp_rep) ;

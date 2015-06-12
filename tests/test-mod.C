@@ -23,10 +23,10 @@ using namespace Givaro;
 #include <cmath>
 
 template<class U> inline bool IsNeg(const U p) { return (p<0); }
-template<> inline bool IsNeg<unsigned long>(const unsigned long p) { return false; }
+template<> inline bool IsNeg<uint64_t>(const uint64_t p) { return false; }
 
 template<class T, class U>
-long int ref_modulo(const T  m, const U p)
+int64_t ref_modulo(const T  m, const U p)
 {
 	Integer M(m);
 	Integer P(p);
@@ -57,7 +57,7 @@ long int ref_modulo(const T  m, const U p)
 }
 
 template<class T, class U>
-long int ref_modulobis(const T  m, const U p)
+int64_t ref_modulobis(const T  m, const U p)
 {
 	Integer M(m);
 	Integer P(p);
@@ -73,7 +73,7 @@ template< class T, class U>
 int test1( const T m, const U p)
 {
 	// double pi (p);
-	long int r =  ref_modulo(m, p);
+	int64_t r =  ref_modulo(m, p);
 
 	const Integer M(m);
 	const Integer P(p);
@@ -103,7 +103,7 @@ template< class T, class U>
 int test1bis( const T m, const U p)
 {
 	double pi = (double) p;
-	long int r =  ref_modulobis(m, p);
+	int64_t r =  ref_modulobis(m, p);
 	// if (r<0)  r += (IsNeg(p) )?(-p):(p); // r est dans [[0,p-1]]
 	const Integer M(m);
 	const Integer P(p);
@@ -173,7 +173,7 @@ template< class T, class U>
 int test3( const T m, const U p)
 {
 	int pi = int(p);
-	long int q = (long int)(m / (T)p);
+	int64_t q = (int64_t)(m / (T)p);
 	const Integer M(m);
 	const Integer P(p);
 	Integer Q ;
@@ -207,14 +207,14 @@ int test3( const T m, const U p)
 int main()
 {
 #if (SIZEOF_LONG==8)
-	long int m = 1253345363665346363;
+	int64_t m = 1253345363665346363;
 #else
-	long int m = 1665346363;
+	int64_t m = 1665346363;
 #endif
 
-	long int p = 78678675;
-	unsigned long int M((unsigned long)m);
-	unsigned long int P((unsigned long)p);
+	int64_t p = 78678675;
+	uint64_t M((uint64_t)m);
+	uint64_t P((uint64_t)p);
 
         Integer mOne(-1);
             // CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep

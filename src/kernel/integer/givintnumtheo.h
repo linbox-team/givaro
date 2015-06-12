@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 //
-// Time-stamp: <30 Jun 04 10:59:26 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 16:42:27 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givintnumtheo.h
@@ -25,6 +25,7 @@
 #include "givaro/givintprime.h"
 #include "givaro/givintfactor.h"
 #include "givaro/givrandom.h"
+#include "givaro/udl.h"
 
 namespace Givaro {
 	//! Num theory Domain.
@@ -48,7 +49,7 @@ namespace Givaro {
 				//! Primitive Root
 				// =================================================================== //
 				Rep& prim_root(Rep&, const Rep&) const ;
-				Rep& prim_root(Rep&, unsigned long&, const Rep&) const ;
+				Rep& prim_root(Rep&, uint64_t&, const Rep&) const ;
 				Rep& prim_root_of_prime(Rep&, const Rep&) const ;
 				template<class Array> Rep& prim_root_of_prime(Rep& A, const Array& Lf, const Rep& phin, const Rep& n) const ;
 
@@ -58,7 +59,7 @@ namespace Givaro {
 				*  [Dubrois & Dumas, Industrial-strength primitive roots]
 				*  Returns the probable primitive root and the probability of error.
 				*/
-				Rep& probable_prim_root(Rep&, double&, const Rep& n, const unsigned long L = 10000000) const;
+				Rep& probable_prim_root(Rep&, double&, const Rep& n, const uint64_t L = 10000000_ui64) const;
 
 				//!  Here L is computed so that the error is close to epsilon
 				Rep& probable_prim_root(Rep&, double&, const Rep& n, const double epsilon) const;
@@ -86,8 +87,8 @@ namespace Givaro {
 				Rep& prim_base(Rep & , const Rep&) const ;
 				Rep& lambda_base(Rep & , const Rep&) const ;
 			public:
-				Rep& lambda_primpow(Rep & , const Rep&, unsigned long) const ;
-				Rep& lambda_inv_primpow(Rep & , const Rep&, unsigned long) const ;
+				Rep& lambda_primpow(Rep & , const Rep&, uint64_t) const ;
+				Rep& lambda_inv_primpow(Rep & , const Rep&, uint64_t) const ;
 				Rep& lambda(Rep & , const Rep&) const ;
 				Rep& lambda_inv(Rep & , const Rep&) const ;
 

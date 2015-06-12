@@ -53,9 +53,9 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     typename Ring::Element a, b, c, d,a_,b_,c_,d_;
     typename Ring::Element e,e_;
 
-    F.init(a, 0UL);
+    F.init(a, 0U);
     TESTE_EG(a, F.zero);
-    F.init(a, 1UL);
+    F.init(a, 1U);
     //         F.write(std::cerr) << std::endl;
     //         F.write(std::cerr << "a: ", a) << std::endl;
     //         F.write(std::cerr << "1: ", F.one) << std::endl;
@@ -153,12 +153,12 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 #endif
 
 template<class Ring>
-int TestRing(const Ring& F, const unsigned  long seed)
+int TestRing(const Ring& F, const uint64_t seed)
 {
     typename Ring::Element x, y;
     typename Ring::RandIter g(F, seed);
     
-    F.init(x, 7UL);
+    F.init(x, 7U);
     F.init(y, -29.0);
     JEONETESTE(F,x,y);
     
@@ -178,10 +178,10 @@ int TestRing(const Ring& F, const unsigned  long seed)
 #endif
 
 template<class Ring>
-int TestPolRing(const Ring& F, const unsigned long seed)
+int TestPolRing(const Ring& F, const uint64_t seed)
 {
     GivRandom generator(seed);
-    srand48((long)seed);
+    srand48((int64_t)seed);
 
     for (size_t i = 0; i < NBITERD; ++i) {
         int d1 = int (lrand48() % DEGMAX);
@@ -206,7 +206,7 @@ int TestPolRing(const Ring& F, const unsigned long seed)
 
 int main(int argc, char ** argv)
 {
-    auto seed = static_cast<unsigned long>(argc>1?atoi(argv[1]):BaseTimer::seed());
+    auto seed = static_cast<uint64_t>(argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif

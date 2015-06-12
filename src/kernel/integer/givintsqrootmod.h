@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Jan 11 15:53:22 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 16:42:58 Jean-Guillaume.Dumas@imag.fr>
 // Author : Yanis Linge
 // ============================================================= //
 
@@ -42,11 +42,11 @@ public:
         // ======================================================== //
     Rep & sqrootmod (Rep & x, const Rep & a, const Rep & n) const {
         std::vector < Rep > Lf;
-        std::vector < unsigned long > Le;
+        std::vector < uint64_t > Le;
         Father_t::set (Lf, Le, n);
 
         typename std::vector < Rep >::const_iterator Lf_iter = Lf.begin ();
-        typename std::vector < unsigned long >::const_iterator Le_iter = Le.begin ();
+        typename std::vector < uint64_t >::const_iterator Le_iter = Le.begin ();
 
         std::vector < Rep > roots;
         Rep tmp;
@@ -64,7 +64,7 @@ public:
             // roots mod powers of primes
         for (; Lf_iter != Lf.end (); ++Lf_iter, ++Le_iter, ++Pe_iter){
                 // root mod a power of 2
-            if (*Lf_iter == 2UL){
+            if (*Lf_iter == 2U){
                 roots.push_back (
                     this->sqrootmodpoweroftwo (tmp, a, *Le_iter, *Pe_iter));
             } else {
@@ -89,10 +89,10 @@ public:
     Rep & sqrootmodprime (Rep & x, const Rep & a, const Rep & p) const;
 
         // p is supposed to be prime, modulo is taken mod p^k
-    Rep & sqrootmodprimepower (Rep & x, const Rep & a, const Rep & p, const unsigned long k, const Rep &pk) const;
+    Rep & sqrootmodprimepower (Rep & x, const Rep & a, const Rep & p, const uint64_t k, const Rep &pk) const;
 
         // modulo is taken mod 2^k
-    Rep & sqrootmodpoweroftwo (Rep & x, const Rep & a,const unsigned long k, const Rep & pk) const;
+    Rep & sqrootmodpoweroftwo (Rep & x, const Rep & a,const uint64_t k, const Rep & pk) const;
 
 protected:
 
@@ -101,10 +101,10 @@ protected:
         // ======================================================== //
 
         // p is supposed to be prime and odd
-    Rep & sqrootlinear (Rep & x, const Rep & a,const Rep & p,const unsigned long k) const;
+    Rep & sqrootlinear (Rep & x, const Rep & a,const Rep & p,const uint64_t k) const;
 
         // result is modulo 2^{k+1}
-    Rep & sqroottwolinear(Rep & x, const Rep & a,const unsigned long k) const;
+    Rep & sqroottwolinear(Rep & x, const Rep & a,const uint64_t k) const;
 
         // ======================================================== //
         // Liftings
@@ -112,15 +112,15 @@ protected:
 
         // PRECONDITION: x^2 = a [p^k]
         // RETURNS: x s.t. x^2 = a [p^{2k}]
-    Rep & sqroothensellift (Rep & x, const Rep & a, const Rep & p, const unsigned long k, const Rep & pk) const;
+    Rep & sqroothensellift (Rep & x, const Rep & a, const Rep & p, const uint64_t k, const Rep & pk) const;
 
         // PRECONDITION: x^2 = a [p^k]
         // RETURNS: x s.t. x^2 = a [p^{k+1}]
-    Rep & sqrootonemorelift (Rep & x, const Rep & a, const Rep & p, const unsigned long k, const Rep & pk) const;
+    Rep & sqrootonemorelift (Rep & x, const Rep & a, const Rep & p, const uint64_t k, const Rep & pk) const;
 
         // PRECONDITION: x^2 = a [2^k], with k>=3, a and x are odd
         // RETURNS: x s.t. x^2 = a [2^{2k-2}]
-    Rep & sqrootmodtwolift (Rep & x, const Rep & a, const unsigned long k, const Rep & pk) const;
+    Rep & sqrootmodtwolift (Rep & x, const Rep & a, const uint64_t k, const Rep & pk) const;
 
 };
 

@@ -189,7 +189,7 @@ namespace Givaro {
 	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::eval (Type_t& res, const Rep& P, const Type_t& Val) const
 	{
 		typename Domain::Element tmp;
-		_domain.init(tmp,0UL);
+		_domain.init(tmp,0U);
 		Degree dP ; degree(dP, P);
 		if (dP == Degree::deginfty) _domain.assign(res, _domain.zero);
 		else {

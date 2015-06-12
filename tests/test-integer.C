@@ -209,13 +209,13 @@ int test_cast_unit(const Integer& a, const Integer& b) {
     int res = 0;
     res = test_cast_unit( (bool) Integer::random<false>(), a, b);
 		if (res) return res ;
-    res = test_cast_unit( (unsigned short) Integer::random<false>(), a, b);
+    res = test_cast_unit( (uint16_t) Integer::random<false>(), a, b);
 		if (res) return res ;
     res = test_cast_unit( (unsigned char) Integer::random<false>(), a, b);
 		if (res) return res ;
-    res = test_cast_unit( (unsigned int) Integer::random<false>(), a, b);
+    res = test_cast_unit( (uint32_t) Integer::random<false>(), a, b);
 		if (res) return res ;
-    res = test_cast_unit( (unsigned long) Integer::random<false>(), a, b);
+    res = test_cast_unit( (uint64_t) Integer::random<false>(), a, b);
 		if (res) return res ;
 
     return 0;
@@ -253,7 +253,7 @@ int test_cast() {
 
 int main (int argc, char ** argv)
 {
-    unsigned long seed = (unsigned long)(argc>1?(unsigned long)atoi(argv[1]):(unsigned long)BaseTimer::seed ());
+    uint64_t seed = (uint64_t)(argc>1?(uint64_t)atoi(argv[1]):(uint64_t)BaseTimer::seed ());
 #ifdef GIVARO_DEBUG
     std::cerr << "Seed: " << seed << std::endl;
 #endif

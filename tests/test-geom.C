@@ -4,7 +4,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // -------------------------------------------------------------
-// Time-stamp: <06 Apr 11 17:42:23 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 16:48:44 Jean-Guillaume.Dumas@imag.fr>
 //
 // Interpolation at geometric points
 // see: Polynomial evaluation and interpolation on special sets
@@ -29,7 +29,7 @@ long long TTcount = 0;
 #endif
 
 struct BlackBoxPolynomial {
-    typedef Poly1Dom<GFqDom<long>,Dense > PolDom_t;
+    typedef Poly1Dom<GFqDom<int64_t>,Dense > PolDom_t;
     typedef PolDom_t::Element	    Polynomial;
     typedef PolDom_t::Type_t	    Type_t;
 
@@ -49,7 +49,7 @@ struct BlackBoxPolynomial {
 
 
 struct BlackBoxVectorOfPolynomial {
-    typedef Poly1Dom<GFqDom<long>,Dense > PolDom_t;
+    typedef Poly1Dom<GFqDom<int64_t>,Dense > PolDom_t;
     typedef PolDom_t::Element	    Polynomial;
     typedef PolDom_t::Type_t	    Type_t;
     typedef std::vector< Type_t > Vect_t;
@@ -79,7 +79,7 @@ template<class Interp, class RandIter>
 bool TestOneField(Interp& FD, RandIter& generator, size_t degmax) {
 
     typename Interp::Polynomial_t nouv, prec;
-    FD.getpoldomain().random(generator, prec, Degree((long)degmax) );
+    FD.getpoldomain().random(generator, prec, Degree((int64_t)degmax) );
 
 #ifdef GIVARO_DEBUG
     FD.getpoldomain().write(std::cout << "Precedent: ", prec) << std::endl;
@@ -116,7 +116,7 @@ bool TestOneFieldVect(Interp& FD, RandIter& generator, size_t degmax, size_t num
 
     std::vector<typename Interp::Polynomial_t> nouv(numpol), prec(numpol);
     for(size_t i=0; i< numpol; ++i) {
-        FD.getpoldomain().random(generator, prec[i], Degree((long)degmax) );
+        FD.getpoldomain().random(generator, prec[i], Degree((int64_t)degmax) );
 #ifdef GIVARO_DEBUG
         FD.getpoldomain().write(std::cout << "Precedent[" << i << "]: ", prec[i]) << std::endl;
 #endif
@@ -159,7 +159,7 @@ int main(int argc, char ** argv) {
         // argv[3] : num poly max
         // argv[4] : seed
 
-    GFqDom<long>::Residu_t MOD = (argc>1 ? (GFqDom<long>::Residu_t) atoi(argv[1]) : 101);
+    GFqDom<int64_t>::Residu_t MOD = (argc>1 ? (GFqDom<int64_t>::Residu_t) atoi(argv[1]) : 101);
     size_t degmax = (argc>2 ? (size_t)atoi(argv[2]) : 20);
     size_t numpolmax = (argc>3 ? (size_t)atoi(argv[3]) : 15);
 
@@ -169,9 +169,9 @@ int main(int argc, char ** argv) {
 #endif
     GivRandom generator(seed);
 
-    GFqDom<long> F(MOD);
-    NewtonInterpGeom< GFqDom<long> > FD(F, Indeter("X"));
-    NewtonInterpGeomMultip< GFqDom<long> > FDM(F, Indeter("X"));
+    GFqDom<int64_t> F(MOD);
+    NewtonInterpGeom< GFqDom<int64_t> > FD(F, Indeter("X"));
+    NewtonInterpGeomMultip< GFqDom<int64_t> > FDM(F, Indeter("X"));
 
     bool success = true;
 

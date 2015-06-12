@@ -60,7 +60,7 @@ namespace Givaro {
 	//#ifndef __ECC
 	template<class RandIter>
 	template< template<class, class> class Container, template <class> class Alloc>
-	//short IntNumTheoDom<RandIter>::mobius(const Container<unsigned long, Alloc<unsigned long> >& lpow) const
+	//short IntNumTheoDom<RandIter>::mobius(const Container<uint64_t, Alloc<uint64_t> >& lpow) const
 	//#else
 	//template<class RandIter>
 	//template<template <class, class> class Container, template <class> class Alloc>
@@ -84,7 +84,7 @@ namespace Givaro {
 	short IntNumTheoDom<RandIter>::mobius(const Rep& a) const
 	{
 		std::list< Rep> lr;
-		std::list<unsigned long> lp;
+		std::list<uint64_t> lp;
 		Father_t::set(lr, lp, a);
 		return mobius(lp);
 	}
@@ -95,7 +95,7 @@ namespace Givaro {
 	// =================================================================== //
 
 	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, unsigned long& runs, const Rep& n) const
+	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, uint64_t& runs, const Rep& n) const
 	{
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else infinite loop
@@ -186,7 +186,7 @@ namespace Givaro {
 
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, const Rep& n) const
-	{ unsigned long runs; return prim_root(A, runs, n); }
+	{ uint64_t runs; return prim_root(A, runs, n); }
 
 	/*
 	   template<class T, template <class, class> class Container, template<class> class Alloc>
@@ -209,13 +209,13 @@ namespace Givaro {
 	//  [Dubrois & Dumas, Industrial-strength primitive roots]
 	//  Returns the probable primitive root and the probability of error.
 	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const unsigned long L) const
+	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const uint64_t L) const
 	{
 		// std::cerr << "L: " << L << std::endl;
 
 		// partial factorisation
 		std::vector<Rep> Lq;
-		std::vector<unsigned long> e;
+		std::vector<uint64_t> e;
 		Rep Q, pmun(p); --pmun;
 		primroot = 1;
 
@@ -255,7 +255,7 @@ namespace Givaro {
 			error = 0.0;
 
 		typename std::vector<Rep>::const_iterator Lqi = Lq.begin();
-		typename std::vector<unsigned long>::const_iterator ei = e.begin();
+		typename std::vector<uint64_t>::const_iterator ei = e.begin();
 		for ( ; Lqi != Lq.end(); ++Lqi, ++ei) {
 			this->div(Temp, pmun, *Lqi);
 			do {
@@ -287,7 +287,7 @@ namespace Givaro {
 	template<class RandIter>
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const double epsilon) const
 	{
-		unsigned long L;
+		uint64_t L;
 		double t1, t4, t5, t6, t7, t8, t10, t11, t17, t20, t23, t32(1.0/epsilon), B(1.0);
 
 		t1 = (double)p-1.0;          // p-1
@@ -308,7 +308,7 @@ namespace Givaro {
 		} while( (GIVABSDIFF(t32,B) > 0.5) && (B<1.8e+19) && ((1.0-t4*t11) > epsilon ) );
 		//         std::cerr << "t32: " << t32 << std::endl;
 		if (B<1.8e+19)
-			L = (unsigned long)::sqrt(t32);
+			L = (uint64_t)::sqrt(t32);
 		else
 			L = 0; // TOO small a precision, turning to deterministic process
 
@@ -549,14 +549,14 @@ namespace Givaro {
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_base(Rep& A, const Rep& m) const
 	{
 		// Prerequisite : m > 4, and m != 8.
-		std::vector<Rep> Lp; std::vector<unsigned long> Le;
+		std::vector<Rep> Lp; std::vector<uint64_t> Le;
 		Father_t::set(Lp, Le, m);
-		unsigned long nbf = Lp.size();
+		uint64_t nbf = Lp.size();
 		std::vector<Rep> Pe(nbf);
 		std::vector<Rep> Ra(nbf);
 
 		typename std::vector<Rep>::const_iterator p=Lp.begin();
-		typename std::vector<unsigned long>::const_iterator e=Le.begin() ;
+		typename std::vector<uint64_t>::const_iterator e=Le.begin() ;
 		typename std::vector<Rep>::iterator pe = Pe.begin();
 		typename std::vector<Rep>::iterator a = Ra.begin() ;
 		for( ;p!=Lp.end();++p, ++e, ++pe, ++a) {
@@ -575,7 +575,7 @@ namespace Givaro {
 
 
 	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_primpow(Rep & z, const Rep& p, const unsigned long e) const
+	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_primpow(Rep & z, const Rep& p, const uint64_t e) const
 	{
 		// Prerequisite : p prime.
 		if (areEqual(p, 2)) {
@@ -588,7 +588,7 @@ namespace Givaro {
 	}
 
 	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv_primpow(Rep & z, const Rep& p, const unsigned long e) const
+	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv_primpow(Rep & z, const Rep& p, const uint64_t e) const
 	{
 		// Prerequisite : p prime.
 		if (this->areEqual(p, 2)) {
@@ -635,16 +635,16 @@ namespace Givaro {
 	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_base(Rep & z, const Rep& m) const
 	{
 		// Prerequisite: m > 4, and m != 8.
-		std::vector<Rep> Lp; std::vector<unsigned long> Le;
+		std::vector<Rep> Lp; std::vector<uint64_t> Le;
 		Father_t::set(Lp, Le, m);
-		unsigned long nbf = Lp.size();
+		uint64_t nbf = Lp.size();
 
 		lambda_inv_primpow(z, Lp.front(), Le.front() );
 
 		if (nbf == 1) return z;
 
 		typename std::vector<Rep>::const_iterator p=Lp.begin();
-		typename std::vector<unsigned long>::const_iterator e=Le.begin() ;
+		typename std::vector<uint64_t>::const_iterator e=Le.begin() ;
 		for( ++p, ++e; p != Lp.end(); ++p, ++e) {
 			Rep tmp;
 			lambda_inv_primpow(tmp, *p, *e);

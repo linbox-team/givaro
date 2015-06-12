@@ -115,7 +115,7 @@ namespace Givaro {
 		P.reallocate((size_t)value(deg+1));
 
 		size_t sz = P.size();
-		for (unsigned int i=0; i<sz-1; ++i)
+		for (size_t i=0; i<sz-1; ++i)
 			_domain.assign(P[i], _domain.zero);
 		_domain.assign(P[sz-1], _domain.one);
 		return P;

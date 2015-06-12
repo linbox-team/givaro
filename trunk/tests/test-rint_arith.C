@@ -28,7 +28,6 @@ int main(void)
 {
     RecInt::rint<STD_RECINT_SIZE> x, y, z;
     mpz_class size, gx, gy, gz, gxy;
-    USItype r;
 
     // Init. size = 2 ^ (2 ^ STD_RECINT_SIZE)
     mpz_ui_pow_ui(size.get_mpz_t(), 2, STD_RECINT_SIZE);
@@ -68,7 +67,7 @@ int main(void)
 
         #if defined(GMP_OPUI)
         // Second test: with unsigned int
-        r = USItype(rand());
+        USItype r = USItype(rand());
         while (x < r) { rand(x); r = USItype(rand()); }
         RI_OP(z, x, r);
         rint_to_mpz(gx, x);

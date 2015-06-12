@@ -474,7 +474,7 @@ namespace Givaro {
 	}
 	int32_t isMOne(const Integer& a)
 	{
-		return ! mpz_cmp_si((mpz_srcptr)&(a.gmp_rep), 1L);
+		return ! mpz_cmp_si((mpz_srcptr)&(a.gmp_rep), 1);
 	}
 
 	int32_t nonZero(const Integer& a)

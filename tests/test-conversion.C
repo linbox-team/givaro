@@ -55,20 +55,16 @@ int testBasicConversion()
 
 	/*  test unsigned versions */
 	/*  cast towards unsigned consider only the absolute value */
-	int64_t vqq = (int64_t) qq;
-	int64_t q7  = (int64_t) q;
+	uint32_t vqq = (uint32_t) qq;
+	uint32_t q7  = (uint32_t) q;
 // 	std::cout << q7 << std::endl;
 // 	std::cout << uqq << std::endl;
 	if (q7 != -vqq)
 		return err = 7;
 
 	uint64_t q8 = (uint64_t) q;
-	if (q8 != (uint64_t)(-vqq))
+	if (q8 != -vqq)
 		return err = 8;
-
-	uint64_t q9 = (uint64_t) q;
-	if (q9 != (uint64_t)(-vqq))
-		return err = 9 ;
 
 	return err ;
 

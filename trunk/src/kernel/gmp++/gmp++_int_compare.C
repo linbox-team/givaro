@@ -100,12 +100,20 @@ namespace Givaro {
 
 	int32_t Integer::operator != (const int64_t l) const
 	{
+#if GMP_LIMB_BITS != 64
+		return this->operator != (Integer(l));
+#else
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
+#endif
 	}
 
 	int32_t Integer::operator != (const uint64_t l) const
 	{
+#if GMP_LIMB_BITS != 64
+		return this->operator != (Integer(l));
+#else
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) != 0;
+#endif
 	}
 
 	//-------------------------------------------------inline comparaison operators
@@ -142,37 +150,37 @@ namespace Givaro {
 	// operator ==
 	int32_t Integer::operator == (const Integer & l) const
 	{
-		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) == 0;
+		return !this->operator!=(l);
 	}
 
 	int32_t Integer::operator == (const double l) const
 	{
-		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) == 0;
+		return !this->operator!=(l);
 	}
 
 	int32_t Integer::operator == (const float l) const
 	{
-		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) == 0;
+		return !this->operator!=(l);
 	}
 
 	int32_t Integer::operator == (const int32_t l) const
 	{
-		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
+		return !this->operator!=(l);
 	}
 
 	int32_t Integer::operator == (const uint32_t l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) == 0;
+		return !this->operator!=(l);
 	}
 
 	int32_t Integer::operator == (const int64_t l) const
 	{
-		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
+		return !this->operator!=(l);
 	}
 
 	int32_t Integer::operator == (const uint64_t l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) == 0;
+		return !this->operator!=(l);
 	}
 
 	//-------------------------------------------------inline comparaison operators
@@ -234,12 +242,20 @@ namespace Givaro {
 
 	int32_t Integer::operator > (const int64_t l) const
 	{
+#if GMP_LIMB_BITS != 64
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
+#else
+		return this->operator > (Integer(l));
+#endif
 	}
 
 	int32_t Integer::operator > (const uint64_t l) const
 	{
+#if GMP_LIMB_BITS != 64
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
+#else
+		return this->operator > (Integer(l));
+#endif
 	}
 
 	//-------------------------------------------------inline comparaison operators
@@ -296,7 +312,11 @@ namespace Givaro {
 
 	int32_t Integer::operator < (const uint64_t l) const
 	{
+#if GMP_LIMB_BITS != 64
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
+#else
+		return this->operator < (Integer(l));
+#endif
 	}
 
 	int32_t Integer::operator < (const int32_t l) const
@@ -306,7 +326,11 @@ namespace Givaro {
 
 	int32_t Integer::operator < (const int64_t l) const
 	{
+#if GMP_LIMB_BITS != 64
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
+#else
+		return this->operator < (Integer(l));
+#endif
 	}
 
 	//-------------------------------------------------inline comparaison operators
@@ -343,37 +367,37 @@ namespace Givaro {
 	// Operator >=
 	int32_t Integer::operator >= (const Integer & l) const
 	{
-		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) >= 0;
+		return !this->operator<(l);
 	}
 
 	int32_t Integer::operator >= (const double l) const
 	{
-		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) >= 0;
+		return !this->operator<(l);
 	}
 
 	int32_t Integer::operator >= (const float l) const
 	{
-		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) >= 0;
+		return !this->operator<(l);
 	}
 
 	int32_t Integer::operator >= (const int32_t l) const
 	{
-		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
+		return !this->operator<(l);
 	}
 
 	int32_t Integer::operator >= (const uint32_t l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) >= 0;
+		return !this->operator<(l);
 	}
 
 	int32_t Integer::operator >= (const int64_t l) const
 	{
-		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
+		return !this->operator<(l);
 	}
 
 	int32_t Integer::operator >= (const uint64_t l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) >= 0;
+		return !this->operator<(l);
 	}
 
 	//-------------------------------------------------inline comparaison operators
@@ -410,37 +434,37 @@ namespace Givaro {
 	// Operator <=
 	int32_t Integer::operator <= (const Integer & l) const
 	{
-		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) <= 0;
+		return !this->operator>(l);
 	}
 
 	int32_t Integer::operator <= (const double l) const
 	{
-		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) <= 0;
+		return !this->operator>(l);
 	}
 
 	int32_t Integer::operator <= (const float l) const
 	{
-		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float) l) <= 0;
+		return !this->operator>(l);
 	}
 
 	int32_t Integer::operator <= (const uint32_t l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) <= 0;
+		return !this->operator>(l);
 	}
 
 	int32_t Integer::operator <= (const uint64_t l) const
 	{
-		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) <= 0;
+		return !this->operator>(l);
 	}
 
 	int32_t Integer::operator <= (const int32_t l) const
 	{
-		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
+		return !this->operator>(l);
 	}
 
 	int32_t Integer::operator <= (const int64_t l) const
 	{
-		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
+		return !this->operator>(l);
 	}
 
 	//-------------------------------------------------inline comparaison operators
@@ -510,11 +534,11 @@ namespace Givaro {
 	}
 	int32_t isZero(const uint16_t a)
 	{
-		return a ==0;
+		return a ==0U;
 	}
 	int32_t isZero(const uint32_t a)
 	{
-		return a ==0;
+		return a ==0U;
 	}
 	int32_t isZero(const uint64_t a)
 	{

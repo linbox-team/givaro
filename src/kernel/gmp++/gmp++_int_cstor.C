@@ -54,13 +54,29 @@ namespace Givaro {
 	//-----------------------------Integer(int64_t n)
 	Integer::Integer(int64_t n)
 	{
+#if GMP_LIMB_BITS != 64
+		// log[10](2^8) < 2.408239966
+		char * tmp = new char[long(2.408239966*(double)sizeof(long long))+1];
+		sprintf(tmp,"%lld",n);
+		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
+		delete [] tmp;
+#else
 		mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
+#endif
 	}
 
 	//-----------------------------Integer(uint64_t n)
 	Integer::Integer(uint64_t n)
 	{
+	{
+#if GMP_LIMB_BITS != 64
+		char * tmp = new char[ long(2.408239966*(double)sizeof(long long unsigned))+1];
+		sprintf(tmp,"%llu",n);
+		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
+		delete [] tmp;
+#else
 		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
+#endif
 	}
 
 	//-----------------------------Integer(double)

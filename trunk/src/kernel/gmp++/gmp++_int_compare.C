@@ -470,7 +470,7 @@ namespace Givaro {
 	// compare to 1 and 0
 	int32_t isOne(const Integer& a)
 	{
-		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 1UL);
+		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 1U);
 	}
 	int32_t isMOne(const Integer& a)
 	{
@@ -479,13 +479,13 @@ namespace Givaro {
 
 	int32_t nonZero(const Integer& a)
 	{
-		return mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
+		return mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0U);
 		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) != 0) ; // BB which one is faster ?
 	}
 
 	int32_t isZero(const Integer& a)
 	{
-		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
+		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0U);
 		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) == 0) ; // BB which one is faster ?
 	}
 	int32_t isZero(const int16_t a)
@@ -510,7 +510,7 @@ namespace Givaro {
 	}
 	int32_t isZero(const uint64_t a)
 	{
-		return a ==0UL;
+		return a ==0U;
 	}
 
 }

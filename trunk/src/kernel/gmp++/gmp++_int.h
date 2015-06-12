@@ -39,6 +39,8 @@
 #    define __USE_GMPPLUSPLUS_SIXTYFOUR__
 #endif
 
+#include <givaro/givcaster.h>
+
 namespace Givaro {
 
 	//------------------------------------------------------ Friend Integer
@@ -704,7 +706,7 @@ namespace Givaro {
 		/** @overload Integer::operator+=(Integer) */
 		template<class XXX>
 		Integer& operator +=(const XXX& n) {
-			return this->operator += ( (Integer)n );
+			return this->operator += ( Caster<Integer>(n) );
 		}
 
 		// - Friends
@@ -1455,7 +1457,7 @@ namespace Givaro {
 		///@{
 		Integer& operator++()
 		{ // prefix
-			return *this+=1UL;
+			return *this+=1U;
 		}
 		Integer operator++(int)
 		{ // postfix
@@ -1465,7 +1467,7 @@ namespace Givaro {
 		}
 		Integer& operator--()
 		{// prefix
-			return *this-=1UL;
+			return *this-=1U;
 		}
 		Integer operator--(int)
 		{// postfix
@@ -1484,7 +1486,7 @@ namespace Givaro {
 		///@{
 		operator bool() const
 		{
-			return *this!=0UL;
+			return *this!=0U;
 		}
 		operator int16_t() const
 		{

@@ -78,7 +78,7 @@ namespace Givaro {
 	// log(2) being close to 0.69314718055994531
 	double naturallog(const Integer& a)
 	{
-		int64_t exp_;
+		long int exp_;
 		double d = mpz_get_d_2exp( &exp_, (mpz_srcptr)&(a.gmp_rep) );
 		return (double)exp_*0.69314718055994531+log(d);
 	}

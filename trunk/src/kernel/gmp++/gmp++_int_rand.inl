@@ -58,7 +58,7 @@ namespace Givaro {
 	// BB : good seeding but not so efficient...
 	bool Integer::RandBool()
 	{
-		if (Integer::random(1UL)) return true;
+		if (Integer::random(1U)) return true;
 		else return false ;
 	}
 

@@ -144,19 +144,19 @@ namespace Givaro {
 	int64_t Integer::operator % (const uint64_t l) const
 	{
 #if 0
-		if (isZero(*this)) return 0UL;
+		if (isZero(*this)) return 0U;
 		if (this->priv_sign()>0)
 			return  mpz_tdiv_ui( (mpz_ptr)&gmp_rep, l);
 		else {
 			Integer Neg;
 			mpz_neg( (mpz_ptr)&(Neg.gmp_rep), (mpz_ptr)&gmp_rep );
 			uint64_t res = mpz_tdiv_ui( (mpz_ptr)&(Neg.gmp_rep), l);
-			if (res > 0UL) return (l-res);
-			else return 0UL;
+			if (res > 0U) return (l-res);
+			else return 0U;
 		}
 #endif
 
-		if (isZero(*this)) return 0UL;
+		if (isZero(*this)) return 0U;
 		bool isneg = (*this)<0 ;
 		//CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
 		uint64_t res = mpz_tdiv_ui( (mpz_srcptr)&gmp_rep, l);

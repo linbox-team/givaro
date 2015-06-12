@@ -46,7 +46,11 @@ namespace Givaro {
 
 	int32_t absCompare(const Integer &a, const uint64_t b)
 	{
+#if GMP_LIMB_BITS != 64
+		return absCompare( a, Integer(b));
+#else
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), b);
+#endif
 	}
 
 	int32_t absCompare(const Integer &a, const uint32_t b)
@@ -56,7 +60,11 @@ namespace Givaro {
 
 	int32_t absCompare(const Integer &a, const int64_t b)
 	{
+#if GMP_LIMB_BITS != 64
+		return absCompare( a, Integer(b));
+#else
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t) std::abs(b));
+#endif
 	}
 
 	int32_t absCompare(const Integer &a, const int32_t b)

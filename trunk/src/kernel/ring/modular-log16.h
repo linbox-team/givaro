@@ -1,12 +1,11 @@
 // ==========================================================================
-// $Source: /var/lib/cvs/Givaro/src/kernel/zpz/givzpz16table1.h,v $
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// $Id: givzpz16table1.h,v 1.17 2011-02-04 14:11:46 jgdumas Exp $
+// Time-stamp: <12 Jun 15 09:12:18 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -52,7 +51,6 @@ namespace Givaro
         typedef const Element* ConstElement_ptr;
 
 
-
         // ----- Representation of vector of the Element
         typedef Residu_t* Array;
         typedef const Residu_t* constArray;
@@ -62,8 +60,8 @@ namespace Givaro
         inline Modular( const Modular<Log16>& F);
         inline ~Modular();
 
-        int operator==( const Modular<Log16>& BC) const { return _p == BC._p;}
-        int operator!=( const Modular<Log16>& BC) const { return _p != BC._p;}
+        bool operator==( const Modular<Log16>& BC) const { return _p == BC._p;}
+        bool operator!=( const Modular<Log16>& BC) const { return _p != BC._p;}
 
         Modular<Log16>& operator=( const Modular<Log16>& F);
 
@@ -100,10 +98,10 @@ namespace Givaro
 
         // initialized by a degree of the generator.
         Rep& init( Rep& r ) const;
-        Rep& init( Rep& r, const long a) const;
-        Rep& init( Rep& a, const int i) const ;
-        Rep& init( Rep& r, const unsigned long a) const;
-        Rep& init( Rep& a, const unsigned int i) const ;
+        Rep& init( Rep& r, const int64_t a) const;
+        Rep& init( Rep& a, const int32_t i) const ;
+        Rep& init( Rep& r, const uint64_t a) const;
+        Rep& init( Rep& a, const uint32_t i) const ;
         Rep& init( Rep& a, const Integer& i) const ;
         Rep& init( Rep& a, const double i) const;
         Rep& init( Rep& a, const float i) const;
@@ -117,17 +115,17 @@ namespace Givaro
         void assign ( const size_t sz, Array r, constArray a ) const;
 
         // ----- Misc methods
-        int iszero( const Rep a ) const;
-        int isone ( const Rep a ) const;
-        int ismone ( const Rep a ) const;
-        int isZero( const Rep a ) const;
-        int isOne ( const Rep a ) const;
-        int isMOne ( const Rep a ) const;
+        bool iszero( const Rep a ) const;
+        bool isone ( const Rep a ) const;
+        bool ismone ( const Rep a ) const;
+        bool isZero( const Rep a ) const;
+        bool isOne ( const Rep a ) const;
+        bool isMOne ( const Rep a ) const;
         size_t length ( const Rep a ) const;
 
 
         // ----- Equality between two Elements
-        int areEqual( const Element& a, const Element& b) const {return a==b;}
+        bool areEqual( const Element& a, const Element& b) const {return a==b;}
 
 
         // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
@@ -193,7 +191,7 @@ namespace Givaro
 
         // <- \sum_i a[i] * b[i]
         Rep& dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
-        Rep& dotprod ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const;
+        Rep& dotprod ( Rep& r, const int32_t bound, const size_t sz, constArray a, constArray b ) const;
 
         // ----- a -> r: uint16_t to double
         void i2d ( const size_t sz, double* r, constArray a ) const;

@@ -66,12 +66,12 @@ namespace Givaro
 
         int32_t fourp = ((int32_t)p) << 2, fourpmone= ((int32_t)_pmone)<<2;
 
-        int not_found = 1;
+        bool not_found = 1;
         Residu_t accu = 1;
         Residu_t seed =2;
 
         // -- Find a generator of the multiplicative group
-        while (_p > 2 && not_found == 1)
+        while (_p > 2 && not_found)
         {
             for(i=1; i<_p; i++)
             {
@@ -85,7 +85,7 @@ namespace Givaro
                 std::cerr << "attempted to build Log16 field with non-prime base "<<_p<<", halting\n";
                 return;
             }
-            if (i ==_p-1) not_found = 0;
+            if (i ==_p-1) not_found = false;
             else {
                 do {
                     seed = Residu_t(rand() % _p);
@@ -457,17 +457,17 @@ namespace Givaro
 
     // ------------------------- Miscellaneous functions
 
-    inline int Modular<Log16, Log16>::iszero(const Rep a) const
+    inline bool Modular<Log16, Log16>::iszero(const Rep a) const
     {
         return a >= _p;
     }
 
-    inline int Modular<Log16, Log16>::isone(const Rep a) const
+    inline bool Modular<Log16, Log16>::isone(const Rep a) const
     {
         return a == Modular<Log16, Log16>::one;
     }
 
-    inline int Modular<Log16, Log16>::ismone(const Rep a) const
+    inline bool Modular<Log16, Log16>::ismone(const Rep a) const
     {
         return a == Modular<Log16, Log16>::mOne;
     }
@@ -478,15 +478,15 @@ namespace Givaro
         return Modular<Log16, Log16>::size_rep;
     }
 
-    inline int Modular<Log16, Log16>::isZero( const Rep a ) const
+    inline bool Modular<Log16, Log16>::isZero( const Rep a ) const
     {
         return iszero(a);
     }
-    inline int Modular<Log16, Log16>::isOne ( const Rep a ) const
+    inline bool Modular<Log16, Log16>::isOne ( const Rep a ) const
     {
         return isone(a);
     }
-    inline int Modular<Log16, Log16>::isMOne ( const Rep a ) const
+    inline bool Modular<Log16, Log16>::isMOne ( const Rep a ) const
     {
         return ismone(a);
     }
@@ -533,15 +533,15 @@ namespace Givaro
         return r = a;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const long a ) const
+    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const int64_t a ) const
     {
-        int sign; unsigned long ua;
+        int sign; uint64_t ua;
         if (a <0) {
             sign =-1;
-            ua = (unsigned long)-a;
+            ua = (uint64_t)-a;
         }
         else {
-            ua = (unsigned long)a;
+            ua = (uint64_t)a;
             sign =1;
         }
         r = Rep( (ua >=_p) ? ua % _p : ua );
@@ -551,19 +551,19 @@ namespace Givaro
         return r = _tab_value2rep[r];
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const int a ) const
+    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const int32_t a ) const
     {
-        return Modular<Log16, Log16>::init( r, (long)a);
+        return Modular<Log16, Log16>::init( r, (int64_t)a);
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const unsigned long a ) const
+    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const uint64_t a ) const
     {
         r = Rep((a >=_p) ? a % _p : a);
         assert(r < _p);
         return r= _tab_value2rep[r];
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const unsigned int a ) const
+    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const uint32_t a ) const
     {
         r = Rep((a >=_p) ? a % _p : a);
         assert(r < _p);
@@ -579,12 +579,12 @@ namespace Givaro
 
     inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const int16_t a ) const
     {
-        return Modular<Log16, Log16>::init( r, (long)a);
+        return Modular<Log16, Log16>::init( r, (int64_t)a);
     }
 
     inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init( Rep& a, const double i) const
     {
-        return init(a,(long)i);
+        return init(a,(int64_t)i);
     }
     inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init( Rep& a, const float i) const
     {
@@ -616,11 +616,11 @@ namespace Givaro
 
 
     inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::dotprod
-    ( Rep& r, const int bound, const size_t sz, constArray a, constArray b ) const
+    ( Rep& r, const int32_t bound, const size_t sz, constArray a, constArray b ) const
     {
-        unsigned int stride = 1;
-        if ((unsigned long)bound < GIVARO_MAXUINT16)
-            stride = (unsigned int) ( GIVARO_MAXUINT32/((unsigned long)bound * (unsigned long)bound) );
+        uint32_t stride = 1;
+        if ((uint64_t)bound < GIVARO_MAXUINT16)
+            stride = (uint32_t) ( GIVARO_MAXUINT32/((uint64_t)bound * (uint64_t)bound) );
         uint32_t dot = (uint32_t)zero;
         if ((sz <10) && (sz <stride)) {
             for(  size_t i= sz; i--; )
@@ -635,8 +635,8 @@ namespace Givaro
             }
 
         }
-        unsigned int i_begin=0;
-        stride &= (unsigned int)~0x1;
+        uint32_t i_begin=0;
+        stride &= (uint32_t)~0x1;
         if (stride ==0) {
             for(  size_t i= sz-1; i>0; --i) {
                 dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
@@ -659,7 +659,7 @@ namespace Givaro
                     dot += _tab_rep2value[a[1]] * _tab_rep2value[b[1]];
                 }
             if (dot>_p) dot %= _p;
-            i_begin += (unsigned int) min_sz;
+            i_begin += (uint32_t) min_sz;
         } while (i_begin <sz);
         assert(dot < _p);
         return r = _tab_value2rep[dot];

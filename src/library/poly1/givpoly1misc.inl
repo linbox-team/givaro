@@ -253,7 +253,7 @@ namespace Givaro {
 		assign(W,one);
 		IntegerDom::Element n,q,r,deux,Zero;
 		ID.init(deux,2);
-		ID.init(Zero,0UL);
+		ID.init(Zero,0);
 		if (ID.islt(pwr,Zero) )
 			ID.neg(n,pwr);
 		else

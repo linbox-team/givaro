@@ -68,7 +68,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 
     TESTE_EG(a_, F.one);
 
-    F.init(ma,-1L);
+    F.init(ma,-1_i64);
 //         F.write(std::cerr) << std::endl;
 //         F.write(std::cerr << "a: ", a) << std::endl;
 //         F.write(std::cerr << "ma: ", ma) << std::endl;
@@ -203,7 +203,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 #endif
 
 template<class Field>
-int TestField(const Field& F, const int seed)
+int TestField(const Field& F, const uint64_t seed)
 {
     typename Field::Element x;
     typename Field::RandIter g(F, seed);
@@ -233,7 +233,7 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
-    Integer::seeding((unsigned long)seed);
+    Integer::seeding((uint64_t)seed);
     RecInt::srand(seed);
     
     using ModularCUS = Modular<int8_t, uint16_t>;

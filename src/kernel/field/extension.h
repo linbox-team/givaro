@@ -59,7 +59,7 @@ namespace Givaro {
 
 	//! XXX
     template<>
-	inline int64_t Exponent_Trait(const GFqDom<long>& F)
+	inline int64_t Exponent_Trait(const GFqDom<int64_t>& F)
 	{
         return F.exponent();
     }
@@ -129,7 +129,7 @@ namespace Givaro {
                     _pD = Pol_t(_bF, Y);
                     _extension_order = _exponent;
 		}
-		_pD.creux_random_irreducible( _irred, (long)_extension_order );
+		_pD.creux_random_irreducible( _irred, (int64_t)_extension_order );
             }
 
 
@@ -167,9 +167,9 @@ namespace Givaro {
             {
                 if (polydomain.isOne(_irred)) {
                     if (_cardinality < (1<<20) )
-                        _pD.creux_random_irreducible( _irred,  (long) _extension_order);
+                        _pD.creux_random_irreducible( _irred,  (int64_t) _extension_order);
                     else
-                        _pD.random_irreducible( _irred,  (long) _extension_order);
+                        _pD.random_irreducible( _irred,  (int64_t) _extension_order);
                 }
             }
 
@@ -349,9 +349,9 @@ namespace Givaro {
 
 	template<class RandIter> Element& random(RandIter& g, Element& r) const
             {
-	       	return _pD.random(g,r,Degree((long)_exponent-1));
+	       	return _pD.random(g,r,Degree((int64_t)_exponent-1));
             }
-	template<class RandIter> Element& random(RandIter& g, Element& r, long s) const
+	template<class RandIter> Element& random(RandIter& g, Element& r, int64_t s) const
             {
 	       	return _pD.random(g,r,(s>=_exponent?_exponent-1:s));
             }
@@ -361,9 +361,9 @@ namespace Givaro {
             }
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r) const
             {
-	       	return _pD.nonzerorandom(g,r,Degree((long)_exponent-1));
+	       	return _pD.nonzerorandom(g,r,Degree((int64_t)_exponent-1));
             }
-	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, long s) const
+	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, int64_t s) const
             {
 	       	return _pD.nonzerorandom(g,r,(s>=_exponent?_exponent-1:s));
             }
@@ -549,7 +549,7 @@ namespace Givaro {
                     // Create new random Elements
 		elt.resize( (size_t)(_field.order()));
 		for(typename Element::iterator it = elt.begin(); it != elt.end() ; ++ it) {
-                    long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
+                    int64_t tmp = static_cast<int64_t>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
                     (_field.base_field()).init(*it , tmp);
 			//(_field.base_field()) . random (*it);
 		}

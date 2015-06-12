@@ -22,7 +22,7 @@
 
 using namespace Givaro;
 
-typedef GFqDom<long>            Field1;
+typedef GFqDom<int64_t>            Field1;
 
 typedef Modular<int16_t>        Field2;
 typedef Modular<int32_t>        Field3;
@@ -174,7 +174,7 @@ int main(int argc, char ** argv)
     // argv[3] : seed for generator
 
     GivRandom seedor( argc>3 ? (unsigned)atoi(argv[3]): (unsigned)BaseTimer::seed() );
-    unsigned long seed = seedor.seed();
+    uint64_t seed = seedor.seed();
 
     Integer a1 = tmain<Field1>(argc, argv, GivRandom(seed), false);
     Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed));

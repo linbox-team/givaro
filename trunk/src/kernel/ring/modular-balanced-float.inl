@@ -173,7 +173,7 @@ ModularBalanced<float>::init(Element& x, const double y) const
 inline ModularBalanced<float>::Element&
 ModularBalanced<float>::init(Element& x, const int32_t y) const
 {
-    x = static_cast<Element>(y % _up);
+    x = static_cast<Element>(y % static_cast<int32_t>(_up));
     NORMALISE(x);
     return x;
 }

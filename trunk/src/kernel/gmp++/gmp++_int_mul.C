@@ -256,23 +256,7 @@ Integer Integer::operator * (const int64_t l) const
 	{
 		return n * l;
 	}
-	 Integer operator * (const Integer& n, const int32_t l)
-	{
-		return n * (int64_t)l;
-	}
-	 Integer operator * (const Integer& n, const uint32_t l)
-	{
-		return n * (uint64_t)l;
-	}
 
-	 Integer& operator *= (Integer& n, const int32_t l)
-	{
-		return n *= (int64_t)l;
-	}
-	 Integer& operator *= (Integer& n, const uint32_t l)
-	{
-		return n *= (uint64_t)l;
-	}
 
 
 }

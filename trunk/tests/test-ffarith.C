@@ -68,12 +68,12 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 
     TESTE_EG(a_, F.one);
 
-    F.init(ma,-1);
-    //         F.write(std::cerr) << std::endl;
-    //         F.write(std::cerr << "a: ", a) << std::endl;
-    //         F.write(std::cerr << "ma: ", ma) << std::endl;
-    //         F.write(std::cerr << "1: ", F.one) << std::endl;
-    //         F.write(std::cerr << "-1: ", F.mOne) << std::endl;
+    F.init(ma,-1L);
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "ma: ", ma) << std::endl;
+//         F.write(std::cerr << "1: ", F.one) << std::endl;
+//         F.write(std::cerr << "-1: ", F.mOne) << std::endl;
     TESTE_EG(ma, F.mOne);
 
     F.inv(a_, ma);

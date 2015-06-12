@@ -17,7 +17,6 @@
  * @ingroup integers
  * Core gmp++_int.h.
  */
-
 #include <vector>
 #include <list>
 #include <string>
@@ -738,6 +737,10 @@ namespace Givaro {
 		/** @overload Integer::operator+=(Integer) */
 		giv_all_inlined Integer& operator += (const int64_t n);
 		/** @overload Integer::operator+=(Integer) */
+		giv_all_inlined Integer& operator += (const uint32_t n)  { return this->operator+=((uint64_t)n); }
+		/** @overload Integer::operator+=(Integer) */
+		giv_all_inlined Integer& operator += (const int32_t n) { return this->operator+=((uint64_t)n); }
+		/** @overload Integer::operator+=(Integer) */
 		template<class XXX>
 		Integer& operator +=(const XXX& n) {
 			return this->operator += ( Caster<Integer>(n) );
@@ -753,19 +756,6 @@ namespace Givaro {
 		friend giv_all_inlined  Integer operator + (const int64_t l, const Integer& n);
 		/** @overload friend Integer::operator+(int,Integer) */
 		friend giv_all_inlined  Integer operator + (const uint64_t l, const Integer& n);
-		/** @overload friend Integer::operator+(int,Integer) */
-		friend giv_all_inlined  Integer operator + (const Integer& n, const int32_t l);
-		/** @overload friend Integer::operator+(int,Integer) */
-		friend giv_all_inlined  Integer operator + (const Integer& n, const uint32_t l);
-
-
-		//! operator +=.
-		//! @param n Integer
-		//! @param l to be added up
-		friend giv_all_inlined  Integer& operator += (Integer& n, const int32_t l);
-		/** @overload friend Integer::operator+=(Integer,int) */
-		friend giv_all_inlined  Integer& operator += (Integer& n, const uint32_t l);
-		/** @overload friend Integer::operator+=(Integer,int) */
 
 		// (FILE gmp++_int_sub.C)
 
@@ -794,6 +784,10 @@ namespace Givaro {
 		/** @overload Integer::operator-=(Integer) */
 		giv_all_inlined Integer& operator -= (const int64_t n);
 		/** @overload Integer::operator-=(Integer) */
+		giv_all_inlined Integer& operator -= (const uint32_t n) { return this->operator-=((uint64_t)n); }
+		/** @overload Integer::operator-=(Integer) */
+		giv_all_inlined Integer& operator -= (const int32_t n) { return this->operator-=((int64_t)n); }
+		/** @overload Integer::operator-=(Integer) */
 		template<class XXX>
 		Integer& operator -=(const XXX& n)
 		{
@@ -815,16 +809,6 @@ namespace Givaro {
 		friend giv_all_inlined  Integer operator - (const int64_t l, const Integer& n);
 		/** @overload friend Integer::operator-(int,Integer) */
 		friend giv_all_inlined  Integer operator - (const uint64_t l, const Integer& n);
-		/** @overload friend Integer::operator-(int,Integer) */
-		friend giv_all_inlined  Integer operator - (const Integer& n, const int32_t l);
-		/** @overload friend Integer::operator-(int,Integer) */
-		friend giv_all_inlined  Integer operator - (const Integer& n, const uint32_t l);
-
-		//! operator -=
-		//! @param l,n to be substracted
-		friend giv_all_inlined  Integer& operator -= (Integer& n, const int32_t l);
-		/** @overload friend Integer::operator-=(Integer,int) */
-		friend giv_all_inlined  Integer& operator -= (Integer& n, const uint32_t l);
 
 		// (FILE gmp++_int_mul.C)
 
@@ -837,6 +821,10 @@ namespace Givaro {
 		giv_all_inlined Integer  operator * (const uint64_t n) const;
 		/** @overload Integer::operator*(Integer) */
 		giv_all_inlined Integer  operator * (const int64_t n) const;
+		/** @overload Integer::operator*(Integer) */
+		giv_all_inlined Integer  operator * (const uint32_t n) const { return this->operator*((uint64_t)n); }
+		/** @overload Integer::operator*(Integer) */
+		giv_all_inlined Integer  operator * (const int32_t n) const { return this->operator*((int64_t)n); }
 
 		/*! operator \c *= .
 		 * @param n as in the formula.
@@ -847,6 +835,10 @@ namespace Givaro {
 		giv_all_inlined Integer& operator *= (const uint64_t n);
 		/** @overload Integer::operator*=(Integer) */
 		giv_all_inlined Integer& operator *= (const int64_t n);
+		/** @overload Integer::operator*=(Integer) */
+		giv_all_inlined Integer& operator *= (const uint32_t n) { return this->operator*=((uint64_t)n); }
+		/** @overload Integer::operator*=(Integer) */
+		giv_all_inlined Integer& operator *= (const int32_t n) { return this->operator*=((int64_t)n); }
 		/** @overload Integer::operator*=(Integer) */
 		template<class XXX>
 		Integer& operator *=(const XXX& n) {
@@ -862,16 +854,6 @@ namespace Givaro {
 		friend giv_all_inlined  Integer operator * (const int64_t l, const Integer& n);
 		/** @overload fried Integer::operator*(int,Integer) */
 		friend giv_all_inlined  Integer operator * (const uint64_t l, const Integer& n);
-		/** @overload fried Integer::operator*(int,Integer) */
-		friend giv_all_inlined  Integer operator * (const Integer& n, const int32_t l);
-		/** @overload fried Integer::operator*(int,Integer) */
-		friend giv_all_inlined  Integer operator * (const Integer& n, const uint32_t l);
-
-		//! operator *=
-		//! @param l,n to be multpct
-		friend giv_all_inlined  Integer& operator *= (Integer& n, const int32_t l);
-		/** @overload fried Integer::operator*(Integer,int) */
-		friend giv_all_inlined  Integer& operator *= (Integer& n, const uint32_t l);
 
 		///@}
 
@@ -1073,6 +1055,10 @@ namespace Givaro {
 		giv_all_inlined Integer  operator /  (const uint64_t d) const;
 		//! @overload Integer::operator/(Integer)
 		giv_all_inlined Integer  operator /  (const int64_t d) const;
+		//! @overload Integer::operator/(Integer)
+		giv_all_inlined Integer  operator /  (const uint32_t d) const { return this->operator/((uint64_t)d); }
+		//! @overload Integer::operator/(Integer)
+		giv_all_inlined Integer  operator /  (const int32_t d) const { return this->operator/((int64_t)d); }
 
 		/*! Division operator (inplace).
 		 * @param d divisor
@@ -1082,6 +1068,10 @@ namespace Givaro {
 		giv_all_inlined Integer& operator /= (const uint64_t d);
 		//! @overload Integer::operator/=(Integer)
 		giv_all_inlined Integer& operator /= (const int64_t d);
+		//! @overload Integer::operator/=(Integer)
+		giv_all_inlined Integer& operator /= (const uint32_t d) { return this->operator/=((uint64_t)d); }
+		//! @overload Integer::operator/=(Integer)
+		giv_all_inlined Integer& operator /= (const int32_t d) { return this->operator/=((int64_t)d); }
 		//! @overload Integer::operator/=(Integer)
 		template<class XXX>
 		Integer& operator /=(const XXX& d) {
@@ -1093,17 +1083,11 @@ namespace Givaro {
 		//! @overload Integer::operator/(int,Integer)
 		friend giv_all_inlined  Integer operator / (const int64_t l,
 							    const Integer& n);
+		//! operator /
+		friend giv_all_inlined  Integer operator / (const uint32_t l, const Integer& n);
 		//! @overload Integer::operator/(int,Integer)
-		friend giv_all_inlined  Integer operator / (const Integer& n, const int32_t l);
-		//! @overload Integer::operator/(int,Integer)
-		friend giv_all_inlined  Integer operator / (const Integer& n, const uint32_t l);
-
-		//! operator /=
-		friend giv_all_inlined  Integer& operator /= (Integer& n, const int32_t l);
-		//! @overload Integer::operator/=(Integer,int)
-		friend giv_all_inlined  Integer& operator /= (Integer& n, const int64_t l);
-		//! @overload Integer::operator/=(Integer,int)
-		friend giv_all_inlined  Integer& operator /= (Integer& n, const uint32_t l);
+		friend giv_all_inlined  Integer operator / (const uint64_t l,
+							    const Integer& n);
 
 		/*!  Function \c mod (inplace).
 		 * \f$ r \gets r \mod n\f$
@@ -1129,6 +1113,19 @@ namespace Givaro {
 		//! @overload Integer::mod(Integer,Integer,Integer)
 		static giv_all_inlined  Integer& mod   (Integer& r,
 							const Integer& n, const uint64_t d);
+		//! @overload Integer::mod(Integer,Integer,Integer)
+		static giv_all_inlined  Integer& mod   (Integer& r,
+                                                const Integer& n, const int32_t d) 
+            {
+                return Integer::mod(r,n,(int64_t)d);
+            }
+        
+		//! @overload Integer::mod(Integer,Integer,Integer)
+		static giv_all_inlined  Integer& mod   (Integer& r,
+							const Integer& n, const uint32_t d)
+            {
+                return Integer::mod(r,n,(uint64_t)d);
+            }
 
 		/*! Euclidean division.
 		 * <code> n = d q + r </code>.
@@ -1200,6 +1197,11 @@ namespace Givaro {
 		//! @overload Integer::operator%(Integer);
 		giv_all_inlined int64_t     operator % (const int64_t n) const;
 		//! @overload Integer::operator%(Integer);
+		giv_all_inlined int32_t     operator % (const uint32_t n) const { return (int32_t)this->operator%((uint64_t)n); }
+		//! @overload Integer::operator%(Integer);
+		giv_all_inlined int32_t     operator % (const int32_t n) const { return (int32_t)this->operator%((int64_t)n); }
+                
+		//! @overload Integer::operator%(Integer);
 		giv_all_inlined double   operator % (const double n) const;
 		//! @overload Integer::operator%(Integer);
 		int16_t    operator % (const uint16_t n) const
@@ -1210,7 +1212,7 @@ namespace Givaro {
 		template<class XXX>
 		XXX      operator %(const XXX& n) const
 		{
-			return (XXX)this->operator % ( Integer(n) );
+ 			return (XXX)this->operator % ( Integer(n) );
 		}
 
 		/** operator %
@@ -1218,18 +1220,15 @@ namespace Givaro {
 		 * @param n
 		 * @return n%l
 		 */
-		friend giv_all_inlined  Integer operator % (const int32_t l, const Integer& n);
-		//! @overload Integer::operator%(int,Integer);
 		friend giv_all_inlined  Integer operator % (const int64_t l, const Integer& n);
 		//! @overload Integer::operator%(int,Integer);
-		friend giv_all_inlined  Integer operator % (const Integer& n, const int32_t l);
+		friend giv_all_inlined  Integer operator % (const uint64_t l, const Integer& n);
 		//! @overload Integer::operator%(int,Integer);
-		friend giv_all_inlined  Integer operator % (const Integer& n, const uint32_t l);
+		friend giv_all_inlined  Integer operator % (const int32_t l, const Integer& n);
+                
 		//! @overload Integer::operator%(int,Integer);
-
-		friend giv_all_inlined  Integer& operator %= (Integer& n, const int32_t l);
+		friend giv_all_inlined  Integer operator % (const uint32_t l, const Integer& n);
 		//! @overload Integer::operator%(int,Integer);
-		friend giv_all_inlined  Integer& operator %= (Integer& n, const uint32_t l);
 
 
 		/*! Modulo operator (inplace).
@@ -1241,6 +1240,10 @@ namespace Givaro {
 		giv_all_inlined Integer&  operator %= (const uint64_t n);
 		//! @overload Integer::operator%=(Integer);
 		giv_all_inlined Integer&  operator %= (const int64_t n);
+		//! @overload Integer::operator%=(Integer);
+		giv_all_inlined Integer&  operator %= (const uint32_t n) { return this->operator%=((uint64_t)n); }
+		//! @overload Integer::operator%=(Integer);
+		giv_all_inlined Integer&  operator %= (const int32_t n) { return this->operator%=((int64_t)n); }
 		//! @overload Integer::operator%=(Integer);
 		template<class XXX>
 		Integer& operator  %=(const XXX& n) {

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfqext.h
-// Time-stamp: <30 Sep 14 10:25:12 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 16:28:43 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
@@ -258,7 +258,7 @@ namespace Givaro {
 
 			typedef typename Father_t::Element ZElem;
 			Father_t Zp(this->_characteristic,1);
-			ZElem q,mq; Zp.init(q,2UL);
+			ZElem q,mq; Zp.init(q,2);
 			dom_power(q,q,_BITS,Zp);
 			Zp.neg(mq,q);
 

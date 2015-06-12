@@ -666,43 +666,43 @@ namespace Givaro {
 
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int32_t Residu ) const
     {
-        int tr = Residu ;
+        int32_t tr = Residu ;
         if (tr <0) {
                 // -a = b [p]
                 // a = p-b [p]
             tr = -tr;
-            if (tr >= (int)_characteristic )
-                tr =(int)( (UT)tr % _characteristic ) ;
+            if (tr >= (int32_t)_characteristic )
+                tr =(int32_t)( (UT)tr % _characteristic ) ;
             if (tr)
                 return r = (Rep) _pol2log[(UT) _characteristic - (UT)tr ];
             else
                 return r = zero;
         }
         else {
-            if (tr >= (int)_characteristic )
-                tr = int((unsigned int)tr % _characteristic ) ;
+            if (tr >= (int32_t)_characteristic )
+                tr = int32_t((uint32_t)tr % _characteristic ) ;
             return r = (Rep)_pol2log[ (UT)tr ];
         }
     }
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int64_t Residu ) const
     {
-        long tr = Residu ;
+        int64_t tr = Residu ;
         if (tr <0) {
                 // -a = b [p]
                 // a = p-b [p]
             tr = -tr;
-            if (tr >= (long)_characteristic )
-				tr = tr % (long)_characteristic ;
+            if (tr >= (int64_t)_characteristic )
+				tr = tr % (int64_t)_characteristic ;
             if (tr)
                 return r = (typename GFqDom<TT>::Rep) _pol2log[ (size_t)_characteristic - (size_t)tr ];
             else
                 return r = zero;
         } else {
-            if (tr >= (long)_characteristic )
-				tr = tr % (long)_characteristic ;
+            if (tr >= (int64_t)_characteristic )
+				tr = tr % (int64_t)_characteristic ;
             return r = (Rep)_pol2log[ (size_t)tr ];
         }
     }
@@ -733,63 +733,63 @@ namespace Givaro {
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const uint64_t Residu ) const
     {
-        unsigned long tr = Residu ;
+        uint64_t tr = Residu ;
         if (tr >= _characteristic )
-			tr =tr %  (unsigned long) _characteristic ;
+			tr =tr %  (uint64_t) _characteristic ;
         return r = (Rep)_pol2log[ (size_t)tr ];
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned int Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const uint32_t Residu ) const
     {
-        unsigned int tr = Residu ;
+        uint32_t tr = Residu ;
         if (tr >= _characteristic ) tr = tr % _characteristic ;
         return r = (Rep)_pol2log[ (size_t)tr ];
     }
 
-#ifndef __GIVARO__DONOTUSE_longlong__
-    template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const unsigned long long Residu ) const
-    {
-        unsigned long long tr = Residu ;
-        if (tr >= _characteristic ) tr = tr % _characteristic ;
-        return r = (Rep)_pol2log[ (size_t)tr ];
-    }
+// #ifndef __GIVARO__DONOTUSE_longlong__
+//     template<typename TT>
+//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const ulong long Residu ) const
+//     {
+//         ulong long tr = Residu ;
+//         if (tr >= _characteristic ) tr = tr % _characteristic ;
+//         return r = (Rep)_pol2log[ (size_t)tr ];
+//     }
 
-    template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long Residu ) const
-    {
-        long long tr = Residu ;
-        if (tr <0) {
-                // -a = b [p]
-                // a = p-b [p]
-            tr = -tr;
-            if (tr >= (long long)_characteristic ) tr = (unsigned long long)tr % _characteristic ;
-            if (tr)
-                return r = _pol2log[ _characteristic - (unsigned long long)tr ];
-            else
-                return r = zero;
-        } else {
-            if (tr >= (long long)_characteristic ) tr = (unsigned long long)tr % _characteristic ;
-            return r = _pol2log[ tr ];
-        }
-    }
+//     template<typename TT>
+//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long Residu ) const
+//     {
+//         long long tr = Residu ;
+//         if (tr <0) {
+//                 // -a = b [p]
+//                 // a = p-b [p]
+//             tr = -tr;
+//             if (tr >= (long long)_characteristic ) tr = (ulong long)tr % _characteristic ;
+//             if (tr)
+//                 return r = _pol2log[ _characteristic - (ulong long)tr ];
+//             else
+//                 return r = zero;
+//         } else {
+//             if (tr >= (long long)_characteristic ) tr = (ulong long)tr % _characteristic ;
+//             return r = _pol2log[ tr ];
+//         }
+//     }
 
 
-    template<typename TT>
-    inline unsigned long long& GFqDom<TT>::convert (unsigned long long& r, const Rep a) const
-    {
-        return r = (unsigned long long)_log2pol[ (unsigned long)a] ;
-    }
-    template<typename TT>
-    inline long long& GFqDom<TT>::convert (long long& r, const Rep a) const
-    {
-        return r = (long long)_log2pol[ (unsigned long)a] ;
-    }
+//     template<typename TT>
+//     inline ulong long& GFqDom<TT>::convert (ulong long& r, const Rep a) const
+//     {
+//         return r = (ulong long)_log2pol[ (ulong)a] ;
+//     }
+//     template<typename TT>
+//     inline long long& GFqDom<TT>::convert (long long& r, const Rep a) const
+//     {
+//         return r = (long long)_log2pol[ (ulong)a] ;
+//     }
 
-#endif
+// #endif
 
 
     template<typename TT>
@@ -813,27 +813,27 @@ namespace Givaro {
 
 
     template<typename TT>
-    inline long& GFqDom<TT>::convert (long& r, const Rep a) const
+    inline int64_t& GFqDom<TT>::convert (int64_t& r, const Rep a) const
     {
-        return r = (long)_log2pol[ (unsigned long)a] ;
+        return r = (int64_t)_log2pol[ (uint64_t)a] ;
     }
 
     template<typename TT>
-    inline unsigned long& GFqDom<TT>::convert (unsigned long& r, const Rep a) const
+    inline uint64_t& GFqDom<TT>::convert (uint64_t& r, const Rep a) const
     {
-        return r = (unsigned long)_log2pol[ (unsigned long)a] ;
+        return r = (uint64_t)_log2pol[ (uint64_t)a] ;
     }
 
     template<typename TT>
-    inline int& GFqDom<TT>::convert (int& r, const Rep a) const
+    inline int32_t& GFqDom<TT>::convert (int32_t& r, const Rep a) const
     {
-        return r = (int)_log2pol[ (UT)a] ;
+        return r = (int32_t)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
-    inline unsigned int& GFqDom<TT>::convert (unsigned int& r, const Rep a) const
+    inline uint32_t& GFqDom<TT>::convert (uint32_t& r, const Rep a) const
     {
-        return r = (unsigned int)_log2pol[ (UT)a] ;
+        return r = (uint32_t)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
@@ -866,7 +866,7 @@ namespace Givaro {
         typedef Poly1PadicDom< GFqDom<TT>, Dense > PadicDom;
         static PadicDom PAD(Pdom);
         Degree d;  Pdom.degree(d, P);
-        if (d >= (long)this->_exponent) {
+        if (d >= (int64_t)this->_exponent) {
             static typename PadicDom::Element tmp;
             static typename PadicDom::Element Irreducible = PAD.radix(tmp, this->_irred);
                 // All this was to get the irreducible polynomial
@@ -947,7 +947,7 @@ namespace Givaro {
     }
 
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, long s) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, int64_t s) const
     {
         return random(g,r);
     }
@@ -960,7 +960,7 @@ namespace Givaro {
     }
 
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, long s) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, int64_t s) const
     {
         return nonzerorandom(g,r);
     }
@@ -1032,7 +1032,7 @@ namespace Givaro {
                 //         Pdom.assign(G, Degree(1), Zp.one);
             Pdom.init(G, Degree(1));
 #else
-            Pdom.random_irreducible(F, Degree((long)e));
+            Pdom.random_irreducible(F, Degree((int64_t)e));
             Pdom.give_random_prim_root(G,F);
 #endif
 
@@ -1154,18 +1154,18 @@ namespace Givaro {
 
 
 #ifdef __GIVARO_COUNT__
-    template<typename TT> long long GFqDom<TT>::_mul_count = 0;
-    template<typename TT> long long GFqDom<TT>::_add_count = 0;
-    template<typename TT> long long GFqDom<TT>::_div_count = 0;
-    template<typename TT> long long GFqDom<TT>::_sub_count = 0;
-    template<typename TT> long long GFqDom<TT>::_neg_count = 0;
-    template<typename TT> long long GFqDom<TT>::_inv_count = 0;
-    template<typename TT> long long GFqDom<TT>::_mul_call = 0;
-    template<typename TT> long long GFqDom<TT>::_add_call = 0;
-    template<typename TT> long long GFqDom<TT>::_div_call = 0;
-    template<typename TT> long long GFqDom<TT>::_sub_call = 0;
-    template<typename TT> long long GFqDom<TT>::_neg_call = 0;
-    template<typename TT> long long GFqDom<TT>::_inv_call = 0;
+    template<typename TT> int64_t GFqDom<TT>::_mul_count = 0;
+    template<typename TT> int64_t GFqDom<TT>::_add_count = 0;
+    template<typename TT> int64_t GFqDom<TT>::_div_count = 0;
+    template<typename TT> int64_t GFqDom<TT>::_sub_count = 0;
+    template<typename TT> int64_t GFqDom<TT>::_neg_count = 0;
+    template<typename TT> int64_t GFqDom<TT>::_inv_count = 0;
+    template<typename TT> int64_t GFqDom<TT>::_mul_call = 0;
+    template<typename TT> int64_t GFqDom<TT>::_add_call = 0;
+    template<typename TT> int64_t GFqDom<TT>::_div_call = 0;
+    template<typename TT> int64_t GFqDom<TT>::_sub_call = 0;
+    template<typename TT> int64_t GFqDom<TT>::_neg_call = 0;
+    template<typename TT> int64_t GFqDom<TT>::_inv_call = 0;
 #endif
 
 } // namespace Givaro

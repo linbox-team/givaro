@@ -439,7 +439,7 @@ namespace Givaro {
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else returns zero
 		if (Rep::isleq(n,4)) return Rep::sub(A,n,this->one);
-		if (isZero(Rep::mod(A,n,4UL))) return A=this->zero;
+		if (isZero(Rep::mod(A,n,4LL))) return A=this->zero;
 		Rep phin, tmp;
 		phi(phin,n);
 		std::list<Rep> Lf;

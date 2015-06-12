@@ -30,16 +30,16 @@ template<class RandIter> unsigned int IntPrimeDom::Miller(RandIter& g, const Int
         // returns 0    : n composite
     if (n < 2) return 0;
     if (n <= 3) return 1;
-    IntPrimeDom::Rep t=n-1L,a,q;
+    IntPrimeDom::Rep t=n-1LL,a,q;
     random(g,a,n);
     long s=0;
     for( ; !( (int)t & 0x1) ; t>>=1, ++s) { }
     powmod(q,a,t,n);
-    if ( (q==1) || (q == (n-1L))) return 1;
+    if ( (q==1) || (q == (n-1LL))) return 1;
     // for(;s>1;--s) {
     for(;--s>0;) {
         q = (q*q) % n;
-        if (q == (n-1L)) return 1;
+        if (q == (n-1LL)) return 1;
     }
     return 0;
 }
@@ -53,7 +53,7 @@ IntPrimeDom::Rep& IntPrimeDom::test_Lehmann(RandIter& g, Rep& r, const Rep& n) c
         // else         : n composite
     IntPrimeDom::Rep A;
     random(g,A,n);
-    return powmod(r,A,(n-1L)/2,n);
+    return powmod(r,A,(n-1LL)/2,n);
 }
 
 template<class RandIter>
@@ -63,7 +63,7 @@ int IntPrimeDom::Lehmann(RandIter& g, const Rep& n)  const
     if (n <= 3) return 1;
     IntPrimeDom::Rep tmp;
     IntPrimeDom::test_Lehmann(g,tmp,n);
-    if (tmp == (n-1L))
+    if (tmp == (n-1LL))
         return 1;
     return 0;
 }

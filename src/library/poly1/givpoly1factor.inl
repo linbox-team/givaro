@@ -55,7 +55,7 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
                 }
 
                 Integer iMOD; Caster(iMOD, MOD);
-                Integer pp = (power(iMOD, d.value()) - 1L)/2;
+                Integer pp = (power(iMOD, d.value()) - 1LL)/2;
 // std::cerr << "pp: " << pp << std::endl;
                 Rep tp;
                 this->gcd(G1, G,
@@ -99,7 +99,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
                     return G1;
                 }
                 Integer iMOD; Caster(iMOD, MOD);
-                Integer pp = (power(iMOD, d.value()) - 1L)/2;
+                Integer pp = (power(iMOD, d.value()) - 1LL)/2;
                 Rep tp, tp2, G2;
                 this->gcd(G2,G, this->sub(tp2, this->powmod(tp, tmp, pp, G) , _domain.one) );
                 Degree dG2; this->degree(dG2,G2);

@@ -19,8 +19,8 @@ namespace Givaro {
 Rational Rational::operator * (const Rational& r) const
 {
 
-  if (isZero(r)) return Rational(0L) ;
-  if (isZero(*this)) return Rational(0L) ;
+  if (isZero(r)) return Rational(0) ;
+  if (isZero(*this)) return Rational(0) ;
   if (isOne(r)) return *this ;
   if (isOne(*this)) return r ;
   if (isInteger(*this) && isInteger(r))
@@ -44,7 +44,7 @@ Rational Rational::operator * (const Rational& r) const
 Rational& Rational::operator *= (const Rational& r)
 {
 
-  if (isZero(r)) return *this=Rational(0L) ;
+  if (isZero(r)) return *this=Rational(0) ;
   if (isZero(*this)) return *this ;
   if (isOne(r)) return *this ;
   if (isOne(*this)) return *this=r ;
@@ -77,7 +77,7 @@ Rational Rational::operator / (const Rational& r) const
   if ( isZero(r) ) {
      throw GivMathDivZero("*** division by zero, in operator / (const Rational&)") ;
   }
-  if (isZero(*this)) return Rational(0L) ;
+  if (isZero(*this)) return Rational(0) ;
   if (isOne(r)) return *this ;
   if (isOne(*this))  {
     if (sign(r) < 0)

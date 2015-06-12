@@ -46,12 +46,12 @@ namespace Givaro {
 
 #define NEED_POLYNOMIAL_REPRESENTATION(p,e) ((e) > FF_SUBEXPONENT_MAX((p),(e)))
 
-#define EXTENSION(q,expo) ( NEED_POLYNOMIAL_REPRESENTATION((q),(expo)) ? Extension<>((q), (expo)) : GFqDom<long>((q), (expo)) )
+#define EXTENSION(q,expo) ( NEED_POLYNOMIAL_REPRESENTATION((q),(expo)) ? Extension<>((q), (expo)) : GFqDom<int64_t>((q), (expo)) )
 
 
 	//! XXX
     template<typename Field>
-	unsigned long Exponent_Trait(const Field& F)
+	int64_t Exponent_Trait(const Field& F)
 	{
         return 1;
     }
@@ -59,7 +59,7 @@ namespace Givaro {
 
 	//! XXX
     template<>
-	inline unsigned long Exponent_Trait(const GFqDom<long>& F)
+	inline int64_t Exponent_Trait(const GFqDom<long>& F)
 	{
         return F.exponent();
     }
@@ -68,13 +68,13 @@ namespace Givaro {
 
 	//! XXX
     template<typename BaseField>
-    unsigned long Exponent_Trait(const Extension<BaseField>& F)
+    int64_t Exponent_Trait(const Extension<BaseField>& F)
 	{
         return F.exponent();
     }
 
 //! Extension
-    template<class BFT = GFqDom<long>  >
+    template<class BFT = GFqDom<int64_t>  >
     class Extension {
     public:
 	typedef          Extension<BFT>                            Self_t;
@@ -118,11 +118,11 @@ namespace Givaro {
 	Extension ( const Residu_t p, const Residu_t e = 1, const Indeter Y="Y") :
 		_bF(p, FF_SUBEXPONENT_MAX(p,e) ), _pD( _bF, Y  ), _characteristic( p )
             , _extension_order( e/FF_SUBEXPONENT_MAX(p,e) ), _exponent ( e )
-            , _cardinality( pow(Integer(p),(unsigned long)(e)) ), zero (_pD.zero)
+            , _cardinality( pow(Integer(p),e) ), zero (_pD.zero)
             , one (_pD.one), mOne(_pD.mOne)
             {
                     /*     cerr << "Pol Cstor" << endl; */
-		unsigned long basedegree = FF_SUBEXPONENT_MAX(p,e) ;
+		int64_t basedegree = FF_SUBEXPONENT_MAX(p,e) ;
 		if (basedegree >= e) {
                     std::cerr << "WARNING : Try a direct extension field GFDom instead of a polynomial extension" << std::endl;
                     _bF = BaseField_t(p, 1);
@@ -140,12 +140,12 @@ namespace Givaro {
             , _characteristic(  (Residu_t) bF.characteristic() )
             , _extension_order( (Residu_t)( ex ) )
             , _exponent(        (Residu_t)(ex + (Residu_t)Exponent_Trait(bF)) )
-            , _cardinality(     (Integer) pow( Integer(bF.cardinality()) , (unsigned long)(ex) ) )
+            , _cardinality(     (Integer) pow( Integer(bF.cardinality()) , (uint64_t)(ex) ) )
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
             , mOne (             (Element)(_pD.mOne))
             {
-				Degree eo ((long int)_extension_order);
+				Degree eo ((int64_t)_extension_order);
 		if (_cardinality < (1<<20) )
                     _pD.creux_random_irreducible( _irred, eo);
 		else
@@ -160,7 +160,7 @@ namespace Givaro {
             , _characteristic(  (Residu_t) _bF.characteristic() )
             , _extension_order( (Residu_t) _pD.degree(Irred).value() )
             , _exponent(        (Residu_t)( _extension_order + (Residu_t)Exponent_Trait(_bF)) )
-            , _cardinality(     (Integer) pow( Integer(_bF.cardinality()) , (unsigned long)_extension_order ) )
+                , _cardinality(     (Integer) pow( Integer(_bF.cardinality()) , (uint64_t)_extension_order ) )
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
             , mOne (             (Element)(_pD.mOne))
@@ -396,9 +396,9 @@ namespace Givaro {
 		return _characteristic;
             }
 
-	unsigned long & characteristic(unsigned long & c) const
+	int64_t & characteristic(int64_t & c) const
             {
-		return c = (unsigned long) _characteristic;
+		return c = (int64_t) _characteristic;
             }
 
 	Residu_t exponent() const

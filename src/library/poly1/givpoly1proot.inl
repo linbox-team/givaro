@@ -499,7 +499,7 @@ namespace Givaro {
 		if (this->degree(d,W) > 0) return 0;
 		IntFactorDom<> FD;
 
-		long n = this->degree(dP,P).value();
+		int64_t n = this->degree(dP,P).value();
 		IntFactorDom<>::Rep qn;
 
 		FD.pow( qn, IntFactorDom<>::Rep(MOD), n);
@@ -507,10 +507,10 @@ namespace Givaro {
 		this->powmod(G1, Unit, qn, P);
 		if (this->degree(d, sub(D,G1,Unit)) >= 0) return 0;
 
-		std::vector<IntFactorDom<>::Rep> Lp; std::vector<unsigned long> Le;
+		std::vector<IntFactorDom<>::Rep> Lp; std::vector<uint64_t> Le;
 		FD.set(Lp, Le, n );
 		for( std::vector<IntFactorDom<>::Rep>::const_iterator p = Lp.begin(); p != Lp.end(); ++p) {
-			long ttmp;
+			int64_t ttmp;
 			FD.pow( qn, IntFactorDom<>::Rep(MOD), n/FD.convert(ttmp,*p) );
 			this->powmod(G1, Unit, qn, P);
 			if (this->degree(d, sub(D,G1,Unit)) < 0) return 0;

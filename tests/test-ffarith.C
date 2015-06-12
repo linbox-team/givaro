@@ -56,9 +56,9 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     typename Field::Element a, b, c, d,a_,b_,c_,d_,ma;
     typename Field::Element e,e_;
 
-    F.init(a, 0UL);
+    F.init(a, 0);
     TESTE_EG(a, F.zero);
-    F.init(a, 1UL);
+    F.init(a, 1);
     //         F.write(std::cerr) << std::endl;
     //         F.write(std::cerr << "a: ", a) << std::endl;
     //         F.write(std::cerr << "1: ", F.one) << std::endl;
@@ -68,7 +68,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 
     TESTE_EG(a_, F.one);
 
-    F.init(ma,-1L);
+    F.init(ma,-1);
     //         F.write(std::cerr) << std::endl;
     //         F.write(std::cerr << "a: ", a) << std::endl;
     //         F.write(std::cerr << "ma: ", ma) << std::endl;
@@ -208,7 +208,7 @@ int TestField(const Field& F, const int seed)
     typename Field::Element x;
     typename Field::RandIter g(F, seed);
     
-    F.init(x, 7UL);
+    F.init(x, 7);
     JEONETESTE(F,x);
     
     for (size_t i = 0; i< NBITER; ++i) {
@@ -375,7 +375,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(GFqDom<int64_t>, GF2M, 2, 20);
     TEST_SPECIFIC(GFqDom<int64_t>, GF2M1, 2, 2);
     TEST_SPECIFIC(GFqDom<int64_t>, GF11E3, 11, 3);
-    TEST_SPECIFIC(Extension<GFqDom<int64_t>>, GF11E9, GF11E3, 3);
+    TEST_SPECIFIC(Extension<GFqDom<int64_t> >, GF11E9, GF11E3, 3);
     TEST_SPECIFIC(Extension<>, GF13E8, 13, 8);
 
     return 0;

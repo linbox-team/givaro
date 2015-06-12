@@ -241,7 +241,7 @@ namespace Givaro {
 		}
 
 		// - return n^e % m
-		Rep& powmod(Rep& r, const Rep& n, const long e, const Rep& m) const
+		Rep& powmod(Rep& r, const Rep& n, const int64_t e, const Rep& m) const
 		{
 			return r = ::Givaro::powmod(n, e, m);
 		}
@@ -288,19 +288,19 @@ namespace Givaro {
 		{
 			return compare(a,b) <= 0;
 		}
-		bool isgeq(const long b,const Rep& a ) const
+		bool isgeq(const int64_t b,const Rep& a ) const
 		{
 			return isgeq(Rep(b),a);
 		}
-		bool isleq(const long b,const Rep& a ) const
+		bool isleq(const int64_t b,const Rep& a ) const
 		{
 			return isleq(Rep(b),a);
 		}
-		bool isgeq(const Rep& a, const long b) const
+		bool isgeq(const Rep& a, const int64_t b) const
 		{
 			return isgeq(a,Rep(b));
 		}
-		bool isleq(const Rep& a, const long b) const
+		bool isleq(const Rep& a, const int64_t b) const
 		{
 			return isleq(a,Rep(b));
 		}
@@ -312,19 +312,19 @@ namespace Givaro {
 		{
 			return compare(a,b) < 0;
 		}
-		bool isgt(const long b,const Rep& a ) const
+		bool isgt(const int64_t b,const Rep& a ) const
 		{
 			return isgt(Rep(b),a);
 		}
-		bool islt(const long b,const Rep& a ) const
+		bool islt(const int64_t b,const Rep& a ) const
 		{
 			return islt(Rep(b),a);
 		}
-		bool isgt(const Rep& a, const long b) const
+		bool isgt(const Rep& a, const int64_t b) const
 		{
 			return isgt(a,Rep(b));
 		}
-		bool islt(const Rep& a, const long b) const
+		bool islt(const Rep& a, const int64_t b) const
 		{
 			return islt(a,Rep(b));
 		}

@@ -476,29 +476,29 @@ namespace Givaro {
 			Z[c] = one;
 
 		Rep u,v, four, two;
-		assign(two,2UL);
+		assign(two,2);
 		this->gcd(g,u,v,two,n);
 		Rep inv2 = u;
-		assign(four,4UL);
+		assign(four,4);
 		this->gcd(g,u,v,four,n);
 		Rep inv4 = u, sixt;
-		assign(sixt,16UL);
+		assign(sixt,16);
 		this->gcd(g,u,v,sixt,n);
 		Rep inv16 = u,inva;
 
 		// Initialize # curves
 		for (unsigned long i=0;i<curves;++i) {
 			a = 0, asq = 0;
-			while ((( a*(asq-1L)*(9L*asq-1L) ) % n) == 0L ) {
+			while ((( a*(asq-1)*(9*asq-1) ) % n) == 0 ) {
 				this->random(gen,r,n);
 				//             kg = r*r + 6;
-				mul(kg,r,r); addin(kg,6UL);
+				mul(kg,r,r); addin(kg,6);
 				//             kgg = this->gcd(kg,n);
 				this->gcd(kgg,kg,n);
 				if (this->isOne(kgg)) {
 					//                 g = this->gcd(kg,n,u,v); if (! this->isOne(g)) { delete [] A, X, Z; return g; }
 					this->gcd(g,u,v,kg,n); if (! this->isOne(g)) { delete [] A; delete [] X; delete [] Z; return g; }
-					a = (6UL*r*u)% n;
+					a = (6*r*u)% n;
 					asq = (a * a) % n ;
 				} else
 					return g=kgg;
@@ -515,7 +515,7 @@ namespace Givaro {
 		//     Rep si("1000000000000000000000000000000");
 		//     Rep s("6180339887498948482045868343656381177");
 		//     Rep si("10000000000000000000000000000000000000");
-		Rep s(618033988UL);
+		Rep s(618033988U);
 		Rep si(1000000000U);
 
 		// Begins search with curves on primes up to B1

@@ -73,7 +73,7 @@ inline int isZero(const Rational& a)
 inline int sign(const Rational& a)
   { return sign(a.num) ; }
 
-inline unsigned long length(const Rational& a)
+inline uint64_t length(const Rational& a)
   { return length(a.num) + length(a.den) ; }
 
 inline const Rational abs(const Rational &r)

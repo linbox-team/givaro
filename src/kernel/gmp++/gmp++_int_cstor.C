@@ -55,8 +55,8 @@ namespace Givaro {
 	Integer::Integer(int64_t n)
 	{
 #if GMP_LIMB_BITS != 64
-		// log[10](2^8) < 2.408239966
-		char * tmp = new char[long(2.408239966*(double)sizeof(long long))+1];
+                // 64 bits is less than 20 digits
+		char * tmp = new char[20];
 		sprintf(tmp,"%lld",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 		delete [] tmp;
@@ -68,9 +68,9 @@ namespace Givaro {
 	//-----------------------------Integer(uint64_t n)
 	Integer::Integer(uint64_t n)
 	{
-	{
 #if GMP_LIMB_BITS != 64
-		char * tmp = new char[ long(2.408239966*(double)sizeof(long long unsigned))+1];
+                // 64 bits is less than 20 digits
+		char * tmp = new char[20];
 		sprintf(tmp,"%llu",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 		delete [] tmp;

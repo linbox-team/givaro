@@ -53,7 +53,7 @@ const Integer round(const Rational& x)
   Integer q;
   Integer r;
   Integer::divmod(q, r, x.num, x.den);
-  r <<= 1UL;
+  r <<= 1U;
   if (absCompare(r,x.den) < 1)
   {
     if (sign(x.num) >= 0)

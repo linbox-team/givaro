@@ -202,7 +202,7 @@ public:
     const Rational mOne;
     const Rational zero;
 
-    unsigned long characteristic() const { return 0UL; }
+    unsigned long characteristic() const { return 0U; }
     Integer& characteristic(Integer& p) const { return p=characteristic();}
 
         // -- assignement

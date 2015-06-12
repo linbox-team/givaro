@@ -448,7 +448,7 @@ namespace Givaro {
 		for(f=Lf.begin();f!=Lf.end();++f)
 			this->div(*f,phin,*f);
 		int found=0;
-		for(A = 2;(Rep::isleq(A,n) && (! found)); Rep::addin(A,1UL)) {
+		for(A = 2;(Rep::isleq(A,n) && (! found)); Rep::addin(A,1U)) {
 			if (isOne(gcd(tmp,A,n))) {
 				found = 1;
 				for(f=Lf.begin();(f!=Lf.end() && found);f++)
@@ -456,7 +456,7 @@ namespace Givaro {
 			}
 		}
 		if (Rep::isleq(A,n))
-			return Rep::subin(A,1UL);
+			return Rep::subin(A,1U);
 		else
 			return A=this->zero;
 	}

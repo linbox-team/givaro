@@ -31,8 +31,8 @@ namespace Givaro {
 		typedef Rep Element;
 
 
-		IntegerDom() : one(1UL), mOne(-1L), zero(0UL) {}
-		IntegerDom(const IntegerDom&) : one(1UL), mOne(-1L), zero(0UL) {}
+		IntegerDom() : one(1U), mOne(-1), zero(0U) {}
+		IntegerDom(const IntegerDom&) : one(1U), mOne(-1), zero(0U) {}
 
 		int operator==( const IntegerDom&) const
 		{

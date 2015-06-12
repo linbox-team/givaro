@@ -68,28 +68,6 @@ namespace Givaro
 		den = mpq_denref((mpq_ptr)&gmp_rep) ;
 	}
 
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	Rationel::Rationel( long long  n)
-	{
-		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_z((mpq_ptr)&gmp_rep,((Integer)n).get_mpz_const()) ;
-
-		num = mpq_numref((mpq_ptr)&gmp_rep) ;
-		den = mpq_denref((mpq_ptr)&gmp_rep) ;
-	}
-
-	Rationel::Rationel( unsigned long long  n)
-	{
-		mpq_init((mpq_ptr)&gmp_rep);
-		mpq_set_z((mpq_ptr)&gmp_rep,((Integer)n).get_mpz()) ;
-
-		num = mpq_numref((mpq_ptr)&gmp_rep) ;
-		den = mpq_denref((mpq_ptr)&gmp_rep) ;
-	}
-
-#endif
-
-
 	// CONSTRUCTORS FROM RationelS
 	Rationel::Rationel( float f, enum reduceFlag red)
 	{

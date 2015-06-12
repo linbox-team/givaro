@@ -512,18 +512,6 @@ namespace Givaro {
 	{
 		return a ==0UL;
 	}
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-#if 1 /*  use of C++0x long long integer constant */
-	int32_t isZero(const unsigned long long a)
-	{
-		return a ==0ULL;
-	}
-#endif
-	int32_t isZero(const long long a)
-	{
-		return a ==0LL;
-	}
-#endif
 
 }
 

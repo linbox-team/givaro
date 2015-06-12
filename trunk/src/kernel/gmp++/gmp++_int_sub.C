@@ -181,32 +181,6 @@ namespace Givaro {
 		return n -= (uint64_t)l;
 	}
 
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	Integer operator - (const Integer& n, const long long l)
-	{
-		return n - (Integer)l;
-	}
-	Integer operator - (const Integer& n, const unsigned long long l)
-	{
-		return n - (Integer)l;
-	}
-	Integer operator - (const long long l, const Integer& n)
-	{
-		return n-l;
-	}
-	Integer operator - (const unsigned long long l, const Integer& n)
-	{
-		return n-l;
-	}
-	Integer& operator -= (Integer& n, const long long l)
-	{
-		return n -= (Integer)l;
-	}
-	Integer& operator -= (Integer& n, const unsigned long long l)
-	{
-		return n -= (Integer)l;
-	}
-#endif
 
 }
 

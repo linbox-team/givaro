@@ -148,10 +148,6 @@ public :
     operator signed char() const { return (signed char) (int) *this; }
     operator unsigned long() const { return (unsigned long) (this->num/this->den); }
     operator long() const { return (long) (this->num/this->den); }
-#ifndef __GIVARO__DONOTUSE_longlong__
-    operator unsigned long long() const { return (unsigned long long) (this->num/this->den); }
-    operator long long() const { return (long long) (this->num/this->den); }
-#endif
     operator std::string() const { return std::string(this->num)+'/'+std::string(this->den); }
     operator float() const { return ((float)this->num)/((float)this->den); }
     operator double() const { return ((double)this->num)/((double)this->den); }

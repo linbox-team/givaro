@@ -63,29 +63,6 @@ namespace Givaro {
 		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-#include <stdio.h>
-	//-----------------------------Integer(long long n)
-	// log[10](2^8) < 2.408239966
-	Integer::Integer(long long n)
-	{
-		char * tmp = new char[long(2.408239966*(double)sizeof(long long))+1]; sprintf(tmp,"%lld",n);
-		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
-		delete [] tmp;
-	}
-
-	//-----------------------------Integer(unsigned long long n)
-	// log[10](2^8) < 2.408239966
-	Integer::Integer(unsigned long long n)
-	{
-		char * tmp = new char[ long(2.408239966*(double)sizeof(unsigned long long))+1];
-		sprintf(tmp,"%llu",n);
-		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
-		delete [] tmp;
-	}
-#endif
-
-
 	//-----------------------------Integer(double)
 	Integer::Integer(double d)
 	{

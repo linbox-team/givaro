@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <20 Jan 11 11:04:19 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 16:37:25 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // =================================================================== //
 
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
     Integer::seeding (seed);
     Integer a,n;
     Integer ThreeToHundred;
-    pow(ThreeToHundred,Integer(3),100UL);
+    pow(ThreeToHundred,Integer(3),100U);
 
     for(int i=0; i<nbtests; ++i) {
 

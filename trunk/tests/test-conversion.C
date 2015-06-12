@@ -21,7 +21,7 @@ int testBasicConversion()
 	if (q1 != qq)
 		return err = 1;
 
-	long int q2 = (long int) q;
+	int64_t q2 = (int64_t) q;
 	if (q2 != qq)
 		return err = 2;
 
@@ -31,16 +31,16 @@ int testBasicConversion()
 
 	/*  test unsigned versions */
 	/*  cast towards unsigned consider only the absolute value */
-	unsigned int uqq = (unsigned int) qq;
-	unsigned int q4  = (unsigned int) (int) q;
+	int64_t uqq = (int64_t) qq;
+	int64_t q4  = (int64_t) (int) q;
 // 	std::cout << q4 << std::endl;
 // 	std::cout << uqq << std::endl;
 	if (q4 != uqq)
 		return err = 4;
 
-	unsigned long lqq = (unsigned long) qq;
+	uint64_t lqq = (uint64_t) qq;
 //         std::cerr << "q  : " << q << std::endl;
-	unsigned long int q5 = (unsigned long) (long int) q;
+	uint64_t q5 = (uint64_t) (int64_t) q;
 //         std::cerr << "lqq: " << lqq << std::endl;
 //         std::cerr << "q5 : " << q5 << std::endl;
 	if (q5 != lqq)
@@ -55,19 +55,19 @@ int testBasicConversion()
 
 	/*  test unsigned versions */
 	/*  cast towards unsigned consider only the absolute value */
-	unsigned int vqq = (unsigned int) qq;
-	unsigned int q7  = (unsigned int) q;
+	int64_t vqq = (int64_t) qq;
+	int64_t q7  = (int64_t) q;
 // 	std::cout << q7 << std::endl;
 // 	std::cout << uqq << std::endl;
 	if (q7 != -vqq)
 		return err = 7;
 
-	unsigned long int q8 = (unsigned long int) q;
-	if (q8 != -vqq)
+	uint64_t q8 = (uint64_t) q;
+	if (q8 != (uint64_t)(-vqq))
 		return err = 8;
 
 	uint64_t q9 = (uint64_t) q;
-	if (q9 != -vqq)
+	if (q9 != (uint64_t)(-vqq))
 		return err = 9 ;
 
 	return err ;

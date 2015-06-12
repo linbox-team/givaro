@@ -253,24 +253,24 @@ int main(int argc, char ** argv) {
     GFqDom<int>::Element tmp;
 
     DP101.assign( P, Z101.init(tmp,5) ); // P is degree 0 polynomial : 5 modulo 101
-    DP101.init( monomial, Degree(1), 33UL) ; // -33 X
+    DP101.init( monomial, Degree(1), 33U) ; // -33 X
     Degree deg,val;
     DP101.degree(deg,monomial);
     DP101.val(val,monomial);
     DP101.addin( P, monomial ); // P += monomial
-    DP101.init( monomial, Degree(2), 12UL) ; // 12 X^2
+    DP101.init( monomial, Degree(2), 12U) ; // 12 X^2
     DP101.addin( P, monomial ); // P is now 5-33*X+12*X^2
 
 //     // DP101.read( std::cin, P); // would read P as a succession of integers :
 //                                 // deg leadcoeff (lead-1)coeff ... unitcoeff
     Q = P;
 
-    DP101.init( Q, Degree(0), 6UL );
-    DP101.init( monomial, Degree(4), 3UL);
+    DP101.init( Q, Degree(0), 6U );
+    DP101.init( monomial, Degree(4), 3U);
     DP101.addin( Q, monomial) ;
-    DP101.init( monomial, Degree(1), 75UL);
+    DP101.init( monomial, Degree(1), 75U);
     DP101.addin( Q, monomial) ;
-    DP101.init( monomial, Degree(3), 45UL);
+    DP101.init( monomial, Degree(3), 45U);
     DP101.subin( Q, monomial) ;
     // Q is now 3*X^4+75*X-45*X^3+6
 

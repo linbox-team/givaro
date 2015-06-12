@@ -119,7 +119,7 @@ namespace Givaro {
 	// 1/log(2) being close to 1.44269504088896341
 	double logtwo(const Integer& a)
 	{
-		int64_t exp;
+		long int exp;
 		double d = mpz_get_d_2exp( &exp, (mpz_srcptr)&(a.gmp_rep) );
 		return (double)exp+log(d)*1.44269504088896341;
 	}

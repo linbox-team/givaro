@@ -216,22 +216,14 @@ namespace Givaro {
 	{
 		return Integer(l) % n;
 	}
-	 Integer operator % (const Integer& n, const int32_t l)
-	{
-		return n % (int64_t)l;
-	}
-	 Integer operator % (const Integer& n, const uint32_t l)
-	{
-		return n % (uint64_t)l;
-	}
 
-	 Integer& operator %= (Integer& n, const int32_t l)
+	 Integer operator % (const uint32_t l, const Integer& n)
 	{
-		return n %= (int64_t)l;
+		return Integer(l) % n;
 	}
-	 Integer& operator %= (Integer& n, const uint32_t l)
+	 Integer operator % (const uint64_t l, const Integer& n)
 	{
-		return n %= (uint64_t)l;
+		return Integer(l) % n;
 	}
 
 

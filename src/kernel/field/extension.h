@@ -123,7 +123,7 @@ namespace Givaro {
             {
                     /*     cerr << "Pol Cstor" << endl; */
 		int64_t basedegree = FF_SUBEXPONENT_MAX(p,e) ;
-		if (basedegree >= e) {
+		if (basedegree >= (int64_t)e) {
                     std::cerr << "WARNING : Try a direct extension field GFDom instead of a polynomial extension" << std::endl;
                     _bF = BaseField_t(p, 1);
                     _pD = Pol_t(_bF, Y);

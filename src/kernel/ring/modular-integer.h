@@ -57,7 +57,7 @@ namespace Givaro
         Modular(const Residu_t p)
             : zero(static_cast<Element>(0))
             , one(static_cast<Element>(1))
-            , mOne(static_cast<Element>(p-1LL))
+            , mOne(static_cast<Element>(p-1))
             , _p(static_cast<Residu_t>(p))
         {
             assert(_p >= getMinModulus());

@@ -384,31 +384,6 @@ namespace Givaro {
 	{
 		return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 	}
-#ifdef __USE_64_bits__
-	Integer::operator unsigned long long() const
-	{
-		uint64_t low = (uint64_t)(*this);
-		Integer rem;
-		int16_t cbtuli = (int16_t)(CHAR_BIT*(double)sizeof(uint64_t));
-		mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), cbtuli );
-		unsigned long long tmp = (uint64_t)(rem);
-		//	tmp <<= CHAR_BIT*sizeof(uint64_t) ;
-		cbtuli /= 2;
-		tmp <<= cbtuli ;
-		tmp <<= cbtuli ;
-
-		return tmp |= low;
-	}
-	Integer::operator long long() const
-	{
-		unsigned long long toto = (unsigned long long)(*this);
-		long long tmp = (long long) toto ;
-//                 if (*this < 0) tmp = -tmp;
-//                 return tmp;
-		return ((*this)<0)? -tmp: tmp;
-	}
-#endif
-
 	Integer::operator double() const
 	{
 		return mpz_get_d ( (mpz_srcptr)&gmp_rep);

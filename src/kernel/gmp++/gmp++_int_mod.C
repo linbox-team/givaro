@@ -207,27 +207,6 @@ namespace Givaro {
 		return res;
 	}
 
-	//Added by Dan Roche, 6-28-04
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	unsigned long long Integer::operator % (const unsigned long long l) const
-	{
-		if (isZero(*this)) return 0LL;
-		Integer Res(Integer::one);
-		Integer Divisor(l);
-		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
-		return (unsigned long long)( Res );
-	}
-
-	long long Integer::operator % (const long long l) const
-	{
-		if (isZero(*this)) return 0LL;
-		Integer Res(Integer::one);
-		Integer Divisor(l);
-		mpz_tdiv_r( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_ptr)&(Divisor.gmp_rep) );
-		return (long long)( Res );
-	}
-#endif //__USE_64_bits__
-
 	// -- operator %
 	 Integer operator % (const int32_t l, const Integer& n)
 	{

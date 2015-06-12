@@ -25,11 +25,9 @@ int testBasicConversion()
 	if (q2 != qq)
 		return err = 2;
 
-#ifndef __GIVARO__DONOTUSE_longlong__
-	long long int q3 = (long long int) q;
+	int64_t q3 = (int64_t) q;
 	if (q3 != qq)
 		return err = 3 ;
-#endif
 
 	/*  test unsigned versions */
 	/*  cast towards unsigned consider only the absolute value */
@@ -48,12 +46,11 @@ int testBasicConversion()
 	if (q5 != lqq)
 		return err = 5;
 
-#ifndef __GIVARO__DONOTUSE_longlong__
-	unsigned long long luqq = (unsigned long long) qq;
-	unsigned long long int q6 = (unsigned long long) (long long int) q;
+	uint64_t luqq = (uint64_t) qq;
+	uint64_t q6 = (uint64_t) (int64_t) q;
 	if (q6 != luqq)
 		return err = 6 ;
-#endif
+#
 
 
 	/*  test unsigned versions */
@@ -69,11 +66,9 @@ int testBasicConversion()
 	if (q8 != -vqq)
 		return err = 8;
 
-#ifndef __GIVARO__DONOTUSE_longlong__
-	unsigned long long int q9 = (unsigned long long int) q;
+	uint64_t q9 = (uint64_t) q;
 	if (q9 != -vqq)
 		return err = 9 ;
-#endif
 
 	return err ;
 

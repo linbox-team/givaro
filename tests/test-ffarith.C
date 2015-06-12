@@ -356,26 +356,26 @@ int main(int argc, char ** argv)
     //-------------------------//
     //----- Galois fields -----//
     
-    TEST_SPECIFIC(GFqDom<int>, GF13, 13);
-    TEST_SPECIFIC(GFqDom<int>, GFpmax, 65521UL);
-    TEST_SPECIFIC(GFqDom<long long>, GFLLpmax, 4194301ULL);
+    TEST_SPECIFIC(GFqDom<int32_t>, GF13, 13);
+    TEST_SPECIFIC(GFqDom<int32_t>, GFpmax, 65521UL);
+    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpmax, 4194301ULL);
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
-    std::vector< GFqDom<long>::Residu_t > Irred(9);
+    std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
     Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
     Irred[8] = 1;
-    TEST_SPECIFIC(GFqDom<long>, GF256, 2, 8, Irred);
+    TEST_SPECIFIC(GFqDom<int64_t>, GF256, 2, 8, Irred);
 
-    TEST_SPECIFIC(GFqDom<int>, GF625, 5, 4);
-    TEST_SPECIFIC(GFqExt<int>, GF81, 3, 4);
+    TEST_SPECIFIC(GFqDom<int32_t>, GF625, 5, 4);
+    TEST_SPECIFIC(GFqExt<int32_t>, GF81, 3, 4);
 
     // Zech log finite field with 2Mb tables
-    TEST_SPECIFIC(GFqDom<long long>, GF2M, 2, 20);
-    TEST_SPECIFIC(GFqDom<long long>, GF2M1, 2, 2);
-    TEST_SPECIFIC(GFqDom<long long>, GF11E3, 11, 3);
-    TEST_SPECIFIC(Extension<GFqDom<long long>>, GF11E9, GF11E3, 3);
+    TEST_SPECIFIC(GFqDom<int64_t>, GF2M, 2, 20);
+    TEST_SPECIFIC(GFqDom<int64_t>, GF2M1, 2, 2);
+    TEST_SPECIFIC(GFqDom<int64_t>, GF11E3, 11, 3);
+    TEST_SPECIFIC(Extension<GFqDom<int64_t>>, GF11E9, GF11E3, 3);
     TEST_SPECIFIC(Extension<>, GF13E8, 13, 8);
 
     return 0;

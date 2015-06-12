@@ -70,10 +70,6 @@ namespace Givaro
 		giv_all_inlined Rationel( int64_t  n) ;
 		giv_all_inlined Rationel( uint64_t  n) ;
 
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		giv_all_inlined Rationel( long long  n) ;
-		giv_all_inlined Rationel( unsigned long long  n) ;
-#endif
 		//@}
 
 		//! constructors from a  numerator and a denominator.

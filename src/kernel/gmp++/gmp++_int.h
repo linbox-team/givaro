@@ -172,12 +172,6 @@ namespace Givaro {
 		giv_all_inlined Integer(uint32_t n);
 		//! @overload Givaro::Integer(int)
 		giv_all_inlined Integer(uint64_t n);
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		//! @overload Givaro::Integer(int)
-		giv_all_inlined Integer(long long n);
-		//! @overload Givaro::Integer(int)
-		giv_all_inlined Integer(unsigned long long n);
-#endif
 		//! @overload Givaro::Integer(int)
 		giv_all_inlined Integer(double n);
 		//! @overload Givaro::Integer(int)
@@ -297,14 +291,6 @@ namespace Givaro {
 		friend giv_all_inlined  int32_t isZero(const uint32_t a);
 		//! @overload Givaro::isZero(Integer);
 		friend giv_all_inlined  int32_t isZero(const uint64_t a);
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-#if 1 /*  use of C++0x long long integer constant */
-		//! @overload Givaro::isZero(Integer);
-		friend giv_all_inlined  int32_t isZero(const unsigned long long a);
-#endif
-		//! @overload Givaro::isZero(Integer);
-		friend giv_all_inlined  int32_t isZero(const long long a);
-#endif
 		//! isleq
 		//! @param a,b
 		template<class A,class B>
@@ -737,17 +723,6 @@ namespace Givaro {
 		friend giv_all_inlined  Integer operator + (const Integer& n, const uint32_t l);
 
 
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		/** @overload friend Integer::operator+(int,Integer) */
-		friend giv_all_inlined 	Integer operator + (const Integer& n, const long long l);
-		/** @overload friend Integer::operator+(int,Integer) */
-		friend giv_all_inlined 	Integer operator + (const Integer& n, const unsigned long long l);
-		/** @overload friend Integer::operator+(int,Integer) */
-		friend giv_all_inlined 	Integer operator + (const long long l, const Integer& n);
-		/** @overload friend Integer::operator+(int,Integer) */
-		friend giv_all_inlined 	Integer operator + (const unsigned long long l, const Integer& n);
-#endif
-
 		//! operator +=.
 		//! @param n Integer
 		//! @param l to be added up
@@ -755,12 +730,6 @@ namespace Givaro {
 		/** @overload friend Integer::operator+=(Integer,int) */
 		friend giv_all_inlined  Integer& operator += (Integer& n, const uint32_t l);
 		/** @overload friend Integer::operator+=(Integer,int) */
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		friend giv_all_inlined 	Integer& operator += (Integer& n, const long long l);
-		/** @overload friend Integer::operator+=(Integer,int) */
-		friend giv_all_inlined 	Integer& operator += (Integer& n, const unsigned long long l);
-#endif
-
 
 		// (FILE gmp++_int_sub.C)
 
@@ -816,22 +785,6 @@ namespace Givaro {
 		/** @overload friend Integer::operator-=(Integer,int) */
 		friend giv_all_inlined  Integer& operator -= (Integer& n, const uint32_t l);
 
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		/** @overload friend Integer::operator-(int,Integer) */
-		friend giv_all_inlined  Integer operator - (const Integer& n, const long long l);
-		/** @overload friend Integer::operator-(int,Integer) */
-		friend giv_all_inlined  Integer operator - (const Integer& n, const unsigned long long l);
-		/** @overload friend Integer::operator-(int,Integer) */
-		friend giv_all_inlined  Integer operator - (const long long l, const Integer& n);
-		/** @overload friend Integer::operator-(int,Integer) */
-		friend giv_all_inlined  Integer operator - (const unsigned long long l, const Integer& n);
-
-		/** @overload friend Integer::operator-=(Integer,int) */
-		friend giv_all_inlined  Integer& operator -= (Integer& n, const long long l);
-		/** @overload friend Integer::operator-=(Integer,int) */
-		friend giv_all_inlined  Integer& operator -= (Integer& n, const unsigned long long l);
-#endif
-
 		// (FILE gmp++_int_mul.C)
 
 		/*! operator \c *.
@@ -879,21 +832,6 @@ namespace Givaro {
 		/** @overload fried Integer::operator*(Integer,int) */
 		friend giv_all_inlined  Integer& operator *= (Integer& n, const uint32_t l);
 
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		/** @overload fried Integer::operator*(int,Integer) */
-		friend giv_all_inlined  Integer operator * (const Integer& n, const long long l);
-		/** @overload fried Integer::operator*(int,Integer) */
-		friend giv_all_inlined  Integer operator * (const Integer& n, const unsigned long long l);
-		/** @overload fried Integer::operator*(int,Integer) */
-		friend giv_all_inlined  Integer operator * (const long long l, const Integer& n);
-		/** @overload fried Integer::operator*(int,Integer) */
-		friend giv_all_inlined  Integer operator * (const unsigned long long l, const Integer& n);
-
-		friend giv_all_inlined  Integer& operator *= (Integer& n, const long long l);
-		/** @overload fried Integer::operator*(Integer,int) */
-		friend giv_all_inlined  Integer& operator *= (Integer& n, const unsigned long long l);
-		/** @overload fried Integer::operator*(Integer,int) */
-#endif
 		///@}
 
 		/*! @name fused add-multiply
@@ -1262,22 +1200,6 @@ namespace Givaro {
 		giv_all_inlined Integer&  operator %= (const uint64_t n);
 		//! @overload Integer::operator%=(Integer);
 		giv_all_inlined Integer&  operator %= (const int64_t n);
-#ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		//! @overload Integer::operator%=(Integer);
-		Integer&  operator %= (const long long n)
-		{
-			return *this %= (Integer)n;
-		}
-		//! @overload Integer::operator%=(Integer);
-		Integer&  operator %= (const unsigned long long n)
-		{
-			return *this %= (Integer)n;
-		}
-		//! @overload Integer::operator%=(Integer);
-		giv_all_inlined long long operator % (const long long n) const;
-		//! @overload Integer::operator%=(Integer);
-		giv_all_inlined unsigned long long operator % (const unsigned long long n) const;
-#endif
 		//! @overload Integer::operator%=(Integer);
 		template<class XXX>
 		Integer& operator  %=(const XXX& n) {
@@ -1584,10 +1506,6 @@ namespace Givaro {
 		}
 		giv_all_inlined operator uint64_t() const ;
 		giv_all_inlined operator int64_t() const ;
-#ifndef __GIVARO__DONOTUSE_longlong__
-		giv_all_inlined operator unsigned long long() const ;
-		giv_all_inlined operator long long() const ;
-#endif
 		giv_all_inlined operator std::string() const ;
 		giv_all_inlined operator float() const ;
 		giv_all_inlined operator double() const ;

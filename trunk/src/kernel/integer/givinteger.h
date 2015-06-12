@@ -31,8 +31,8 @@ namespace Givaro {
 		typedef Rep Element;
 
 
-		IntegerDom() : one(1U), mOne(-1), zero(0U) {}
-		IntegerDom(const IntegerDom&) : one(1U), mOne(-1), zero(0U) {}
+		IntegerDom() : one(1), mOne(-1), zero(0U) {}
+		IntegerDom(const IntegerDom&) : one(1), mOne(-1), zero(0U) {}
 
 		int operator==( const IntegerDom&) const
 		{
@@ -57,19 +57,19 @@ namespace Givaro {
 		{
 			return a = b ;
 		}
-		Rep& read( Rep& a, const long i) const
+		Rep& read( Rep& a, const int64_t i) const
 		{
 			return a = Integer(i) ;
 		}
-		Rep& read( Rep& a, const unsigned long i) const
+		Rep& read( Rep& a, const uint64_t i) const
 		{
 			return a = Integer(i) ;
 		}
-		Rep& read( Rep& a, const int i) const
+		Rep& read( Rep& a, const int32_t i) const
 		{
 			return a = Integer(i) ;
 		}
-		Rep& read( Rep& a, const unsigned int i) const
+		Rep& read( Rep& a, const uint32_t i) const
 		{
 			return a = Integer(i) ;
 		}
@@ -208,21 +208,21 @@ namespace Givaro {
 
 
 		// - return n^l
-		Rep& pow(Rep& r, const Rep& n, const long l) const
+		Rep& pow(Rep& r, const Rep& n, const int64_t l) const
 		{
 			return r = ::Givaro::pow(n, l);
 		}
-		Rep& pow(Rep& r, const Rep& n, const unsigned long l) const
+		Rep& pow(Rep& r, const Rep& n, const uint64_t l) const
 		{
 			return r = ::Givaro::pow(n, l);
 		}
-		Rep& pow(Rep& r, const Rep& n, const int l) const
+		Rep& pow(Rep& r, const Rep& n, const int32_t l) const
 		{
-			return r = ::Givaro::pow(n, (long)l);
+			return r = ::Givaro::pow(n, (int64_t)l);
 		}
-		Rep& pow(Rep& r, const Rep& n, const unsigned int l) const
+		Rep& pow(Rep& r, const Rep& n, const uint32_t l) const
 		{
-			return r = ::Givaro::pow(n, (unsigned long)l);
+			return r = ::Givaro::pow(n, (uint64_t)l);
 		}
 
 		// - return square root of n

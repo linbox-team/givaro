@@ -175,15 +175,15 @@ int main(int argc, char ** argv) {
 
         // Zech log finite field with 256 elements
         // and prescribed irreducible polynomial
-    std::vector< GFqDom<long>::Residu_t > Irred(9);
+    std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
     Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
     Irred[8] = 1;
-    GFqDom<long> F256(2,8, Irred); TestField( F256 );
+    GFqDom<int64_t> F256(2,8, Irred); TestField( F256 );
 
         // Zech log finite field with 3^4 elements
         // Using the Q-adic Transform
-    GFqExt<int> GF81( 3, 4 ); TestField( GF81 );
+    GFqExt<int32_t> GF81( 3, 4 ); TestField( GF81 );
 
     	// Zech log finite field with 2Mb tables
     struct rusage  tmp1 ;
@@ -191,12 +191,6 @@ int main(int argc, char ** argv) {
           // user time
     double tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ ( 1000000.0 ) ;
 		    ;
-#ifndef __GIVARO__DONOTUSE_longlong__
-    GFqDom<long long> GF2M( 2, (argc > 1 ? (GFqDom<long long>::Residu_t) atoi(argv[1]) : 20) );
-#else
-    GFqDom<long> GF2M( 2, (argc > 1 ? atoi(argv[1]) : 20) );
-#endif
-
     getrusage (RUSAGE_SELF, &tmp1) ;
     tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ (1000000.0) - tim;
 
@@ -211,9 +205,6 @@ int main(int argc, char ** argv) {
         << tmp1.ru_nswap << " swaps"<< std::endl
         << tmp1.ru_inblock << " block input operations"<< std::endl
         << tmp1.ru_oublock << " block output operations"<< std::endl;
-
-    TestField( GF2M );
-
 
     return 0;
 }

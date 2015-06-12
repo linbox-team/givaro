@@ -607,6 +607,16 @@ namespace Givaro {
 		static giv_all_inlined  Integer& addin (Integer& res, const int64_t n);
 		/** @overload Integer::addin(Integer,Integer) */
 		static giv_all_inlined  Integer& addin (Integer& res, const uint64_t n);
+		/** @overload Integer::addin(Integer,Integer) */
+		static giv_all_inlined  Integer& addin (Integer& res, const int32_t n) {
+            return addin(res, (int64_t)n);
+        }       
+		/** @overload Integer::addin(Integer,Integer) */
+		static giv_all_inlined  Integer& addin (Integer& res, const uint32_t n) {
+            return addin(res,(uint64_t)n);
+        }
+        
+                
 
 		/*!  Addition
 		 * <code>res=n1+n2</code>.
@@ -619,6 +629,9 @@ namespace Givaro {
 		static giv_all_inlined  Integer& add   (Integer& res, const Integer& n1, const int64_t n2);
 		/** @overload Integer::add(Integer,Integer,Integer) */
 		static giv_all_inlined  Integer& add   (Integer& res, const Integer& n1, const uint64_t n2);
+		static giv_all_inlined  Integer& add   (Integer& res, const Integer& n1, const int32_t n2) { return add(res,n1,(int64_t)n2); }
+		/** @overload Integer::add(Integer,Integer,Integer) */
+		static giv_all_inlined  Integer& add   (Integer& res, const Integer& n1, const uint32_t n2) { return add(res,n1,(uint64_t)n2); }
 
 		// (FILE gmp++_int_sub.C)
 		/*!  Substraction (inplace)
@@ -631,6 +644,12 @@ namespace Givaro {
 		static giv_all_inlined  Integer& subin (Integer& res, const int64_t n);
 		/** @overload Integer::subin(Integer,Integer) */
 		static giv_all_inlined  Integer& subin (Integer& res, const uint64_t n);
+		/** @overload Integer::subin(Integer,Integer) */
+		static giv_all_inlined  Integer& subin (Integer& res, const int32_t n) {
+            return subin(res,(int64_t)n); }
+		/** @overload Integer::subin(Integer,Integer) */
+		static giv_all_inlined  Integer& subin (Integer& res, const uint32_t n) {
+            return subin(res,(uint64_t)n); }
 
 		/*!  Substraction
 		 * <code>res=n1-n2</code>.
@@ -643,6 +662,9 @@ namespace Givaro {
 		static giv_all_inlined  Integer& sub   (Integer& res, const Integer& n1, const int64_t n2);
 		/** @overload Integer::sub(Integer,Integer,Integer) */
 		static giv_all_inlined  Integer& sub   (Integer& res, const Integer& n1, const uint64_t n2);
+		static giv_all_inlined  Integer& sub   (Integer& res, const Integer& n1, const int32_t n2) { return sub(res,n1,(uint64_t)n2); }
+		/** @overload Integer::sub(Integer,Integer,Integer) */
+		static giv_all_inlined  Integer& sub   (Integer& res, const Integer& n1, const uint32_t n2) { return sub(res,n1,(uint64_t)n2); }
 
 		/*!  Negation (inplace)
 		 * <code>res=-res</code>.
@@ -666,6 +688,10 @@ namespace Givaro {
 		static giv_all_inlined  Integer& mulin (Integer& res, const int64_t n);
 		/** @overload Integer::mulin(Integer,Integer) */
 		static giv_all_inlined  Integer& mulin (Integer& res, const uint64_t n);
+		/** @overload Integer::mulin(Integer,Integer) */
+		static giv_all_inlined  Integer& mulin (Integer& res, const int32_t n) { return mulin(res,(int64_t)n); }
+		/** @overload Integer::mulin(Integer,Integer) */
+		static giv_all_inlined  Integer& mulin (Integer& res, const uint32_t n){ return mulin(res,(uint64_t)n); }
 
 		/*! Multiplication
 		 * <code>res=n1*n2</code>.
@@ -678,6 +704,10 @@ namespace Givaro {
 		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const int64_t n2);
 		/** @overload Integer::mul(Integer,Integer,Integer) */
 		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const uint64_t n2);
+		/** @overload Integer::mul(Integer,Integer,Integer) */
+		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const int32_t n2) { return mul(res,n1,(int64_t)n2); }
+		/** @overload Integer::mul(Integer,Integer,Integer) */
+		static giv_all_inlined  Integer& mul   (Integer& res, const Integer& n1, const uint32_t n2) { return mul(res,n1,(uint64_t)n2); }
 		///@}
 
 		//----------------Elementary arithmetic between Integers and basic
@@ -693,6 +723,10 @@ namespace Givaro {
 		giv_all_inlined Integer  operator + (const uint64_t n) const;
 		/** @overload Integer::operator+(Integer) */
 		giv_all_inlined Integer  operator + (const int64_t n) const;
+		/** @overload Integer::operator+(Integer) */
+		giv_all_inlined Integer  operator + (const uint32_t n) const { return this->operator+((uint64_t)n); }
+		/** @overload Integer::operator+(Integer) */
+		giv_all_inlined Integer  operator + (const int32_t n) const { return this->operator+((int64_t)n); }
 
 		/*! operator \c += .
 		 * @param n asfriend In the formula.
@@ -744,6 +778,11 @@ namespace Givaro {
 		giv_all_inlined Integer  operator - (const uint64_t n) const;
 		/** @overload Integer::operator-(Integer) */
 		giv_all_inlined Integer  operator - (const int64_t n) const;
+		/** @overload Integer::operator+(Integer) */
+		giv_all_inlined Integer  operator - (const uint32_t n) const { return this->operator-((uint64_t)n); }
+		/** @overload Integer::operator+(Integer) */
+		giv_all_inlined Integer  operator - (const int32_t n) const { return this->operator-((int64_t)n); }
+
 
 		/*! operator \c -= .
 		 * @param n as in the formula.

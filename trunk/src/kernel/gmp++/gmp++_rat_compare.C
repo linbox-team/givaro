@@ -28,7 +28,7 @@ namespace Givaro {
 	 * @param b integer
 	 * @return \c 1 if \f$a > b\f$, \c 0 if \f$a = b\f$ and \p -1 otherwise.
 	 */
-	int compare(const Integer &a, const Integer& b)
+	int32_t compare(const Integer &a, const Integer& b)
 	{
 		return mpz_cmp ( (mpz_srcptr)&a.gmp_rep, (mpz_srcptr)&b.gmp_rep );
 	}
@@ -38,53 +38,53 @@ namespace Givaro {
 	 * @param b integer
 	 * @return \c 1 if \f$|a| > |b|\f$, \c 0 if \f$|a| = |b|\f$ and \p -1 otherwise.
 	 */
-	int absCompare(const Integer &a, const Integer &b)
+	int32_t absCompare(const Integer &a, const Integer &b)
 	{
 		return mpz_cmpabs( (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
 	}
 
-	int Integer::operator != (const int l) const
+	int32_t Integer::operator != (const int32_t l) const
 	{
 		return mpz_cmp_si ( (mpz_srcptr)&gmp_rep, l ) != 0;
 	}
 
-	int Integer::operator != (const int64_t l) const
+	int32_t Integer::operator != (const int64_t l) const
 	{
 		return mpz_cmp_si ( (mpz_srcptr)&gmp_rep, l ) != 0;
 	}
 
 	//uint64_t ops added by Dan Roche, 6-26-04
-	int Integer::operator != (const uint64_t l) const
+	int32_t Integer::operator != (const uint64_t l) const
 	{
 		return mpz_cmp_ui ( (mpz_srcptr)&gmp_rep, l ) != 0;
 	}
 
-	int Integer::operator > (const uint64_t l) const
+	int32_t Integer::operator > (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator < (const uint64_t l) const
+	int32_t Integer::operator < (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
-	int Integer::operator > (const int l) const
+	int32_t Integer::operator > (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator > (const int64_t l) const
+	int32_t Integer::operator > (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator < (const int l) const
+	int32_t Integer::operator < (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
-	int Integer::operator < (const int64_t l) const
+	int32_t Integer::operator < (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}

@@ -45,7 +45,7 @@ namespace Givaro
 		RawRep * num ;
 		RawRep * den ;
 
-		int privSign() const;
+		int32_t privSign() const;
 
 		const Rep* get_rep() const
 		{
@@ -64,14 +64,14 @@ namespace Givaro
 
 		giv_all_inlined Rationel( Integer & n) ;
 
-		giv_all_inlined Rationel( int  n) ;
+		giv_all_inlined Rationel( int32_t  n) ;
 		giv_all_inlined Rationel( uint32_t  n) ;
 
-		giv_all_inlined Rationel( long int  n) ;
+		giv_all_inlined Rationel( int64_t  n) ;
 		giv_all_inlined Rationel( uint64_t  n) ;
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-		giv_all_inlined Rationel( long long int  n) ;
+		giv_all_inlined Rationel( long long  n) ;
 		giv_all_inlined Rationel( unsigned long long  n) ;
 #endif
 		//@}
@@ -85,40 +85,40 @@ namespace Givaro
 		//@{
 		giv_all_inlined Rationel( Integer & n, Integer & d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( int n, int d,
+		giv_all_inlined Rationel( int32_t n, int32_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( uint32_t n, int d,
+		giv_all_inlined Rationel( uint32_t n, int32_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( long int n, int d,
+		giv_all_inlined Rationel( int64_t n, int32_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( uint64_t n, int d,
+		giv_all_inlined Rationel( uint64_t n, int32_t d,
 					  enum reduceFlag = NoReduce) ;
 
-		giv_all_inlined Rationel( int n, uint32_t d,
+		giv_all_inlined Rationel( int32_t n, uint32_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( int n, long int d,
+		giv_all_inlined Rationel( int32_t n, int64_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( int n, uint64_t d,
+		giv_all_inlined Rationel( int32_t n, uint64_t d,
 					  enum reduceFlag = NoReduce) ;
 
 		giv_all_inlined Rationel( uint32_t n, uint32_t d,
 					  enum reduceFlag = NoReduce);
-		giv_all_inlined Rationel( uint32_t n, long int d,
+		giv_all_inlined Rationel( uint32_t n, int64_t d,
 					  enum reduceFlag = NoReduce) ;
 		giv_all_inlined Rationel( uint32_t n, uint64_t d,
 					  enum reduceFlag = NoReduce);
 
 		giv_all_inlined Rationel( uint64_t n, uint32_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( long int n, uint32_t d,
+		giv_all_inlined Rationel( int64_t n, uint32_t d,
 					  enum reduceFlag = NoReduce) ;
 
 
-		giv_all_inlined Rationel( long int n, long int d,
+		giv_all_inlined Rationel( int64_t n, int64_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( uint64_t n, long int d,
+		giv_all_inlined Rationel( uint64_t n, int64_t d,
 					  enum reduceFlag = NoReduce) ;
-		giv_all_inlined Rationel( long int n, uint64_t d,
+		giv_all_inlined Rationel( int64_t n, uint64_t d,
 					  enum reduceFlag = NoReduce) ;
 
 		giv_all_inlined Rationel( uint64_t n, uint64_t d,
@@ -231,12 +231,12 @@ namespace Givaro
 		 */
 		static giv_all_inlined Rationel& reduce(Rationel & r) ;//const
 
-		static inline int isZero(const Rationel &n)
+		static inline int32_t isZero(const Rationel &n)
 		{
 			return (mpq_sgn((mpq_srcptr)&n.gmp_rep) == 0) ;
 		}
 
-		giv_all_inlined int isZero()
+		giv_all_inlined int32_t isZero()
 		{
 			return (mpq_sgn((mpq_srcptr)&gmp_rep) == 0);
 		}

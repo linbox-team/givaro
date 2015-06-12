@@ -34,7 +34,7 @@ namespace Givaro {
 	{
 		if (isZero(n)) return res;
 		if (isZero(res)) return res = - n;
-		int sgn = Givaro::sign(n);
+		int32_t sgn = Givaro::sign(n);
 		if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
 		else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n);
 		return res;
@@ -58,7 +58,7 @@ namespace Givaro {
 	{
 		if (isZero(n1)) return res = - n2;
 		if (isZero(n2)) return res = n1;
-		int sgn = Givaro::sign(n2);
+		int32_t sgn = Givaro::sign(n2);
 		if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
 		else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, -n2);
 		return res;
@@ -107,7 +107,7 @@ namespace Givaro {
 		if (l==0) return *this;
 		if (isZero(*this)) return logcpy(Integer(-l));
 		//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
-		int sgn = Givaro::sign(l);
+		int32_t sgn = Givaro::sign(l);
 		if (sgn >0) mpz_sub_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
 		else mpz_add_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, -l);
 		return *this;
@@ -140,14 +140,14 @@ namespace Givaro {
 		if (isZero(*this)) return Integer(-l);
 		//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
 		Integer res;
-		int sgn = Givaro::sign(l);
+		int32_t sgn = Givaro::sign(l);
 		if (sgn >0) mpz_sub_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
 		else mpz_add_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, -l);
 		return res;
 	}
 
 	// -- operator -
-	Integer operator - (const int l, const Integer& n)
+	Integer operator - (const int32_t l, const Integer& n)
 	{
 		return -(n - (int64_t)l);
 	}
@@ -163,7 +163,7 @@ namespace Givaro {
 	{
 		return -(n - l);
 	}
-	Integer operator - (const Integer& n, const int l)
+	Integer operator - (const Integer& n, const int32_t l)
 	{
 		return n - (int64_t)l;
 	}
@@ -172,7 +172,7 @@ namespace Givaro {
 		return n - (uint64_t)l;
 	}
 
-	Integer& operator -= (Integer& n, const int l)
+	Integer& operator -= (Integer& n, const int32_t l)
 	{
 		return n -= (int64_t)l;
 	}
@@ -182,7 +182,7 @@ namespace Givaro {
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	Integer operator - (const Integer& n, const long long int l)
+	Integer operator - (const Integer& n, const long long l)
 	{
 		return n - (Integer)l;
 	}
@@ -190,7 +190,7 @@ namespace Givaro {
 	{
 		return n - (Integer)l;
 	}
-	Integer operator - (const long long int l, const Integer& n)
+	Integer operator - (const long long l, const Integer& n)
 	{
 		return n-l;
 	}
@@ -198,7 +198,7 @@ namespace Givaro {
 	{
 		return n-l;
 	}
-	Integer& operator -= (Integer& n, const long long int l)
+	Integer& operator -= (Integer& n, const long long l)
 	{
 		return n -= (Integer)l;
 	}

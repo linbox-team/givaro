@@ -90,7 +90,7 @@ namespace Givaro {
 	 */
 	bool isOdd(const Integer &a)
 	{
-		int o = mpz_tstbit( (mpz_srcptr) &(a.gmp_rep), 0);
+		int32_t o = mpz_tstbit( (mpz_srcptr) &(a.gmp_rep), 0);
 		return (o!=0); // or maybe should I write l==1 ^^
 	}
 
@@ -150,12 +150,12 @@ namespace Givaro {
 		return r;
 	}
 
-	int probab_prime(const Integer &p)
+	int32_t probab_prime(const Integer &p)
 	{
 		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),10) ;
 	}
 
-	int probab_prime(const Integer &p, int r)
+	int32_t probab_prime(const Integer &p, int32_t r)
 	{
 		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),r) ;
 	}
@@ -163,12 +163,12 @@ namespace Givaro {
 	// ==========================================================================
 	// Computes and returns the Jacobi and Legendre symbols (u/v) of the integers u and v.
 	// The algorithm used is Gmp's.
-	int jacobi(const Integer& u, const Integer& v)
+	int32_t jacobi(const Integer& u, const Integer& v)
 	{
 		return mpz_jacobi ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
 	}
 
-	int legendre(const Integer& u, const Integer& v)
+	int32_t legendre(const Integer& u, const Integer& v)
 	{
 		return mpz_legendre ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
 	}
@@ -176,7 +176,7 @@ namespace Givaro {
 
 
 	//--------------------------------------------Integer::operator <<   // shift left
-	Integer Integer::operator << (int l) const
+	Integer Integer::operator << (int32_t l) const
 	{
 		return this->operator<<( (uint64_t)l );
 	}
@@ -198,7 +198,7 @@ namespace Givaro {
 
 
 	//--------------------------------------------Integer::operator >>   // shift right
-	Integer Integer::operator >> (int l) const
+	Integer Integer::operator >> (int32_t l) const
 	{
 		return this->operator>>( (uint64_t)l );
 	}
@@ -221,7 +221,7 @@ namespace Givaro {
 	}
 
 	//--------------------------------------------Integer::operator <<=   // shift left
-	Integer& Integer::operator <<= (int l)
+	Integer& Integer::operator <<= (int32_t l)
 	{
 		return this->operator<<= ( (uint64_t)l );
 	}
@@ -242,7 +242,7 @@ namespace Givaro {
 
 
 	//--------------------------------------------Integer::operator >>=   // shift right
-	Integer& Integer::operator >>= (int l)
+	Integer& Integer::operator >>= (int32_t l)
 	{
 		return this->operator>>= ( (uint64_t)l );
 	}
@@ -370,7 +370,7 @@ namespace Givaro {
 	//------------------------------------------- casting method
 	Integer::operator int() const
 	{
-		return int (mpz_get_si ( (mpz_srcptr)&gmp_rep));
+		return int32_t (mpz_get_si ( (mpz_srcptr)&gmp_rep));
 	}
 	Integer::operator uint32_t() const
 	{
@@ -389,7 +389,7 @@ namespace Givaro {
 	{
 		uint64_t low = (uint64_t)(*this);
 		Integer rem;
-		short cbtuli = (short)(CHAR_BIT*(double)sizeof(uint64_t));
+		int16_t cbtuli = (int16_t)(CHAR_BIT*(double)sizeof(uint64_t));
 		mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), cbtuli );
 		unsigned long long tmp = (uint64_t)(rem);
 		//	tmp <<= CHAR_BIT*sizeof(uint64_t) ;
@@ -463,7 +463,7 @@ namespace Givaro {
 		return  mpz_size( (mpz_srcptr)&gmp_rep ) ;
 	}
 
-	size_t Integer::size_in_base(int BASE) const
+	size_t Integer::size_in_base(int32_t BASE) const
 	{
 		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, BASE);
 	}

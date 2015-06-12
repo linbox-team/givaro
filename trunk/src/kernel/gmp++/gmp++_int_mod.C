@@ -44,7 +44,7 @@ namespace Givaro {
 	Integer& Integer::modin(Integer& res, const int64_t n)
 	{
 		if (isZero(res)) return res;
-		// int sgn = sign(n);
+		// int32_t sgn = sign(n);
 		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, abs(n));
 		// if (sgn <0) return res = -res;
 
@@ -68,7 +68,7 @@ namespace Givaro {
 	Integer& Integer::mod(Integer& res, const Integer& n1, const int64_t n2)
 	{
 		if (isZero(n1)) return res = Integer::zero;
-		// int sgn = sign(n2);
+		// int32_t sgn = sign(n2);
 		// mpz_tdiv_r_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, abs(n2));
 		// if (sgn <0) return res = - res;
 
@@ -102,7 +102,7 @@ namespace Givaro {
 	{
 		if (isZero(*this)) return *this;
 #ifdef DEBUG
-		int sgn_this = (*this>0)?1:-1;
+		int32_t sgn_this = (*this>0)?1:-1;
 #endif
 
 		mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
@@ -118,9 +118,9 @@ namespace Givaro {
 	{
 		if (isZero(*this)) return *this;
 #ifdef DEBUG
-		int sgn_this = (*this>0)?1:-1;
+		int32_t sgn_this = (*this>0)?1:-1;
 #endif
-		int sgn = Givaro::sign(l);
+		int32_t sgn = Givaro::sign(l);
 		mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
 		if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
 
@@ -218,7 +218,7 @@ namespace Givaro {
 		return (unsigned long long)( Res );
 	}
 
-	long long Integer::operator % (const long long int l) const
+	long long Integer::operator % (const long long l) const
 	{
 		if (isZero(*this)) return 0LL;
 		Integer Res(Integer::one);
@@ -229,7 +229,7 @@ namespace Givaro {
 #endif //__USE_64_bits__
 
 	// -- operator %
-	 Integer operator % (const int l, const Integer& n)
+	 Integer operator % (const int32_t l, const Integer& n)
 	{
 		return Integer(l) % n;
 	}
@@ -237,7 +237,7 @@ namespace Givaro {
 	{
 		return Integer(l) % n;
 	}
-	 Integer operator % (const Integer& n, const int l)
+	 Integer operator % (const Integer& n, const int32_t l)
 	{
 		return n % (int64_t)l;
 	}
@@ -246,7 +246,7 @@ namespace Givaro {
 		return n % (uint64_t)l;
 	}
 
-	 Integer& operator %= (Integer& n, const int l)
+	 Integer& operator %= (Integer& n, const int32_t l)
 	{
 		return n %= (int64_t)l;
 	}

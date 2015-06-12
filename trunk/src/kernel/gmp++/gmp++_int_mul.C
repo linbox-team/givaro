@@ -33,8 +33,8 @@ Integer& Integer::mulin(Integer& res, const int64_t n)
 {
   if (isZero(n)) return res = Integer::zero;
   if (isZero(res)) return res;
-//   int sgn = sign(n);
-  // int sgn = sign(n);
+//   int32_t sgn = sign(n);
+  // int32_t sgn = sign(n);
   // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, abs(n));
 //   if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
   // if (sgn <0) return res = -res;
@@ -60,7 +60,7 @@ Integer& Integer::mul(Integer& res, const Integer& n1, const int64_t n2)
 {
   if (isZero(n1)) return res = Integer::zero;
   if (isZero(n2)) return res = Integer::zero;
-  // int sgn = sign(n2);
+  // int32_t sgn = sign(n2);
   // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, abs(n2));
   // if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
   // if (sgn <0) return res = -res;
@@ -196,7 +196,7 @@ Integer& Integer::operator *= (const int64_t l)
   if (l==0) return *this =Integer::zero;
   if (isZero(*this)) return *this;
 //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
-  // int sgn = sign(l);
+  // int32_t sgn = sign(l);
   // mpz_mul_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, abs(l));
   // if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
   mpz_mul_si( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
@@ -230,7 +230,7 @@ Integer Integer::operator * (const int64_t l) const
   if (isZero(*this)) return Integer::zero;
 //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
   Integer res;
-  // int sgn = sign(l);
+  // int32_t sgn = sign(l);
   // mpz_mul_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, abs(l));
 //   if (sgn <0) (res.gmp_rep).size = -(res.gmp_rep).size;
 //   return Integer((res.gmp_rep));
@@ -240,7 +240,7 @@ Integer Integer::operator * (const int64_t l) const
 }
 
 	// -- operator *
-	 Integer operator * (const int l, const Integer& n)
+	 Integer operator * (const int32_t l, const Integer& n)
 	{
 		return n * (int64_t)l;
 	}
@@ -256,7 +256,7 @@ Integer Integer::operator * (const int64_t l) const
 	{
 		return n * l;
 	}
-	 Integer operator * (const Integer& n, const int l)
+	 Integer operator * (const Integer& n, const int32_t l)
 	{
 		return n * (int64_t)l;
 	}
@@ -265,7 +265,7 @@ Integer Integer::operator * (const int64_t l) const
 		return n * (uint64_t)l;
 	}
 
-	 Integer& operator *= (Integer& n, const int l)
+	 Integer& operator *= (Integer& n, const int32_t l)
 	{
 		return n *= (int64_t)l;
 	}
@@ -275,7 +275,7 @@ Integer Integer::operator * (const int64_t l) const
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	 Integer operator * (const Integer& n, const long long int l)
+	 Integer operator * (const Integer& n, const long long l)
 	{
 		return n * (Integer)l;
 	}
@@ -283,7 +283,7 @@ Integer Integer::operator * (const int64_t l) const
 	{
 		return n * (Integer)l;
 	}
-	 Integer operator * (const long long int l, const Integer& n)
+	 Integer operator * (const long long l, const Integer& n)
 	{
 		return n*l;
 	}
@@ -291,7 +291,7 @@ Integer Integer::operator * (const int64_t l) const
 	{
 		return n*l;
 	}
-	 Integer& operator *= (Integer& n, const long long int l)
+	 Integer& operator *= (Integer& n, const long long l)
 	{
 		return n *= (Integer)l;
 	}

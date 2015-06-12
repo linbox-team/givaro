@@ -47,7 +47,7 @@ namespace Givaro {
 		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n);
 		return res;
 	}
-	Rationel& Rationel::addin(Rationel& res, const long unsigned int n)
+	Rationel& Rationel::addin(Rationel& res, const uint64_t n)
 	{
 		if (isZero(n)) return res;
 		if (isZero(res)) return res = n;
@@ -71,7 +71,7 @@ namespace Givaro {
 		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, -n2);
 		return res;
 	}
-	Rationel& Rationel::add(Rationel& res, const Integer& n1, const long unsigned int n2)
+	Rationel& Rationel::add(Rationel& res, const Integer& n1, const uint64_t n2)
 	{
 		if (isZero(n1)) return res = n2;
 		if (isZero(n2)) return res = n1;
@@ -89,7 +89,7 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator += (const long unsigned int l)
+	Integer& Integer::operator += (const uint64_t l)
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return logcpy(Integer(l));
@@ -117,7 +117,7 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer Integer::operator + (const long unsigned int l) const
+	Integer Integer::operator + (const uint64_t l) const
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return Integer(l);
@@ -149,15 +149,15 @@ namespace Givaro {
 	{
 		return n + (long)l;
 	}
-	Integer operator + (const unsigned int l, const Integer& n)
+	Integer operator + (const uint32_t l, const Integer& n)
 	{
-		return n + (long unsigned)l;
+		return n + (uint64_t)l;
 	}
 	Integer operator + (const long int l, const Integer& n)
 	{
 		return n + l;
 	}
-	Integer operator + (const long unsigned int l, const Integer& n)
+	Integer operator + (const uint64_t l, const Integer& n)
 	{
 		return n + l;
 	}
@@ -165,18 +165,18 @@ namespace Givaro {
 	{
 		return n + (long)l;
 	}
-	Integer operator + (const Integer& n, const unsigned int l)
+	Integer operator + (const Integer& n, const uint32_t l)
 	{
-		return n + (long unsigned)l;
+		return n + (uint64_t)l;
 	}
 
 	Integer& operator += (Integer& n, const int l)
 	{
 		return n += (long)l;
 	}
-	Integer& operator += (Integer& n, const unsigned int l)
+	Integer& operator += (Integer& n, const uint32_t l)
 	{
-		return n += (long unsigned)l;
+		return n += (uint64_t)l;
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
@@ -184,7 +184,7 @@ namespace Givaro {
 	{
 		return n + (Integer)l;
 	}
-	Integer operator + (const Integer& n, const long long unsigned int l)
+	Integer operator + (const Integer& n, const unsigned long long l)
 	{
 		return n + (Integer)l;
 	}
@@ -192,7 +192,7 @@ namespace Givaro {
 	{
 		return n+l;
 	}
-	Integer operator + (const long long unsigned int l, const Integer& n)
+	Integer operator + (const unsigned long long l, const Integer& n)
 	{
 		return n+l;
 	}
@@ -200,7 +200,7 @@ namespace Givaro {
 	{
 		return n += (Integer)l;
 	}
-	Integer& operator += (Integer& n, const long long unsigned int l)
+	Integer& operator += (Integer& n, const unsigned long long l)
 	{
 		return n += (Integer)l;
 	}

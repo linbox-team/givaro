@@ -33,13 +33,13 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer& Integer::divin(Integer& res, const long int n)
+	Integer& Integer::divin(Integer& res, const int64_t n)
 	{
 		//  if (n ==0) {
 		//    GivMathDivZero("[Integer::/]: division by zero");
 		//  }
 		if (isZero(res)) return res;
-		int sgn = Givaro::sign(n);
+		int32_t sgn = Givaro::sign(n);
 		mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, std::abs(n));
 		if (sgn <0) return res = -res;
 		// if (n<0)
@@ -51,7 +51,7 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer& Integer::divin(Integer& res, const long unsigned int n)
+	Integer& Integer::divin(Integer& res, const uint64_t n)
 	{
 		//  if (n ==0) {
 		//    GivMathDivZero("[Integer::/]: division by zero");
@@ -71,13 +71,13 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer& Integer::div(Integer& res, const Integer& n1, const long int n2)
+	Integer& Integer::div(Integer& res, const Integer& n1, const int64_t n2)
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		//  if (isZero(n2)) {
 		//    GivMathDivZero("[Integer::/]: division by zero");
 		//  }
-		int sgn = Givaro::sign(n2);
+		int32_t sgn = Givaro::sign(n2);
 		mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, std::abs(n2));
 		if (sgn <0) return res = -res;
 
@@ -90,12 +90,12 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer& Integer::div(Integer& res, const Integer& n1, const int n2)
+	Integer& Integer::div(Integer& res, const Integer& n1, const int32_t n2)
 	{
 		return div(res,n1,long(n2));
 	}
 
-	Integer& Integer::div(Integer& res, const Integer& n1, const long unsigned int n2)
+	Integer& Integer::div(Integer& res, const Integer& n1, const uint64_t n2)
 	{
 		if (isZero(n1)) return res = Integer::zero;
 		//  if (isZero(n2)) {
@@ -116,7 +116,7 @@ namespace Givaro {
 		return q;
 	}
 
-	Integer& Integer::divexact  (Integer& q, const Integer& n1, const unsigned long & n2)
+	Integer& Integer::divexact  (Integer& q, const Integer& n1, const uint64_t & n2)
 	{
 		if (isZero(n1)) return q = Integer::zero;
 		mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
@@ -147,7 +147,7 @@ namespace Givaro {
 		return q;
 	}
 
-	Integer  Integer::divexact  (const Integer& n1, const unsigned long& n2)
+	Integer  Integer::divexact  (const Integer& n1, const uint64_t& n2)
 	{
 		if (isZero(n1)) return Integer::zero;
 		Integer q;
@@ -176,7 +176,7 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator /= (const long unsigned int l)
+	Integer& Integer::operator /= (const uint64_t l)
 	{
 		//  if (l ==0) {
 		//    GivMathDivZero("[Integer::/]: division by zero");
@@ -186,13 +186,13 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator /= (const long int l)
+	Integer& Integer::operator /= (const int64_t l)
 	{
 		//  if (l ==0) {
 		//    GivMathDivZero("[Integer::/]: division by zero");
 		//  }
 		if (isZero(*this)) return *this;
-		int sgn = Givaro::sign(l);
+		int32_t sgn = Givaro::sign(l);
 		mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
 		if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep));
 		return *this;
@@ -216,7 +216,7 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer Integer::operator / (const long unsigned int l) const
+	Integer Integer::operator / (const uint64_t l) const
 	{
 		//  if (l ==0) {
 		//    GivMathDivZero("[Integer::/]: division by zero");
@@ -228,14 +228,14 @@ namespace Givaro {
 		return res;
 	}
 
-	Integer Integer::operator / (const long int l) const
+	Integer Integer::operator / (const int64_t l) const
 	{
 		//  if (l ==0) {
 		//    GivMathDivZero("[Integer::/]: division by zero");
 		//  }
 		if (isZero(*this)) return Integer::zero;
 		Integer res;
-		int sgn = Givaro::sign(l);
+		int32_t sgn = Givaro::sign(l);
 		mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, std::abs(l));
 		if (sgn <0) return negin(res);
 		// if (l>0)
@@ -272,12 +272,12 @@ namespace Givaro {
 		return q;
 	}
 
-	Integer& Integer::divmod(Integer& q, long int & r, const Integer& a, const long int b)
+	Integer& Integer::divmod(Integer& q, int64_t & r, const Integer& a, const int64_t b)
 	{
 		//  if (isZero(b)) {
 		//    GivMathDivZero("[Integer::divide]: division by zero");
 		//  }
-		// int sgn = sign(b);
+		// int32_t sgn = sign(b);
 		r = (long)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
 					 (mpz_srcptr)&(a.gmp_rep), std::abs(b));
 		// if (sgn <0) return negin(q);
@@ -297,7 +297,7 @@ namespace Givaro {
 		return q;
 	}
 
-	Integer& Integer::divmod(Integer& q, long unsigned int & r, const Integer& a, const long unsigned int b)
+	Integer& Integer::divmod(Integer& q, uint64_t & r, const Integer& a, const uint64_t b)
 	{
 		//  if (isZero(b)) {
 		//    GivMathDivZero("[Integer::divide]: division by zero");
@@ -388,7 +388,7 @@ namespace Givaro {
 		return r;
 	}
 
-	Integer& Integer::trem(Integer& r, const Integer &n , const unsigned long& d)
+	Integer& Integer::trem(Integer& r, const Integer &n , const uint64_t& d)
 	{
 		mpz_tdiv_r_ui((mpz_ptr)&(r.gmp_rep),
 			      (mpz_srcptr)&(n.gmp_rep),
@@ -396,7 +396,7 @@ namespace Givaro {
 		return r;
 	}
 
-	Integer& Integer::crem(Integer& r, const Integer &n , const unsigned long & d)
+	Integer& Integer::crem(Integer& r, const Integer &n , const uint64_t & d)
 	{
 		mpz_cdiv_r_ui((mpz_ptr)&(r.gmp_rep),
 			      (mpz_srcptr)&(n.gmp_rep),
@@ -404,7 +404,7 @@ namespace Givaro {
 		return r;
 	}
 
-	Integer& Integer::frem(Integer& r, const Integer &n , const unsigned long & d)
+	Integer& Integer::frem(Integer& r, const Integer &n , const uint64_t & d)
 	{
 		mpz_fdiv_r_ui((mpz_ptr)&(r.gmp_rep),
 			      (mpz_srcptr)&(n.gmp_rep),
@@ -412,56 +412,56 @@ namespace Givaro {
 		return r;
 	}
 
-	unsigned long Integer::trem(const Integer &n , const unsigned long& d)
+	uint64_t Integer::trem(const Integer &n , const uint64_t& d)
 	{
 		return mpz_cdiv_ui( (mpz_srcptr)&(n.gmp_rep),
 				    (d));
 	}
 
-	unsigned long Integer::crem(const Integer &n , const unsigned long & d)
+	uint64_t Integer::crem(const Integer &n , const uint64_t & d)
 	{
 		return mpz_tdiv_ui( (mpz_srcptr)&(n.gmp_rep),
 				    (d));
 	}
 
-	unsigned long Integer::frem(const Integer &n , const unsigned long & d)
+	uint64_t Integer::frem(const Integer &n , const uint64_t & d)
 	{
 		return mpz_fdiv_ui( (mpz_srcptr)&(n.gmp_rep),
 				    d);
 	}
 
 	// -- operator /
-	Integer operator / (const int l, const Integer& n)
+	Integer operator / (const int32_t l, const Integer& n)
 	{
 		return Integer(l)/n;
 	}
-	Integer operator / (const long int l, const Integer& n)
+	Integer operator / (const int64_t l, const Integer& n)
 	{
 		return Integer(l)/n;
 	}
-	Integer operator / (const Integer& n, const int l)
+	Integer operator / (const Integer& n, const int32_t l)
 	{
 		return n / (long)l;
 	}
-	Integer operator / (const Integer& n, const unsigned int l)
+	Integer operator / (const Integer& n, const uint32_t l)
 	{
-		return n / (long unsigned)l;
+		return n / (uint64_t)l;
 	}
 
-	Integer& operator /= (Integer& n, const int l)
+	Integer& operator /= (Integer& n, const int32_t l)
 	{
 		if (l>=0)
-			return n /= (long unsigned)l;
+			return n /= (uint64_t)l;
 		else
-			return  n = -(n / (long unsigned)-l);
+			return  n = -(n / (uint64_t)-l);
 	}
-	Integer& operator /= (Integer& n, const long int l)
+	Integer& operator /= (Integer& n, const int64_t l)
 	{
-		return n /= (long unsigned)l;
+		return n /= (uint64_t)l;
 	}
-	Integer& operator /= (Integer& n, const unsigned int l)
+	Integer& operator /= (Integer& n, const uint32_t l)
 	{
-		return n /= (long unsigned)l;
+		return n /= (uint64_t)l;
 	}
 
 

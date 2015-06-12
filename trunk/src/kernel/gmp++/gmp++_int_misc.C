@@ -26,8 +26,8 @@
 #endif
 
 namespace Givaro {
-	//-------------------------------------------fact (long unsigned int l)
-	Integer fact ( long unsigned int l)
+	//-------------------------------------------fact (uint64_t l)
+	Integer fact ( uint64_t l)
 	{
 		Integer Res ;
 		mpz_fac_ui( (mpz_ptr)&(Res.gmp_rep), l ) ;
@@ -61,7 +61,7 @@ namespace Givaro {
 		return sqrtrem(q,a,r);
 	}
 
-	bool root(Integer& q, const Integer &a, unsigned int n)
+	bool root(Integer& q, const Integer &a, uint32_t n)
 	{
 		return (bool)mpz_root ((mpz_ptr)&(q.gmp_rep),
 				       (mpz_srcptr)&(a.gmp_rep),
@@ -178,18 +178,18 @@ namespace Givaro {
 	//--------------------------------------------Integer::operator <<   // shift left
 	Integer Integer::operator << (int l) const
 	{
-		return this->operator<<( (long unsigned)l );
+		return this->operator<<( (uint64_t)l );
 	}
-	Integer Integer::operator << (unsigned int l) const
+	Integer Integer::operator << (uint32_t l) const
 	{
-		return this->operator<<( (long unsigned)l );
+		return this->operator<<( (uint64_t)l );
 	}
 	Integer Integer::operator << (long int l) const
 	{
-		return this->operator<<( (long unsigned)l );
+		return this->operator<<( (uint64_t)l );
 	}
 
-	Integer Integer::operator << (long unsigned int l) const
+	Integer Integer::operator << (uint64_t l) const
 	{
 		Integer tmp;
 		mpz_mul_2exp((mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
@@ -200,20 +200,20 @@ namespace Givaro {
 	//--------------------------------------------Integer::operator >>   // shift right
 	Integer Integer::operator >> (int l) const
 	{
-		return this->operator>>( (long unsigned)l );
+		return this->operator>>( (uint64_t)l );
 	}
 
 	Integer Integer::operator >> (long int l) const
 	{
-		return this->operator>>( (long unsigned)l );
+		return this->operator>>( (uint64_t)l );
 	}
 
-	Integer Integer::operator >> (unsigned int l) const
+	Integer Integer::operator >> (uint32_t l) const
 	{
-		return this->operator>>( (long unsigned)l );
+		return this->operator>>( (uint64_t)l );
 	}
 
-	Integer Integer::operator >> (long unsigned int l) const
+	Integer Integer::operator >> (uint64_t l) const
 	{
 		Integer tmp;
 		mpz_tdiv_q_2exp( (mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
@@ -223,18 +223,18 @@ namespace Givaro {
 	//--------------------------------------------Integer::operator <<=   // shift left
 	Integer& Integer::operator <<= (int l)
 	{
-		return this->operator<<= ( (long unsigned)l );
+		return this->operator<<= ( (uint64_t)l );
 	}
-	Integer& Integer::operator <<=  (unsigned int l)
+	Integer& Integer::operator <<=  (uint32_t l)
 	{
-		return this->operator<<= ( (long unsigned)l );
+		return this->operator<<= ( (uint64_t)l );
 	}
 	Integer& Integer::operator <<= (long int l)
 	{
-		return this->operator<<= ( (long unsigned)l );
+		return this->operator<<= ( (uint64_t)l );
 	}
 
-	Integer& Integer::operator <<= (long unsigned int l)
+	Integer& Integer::operator <<= (uint64_t l)
 	{
 		mpz_mul_2exp((mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
 		return *this;
@@ -244,18 +244,18 @@ namespace Givaro {
 	//--------------------------------------------Integer::operator >>=   // shift right
 	Integer& Integer::operator >>= (int l)
 	{
-		return this->operator>>= ( (long unsigned)l );
+		return this->operator>>= ( (uint64_t)l );
 	}
 	Integer& Integer::operator >>= (long int l)
 	{
-		return this->operator>>= ( (long unsigned)l );
+		return this->operator>>= ( (uint64_t)l );
 	}
-	Integer& Integer::operator >>= (unsigned int l)
+	Integer& Integer::operator >>= (uint32_t l)
 	{
-		return this->operator>>= ( (long unsigned)l );
+		return this->operator>>= ( (uint64_t)l );
 	}
 
-	Integer& Integer::operator >>= (long unsigned int l)
+	Integer& Integer::operator >>= (uint64_t l)
 	{
 		mpz_tdiv_q_2exp( (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
 		return *this;
@@ -277,33 +277,33 @@ namespace Givaro {
 		Integer res(*this);
 		return res &= a;
 	}
-	Integer Integer::operator^ (const long unsigned int & a) const
+	Integer Integer::operator^ (const uint64_t & a) const
 	{   // XOR
 		Integer res(*this);
 		return res ^= a;
 	}
-	Integer Integer::operator| (const long unsigned int & a) const
+	Integer Integer::operator| (const uint64_t & a) const
 	{   // OR
 		Integer res(*this);
 		return res |= a;
 	}
-	long unsigned Integer::operator& (const long unsigned int & a) const
+	uint64_t Integer::operator& (const uint64_t & a) const
 	{   // AND
 		return mpz_get_ui((mpz_srcptr)&(gmp_rep)) & a;
 	}
-	Integer Integer::operator^ (const unsigned int& a) const
+	Integer Integer::operator^ (const uint32_t& a) const
 	{   // XOR
 		Integer res(*this);
 		return res ^= a;
 	}
-	Integer Integer::operator| (const unsigned int& a) const
+	Integer Integer::operator| (const uint32_t& a) const
 	{   // OR
 		Integer res(*this);
 		return res |= a;
 	}
-	unsigned int Integer::operator& (const unsigned int& a) const
+	uint32_t Integer::operator& (const uint32_t& a) const
 	{   // AND
-		return (unsigned int) (mpz_get_ui((mpz_srcptr)&(gmp_rep)) & (long unsigned int)a );
+		return (uint32_t) (mpz_get_ui((mpz_srcptr)&(gmp_rep)) & (uint64_t)a );
 	}
 	Integer Integer::operator~ () const
 	{   // 1 complement
@@ -327,38 +327,38 @@ namespace Givaro {
 		return *this;
 	}
 
-	Integer& Integer::operator^= (const long unsigned int & a)
+	Integer& Integer::operator^= (const uint64_t & a)
 	{   // XOR
         Integer au(a);
 		mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
 		return *this;
 	}
-	Integer& Integer::operator|= (const long unsigned int & a)
+	Integer& Integer::operator|= (const uint64_t & a)
 	{   // OR
         Integer au(a);
 		mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
 		return *this;
 	}
-	Integer& Integer::operator&= (const long unsigned int & a)
+	Integer& Integer::operator&= (const uint64_t & a)
 	{   // AND
         Integer au(a);
 		mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
 		return *this;
 	}
 
-	Integer& Integer::operator^= (const unsigned int& a)
+	Integer& Integer::operator^= (const uint32_t& a)
 	{   // XOR
         Integer au(a);
 		mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
 		return *this;
 	}
-	Integer& Integer::operator|= (const unsigned int& a)
+	Integer& Integer::operator|= (const uint32_t& a)
 	{   // OR
         Integer au(a);
 		mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
 		return *this;
 	}
-	Integer& Integer::operator&= (const unsigned int& a)
+	Integer& Integer::operator&= (const uint32_t& a)
 	{   // AND
         Integer au(a);
 		mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
@@ -372,27 +372,27 @@ namespace Givaro {
 	{
 		return int (mpz_get_si ( (mpz_srcptr)&gmp_rep));
 	}
-	Integer::operator unsigned int() const
+	Integer::operator uint32_t() const
 	{
-		return (unsigned int) mpz_get_ui ( (mpz_srcptr)&gmp_rep);
+		return (uint32_t) mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 	}
 	Integer::operator long() const
 	{
 		return mpz_get_si ( (mpz_srcptr)&gmp_rep);
 	}
-	Integer::operator long unsigned() const
+	Integer::operator uint64_t() const
 	{
 		return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 	}
 #ifdef __USE_64_bits__
-	Integer::operator long long unsigned() const
+	Integer::operator unsigned long long() const
 	{
-		long unsigned int low = (long unsigned)(*this);
+		uint64_t low = (uint64_t)(*this);
 		Integer rem;
-		short cbtuli = (short)(CHAR_BIT*(double)sizeof(long unsigned int));
+		short cbtuli = (short)(CHAR_BIT*(double)sizeof(uint64_t));
 		mpz_tdiv_q_2exp( (mpz_ptr)&(rem.gmp_rep), (mpz_srcptr)&(gmp_rep), cbtuli );
-		long long unsigned tmp = (long unsigned)(rem);
-		//	tmp <<= CHAR_BIT*sizeof(long unsigned int) ;
+		unsigned long long tmp = (uint64_t)(rem);
+		//	tmp <<= CHAR_BIT*sizeof(uint64_t) ;
 		cbtuli /= 2;
 		tmp <<= cbtuli ;
 		tmp <<= cbtuli ;
@@ -401,7 +401,7 @@ namespace Givaro {
 	}
 	Integer::operator long long() const
 	{
-		long long unsigned toto = (long long unsigned)(*this);
+		unsigned long long toto = (unsigned long long)(*this);
 		long long tmp = (long long) toto ;
 //                 if (*this < 0) tmp = -tmp;
 //                 return tmp;
@@ -422,7 +422,7 @@ namespace Givaro {
 	{
 #ifdef __GIVARO_GMP_NO_CXX
 		std::string s;
-		long unsigned strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), 10) + 2;
+		uint64_t strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), 10) + 2;
 		char *str = new char[strSize + 2];
 		mpz_get_str(str, 10, (mpz_srcptr)&(gmp_rep));
 		s = std::string(str);
@@ -445,10 +445,10 @@ namespace Givaro {
 		return v;
 	}
 
-	long unsigned int length(const Integer& a)
+	uint64_t length(const Integer& a)
 	{
-		//! @bug JGD 23.04.2012: shouldn't it be "mp_limb_t" instead of "long unsigned"?
-		return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(long unsigned);
+		//! @bug JGD 23.04.2012: shouldn't it be "mp_limb_t" instead of "uint64_t"?
+		return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(uint64_t);
 	}
 
 	Integer abs(const Integer &n)
@@ -473,7 +473,7 @@ namespace Givaro {
 		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, 2);
 	}
 
-	long unsigned Integer::operator[](size_t i) const
+	uint64_t Integer::operator[](size_t i) const
 	{
 		if ( mpz_size( (mpz_srcptr)&gmp_rep ) > i)
 			return mpz_getlimbn( (mpz_srcptr)&gmp_rep, i);

@@ -24,29 +24,29 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-  GFqDom<long>::Residu_t MOD;
+  GFqDom<int64_t>::Residu_t MOD;
   if (argc > 1)
-	  MOD = (GFqDom<long>::Residu_t) atoi(argv[1]);
+	  MOD = (GFqDom<int64_t>::Residu_t) atoi(argv[1]);
   else
 	  std::cin >> MOD;
-  unsigned long expo = 1;
-  if (argc > 2) expo = (unsigned long)atoi(argv[2]);
+  uint64_t expo = 1;
+  if (argc > 2) expo = (uint64_t)atoi(argv[2]);
 
-  GFqDom<long> F(MOD, expo);
+  GFqDom<int64_t> F(MOD, expo);
 
-  Poly1FactorDom<GFqDom<long>, Dense> FD(F,Indeter("X"));
-  typedef Poly1FactorDom<GFqDom<long>, Dense>::Element Polys ;
+  Poly1FactorDom<GFqDom<int64_t>, Dense> FD(F,Indeter("X"));
+  typedef Poly1FactorDom<GFqDom<int64_t>, Dense>::Element Polys ;
   Polys P;
   FD.read( cin, P );
   std::vector<Polys> Lf;
-  std::vector<unsigned long> Le;
+  std::vector<uint64_t> Le;
 
         Timer tim; tim.clear(); tim.start();
         FD.CZfactor(Lf, Le, P);
         tim.stop();
 
   FD.write( cout, P ) << " is 1";
-  std::vector<unsigned long>::const_iterator e = Le.begin();
+  std::vector<uint64_t>::const_iterator e = Le.begin();
   for(std::vector<Polys>::const_iterator i = Lf.begin(); i != Lf.end(); ++i, ++e) {
       FD.write(cout << " * (", *i) << ")";
       if (*e > 1) cout << "^" << *e;
@@ -70,12 +70,12 @@ int main(int argc, char** argv)
 
 		bool f;
 
-	Poly1FactorDom<GFqDom<long>, Dense>::Element W,D;
+	Poly1FactorDom<GFqDom<int64_t>, Dense>::Element W,D;
 	FD.gcd(W,FD.diff(D,P),P);
 	Degree d, dP;
 	if (FD.degree(d,W) > 0) return 0;
 		// Distinct degree free ?
-	Poly1FactorDom<GFqDom<long>, Dense>::Element  Unit, G1;
+	Poly1FactorDom<GFqDom<int64_t>, Dense>::Element  Unit, G1;
 	FD.init(Unit, Degree(1), F.one);
 	W.copy(Unit);
 	FD.degree(dP,P); Degree dPo = (dP/2);

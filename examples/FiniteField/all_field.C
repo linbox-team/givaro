@@ -23,7 +23,7 @@ using namespace Givaro;
 namespace Givaro {
 // Domain kind
 typedef Modular<uint32_t>	Field1;	typedef StaticElement< Field1 > Element1; 	template<> Field1 Element1::_domain(2);
-typedef GFqDom<long>		Field2;	typedef StaticElement< Field2 > Element2;	template<> Field2 Element2::_domain(2);
+typedef GFqDom<int64_t>		Field2;	typedef StaticElement< Field2 > Element2;	template<> Field2 Element2::_domain(2);
 typedef Montgomery<int32_t>	Field3;	typedef StaticElement< Field3 > Element3;	template<> Field3 Element3::_domain(2);
 typedef Modular<Integer>		Field4;	typedef StaticElement< Field4 > Element4;	template<> Field4 Element4::_domain(2);
 typedef Modular<int32_t>		Field5;	typedef StaticElement< Field5 > Element5; 	template<> Field5 Element5::_domain(2);
@@ -41,7 +41,7 @@ Field8 Element8::_domain(2);
 template<class Field, class Element>
 void TestField()
 {
-    unsigned long P = 251;
+    uint64_t P = 251;
 
         // Initialization of static member
     Element::setDomain( Field( typename Field::Residu_t(P)) );
@@ -65,7 +65,7 @@ void TestField()
     std::cout << a << " is non zero ? " << (a != Element(0) ) << std::endl;
     a = 0; std::cout << a << " is zero ? " << (a == Element(0) ) << std::endl;
 
-    double dd(0.0); dd += (double)(e); dd += (float)e; dd += (unsigned int)e;
+    double dd(0.0); dd += (double)(e); dd += (float)e; dd += (uint32_t)e;
     Element::getDomain().write( std::cerr << "Test: " << dd << " within ") << std::endl;
 }
 

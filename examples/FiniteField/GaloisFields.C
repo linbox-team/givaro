@@ -13,16 +13,16 @@
 using namespace Givaro;
 
 int main (int argc, char * * argv) {
-    unsigned long q = (argc>1?(unsigned long)atoi(argv[1]):13);
-    unsigned long expo = (argc>2?(unsigned long)atoi(argv[2]):8);
+    uint64_t q = (argc>1?(uint64_t)atoi(argv[1]):13);
+    uint64_t expo = (argc>2?(uint64_t)atoi(argv[2]):8);
 
     {
             // This is the field with 11^2=121 elements
             // Using a generator representation and tables
-        GFqDom<long> F1(11,2);
+        GFqDom<int64_t> F1(11,2);
         F1.write(std::cout << "This is the field with 121 elements: ") << std::endl;
         std::cout << " using: " << F1.irreducible() << " as irreducible polynomial" << std::endl;
-        GFqDom<long>::Element primroot; F1.generator(primroot);
+        GFqDom<int64_t>::Element primroot; F1.generator(primroot);
         F1.write(std::cout << " represented as indexes with respect to the generator: ", primroot) << std::endl;
         std::cout << " represented as indexes with respect to the generator: " << F1.generator() << std::endl;
 
@@ -38,11 +38,11 @@ int main (int argc, char * * argv) {
 
         if ( NEED_POLYNOMIAL_REPRESENTATION(q,expo) ) {
                 // The template parameter if the type of the base field
-                // By default GFqDom<long> is used.
+                // By default GFqDom<int64_t> is used.
             Extension<> Fqe(q, expo);
             Fqe.write(std::cout << "This is the field with " << q << '^' << expo << " elements: ") << std::endl;
         } else {
-            GFqDom<long> Fqe(q, expo);
+            GFqDom<int64_t> Fqe(q, expo);
             Fqe.write(std::cout << "This is the field with " << q << '^' << expo << " elements: ") << std::endl;
         }
     }
@@ -51,8 +51,8 @@ int main (int argc, char * * argv) {
         // This is the field with 11^2=121 elements
         // Using a polynomial representation
     {
-	    GFqDom<long> F11(11);
-	    Extension< GFqDom<long> > F121(F11, 2);
+	    GFqDom<int64_t> F11(11);
+	    Extension< GFqDom<int64_t> > F121(F11, 2);
 	    F121.write(std::cout << "This is the field with 121 elements: ") << std::endl;
     }
 
@@ -88,18 +88,18 @@ int main (int argc, char * * argv) {
 
         // This is the field with 2^8 elements
     {
-        GFqDom<long> F256(2,8);
+        GFqDom<int64_t> F256(2,8);
         F256.write(std::cout << "This is the field with 256 elements: ") << ", using: " << F256.irreducible() << " as irreducible polynomial" << std::endl;
     }
 
         // This is the field with 2^8 elements
         // Using 1 + x +x^3 +x^4 +x^8 as irreducible polynomial
     {
-        std::vector< GFqDom<long>::Residu_t > Irred(9);
+        std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
         Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
         Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
         Irred[8] = 1;
-        GFqDom<long> F256(2,8, Irred);
+        GFqDom<int64_t> F256(2,8, Irred);
         F256.write(std::cout << "This is the field with 256 elements: ") << ", using: " << F256.irreducible() << " as irreducible polynomial" << std::endl;
 
         std::cout << " this field is generated (in 2-adic) by: " << F256.generator() << std::endl;
@@ -107,9 +107,9 @@ int main (int argc, char * * argv) {
         std::cout << " in this field the indeterminate is represented by: " << F256.sage_generator() << " (same as " << F256.indeterminate() << ')' << std::endl;
 
 
-        Givaro::GFqDom<long> F2(2);
-        typedef Givaro::Poly1Dom< Givaro::GFqDom<long>, Givaro::Dense> PolDomain;
-        typedef Givaro::Poly1PadicDom< Givaro::GFqDom<long>, Givaro::Dense> PadicDomain;
+        Givaro::GFqDom<int64_t> F2(2);
+        typedef Givaro::Poly1Dom< Givaro::GFqDom<int64_t>, Givaro::Dense> PolDomain;
+        typedef Givaro::Poly1PadicDom< Givaro::GFqDom<int64_t>, Givaro::Dense> PadicDomain;
 
 
         PolDomain Pol2(F2,"Z");
@@ -124,11 +124,11 @@ int main (int argc, char * * argv) {
                    << " == Z mod (", polIrred) << ')' << std::endl;
 
         {
-            GFqDom<long>::Element a, b, c;
-            givvector<long> Av(8); // A := X^7+X^6+X^3+X
+            GFqDom<int64_t>::Element a, b, c;
+            givvector<int64_t> Av(8); // A := X^7+X^6+X^3+X
             Av[0]=0; Av[1]=1; Av[2]=0; Av[3]=1;
             Av[4]=0; Av[5]=0; Av[6]=1; Av[7]=1;
-            givvector<long> Bv(8); // B:=X^6+X^4+X+1;
+            givvector<int64_t> Bv(8); // B:=X^6+X^4+X+1;
             Bv[0]=1; Bv[1]=1; Bv[2]=0; Bv[3]=0;
             Bv[4]=1; Bv[5]=0; Bv[6]=1; Bv[7]=0;
 
@@ -146,7 +146,7 @@ int main (int argc, char * * argv) {
         }
 
         {
-            GFqDom<long>::Element a, b, c, x;
+            GFqDom<int64_t>::Element a, b, c, x;
             x = F256.sage_generator();
 
             F256.add(a,x,F256.one); 	// X+1
@@ -184,14 +184,14 @@ int main (int argc, char * * argv) {
             Modular<int16_t> GF2(2);
             Poly1PadicDom< Modular<int16_t> > P2(GF2,"X");
 
-            givvector<long> vect202; P2.radixdirect(vect202, 202, 8);
-            givvector<long> vect83; P2.radixdirect(vect83, 83, 8);
+            givvector<int64_t> vect202; P2.radixdirect(vect202, 202, 8);
+            givvector<int64_t> vect83; P2.radixdirect(vect83, 83, 8);
 
-            givvector< unsigned long > Irred2; P2.radixdirect(Irred2, 283, 9);
-            GFqDom<long> F256_(2,8, Irred2);
+            givvector< uint64_t > Irred2; P2.radixdirect(Irred2, 283, 9);
+            GFqDom<int64_t> F256_(2,8, Irred2);
 
 
-            GFqDom<long>::Element a, b, c;
+            GFqDom<int64_t>::Element a, b, c;
             F256_.init(a, vect202); F256_.init(b, vect83);
 
             F256_.mul(c,a,b);

@@ -52,6 +52,7 @@ public :
         // Cstor et dstor
     Rational(Neutral n = Neutral::zero) ;
     Rational(int32_t n) ;
+    Rational(uint32_t n) ;
     Rational(int64_t n) ;
     Rational(uint64_t n) ;
     Rational(int64_t n, int64_t d ) ;

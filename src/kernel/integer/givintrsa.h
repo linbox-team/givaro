@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <07 May 09 13:51:58 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 18:21:34 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /** @file givintrsa.h
@@ -45,7 +45,7 @@ public:
 private:
     Element _n, _e;
     Element _d;
-    long _lm;
+    int64_t _lm;
 
 public:
 
@@ -59,13 +59,13 @@ public:
 	   	keys_gen(IntFactorDom<RandIter>::_g, 257, 255, _n, _e, _d);
 	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
    	}
-    IntRSADom(const long s, bool fi = false, RandIter g = RandIter() ) :
+    IntRSADom(const int64_t s, bool fi = false, RandIter g = RandIter() ) :
 		IntFactorDom<RandIter>(g), _fast_impl(fi)
 	{
 	   	keys_gen(IntFactorDom<RandIter>::_g, (s>>1)-1, (s>>1)+1, _n, _e, _d);
 	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
 	}
-    IntRSADom(const long p, const long q, bool fi = false, RandIter g = RandIter() ) :
+    IntRSADom(const int64_t p, const int64_t q, bool fi = false, RandIter g = RandIter() ) :
 	   	IntFactorDom<RandIter>(g), _fast_impl(fi)
    	{
 	   	keys_gen(IntFactorDom<RandIter>::_g, p, q, _n, _e, _d);
@@ -111,7 +111,7 @@ public:
  * - J. Gordon, <i>Strong Primes Are Easy to Find</i>,  EUROCRYPT'84, LNCS 209.
  */
 // =================================================================== //
-    Element& strong_prime(random_generator& g, long psize, Element& p) const;
+    Element& strong_prime(random_generator& g, int64_t psize, Element& p) const;
 
 // =================================================================== //
 /** Key gen.
@@ -122,14 +122,14 @@ public:
  */
 // =================================================================== //
 //@{
-    void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d, Element& p, Element& q) const ;
-    void keys_gen(random_generator& g, long psize, long qsize, Element& n, Element& e, Element& d) const ;
+    void keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& n, Element& e, Element& d, Element& p, Element& q) const ;
+    void keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& n, Element& e, Element& d) const ;
 	//@}
 
 // =================================================================== //
 //! log[10]
 // =================================================================== //
-    long log(const Element& n, const long = 10) const ;
+    int64_t log(const Element& n, const int64_t = 10) const ;
 
 // =================================================================== //
 //! Text conversions

@@ -56,7 +56,7 @@ namespace Givaro {
 	{
 #if GMP_LIMB_BITS != 64
                 // 64 bits is less than 20 digits
-		char * tmp = new char[20];
+		char * tmp = new char[23];
 		sprintf(tmp,"%lld",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 		delete [] tmp;
@@ -70,7 +70,7 @@ namespace Givaro {
 	{
 #if GMP_LIMB_BITS != 64
                 // 64 bits is less than 20 digits
-		char * tmp = new char[20];
+		char * tmp = new char[23];
 		sprintf(tmp,"%llu",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
 		delete [] tmp;

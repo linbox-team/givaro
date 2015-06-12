@@ -27,14 +27,14 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
-    DP.add ( R, P, Q, (long)d1, (long)d2); // R = P*Q;
+    DP.add ( R, P, Q, (int64_t)d1, (int64_t)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.add (T, P, Q);
     V=T;
-    DP.truncin(V,(long)d1,(long)d2);
+    DP.truncin(V,(int64_t)d1,(int64_t)d2);
 
     if( DP.areNEqual( V, R) ) {
         std::cerr << "ERROR ADD:" << TTcount << std::endl;
@@ -55,14 +55,14 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
-    DP.sub ( R, P, Q, (long)d1, (long)d2); // R = P*Q;
+    DP.sub ( R, P, Q, (int64_t)d1, (int64_t)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.sub (T, P, Q);
     V=T;
-    DP.truncin(V,(long)d1,(long)d2);
+    DP.truncin(V,(int64_t)d1,(int64_t)d2);
 
     if( DP.areNEqual( V, R) ) {
         std::cerr << "ERROR SUB:" << TTcount << std::endl;
@@ -83,14 +83,14 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
-    DP.mul ( R, P, Q, (long)d1, (long)d2); // R = P*Q;
+    DP.mul ( R, P, Q, (int64_t)d1, (int64_t)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.mul (T, P, Q);
     V=T;
-    DP.truncin(V,(long)d1,(long)d2);
+    DP.truncin(V,(int64_t)d1,(int64_t)d2);
 
     if( DP.areNEqual( V, R) ) {
         std::cerr << "ERROR MUL:" << TTcount << std::endl;
@@ -111,14 +111,14 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
-    DP.axpy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q;
+    DP.axpy ( R, P, Q, G, (int64_t)d1, (int64_t)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.axpy (T, P, Q, G);
     V=T;
-    DP.truncin(V,(long)d1,(long)d2);
+    DP.truncin(V,(int64_t)d1,(int64_t)d2);
 
     if( DP.areNEqual( V, R) ) {
         std::cerr << "ERROR Axpy:" << std::endl;
@@ -144,14 +144,14 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
-    DP.axmy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q;
+    DP.axmy ( R, P, Q, G, (int64_t)d1, (int64_t)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.axmy (T, P, Q, G);
     V=T;
-    DP.truncin(V,(long)d1,(long)d2);
+    DP.truncin(V,(int64_t)d1,(int64_t)d2);
 
     if( DP.areNEqual( V, R) ) {
         std::cerr << "ERROR Axmy:" << std::endl;
@@ -172,14 +172,14 @@ bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >:
 {
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V;
-    DP.maxpy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q;
+    DP.maxpy ( R, P, Q, G, (int64_t)d1, (int64_t)d2); // R = P*Q;
 //     DP.write( DP.write(
 //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
 //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.maxpy (T, P, Q, G);
     V=T;
-    DP.truncin(V,(long)d1,(long)d2);
+    DP.truncin(V,(int64_t)d1,(int64_t)d2);
 
     if( DP.areNEqual( V, R) ) {
         std::cerr << "ERROR Maxpy:" << std::endl;
@@ -200,7 +200,7 @@ bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >:
 int main(int argc, char ** argv) {
 
  {
-    long seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
+    int64_t seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
     std::cerr << "seed: " << seed << std::endl;
 
     GFqDom<int> Z101( 101, 1 );  // integers modulo 101
@@ -212,7 +212,7 @@ int main(int argc, char ** argv) {
 
     DP101.assign( P, Z101.init(tmp,5) ); // P is degree 0 polynomial : 5 modulo 101
     DP101.write( std::cout << "P: " , P )<< std::endl;
-    DP101.init( monomial, Degree(1), 33UL) ; // -33 X
+    DP101.init( monomial, Degree(1), 33U) ; // -33 X
     DP101.write( std::cout << "m: " , monomial )<< std::endl;
     Degree deg,val;
     DP101.degree(deg,monomial);
@@ -220,7 +220,7 @@ int main(int argc, char ** argv) {
     DP101.write( std::cout << "[m]_" << val << '^' << deg << ": " , monomial )<< std::endl;
     DP101.addin( P, monomial ); // P += monomial
     DP101.write( std::cout << "P: " , P )<< std::endl;
-    DP101.init( monomial, Degree(2), 12UL) ; // 12 X^2
+    DP101.init( monomial, Degree(2), 12U) ; // 12 X^2
     DP101.write( std::cout << "m: " , monomial )<< std::endl;
     DP101.addin( P, monomial ); // P is now 5-33*X+12*X^2
     DP101.write( std::cout << "P: " , P )<< std::endl;
@@ -232,17 +232,17 @@ int main(int argc, char ** argv) {
     DP101.write( std::cout << "Q: " , Q )<< std::endl;
 
 
-    DP101.init( Q, Degree(0), 6UL );
+    DP101.init( Q, Degree(0), 6U );
     DP101.write( std::cout << "Q: " , Q )<< std::endl;
-    DP101.init( monomial, Degree(4), 3UL);
+    DP101.init( monomial, Degree(4), 3U);
     DP101.write( std::cout << "m: " , monomial )<< std::endl;
     DP101.addin( Q, monomial) ;
     DP101.write( std::cout << "Q: " , Q )<< std::endl;
-    DP101.init( monomial, Degree(1), 75UL);
+    DP101.init( monomial, Degree(1), 75U);
     DP101.write( std::cout << "m: " , monomial )<< std::endl;
     DP101.addin( Q, monomial) ;
     DP101.write( std::cout << "Q: " , Q )<< std::endl;
-    DP101.init( monomial, Degree(3), 45UL);
+    DP101.init( monomial, Degree(3), 45U);
     DP101.write( std::cout << "m: " , monomial )<< std::endl;
     DP101.subin( Q, monomial) ;
     DP101.write( std::cout << "Q: " , Q )<< std::endl;

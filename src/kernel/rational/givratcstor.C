@@ -95,6 +95,9 @@ Rational::Rational(Neutral n ) : den(Integer::one)
 Rational::Rational(int32_t n ) : num(n), den(Integer::one)
 { }
 
+Rational::Rational(uint32_t n ) : num(n), den(Integer::one)
+{ }
+
 
 //   ------------------------------ Rational(long n)
 Rational::Rational(int64_t n ) : num(n), den(Integer::one)

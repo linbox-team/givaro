@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <21 Nov 07 11:34:43 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 18:38:55 Jean-Guillaume.Dumas@imag.fr>
 // Thanks to Dieter Schuster
 // ========================================================== //
 
@@ -23,17 +23,17 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-    GFqDom<long> GF128(2, 7);
-    GFqDom<long>::Element b, c, gen;
-    GF128.init(b, 5UL);
+    GFqDom<int64_t> GF128(2, 7);
+    GFqDom<int64_t>::Element b, c, gen;
+    GF128.init(b, 5U);
     GF128.init(c, 3);
     GF128.write(std::cout, b) << std::endl;
     GF128.write(std::cout, c) << std::endl;
 
-    GFqDom<long>::Element f,g,h,j;
-    GFqDom<long> F2(2);
-    Poly1Dom< GFqDom<long>, Dense> Pol2(F2);
-    Poly1Dom< GFqDom<long>, Dense>::Element P, Q, R;
+    GFqDom<int64_t>::Element f,g,h,j;
+    GFqDom<int64_t> F2(2);
+    Poly1Dom< GFqDom<int64_t>, Dense> Pol2(F2);
+    Poly1Dom< GFqDom<int64_t>, Dense>::Element P, Q, R;
     Pol2.init(P,Degree(1));
     F2.init(P[0],1);
     F2.init(P[1],1);
@@ -53,7 +53,7 @@ int main(int argc, char** argv)
                           << gen << std::endl;
 
 
-    Poly1PadicDom< GFqDom<long>, Dense > Padic2(Pol2);
+    Poly1PadicDom< GFqDom<int64_t>, Dense > Padic2(Pol2);
         //
 
     std::cout << "Irreducible (in 2-adic): "

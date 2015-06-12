@@ -25,7 +25,7 @@ namespace Givaro {
 //! Degree type for polynomials
 class Degree {
 public:
-  typedef long value_type;
+  typedef int64_t value_type;
 
   enum { DEGPOLYZERO =-1};
   Degree(long a = DEGPOLYZERO): _deg(a) { }
@@ -40,7 +40,7 @@ public:
   static const long deginfty;
 
   // -- cvrt
-  long value() const { return _deg; }
+  int64_t value() const { return _deg; }
 
   // -- Basic arithmetic:
   Degree operator+( const Degree& d) const { return Degree(_deg+d._deg); }
@@ -55,10 +55,10 @@ public:
     Degree operator>>( const int i) const { return Degree(_deg>>i); }
     Degree& operator <<=( const int i) { _deg<<=i; return *this;}
     Degree& operator >>=( const int i) { _deg>>=i; return *this;}
-  long operator++() { return ++_deg; }
-  long operator--() { return --_deg; }
-  long operator++(int) { return _deg++; }
-  long operator--(int) { return _deg--; }
+  int64_t operator++() { return ++_deg; }
+  int64_t operator--() { return --_deg; }
+  int64_t operator++(int) { return _deg++; }
+  int64_t operator--(int) { return _deg--; }
 
   // -- Comparizon:
   int operator==( const Degree& d) const { return _deg == d._deg; }
@@ -67,12 +67,12 @@ public:
   int operator< ( const Degree& d) const { return _deg <  d._deg; }
   int operator>=( const Degree& d) const { return _deg >= d._deg; }
   int operator> ( const Degree& d) const { return _deg >  d._deg; }
-  int operator==( const long& d) const { return _deg == d; }
-  int operator!=( const long& d) const { return _deg != d; }
-  int operator<=( const long& d) const { return _deg <= d; }
-  int operator< ( const long& d) const { return _deg <  d; }
-  int operator>=( const long& d) const { return _deg >= d; }
-  int operator> ( const long& d) const { return _deg >  d; }
+  int operator==( const int64_t& d) const { return _deg == d; }
+  int operator!=( const int64_t& d) const { return _deg != d; }
+  int operator<=( const int64_t& d) const { return _deg <= d; }
+  int operator< ( const int64_t& d) const { return _deg <  d; }
+  int operator>=( const int64_t& d) const { return _deg >= d; }
+  int operator> ( const int64_t& d) const { return _deg >  d; }
 
   // -- methods
     friend std::ostream& operator<< (std::ostream& o, const Degree& d) { return o << d._deg; }
@@ -80,11 +80,11 @@ public:
 
 
 public:
-  long _deg;
+  int64_t _deg;
 };
 
 //! value
-inline long value(const Degree& d) { return d._deg; }
+inline int64_t value(const Degree& d) { return d._deg; }
 } // Givaro
 
 #endif // __GIVARO_poly1degree_H

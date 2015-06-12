@@ -72,9 +72,9 @@ namespace Givaro {
 			//             return ((n)<BOUNDARY_isprime ?  isprime_Tabule(n) :
 			//                     (n)<BOUNDARY_2_isprime ? isprime_Tabule2(n) :
 			//                     probab_prime(n));
-			long l;
-			return int (int(islt(n,BOUNDARY_isprime) ?  isprime_Tabule((int)convert(l,n)):
-					islt(n,BOUNDARY_2_isprime) ? isprime_Tabule2((int)convert(l,n)):
+			int64_t l;
+			return int32_t (int32_t(islt(n,BOUNDARY_isprime) ?  isprime_Tabule((int32_t)convert(l,n)):
+					islt(n,BOUNDARY_2_isprime) ? isprime_Tabule2((int32_t)convert(l,n)):
 					local_prime(n,r)));
 		}
 

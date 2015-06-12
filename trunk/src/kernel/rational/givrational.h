@@ -27,15 +27,15 @@ namespace Givaro {
 class Rational ;
 int compare(const Rational& a, const Rational& b) ;
 int absCompare(const Rational& a, const Rational& b) ;
-const Rational pow(const Rational &r, const long l);
+const Rational pow(const Rational &r, const int64_t l);
 const Integer floor (const Rational &r) ;
 const Integer ceil  (const Rational &r) ;
 const Integer round (const Rational &r) ;
 const Integer trunc (const Rational &r) ;
 const Rational abs  (const Rational &r) ;
-const Rational pow (const Rational& n, unsigned int l);
-const Rational pow (const Rational& n, unsigned long l);
-unsigned long length (const Rational& r) ;
+const Rational pow (const Rational& n, uint l);
+const Rational pow (const Rational& n, uint64_t l);
+uint64_t length (const Rational& r) ;
 int sign   (const Rational& r) ;
 int isZero (const Rational& r) ;
 int isOne  (const Rational& r) ;
@@ -51,11 +51,11 @@ class Rational {
 public :
         // Cstor et dstor
     Rational(Neutral n = Neutral::zero) ;
-    Rational(int n) ;
-    Rational(long n) ;
-    Rational(unsigned long n) ;
-    Rational(long n, long d ) ;
-    Rational(unsigned long n, unsigned long d ) ;
+    Rational(int32_t n) ;
+    Rational(int64_t n) ;
+    Rational(uint64_t n) ;
+    Rational(int64_t n, int64_t d ) ;
+    Rational(uint64_t n, uint64_t d ) ;
     Rational(double x) ;
     Rational(const char* s) ;
     Rational(const Integer& n) ;
@@ -101,7 +101,7 @@ public :
     Integer operator % (const Integer &r) const;
 
 //-----------------------------------------Arithmetic functions
-    friend const Rational pow(const Rational &r, const long l);
+    friend const Rational pow(const Rational &r, const int64_t l);
 
 //-----------------------------------------Miscellaneous
     friend const Integer floor (const Rational &r) ;
@@ -111,13 +111,13 @@ public :
 
     inline friend const Rational abs  (const Rational &r) ;
 
-    friend const Rational pow (const Rational& n, unsigned int l) {
+    friend const Rational pow (const Rational& n, uint32_t l) {
         Rational r;
         r.num = ::Givaro::pow(n.num, l); r.den =  ::Givaro::pow(n.den, l);
         return r;
     }
 
-    friend const Rational pow (const Rational& n, unsigned long l) {
+    friend const Rational pow (const Rational& n, uint64_t l) {
         Rational r;
         r.num =  ::Givaro::pow(n.num, l); r.den =  ::Givaro::pow(n.den, l);
         return r;
@@ -125,7 +125,7 @@ public :
 
     const Integer nume() const ;
     const Integer deno() const ;
-    inline friend unsigned long length (const Rational& r) ;
+    inline friend uint64_t length (const Rational& r) ;
     inline friend int sign   (const Rational& r) ;
     inline friend int isZero (const Rational& r) ;
     inline friend int isOne  (const Rational& r) ;
@@ -141,13 +141,13 @@ public :
 
         // -- Cast operators
     operator short() const { return (short)(int) *this; }
-    operator unsigned short() const { return (unsigned short) (unsigned int) *this; }
-    operator unsigned char() const { return (unsigned char)(unsigned int) *this; }
-    operator unsigned int() const { return (unsigned int) (this->num/this->den); }
+    operator uint16_t() const { return (uint16_t) (uint32_t) *this; }
+    operator uint8_t() const { return (uint8_t)(uint32_t) *this; }
+    operator uint32_t() const { return (uint32_t) (this->num/this->den); }
     operator int() const  { return (int) (this->num/this->den); }
     operator signed char() const { return (signed char) (int) *this; }
-    operator unsigned long() const { return (unsigned long) (this->num/this->den); }
-    operator long() const { return (long) (this->num/this->den); }
+    operator uint64_t() const { return (uint64_t) (this->num/this->den); }
+    operator int64_t() const { return (int64_t) (this->num/this->den); }
     operator std::string() const { return std::string(this->num)+'/'+std::string(this->den); }
     operator float() const { return ((float)this->num)/((float)this->den); }
     operator double() const { return ((double)this->num)/((double)this->den); }
@@ -202,7 +202,7 @@ public:
     const Rational mOne;
     const Rational zero;
 
-    unsigned long characteristic() const { return 0U; }
+    uint64_t characteristic() const { return 0U; }
     Integer& characteristic(Integer& p) const { return p=characteristic();}
 
         // -- assignement
@@ -241,8 +241,8 @@ public:
     Rep& invin( Rep& r ) const { std::swap(r.num,r.den); return r; }
 
         // - return n^l
-    Rep& pow(Rep& r, const Rep& n, const unsigned long l) const { return r =  ::Givaro::pow(n, l); }
-    Rep& pow(Rep& r, const Rep& n, const unsigned int l) const { return r =  ::Givaro::pow(n, l); }
+    Rep& pow(Rep& r, const Rep& n, const uint64_t l) const { return r =  ::Givaro::pow(n, l); }
+    Rep& pow(Rep& r, const Rep& n, const uint32_t l) const { return r =  ::Givaro::pow(n, l); }
 
 
         // - Rational number reconstruction
@@ -262,9 +262,9 @@ public:
     int isZero  (const Rep& a) const { return compare(a, zero) ==0; }
     int areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
     int areNEqual(const Rep& a, const Rep& b) const { return compare(a, b) !=0; }
-    template< class RandIter > Rep& random(RandIter& g, Rep& r, long s = 1) const { return r=Rational(Integer::random(s), Integer::nonzerorandom(s)); }
+    template< class RandIter > Rep& random(RandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::random(s), Integer::nonzerorandom(s)); }
     template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const { Integer rnum,rden; Integer::random(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
-    template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, long s = 1) const { return r=Rational(Integer::nonzerorandom(s), Integer::nonzerorandom(s)); }
+    template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::nonzerorandom(s), Integer::nonzerorandom(s)); }
     template< class RandIter > Rep& nonzerorandom (RandIter& g,Rep& r, const Rep& b) const { Integer rnum,rden; Integer::nonzerorandom(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
 
 

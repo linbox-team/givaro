@@ -53,11 +53,11 @@ namespace Givaro {
 	// =================================================================== //
 	// Primality tests
 	// =================================================================== //
-	IntPrimeDom::Rep& IntPrimeDom::nextprimein(Rep& n, int r)  const
+	IntPrimeDom::Rep& IntPrimeDom::nextprimein(Rep& n, int32_t r)  const
 	{
 		if (isleq( n,1)) return n=2;
 		Rep tmp;
-		mod( tmp, n, 2UL);
+		mod( tmp, n, 2U);
 		if ( isZero(tmp) )
 			addin(n,1);
 		else
@@ -67,7 +67,7 @@ namespace Givaro {
 		return n;
 	}
 
-	IntPrimeDom::Rep& IntPrimeDom::nextprime(Rep& n, const Rep& p, int r)  const
+	IntPrimeDom::Rep& IntPrimeDom::nextprime(Rep& n, const Rep& p, int32_t r)  const
 	{
 		if (isleq( p,1)) return n=2;
 		if (&n == &p) return nextprimein(n,r);
@@ -85,7 +85,7 @@ namespace Givaro {
 	{
 		if (isleq( n,2)) return n=2;
 		Rep tmp;
-		mod(tmp, n, 2UL);
+		mod(tmp, n, 2U);
 		if (isZero(tmp) )
 			subin(n,1);
 		else
@@ -195,7 +195,7 @@ namespace Givaro {
 
 
 	unsigned int IntPrimeDom::isprimepower (Rep& q, const Rep& u) const {
-		unsigned long int n, n2;
+		uint64_t n, n2;
 		int i;
 		Integer t(u);
 		int exact;
@@ -204,8 +204,8 @@ namespace Givaro {
 		if (usize == 0)
 			return 1;			/* consider 0 a perfect power */
 
-		n2 = (unsigned int)u;
-		if ( ( n2 & 3UL) == 2UL)
+		n2 = (uint64_t)u;
+		if ( ( n2 & 3U) == 2U)
 			return 0;			/* 2 divides exactly once.  */
 
 		n2=0;
@@ -229,9 +229,9 @@ namespace Givaro {
 		for (i = 1; primes[i] != 0; i++)
 		{
 			u2 = u;
-            unsigned long int prime = primes[i];
+            uint64_t prime = primes[i];
 
-            unsigned long int rem = (unsigned long)(u2 % prime);
+            uint64_t rem = (uint64_t)(u2 % prime);
 			if (rem == 0)		/* divisable by this prime? */
 			{
 				Integer::divmod(q,rem,u2,prime * prime);
@@ -262,15 +262,15 @@ namespace Givaro {
 		}
 
 		/* We found no factors above; have to check all values of n.  */
-		unsigned long int nth;
+		uint64_t nth;
 		for (nth = (usize < 0 ? 3 : 2);; ++nth)
 		{
 			if (! isprime (nth))
 				continue;
-			exact = root (q, u2, (unsigned int)nth);
+			exact = root (q, u2, (uint32_t)nth);
 			if (exact) {
 				if (isprime(q))
-					return (unsigned int)nth;
+					return (uint32_t)nth;
 				else
 					return 0;
 			}

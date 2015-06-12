@@ -63,7 +63,7 @@ Rational::Rational(double x) {
         den = 1;
         *this/=Rational(Integer(1)<<1074);
     } else {
-        const long shift = 1075-t.u.exponent;
+        const int64_t shift = 1075-t.u.exponent;
         t.u.exponent = 1076;
         if (shift > 0) {
             Integer tt( t.u.mantissa+static_cast<uint64_t>(4503599627370496ULL) );
@@ -92,21 +92,21 @@ Rational::Rational(Neutral n ) : den(Integer::one)
 }
 
 //   ------------------------------ Rational(int n)
-Rational::Rational(int n ) : num(n), den(Integer::one)
+Rational::Rational(int32_t n ) : num(n), den(Integer::one)
 { }
 
 
 //   ------------------------------ Rational(long n)
-Rational::Rational(long n ) : num(n), den(Integer::one)
+Rational::Rational(int64_t n ) : num(n), den(Integer::one)
 { }
 
 
 //   ------------------------------ Rational(unsigned long n)
-Rational::Rational(unsigned long n ) : num(n), den(Integer::one)
+Rational::Rational(uint64_t n ) : num(n), den(Integer::one)
 { }
 
 //   ------------------------------ Rational(unsigned long n, unsigned long d )
-Rational::Rational(unsigned long n, unsigned long d )
+Rational::Rational(uint64_t n, uint64_t d )
 {
   if (d == 0)
     {
@@ -127,8 +127,8 @@ Rational::Rational(unsigned long n, unsigned long d )
 }
 
 
-//   ------------------------------ Rational(long n, long d )
-Rational::Rational(long n, long d )
+//   ------------------------------ Rational(int64_t n, int64_t d )
+Rational::Rational(int64_t n, int64_t d )
 {
   if (d == 0)
     {

@@ -64,18 +64,18 @@ const Integer round(const Rational& x)
   return q;
 }
 
-const Rational pow (const Rational& x, const long y)
+const Rational pow (const Rational& x, const int64_t y)
 {
   Rational r;
   if (y >= 0)
   {
-    r.num = pow(x.num, (long) y);
-    r.den = pow(x.den, (long) y);
+    r.num = pow(x.num, (int64_t) y);
+    r.den = pow(x.den, (int64_t) y);
   }
   else
   {
-    r.den = pow(x.num, (long) -y);
-    r.num = pow(x.den, (long) -y);
+    r.den = pow(x.num, (int64_t) -y);
+    r.num = pow(x.den, (int64_t) -y);
     if (sign(r.den) < 0)
     {
       r.num = -r.num ;

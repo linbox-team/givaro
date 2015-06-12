@@ -148,9 +148,9 @@ public:
 	{
 		return p=characteristic();
 	}
-	unsigned long& characteristic(unsigned long& p) const
+	uint64_t& characteristic(uint64_t& p) const
 	{
-		return p=(unsigned long)_characteristic;
+		return p=(uint64_t)_characteristic;
 	}
 
     static inline Residu_t getMaxModulus() { return 65536u; }
@@ -176,17 +176,13 @@ public:
 
 	// Initialization of Elements
 	Rep& init( Rep&) const;
-	Rep& init( Rep&, const int) const ;
-	Rep& init( Rep&, const unsigned int) const ;
-	Rep& init( Rep&, const long) const ;
-	Rep& init( Rep&, const unsigned long) const ;
+	Rep& init( Rep&, const int32_t) const ;
+	Rep& init( Rep&, const uint32_t) const ;
+	Rep& init( Rep&, const int64_t) const ;
+	Rep& init( Rep&, const uint64_t) const ;
 	Rep& init( Rep&, const Integer) const;
 	Rep& init( Rep&, const float) const ;
 	Rep& init( Rep&, const double) const ;
-#ifndef __GIVARO__DONOTUSE_longlong__
-	Rep& init( Rep&, const long long) const;
-	Rep& init( Rep&, const unsigned long long) const ;
-#endif
 	Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
 
 	// Initialization of a polynomial
@@ -210,17 +206,17 @@ public:
 	// Conversions of the elements
 	std::ostream& 	convert(std::ostream& s, const Rep a ) const { return write(s,a); }
 	TT 		convert(const Rep) const ;
-	long& 		convert(long&, const Rep) const ;
-	unsigned long& 	convert(unsigned long&, const Rep) const ;
-	int& 		convert(int&, const Rep) const ;
+    int64_t& convert(int64_t&, const Rep) const ;
+    uint64_t& 	convert(uint64_t&, const Rep) const ;
+	int32_t& 		convert(int32_t&, const Rep) const ;
 	float&	        convert(float&, const Rep) const ;
 	double& 	convert(double&, const Rep) const ;
-	unsigned int& 	convert(unsigned int&, const Rep) const ;
+	uint32_t& 	convert(uint32_t&, const Rep) const ;
 	Integer& 	convert(Integer&, const Rep) const ;
-#ifndef __GIVARO__DONOTUSE_longlong__
-	long long& 	convert(long long&, const Rep) const ;
-	unsigned long long& convert(unsigned long long&, const Rep) const ;
-#endif
+// #ifndef __GIVARO__DONOTUSE_longlong__
+// 	int64_t& 	convert(int64_t&, const Rep) const ;
+// 	uint64_t& convert(uint64_t&, const Rep) const ;
+// #endif
 
 	// Test operators
 	inline int operator== (const GFqDom<TT>& a) const;
@@ -309,10 +305,10 @@ public:
 	// ----- random generators
 
 	template<class RandIter> Rep& random(RandIter& g, Rep& r) const ;
-	template<class RandIter> Rep& random(RandIter& g, Rep& r, long s) const ;
+	template<class RandIter> Rep& random(RandIter& g, Rep& r, int64_t s) const ;
 	template<class RandIter> Rep& random(RandIter& g, Rep& r, const Rep& b) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r) const ;
-	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, long s) const ;
+	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, int64_t s) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const ;
 
 	typedef GIV_randIter< GFqDom<TT>, Rep> RandIter;
@@ -347,18 +343,18 @@ public:
 
 
 #ifdef __GIVARO_COUNT__
-	static    long long _add_count;
-	static    long long _mul_count;
-	static    long long _neg_count;
-	static    long long _div_count;
-	static    long long _sub_count;
-	static    long long _inv_count;
-	static    long long _add_call;
-	static    long long _mul_call;
-	static    long long _neg_call;
-	static    long long _div_call;
-	static    long long _sub_call;
-	static    long long _inv_call;
+	static    int64_t _add_count;
+	static    int64_t _mul_count;
+	static    int64_t _neg_count;
+	static    int64_t _div_count;
+	static    int64_t _sub_count;
+	static    int64_t _inv_count;
+	static    int64_t _add_call;
+	static    int64_t _mul_call;
+	static    int64_t _neg_call;
+	static    int64_t _div_call;
+	static    int64_t _sub_call;
+	static    int64_t _inv_call;
 #endif
 
 	static void Init();

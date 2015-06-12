@@ -23,7 +23,7 @@
 
 namespace Givaro {
 
-	int isperfectpower(const Integer& n)
+	int32_t isperfectpower(const Integer& n)
 	{
 		return mpz_perfect_power_p((mpz_srcptr)&(n.gmp_rep));
 	}

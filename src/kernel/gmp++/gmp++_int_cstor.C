@@ -33,19 +33,19 @@ namespace Givaro {
 		mpz_init_set ( (mpz_ptr)&gmp_rep, (mpz_srcptr)&(n.gmp_rep)) ;
 	}
 
-	//-----------------------------Integer(int n)
-	Integer::Integer(int n)
+	//-----------------------------Integer(int32_t n)
+	Integer::Integer(int32_t n)
 	{
 		mpz_init_set_si((mpz_ptr)&gmp_rep, n) ;
 	}
 
-	//-----------------------------Integer(uint n)
+	//-----------------------------Integer(uint32_t n)
 	Integer::Integer(unsigned char n)
 	{
 		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
 	}
 
-	//-----------------------------Integer(uint n)
+	//-----------------------------Integer(uint32_t n)
 	Integer::Integer(uint32_t n)
 	{
 		mpz_init_set_ui((mpz_ptr)&gmp_rep, n) ;
@@ -65,9 +65,9 @@ namespace Givaro {
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #include <stdio.h>
-	//-----------------------------Integer(long long int n)
+	//-----------------------------Integer(long long n)
 	// log[10](2^8) < 2.408239966
-	Integer::Integer(long long int n)
+	Integer::Integer(long long n)
 	{
 		char * tmp = new char[long(2.408239966*(double)sizeof(long long))+1]; sprintf(tmp,"%lld",n);
 		mpz_init_set_str((mpz_ptr)&gmp_rep, tmp, 10) ;
@@ -120,8 +120,8 @@ namespace Givaro {
 		return *this ;
 	}
 
-	void importWords(Integer& x, size_t count, int order, int size,
-			 int endian, size_t nails, const void* op)
+	void importWords(Integer& x, size_t count, int32_t order, int32_t size,
+			 int32_t endian, size_t nails, const void* op)
 	{
 		mpz_import( (mpz_ptr)&(x.gmp_rep), count, order, size, endian, nails, op);
 	}

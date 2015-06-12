@@ -32,7 +32,7 @@ namespace Givaro
 		den = mpq_denref((mpq_ptr)&gmp_rep) ;
 	}
 
-	Rationel::Rationel( int  n)
+	Rationel::Rationel( int32_t  n)
 	{
 		mpq_init((mpq_ptr)&gmp_rep);
 		mpq_set_si((mpq_ptr)&gmp_rep,(int64_t) n, 1L) ;
@@ -50,7 +50,7 @@ namespace Givaro
 		den = mpq_denref((mpq_ptr)&gmp_rep) ;
 	}
 
-	Rationel::Rationel( long int  n)
+	Rationel::Rationel( int64_t  n)
 	{
 		mpq_init((mpq_ptr)&gmp_rep);
 		mpq_set_si((mpq_ptr)&gmp_rep, n, 1L) ;
@@ -69,7 +69,7 @@ namespace Givaro
 	}
 
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
-	Rationel::Rationel( long long int  n)
+	Rationel::Rationel( long long  n)
 	{
 		mpq_init((mpq_ptr)&gmp_rep);
 		mpq_set_z((mpq_ptr)&gmp_rep,((Integer)n).get_mpz_const()) ;
@@ -163,7 +163,7 @@ namespace Givaro
 
 	// castable to long int/long int
 	// INT
-	Rationel::Rationel( int n, int d,
+	Rationel::Rationel( int32_t n, int32_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -180,7 +180,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( uint32_t n, int d,
+	Rationel::Rationel( uint32_t n, int32_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -197,7 +197,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( long int n, int d,
+	Rationel::Rationel( int64_t n, int32_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -214,7 +214,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( uint64_t n, int d,
+	Rationel::Rationel( uint64_t n, int32_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -233,7 +233,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( int n, uint32_t d,
+	Rationel::Rationel( int32_t n, uint32_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -247,7 +247,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( int n, long int d,
+	Rationel::Rationel( int32_t n, int64_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -264,7 +264,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( int n, uint64_t d,
+	Rationel::Rationel( int32_t n, uint64_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -307,7 +307,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( uint32_t n, long int d,
+	Rationel::Rationel( uint32_t n, int64_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -323,7 +323,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( long int n, uint32_t d,
+	Rationel::Rationel( int64_t n, uint32_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -352,7 +352,7 @@ namespace Givaro
 	}
 
 	// L
-	Rationel::Rationel( long int n, long int d,
+	Rationel::Rationel( int64_t n, int64_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -370,7 +370,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( long int n, uint64_t d,
+	Rationel::Rationel( int64_t n, uint64_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));
@@ -385,7 +385,7 @@ namespace Givaro
 
 	}
 
-	Rationel::Rationel( uint64_t n, long int d,
+	Rationel::Rationel( uint64_t n, int64_t d,
 			    enum reduceFlag red)
 	{
 		assert(nonZero(d));

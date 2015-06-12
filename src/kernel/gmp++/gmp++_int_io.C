@@ -31,7 +31,7 @@ namespace Givaro {
 	// Sortie nonsignee : 321321 meme si n = -321321, par exemple
 	std::ostream& absOutput(std::ostream &o, const Integer&n)
 	{
-		int base = 10;
+		int32_t base = 10;
 
 		uint64_t strSize = mpz_sizeinbase((mpz_srcptr)&(n.gmp_rep), base) + 2;
 		char *str = ::new char[strSize];
@@ -50,7 +50,7 @@ namespace Givaro {
 	{
 // For some reason, ekopath does an undefined reference to the GMP-streams - A. Breust 2015-01-21
 #if defined(__GIVARO_GMP_NO_CXX) || defined(__PATHCC__)
-		int base = 10;
+		int32_t base = 10;
 		uint64_t strSize = mpz_sizeinbase((mpz_srcptr)&(gmp_rep), base) + 2;
 		char *str = new char[strSize];
 		mpz_get_str(str, base, (mpz_srcptr)&(gmp_rep));
@@ -85,12 +85,12 @@ namespace Givaro {
 		// Base : 10^9, we read by packet of length 9
 		// the char.
 		char Tmp[10] ;
-		int counter = 0 ;
+		int32_t counter = 0 ;
 
 		// Set the returned integer
 		a = 0L ;
 		char ch ;
-		int sign = 1 ;
+		int32_t sign = 1 ;
 
 		// find a sign:
 		inp.get(ch) ;
@@ -108,7 +108,7 @@ namespace Givaro {
 		// eat white
 		inp >> std::ws  ;
 
-		int noend = 1 ;
+		int32_t noend = 1 ;
 		while (noend)
 		{
 			counter = 0 ;

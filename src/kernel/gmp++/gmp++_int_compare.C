@@ -23,503 +23,503 @@
 
 namespace Givaro {
 
-	int compare(const Integer &a, const Integer& b)
+	int32_t compare(const Integer &a, const Integer& b)
 	{
 		return mpz_cmp ( (mpz_srcptr)&a.gmp_rep, (mpz_srcptr)&b.gmp_rep );
 	}
 
 	// absCompare
-	int absCompare(const Integer &a, const Integer &b)
+	int32_t absCompare(const Integer &a, const Integer &b)
 	{
 		return mpz_cmpabs( (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
 	}
 
-	int absCompare(const Integer &a, const double b)
+	int32_t absCompare(const Integer &a, const double b)
 	{
 		return mpz_cmpabs_d( (mpz_srcptr)&(a.gmp_rep), b);
 	}
 
-	int absCompare(const Integer &a, const float b)
+	int32_t absCompare(const Integer &a, const float b)
 	{
 		return mpz_cmpabs_d( (mpz_srcptr)&(a.gmp_rep), (double)b);
 	}
 
-	int absCompare(const Integer &a, const uint64_t b)
+	int32_t absCompare(const Integer &a, const uint64_t b)
 	{
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), b);
 	}
 
-	int absCompare(const Integer &a, const uint32_t b)
+	int32_t absCompare(const Integer &a, const uint32_t b)
 	{
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t)b);
 	}
 
-	int absCompare(const Integer &a, const int64_t b)
+	int32_t absCompare(const Integer &a, const int64_t b)
 	{
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t) std::abs(b));
 	}
 
-	int absCompare(const Integer &a, const int b)
+	int32_t absCompare(const Integer &a, const int32_t b)
 	{
 		return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t) std::abs(b));
 	}
 
 	// Operator !=
-	int Integer::operator != (const Integer & l) const
+	int32_t Integer::operator != (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) != 0;
 	}
 
-	int Integer::operator != (const double l) const
+	int32_t Integer::operator != (const double l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) != 0;
 	}
 
-	int Integer::operator != (const float l) const
+	int32_t Integer::operator != (const float l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) != 0;
 	}
 
-	int Integer::operator != (const int l) const
+	int32_t Integer::operator != (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
 	}
 
-	int Integer::operator != (const uint32_t l) const
+	int32_t Integer::operator != (const uint32_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) != 0;
 	}
 
-	int Integer::operator != (const int64_t l) const
+	int32_t Integer::operator != (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
 	}
 
-	int Integer::operator != (const uint64_t l) const
+	int32_t Integer::operator != (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) != 0;
 	}
 
 	//-------------------------------------------------inline comparaison operators
-	int operator != (double l, const Integer& n)
+	int32_t operator != (double l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
-	int operator != (float l, const Integer& n)
+	int32_t operator != (float l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
-	int operator != (int l, const Integer& n)
+	int32_t operator != (int32_t l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
-	int operator != (int64_t l, const Integer& n)
+	int32_t operator != (int64_t l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
-	int operator != (uint64_t l, const Integer& n)
+	int32_t operator != (uint64_t l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
-	int operator != (uint32_t l, const Integer& n)
+	int32_t operator != (uint32_t l, const Integer& n)
 	{
 		return n.operator != (l);
 	}
 
 	// operator ==
-	int Integer::operator == (const Integer & l) const
+	int32_t Integer::operator == (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) == 0;
 	}
 
-	int Integer::operator == (const double l) const
+	int32_t Integer::operator == (const double l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) == 0;
 	}
 
-	int Integer::operator == (const float l) const
+	int32_t Integer::operator == (const float l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) == 0;
 	}
 
-	int Integer::operator == (const int l) const
+	int32_t Integer::operator == (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
 	}
 
-	int Integer::operator == (const uint32_t l) const
+	int32_t Integer::operator == (const uint32_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) == 0;
 	}
 
-	int Integer::operator == (const int64_t l) const
+	int32_t Integer::operator == (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) == 0;
 	}
 
-	int Integer::operator == (const uint64_t l) const
+	int32_t Integer::operator == (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) == 0;
 	}
 
 	//-------------------------------------------------inline comparaison operators
-	int operator == (double l, const Integer& n)
+	int32_t operator == (double l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
-	int operator == (float l, const Integer& n)
+	int32_t operator == (float l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
-	int operator == (int l, const Integer& n)
+	int32_t operator == (int32_t l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
-	int operator == (int64_t l, const Integer& n)
+	int32_t operator == (int64_t l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
-	int operator == (uint64_t l, const Integer& n)
+	int32_t operator == (uint64_t l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
-	int operator == (uint32_t l, const Integer& n)
+	int32_t operator == (uint32_t l, const Integer& n)
 	{
 		return n.operator == (l);
 	}
 
 	// Operator >
-	int Integer::operator > (const Integer & l) const
+	int32_t Integer::operator > (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) > 0;
 	}
 
-	int Integer::operator > (const double l) const
+	int32_t Integer::operator > (const double l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) > 0;
 	}
 
-	int Integer::operator > (const float l) const
+	int32_t Integer::operator > (const float l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) > 0;
 	}
 
-	int Integer::operator > (const int l) const
+	int32_t Integer::operator > (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator > (const uint32_t l) const
+	int32_t Integer::operator > (const uint32_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) > 0;
 	}
 
-	int Integer::operator > (const int64_t l) const
+	int32_t Integer::operator > (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
-	int Integer::operator > (const uint64_t l) const
+	int32_t Integer::operator > (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
 	}
 
 	//-------------------------------------------------inline comparaison operators
-	int operator > (double l, const Integer& n)
+	int32_t operator > (double l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
-	int operator > (float l, const Integer& n)
+	int32_t operator > (float l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
-	int operator > (int l, const Integer& n)
+	int32_t operator > (int32_t l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
-	int operator > (int64_t l, const Integer& n)
+	int32_t operator > (int64_t l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
-	int operator > (uint64_t l, const Integer& n)
+	int32_t operator > (uint64_t l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
-	int operator > (uint32_t l, const Integer& n)
+	int32_t operator > (uint32_t l, const Integer& n)
 	{
 		return n.operator < (l);
 	}
 
 	// Operator <
-	int Integer::operator < (const Integer & l) const
+	int32_t Integer::operator < (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) < 0;
 	}
 
-	int Integer::operator < (const double l) const
+	int32_t Integer::operator < (const double l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) < 0;
 	}
 
-	int Integer::operator < (const float l) const
+	int32_t Integer::operator < (const float l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float) l) < 0;
 	}
 
-	int Integer::operator < (const uint32_t l) const
+	int32_t Integer::operator < (const uint32_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) < 0;
 	}
 
-	int Integer::operator < (const uint64_t l) const
+	int32_t Integer::operator < (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
-	int Integer::operator < (const int l) const
+	int32_t Integer::operator < (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
-	int Integer::operator < (const int64_t l) const
+	int32_t Integer::operator < (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 	}
 
 	//-------------------------------------------------inline comparaison operators
-	int operator < (double l, const Integer& n)
+	int32_t operator < (double l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
-	int operator < (float l, const Integer& n)
+	int32_t operator < (float l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
-	int operator < (int l, const Integer& n)
+	int32_t operator < (int32_t l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
-	int operator < (int64_t l, const Integer& n)
+	int32_t operator < (int64_t l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
-	int operator < (uint64_t l, const Integer& n)
+	int32_t operator < (uint64_t l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
-	int operator < (uint32_t l, const Integer& n)
+	int32_t operator < (uint32_t l, const Integer& n)
 	{
 		return n.operator > (l);
 	}
 
 	// Operator >=
-	int Integer::operator >= (const Integer & l) const
+	int32_t Integer::operator >= (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) >= 0;
 	}
 
-	int Integer::operator >= (const double l) const
+	int32_t Integer::operator >= (const double l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) >= 0;
 	}
 
-	int Integer::operator >= (const float l) const
+	int32_t Integer::operator >= (const float l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float)  l) >= 0;
 	}
 
-	int Integer::operator >= (const int l) const
+	int32_t Integer::operator >= (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
-	int Integer::operator >= (const uint32_t l) const
+	int32_t Integer::operator >= (const uint32_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) >= 0;
 	}
 
-	int Integer::operator >= (const int64_t l) const
+	int32_t Integer::operator >= (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
-	int Integer::operator >= (const uint64_t l) const
+	int32_t Integer::operator >= (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) >= 0;
 	}
 
 	//-------------------------------------------------inline comparaison operators
-	int operator >= (double l, const Integer& n)
+	int32_t operator >= (double l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
-	int operator >= (float l, const Integer& n)
+	int32_t operator >= (float l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
-	int operator >= (int l, const Integer& n)
+	int32_t operator >= (int32_t l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
-	int operator >= (int64_t l, const Integer& n)
+	int32_t operator >= (int64_t l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
-	int operator >= (uint64_t l, const Integer& n)
+	int32_t operator >= (uint64_t l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
-	int operator >= (uint32_t l, const Integer& n)
+	int32_t operator >= (uint32_t l, const Integer& n)
 	{
 		return n.operator <= (l);
 	}
 
 	// Operator <=
-	int Integer::operator <= (const Integer & l) const
+	int32_t Integer::operator <= (const Integer & l) const
 	{
 		return mpz_cmp((mpz_srcptr)&gmp_rep,  (mpz_srcptr)l.get_mpz_const()) <= 0;
 	}
 
-	int Integer::operator <= (const double l) const
+	int32_t Integer::operator <= (const double l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep,  l) <= 0;
 	}
 
-	int Integer::operator <= (const float l) const
+	int32_t Integer::operator <= (const float l) const
 	{
 		return mpz_cmp_d((mpz_srcptr)&gmp_rep, (float) l) <= 0;
 	}
 
-	int Integer::operator <= (const uint32_t l) const
+	int32_t Integer::operator <= (const uint32_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) <= 0;
 	}
 
-	int Integer::operator <= (const uint64_t l) const
+	int32_t Integer::operator <= (const uint64_t l) const
 	{
 		return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
-	int Integer::operator <= (const int l) const
+	int32_t Integer::operator <= (const int32_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
-	int Integer::operator <= (const int64_t l) const
+	int32_t Integer::operator <= (const int64_t l) const
 	{
 		return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) <= 0;
 	}
 
 	//-------------------------------------------------inline comparaison operators
-	int operator <= (double l, const Integer& n)
+	int32_t operator <= (double l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
-	int operator <= (float l, const Integer& n)
+	int32_t operator <= (float l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
-	int operator <= (int l, const Integer& n)
+	int32_t operator <= (int32_t l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
-	int operator <= (int64_t l, const Integer& n)
+	int32_t operator <= (int64_t l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
-	int operator <= (uint64_t l, const Integer& n)
+	int32_t operator <= (uint64_t l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
-	int operator <= (uint32_t l, const Integer& n)
+	int32_t operator <= (uint32_t l, const Integer& n)
 	{
 		return n.operator >= (l);
 	}
 
 
 	// compare to 1 and 0
-	int isOne(const Integer& a)
+	int32_t isOne(const Integer& a)
 	{
 		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 1UL);
 	}
-	int isMOne(const Integer& a)
+	int32_t isMOne(const Integer& a)
 	{
 		return ! mpz_cmp_si((mpz_srcptr)&(a.gmp_rep), 1L);
 	}
 
-	int nonZero(const Integer& a)
+	int32_t nonZero(const Integer& a)
 	{
 		return mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
 		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) != 0) ; // BB which one is faster ?
 	}
 
-	int isZero(const Integer& a)
+	int32_t isZero(const Integer& a)
 	{
 		return ! mpz_cmp_ui((mpz_srcptr)&(a.gmp_rep), 0UL);
 		// return (mpz_sgn((mpz_srcptr)&(a.gmp_rep)) == 0) ; // BB which one is faster ?
 	}
-	int isZero(const short int a)
+	int32_t isZero(const int16_t a)
 	{
 		return a ==0;
 	}
-	int isZero(const int a)
+	int32_t isZero(const int32_t a)
 	{
 		return a ==0;
 	}
-	int isZero(const int64_t a)
+	int32_t isZero(const int64_t a)
 	{
 		return a ==0;
 	}
-	int isZero(const uint16_t a)
+	int32_t isZero(const uint16_t a)
 	{
 		return a ==0;
 	}
-	int isZero(const uint32_t a)
+	int32_t isZero(const uint32_t a)
 	{
 		return a ==0;
 	}
-	int isZero(const uint64_t a)
+	int32_t isZero(const uint64_t a)
 	{
 		return a ==0UL;
 	}
 #ifdef __USE_GMPPLUSPLUS_SIXTYFOUR__
 #if 1 /*  use of C++0x long long integer constant */
-	int isZero(const unsigned long long a)
+	int32_t isZero(const unsigned long long a)
 	{
 		return a ==0ULL;
 	}
 #endif
-	int isZero(const long long int a)
+	int32_t isZero(const long long a)
 	{
 		return a ==0LL;
 	}

@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <22 Mar 11 15:05:39 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 14:24:44 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -23,7 +23,7 @@ IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
 //         std::cerr << "p:= " << p << ';' << std::endl;
 //         std::cerr << "a:= " << a << ';' << std::endl;
     Rep amp (a); amp %=p;
-    if (amp == 0U || amp == 1U) return x = amp;
+    if (amp == 0U || amp == 1) return x = amp;
 
     if (legendre (amp, p) == -1){
         std::cerr << amp << " is not a quadratic residue mod " << p << std::endl;
@@ -38,10 +38,10 @@ IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
         // O. Atkin
     if ((p & 7UL) == 5UL) {			// If p = 5 mod 8
         Rep tmp;
-        Rep puis (p); puis -= 1U; puis >>= 2UL;// puis = (p-1)/4
+        Rep puis (p); puis -= 1; puis >>= 2UL;// puis = (p-1)/4
         powmod (tmp, amp, puis, p);
 
-        if (tmp == 1U) {
+        if (tmp == 1) {
             puis = p; puis += 3UL; puis >>= 3UL;// puis = (p+3)/8
             return powmod (x, amp, puis, p);
         }
@@ -57,10 +57,10 @@ IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
 
         // S. Mueller
     if ((p & 15UL) == 9UL) {			// If p = 9 mod 16
-        Rep i (amp); i <<= 1U;
-        Rep puis (p); puis -= 1U; puis >>= 2UL;// puis = (p-1)/4
+        Rep i (amp); i <<= 1;
+        Rep puis (p); puis -= 1; puis >>= 2UL;// puis = (p-1)/4
         powmod (x, i, puis, p);			// (2a)^{(p-1}/4} is +1 or -1
- 	if (x != 1U) x = -1;
+ 	if (x != 1) x = -1;
 
         Rep d; while (legendre (Rep::nonzerorandom (d, l), p) == x) ;
         puis = p; puis -= 9UL; puis >>= 4UL; 	// puis = (p-9)/16
@@ -78,7 +78,7 @@ IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
     Rep p1 (p); --p1;
     Rep q (p1);
     long e (0);
-    for( ; (q & 1U) == 0; ++e) q >>= 1;
+    for( ; (q & 1UL) == 0; ++e) q >>= 1;
 
 	// now we have e and q such that : p-1=q*2^e with q odd
 	// we need a non quadratic element : g
@@ -134,7 +134,7 @@ IntSqrtModDom<RandIter>::sqrootmodprimepower (Rep & x,
         unsigned long t=0;
         for( ; (b%p) == 0; ++t) b/=p; // a = b p^t and p does not divide b
 
-        if((t&1U)==0){
+        if((t&1)==0){
             Rep sqrtb;
             sqrootmodprimepower(sqrtb,b,p,k,pk);
             powmod(x,p,(t>>1),pk);
@@ -208,13 +208,13 @@ IntSqrtModDom<RandIter>::sqrootmodpoweroftwo (Rep & x,
         // General case k >= 4
     if(tmpa==0) return x=0;
     if(tmpa==1) return x=1;
-    if ((tmpa & 1U)==0){
+    if ((tmpa & 1UL)==0L){
 
         Rep b(tmpa);
         unsigned long t=0;
-        for( ; (b & 1U) == 0; ++t) b>>=1; // a = b p^t and p does not divide b
+        for( ; (b & 1UL) == 0L; ++t) b>>=1; // a = b p^t and p does not divide b
 
-        if ((t & 1U)==0) {
+        if ((t & 1UL)==0L) {
             Rep sqrtpt(1); sqrtpt<<=(t>>1);
             sqrootmodpoweroftwo(x,b,k,pk);
             x <<= (t>>1); // x <-- x * 2^{t/2}

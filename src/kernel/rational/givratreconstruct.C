@@ -20,7 +20,7 @@ namespace Givaro {
 	{
 		bool res = this->ratrecon(f,m,k,recurs);
 		if (recurs)
-			for( Integer newk = k + 1; (!res) && (newk<f) ; ++newk)
+			for( Integer newk = k + 1L; (!res) && (newk<f) ; ++newk)
 				res = this->ratrecon(f,m,newk,true);
 	}
 

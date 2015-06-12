@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Contributor: Jack Dubrois < Jacques.Dubrois@imag.fr>
-// Time-stamp: <11 Oct 04 13:42:42 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 14:25:55 Jean-Guillaume.Dumas@imag.fr>
 //
 // Primality check using Probabilistic Lucas    /////////////////////////
 // i.e. Primitive Root with choosen probability /////////////////////////
@@ -130,7 +130,7 @@ bool ProbLucas(const Integer n, const double orig_epsilon)
 #endif
 	GivRandom generator;
 
-	Integer Q=n-1,a,q,tmp(1);
+	Integer Q=n-1L,a,q,tmp(1);
 	Integer nmu=Q;
 
 	double P = 1.0;

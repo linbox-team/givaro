@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <06 Jun 06 15:03:59 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Jun 15 14:19:36 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 #ifndef __GIVARO_factorisation_INL
@@ -489,7 +489,7 @@ namespace Givaro {
 		// Initialize # curves
 		for (unsigned long i=0;i<curves;++i) {
 			a = 0, asq = 0;
-			while ((( a*(asq-1U)*(9UL*asq-1U) ) % n) == 0L ) {
+			while ((( a*(asq-1L)*(9L*asq-1L) ) % n) == 0L ) {
 				this->random(gen,r,n);
 				//             kg = r*r + 6;
 				mul(kg,r,r); addin(kg,6UL);

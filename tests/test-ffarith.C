@@ -59,9 +59,9 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.init(a, 0);
     TESTE_EG(a, F.zero);
     F.init(a, 1);
-    //         F.write(std::cerr) << std::endl;
-    //         F.write(std::cerr << "a: ", a) << std::endl;
-    //         F.write(std::cerr << "1: ", F.one) << std::endl;
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "1: ", F.one) << std::endl;
     TESTE_EG(a, F.one);
 
     F.inv(a_, a);

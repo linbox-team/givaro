@@ -33,12 +33,12 @@ int main()
 	Rationel B(3);
 	Rationel C(A);
 	Rationel D(b);
-	Rationel E(-5L);
+	Rationel E(-5);
 	Rationel F(c);
-	Rationel G(10UL);
+	Rationel G(10);
 	Rationel H(0.3);
 	Rationel I(1,2);
-	Rationel J(7UL,-2L);
+	Rationel J(7,-2);
 	std::cout << "xxx" << std::endl;
 	Rationel K(a,b);
 	std::cout << "xxx" << std::endl;

@@ -357,8 +357,8 @@ int main(int argc, char ** argv)
     //----- Galois fields -----//
     
     TEST_SPECIFIC(GFqDom<int32_t>, GF13, 13);
-    TEST_SPECIFIC(GFqDom<int32_t>, GFpmax, 65521UL);
-    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpmax, 4194301ULL);
+    TEST_SPECIFIC(GFqDom<int32_t>, GFpmax, 65521U);
+    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpmax, 4194301);
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
@@ -375,7 +375,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(GFqDom<int64_t>, GF2M, 2, 20);
     TEST_SPECIFIC(GFqDom<int64_t>, GF2M1, 2, 2);
     TEST_SPECIFIC(GFqDom<int64_t>, GF11E3, 11, 3);
-    TEST_SPECIFIC(Extension<GFqDom<int64_t> >, GF11E9, GF11E3, 3LL);
+    TEST_SPECIFIC(Extension<GFqDom<int64_t> >, GF11E9, GF11E3, 3);
     TEST_SPECIFIC(Extension<>, GF13E8, 13, 8);
 
     return 0;

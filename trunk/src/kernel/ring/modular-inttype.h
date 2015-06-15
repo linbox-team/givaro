@@ -64,7 +64,7 @@ namespace Givaro
         Modular(const IntConvType& p, const IntConvType& e=1)
             : zero(0)
             , one(1)
-            , mOne( Caster<Residu_t>(p-1L) )
+            , mOne( Caster<Residu_t>(p-1) )
             , _p( Caster<Residu_t>(p) )
         {
             assert(_p >= getMinModulus());

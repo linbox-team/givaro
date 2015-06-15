@@ -19,20 +19,15 @@
 #ifndef __GIVARO_random_H
 #define __GIVARO_random_H
 #include <givaro/givconfig.h>
+#include <givaro/udl.h>
 
 extern "C" {
 # include <sys/time.h>
 # include <sys/resource.h>
 }
 
-
-#if __GIVARO__DONOTUSE_longlong__
-#define _GIVRAN_MULTIPLYER_ 950706376UL
-#define _GIVRAN_MODULO_     2147483647UL
-#else
-#define _GIVRAN_MULTIPLYER_ 950706376ULL
-#define _GIVRAN_MODULO_     2147483647ULL
-#endif
+#define _GIVRAN_MULTIPLYER_ 950706376_ui64
+#define _GIVRAN_MODULO_     2147483647_ui64
 
 namespace Givaro {
 

@@ -140,12 +140,12 @@ namespace Givaro {
 	{
 		if (p < 3) return (r=2);
 		if (isOdd(p))
-			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2L );
+			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2 );
 		else
 			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1 );
 
 		while( !mpz_probab_prime_p ( (mpz_srcptr)&(p.gmp_rep), 10 ) )
-			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2L );
+			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2 );
 
 		return r;
 	}

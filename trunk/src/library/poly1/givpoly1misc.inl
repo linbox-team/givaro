@@ -177,7 +177,7 @@ namespace Givaro {
 		{
 			if (!_domain.isZero(P[i])) {
 				// return d = (Degree)i;
-				return d = (long)i;
+				return d = (uint64_t)i;
 			}
 		}
 		return d=0;
@@ -219,7 +219,7 @@ namespace Givaro {
 	}
 
 	template <class Domain>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pow( Rep& W, const Rep& P, long n) const
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pow( Rep& W, const Rep& P, uint64_t n) const
 	{
 		Rep puiss2;
 		assign(puiss2, P); // -- P**(2^k)
@@ -285,7 +285,7 @@ namespace Givaro {
 
 	// -- Random dense polynomial of size s
 	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, long s) const
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, uint64_t s) const
 	{
 		return random(g, r,Degree(s-1));
 	}
@@ -313,10 +313,10 @@ namespace Givaro {
 	template <class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(GivRandom& g, Rep& r, Degree d) const
 	{
-		r.reallocate((size_t)d.value()+1);
-		_domain.nonzerorandom(g, r[(size_t)d.value()]);
+		r.reallocate((uint64_t)d.value()+1);
+		_domain.nonzerorandom(g, r[(uint64_t)d.value()]);
 		for (int i= (int)d.value(); i--;)
-			_domain.random(g,r[(size_t)i]);
+			_domain.random(g,r[(uint64_t)i]);
 		return r;
 	}
 
@@ -324,13 +324,13 @@ namespace Givaro {
 	template <class Domain> template<class RandIter>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, Degree d) const
 	{
-		r.reallocate((size_t)d.value()+1);
+		r.reallocate((uint64_t)d.value()+1);
 		while (_domain.isZero(_domain.init(r[d.value()], g()))) {};
 		for (int i=d.value(); i--;)
-			_domain.init(r[(size_t)i],g());
+			_domain.init(r[(uint64_t)i],g());
 		_domain.nonzerorandom(g, r[d.value()]);
 		for (int i=d.value(); i--;)
-			_domain.random(g,r[(size_t)i]);
+			_domain.random(g,r[(uint64_t)i]);
 		return r;
 	}
 #endif
@@ -351,7 +351,7 @@ namespace Givaro {
 
 
 	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandIter& g, Rep& r, long s) const
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandIter& g, Rep& r, uint64_t s) const
 	{
 		return random(g, r,s);
 	}

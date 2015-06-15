@@ -124,7 +124,7 @@ namespace Givaro {
 		// Deterministic algorithm
 		// Valid for p < BOUNDARY_factor
 		// Lf is the Container of factors
-		long n = (long)p;
+            uint64_t n = (uint64_t)p;
 		if (Integer(n) != p) std::cerr << "*** Erathostene with " << p << " too large, using " << n << " instead ***" << std::endl;
 
 

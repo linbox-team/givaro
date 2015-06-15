@@ -396,7 +396,7 @@ namespace Givaro {
 
 		// -- misc
 		// -- W <-- P^n
-		Rep& pow( Rep& W, const Rep& P, long n) const;
+		Rep& pow( Rep& W, const Rep& P, uint64_t n) const;
 		// -- W <-- P^n [ U ]
 		Rep& powmod( Rep& W, const Rep& P, IntegerDom::Element pwr, const Rep& U) const;
 		template < class MyInt >
@@ -406,17 +406,17 @@ namespace Givaro {
 		}
 
 		// -- W <-- P(X^b)
-		Rep& power_compose( Rep& W, const Rep& P, long b) const;
+		Rep& power_compose( Rep& W, const Rep& P, uint64_t b) const;
 
 		// -- n th cyclotomic polynomial
-		Rep& cyclotomic( Rep& P, long n) const;
+		Rep& cyclotomic( Rep& P, uint64_t n) const;
 
 
 		// -- Random generators
 		// -- Random dense polynomial of degree 0
 		template< class RandIter > Rep& random(RandIter& g, Rep& r) const;
 		// -- Random dense polynomial of size s
-		template< class RandIter > Rep& random(RandIter& g, Rep& r, long s) const ;
+		template< class RandIter > Rep& random(RandIter& g, Rep& r, uint64_t s) const ;
 		// -- Random dense polynomial of degree d
 		template< class RandIter > Rep& random(RandIter& g, Rep& r, Degree s) const ;
 
@@ -425,7 +425,7 @@ namespace Givaro {
 		template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const;
 
 		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r) const;
-		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, long s) const;
+		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, uint64_t s) const;
 		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, Degree s) const ;
 		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const;
 

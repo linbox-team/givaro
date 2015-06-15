@@ -184,8 +184,8 @@ int TestPolRing(const Ring& F, const uint64_t seed)
     srand48((int64_t)seed);
 
     for (size_t i = 0; i < NBITERD; ++i) {
-        int d1 = int (lrand48() % DEGMAX);
-        int d2 = int (lrand48() % DEGMAX);
+        int64_t d1 = int64_t (lrand48() % DEGMAX);
+        int64_t d2 = int64_t (lrand48() % DEGMAX);
         typename Ring::Element x, d, z, o;
 	
         do { F.random(generator, x, Degree(d1)); } while(F.isZero(x));

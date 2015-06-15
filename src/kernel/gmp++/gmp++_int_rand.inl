@@ -41,7 +41,7 @@ namespace Givaro {
 
 	inline void Integer::seeding(uint64_t s)
 	{
-		Integer::randstate().seed(s) ;
+            Integer::randstate().seed( (unsigned long)s) ;
 	}
 
 	void Integer::seeding(Integer  s)

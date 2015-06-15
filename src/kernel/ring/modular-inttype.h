@@ -48,10 +48,14 @@ namespace Givaro
         // ----- Constructors
         ~Modular() noexcept {}
         Modular()
-            : _p(static_cast<Residu_t>(0)) {}
+                : zero(0),
+                  one(1),
+                  _p(static_cast<Residu_t>(0)) {}
 
         Modular(const Residu_t p)
-            : mOne(p-static_cast<Residu_t>(1)), _p(p)
+            : zero(0)
+            , one(1)
+            , mOne(p-static_cast<Residu_t>(1)), _p(p)
         {
             assert(_p >= getMinModulus());
         }

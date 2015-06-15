@@ -18,13 +18,13 @@ namespace Givaro {
 // Composition by a power of X
 // ---------------------------------------------------------------
 template<class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::power_compose(Rep& W, const Rep& P, long b) const
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::power_compose(Rep& W, const Rep& P, uint64_t b) const
 {
   Degree dp; degree(dp, P);
   Type_t lc;
   leadcoef(lc, P);
   assign( W, b*dp.value(), lc); // all coeffs to zero, except leading ...
-  for(long i=0;i<dp.value();++i) {
+  for(size_t i=0;i<dp.value();++i) {
       _domain.assign(W[i*b], P[i]);
   }
   return setdegree(W);
@@ -37,7 +37,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::power_compo
 // n th Cyclotomic polynomial
 // ---------------------------------------------------------------
 template<class Domain>
-inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic( Rep& P, long n) const
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic( Rep& P, uint64_t n) const
 {
   // P must provide an indeterminate
 //   Integer In(n);
@@ -54,7 +54,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::cyclotomic(
         return setdegree(P);
     }
     else {
-        long q,f;
+        uint64_t q,f;
         q = n / 2;
         f = n % 2;
         if (f) {

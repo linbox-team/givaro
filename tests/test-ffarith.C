@@ -375,7 +375,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(GFqDom<int64_t>, GF2M, 2, 20);
     TEST_SPECIFIC(GFqDom<int64_t>, GF2M1, 2, 2);
     TEST_SPECIFIC(GFqDom<int64_t>, GF11E3, 11, 3);
-    TEST_SPECIFIC(Extension<GFqDom<int64_t> >, GF11E9, GF11E3, 3);
+    TEST_SPECIFIC(Extension<GFqDom<int64_t> >, GF11E9, GF11E3, 3LL);
     TEST_SPECIFIC(Extension<>, GF13E8, 13, 8);
 
     return 0;

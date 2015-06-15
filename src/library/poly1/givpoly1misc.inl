@@ -219,14 +219,13 @@ namespace Givaro {
 	}
 
 	template <class Domain>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pow( Rep& W, const Rep& P, uint64_t n) const
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::pow( Rep& W, const Rep& P, uint64_t p) const
 	{
+            // TODO: manage a negative exponent ...
 		Rep puiss2;
 		assign(puiss2, P); // -- P**(2^k)
 		Rep tmp;
 		assign(W,one);
-		unsigned int p;
-		p = (unsigned int) (n < 0 ? -n : n); // cannot treats the case of <0 exponent
 		while (p != 0) {
 			if (p & 0x1) {
 				mul( tmp, W, puiss2);
@@ -251,25 +250,21 @@ namespace Givaro {
 		Rep puiss, tmp;
 		mod(puiss, P, U);
 		assign(W,one);
-		IntegerDom::Element n,q,r,deux,Zero;
-		ID.init(deux,2);
-		ID.init(Zero,0);
-		if (ID.islt(pwr,Zero) )
-			ID.neg(n,pwr);
-		else
-			ID.init(n,pwr);
 
-		while (n > 0) {
-			ID.divmod(q,r,n,deux);
-			n.copy(q);
-			if (! ID.isZero(r)) {
+        Integer n(pwr);
+        if (n<0) {
+            std::cerr << "Powering with negative exponent not implemented" << std::endl;
+            n = -n;
+        }
+        while(n>0) {
+            if (n & 1U) {
 				mulin(W,puiss);
                 modin(W,U);
 			}
-//			mul(tmp,puiss,puiss);
 			sqr(tmp,puiss);
 			mod(puiss,tmp,U);
-		}
+            n >>= 1;
+        }
 
 		// write(cerr << "W: ", W) << "\n----------- END POWMOD -----------" <<  endl;
 		return setDegree(W);

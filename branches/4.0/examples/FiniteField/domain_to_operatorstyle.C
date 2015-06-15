@@ -35,7 +35,7 @@ namespace Givaro
 }
 
 int main(int argc, char ** argv) {
-    uint64_t P = (argc>1 ? (uint64_t)atoi(argv[1]) : 5009UL);
+    uint64_t P = (argc>1 ? (uint64_t)atoi(argv[1]) : 5009U);
 
         // Initialization of static member
     Element::setDomain( Field(P) );

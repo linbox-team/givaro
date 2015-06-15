@@ -84,7 +84,7 @@ namespace Givaro {
 		if (P.size())
 			return _domain.assign(Val, P[0]);
 		else
-			return _domain.init(Val, 0UL);
+			return _domain.init(Val, 0U);
 	}
 
 	template<class Domain> template<class XXX>
@@ -93,7 +93,7 @@ namespace Givaro {
 		if (P.size())
 			return _domain.convert(Val, P[0]);
 		else
-			return _domain.convert(Val, 0UL);
+			return _domain.convert(Val, 0U);
 	}
 
 	template<class Domain> template<class UU, template<class XX> class Vect>

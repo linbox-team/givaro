@@ -88,7 +88,7 @@ namespace Givaro {
 		int32_t counter = 0 ;
 
 		// Set the returned integer
-		a = 0L ;
+		a = 0 ;
 		char ch ;
 		int32_t sign = 1 ;
 

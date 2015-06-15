@@ -41,8 +41,8 @@ namespace Givaro
 	using Element = typename RingInterface<IntType>::Element;
 
         // ----- Constantes
-        const Element zero = Element(0);
-        const Element one  = Element(1);
+        const Element zero ;
+        const Element one  ;
         const Element mOne;
 
         // ----- Constructors
@@ -76,7 +76,7 @@ namespace Givaro
         }
 
         Modular(const Self_t& F)
-            : mOne(F.mOne), _p(F._p) {}
+                : zero(F.zero),one(F.one),mOne(F.mOne), _p(F._p) {}
 
         // ----- Accessors
         inline Element minElement() const override { return zero; }

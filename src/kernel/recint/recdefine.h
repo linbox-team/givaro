@@ -67,8 +67,8 @@ namespace RecInt
 #define __RECINT_LIMB_SIZE 6
 
 /* Some useful defines. */
-#define __RECINT_MINUSONE limb(0xffffffffffffffffULL)
-#define __RECINT_MAXPOWTWO limb(0x8000000000000000ULL)
+#define __RECINT_MINUSONE limb(0xffffffffffffffff)
+#define __RECINT_MAXPOWTWO limb(0x8000000000000000)
 #define __RECINT_TYPENOTMAXPOWTWO(T) ~(T(1) << (8 * sizeof(T) - 1))
 
 

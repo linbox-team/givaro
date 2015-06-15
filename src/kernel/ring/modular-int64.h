@@ -25,6 +25,7 @@
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
+#include "givaro/udl.h"
 
 namespace Givaro {
 
@@ -79,8 +80,8 @@ namespace Givaro {
         inline Residu_t cardinality() const { return _p; }
         template<class T> inline T& characteristic(T& p) const { return p = _p; }
         template<class T> inline T& cardinality(T& p) const { return p = _p; }
-        static inline Residu_t getMaxModulus() { return 3037000499ULL; } 
-        static inline Residu_t getMinModulus() { return 2; }
+        static inline Residu_t getMaxModulus() { return 3037000499_ui64; } 
+        static inline Residu_t getMinModulus() { return 2_ui64; }
 
         // ----- Checkers
         inline bool isZero(const Element& a) const override { return a == zero; }

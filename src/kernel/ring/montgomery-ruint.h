@@ -61,7 +61,7 @@ namespace Givaro
             RecInt::copy(const_cast<Element&>(one), _r);
             to_mg(const_cast<Element&>(mOne), _p - 1u);
 
-            assert(_p & 1u != 0u);
+            assert( (_p & 1u) != 0u);
 	    assert(_p >= getMinModulus());
 	    assert(_p <= getMaxModulus());
 	}

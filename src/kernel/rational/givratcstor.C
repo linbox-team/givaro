@@ -14,6 +14,7 @@
 #include "givaro/givrational.h"
 #include "givaro/giverror.h"
 #include "givaro/givpower.h"
+#include "givaro/udl.h"
 #include <cmath>
 #include <float.h>
 #include <iostream>
@@ -66,11 +67,11 @@ Rational::Rational(double x) {
         const int64_t shift = 1075-t.u.exponent;
         t.u.exponent = 1076;
         if (shift > 0) {
-            Integer tt( t.u.mantissa+static_cast<uint64_t>(4503599627370496ULL) );
+            Integer tt( t.u.mantissa+static_cast<uint64_t>(4503599627370496_ui64) );
             num = (x<0.?-tt:tt);
             den = Integer(1)<<shift;
         } else {
-            Integer tt( t.u.mantissa+static_cast<uint64_t>(4503599627370496ULL));
+            Integer tt( t.u.mantissa+static_cast<uint64_t>(4503599627370496_ui64));
             tt <<=(-shift);
             num = (x<0.?-tt:tt);
             den = 1;

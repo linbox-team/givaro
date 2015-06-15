@@ -28,6 +28,7 @@ BASIC_TESTS =          \
 		test-mod       \
 		test-modsqroot \
 		test-trunc     \
+		test-poly       \
 		test-crt       \
 		test-geom      \
 		test-integer   \
@@ -99,6 +100,7 @@ test_ringarith_SOURCES= test-ringarith.C
 test_mod_SOURCES      = test-mod.C
 test_modsqroot_SOURCES= test-modsqroot.C
 test_trunc_SOURCES    = test-trunc.C
+test_poly_SOURCES    = test-poly.C
 test_crt_SOURCES      = test-crt.C
 test_geom_SOURCES     = test-geom.C
 test_integer_SOURCES  = test-integer.C

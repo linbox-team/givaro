@@ -33,7 +33,7 @@ int main(int argc, char ** argv) {
     GFqKronecker<long,Integer>::Element a, b;
     GF.write(std::cerr << "After field init of ") << std::endl;
 
-    GF.init(a, 7UL);
+    GF.init(a, 7U);
     GF.write( std::cerr << "7 --> ", a ) << std::endl;
 
     GivRandom generator;

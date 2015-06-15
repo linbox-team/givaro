@@ -41,17 +41,21 @@ namespace Givaro
 	using Element = typename RingInterface<IntType>::Element;
 
         // ----- Constantes
-        const Element zero = Element(0);
-        const Element one  = Element(1);
+        const Element zero ;
+        const Element one  ;
         const Element mOne;
 
         // ----- Constructors
         ~Modular() noexcept {}
         Modular()
-            : _p(static_cast<Residu_t>(0)) {}
+                : zero(0),
+                  one(1),
+                  _p(static_cast<Residu_t>(0)) {}
 
         Modular(const Residu_t p)
-            : mOne(p-static_cast<Residu_t>(1)), _p(p)
+            : zero(0)
+            , one(1)
+            , mOne(p-static_cast<Residu_t>(1)), _p(p)
         {
             assert(_p >= getMinModulus());
         }
@@ -60,7 +64,7 @@ namespace Givaro
         Modular(const IntConvType& p, const IntConvType& e=1)
             : zero(0)
             , one(1)
-            , mOne( Caster<Residu_t>(p-1L) )
+            , mOne( Caster<Residu_t>(p-1) )
             , _p( Caster<Residu_t>(p) )
         {
             assert(_p >= getMinModulus());
@@ -76,7 +80,7 @@ namespace Givaro
         }
 
         Modular(const Self_t& F)
-            : mOne(F.mOne), _p(F._p) {}
+                : zero(F.zero),one(F.one),mOne(F.mOne), _p(F._p) {}
 
         // ----- Accessors
         inline Element minElement() const override { return zero; }

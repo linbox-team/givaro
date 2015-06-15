@@ -265,11 +265,11 @@ struct HighOrder {
     std::vector<Truncated>& highorder(std::vector<Truncated>& Gam, std::vector<Truncated>& T, std::vector<Degree>& Deg, Polynomial& Tay, Degree& dT, Degree a, Degree order, const Polynomial& A, const Degree dA) const {
         Gam.resize(0); T.resize(0); Deg.resize(0);
         size_t e;
-        for(e=0; (1L<<e)<dA.value(); ++e) {}
+        for(e=0; (1<<e)<dA.value(); ++e) {}
         ++e; // 2^{e-2} < d <= 2^{e-1}
-        int dt = int (1UL<<e);
+        int dt = int (1<<e);
 
-        Degree k0 = 1L<<e;
+        Degree k0 = Degree(1<<e);
         Deg.push_back(k0-dA);
 
         Degree dif = order-a;

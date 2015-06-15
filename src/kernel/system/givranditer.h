@@ -300,7 +300,7 @@ namespace Givaro {
 
     Element& random (Element& a) const
       {
-	return _F.init(a, lrand48());
+          return _F.init(a, uint64_t(lrand48()));
       }
 
   private:

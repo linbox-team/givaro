@@ -65,12 +65,12 @@ namespace Givaro {
      *             generator (default = 0)
      */
   GIV_randIter(const  Field& F,
-	       const Type& size = 0,
-	       const Type& seed = 0)
+	       const size_t size = 0,
+	       const uint64_t seed = 0)
     : _size(size), _givrand( GivRandom(seed) ), _field(F)
     {
 
-      Type cardinality    = Type( F.size() );
+      size_t cardinality    = size_t( F.size() );
       if ((_size > cardinality) || (_size == 0) )
 	_size = cardinality;
     }
@@ -160,7 +160,7 @@ namespace Givaro {
   private:
 
     /// Sampling size
-    Type _size;
+    size_t _size;
 
     /// Random generator
     GivRandom _givrand;

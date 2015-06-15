@@ -744,8 +744,8 @@ namespace Givaro {
     template<typename TT>
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const uint32_t Residu ) const
     {
-        uint32_t tr = Residu ;
-        if (tr >= _characteristic ) tr = tr % _characteristic ;
+        uint64_t tr = static_cast<uint64_t>(Residu) ;
+        if (tr >= _characteristic ) tr = tr % (uint64_t) _characteristic ;
         return r = (Rep)_pol2log[ (size_t)tr ];
     }
 

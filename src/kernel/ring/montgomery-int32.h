@@ -55,10 +55,10 @@ namespace Givaro
         const Element mOne;
 
         // ----- Constructors
-        Montgomery() : one(1UL), mOne(0UL), _p(0UL), _dp(0.0) {}
+        Montgomery() : one(1U), mOne(0U), _p(0U), _dp(0.0) {}
 
         Montgomery( Residu_t p, int = 1) :
-            one(0UL), mOne(0UL),
+            one(0U), mOne(0U),
             _p(  (Residu_t)  p),
             _Bp( (Residu_t)  B32%p),
             _B2p((Residu_t)  (_Bp<<HALF_BITS32) % p),

@@ -27,11 +27,11 @@
 
 #ifndef _GIVARO_FF_TABLE_MAX
 // 2^23 ---> 2^23*4*3 = 100K
-// #define FF_TABLE_MAX 8388608UL
+// #define FF_TABLE_MAX 8388608U
 // 2^20 ---> 2s on 735MHz
-//#define FF_TABLE_MAX 1048576UL
+//#define FF_TABLE_MAX 1048576U
 // Now 2^21+1 seems OK
-#define _GIVARO_FF_TABLE_MAX 2097153UL
+#define _GIVARO_FF_TABLE_MAX 2097153U
 #endif
 
 #ifndef _GIVARO_FF_MAXEXPONENT_

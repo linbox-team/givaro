@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: givpowers.h
-// Time-stamp: <25 Feb 11 13:34:07 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Jun 15 16:36:32 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 
 /** @file givpower.h
@@ -73,25 +73,24 @@ template<> Integer power(const Integer n, const unsigned int l) { return pow(n,l
 template<class D, class TT>
 TT& dom_power(TT& res, const TT& n, long l, const D& F)
 {
-  if (l == 0) return res = F.one ;
+  if (l == 0) return F.assign(res,F.one) ;
 
   unsigned long p = (unsigned long) l ;
-  short is_assg = 0 ;
+  bool is_assg = false ;
 
-  TT puiss = n ;
-  res = F.one ;
+  TT puiss; F.init(puiss); F.assign(puiss,n) ;
+  F.assign(res,F.one) ;
 
   while (p != 0) {
       if (p & 0x1) {
           if (is_assg)
               F.mulin(res,puiss) ;
           else {
-          is_assg = 1 ;
-          res = puiss ;
+          is_assg = true ;
+          F.assign(res,puiss) ;
           }
       }
       if ((p >>= 1) != 0) { F.mulin(puiss,puiss) ; }
-//       if ((p >>= 1) != 0) { F.mul(tmp,puiss,puiss) ; puiss = tmp; }
   }
   return res ;
 }

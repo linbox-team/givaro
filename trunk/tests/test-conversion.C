@@ -7,7 +7,7 @@
 
 
 #include <givaro/givinteger.h>
-#include <math.h>
+#include <cmath>
 
 using namespace Givaro;
 

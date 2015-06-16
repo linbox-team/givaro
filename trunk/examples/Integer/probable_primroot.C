@@ -13,7 +13,7 @@
 #include <iostream>
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>
-#include <math.h>
+#include <cmath>
 
 using namespace Givaro;
 

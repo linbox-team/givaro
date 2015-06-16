@@ -23,7 +23,7 @@
 #include <stdio.h>
 using namespace std;
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 #include <givaro/givintprime.h>
 #include <givaro/givintnumtheo.h>
 #include <givaro/givtimer.h>

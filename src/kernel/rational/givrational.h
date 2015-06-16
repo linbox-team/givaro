@@ -209,7 +209,13 @@ public:
 
         // -- assignement
     Rep& init( Rep& a ) const{ return a; }
-    Rep& init  ( Rep& a, const Rep& b) const { return a = b ; }
+    template<class XXX> Rep& init(Rep& r, const XXX& x) const {
+        return Caster<Rep,XXX>(r,x); 
+    }
+    template<class XXX> XXX& convert(XXX& x, const Rep& a) const {
+        return Caster<XXX,Rep>(x,a);
+    }
+
     Rep& assign( Rep& a, const Rep& b) const { return a = b ; }
 
         // -- arithmetic operators

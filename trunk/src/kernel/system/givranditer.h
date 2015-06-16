@@ -16,7 +16,6 @@
 #ifndef __GIVARO_randiter_H
 #define __GIVARO_randiter_H
 
-#include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
 
 // For ModularBalancedRandIter

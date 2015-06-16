@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 16:44:19 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Jun 15 16:04:34 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -16,8 +16,8 @@
 
 namespace Givaro {
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqrootmodprime (Rep & x,
                                          const Rep & a,
                                          const Rep & p) const {
 //         std::cerr << "p:= " << p << ';' << std::endl;
@@ -117,8 +117,8 @@ IntSqrtModDom<RandIter>::sqrootmodprime (Rep & x,
     return x;
 }
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqrootmodprimepower (Rep & x,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqrootmodprimepower (Rep & x,
                                               const Rep & a,
                                               const Rep & p,
                                               const uint64_t k,
@@ -179,8 +179,8 @@ IntSqrtModDom<RandIter>::sqrootmodprimepower (Rep & x,
     return x;
 }
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqrootmodpoweroftwo (Rep & x,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqrootmodpoweroftwo (Rep & x,
                                               const Rep & a,
                                               const uint64_t k,
                                               const Rep & pk) const {
@@ -271,8 +271,8 @@ IntSqrtModDom<RandIter>::sqrootmodpoweroftwo (Rep & x,
     return x;
 }
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqrootlinear (Rep & x,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqrootlinear (Rep & x,
                                        const Rep & a,
                                        const Rep & p,
                                        const uint64_t k) const {
@@ -285,8 +285,8 @@ IntSqrtModDom<RandIter>::sqrootlinear (Rep & x,
     return x;
 }
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqroottwolinear (Rep & x,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqroottwolinear (Rep & x,
                                           const Rep & a,
                                           const uint64_t k) const {
         //first cases k = 1,2,3
@@ -307,8 +307,8 @@ IntSqrtModDom<RandIter>::sqroottwolinear (Rep & x,
 }
 
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqroothensellift (Rep & x,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqroothensellift (Rep & x,
                                            const Rep & a,
                                            const Rep & p,
                                            const uint64_t k,
@@ -333,8 +333,8 @@ IntSqrtModDom<RandIter>::sqroothensellift (Rep & x,
     return Integer::axpyin(x,h,pk);
 }
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqrootonemorelift (Rep & x0,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqrootonemorelift (Rep & x0,
                                             const Rep & a,
                                             const Rep & p,
                                             const uint64_t k,
@@ -354,8 +354,8 @@ IntSqrtModDom<RandIter>::sqrootonemorelift (Rep & x0,
     return Integer::axpyin(x0,h,pk);
 }
 
-template <class RandIter> inline typename IntSqrtModDom<RandIter>::Rep &
-IntSqrtModDom<RandIter>::sqrootmodtwolift (Rep & x,
+template <class MyRandIter> inline typename IntSqrtModDom<MyRandIter>::Rep &
+IntSqrtModDom<MyRandIter>::sqrootmodtwolift (Rep & x,
                                            const Rep & a,
                                            const uint64_t k,
                                            const Rep & pk) const {

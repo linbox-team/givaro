@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 //
-// Time-stamp: <12 Jun 15 16:42:27 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Jun 15 16:05:31 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givintnumtheo.h
@@ -29,13 +29,13 @@
 
 namespace Givaro {
 	//! Num theory Domain.
-	template<class RandIter = GivRandom>
-		class IntNumTheoDom : public IntFactorDom<RandIter> {
+	template<class MyRandIter = GivRandom>
+		class IntNumTheoDom : public IntFactorDom<MyRandIter> {
 			public:
-				typedef IntFactorDom<RandIter> Father_t;
-				typedef typename IntFactorDom<RandIter>::Rep Rep;
-				IntNumTheoDom(RandIter g = RandIter())
-					:  IntFactorDom<RandIter>(g) {}
+				typedef IntFactorDom<MyRandIter> Father_t;
+				typedef typename IntFactorDom<MyRandIter>::Rep Rep;
+				IntNumTheoDom(MyRandIter g = MyRandIter())
+					:  IntFactorDom<MyRandIter>(g) {}
 
 				// =================================================================== //
 				//! Euler's phi function

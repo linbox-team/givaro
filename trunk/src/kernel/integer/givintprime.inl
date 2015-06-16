@@ -23,7 +23,7 @@
 
 namespace Givaro {
 
-template<class RandIter> unsigned int IntPrimeDom::Miller(RandIter& g, const Integer& n) const
+template<class MyRandIter> unsigned int IntPrimeDom::Miller(MyRandIter& g, const Integer& n) const
 {
         // Monte Carlo algorithm
         // returns 1    : n prime with probability 3/4
@@ -45,8 +45,8 @@ template<class RandIter> unsigned int IntPrimeDom::Miller(RandIter& g, const Int
 }
 
 
-template<class RandIter>
-IntPrimeDom::Rep& IntPrimeDom::test_Lehmann(RandIter& g, Rep& r, const Rep& n) const {
+template<class MyRandIter>
+IntPrimeDom::Rep& IntPrimeDom::test_Lehmann(MyRandIter& g, Rep& r, const Rep& n) const {
         // Monte Carlo algorithm
         // returns n-1  : n prime with probability 1/2
         // returns 1    : n composite with probability 1/2
@@ -56,8 +56,8 @@ IntPrimeDom::Rep& IntPrimeDom::test_Lehmann(RandIter& g, Rep& r, const Rep& n) c
     return powmod(r,A,(n-1)/2,n);
 }
 
-template<class RandIter>
-int IntPrimeDom::Lehmann(RandIter& g, const Rep& n)  const
+template<class MyRandIter>
+int IntPrimeDom::Lehmann(MyRandIter& g, const Rep& n)  const
 {
     if (n < 2) return 0;
     if (n <= 3) return 1;

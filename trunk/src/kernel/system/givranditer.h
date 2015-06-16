@@ -284,7 +284,7 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-  GeneralRingRandIter(const Ring &F, size_t seed = 0) : _F(F)
+        GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size)
     {
       if (seed == 0) {
 	struct timeval tp;
@@ -294,16 +294,17 @@ namespace Givaro {
 
       srand48((long)seed);
     }
-  GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F) {}
+  GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
     ~GeneralRingRandIter() {}
 
     Element& random (Element& a) const
       {
-          return _F.init(a, uint64_t(lrand48()));
+          return _F.init(a, uint64_t( (_size == 0?lrand48():lrand48()%_size)));
       }
 
   private:
-    Ring _F;
+    const Ring& _F;
+    size_t _size; 
   };
 
 
@@ -330,8 +331,8 @@ namespace Givaro {
     }
 
     private:
-    Ring     _F;
-    RandIter _r;
+    const Ring&     _F;
+    RandIter& _r;
     };
 
 } // namespace Givaro

@@ -93,7 +93,7 @@ namespace Givaro {
 
 		template<class XXX> XXX& convert(XXX& x, const Rep& a) const
 		{
-			return x=(XXX)a;
+			return Caster<XXX,Rep>(x,a);
 		}
 
 		// -- arithmetic operators

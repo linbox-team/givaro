@@ -23,7 +23,7 @@
 #ifndef GIVABSDIFF
 #define GIVABSDIFF(a,b) ((a)<(b)?((b)-(a)):((a)-(b)))
 #endif
-#include <math.h>
+#include <cmath>
 
 namespace Givaro {
 

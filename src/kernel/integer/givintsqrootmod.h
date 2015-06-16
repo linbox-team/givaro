@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 16:42:58 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Jun 15 16:05:06 Jean-Guillaume.Dumas@imag.fr>
 // Author : Yanis Linge
 // ============================================================= //
 
@@ -29,13 +29,13 @@
 namespace Givaro {
 
 	//!  Modular square roots.
-template < class RandIter = GivRandom >
-class IntSqrtModDom:public IntFactorDom < RandIter > {
+template < class MyRandIter = GivRandom >
+class IntSqrtModDom:public IntFactorDom < MyRandIter > {
 public:
-    typedef IntFactorDom < RandIter > Father_t;
-    typedef typename IntFactorDom < RandIter >::Rep Rep;
+    typedef IntFactorDom < MyRandIter > Father_t;
+    typedef typename IntFactorDom < MyRandIter >::Rep Rep;
 
-    IntSqrtModDom (RandIter g = RandIter ()) : IntFactorDom < RandIter > (g) {}
+    IntSqrtModDom (MyRandIter g = MyRandIter ()) : IntFactorDom < MyRandIter > (g) {}
 
         // ======================================================== //
         // Modular Square root functions

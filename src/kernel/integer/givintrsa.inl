@@ -24,8 +24,8 @@ namespace Givaro {
 	// log[10]
 	// =================================================================== //
 
-	template<class RandIter>
-	int64_t IntRSADom<RandIter>::log(const Element& n, const int64_t b ) const
+	template<class MyRandIter>
+	int64_t IntRSADom<MyRandIter>::log(const Element& n, const int64_t b ) const
 	{
 		int64_t res = 0;
 		for(Element p = n; p>=b; ++res, this->divin(p,b) ) {}
@@ -38,8 +38,8 @@ namespace Givaro {
 	// =================================================================== //
 
 
-	template<class RandIter>
-	std::ostream& IntRSADom<RandIter>::ecriture_str(std::ostream& o, const Element& n) const
+	template<class MyRandIter>
+	std::ostream& IntRSADom<MyRandIter>::ecriture_str(std::ostream& o, const Element& n) const
 	{
 
 		Element p = n, a, b;
@@ -55,8 +55,8 @@ namespace Givaro {
 		return o;
 	}
 
-	template<class RandIter>
-	std::ostream& IntRSADom<RandIter>::ecriture_str_last(std::ostream& o, const Element& n) const
+	template<class MyRandIter>
+	std::ostream& IntRSADom<MyRandIter>::ecriture_str_last(std::ostream& o, const Element& n) const
 	{
 		Element p = n, a, b;
 		int64_t i = _lm-1, nbzeroes(0);
@@ -80,8 +80,8 @@ namespace Givaro {
 	}
 
 
-	template<class RandIter>
-	std::ostream& IntRSADom<RandIter>::ecriture_Int(std::ostream& o, const Element& p) const
+	template<class MyRandIter>
+	std::ostream& IntRSADom<MyRandIter>::ecriture_Int(std::ostream& o, const Element& p) const
 	{
 		return o << p << std::endl;
 	}
@@ -90,10 +90,10 @@ namespace Givaro {
 
 
 	// CBC mode enciphering
-	template<class RandIter>
-	std::ostream& IntRSADom<RandIter>::encipher(std::ostream& o, std::istream& in) const
+	template<class MyRandIter>
+	std::ostream& IntRSADom<MyRandIter>::encipher(std::ostream& o, std::istream& in) const
 	{
-		RandIter generator;
+		MyRandIter generator;
 		unsigned char x;
 		Element res,r;
 		o << generator.seed() << std::endl;
@@ -126,8 +126,8 @@ namespace Givaro {
 	}
 
 	// CBC mode deciphering
-	template<class RandIter>
-	std::ostream& IntRSADom<RandIter>::decipher(std::ostream& o, std::istream& in)
+	template<class MyRandIter>
+	std::ostream& IntRSADom<MyRandIter>::decipher(std::ostream& o, std::istream& in)
 	{
 		double Length = (double) _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
 		char * tmp = new char[(size_t)Length+2];
@@ -168,7 +168,7 @@ namespace Givaro {
 				r2 += r;
 				// Must be positive
 				if (r2 > _n) r2 -= _n;
-				else if (r2 < IntFactorDom<RandIter>::zero) r2+=_n;
+				else if (r2 < IntFactorDom<MyRandIter>::zero) r2+=_n;
 				r2 ^= ancien;
 				ancien = Integer(tmp);
 				in >> tmp;
@@ -201,8 +201,8 @@ namespace Givaro {
 
 
 
-	template<class RandIter>
-	typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::strong_prime(random_generator& g, int64_t psize, Element& p) const
+	template<class MyRandIter>
+	typename IntRSADom<MyRandIter>::Element& IntRSADom<MyRandIter>::strong_prime(random_generator& g, int64_t psize, Element& p) const
 	{
 		Element q,t,r,s;
 
@@ -258,15 +258,15 @@ namespace Givaro {
 	// deciphering is computing	: b^u mod m
 	// since for any x, x^(k.u) = x mod m
 	// =================================================================== //
-	template<class RandIter>
-	void IntRSADom<RandIter>::keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& m, Element& k, Element& u) const
+	template<class MyRandIter>
+	void IntRSADom<MyRandIter>::keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& m, Element& k, Element& u) const
 	{
 		Element p, q;
 		keys_gen(g,psize,qsize,m,k,u,p,q);
 	}
 
-	template<class RandIter>
-	void IntRSADom<RandIter>::keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& m, Element& k, Element& u, Element& p, Element& q) const
+	template<class MyRandIter>
+	void IntRSADom<MyRandIter>::keys_gen(random_generator& g, int64_t psize, int64_t qsize, Element& m, Element& k, Element& u, Element& p, Element& q) const
 	{
 		Element d, l;
 
@@ -276,8 +276,8 @@ namespace Givaro {
 
 		Element phim;
 		this->mul(phim,
-			  this-> sub(d,p,IntFactorDom<RandIter>::one),
-			  this-> sub(l,q,IntFactorDom<RandIter>::one));
+			  this-> sub(d,p,IntFactorDom<MyRandIter>::one),
+			  this-> sub(l,q,IntFactorDom<MyRandIter>::one));
 		this->mul(m, p, q);
 
 		Element v, gd;
@@ -291,23 +291,23 @@ namespace Givaro {
 			} while (this->gcd(gd,u,v,k,phim) != 1);
 		}
 		this->modin(u,phim);
-		if ( this->islt(u,IntFactorDom<RandIter>::zero) )
+		if ( this->islt(u,IntFactorDom<MyRandIter>::zero) )
 			this->addin(u,phim);
 	}
 
 	// =================================================================== //
 	// Breaking codes
 	// =================================================================== //
-	template<class RandIter>
-	typename IntRSADom<RandIter>::Element& IntRSADom<RandIter>::point_break(Element& u)
+	template<class MyRandIter>
+	typename IntRSADom<MyRandIter>::Element& IntRSADom<MyRandIter>::point_break(Element& u)
 	{
 		if ( isZero(_d) ) {
 			Element p,v,d, pm;
 			this->factor(p, _n);
-			this->mul(pm, this->sub(v,p,IntFactorDom<RandIter>::one),
-			    this->subin( this->div(d,_n,p), IntFactorDom<RandIter>::one ) );
+			this->mul(pm, this->sub(v,p,IntFactorDom<MyRandIter>::one),
+			    this->subin( this->div(d,_n,p), IntFactorDom<MyRandIter>::one ) );
 			this->gcd(d,_d,v,_e,pm);
-			if (this->islt(_d,IntFactorDom<RandIter>::zero))
+			if (this->islt(_d,IntFactorDom<MyRandIter>::zero))
 			       this->	addin(_d, pm);
 		}
 		return u = _d;

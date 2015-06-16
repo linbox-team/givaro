@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 14:19:36 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Jun 15 16:04:03 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 #ifndef __GIVARO_factorisation_INL
@@ -20,17 +20,17 @@
 
 namespace Givaro {
 
-	template<class RandIter>
-	std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, const Rep& n) const
+	template<class MyRandIter>
+	std::ostream& IntFactorDom<MyRandIter>::write(std::ostream& o, const Rep& n) const
 	{
 		std::vector<Rep> Lf;
 		return write(o, Lf, n);
 	}
 
 
-	template<class RandIter>
+	template<class MyRandIter>
 	template<class Array>
-	std::ostream& IntFactorDom<RandIter>::write(std::ostream& o, Array& Lf, const Rep& n) const
+	std::ostream& IntFactorDom<MyRandIter>::write(std::ostream& o, Array& Lf, const Rep& n) const
 	{
 
 		//         // n = * Lf[i] ^ Lo[i]
@@ -75,13 +75,13 @@ namespace Givaro {
 	// Set or Container of divisors, factors.
 	// =================================================================== //
 	// #ifndef __ECC
-	// template<class RandIter>
+	// template<class MyRandIter>
 	// template< template<class> class Container> bool
-	// IntFactorDom<RandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const
+	// IntFactorDom<MyRandIter>::set(Container<Rep>& Lf, Container<unsigned long>& Lo, const Rep& n, unsigned long loops)  const
 	// #else
-	template<class RandIter>
+	template<class MyRandIter>
 	template<class Container1, class Container2> bool
-	IntFactorDom<RandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsigned long loops)  const
+	IntFactorDom<MyRandIter>::set(Container1& Lf, Container2& Lo, const Rep& n, unsigned long loops)  const
 	//#endif
 	{
 		// n = * Lf[i] ^ Lo[i]
@@ -112,13 +112,13 @@ namespace Givaro {
 
 
 	// #ifndef __ECC
-	// template<class RandIter>
+	// template<class MyRandIter>
 	// template< template<class> class Container>
-	//   void IntFactorDom<RandIter>::Erathostene(Container<Rep>& Lf, const Rep& p)  const
+	//   void IntFactorDom<MyRandIter>::Erathostene(Container<Rep>& Lf, const Rep& p)  const
 	// #else
-	template<class RandIter>
+	template<class MyRandIter>
 	template<class Container>
-	void IntFactorDom<RandIter>::Erathostene(Container& Lf, const Rep& p)  const
+	void IntFactorDom<MyRandIter>::Erathostene(Container& Lf, const Rep& p)  const
 	//#endif
 	{
 		// Deterministic algorithm
@@ -164,13 +164,13 @@ namespace Givaro {
 
 
 	// #ifndef __ECC
-	// template<class RandIter>
+	// template<class MyRandIter>
 	// template< template<class> class Container>
-	// void IntFactorDom<RandIter>::set( Container<Rep>& Lf,  const Rep& n)  const
+	// void IntFactorDom<MyRandIter>::set( Container<Rep>& Lf,  const Rep& n)  const
 	// #else
-	template<class RandIter>
+	template<class MyRandIter>
 	template<class Container>
-	void IntFactorDom<RandIter>::set( Container& Lf,  const Rep& n)  const
+	void IntFactorDom<MyRandIter>::set( Container& Lf,  const Rep& n)  const
 	//#endif
 	{
 		// big_factor is executed until
@@ -197,8 +197,8 @@ namespace Givaro {
 
 
 	// #ifndef __ECC
-	// template<class RandIter>
-	// template< template<class> class Container, template<class> class Cont2> Container< typename IntFactorDom<RandIter>::Rep >&  IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const
+	// template<class MyRandIter>
+	// template< template<class> class Container, template<class> class Cont2> Container< typename IntFactorDom<MyRandIter>::Rep >&  IntFactorDom<MyRandIter>::divisors( Container<Rep>& L, const Cont2<Rep>& Lf, const Cont2<unsigned long>& Le)  const
 	// {
 	//     typename Cont2<Rep>::const_iterator li = Lf.begin();
 	//     typename Cont2<unsigned long>::const_iterator lj = Le.begin();
@@ -206,8 +206,8 @@ namespace Givaro {
 	//     Container<Rep> Res2;
 	//     typename Container<Rep>::iterator lr;
 	// #else
-	template<class RandIter>
-	template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<RandIter>::divisors( Container& L, const Cont2& Lf, const Cont3& Le)  const
+	template<class MyRandIter>
+	template<class Container, class Cont2, class Cont3> Container&  IntFactorDom<MyRandIter>::divisors( Container& L, const Cont2& Lf, const Cont3& Le)  const
 	{
 		typename Cont2::const_iterator li = Lf.begin();
 		typename Cont3::const_iterator lj = Le.begin();
@@ -231,24 +231,24 @@ namespace Givaro {
 
 
 	// #ifndef __ECC
-	// template<class RandIter>
-	// template< template<class> class Container> Container<typename IntFactorDom<RandIter>::Rep>& IntFactorDom<RandIter>::divisors( Container<Rep>& L, const Rep& n)  const
+	// template<class MyRandIter>
+	// template< template<class> class Container> Container<typename IntFactorDom<MyRandIter>::Rep>& IntFactorDom<MyRandIter>::divisors( Container<Rep>& L, const Rep& n)  const
 	// {
 	//     Container<Rep> Lf;
 	//     Container<unsigned long> Le;
 	// #else
-	template<class RandIter>
-	template<class Container> Container& IntFactorDom<RandIter>::divisors( Container& L, const Rep& n)  const
+	template<class MyRandIter>
+	template<class Container> Container& IntFactorDom<MyRandIter>::divisors( Container& L, const Rep& n)  const
 	{
 		Container Lf;
 		std::vector<unsigned long> Le;
 		//#endif
-		IntFactorDom<RandIter>::set(Lf,Le,n);
+		IntFactorDom<MyRandIter>::set(Lf,Le,n);
 		return divisors(L, Lf, Le);
 	}
 
-	template<class RandIter>
-	typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Pollard(const RandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
+	template<class MyRandIter>
+	typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Pollard(const MyRandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
 	{
 		// average number of iterations < 13/8*sqrt( Pi*n/2)
 		// Sometimes the factor isn't prime -- TO EXPLICIT
@@ -459,8 +459,8 @@ namespace Givaro {
 	// to find a factor p of N.
 	// TODO : make it generic in regards to DOMAINLIKENESS
 	// ======================================================================== //
-	template<class RandIter>
-	typename IntFactorDom<RandIter>::Rep& IntFactorDom<RandIter>::Lenstra(const RandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const
+	template<class MyRandIter>
+	typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Lenstra(const MyRandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const
 	{
 		if (n<3) return g=n;
 		if ( isprime(n,5) ) return g=n;

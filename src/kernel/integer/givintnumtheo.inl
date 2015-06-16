@@ -30,8 +30,8 @@ namespace Givaro {
 	// =================================================================== //
 	// Euler's phi function
 	// =================================================================== //
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::phi(Rep& res, const Rep& n) const
 	{
 		if (Rep::isleq(n,1)) return res=n;
 		if (Rep::isleq(n,3)) return Rep::sub(res,n,this->one);
@@ -42,9 +42,9 @@ namespace Givaro {
 	}
 
 
-	template<class RandIter>
+	template<class MyRandIter>
 	template< template<class, class> class Container, template<class> class Alloc>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::phi(Rep& res, const Container<Rep, Alloc<Rep> >& Lf, const Rep& n) const
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::phi(Rep& res, const Container<Rep, Alloc<Rep> >& Lf, const Rep& n) const
 	{
 		if (Rep::isleq(n,1)) return res=n;
 		if (Rep::isleq(n,3)) return Rep::sub(res,n,this->one);
@@ -58,13 +58,13 @@ namespace Givaro {
 	// Möbius function
 	// =================================================================== //
 	//#ifndef __ECC
-	template<class RandIter>
+	template<class MyRandIter>
 	template< template<class, class> class Container, template <class> class Alloc>
-	//short IntNumTheoDom<RandIter>::mobius(const Container<uint64_t, Alloc<uint64_t> >& lpow) const
+	//short IntNumTheoDom<MyRandIter>::mobius(const Container<uint64_t, Alloc<uint64_t> >& lpow) const
 	//#else
-	//template<class RandIter>
+	//template<class MyRandIter>
 	//template<template <class, class> class Container, template <class> class Alloc>
-	short IntNumTheoDom<RandIter>::mobius(const Container<Rep, Alloc<Rep> >& lpow) const
+	short IntNumTheoDom<MyRandIter>::mobius(const Container<Rep, Alloc<Rep> >& lpow) const
 	{
 		//#endif
 		if (lpow.size()) {
@@ -80,8 +80,8 @@ namespace Givaro {
 			return 1;
 	}
 
-	template<class RandIter>
-	short IntNumTheoDom<RandIter>::mobius(const Rep& a) const
+	template<class MyRandIter>
+	short IntNumTheoDom<MyRandIter>::mobius(const Rep& a) const
 	{
 		std::list< Rep> lr;
 		std::list<uint64_t> lp;
@@ -94,8 +94,8 @@ namespace Givaro {
 	// Primitive Root
 	// =================================================================== //
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, uint64_t& runs, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_root(Rep& A, uint64_t& runs, const Rep& n) const
 	{
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else infinite loop
@@ -184,8 +184,8 @@ namespace Givaro {
 		}
 	}
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root(Rep& A, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_root(Rep& A, const Rep& n) const
 	{ uint64_t runs; return prim_root(A, runs, n); }
 
 	/*
@@ -208,8 +208,8 @@ namespace Givaro {
 	//  10,000,000 gives at least 1-2^{-40} probability of success
 	//  [Dubrois & Dumas, Industrial-strength primitive roots]
 	//  Returns the probable primitive root and the probability of error.
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const uint64_t L) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const uint64_t L) const
 	{
 		// std::cerr << "L: " << L << std::endl;
 
@@ -284,8 +284,8 @@ namespace Givaro {
 	// Newton-Raphson iteration is used for
 	// 1-epsilon = (1+2/(p-1))*(1-1/B)^(ln( (p-1)/2 )/ln(B))
 	// see [Dubrois & Dumas]
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const double epsilon) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const double epsilon) const
 	{
 		uint64_t L;
 		double t1, t4, t5, t6, t7, t8, t10, t11, t17, t20, t23, t32(1.0/epsilon), B(1.0);
@@ -322,8 +322,8 @@ namespace Givaro {
 	// Specializations for prime numbers
 	// =================================
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_prime(Rep& A, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_root_of_prime(Rep& A, const Rep& n) const
 	{
 
 		std::vector<Rep> Lf;
@@ -346,9 +346,9 @@ namespace Givaro {
 
 	/// Add Jacobi for quadratic nonresidue
 
-	template<class RandIter>
+	template<class MyRandIter>
 	template<class Array>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_root_of_prime(Rep& A, const Array& aLf, const Rep& phin, const Rep& n) const
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_root_of_prime(Rep& A, const Array& aLf, const Rep& phin, const Rep& n) const
 	{
 
 		Rep tmp, expo, temp;
@@ -433,8 +433,8 @@ namespace Givaro {
 
 
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lowest_prim_root(Rep& A, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::lowest_prim_root(Rep& A, const Rep& n) const
 	{
 		// n must be in {2,4,p^m,2p^m} where p is an odd prime
 		// else returns zero
@@ -461,8 +461,8 @@ namespace Givaro {
 			return A=this->zero;
 	}
 
-	template<class RandIter>
-	bool IntNumTheoDom<RandIter>::is_prim_root(const Rep& p, const Rep& n) const
+	template<class MyRandIter>
+	bool IntNumTheoDom<MyRandIter>::is_prim_root(const Rep& p, const Rep& n) const
 	{
 		// returns 0 if failed
 		bool found=false;
@@ -483,16 +483,16 @@ namespace Givaro {
 		return found;
 	}
 
-	template<class RandIter>
-	bool IntNumTheoDom<RandIter>::isorder(const Rep& g, const Rep& p, const Rep& n) const
+	template<class MyRandIter>
+	bool IntNumTheoDom<MyRandIter>::isorder(const Rep& g, const Rep& p, const Rep& n) const
 	{
 		// returns 1 if p is of order g in Z/nZ
 		Rep tmp;
 		return (this->isOne( this->powmod(tmp, p, g, n) ) && this->areEqual( g, order(tmp,p,n) ) );
 	}
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::order(Rep& g, const Rep& p, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::order(Rep& g, const Rep& p, const Rep& n) const
 	{
 		// returns 0 if failed
 		Rep A;
@@ -524,16 +524,16 @@ namespace Givaro {
 		return g=this->zero;
 	}
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_inv(Rep& A, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_inv(Rep& A, const Rep& n) const
 	{
 		if (Rep::isleq(n,4)) return sub(A,n,this->one);
 		if (areEqual(n,8)) return init(A,3);
 		return prim_base(A, n);
 	}
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_elem(Rep& A, const Rep& n) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_elem(Rep& A, const Rep& n) const
 	{
 		if (Rep::isleq(n,4)) {
 			Rep tmp;
@@ -545,8 +545,8 @@ namespace Givaro {
 		return prim_base(A, n);
 	}
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::prim_base(Rep& A, const Rep& m) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_base(Rep& A, const Rep& m) const
 	{
 		// Prerequisite : m > 4, and m != 8.
 		std::vector<Rep> Lp; std::vector<uint64_t> Le;
@@ -574,8 +574,8 @@ namespace Givaro {
 	}
 
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_primpow(Rep & z, const Rep& p, const uint64_t e) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::lambda_primpow(Rep & z, const Rep& p, const uint64_t e) const
 	{
 		// Prerequisite : p prime.
 		if (areEqual(p, 2)) {
@@ -587,8 +587,8 @@ namespace Givaro {
 		}
 	}
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv_primpow(Rep & z, const Rep& p, const uint64_t e) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::lambda_inv_primpow(Rep & z, const Rep& p, const uint64_t e) const
 	{
 		// Prerequisite : p prime.
 		if (this->areEqual(p, 2)) {
@@ -608,8 +608,8 @@ namespace Givaro {
 
 
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_inv(Rep & z, const Rep& m) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::lambda_inv(Rep & z, const Rep& m) const
 	{
 		if (this->areEqual(m,2))
 			return this->init(z,1);
@@ -618,8 +618,8 @@ namespace Givaro {
 		return lambda_base(z, m);
 	}
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda(Rep & z, const Rep& m) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::lambda(Rep & z, const Rep& m) const
 	{
 		if (this->areEqual(m,2))
 			return this->init(z,1);
@@ -631,8 +631,8 @@ namespace Givaro {
 	}
 
 
-	template<class RandIter>
-	typename IntNumTheoDom<RandIter>::Rep& IntNumTheoDom<RandIter>::lambda_base(Rep & z, const Rep& m) const
+	template<class MyRandIter>
+	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::lambda_base(Rep & z, const Rep& m) const
 	{
 		// Prerequisite: m > 4, and m != 8.
 		std::vector<Rep> Lp; std::vector<uint64_t> Le;

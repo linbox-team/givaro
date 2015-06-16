@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Needs Container structures : stl ones for instance
-// Time-stamp: <29 Jun 05 14:12:09 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Jun 15 16:05:40 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givintfactor.h
@@ -39,7 +39,7 @@ namespace Givaro {
 	// =================================================================== //
 
 	//! Integer Factor Domain.
-	template<class RandIter = GivRandom>
+	template<class MyRandIter = GivRandom>
 	class IntFactorDom : public IntPrimeDom {
 	private:
 		// 2*3*5*7*11*13*17*19*23
@@ -47,12 +47,12 @@ namespace Givaro {
 		// 29*31*37*41*43*47*53*59*61*67*71*73*79*83*89*97
 		const Rep PROD_second_primes;
 	protected:
-		RandIter _g;
+		MyRandIter _g;
 
 	public:
-		typedef RandIter random_generator;
+		typedef MyRandIter random_generator;
 
-		IntFactorDom(RandIter g = RandIter()) :
+		IntFactorDom(MyRandIter g = MyRandIter()) :
 			IntPrimeDom(),
 			PROD_first_primes(223092870),
 			PROD_second_primes("10334565887047481278774629361"),
@@ -67,9 +67,9 @@ namespace Givaro {
 			if (isOne(gcd(r,n,PROD_first_primes)))
 				if (isOne(gcd(r,n,PROD_second_primes))) {
 #ifdef GIVARO_LENSTRA
-					return Lenstra((const RandIter&)_g, r, n);
+					return Lenstra((const MyRandIter&)_g, r, n);
 #else
-					return Pollard((const RandIter&)_g, r, n, loops);
+					return Pollard((const MyRandIter&)_g, r, n, loops);
 #endif
 				} else
 					return factor_second_primes(r,n);
@@ -88,7 +88,7 @@ namespace Givaro {
 					Rep nn = r;
 					if (isOne(gcd(r,nn,PROD_first_primes))) {
 						if (isOne(gcd(r,nn,PROD_second_primes))) {
-							Pollard((const RandIter&)_g, r, nn, loops);
+							Pollard((const MyRandIter&)_g, r, nn, loops);
 						} else {
 							factor_second_primes(r,nn);
 						}
@@ -96,7 +96,7 @@ namespace Givaro {
 						factor_first_primes(r,nn);
 					}
 					if (r == nn) {
-						Lenstra((const RandIter&)_g, r, nn) ;
+						Lenstra((const MyRandIter&)_g, r, nn) ;
 						break; // In case Lenstra fails also
 					}
 				}
@@ -129,9 +129,9 @@ namespace Givaro {
 
 		// Pollard with a bound on the number of loops
 		// Bound 0 is without bound
-		Rep& Pollard(const RandIter&, Rep&, const Rep& n, unsigned long threshold = 0) const ;
+		Rep& Pollard(const MyRandIter&, Rep&, const Rep& n, unsigned long threshold = 0) const ;
 		// returns a factor by Lenstra's elliptic curves method
-		Rep& Lenstra(const RandIter&, Rep&, const Rep& n, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
+		Rep& Lenstra(const MyRandIter&, Rep&, const Rep& n, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
 
 		std::ostream& write(std::ostream& o, const Rep& n) const;
 		template<class Array> std::ostream& write(std::ostream& o, Array&, const Rep& n) const;

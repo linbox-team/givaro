@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <06 Jun 06 14:48:16 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Jun 15 16:03:53 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 
@@ -82,14 +82,14 @@ namespace Givaro {
 		// else return is 0 and r is undefined
 		unsigned int isprimepower(Rep&, const Rep&) const ;
 
-		template<class RandIter>
-		unsigned int Miller(RandIter& g, const Rep& n=_GIVARO_ISPRIMETESTS_) const  ;
+		template<class MyRandIter>
+		unsigned int Miller(MyRandIter& g, const Rep& n=_GIVARO_ISPRIMETESTS_) const  ;
 
-		template<class RandIter>
-		Rep& test_Lehmann(RandIter& g, Rep&, const Rep& n=_GIVARO_ISPRIMETESTS_) const  ;
+		template<class MyRandIter>
+		Rep& test_Lehmann(MyRandIter& g, Rep&, const Rep& n=_GIVARO_ISPRIMETESTS_) const  ;
 
-		template<class RandIter>
-		int Lehmann(RandIter& g, const Rep& n=_GIVARO_ISPRIMETESTS_)  const ;
+		template<class MyRandIter>
+		int Lehmann(MyRandIter& g, const Rep& n=_GIVARO_ISPRIMETESTS_)  const ;
 
 		int isprime_Tabule(const int n) const ;
 		int isprime_Tabule2(const int n) const ;

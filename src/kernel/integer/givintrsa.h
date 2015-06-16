@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 18:21:34 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <16 Jun 15 16:05:18 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /** @file givintrsa.h
@@ -32,15 +32,15 @@
 namespace Givaro {
 
 	//! RSA domain
-template<class RandIter = GivRandom>
-class IntRSADom : public IntFactorDom<RandIter> {
+template<class MyRandIter = GivRandom>
+class IntRSADom : public IntFactorDom<MyRandIter> {
 public:
     // JGD 19.02.2003 : Should work nicely, but produces:
     //                  "implicit typename is deprecated"
-    // using IntFactorDom<RandIter>::Element;
-    // using IntFactorDom<RandIter>::random_generator;
-    typedef typename IntFactorDom<RandIter>::Element Element;
-    typedef typename IntFactorDom<RandIter>::random_generator random_generator;
+    // using IntFactorDom<MyRandIter>::Element;
+    // using IntFactorDom<MyRandIter>::random_generator;
+    typedef typename IntFactorDom<MyRandIter>::Element Element;
+    typedef typename IntFactorDom<MyRandIter>::random_generator random_generator;
 
 private:
     Element _n, _e;
@@ -53,22 +53,22 @@ public:
 //! Constructors
 // =================================================================== //
 //@{
-    IntRSADom(bool fi = false, RandIter g = RandIter() ) :
-		IntFactorDom<RandIter>(g), _fast_impl(fi)
+    IntRSADom(bool fi = false, MyRandIter g = MyRandIter() ) :
+		IntFactorDom<MyRandIter>(g), _fast_impl(fi)
 	{
-	   	keys_gen(IntFactorDom<RandIter>::_g, 257, 255, _n, _e, _d);
+	   	keys_gen(IntFactorDom<MyRandIter>::_g, 257, 255, _n, _e, _d);
 	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
    	}
-    IntRSADom(const int64_t s, bool fi = false, RandIter g = RandIter() ) :
-		IntFactorDom<RandIter>(g), _fast_impl(fi)
+    IntRSADom(const int64_t s, bool fi = false, MyRandIter g = MyRandIter() ) :
+		IntFactorDom<MyRandIter>(g), _fast_impl(fi)
 	{
-	   	keys_gen(IntFactorDom<RandIter>::_g, (s>>1)-1, (s>>1)+1, _n, _e, _d);
+	   	keys_gen(IntFactorDom<MyRandIter>::_g, (s>>1)-1, (s>>1)+1, _n, _e, _d);
 	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
 	}
-    IntRSADom(const int64_t p, const int64_t q, bool fi = false, RandIter g = RandIter() ) :
-	   	IntFactorDom<RandIter>(g), _fast_impl(fi)
+    IntRSADom(const int64_t p, const int64_t q, bool fi = false, MyRandIter g = MyRandIter() ) :
+	   	IntFactorDom<MyRandIter>(g), _fast_impl(fi)
    	{
-	   	keys_gen(IntFactorDom<RandIter>::_g, p, q, _n, _e, _d);
+	   	keys_gen(IntFactorDom<MyRandIter>::_g, p, q, _n, _e, _d);
 	   	_lm = log(_n,1<<(8*sizeof(unsigned char)));
 	}
     IntRSADom(const Element& n, const Element& e, const Element& d) :

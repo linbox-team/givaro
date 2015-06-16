@@ -188,6 +188,7 @@ namespace Givaro {
 //! Rational Domain
 class RationalDom  {
 public:
+    using Self_t = RationalDom;
     typedef Rational Element;
     typedef Rational Rep;
 
@@ -263,10 +264,13 @@ public:
     int isZero  (const Rep& a) const { return compare(a, zero) ==0; }
     int areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
     int areNEqual(const Rep& a, const Rep& b) const { return compare(a, b) !=0; }
-    template< class RandIter > Rep& random(RandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::random(s), Integer::nonzerorandom(s)); }
-    template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const { Integer rnum,rden; Integer::random(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
-    template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::nonzerorandom(s), Integer::nonzerorandom(s)); }
-    template< class RandIter > Rep& nonzerorandom (RandIter& g,Rep& r, const Rep& b) const { Integer rnum,rden; Integer::nonzerorandom(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
+    typedef GeneralRingRandIter<Self_t> RandIter;
+    typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+    
+    template< class MyRandIter > Rep& random(MyRandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::random(s), Integer::nonzerorandom(s)); }
+    template< class MyRandIter > Rep& random(MyRandIter& g, Rep& r, const Rep& b) const { Integer rnum,rden; Integer::random(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
+    template< class MyRandIter > Rep& nonzerorandom(MyRandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::nonzerorandom(s), Integer::nonzerorandom(s)); }
+    template< class MyRandIter > Rep& nonzerorandom (MyRandIter& g,Rep& r, const Rep& b) const { Integer rnum,rden; Integer::nonzerorandom(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
 
 
         // -- IO

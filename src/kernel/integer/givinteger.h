@@ -15,11 +15,12 @@
 #ifndef __GIVARO_integer_H
 #define __GIVARO_integer_H
 
+#include "givaro-config.h"
+#include "gmp++/gmp++.h"
 #include "givaro/givbasictype.h"
 #include "givaro/givinit.h"
 #include "givaro/giverror.h"
-#include "givaro-config.h"
-#include "gmp++/gmp++.h"
+#include "givaro/givranditer.h"
 #include <string>
 
 namespace Givaro {
@@ -27,6 +28,7 @@ namespace Givaro {
 	//! Integer Domain.
 	class IntegerDom {
 	public:
+        using Self_t = IntegerDom;
 		typedef Integer Rep;
 		typedef Rep Element;
 
@@ -335,19 +337,24 @@ namespace Givaro {
 		{ Integer::seeding(s) ;
 		}
 #endif
-		template< class RandIter > Rep& random(RandIter&, Rep& r, long s = 1) const
+
+        typedef GeneralRingRandIter<Self_t> RandIter;
+        typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+
+
+		template< class MyRandIter > Rep& random(MyRandIter&, Rep& r, long s = 1) const
 		{
 			return Integer::random(r,s);
 		}
-		template< class RandIter > Rep& random(RandIter&, Rep& r, const Rep& b) const
+		template< class MyRandIter > Rep& random(MyRandIter&, Rep& r, const Rep& b) const
 		{
 			return Integer::random(r,b);
 		}
-		template< class RandIter > Rep& nonzerorandom(RandIter&, Rep& r, long s = 1) const
+		template< class MyRandIter > Rep& nonzerorandom(MyRandIter&, Rep& r, long s = 1) const
 		{
 			return Integer::nonzerorandom(r,s);
 		}
-		template< class RandIter > Rep& nonzerorandom (RandIter&,Rep& r, const Rep& b) const
+		template< class MyRandIter > Rep& nonzerorandom (MyRandIter&,Rep& r, const Rep& b) const
 		{
 			return Integer::nonzerorandom(r,b);
 		}

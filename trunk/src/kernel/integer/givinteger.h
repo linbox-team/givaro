@@ -21,12 +21,13 @@
 #include "givaro/givinit.h"
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
+#include "givaro/ring-interface.h"
 #include <string>
 
 namespace Givaro {
 	//------------------------------------ Class IntegerDom
 	//! Integer Domain.
-	class IntegerDom {
+	class IntegerDom : public RingInterface<Integer> {
 	public:
         using Self_t = IntegerDom;
 		typedef Integer Rep;

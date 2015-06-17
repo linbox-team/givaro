@@ -32,7 +32,7 @@ namespace Givaro
      * .
      */
     template<>
-    class Modular<Integer, Integer> : public RingInterface<Integer>
+    class Modular<Integer, Integer> : public virtual FiniteFieldInterface<Integer>
     {
     public:
         // ----- Exported Types and constantes

@@ -37,7 +37,7 @@ namespace Givaro {
      * .
      */
     template<typename COMP>
-    class Modular<int32_t, COMP> : public RingInterface<int32_t>
+    class Modular<int32_t, COMP> : public virtual FiniteFieldInterface<int32_t>
     {
     public:
 

@@ -17,10 +17,8 @@ namespace Givaro
  * For instance Modular<> or Montgomery<>.
  */
 template<class _Element>
-class RingInterface
+struct RingInterface
 {
-public:
-
 	virtual ~RingInterface() = default;
 
 	// ----- Typedefs
@@ -28,10 +26,6 @@ public:
 	typedef Element* Element_ptr ;
 	typedef const Element ConstElement;
 	typedef const Element* ConstElement_ptr;
-	
-	// ----- Accessors
-	virtual Element minElement() const = 0;
-	virtual Element maxElement() const = 0;
 	
 	// ----- Checkers
 	virtual bool isZero(const Element& a) const = 0;
@@ -41,18 +35,14 @@ public:
 	
 	// ----- Classic arithmetic
 	virtual Element& mul(Element& r, const Element& a, const Element& b) const = 0;
-	virtual Element& div(Element& r, const Element& a, const Element& b) const = 0;
 	virtual Element& add(Element& r, const Element& a, const Element& b) const = 0;
 	virtual Element& sub(Element& r, const Element& a, const Element& b) const = 0;
 	virtual Element& neg(Element& r, const Element& a) const = 0;
-	virtual Element& inv(Element& r, const Element& a) const = 0;
 
 	virtual Element& mulin(Element& r, const Element& a) const = 0;
-	virtual Element& divin(Element& r, const Element& a) const = 0;
 	virtual Element& addin(Element& r, const Element& a) const = 0;
 	virtual Element& subin(Element& r, const Element& a) const = 0;
 	virtual Element& negin(Element& r) const = 0;
-	virtual Element& invin(Element& r) const = 0;
 	
 	// -- axpy:   r <- a * x + y
 	// -- axpyin: r <- a * x + r
@@ -70,6 +60,40 @@ public:
 	virtual Element& maxpyin(Element& r, const Element& a, const Element& x) const = 0;
 	
 }; // class RingInterface
+
+template<class _Element>
+struct FieldInterface : public virtual RingInterface<_Element>
+{
+	virtual ~FieldInterface() = default;
+
+// ----- Division arithmetic
+	virtual _Element& div(_Element& r, const _Element& a, const _Element& b) const = 0;
+    virtual _Element& inv(_Element& r, const _Element& a) const = 0;
+	virtual _Element& divin(_Element& r, const _Element& a) const = 0;
+	virtual _Element& invin(_Element& r) const = 0;
+}; // class FieldInterface
+
+
+template<class _Element>
+struct FiniteInterface
+{
+	virtual ~FiniteInterface() = default;
+	// ----- Accessors
+	virtual _Element minElement() const = 0;
+	virtual _Element maxElement() const = 0;
+};
+
+
+
+template<class _Element>
+struct FiniteFieldInterface : public virtual FieldInterface<_Element>, public virtual FiniteInterface<_Element> {
+	virtual ~FiniteFieldInterface() = default;
+};
+template<class _Element>
+struct FiniteRingInterface : public virtual RingInterface<_Element>, public virtual FiniteInterface<_Element> {
+	virtual ~FiniteRingInterface() = default;
+};
+
 
 } // namespace Givaro
 

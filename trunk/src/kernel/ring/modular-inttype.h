@@ -32,14 +32,14 @@ namespace Givaro
      * .
      */
     template<typename IntType, typename COMP>
-    class Modular : public RingInterface<IntType>
+    class Modular : public virtual FiniteFieldInterface<IntType>
     {
     public:
         // ----- Exported Types and constantes
         typedef Modular<IntType> Self_t;
         typedef IntType Residu_t;
         enum { size_rep = sizeof(Residu_t) };
-	using Element = typename RingInterface<IntType>::Element;
+	using Element = typename FiniteFieldInterface<IntType>::Element;
 
         // ----- Constantes
         const Element zero ;

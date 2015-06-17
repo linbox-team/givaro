@@ -19,6 +19,7 @@
 
 #include "givaro/givinteger.h"
 #include "givaro/givmodule.h"
+#include "givaro/ring-interface.h"
 
 namespace Givaro {
 
@@ -186,7 +187,7 @@ extern std::istream& operator>> (std::istream& in, Rational& r) ;
 namespace Givaro {
 
 //! Rational Domain
-class RationalDom  {
+class RationalDom   : public RingInterface<Rational> {
 public:
     using Self_t = RationalDom;
     typedef Rational Element;
@@ -265,10 +266,10 @@ public:
         // - Misc
     size_t length (const Rep& a) const { return  ::Givaro::length(a); }
     int sign    (const Rep& a) const { return  ::Givaro::sign(a); }
-    int isOne   (const Rep& a) const { return compare(a, one) ==0; }
-    int isMOne   (const Rep& a) const { return compare(a, mOne) ==0; }
-    int isZero  (const Rep& a) const { return compare(a, zero) ==0; }
-    int areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
+    bool isOne   (const Rep& a) const { return compare(a, one) ==0; }
+    bool isMOne   (const Rep& a) const { return compare(a, mOne) ==0; }
+    bool isZero  (const Rep& a) const { return compare(a, zero) ==0; }
+    bool areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
     int areNEqual(const Rep& a, const Rep& b) const { return compare(a, b) !=0; }
     typedef GeneralRingRandIter<Self_t> RandIter;
     typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;

@@ -22,12 +22,12 @@ namespace Givaro
     //! @brief The standard arithmetic in modular rings using fixed size precision.
 
     template<size_t K>
-    class Modular<RecInt::ruint<K>, RecInt::ruint<K>> : public RingInterface<RecInt::ruint<K>>
+    class Modular<RecInt::ruint<K>, RecInt::ruint<K>> : public virtual FiniteFieldInterface<RecInt::ruint<K>>
     {
     public:
 
         // ----- Exported Types and constantes
-        using Element = typename RingInterface<RecInt::ruint<K>>::Element;
+        using Element = typename FiniteFieldInterface<RecInt::ruint<K>>::Element;
         using Self_t = Modular<RecInt::ruint<K>, RecInt::ruint<K>>;
         using Residu_t = RecInt::ruint<K>;
         using Compute_t = RecInt::ruint<K>;

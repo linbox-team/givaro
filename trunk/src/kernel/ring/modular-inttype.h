@@ -18,6 +18,7 @@
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
+#include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/modular-general.h"

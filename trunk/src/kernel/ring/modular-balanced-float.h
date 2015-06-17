@@ -13,6 +13,7 @@
 #ifndef __GIVARO_modular_balanced_float_H
 #define __GIVARO_modular_balanced_float_H
 
+#include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"

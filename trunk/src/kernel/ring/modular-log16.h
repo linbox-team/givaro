@@ -18,6 +18,7 @@
 #ifndef __GIVARO_modular_log16_H
 #define __GIVARO_modular_log16_H
 
+#include "givaro/givinteger.h"
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
 #include "givaro/givarray0.h"

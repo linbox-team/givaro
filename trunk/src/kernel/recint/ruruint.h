@@ -56,7 +56,7 @@ namespace RecInt
         // Constructors
         ruint() {}
         ruint(const ruint<K>& r) : High(r.High), Low(r.Low) {}
-        ruint(const ruint<K-1>& rl) : High(0), Low(rl) {}
+        ruint(const ruint<K-1>& rl) : Low(rl) {}
         ruint(const double b) : Low((b < 0)? -b : b) { if (b < 0) *this = -*this; }
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Low(b) {}
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   ruint(const T b) : Low((b < 0)? -b : b)

@@ -22,6 +22,7 @@
 #ifndef __GIVARO_zpz16std_H
 #define __GIVARO_zpz16std_H
 
+#include "givaro/givinteger.h"
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
 #include "givaro/givcaster.h"

@@ -16,6 +16,7 @@
 #ifndef __GIVARO_modular_uint8_H
 #define __GIVARO_modular_uint8_H
 
+#include "givaro/givinteger.h"
 #include "givaro/givranditer.h"
 #include "givaro/modular-general.h"
 #include "givaro/ring-interface.h"

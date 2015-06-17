@@ -23,7 +23,7 @@ namespace Givaro
     //! An integer (a mod p) is stored as (a * r mod 2^{2^K}) with (r = 2^{2^K} mod p).
 
     template<size_t K>
-    class Montgomery<RecInt::ruint<K>> : public RingInterface<RecInt::ruint<K>>
+    class Montgomery<RecInt::ruint<K>> : public virtual FiniteFieldInterface<RecInt::ruint<K>>
     {
     public:
 

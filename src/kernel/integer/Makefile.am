@@ -7,7 +7,7 @@
 AM_CPPFLAGS=-I$(top_srcdir)  ${GMP_VERSION}
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/memory  -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel
+AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/memory  -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/ring
 
 pkginclude_HEADERS=         \
 	givinteger.h		    \

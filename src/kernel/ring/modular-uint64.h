@@ -37,7 +37,7 @@ namespace Givaro
      * \ingroup field
      */
     template<typename COMP>
-    class Modular<uint64_t, COMP> : public RingInterface<uint64_t>
+    class Modular<uint64_t, COMP> : public virtual FiniteFieldInterface<uint64_t>
     {
     public:
         // ----- Exported Types and constantes

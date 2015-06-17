@@ -13,10 +13,13 @@
 #ifndef __GIVARO_modular_balanced_double_H
 #define __GIVARO_modular_balanced_double_H
 
+#include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
+
+#include <iostream>
 
 namespace Givaro
 {

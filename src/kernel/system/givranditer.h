@@ -332,7 +332,7 @@ namespace Givaro {
 
     private:
     const Ring&     _F;
-    RandIter& _r;
+    const RandIter& _r;
     };
 
 } // namespace Givaro

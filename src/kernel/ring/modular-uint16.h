@@ -16,6 +16,7 @@
 #ifndef __GIVARO_modular_uint16_H
 #define __GIVARO_modular_uint16_H
 
+#include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"

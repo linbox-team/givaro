@@ -19,6 +19,7 @@
 
 #include <float.h>
 
+#include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"

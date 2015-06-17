@@ -14,6 +14,7 @@
 
 #include <float.h>
 
+#include "givaro/givinteger.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"

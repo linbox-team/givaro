@@ -22,6 +22,7 @@
 #ifndef __GIVARO_modular_int32_H
 #define __GIVARO_modular_int32_H
 
+#include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"

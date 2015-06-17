@@ -20,6 +20,7 @@
 #ifndef __GIVARO_zpz32unsigned_H
 #define __GIVARO_zpz32unsigned_H
 
+#include "givaro/givinteger.h"
 #include "givaro/ring-interface.h"
 #include "givaro/givranditer.h"
 #include "givaro/modular-general.h"

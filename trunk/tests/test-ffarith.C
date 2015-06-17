@@ -111,11 +111,11 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.assign(c_,c);       // c_ <- c
     F.divin(c_,b);      // c_ == a ?
 
-    //         F.write(std::cerr) << std::endl;
-    //         F.write(std::cerr << "a: ", a) << std::endl;
-    //         F.write(std::cerr << "b: ", b) << std::endl;
-    //         F.write(std::cerr << "c: ", c) << std::endl;
-    //         F.write(std::cerr << "c_: ", c_) << std::endl;
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "b: ", b) << std::endl;
+//         F.write(std::cerr << "c: ", c) << std::endl;
+//         F.write(std::cerr << "c_: ", c_) << std::endl;
     TESTE_EG(a,c_);
 
     F.assign(c, a);

@@ -25,19 +25,19 @@
 namespace Givaro
 {
     template <typename _Element>
-    _Element& Moderin(_Element& t, const _Element& s) {
+    inline _Element& Moderin(_Element& t, const _Element& s) {
         return t %= s;
     }
 
     template <typename _Element>
-    _Element Moder(const _Element& t, const _Element& s) {
+    inline _Element Moder(const _Element& t, const _Element& s) {
         return t%s;
     }
 
-    template<> float Moder(const float& t, const float& s) { return fmodf(t,s); }
-    template<> float& Moderin(float& t, const float& s) { return t=Moder(t,s); }
-    template<> double Moder(const double& t, const double& s) { return fmod(t,s); }
-    template<> double& Moderin(double& t, const double& s) { return t=Moder(t,s); }
+    template<> inline float Moder(const float& t, const float& s) { return fmodf(t,s); }
+    template<> inline float& Moderin(float& t, const float& s) { return t=Moder(t,s); }
+    template<> inline double Moder(const double& t, const double& s) { return fmod(t,s); }
+    template<> inline double& Moderin(double& t, const double& s) { return t=Moder(t,s); }
     
     
 

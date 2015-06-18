@@ -43,7 +43,8 @@ int isOne  (const Rational& r) ;
 int isMOne  (const Rational& r) ;
 int isInteger(const Rational& r);
 
-class RationalDom;
+template<class RatElement>
+class QField;
 
 
 //! Rationals. No doc.
@@ -167,7 +168,7 @@ protected:
     static void Init(int* argc, char***argv);
     static void End();
     friend class GivModule;
-    friend class RationalDom;
+    friend class QField<Rational>;
         // Rational number reconstruction
     bool ratrecon(const Integer& f, const Integer& m, const Integer& k, bool recurs = false ) ;
 
@@ -187,23 +188,24 @@ extern std::istream& operator>> (std::istream& in, Rational& r) ;
 namespace Givaro {
 
 //! Rational Domain
-class RationalDom   : public FieldInterface<Rational> {
+template<>
+class QField<Rational> : public FieldInterface<Rational> {
 public:
-    using Self_t = RationalDom;
+    using Self_t = QField<Element>;
     typedef Rational Element;
     typedef Rational Rep;
 
         // -- Cstor
-    RationalDom() : one(1), mOne(-one), zero(0) {}
-    template<class X> RationalDom(const X& x) : one(1), mOne(-one),zero(0) {}
+    QField() : one(1), mOne(-one), zero(0) {}
+    template<class X> QField(const X& x) : one(1), mOne(-one),zero(0) {}
 
-    int operator==( const RationalDom& ) const { return 1;}
-    int operator!=( const RationalDom& ) const { return 0;}
+    int operator==( const QField<Element>& ) const { return 1;}
+    int operator!=( const QField<Element>& ) const { return 0;}
 
         // -- Constants
-    const Rational one;
-    const Rational mOne;
-    const Rational zero;
+    const Element one;
+    const Element mOne;
+    const Element zero;
 
     uint64_t characteristic() const { return 0U; }
     Integer& characteristic(Integer& p) const { return p=characteristic();}
@@ -286,7 +288,7 @@ public:
         { char ch;
         i >> std::ws >> ch;
         if (ch != 'R')
-            GivError::throw_error(GivBadFormat("RationalDom::read: bad signature domain"));
+            GivError::throw_error(GivBadFormat("QField<Element>::read: bad signature domain"));
         return i;
         }
     std::ostream& write( std::ostream& o ) const { return o << 'R'; }

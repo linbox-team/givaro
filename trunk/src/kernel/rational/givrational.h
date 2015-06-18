@@ -209,6 +209,8 @@ public:
 
     uint64_t characteristic() const { return 0U; }
     Integer& characteristic(Integer& p) const { return p=characteristic();}
+    uint64_t cardinality() const { return 0U; }
+    Integer& cardinality(Integer& p) const { return p=cardinality();}
 
         // -- assignement
     Rep& init( Rep& a ) const{ return a; }

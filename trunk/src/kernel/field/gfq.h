@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <11 Jun 15 18:09:31 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <18 Jun 15 14:59:56 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -360,9 +360,6 @@ public:
 	static void Init();
 	static void End();
 };
-
-// Used by LinBox
-typedef GFqDom<int32_t> GFq;
 
 } // namespace Givaro
 

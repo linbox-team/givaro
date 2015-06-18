@@ -24,6 +24,24 @@
 
 namespace Givaro
 {
+    template <typename _Element>
+    _Element& Moderin(_Element& t, const _Element& s) {
+        return t %= s;
+    }
+
+    template <typename _Element>
+    _Element Moder(const _Element& t, const _Element& s) {
+        return t%s;
+    }
+
+    template<> float Moder(const float& t, const float& s) { return fmodf(t,s); }
+    template<> float& Moderin(float& t, const float& s) { return t=Moder(t,s); }
+    template<> double Moder(const double& t, const double& s) { return fmod(t,s); }
+    template<> double& Moderin(double& t, const double& s) { return t=Moder(t,s); }
+    
+    
+
+
 
 	/** \brief Unparameterized field adapter.
 	 * \ingroup field
@@ -108,6 +126,12 @@ namespace Givaro
 		Element &div (Element &x, const Element &y, const Element &z) const
 		{
 			return x = y / z;
+		}
+
+		/// x := y mod z
+		Element &mod (Element &x, const Element &y, const Element &z) const
+		{
+			return x = Moder(y,z);
 		}
 
 		/// x := -y
@@ -208,6 +232,12 @@ namespace Givaro
 		Element &divin (Element &x, const Element &y) const
 		{
 			return x /= y;
+		}
+
+		/// x := x mod y
+		Element &modin (Element &x, const Element &y) const
+		{
+			return Moderin(x,y);
 		}
 
 		/// x := -x

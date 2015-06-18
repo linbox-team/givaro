@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <16 Jun 15 16:03:53 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <18 Jun 15 18:30:25 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 
@@ -57,6 +57,12 @@ namespace Givaro {
 #define BOUNDARY_isprime TABMAX
 #define BOUNDARY_2_isprime TABMAX2
 
+#define GIVARO_ISLT(a,b) ((a)<(b))
+#define GIVARO_ISLEQ(a,b) ((a)<=(b))
+#define GIVARO_ISGT(a,b) ((a)>(b))
+#define GIVARO_ISGEQ(a,b) ((a)>=(b))
+
+
 	// =================================================================== //
 	//! Primality tests
 	// =================================================================== //
@@ -73,8 +79,8 @@ namespace Givaro {
 			//                     (n)<BOUNDARY_2_isprime ? isprime_Tabule2(n) :
 			//                     probab_prime(n));
 			int64_t l;
-			return int32_t (int32_t(islt(n,BOUNDARY_isprime) ?  isprime_Tabule((int32_t)convert(l,n)):
-					islt(n,BOUNDARY_2_isprime) ? isprime_Tabule2((int32_t)convert(l,n)):
+			return int32_t (int32_t(GIVARO_ISLT(n,BOUNDARY_isprime) ?  isprime_Tabule((int32_t)convert(l,n)):
+					GIVARO_ISLT(n,BOUNDARY_2_isprime) ? isprime_Tabule2((int32_t)convert(l,n)):
 					local_prime(n,r)));
 		}
 

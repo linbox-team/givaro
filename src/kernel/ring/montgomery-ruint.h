@@ -63,7 +63,7 @@ namespace Givaro
 
             assert( (_p & 1u) != 0u);
 	    assert(_p >= getMinModulus());
-	    assert(_p <= getMaxModulus());
+	    assert(_p <= maxCardinality());
 	}
 
 	Montgomery(const Self_t& F)
@@ -83,7 +83,7 @@ namespace Givaro
 	template<class T> inline T& characteristic(T& p) const { return p = _p; }
 	template<class T> inline T& cardinality(T& p) const { return p = _p; }
 
-	static inline Residu_t getMaxModulus() { return -1; }
+	static inline Residu_t maxCardinality() { return -1; }
 	static inline Residu_t getMinModulus() { return 2; }
 
 	// ----- Checkers

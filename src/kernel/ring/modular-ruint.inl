@@ -19,7 +19,7 @@ namespace Givaro
 
     template<size_t K>
     inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Residu_t
-        Modular<RecInt::ruint<K>, RecInt::ruint<K>>::getMaxModulus() { return RecInt::ruint<K>::getMaxModulus(); }
+        Modular<RecInt::ruint<K>, RecInt::ruint<K>>::maxCardinality() { return RecInt::ruint<K>::maxCardinality(); }
 
     // ------------------------
     // ----- Classic arithmetic

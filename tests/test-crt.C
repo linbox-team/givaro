@@ -60,8 +60,8 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
         
     {
         Integer a( generator() >>(argc>2?atoi(argv[2]):17) );
-        if ( (Field::getMaxModulus() > 0) && ( a > Field::getMaxModulus() ) ) {
-            a = Field::getMaxModulus()/2;
+        if ( (Field::maxCardinality() > 0) && ( a > Field::maxCardinality() ) ) {
+            a = Field::maxCardinality()/2;
         }
         
         for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
@@ -142,8 +142,8 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     }
 
     Integer pr( generator() >>(argc>2?atoi(argv[2]):17) ), res;
-    if ( (Field::getMaxModulus() > 0) && (pr > Field::getMaxModulus() ) ) {
-        pr = Field::getMaxModulus()/2;
+    if ( (Field::maxCardinality() > 0) && (pr > Field::maxCardinality() ) ) {
+        pr = Field::maxCardinality()/2;
     }
     Field F( ID.nextprimein(pr) );
     typename Field::Element el;

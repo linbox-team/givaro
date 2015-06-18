@@ -246,7 +246,7 @@ namespace Givaro
 
     public:
 
-        static inline Residu_t getMaxModulus() { return 16381; }
+        static inline Residu_t maxCardinality() { return 16381; }
         static inline Residu_t getMinModulus() { return 2; }
 
     };

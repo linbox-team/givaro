@@ -103,7 +103,7 @@ namespace RecInt
         cr_iterator rbegin() const { return cr_iterator(NBLIMB<K>::value-1, this); }
         cr_iterator rend() const { return cr_iterator(); }
         UDItype size() { return NBLIMB<K>::value; }
-        static ruint<K> getMaxModulus() { ruint<K> max; max.High = 1; return max; }
+        static ruint<K> maxCardinality() { ruint<K> max; max.High = 1; return max; }
     };
 
     // Break points
@@ -164,7 +164,7 @@ namespace RecInt
         cr_iterator rbegin() const { return cr_iterator(&Value); }
         cr_iterator rend() const { return cr_iterator(); }
         UDItype size() { return 1; }
-        static ruint<__RECINT_LIMB_SIZE> getMaxModulus() { return 4294967296; }
+        static ruint<__RECINT_LIMB_SIZE> maxCardinality() { return 4294967296; }
     };
 
 #if defined(__RECINT_USE_FAST_128)
@@ -217,7 +217,7 @@ namespace RecInt
         cr_iterator rbegin() const { return cr_iterator(NBLIMB<__RECINT_LIMB_SIZE+1>::value-1, this); }
         cr_iterator rend() const { return cr_iterator(); }
         UDItype size() { return NBLIMB<__RECINT_LIMB_SIZE+1>::value; }
-        static ruint<__RECINT_LIMB_SIZE+1> getMaxModulus() { ruint<__RECINT_LIMB_SIZE+1> max; max.High = 1; return max; }
+        static ruint<__RECINT_LIMB_SIZE+1> maxCardinality() { ruint<__RECINT_LIMB_SIZE+1> max; max.High = 1; return max; }
     };
 #endif
 

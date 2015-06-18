@@ -44,7 +44,7 @@ public:
 	: zero(0.0), one(1.0), mOne((Element)p - 1.0), _p((double)p), _lp((Residu_t)p)
 	{
 	    assert(_p >= getMinModulus());
-	    assert(_p <= getMaxModulus());
+	    assert(_p <= maxCardinality());
 	}
 
 	Modular(const Self_t& F)
@@ -61,7 +61,7 @@ public:
 	template<class T> inline T& characteristic(T& p) const { return p = _lp; }
 	inline Residu_t cardinality() const { return _lp; }
 	template<class T> inline T& cardinality(T& p) const { return p = _lp; }
-	static inline Residu_t getMaxModulus() { return 67108864; }
+	static inline Residu_t maxCardinality() { return 67108864; }
 	static inline Residu_t getMinModulus() { return 2; }
 
 	// ----- Checkers

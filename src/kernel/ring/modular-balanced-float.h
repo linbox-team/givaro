@@ -49,7 +49,7 @@ namespace Givaro
 	    , _up(static_cast<uint32_t>(_p))
 	{
 	    assert(_p >= getMinModulus());
-	    assert(_p <= getMaxModulus());
+	    assert(_p <= maxCardinality());
 	}
 
 	ModularBalanced(const Self_t& F)
@@ -69,7 +69,7 @@ namespace Givaro
 	template<class T> inline T& characteristic(T& p) const { return Caster(p,_p); }
 	template<class T> inline T& cardinality(T& p) const { return Caster(p,_p); }
 	
-	static inline Element getMaxModulus() { return 5791.f; } // 2^12.5
+	static inline Element maxCardinality() { return 5791.f; } // 2^12.5
 	static inline Element getMinModulus() { return 3.f; }
 
 	// ----- Checkers

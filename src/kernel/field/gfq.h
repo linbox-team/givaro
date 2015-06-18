@@ -153,7 +153,7 @@ public:
 		return p=(uint64_t)_characteristic;
 	}
 
-    static inline Residu_t getMaxModulus() { return 65536u; }
+    static inline Residu_t maxCardinality() { return 65536u; }
     static inline Residu_t getMinModulus() { return 2; }
 
 	UTT cardinality() const;

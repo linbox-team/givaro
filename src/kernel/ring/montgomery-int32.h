@@ -106,7 +106,7 @@ namespace Givaro
         inline Residu_t cardinality() const { return _p; }
         template<class T> inline T& characteristic(T& p) const { return p = _p; }
         template<class T> inline T& cardinality(T& p) const { return p = _p; }
-        static inline Residu_t getMaxModulus() { return 40503; } // 2^15.3
+        static inline Residu_t maxCardinality() { return 40503; } // 2^15.3
         static inline Residu_t getMinModulus() { return 2; }
 
         // ----- Checkers

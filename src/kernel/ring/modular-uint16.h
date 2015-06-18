@@ -60,7 +60,7 @@ namespace Givaro {
             : zero(Element(0)), one(Element(1)), mOne(Element(p-1)), _p(p)
         {
             assert(_p >= getMinModulus());
-            assert(_p <= getMaxModulus());
+            assert(_p <= maxCardinality());
         }
 
         Modular(const Self_t& F)
@@ -77,7 +77,7 @@ namespace Givaro {
         inline Residu_t cardinality() const { return _p; }
         template<class T> inline T& characteristic(T& p) const { return p = _p; }
         template<class T> inline T& cardinality(T& p) const { return p = _p; }
-        static inline Residu_t getMaxModulus();
+        static inline Residu_t maxCardinality();
         static inline Residu_t getMinModulus() { return 2; }
 
         // ----- Checkers

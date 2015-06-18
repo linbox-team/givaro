@@ -50,7 +50,7 @@ namespace Givaro
 	    , _mhalfp(_halfp - _p + 1.f)
 	    , _up(static_cast<uint32_t>(_p))
 	{
-	    assert(_p >= getMinModulus());
+	    assert(_p >= minCardinality());
 	    assert(_p <= maxCardinality());
 	}
 
@@ -71,7 +71,7 @@ namespace Givaro
 	template<class T> inline T& cardinality(T& p) const { return Caster(p,_p); }
 	
 	static inline Element maxCardinality() { return 134217727; } // 2^12.5
-	static inline Element getMinModulus() { return 3.f; }
+	static inline Element minCardinality() { return 3.f; }
 
 	// ----- Checkers
 	inline bool isZero(const Element& a) const override { return a == zero; }

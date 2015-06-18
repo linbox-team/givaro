@@ -154,7 +154,7 @@ public:
 	}
 
     static inline Residu_t maxCardinality() { return 65536u; }
-    static inline Residu_t getMinModulus() { return 2; }
+    static inline Residu_t minCardinality() { return 2; }
 
 	UTT cardinality() const;
 	template<typename T> T& cardinality(T& p) const { return p = T(_q); }

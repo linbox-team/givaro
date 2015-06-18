@@ -29,15 +29,15 @@
 using namespace Givaro;
 
 
-typedef GFqDom<int64_t> 		Field1;
-typedef Modular<int16_t>     Field2;
-typedef Modular<Log16>       Field3;
+typedef GFqDom<int64_t> 	Field1;
+typedef Modular<int16_t>    Field2;
+typedef Modular<Log16>      Field3;
 typedef Modular<int32_t>  	Field4;
 typedef Modular<int64_t>  	Field5;
 typedef Modular<uint32_t>	Field6;
 typedef Montgomery<int32_t> Field7;
-typedef RationalDom	        Field8;
-typedef Modular<Integer>     Field9;
+typedef QField<Rational> 	Field8;
+typedef Modular<Integer>    Field9;
 
 
 typedef Extension<> 		Field10;

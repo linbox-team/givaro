@@ -19,7 +19,7 @@
 
 using namespace Givaro;
 
-typedef Poly1Dom< RationalDom, Dense>::Element RatPoly;
+typedef Poly1Dom< QField<Rational>, Dense>::Element RatPoly;
 typedef std::vector<double> DoublePoly;
 
 std::ostream& operator<< (std::ostream& o, const DoublePoly& v) {
@@ -37,8 +37,8 @@ int main(int argc, char** argv)
 
     Integer f,m,k;
 
-    RationalDom Q;
-    Poly1Dom< RationalDom, Dense> PolQ(Q);
+    QField<Rational> Q;
+    Poly1Dom< QField<Rational>, Dense> PolQ(Q);
 
 
     DoublePoly D;

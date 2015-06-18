@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     if (argc > 1) f = Integer(argv[1]); else std::cin >> f;
     if (argc > 2) m = Integer(argv[2]); else std::cin >> m;
 
-    RationalDom RD;
+    QField<Rational> RD;
     Rational rec;
 
     Timer tim; tim.clear(); tim.start();

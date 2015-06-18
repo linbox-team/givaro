@@ -32,7 +32,7 @@ namespace Givaro
      *  Ring of integers, using the _Element base type.
      */
     template<class _Element>
-    class ZRing : public UnparametricOperations<_Element>
+    class ZRing : public UnparametricOperations<_Element>, public virtual RingInterface<_Element>
     {
     public:
 

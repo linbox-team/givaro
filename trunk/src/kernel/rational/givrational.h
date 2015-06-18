@@ -187,7 +187,7 @@ extern std::istream& operator>> (std::istream& in, Rational& r) ;
 namespace Givaro {
 
 //! Rational Domain
-class RationalDom   : public RingInterface<Rational> {
+class RationalDom   : public FieldInterface<Rational> {
 public:
     using Self_t = RationalDom;
     typedef Rational Element;

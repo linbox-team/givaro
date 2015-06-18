@@ -54,7 +54,7 @@ namespace Givaro
             , mOne(p-1)
             , _p(p)
         {
-            assert(_p >= getMinModulus());
+            assert(_p >= minCardinality());
             assert(_p <= maxCardinality());
         }
 
@@ -64,7 +64,7 @@ namespace Givaro
             , mOne( Caster<Residu_t>(p-1) )
             , _p( Caster<Residu_t>(p) )
         {
-            assert(_p >= getMinModulus());
+            assert(_p >= minCardinality());
             assert(_p <= maxCardinality());
         }
 
@@ -75,7 +75,7 @@ namespace Givaro
             , mOne( Caster<Residu_t>(p-1) )
             , _p( Caster<Residu_t>(p) )
         {
-            assert(_p >= getMinModulus());
+            assert(_p >= minCardinality());
             assert(_p <= maxCardinality());
         }
 
@@ -96,7 +96,7 @@ namespace Givaro
 
         //std::enable_if<Compute_t>
         static inline Residu_t maxCardinality();
-        static inline Residu_t getMinModulus() { return 2; }
+        static inline Residu_t minCardinality() { return 2; }
 
         // ----- Checkers
         inline bool isZero(const Element& a) const override { return a == zero; }

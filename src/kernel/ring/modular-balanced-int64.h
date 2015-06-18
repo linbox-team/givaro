@@ -45,7 +45,7 @@ namespace Givaro
 	ModularBalanced(Element p)
 	    : _p(p), _halfp(p >> 1), _mhalfp(_halfp - p + 1), _dinvp(1. / static_cast<double>(p))
 	{
-	    assert(_p >= getMinModulus());
+	    assert(_p >= minCardinality());
 	    assert(_p <= maxCardinality());
 	}
 
@@ -66,7 +66,7 @@ namespace Givaro
 	template<class T> inline T& cardinality(T& p) const { return p = _p; }
 	
 	static inline Element maxCardinality() { return 6074000999; } // 2^32.5
-	static inline Element getMinModulus() { return 3; }
+	static inline Element minCardinality() { return 3; }
 
 	// ----- Checkers
 	inline bool isZero(const Element& a) const override { return a == zero; }

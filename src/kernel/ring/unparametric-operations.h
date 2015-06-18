@@ -18,6 +18,7 @@
 #ifndef __GIVARO_ring_unparametric_operations_H
 #define __GIVARO_ring_unparametric_operations_H
 
+#include "givaro/ring-interface.h"
 #include <iostream> // std::ostream
 #include <string>
 

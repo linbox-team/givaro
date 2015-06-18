@@ -38,10 +38,10 @@ namespace Givaro
 	 *
 	 *  For a typical unparametric field, some of the methods must be defined in a specialization.
 	 */
-	template <class K>
-	class UnparametricOperations {
+	template <class _Element>
+	class UnparametricOperations : public virtual RingInterface<_Element>{
 	public:
-		typedef K Element;
+		typedef _Element Element;
 
 		UnparametricOperations(){}
 		//@{
@@ -79,26 +79,6 @@ namespace Givaro
 		{
 			return x == y;
 		}
-
-		///  x == 0
-		bool isZero (const Element &x) const
-		{
-			return x == Element (0);
-		}
-
-		///  x == 1
-		bool isOne (const Element &x) const
-		{
-			return x == Element (1);
-		}
-
-		inline bool isMOne (const Element &x) const
-		{
-			return x == Element(-1) ;
-		}
-
-		//@} Comparison Predicates
-
 
 		/** @name Arithmetic Operations
 		 * The first argument is set and is also the return value.
@@ -151,6 +131,15 @@ namespace Givaro
 			return z = a * x + y;
 		}
 
+		/// z := a*x + z
+		// more optimal implementation, if available, can be defined in a template specialization.
+		Element &axpyin (Element &z,
+			       const Element &a,
+			       const Element &x) const
+		{
+			return z += a * x;
+		}
+
 		/// z := a*x - y
 		// more optimal implementation, if available, can be defined in a template specialization.
 		Element &axmy (Element &z,
@@ -161,6 +150,15 @@ namespace Givaro
 			return z = a * x - y;
 		}
 
+		/// z := a*x - z
+		// more optimal implementation, if available, can be defined in a template specialization.
+		Element &axmyin (Element &z,
+			       const Element &a,
+			       const Element &x) const
+		{
+			return z = a * x - z;
+		}
+
 		/// z := y - a*x
 		// more optimal implementation, if available, can be defined in a template specialization.
 		Element &maxpy (Element &z,
@@ -169,6 +167,15 @@ namespace Givaro
 			       const Element &y) const
 		{
 			return z = y - a * x;
+		}
+
+		/// z := z - a*x
+		// more optimal implementation, if available, can be defined in a template specialization.
+		Element &maxpyin (Element &z,
+			       const Element &a,
+			       const Element &x) const
+		{
+			return z -= a * x;
 		}
 
 		//@} Arithmetic Operations
@@ -213,22 +220,6 @@ namespace Givaro
 		{
 			return x = Element (1) / x;
 		}
-
-		/// y := a*x + y
-		Element &axpyin (Element &y, const Element &a, const Element &x) const
-		{
-			return y += a * x;
-		}
-
-		/// y := a*x + y
-		Element &maxpyin (Element &y,
-			       const Element &a,
-			       const Element &x) const
-		{
-			return y += a * x;
-		}
-
-		//@} Inplace Arithmetic Operations
 
 		/** @name Input/Output Operations */
 		//@{

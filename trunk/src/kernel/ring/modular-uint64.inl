@@ -21,11 +21,11 @@ namespace Givaro
 
     template<>
     inline Modular<uint64_t, uint64_t>::Residu_t
-    Modular<uint64_t, uint64_t>::getMaxModulus() { return 4294967295u; } // 2^32 - 1
+    Modular<uint64_t, uint64_t>::maxCardinality() { return 4294967295u; } // 2^32 - 1
 
     template<>
     inline Modular<uint64_t, int64_t>::Residu_t
-    Modular<uint64_t, int64_t>::getMaxModulus() { return 4294967295u; }
+    Modular<uint64_t, int64_t>::maxCardinality() { return 4294967295u; }
 
     // ------------------------
     // ----- Classic arithmetic

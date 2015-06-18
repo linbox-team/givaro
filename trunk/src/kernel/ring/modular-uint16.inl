@@ -22,19 +22,19 @@ namespace Givaro {
 
     template<>
     inline Modular<uint16_t, int16_t>::Residu_t
-    Modular<uint16_t, int16_t>::getMaxModulus() { return 255u; } // 2^8 - 1
+    Modular<uint16_t, int16_t>::maxCardinality() { return 255u; } // 2^8 - 1
 
     template<>
     inline Modular<uint16_t, uint16_t>::Residu_t
-    Modular<uint16_t, uint16_t>::getMaxModulus() { return 255u; }
+    Modular<uint16_t, uint16_t>::maxCardinality() { return 255u; }
 
     template<>
     inline Modular<uint16_t, uint32_t>::Residu_t
-    Modular<uint16_t, uint32_t>::getMaxModulus() { return 32757u; } // 2^15 - 1
+    Modular<uint16_t, uint32_t>::maxCardinality() { return 32757u; } // 2^15 - 1
 
     template<>
     inline Modular<uint16_t, int32_t>::Residu_t
-    Modular<uint16_t, int32_t>::getMaxModulus() { return 32757u; }
+    Modular<uint16_t, int32_t>::maxCardinality() { return 32757u; }
 
     // --------------------
     // ----- Initialisation

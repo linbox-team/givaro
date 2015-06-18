@@ -32,7 +32,7 @@ namespace Givaro
      *  Ring of integers, using the _Element base type.
      */
     template<class _Element>
-    class ZRing : public UnparametricOperations<_Element>, public virtual RingInterface<_Element>
+    class ZRing : public UnparametricOperations<_Element>
     {
     public:
 
@@ -62,13 +62,17 @@ namespace Givaro
         template<typename T> T& cardinality(T& c) const { return c = static_cast<T>(0); }
         template<typename T> T& characteristic(T& c) const { return c = static_cast<T>(0); }
         
-        static inline Residu_t getMaxModulus() { return -1; }
+        static inline Residu_t maxCardinality() { return -1; }
         static inline Residu_t getMinModulus() { return 2; }
 
         //----- Ring-wise operations
         inline bool operator==(const Self_t& F) const { return true; }
         inline bool operator!=(const Self_t& F) const { return false; }
         inline ZRing<Element>& operator=(const ZRing<Element>&) { return *this; }
+        // Ring tests
+        bool isZero(const Element& a) const { return a == zero; }
+        bool isOne (const Element& a) const { return a == one; }
+        bool isMOne(const Element& a) const { return a == mOne; }
 
         //----- Initialisation
         Element& init(Element& x) const { return x; }
@@ -87,6 +91,7 @@ namespace Givaro
         // To ensure interface consistency
         size_t minElement() const { return 0; }
         size_t maxElement() const { return 0; }
+
 
         // ----- Random generators
         typedef GeneralRingRandIter<Self_t> RandIter;

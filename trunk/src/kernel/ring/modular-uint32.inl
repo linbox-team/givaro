@@ -23,19 +23,19 @@ namespace Givaro
 
     template<>
     inline Modular<uint32_t, int32_t>::Residu_t
-    Modular<uint32_t, int32_t>::getMaxModulus() { return 65535u; } // 2^16 - 1
+    Modular<uint32_t, int32_t>::maxCardinality() { return 65535u; } // 2^16 - 1
 
     template<>
     inline Modular<uint32_t, uint32_t>::Residu_t
-    Modular<uint32_t, uint32_t>::getMaxModulus() { return 65535u; }
+    Modular<uint32_t, uint32_t>::maxCardinality() { return 65535u; }
 
     template<>
     inline Modular<uint32_t, uint64_t>::Residu_t
-    Modular<uint32_t, uint64_t>::getMaxModulus() { return 2147483647u; } // 2^31 - 1
+    Modular<uint32_t, uint64_t>::maxCardinality() { return 2147483647u; } // 2^31 - 1
 
     template<>
     inline Modular<uint32_t, int64_t>::Residu_t
-    Modular<uint32_t, int64_t>::getMaxModulus() { return 2147483647u; }
+    Modular<uint32_t, int64_t>::maxCardinality() { return 2147483647u; }
 
     // ------------------------
     // ----- Classic arithmetic

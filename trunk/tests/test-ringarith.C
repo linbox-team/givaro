@@ -318,7 +318,7 @@ int main(int argc, char ** argv)
     //----- Modulo maximal prime -----//
 
 #define TEST_LAST(Field, Name)		\
-    Field Name(Field::getMaxModulus());	\
+    Field Name(Field::maxCardinality());	\
     JETESTE(Name, seed);
     
     TEST_LAST(Modular<int8_t>, Cmax);

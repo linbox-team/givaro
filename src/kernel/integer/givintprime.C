@@ -55,7 +55,7 @@ namespace Givaro {
 	// =================================================================== //
 	IntPrimeDom::Rep& IntPrimeDom::nextprimein(Rep& n, int32_t r)  const
 	{
-		if (isleq( n,1)) return n=2;
+		if (GIVARO_ISLEQ( n,1)) return n=2;
 		Rep tmp;
 		mod( tmp, n, 2U);
 		if ( isZero(tmp) )
@@ -69,7 +69,7 @@ namespace Givaro {
 
 	IntPrimeDom::Rep& IntPrimeDom::nextprime(Rep& n, const Rep& p, int32_t r)  const
 	{
-		if (isleq( p,1)) return n=2;
+		if (GIVARO_ISLEQ( p,1)) return n=2;
 		if (&n == &p) return nextprimein(n,r);
 		if (isZero( mod(n,p,2)))
 			add(n,p,1);
@@ -83,7 +83,7 @@ namespace Givaro {
 
 	IntPrimeDom::Rep& IntPrimeDom::prevprimein(Rep& n, int r)  const
 	{
-		if (isleq( n,2)) return n=2;
+		if (GIVARO_ISLEQ( n,2)) return n=2;
 		Rep tmp;
 		mod(tmp, n, 2U);
 		if (isZero(tmp) )
@@ -97,7 +97,7 @@ namespace Givaro {
 
 	IntPrimeDom::Rep& IntPrimeDom::prevprime(Rep& n, const Rep& p, int r)  const
 	{
-		if (isleq( p,2)) return n=2;
+		if (GIVARO_ISLEQ( p,2)) return n=2;
 		if (&n == &p) return prevprimein(n,r);
 		if (isZero( mod(n,p,2)) )
 			sub(n,p,1);

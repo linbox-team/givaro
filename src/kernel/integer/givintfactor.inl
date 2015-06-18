@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <16 Jun 15 16:04:03 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <18 Jun 15 18:30:38 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 #ifndef __GIVARO_factorisation_INL
@@ -41,15 +41,15 @@ namespace Givaro {
 		bool flag = 0;
 		Integer tmp;
 
-		if (islt(nn,zero)) {
+		if (GIVARO_ISLT(nn,zero)) {
 			nn = -n;
 			o << "-";
 		}
 
-		if (isleq(nn,1)) { Lf.push_back(nn); return IntegerDom::write(o,nn); }
+		if (GIVARO_ISLEQ(nn,1)) { Lf.push_back(nn); return IntegerDom::write(o,nn); }
 
 
-		while( isgt(nn,1) ) {
+		while( GIVARO_ISGT(nn,1) ) {
 			primefactor(g,nn);
 			if (flag)
 				o << " * ";
@@ -252,7 +252,7 @@ namespace Givaro {
 	{
 		// average number of iterations < 13/8*sqrt( Pi*n/2)
 		// Sometimes the factor isn't prime -- TO EXPLICIT
-		if (islt(n,3)) return g=n;
+		if (GIVARO_ISLT(n,3)) return g=n;
 		if ( isprime(n, _GIVARO_ISPRIMETESTS_) ) return g=n;
 		g=1;
 		Rep m(zero), x, y, p(one), t;

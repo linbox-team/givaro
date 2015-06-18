@@ -81,6 +81,11 @@ struct FiniteInterface
 	// ----- Accessors
 	virtual _Element minElement() const = 0;
 	virtual _Element maxElement() const = 0;
+
+        // ----- Static members
+        // static Residu_t getMinModulus() const = 0;
+        // static Residu_t getMaxModulus() const = 0;
+
 };
 
 

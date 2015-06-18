@@ -21,13 +21,15 @@
 
 #include <algorithm>
 #include <typeinfo>
+#include <math.h>
 
 #include "givaro/unparametric-operations.h"
 #include "givaro/givranditer.h"
 #include "givaro/givinteger.h"
 
 namespace Givaro
-{
+{    
+  
     /** Class ZRing.
      *  Ring of integers, using the _Element base type.
      */
@@ -38,6 +40,7 @@ namespace Givaro
 
         // ----- Exported Types and constantes
         using Element = _Element;
+        using Rep = _Element;
         using Self_t = ZRing<Element>;
         using Residu_t = Element;
         using Element_ptr = Element*;

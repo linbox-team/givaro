@@ -229,7 +229,7 @@ ModularBalanced<double>::write(std::ostream& os) const
 inline std::ostream&
 ModularBalanced<double>::write(std::ostream& os, const Element& x) const
 {
-    return os << x;
+            return os << std::setprecision(dbl::digits10) << x;
 }
 
 inline std::istream&

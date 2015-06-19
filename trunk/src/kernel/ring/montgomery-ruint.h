@@ -12,6 +12,10 @@
 
 #include "recint/ruint.h"
 #include "recint/rmgmodule.h"
+
+#include "givaro/givcaster.h"
+#include "givaro/givinteger.h"
+#include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
 
 namespace Givaro

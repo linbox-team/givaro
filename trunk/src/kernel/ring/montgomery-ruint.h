@@ -59,8 +59,11 @@ namespace Givaro
             RecInt::arazi_qi(_p1, -_p); // p1 = -inv(p) mod 2^(2^K)
             RecInt::mod_n(_r, -_p, _p); // r = 2^(2^K) mod p
 
-            RecInt::mul(_r2, _r, _r);   // r2 = r^2 mod p
-            RecInt::mul(_r3, _r2, _r);  // r3 = r^3 mod p
+            LargeElement ltmp;
+            RecInt::lmul(ltmp, _r, _r);
+            RecInt::mod_n(_r2, ltmp, _p);   // r2 = r^2 mod p
+            RecInt::lmul(ltmp, _r2, _r);
+            RecInt::mod_n(_r3, ltmp, _p);   // r2 = r^2 mod p
 
             RecInt::copy(const_cast<Element&>(one), _r);
             to_mg(const_cast<Element&>(mOne), _p - 1u);
@@ -115,6 +118,12 @@ namespace Givaro
         template<typename T> Element& init(Element& r, const T& a) const
         {
             reduce(r, Caster<Element>((a < 0)? -a : a));
+	    if (a < 0) negin(r);
+            return to_mg(r);
+        }
+        Element& init(Element& r, const Integer& a) const
+        {
+            r = Caster<Element>(a % _p);
 	    if (a < 0) negin(r);
             return to_mg(r);
         }

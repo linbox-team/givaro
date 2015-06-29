@@ -11,6 +11,7 @@
 #include <givaro/modular-balanced.h>
 #include <givaro/montgomery.h>
 
+#include <givaro/gf2.h>
 #include <givaro/gfq.h>
 #include <givaro/gfqext.h>
 #include <givaro/extension.h>
@@ -281,6 +282,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Integer>, I2, 2);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R2, 2);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU2, 2);
+    TEST_SPECIFIC(GF2, GF_2, 2);
 
     //--------------------//
     //----- Modulo 3 -----//

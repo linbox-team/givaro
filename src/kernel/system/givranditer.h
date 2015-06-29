@@ -18,6 +18,7 @@
 
 #include "givaro/givconfig.h"
 #include "givaro/givrandom.h"
+#include "givaro/givtimer.h"
 
 // For ModularBalancedRandIter
 #include <sys/time.h>

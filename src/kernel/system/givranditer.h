@@ -16,6 +16,7 @@
 #ifndef __GIVARO_randiter_H
 #define __GIVARO_randiter_H
 
+#include "givaro/givconfig.h"
 #include "givaro/givrandom.h"
 
 // For ModularBalancedRandIter
@@ -23,6 +24,7 @@
 #ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE
 #endif
+
 #include <stdlib.h>
 #include <limits>
 
@@ -284,27 +286,22 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-        GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size)
-    {
-      if (seed == 0) {
-	struct timeval tp;
-	gettimeofday(&tp, 0) ;
-	seed = (size_t)tp.tv_usec;
-      }
-
-      srand48((long)seed);
-    }
+        GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? BaseTimer::seed() : seed)
+    {}
   GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
     ~GeneralRingRandIter() {}
 
     Element& random (Element& a) const
       {
-          return _F.init(a, uint64_t( (_size == 0?lrand48():lrand48()%_size)));
+          return _F.init(a, uint64_t( (_size == 0?_givrand():_givrand()%_size)));
       }
 
   private:
     const Ring& _F;
     size_t _size; 
+            /// Random generator
+    GivRandom _givrand;
+
   };
 
 

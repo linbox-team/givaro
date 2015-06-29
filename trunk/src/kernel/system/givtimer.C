@@ -34,14 +34,14 @@ extern "C" {
 namespace Givaro {
 
 // Return a value to initialize random generator
-long BaseTimer::seed()
+int64_t BaseTimer::seed()
 {
 #if (GIVARO_SYS == _SYS_MACOS)
 	return clock() ;
 #else
 	struct timeval tp;
 	gettimeofday(&tp, 0) ;
-	return(tp.tv_usec);
+	return static_cast<int64_t>(tp.tv_usec);
 #endif
 }
 

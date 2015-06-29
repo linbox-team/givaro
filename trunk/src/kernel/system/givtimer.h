@@ -25,8 +25,8 @@
 #ifndef __GIVARO_timer_H
 #define __GIVARO_timer_H
 
-#include <iostream>
 #include <givaro/givconfig.h>
+#include <iostream>
 
 namespace Givaro {
 // class BaseTimer; class RealTimer; class SysTimer; class UserTimer;
@@ -55,7 +55,7 @@ public:
 	}
 
 	// -- Return a value to initialize random generator
-	static long seed();
+	static int64_t seed();
 
 	// -- basic methods:
 	std::ostream& print( std::ostream& ) const;

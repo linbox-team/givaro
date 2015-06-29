@@ -11,6 +11,7 @@ AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(
 
 pkginclude_HEADERS=     \
 	StaticElement.h		\
+	gf2.h               \
 	gfq.h		    	\
 	gfqext.h		    \
 	gfqkronecker.h		\
@@ -23,6 +24,7 @@ pkginclude_HEADERS=     \
 	givrnsfixed.inl		\
 	givrnscstor.inl		\
 	givrnsconvert.inl	\
+	gf2.inl             \
 	gfq.inl
 
 noinst_LTLIBRARIES=libgivfield.la

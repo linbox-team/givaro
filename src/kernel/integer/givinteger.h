@@ -21,6 +21,7 @@
 #include "givaro/givinit.h"
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
+#include "givaro/zring.h"
 #include "givaro/ring-interface.h"
 #include <string>
 

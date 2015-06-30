@@ -59,6 +59,8 @@ public :
     Rational(uint64_t n) ;
     Rational(int64_t n, int64_t d ) ;
     Rational(uint64_t n, uint64_t d ) ;
+    Rational(int32_t n, int32_t d ) ;
+    Rational(uint32_t n, uint32_t d ) ;
     Rational(double x) ;
     Rational(const char* s) ;
     Rational(const Integer& n) ;
@@ -214,6 +216,7 @@ public:
 
         // -- assignement
     Rep& init( Rep& a ) const{ return a; }
+    Rep& init( Rep& a, const Integer& n, const Integer& d) const{ return a=Rational(n,d); }
     template<class XXX> Rep& init(Rep& r, const XXX& x) const {
         return Caster<Rep,XXX>(r,x); 
     }
@@ -222,6 +225,9 @@ public:
     }
 
     Rep& assign( Rep& a, const Rep& b) const { return a = b ; }
+        // -- integers operators
+    Integer& get_num(Integer& n, const Element& r) const { return n=r.nume();}
+    Integer& get_den(Integer& d, const Element& r) const { return d=r.deno();}
 
         // -- arithmetic operators
     Rep& mul( Rep& r, const Rep& a, const Rep& b ) const { return r = a * b; };

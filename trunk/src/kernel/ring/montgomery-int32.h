@@ -129,7 +129,7 @@ namespace Givaro
         Element& init (Element& x, const Integer& a) const;
         template<typename T> Element& init(Element& r, const T& a) const
         {
-            Caster<Element,T>(r, (a < 0? -a : a) % _p);
+            r = Caster<Element>(a < 0? -a : a) % _p;
             if (a < 0) negin(r);
 //             return redc(r, r * _B2p);
             Element c=r * _B2p;

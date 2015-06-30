@@ -114,22 +114,6 @@ namespace Givaro {
 	return *this;
       }
 
-    /** Random field Element creator.
-     * This returns a random field Element from the information supplied
-     * at the creation of the generator.
-     * @return random field Element
-     */
-    Element& operator() (void)
-      {
-	// Create new random Elements
-	long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
-	Element* x=new Element;
-	_field.assign(*x , tmp);
-	return *x;
-
-      } // Element& operator() (void)
-
-
     /** Random field Element creator with assignement.
      * This returns a random field Element from the information supplied
      * at the creation of the generator.
@@ -137,14 +121,9 @@ namespace Givaro {
      */
     Element& random(Element& elt) const
       {
-	// Create new random Elements
-	//atroce
-	//long tmp = static_cast<long>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
-	//_field.assign(elt , tmp);
-	_field.random (_givrand, elt);
-	return elt;
-
-      } // Element& random(Element& )
+	    _field.random (_givrand, elt);
+	    return elt;
+      } 
 
 
 
@@ -287,7 +266,7 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-        GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? BaseTimer::seed() : seed)
+        GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
     {}
   GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
     ~GeneralRingRandIter() {}

@@ -1,27 +1,32 @@
 Givaro
 ======
 
-Q: How to install Givaro?
-A: Quick Start
+Download and install
+--------------------
 
-> tar -zxvf Givaro.tar.gz
-> cd givaro-4.XX
+For lastest releases, please check out [this website](https://forge.imag.fr/frs/?group_id=187).
+Then, you can install doing:
+
+```
+> tar -zxvf givaro-*.tar.gz
+> cd givaro-*
 > configure --prefix=/tmp/givaro-exec
-> make; make install
+> make install
+```
 
-	Configuration can be adapted. > configure --help, will print the parameter choices.
-	In particular if GMP is not installed to the default location you might need to add e.g. --with-gmp=/mypathforgmp/gmp-4.3.1 to the configure line.
-	Also, on non-Linux systems you might need to use 'gmake' instead of 'make'.
+*Configuration can be adapted. Check `configure --help` to print the parameter choices.*
 
-Q: Compilation?
-A: An optional compilation help file is provided : just add the following line to your Makefile !
+*In particular if GMP is not installed to the default location you might need to add for instance `--with-gmp=/mypathforgmp/gmp-x-y-z` to the configure line.*
 
+*Also, on non-Linux systems you might need to use `gmake` instead of `make`.*
+
+Compile your own files
+----------------------
+
+An optional compilation help file is provided: just add the following line to your Makefile. Then a simple call will compile your C and C++ files.
+
+```
 include ##GIVAROROOT##/bin/givaro-makefile
+```
 
-A: Then a simple call will compile your C and C++ files  (here ifactor.C, with a gazillion number of optional optimization flags):
-
-> cd examples/Integer; make ifactor "OPTFLAGS=-O7 -funroll-all-loops -felide-constructors -fstrict-aliasing -frerun-loop-opt -fexpensive-optimizations -fforce-addr -fforce-mem -fstrength-reduce -march=i686"
-
-
-Q: Without the givaro compilation file?
-A: You should add -Igivaropath/include to the CXX compilation flags, -Lgivaropath/lib -lgivaro to the LD link flags, toghether with those for GMP.
+However, if you want to do it without this tool, you should add `-I##GIVAROROOT##/include` to the CXX compilation flags, and `-L##GIVAROROOT##/lib -lgivaro` to the LD link flags, along those for GMP.

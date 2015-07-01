@@ -1,0 +1,17 @@
+\form#0:$\mathbf{Z}/m\mathbf{Z}$
+\form#1:\[ a= b q + r, \text{with } \vert r\vert < \vert b\vert \text{ and } a r \geq 0 \]
+\form#2:\[ a= b q + r, \text{with } 0 \leq r < \vert b\vert \]
+\form#3:$ r \gets r \mod n$
+\form#4:$ r \gets n \mod d$
+\form#5:$a > b$
+\form#6:$a = b$
+\form#7:$|a| > |b|$
+\form#8:$|a| = |b|$
+\form#9:$ num/den \equiv f \mod m$
+\form#10:$|num|<k$
+\form#11:$0 < |den| \leq f/kf$
+\form#12:$(p-1)^2 + p(B-1) < B^2 $
+\form#13:$2<p \leq 40504$
+\form#14:$B=2^16$
+\form#15:$ck = \left(\prod_{j=0..k-1}p_j\right)^{-1} \mod pk$
+\form#16:$\mathbf{Z}/p\mathbf{Z}$

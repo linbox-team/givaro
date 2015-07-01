@@ -1,0 +1,29 @@
+    make sure the buildbots are happy
+    run make check, make examples, make doc, make dist, make install, make uninstall and verify that:
+        all return 0
+        no file are forgotten (even on uninstall) 
+    copy the tarball and make sure ./configure works with a few options and that its help is helpful
+    check this on several architectures
+    if Linbox is being released
+        make sure the auto-intall is up to date and works.
+        make sure givaro/fflas are happy along with this release of linbox
+        Please, remember that anything in givaro or fflas that breaks linbox (interface, file renamed, etc) has to have y <- y+1 and the m4s/auto-install are updated accordingly.) 
+    make the final changes to svn.
+        If one of the first two numbers have changed, copy to a new branch, eg linbox-1.2. commit a message "branching x.y"
+        If only the minor version has changed, optionally merge it to the current branch. 
+    read the logs between a.b.c (last version) and x.y.z (this version),
+        compile the changes from the log into a ChangeLog?
+        use the same syntax as the previous ChangeLog?
+        don't forget to put the ChangeLog? in the tarball 
+    create a md5sum of the tarball
+    put the tarball, the ChangeLog? and the md5sum on the servers
+        LinBox uses incremental NEWS-x.y htlm file, add the x.y.z to the top.
+        fflas-ffpack and linbox see their tar.gz and md5sum put on the linalg trunk (www) from svn. fflas has its changelog there too.
+        givaro is put on the forge with the forge interface (tarball + md5sum + ChangeLog?)
+        the main page on linalg.org should be updated accordingly (stable/unstable versions, etc)
+        fflas-ffpack posting is done on its track. 
+    use incremente-version to increment to the new version that is being developped.
+    make a commit with only this change and put the "new version x.y.z" as the commit message (this will be the a.b.c for the next release and anything in between is the changelog).
+    If major version has been changed, check requirements (version_min and version_max) in linbox/macros/fflas-ffpack-check.m4 and linbox/macros/givaro-check.m4
+    use x.y.(z+1) for fixing stuff, do not modify a posted tar gz
+    if necessary, update the doxygen documentation on the website. 

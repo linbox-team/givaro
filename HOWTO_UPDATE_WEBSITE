@@ -1,0 +1,1 @@
+/usr/bin/rsync --verbose --update --recursive --rsh=ssh --times htdocs scm.forge.imag.fr:/home/groups/givaro

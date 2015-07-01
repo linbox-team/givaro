@@ -26,4 +26,4 @@
     make a commit with only this change and put the "new version x.y.z" as the commit message (this will be the a.b.c for the next release and anything in between is the changelog).
     If major version has been changed, check requirements (version_min and version_max) in linbox/macros/fflas-ffpack-check.m4 and linbox/macros/givaro-check.m4
     use x.y.(z+1) for fixing stuff, do not modify a posted tar gz
-    Update the doxygen documentation on the website (see HOWTO_UPDATE_WEBSITE in htdocs of www branch). 
+    Update the doxygen documentation (and version number in docs/mainpage.doxy) on the website (see HOWTO_UPDATE_WEBSITE in htdocs of www branch). 

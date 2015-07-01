@@ -18,8 +18,6 @@ benchmarks/benchmark-recint_inv_naive
 benchmarks/benchmark-recint_mul
 config.h
 configure
-docs/Doxyfile
-docs/DoxyfileDev
 examples/FiniteField/GF128
 examples/FiniteField/GFirreducible
 examples/FiniteField/GaloisFields

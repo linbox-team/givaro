@@ -1,2 +1,0 @@
-make ; make install should be good enough.
-Don't forget to configure with --prefix so your installation goes to the intented location !

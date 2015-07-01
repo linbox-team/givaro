@@ -1,4 +1,4 @@
-# Copyright(c)'1994-2009 by The Givaro group
+# Copyright(c)'1994-2015 by The Givaro group
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software. 
@@ -8,7 +8,7 @@ Q: How to install Givaro?
 A: Quick Start
 
 > tar -zxvf Givaro.tar.gz
-> cd givaro-3.XX
+> cd givaro-4.XX
 > configure --prefix=/tmp/givaro-exec
 > make; make install
 

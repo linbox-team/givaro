@@ -22,136 +22,136 @@ docs/Doxyfile
 docs/DoxyfileDev
 examples/FiniteField/GF128
 examples/FiniteField/GFirreducible
-        examples/FiniteField/GaloisFields
-        examples/FiniteField/Test_Extension
-        examples/FiniteField/all_field
-        examples/FiniteField/domain_to_operatorstyle
-        examples/FiniteField/exponentiation
-        examples/FiniteField/ff_arith
-        examples/FiniteField/gfq_atomic
-        examples/FiniteField/zpz_atomic
-        examples/Integer/ModularSquareRoot
-        examples/Integer/ProbLucas
-        examples/Integer/RSA_breaking
-        examples/Integer/RSA_decipher
-        examples/Integer/RSA_encipher
-        examples/Integer/RSA_keys_generator
-        examples/Integer/iexponentiation
-        examples/Integer/ifactor
-        examples/Integer/ifactor_lenstra
-        examples/Integer/igcd
-        examples/Integer/igcdext
-        examples/Integer/ilcm
-        examples/Integer/ispower
-        examples/Integer/isprime
-        examples/Integer/isproot
-        examples/Integer/lambda
-        examples/Integer/lambda_inv
-        examples/Integer/nb_primes
-        examples/Integer/nextprime
-        examples/Integer/order
-        examples/Integer/phi
-        examples/Integer/prevprime
-        examples/Integer/primitiveelement
-        examples/Integer/primitiveroot
-        examples/Integer/probable_primroot
-        examples/Polynomial/PolynomialCRT
-        examples/Polynomial/bivariate
-        examples/Polynomial/highorder
-        examples/Polynomial/interpolate
-        examples/Polynomial/isirred
-        examples/Polynomial/isprimitive
-        examples/Polynomial/pol_arith
-        examples/Polynomial/pol_eval
-        examples/Polynomial/pol_factor
-        examples/Polynomial/trunc_arith
-        examples/Rational/iratrecon
-        examples/Rational/polydouble
-        examples/RecInt/iterator
-        examples/RecInt/rsa
-        givaro-config
-        givaro-config.h
-        givaro-makefile
-        libtool
-        macros/libtool.m4
-        macros/ltoptions.m4
-        macros/ltsugar.m4
-        macros/ltversion.m4
-        macros/lt~obsolete.m4
-        src/kernel/bstruct/givaro
-        src/kernel/field/givaro
-        src/kernel/gmp++/gmp++
-        src/kernel/integer/givaro
-        src/kernel/memory/givaro
-        src/kernel/rational/givaro
-        src/kernel/recint/recint
-        src/kernel/ring/givaro
-        src/kernel/system/givaro
-        src/library/matrix/givaro
-        src/library/poly1/givaro
-        src/library/tools/givaro
-        src/library/vector/givaro
-        stamp-h1
-        tests/test-conversion
-        tests/test-crt
-        tests/test-ffarith
-        tests/test-geom
-        tests/test-ifactor
-        tests/test-integer
-        tests/test-mod
-        tests/test-modsqroot
-        tests/test-poly
-        tests/test-random
-        tests/test-ratrecon
-        tests/test-recint_cast
-        tests/test-recint_convert
-        tests/test-recint_convert_mg
-        tests/test-recint_exp
-        tests/test-recint_exp_mg
-        tests/test-recint_extra
-        tests/test-recint_extra_mg
-        tests/test-recint_rand
-        tests/test-recint_rand_mg
-        tests/test-ringarith
-        tests/test-rint_arith_add
-        tests/test-rint_arith_mod
-        tests/test-rint_arith_mul
-        tests/test-rint_arith_sub
-        tests/test-rmint_arith_add
-        tests/test-rmint_arith_add_mg
-        tests/test-rmint_arith_addmul
-        tests/test-rmint_arith_addmul_mg
-        tests/test-rmint_arith_mod
-        tests/test-rmint_arith_mod_mg
-        tests/test-rmint_arith_mul
-        tests/test-rmint_arith_mul_mg
-        tests/test-rmint_arith_sub
-        tests/test-rmint_arith_sub_mg
-        tests/test-rmint_comparisons
-        tests/test-rmint_comparisons_mg
-        tests/test-rmint_complex
-        tests/test-rmint_complex_mg
-        tests/test-rmint_constructors
-        tests/test-rmint_constructors_mg
-        tests/test-rmint_inv_div
-        tests/test-rmint_inv_div_mg
-        tests/test-rmint_montgomery
-        tests/test-rmint_neg
-        tests/test-rmint_neg_mg
-        tests/test-ruint_arazi
-        tests/test-ruint_arith_add
-        tests/test-ruint_arith_addmul
-        tests/test-ruint_arith_div
-        tests/test-ruint_arith_mul
-        tests/test-ruint_arith_sub
-        tests/test-ruint_comparisons
-        tests/test-ruint_complex
-        tests/test-ruint_constructors
-        tests/test-ruint_fiddling
-        tests/test-ruint_lmul
-        tests/test-ruint_operators
-        tests/test-ruint_shift
-        tests/test-ruint_square
-        tests/test-trunc
+examples/FiniteField/GaloisFields
+examples/FiniteField/Test_Extension
+examples/FiniteField/all_field
+examples/FiniteField/domain_to_operatorstyle
+examples/FiniteField/exponentiation
+examples/FiniteField/ff_arith
+examples/FiniteField/gfq_atomic
+examples/FiniteField/zpz_atomic
+examples/Integer/ModularSquareRoot
+examples/Integer/ProbLucas
+examples/Integer/RSA_breaking
+examples/Integer/RSA_decipher
+examples/Integer/RSA_encipher
+examples/Integer/RSA_keys_generator
+examples/Integer/iexponentiation
+examples/Integer/ifactor
+examples/Integer/ifactor_lenstra
+examples/Integer/igcd
+examples/Integer/igcdext
+examples/Integer/ilcm
+examples/Integer/ispower
+examples/Integer/isprime
+examples/Integer/isproot
+examples/Integer/lambda
+examples/Integer/lambda_inv
+examples/Integer/nb_primes
+examples/Integer/nextprime
+examples/Integer/order
+examples/Integer/phi
+examples/Integer/prevprime
+examples/Integer/primitiveelement
+examples/Integer/primitiveroot
+examples/Integer/probable_primroot
+examples/Polynomial/PolynomialCRT
+examples/Polynomial/bivariate
+examples/Polynomial/highorder
+examples/Polynomial/interpolate
+examples/Polynomial/isirred
+examples/Polynomial/isprimitive
+examples/Polynomial/pol_arith
+examples/Polynomial/pol_eval
+examples/Polynomial/pol_factor
+examples/Polynomial/trunc_arith
+examples/Rational/iratrecon
+examples/Rational/polydouble
+examples/RecInt/iterator
+examples/RecInt/rsa
+givaro-config
+givaro-config.h
+givaro-makefile
+libtool
+macros/libtool.m4
+macros/ltoptions.m4
+macros/ltsugar.m4
+macros/ltversion.m4
+macros/lt~obsolete.m4
+src/kernel/bstruct/givaro
+src/kernel/field/givaro
+src/kernel/gmp++/gmp++
+src/kernel/integer/givaro
+src/kernel/memory/givaro
+src/kernel/rational/givaro
+src/kernel/recint/recint
+src/kernel/ring/givaro
+src/kernel/system/givaro
+src/library/matrix/givaro
+src/library/poly1/givaro
+src/library/tools/givaro
+src/library/vector/givaro
+stamp-h1
+tests/test-conversion
+tests/test-crt
+tests/test-ffarith
+tests/test-geom
+tests/test-ifactor
+tests/test-integer
+tests/test-mod
+tests/test-modsqroot
+tests/test-poly
+tests/test-random
+tests/test-ratrecon
+tests/test-recint_cast
+tests/test-recint_convert
+tests/test-recint_convert_mg
+tests/test-recint_exp
+tests/test-recint_exp_mg
+tests/test-recint_extra
+tests/test-recint_extra_mg
+tests/test-recint_rand
+tests/test-recint_rand_mg
+tests/test-ringarith
+tests/test-rint_arith_add
+tests/test-rint_arith_mod
+tests/test-rint_arith_mul
+tests/test-rint_arith_sub
+tests/test-rmint_arith_add
+tests/test-rmint_arith_add_mg
+tests/test-rmint_arith_addmul
+tests/test-rmint_arith_addmul_mg
+tests/test-rmint_arith_mod
+tests/test-rmint_arith_mod_mg
+tests/test-rmint_arith_mul
+tests/test-rmint_arith_mul_mg
+tests/test-rmint_arith_sub
+tests/test-rmint_arith_sub_mg
+tests/test-rmint_comparisons
+tests/test-rmint_comparisons_mg
+tests/test-rmint_complex
+tests/test-rmint_complex_mg
+tests/test-rmint_constructors
+tests/test-rmint_constructors_mg
+tests/test-rmint_inv_div
+tests/test-rmint_inv_div_mg
+tests/test-rmint_montgomery
+tests/test-rmint_neg
+tests/test-rmint_neg_mg
+tests/test-ruint_arazi
+tests/test-ruint_arith_add
+tests/test-ruint_arith_addmul
+tests/test-ruint_arith_div
+tests/test-ruint_arith_mul
+tests/test-ruint_arith_sub
+tests/test-ruint_comparisons
+tests/test-ruint_complex
+tests/test-ruint_constructors
+tests/test-ruint_fiddling
+tests/test-ruint_lmul
+tests/test-ruint_operators
+tests/test-ruint_shift
+tests/test-ruint_square
+tests/test-trunc
 
 

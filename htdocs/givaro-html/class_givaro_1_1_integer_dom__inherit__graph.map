@@ -1,0 +1,10 @@
+<map id="IntegerDom" name="IntegerDom">
+<area shape="rect" id="node3" href="$class_givaro_1_1_fermat_dom.html" title="Fermat numbers. " alt="" coords="200,5,299,33"/>
+<area shape="rect" id="node6" href="$class_givaro_1_1_int_prime_dom.html" title="Primality tests. " alt="" coords="196,55,303,83"/>
+<area shape="rect" id="node21" href="$class_givaro_1_1_int_r_n_ssystem.html" title="RNS system class. No doc. " alt="" coords="153,106,345,150"/>
+<area shape="rect" id="node24" href="$class_givaro_1_1_poly1_padic_dom_3_01_domain_00_01_dense_01_4.html" title="Poly1 p&#45;adic. " alt="" coords="155,173,344,217"/>
+<area shape="rect" id="node8" href="$class_givaro_1_1_int_factor_dom.html" title="Integer Factor Domain. " alt="" coords="396,55,604,83"/>
+<area shape="rect" id="node10" href="$class_givaro_1_1_int_num_theo_dom.html" title="Num theory Domain. " alt="" coords="653,5,885,33"/>
+<area shape="rect" id="node13" href="$class_givaro_1_1_int_r_s_a_dom.html" title="RSA domain. " alt="" coords="672,55,867,83"/>
+<area shape="rect" id="node16" href="$class_givaro_1_1_int_sqrt_mod_dom.html" title="Modular square roots. " alt="" coords="657,106,881,134"/>
+</map>

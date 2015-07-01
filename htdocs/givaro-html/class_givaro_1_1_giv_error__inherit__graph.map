@@ -1,0 +1,5 @@
+<map id="GivError" name="GivError">
+<area shape="rect" id="node3" href="$class_givaro_1_1_giv_bad_format.html" title="Exception thrown in input of data structure. " alt="" coords="5,83,117,111"/>
+<area shape="rect" id="node6" href="$class_givaro_1_1_giv_math_div_zero.html" title="Div by 0. " alt="" coords="141,83,267,111"/>
+<area shape="rect" id="node9" href="$class_givaro_1_1_giv_math_error.html" title="Math error. " alt="" coords="291,83,395,111"/>
+</map>

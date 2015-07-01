@@ -1,6 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_givaro_1_1_base_timer.html" title="base for class RealTimer; class SysTimer; class UserTimer; " alt="" coords="5,55,96,83"/>
-<area shape="rect" id="node3" href="$class_givaro_1_1_real_timer.html" title="Real timer. " alt="" coords="147,5,229,33"/>
-<area shape="rect" id="node5" href="$class_givaro_1_1_sys_timer.html" title="Sys timer. " alt="" coords="148,55,228,83"/>
-<area shape="rect" id="node7" href="$class_givaro_1_1_user_timer.html" title="User timer. " alt="" coords="144,106,232,134"/>
-</map>

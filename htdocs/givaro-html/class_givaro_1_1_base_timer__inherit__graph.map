@@ -1,5 +1,0 @@
-<map id="BaseTimer" name="BaseTimer">
-<area shape="rect" id="node3" href="$class_givaro_1_1_real_timer.html" title="Real timer. " alt="" coords="5,83,88,111"/>
-<area shape="rect" id="node6" href="$class_givaro_1_1_sys_timer.html" title="Sys timer. " alt="" coords="112,83,192,111"/>
-<area shape="rect" id="node9" href="$class_givaro_1_1_user_timer.html" title="User timer. " alt="" coords="216,83,304,111"/>
-</map>

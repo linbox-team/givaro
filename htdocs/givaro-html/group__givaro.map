@@ -1,8 +1,0 @@
-<map id="Givaro" name="Givaro">
-<area shape="rect" id="node1" href="$group__bstruct.html" title="NO DOC. " alt="" coords="124,5,191,33"/>
-<area shape="rect" id="node2" href="$group__rational.html" title="NO DOC. " alt="" coords="117,55,197,83"/>
-<area shape="rect" id="node4" href="$group__system.html" title="NO DOC. " alt="" coords="123,106,192,134"/>
-<area shape="rect" id="node5" href="$group__integer.html" title="NO DOC NO DOC. " alt="" coords="124,157,191,185"/>
-<area shape="rect" id="node6" href="$group__gmp.html" title="Wrapper (and more) around GMP integer interface. " alt="" coords="132,207,183,235"/>
-<area shape="rect" id="node7" href="$group__memory.html" title="NO DOC. " alt="" coords="120,258,195,286"/>
-</map>

@@ -65,3 +65,5 @@ docs/givaro-dev-html/index.html:
 
 VERSION=4.0.0
 
+git:
+	git commit -a; git pull; git push

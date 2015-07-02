@@ -239,7 +239,7 @@ namespace Givaro {
 			return ::Givaro::sqrtrem(s,n, r);
 		}
 		// - base p logarithm of a
-		long logp(const Rep& a, const Rep& p) const
+		int64_t logp(const Rep& a, const Rep& p) const
 		{
 			return ::Givaro::logp(a,p);
 		}
@@ -255,7 +255,7 @@ namespace Givaro {
 		}
 
 		// - Misc
-		unsigned long length (const Rep& a) const
+		uint64_t length (const Rep& a) const
 		{
 			return ::Givaro::length(a);
 		}

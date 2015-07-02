@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 16:28:24 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <02 Jul 15 16:32:37 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givrandom.h
@@ -33,7 +33,7 @@ namespace Givaro {
 
 	//! GivRandom
 class GivRandom {
-    mutable unsigned long _seed;
+    mutable uint64_t _seed;
 public:
     typedef GivRandom random_generator;
 
@@ -43,7 +43,7 @@ public:
         if (! s) {
 		struct timeval tp;
 		gettimeofday(&tp, 0) ;
-		_seed = (unsigned long)(tp.tv_usec);
+		_seed = (uint64_t)(tp.tv_usec);
 	}
     }
 

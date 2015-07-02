@@ -108,22 +108,22 @@ namespace Givaro
 		 * @param x field base element to contain output (reference returned).
 		 * @param y Integer.
 		 */
-		Element& init (Element& x, const int &y ) const
+		Element& init (Element& x, const int32_t &y ) const
 		{
 			return x = y & 1;
 		}
 
-		Element& init (Element& x, const unsigned int &y ) const
+		Element& init (Element& x, const uint32_t &y ) const
 		{
 			return x = y & 1;
 		}
 
-		Element& init (Element& x, const long &y ) const
+		Element& init (Element& x, const int64_t &y ) const
 		{
 			return x = y & 1;
 		}
 
-		Element& init (Element& x, const unsigned long &y ) const
+		Element& init (Element& x, const uint64_t &y ) const
 		{
 			return x = y & 1;
 		}

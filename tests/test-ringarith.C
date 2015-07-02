@@ -140,6 +140,7 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     //         F.write(std::cerr << "e_: ", e_) << std::endl;
     TESTE_EG(e,e_);
 
+
 #ifdef GIVARO_DEBUG
     F.write(std::cerr );
     std::cerr  << " done." << std::endl;
@@ -155,11 +156,27 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 template<class Ring>
 int TestRing(const Ring& F, const uint64_t seed)
 {
-    typename Ring::Element x, y;
+    typename Ring::Element x, y, a;
     typename Ring::RandIter g(F, seed);
     
     F.init(x, 7U);
     F.init(y, -29.0);
+    JEONETESTE(F,x,y);
+
+    F.init(x, Ring::maxCardinality()-1U);
+    F.init(y, Ring::maxCardinality()-1U);
+    JEONETESTE(F,x,y);
+    
+    F.assign(x, F.maxElement());
+    F.assign(y, F.maxElement());
+    JEONETESTE(F,x,y);
+    
+    F.assign(x, F.minElement());
+    F.assign(y, F.maxElement());
+    JEONETESTE(F,x,y);
+    
+    F.assign(x, F.minElement());
+    F.assign(y, F.minElement());
     JEONETESTE(F,x,y);
     
     for (size_t i = 0; i< NBITER; ++i) {

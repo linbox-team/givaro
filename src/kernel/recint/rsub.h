@@ -129,13 +129,13 @@ namespace RecInt
         return a;
     }
     template <size_t K, typename T>
-    inline __RECINT_IS_ARITH(T, rint<K>) operator-(const rint<K>& b, const T& c) {
+    inline __RECINT_IS_UNSIGNED(T, rint<K>) operator-(const rint<K>& b, const T& c) {
         rint<K> a;
         sub(a, b, c);
         return a;
     }
     template <size_t K, typename T>
-    inline __RECINT_IS_ARITH(T, rint<K>) operator-(const T& c, const rint<K>& b) {
+    inline __RECINT_IS_UNSIGNED(T, rint<K>) operator-(const T& c, const rint<K>& b) {
         rint<K> a;
         sub(a, b, c);
         return -a;

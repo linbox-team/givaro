@@ -134,8 +134,8 @@ public:
 	// ----- Random generators
 	typedef ModularRandIter<Self_t> RandIter;
 	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-    template< class Random > Element& random(const Random& g, Element& r) const { return init(r, g()); }
-    template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+    template< class Random > Element& random(Random& g, Element& r) const { return init(r, g()); }
+    template< class Random > Element& nonzerorandom(Random& g, Element& a) const
     	{ while (isZero(init(a, g())))
                 ;
     	  return a; }

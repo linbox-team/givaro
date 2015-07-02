@@ -147,9 +147,9 @@ namespace Givaro
         // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-        template< class Random > Element& random(const Random& g, Element& r) const
+        template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
-        template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+        template< class Random > Element& nonzerorandom(Random& g, Element& a) const
         { while (isZero(init(a, g())))
                 ;
             return a; }
@@ -184,12 +184,26 @@ namespace Givaro
             }
             Givaro::Integer::seeding(s);
         }
-        Element& random(Element& elt) const
+        Element& operator()(Element& elt)
         {
             // Create new random Elements
             Givaro::Integer::random_lessthan(elt,_p);
 
             return elt;
+        }
+
+        Element& random(Element& elt)
+        {
+            return this->operator()(elt);
+        }
+        Element operator()()
+        {
+            Element elt; return this->operator()(elt);
+        }
+
+        Element random() 
+        {
+            return this->operator()();
         }
 
     private:

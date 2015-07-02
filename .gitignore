@@ -11,6 +11,7 @@ ARCHIVES
 *status
 *cache
 *aux
+docs/Doxyfile
 aclocal.m4
 benchmarks/benchmark-recint_exp
 benchmarks/benchmark-recint_inv_arazi

@@ -119,11 +119,24 @@ namespace Givaro {
      * at the creation of the generator.
      * @return random field Element
      */
-    Element& random(Element& elt) const
+      Element& operator()(Element& elt)
       {
-	    _field.random (_givrand, elt);
-	    return elt;
+	    return _field.random (_givrand, elt);
       } 
+      Element& random(Element& elt)
+      {
+          return this->operator()(elt);
+      } 
+      Element operator()() 
+      {
+          Element tmp;
+          return this->operator()(tmp);
+      } 
+      Element random() 
+      {
+          return this->operator()();
+      } 
+
 
 
 
@@ -133,8 +146,8 @@ namespace Givaro {
      */
     //@{
 
-    /// Default constructor
-  GIV_randIter(void) : _size(0), _givrand(), _field() {}
+//     /// Default constructor
+//   GIV_randIter(void) : _size(0), _givrand(), _field() {}
 
     //@}
 
@@ -147,7 +160,7 @@ namespace Givaro {
     GivRandom _givrand;
 
     /// Field
-    Field _field;
+    const Field& _field;
 
   }; //  class GIV_randIter
 
@@ -228,21 +241,37 @@ namespace Givaro {
        * at the creation of the generator.
        * @return random field Element
        */
-      Element& random(Element& elt) const
+        Element& operator()(Element& elt) 
 	{
-	  // Create new random Elements
-	  _field.random(_givrand, elt);
-	  return elt;
+                // Create new random Elements
+            return _field.random(_givrand, elt);
 	}
 
+        Element& random(Element& elt)
+	{
+            return this->operator()(elt);
+            
+	}
+
+        Element operator()() 
+        {
+            Element tmp;
+            return this->operator()(tmp);
+        }
+        
+        Element random() 
+        {
+            return this->operator()();
+        }
+        
       //@} Common Object Iterface
 
       /** @name Implementation-Specific Methods.
        */
       //@{
 
-      /// Default constructor
-    ModularRandIter(void) : _givrand(), _field() {}
+//       /// Default constructor
+//     ModularRandIter(void) : _givrand(), _field() {}
 
       //@}
 
@@ -252,7 +281,7 @@ namespace Givaro {
       GivRandom _givrand;
 
       /// Field
-      Field _field;
+      const Field& _field;
 
     }; //  class ModularRandIter
 
@@ -266,14 +295,26 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-        GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
+      GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
     {}
-  GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
-    ~GeneralRingRandIter() {}
+      GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
+      ~GeneralRingRandIter() {}
 
-    Element& random (Element& a) const
+      Element& operator() (Element& a) const
       {
           return _F.init(a, uint64_t( (_size == 0?_givrand():_givrand()%_size)));
+      }
+      Element& random (Element& a) const
+      {
+          return this->operator()(a);
+      }
+      Element operator() () const
+      {
+          Element a; return this->operator()(a);
+      }
+      Element random () const
+      {
+          return this->operator()();
       }
 
   private:
@@ -301,15 +342,28 @@ namespace Givaro {
     GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _F(R._F), _r(R._r) {}
     ~GeneralRingNonZeroRandIter() {}
 
-    Element& random(Element &a) const
+    Element& operator()(Element &a) 
     {
       do _r.random(a); while (_F.isZero(a));
       return a;
     }
+    Element& random(Element &a) 
+    {
+        return this->operator()(a);
+    }
+
+    Element operator()() 
+    {
+        Element a; return this->operator()(a);
+    }
+    Element random() 
+    {
+        return this->operator()();
+    }
 
     private:
     const Ring&     _F;
-    const RandIter& _r;
+    RandIter& _r;
     };
 
 } // namespace Givaro

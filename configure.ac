@@ -12,7 +12,7 @@ AC_INIT([Givaro],[4.0.0],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability])
+AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability foreign])
 AC_CONFIG_HEADERS([config.h])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 AC_PATH_PROG(RM, rm, $FALSE)

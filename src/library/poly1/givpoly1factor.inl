@@ -135,7 +135,6 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
     , const Rep& f
     , Residu_t MOD)  const  {
 
-    // srand48(BaseTimer::seed());
 // write(std::cerr << "DD in: ", f) << std::endl;
     Rep W, D, P = f;
     Degree dP;

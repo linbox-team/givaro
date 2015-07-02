@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// Time-stamp: <12 Jun 15 18:46:28 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <02 Jul 15 11:43:03 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -209,9 +209,9 @@ namespace Givaro
         // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-        template< class Random > Element& random(const Random& g, Element& r) const
+        template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
-        template< class Random > Element& nonzerorandom(const Random& g, Element& a) const
+        template< class Random > Element& nonzerorandom(Random& g, Element& a) const
         { while (isZero(init(a, g())))
                 ;
             return a; }

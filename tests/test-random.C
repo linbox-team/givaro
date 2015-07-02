@@ -564,6 +564,30 @@ int test5()
 
 }
 
+#include <givaro/modular.h>
+#include <givaro/montgomery.h>
+#include <givaro/modular-ruint.h>
+#include <givaro/modular-balanced.h>
+
+template<typename Field>
+int modtest(Field& F, uint64_t seed) {
+    typedef typename Field::RandIter RI;
+    RI gen(F);
+    
+    typename Field::Element a,b,c,d;
+    F.init(a);F.init(b);F.init(c); F.init(d);
+    
+    gen.random(a);
+//    gen(b);
+    
+    F.random(gen, c);
+
+    return 0;
+    
+}
+
+
+
 int main()
 {
 #ifdef GIVARO_DEBUG
@@ -599,9 +623,34 @@ int main()
 	// cout << "seed : " << seed << endl;
 	// Integer seed(1<<20);
 	// cout << "seed : " << seed << endl;
+        int pass=0;
 
+        { Modular<double> F1(11); pass += modtest(F1,3); }
+        { Modular<float> F1(11); pass += modtest(F1,3); }
+        { Modular<uint64_t> F1(11); pass += modtest(F1,3); }
+        { Modular<uint32_t> F1(11); pass += modtest(F1,3); }
+        { Modular<int64_t> F1(11); pass += modtest(F1,3); }
+        { Modular<int32_t> F1(11); pass += modtest(F1,3); }
+        { Modular<uint16_t> F1(11); pass += modtest(F1,3); }
+        { Modular<int16_t> F1(11); pass += modtest(F1,3); }
+        { Modular<int8_t> F1(11); pass += modtest(F1,3); }
+        { Modular<uint8_t> F1(11); pass += modtest(F1,3); }
+        { Modular<Log16> F1(11); pass += modtest(F1,3); }
+        { Montgomery<int32_t> F1(11); pass += modtest(F1,3); }
+        { Montgomery<RecInt::ruint128> F1(11); pass += modtest(F1,3); }
+        // { Modular<RecInt::rint128> F1(11); pass += modtest(F1,3); }
+        { Modular<RecInt::ruint128> F1(11); pass += modtest(F1,3); }
+        { Modular<Integer> F1(11); pass += modtest(F1,3); }
+        { Modular<Integer> F1(11); pass += modtest(F1,3); }
+        { ModularBalanced<double> F1(11); pass += modtest(F1,3); }
+        { ModularBalanced<float> F1(11); pass += modtest(F1,3); }
+        { ModularBalanced<int64_t> F1(11); pass += modtest(F1,3); }
+        { ModularBalanced<int32_t> F1(11); pass += modtest(F1,3); }
+        { Modular<Integer> F1(11); pass += modtest(F1,3); }
+        { Modular<Integer> F1(11); pass += modtest(F1,3); }
+        
 
-	return 0 ;
+	return pass ;
 
 }
 

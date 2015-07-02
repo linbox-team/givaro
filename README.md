@@ -10,13 +10,13 @@ Then, you can install doing:
 ```
 > tar -zxvf givaro-*.tar.gz
 > cd givaro-*
-> configure --prefix=/tmp/givaro-exec
+> ./configure --prefix=##GIVAROROOT#
 > make install
 ```
 
 *Configuration can be adapted. Check `configure --help` to print the parameter choices.*
 
-*In particular if GMP is not installed to the default location you might need to add for instance `--with-gmp=/mypathforgmp/gmp-x-y-z` to the configure line.*
+*In particular if GMP is not installed to the default location you might need to add for instance `--with-gmp=##GMPROOT#/gmp-x-y-z` to the configure line.*
 
 *Also, on non-Linux systems you might need to use `gmake` instead of `make`.*
 

@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 18:37:48 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <03 Jul 15 17:21:55 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1factor.h
@@ -30,7 +30,7 @@ namespace Givaro {
 	// template<class Domain, class StorageTag> class Poly1FactorDom {};
 
 	//! Poly1FactorDom
-	template<class Domain, class Tag, class RandIter = GivRandom>
+	template<class Domain, class Tag = Dense, class RandIter = GivRandom>
 	class Poly1FactorDom : public Poly1Dom<Domain,Tag> {
 	protected:
 		using               Poly1Dom<Domain,Tag>::_domain;
@@ -138,6 +138,18 @@ namespace Givaro {
 			    , const Rep& P )  const {
 			return factor(W,P,_domain.residu());
 		}
+
+
+            template<class PolyCont>
+            PolyCont& factor (PolyCont& factors,
+                              std::vector<uint64_t>& exp,
+                              const Rep& P) {
+                    // JGD 02.03.2012 : to be refactored
+                    // at least without pointers ...
+                CZfactor(factors, exp, P); // Cantor-Zassenhaus factorization
+                return factors;
+            }
+
 
 
 		// ---------------------------------------------------------------

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: J-L. Roch, T. Gautier, J-G. Dumas
-// $Id: givpoly1gcd.inl,v 1.11 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givpoly1gcd.inl,v 1.11 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 #ifndef __GIVARO_poly1_gcd_INL
 #define __GIVARO_poly1_gcd_INL

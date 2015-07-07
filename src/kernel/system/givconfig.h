@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givconfig.h,v 1.22 2011-02-04 14:50:07 bboyer Exp $
+// $Id: givconfig.h,v 1.22 2011-02-04 14:50:07 briceboyer Exp $
 // ==========================================================================
 /** @file givconfig.h
  * @ingroup system

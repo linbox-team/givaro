@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: B. Boyer
-// $Id: gmp++_int_random.C,v 1.5 2011-09-16 12:09:37 bboyer Exp $
+// $Id: gmp++_int_random.C,v 1.5 2011-09-16 12:09:37 briceboyer Exp $
 // ==========================================================================
 
 // #include "gmp++/gmp++.h"

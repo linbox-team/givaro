@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1muldiv.inl,v 1.14 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givpoly1muldiv.inl,v 1.14 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 #ifndef __GIVARO_poly1_muldiv_INL
 #define __GIVARO_poly1_muldiv_INL

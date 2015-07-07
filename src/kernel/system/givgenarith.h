@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givgenarith.h,v 1.5 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givgenarith.h,v 1.5 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 /** @file givgenarith.h
  * @ingroup system

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors:  B. Boyer
-// $Id: gmp++_int_io.C,v 1.7 2011-09-17 14:28:22 bboyer Exp $
+// $Id: gmp++_int_io.C,v 1.7 2011-09-17 14:28:22 briceboyer Exp $
 // ==========================================================================
 // Description:
 

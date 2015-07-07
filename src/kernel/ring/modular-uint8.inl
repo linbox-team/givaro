@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: BB <brice.boyer@lip6.fr>
+// Authors: Brice Boyer (briceboyer) <boyer.brice@gmail.com>
 //          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 

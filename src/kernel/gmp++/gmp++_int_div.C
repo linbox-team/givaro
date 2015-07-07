@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_div.C,v 1.9 2011-01-06 18:02:37 bboyer Exp $
+// $Id: gmp++_int_div.C,v 1.9 2011-01-06 18:02:37 briceboyer Exp $
 // ==========================================================================
 /** @file gmp++/gmp++_int_div.C
  * diving stuff.

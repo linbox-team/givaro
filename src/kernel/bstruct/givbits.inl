@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givbits.inl,v 1.3 2011-02-02 16:23:55 bboyer Exp $
+// $Id: givbits.inl,v 1.3 2011-02-02 16:23:55 briceboyer Exp $
 // ==========================================================================
 
 #ifndef __GIVARO_bits_INL

@@ -1,5 +1,5 @@
 # Copyright(c)'2011 by The Givaro group
-# Written by BB <bboyer@imag.fr>
+# Written by Brice Boyer (briceboyer) <boyer.brice@gmail.com>
 # This file is part of Givaro.
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software.

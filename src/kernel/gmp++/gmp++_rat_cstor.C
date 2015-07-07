@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: B. Boyer
-// $Id: gmp++_rat_cstor.C,v 1.4 2011-09-16 14:28:22 bboyer Exp $
+// $Id: gmp++_rat_cstor.C,v 1.4 2011-09-16 14:28:22 briceboyer Exp $
 // ==========================================================================
 #ifndef __GMPplusplus_rat_cstor_C__
 #define __GMPplusplus_rat_cstor_C__

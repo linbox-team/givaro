@@ -6,7 +6,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: Pascal Giorgi <pascal.giorgi@ens-lyon.fr>
 //          Clement Pernet <clement.pernet@gmail.com>
-//          Brice Boyer <bboyer@imag.fr> (modified)
+//          Brice Boyer (briceboyer) <boyer.brice@gmail.com> (modified)
 //          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
@@ -29,7 +29,7 @@ namespace Givaro
     class ModularBalanced<double> : public virtual FiniteFieldInterface<double>
     {
     public:
-	
+
 	// ----- Exported types
 	using Self_t = ModularBalanced<double>;
 	enum { size_rep = sizeof(Element) };
@@ -69,7 +69,7 @@ namespace Givaro
 	inline Element cardinality() const { return _p; }
 	template<class T> inline T& characteristic(T& p) const { return Caster(p,_p); }
 	template<class T> inline T& cardinality(T& p) const { return Caster(p,_p); }
-	
+
 	static inline Element maxCardinality() { return 134217727; } // 2^12.5
 	static inline Element minCardinality() { return 3.f; }
 
@@ -79,7 +79,7 @@ namespace Givaro
 	inline bool isMOne(const Element& a) const override { return a == mOne; }
 	inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
 	inline size_t length(const Element a) const { return size_rep; }
-	
+
 	// ----- Ring-wise operators
 	inline bool operator==(const Self_t& F) const { return _p == F._p; }
 	inline bool operator!=(const Self_t& F) const { return _p != F._p; }
@@ -110,10 +110,10 @@ namespace Givaro
 	// ----- Convert
 	template<typename T> T& convert(T& r, const Element& a) const
 	{ return r = static_cast<T>(a); }
-	
+
 	Element& reduce(Element& r, const Element& a) const;
 	Element& reduce(Element& r) const;
-	
+
 	// ----- Classic arithmetic
 	Element& mul(Element& r, const Element& a, const Element& b) const override;
 	Element& div(Element& r, const Element& a, const Element& b) const override;
@@ -128,7 +128,7 @@ namespace Givaro
 	Element& subin(Element& r, const Element& a) const override;
 	Element& negin(Element& r) const override;
 	Element& invin(Element& r) const override;
-	
+
 	// -- axpy:   r <- a * x + y
 	// -- axpyin: r <- a * x + r
 	Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
@@ -158,7 +158,7 @@ namespace Givaro
 	std::ostream& write(std::ostream& s) const;
 	std::istream& read (std::istream& s, Element& a) const;
 	std::ostream& write(std::ostream& s, const Element& a) const;
-	
+
     protected:
 
 	Element _p;
@@ -170,5 +170,5 @@ namespace Givaro
 
 #include "givaro/modular-balanced-double.inl"
 
-#endif 
+#endif
 

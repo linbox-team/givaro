@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz32uns.inl,v 1.15 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givzpz32uns.inl,v 1.15 2011-02-02 17:16:43 briceboyer Exp $
 // ==========================================================================
 
 #ifndef __GIVARO_modular_uint32_INL

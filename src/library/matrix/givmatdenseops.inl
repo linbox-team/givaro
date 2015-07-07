@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givmatdenseops.inl,v 1.3 2011-01-19 18:29:09 bboyer Exp $
+// $Id: givmatdenseops.inl,v 1.3 2011-01-19 18:29:09 briceboyer Exp $
 // ==========================================================================
 
 #error "this looks very much like dead code"

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: JG Dumas
-// $Id: givzpzInt.inl,v 1.11 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givzpzInt.inl,v 1.11 2011-02-02 17:16:43 briceboyer Exp $
 // ==========================================================================
 #ifndef __GIVARO_zpz_int_INL
 #define __GIVARO_zpz_int_INL

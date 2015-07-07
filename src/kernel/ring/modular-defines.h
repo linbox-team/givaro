@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust <Alexis.Breust@imag.fr>
-//          BB <brice.boyer@lip6.fr>
+//         Brice Boyer (briceboyer) <boyer.brice@gmail.com>
 // ==========================================================================
 
 #ifndef __GIVARO_modular_defines_H

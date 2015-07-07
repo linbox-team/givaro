@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: gmp++_int_add.C,v 1.5 2010-12-20 12:09:37 bboyer Exp $
+// $Id: gmp++_int_add.C,v 1.5 2010-12-20 12:09:37 briceboyer Exp $
 // ==========================================================================
 
 /** @file gmp++/gmp++_int_add.C

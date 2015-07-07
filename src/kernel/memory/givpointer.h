@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: T. Gautier
-// $Id: givpointer.h,v 1.3 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givpointer.h,v 1.3 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 /*! @file givpointer.h
  * @ingroup memory

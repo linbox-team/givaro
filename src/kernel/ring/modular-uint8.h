@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: BB <brice.boyer@lip6.fr>
+// Authors: Brice Boyer (briceboyer) <boyer.brice@gmail.com>
 //          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
@@ -110,7 +110,7 @@ namespace Givaro {
 
         Element& assign (Element& x, const Element& y) const
         { return x = y; }
-    
+
         // ----- Convert and reduce
         template<typename T> T& convert(T& r, const Element& a) const
         { return r = Caster<T>(a); }
@@ -167,7 +167,7 @@ namespace Givaro {
 	std::ostream& write(std::ostream& s, const Element& a) const;
 
     protected:
-        
+
 	Residu_t _p;
     };
 

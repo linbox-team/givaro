@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama, T. Gautier
-// $Id: givaromm.C,v 1.5 2010-10-15 13:43:48 bboyer Exp $
+// $Id: givaromm.C,v 1.5 2010-10-15 13:43:48 briceboyer Exp $
 // ==========================================================================
 // Description:
 

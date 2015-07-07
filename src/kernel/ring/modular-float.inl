@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: BB <brice.boyer@lip6.fr>
+// Authors: Brice Boyer (briceboyer) <boyer.brice@gmail.com>
 //          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
@@ -17,13 +17,13 @@ namespace Givaro {
 
     // --------------------
     // ----- Initialisation
-    
+
     inline Modular<float>::Element&
     Modular<float>::init(Element& a) const
     {
         return a = zero;
     }
-    
+
     inline Modular<float>::Element&
     Modular<float>::init(Element& r, const double a) const
     {
@@ -31,7 +31,7 @@ namespace Givaro {
         if (r < 0.f) r += _p;
         return r;
     }
-    
+
     inline Modular<float>::Element&
     Modular<float>::init(Element& r, const int32_t a) const
     {
@@ -39,13 +39,13 @@ namespace Givaro {
         if (a < 0) negin(r);
         return r;
     }
-    
+
     inline Modular<float>::Element&
     Modular<float>::init(Element& r, const uint32_t a) const
     {
         return r = static_cast<Element>(a % uint32_t(_lp));
     }
-    
+
     inline Modular<float>::Element&
     Modular<float>::init(Element& r, const int64_t a) const
     {
@@ -53,13 +53,13 @@ namespace Givaro {
         if (a < 0) negin(r);
         return r;
     }
-    
+
     inline Modular<float>::Element&
     Modular<float>::init(Element& r, const uint64_t a) const
     {
         return r = static_cast<Element>(a % uint64_t(_lp));
     }
-    
+
     inline Modular<float>::Element&
     Modular<float>::init(Element& r, const Integer& a) const
     {
@@ -67,7 +67,7 @@ namespace Givaro {
         if (a < 0) negin(r);
         return r;
     }
-    
+
     inline Modular<float>::Element&
     Modular<float>::assign (Element &x, const Element &y) const
     {

@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: M. Samama
-// $Id: givratcstor.C,v 1.9 2011-02-04 14:50:07 bboyer Exp $
+// $Id: givratcstor.C,v 1.9 2011-02-04 14:50:07 briceboyer Exp $
 // ==========================================================================
 // Description:
 

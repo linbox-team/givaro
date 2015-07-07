@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givpoly1addsub.inl,v 1.4 2011-02-02 16:23:56 bboyer Exp $
+// $Id: givpoly1addsub.inl,v 1.4 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 
 #ifndef __GIVARO_poly_addsub_INL

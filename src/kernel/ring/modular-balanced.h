@@ -6,7 +6,7 @@
 // see the COPYRIGHT file for more details.
 // Authors: Pascal Giorgi <pascal.giorgi@ens-lyon.fr>
 //          Clement Pernet <Clement.Pernet@imag.fr>
-//          Brice Boyer <bboyer@imag.fr>
+//          Brice Boyer (briceboyer) <boyer.brice@gmail.com>
 //          Alexis Breust (adpated from FFLAS-FFPACK)
 // ==========================================================================
 

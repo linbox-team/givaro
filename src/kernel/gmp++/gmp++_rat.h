@@ -5,8 +5,8 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Authors: B. Boyer <bboyer@imag.fr>
-// $Id: givRationel.h,v 0.0 2011-09-15 18:23:56 bboyer Exp $
+// Authors: Brice Boyer (briceboyer) <boyer.brice@gmail.com>
+// $Id: givRationel.h,v 0.0 2011-09-15 18:23:56 briceboyer Exp $
 // ==========================================================================
 
 #ifndef __GIVARO_GMPplusplus_Rationel_H

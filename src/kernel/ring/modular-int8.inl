@@ -6,7 +6,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: T. Gautier
-// $Id: givzpz16std.inl,v 1.18 2011-02-02 17:16:43 bboyer Exp $
+// $Id: givzpz16std.inl,v 1.18 2011-02-02 17:16:43 briceboyer Exp $
 // ==========================================================================
 // Description:
 

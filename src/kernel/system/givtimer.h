@@ -67,6 +67,8 @@ public:
 	const BaseTimer operator +  (const BaseTimer & T)  const;
 	BaseTimer& operator += (const BaseTimer & T) { return *this = *this + T; };
 	BaseTimer& operator -= (const BaseTimer & T) { return *this = *this - T; };
+	const BaseTimer operator / (const double nbiter)  const;
+	BaseTimer& operator /= (const double nbiter) { return *this = *this / nbiter; };
 	public:
 	double _start_t;  // time as of start ()
 	double _t;        // time
@@ -205,8 +207,10 @@ public :
 	const Timer operator - (const Timer & T)  const;
 	const Timer operator - () ;
 	const Timer operator + (const Timer & T)  const;
+	const Timer operator / (const double)  const;
 	Timer& operator += (const Timer & T) { return *this = *this + T; };
 	Timer& operator -= (const Timer & T) { return *this = *this - T; };
+	Timer& operator /= (const double d) { return *this = *this / d; };
 
 
 	// -- methods :

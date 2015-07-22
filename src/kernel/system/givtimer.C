@@ -60,7 +60,7 @@ BaseTimer& BaseTimer::operator = (const BaseTimer & T)
 }
 
 // Computes and returns interval of time
-// beteween *this and T
+// between *this and T
 const BaseTimer BaseTimer::operator - (const BaseTimer & T) const
 {
 	BaseTimer Tmp ;
@@ -79,6 +79,14 @@ const BaseTimer BaseTimer::operator + (const BaseTimer & T)  const
 {
 	BaseTimer Tmp ;
 	Tmp._t = _t + T._t ;
+	return Tmp ;
+}
+
+// Average timer
+const BaseTimer BaseTimer::operator / (const double nbiter) const
+{
+	BaseTimer Tmp ;
+	Tmp._t = _t / nbiter ;
 	return Tmp ;
 }
 
@@ -194,7 +202,7 @@ void Timer::stop()
 	rt.stop() ;
 	ut.stop() ;
 	st.stop() ;
-	_count = 1;
+	++_count;
 }
 
 
@@ -216,7 +224,7 @@ Timer& Timer::operator = (const Timer & T)
 }
 
 // Comput._tes and returns interval of time
-// beteween *this and T
+// between *this and T
 const Timer Timer::operator - (const Timer & T)  const
 {
 	Timer Tmp ;
@@ -246,4 +254,15 @@ const Timer Timer::operator + (const Timer & T)  const
 	Tmp._count = _count + T._count;
 	return Tmp ;
 }
+
+const Timer Timer::operator / (const double nbiter)  const
+{
+	Timer Tmp ;
+	Tmp.ut = ut / nbiter ;
+	Tmp.st = st / nbiter ;
+	Tmp.rt = rt / nbiter ;
+	Tmp._count = _count / nbiter;
+	return Tmp ;
+}
+
 } // namespace Givaro

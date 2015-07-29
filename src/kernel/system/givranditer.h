@@ -119,20 +119,20 @@ namespace Givaro {
      * at the creation of the generator.
      * @return random field Element
      */
-      Element& operator()(Element& elt)
+      Element& operator()(Element& elt) const
       {
 	    return _field.random (_givrand, elt);
       } 
-      Element& random(Element& elt)
+      Element& random(Element& elt) const
       {
           return this->operator()(elt);
       } 
-      Element operator()() 
+      Element operator()()  const
       {
           Element tmp;
           return this->operator()(tmp);
       } 
-      Element random() 
+      Element random()  const
       {
           return this->operator()();
       } 
@@ -241,25 +241,25 @@ namespace Givaro {
        * at the creation of the generator.
        * @return random field Element
        */
-        Element& operator()(Element& elt) 
+        Element& operator()(Element& elt) const
 	{
                 // Create new random Elements
             return _field.random(_givrand, elt);
 	}
 
-        Element& random(Element& elt)
+        Element& random(Element& elt) const
 	{
             return this->operator()(elt);
             
 	}
 
-        Element operator()() 
+        Element operator()() const
         {
             Element tmp;
             return this->operator()(tmp);
         }
         
-        Element random() 
+        Element random() const
         {
             return this->operator()();
         }
@@ -347,21 +347,21 @@ namespace Givaro {
     GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _F(R._F), _r(R._r) {}
     ~GeneralRingNonZeroRandIter() {}
 
-    Element& operator()(Element &a) 
+    Element& operator()(Element &a) const
     {
       do _r.random(a); while (_F.isZero(a));
       return a;
     }
-    Element& random(Element &a) 
+    Element& random(Element &a) const
     {
         return this->operator()(a);
     }
 
-    Element operator()() 
+    Element operator()() const
     {
         Element a; return this->operator()(a);
     }
-    Element random() 
+    Element random() const
     {
         return this->operator()();
     }

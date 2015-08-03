@@ -69,7 +69,7 @@ namespace Givaro {
   GIV_randIter(const  Field& F,
 	       const size_t size = 0,
 	       const uint64_t seed = 0)
-    : _size(size), _givrand( GivRandom(seed) ), _field(F)
+    : _size(size), _givrand( GivRandom(seed) ), _field(&F)
     {
 
       size_t cardinality    = size_t( F.size() );
@@ -121,7 +121,7 @@ namespace Givaro {
      */
       Element& operator()(Element& elt) const
       {
-	    return _field.random (_givrand, elt);
+	    return ring().random (_givrand, elt);
       } 
       Element& random(Element& elt) const
       {
@@ -137,6 +137,7 @@ namespace Givaro {
           return this->operator()();
       } 
 
+    const Field& ring() const { return *_field; }
 
 
 
@@ -160,7 +161,7 @@ namespace Givaro {
     GivRandom _givrand;
 
     /// Field
-    const Field& _field;
+    const Field* _field;
 
   }; //  class GIV_randIter
 
@@ -198,7 +199,7 @@ namespace Givaro {
        *             generator (default = 0)
        */
     ModularRandIter(const  Field& F, const size_t& size = 0, const size_t& seed = 0)
-      : _givrand( GivRandom(seed) ), _field(F) {}
+      : _givrand( GivRandom(seed) ), _field(&F) {}
 
       /** Copy constructor.
        * Constructs ALP_randIter object by copying the random field
@@ -244,7 +245,7 @@ namespace Givaro {
         Element& operator()(Element& elt) const
 	{
                 // Create new random Elements
-            return _field.random(_givrand, elt);
+            return ring().random(_givrand, elt);
 	}
 
         Element& random(Element& elt) const
@@ -275,7 +276,7 @@ namespace Givaro {
 
       //@}
 
-        const Field& ring() const { return _field; }
+        const Field& ring() const { return *_field; }
 
     private:
 
@@ -283,7 +284,7 @@ namespace Givaro {
       GivRandom _givrand;
 
       /// Field
-      const Field& _field;
+      const Field* _field;
 
     }; //  class ModularRandIter
 
@@ -297,14 +298,14 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-      GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
+      GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(&F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
     {}
       GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
       ~GeneralRingRandIter() {}
 
       Element& operator() (Element& a) const
       {
-          return _F.init(a, uint64_t( (_size == 0?_givrand():_givrand()%_size)));
+          return ring().init(a, uint64_t( (_size == 0?_givrand():_givrand()%_size)));
       }
       Element& random (Element& a) const
       {
@@ -319,10 +320,10 @@ namespace Givaro {
           return this->operator()();
       }
 
-      const Ring& ring() const { return _F; }
+      const Ring& ring() const { return *_F; }
 
   private:
-    const Ring& _F;
+    const Ring* _F;
     size_t _size; 
             /// Random generator
     GivRandom _givrand;
@@ -342,14 +343,14 @@ namespace Givaro {
     public:
     typedef typename Ring::Element Element;
 
-    GeneralRingNonZeroRandIter(const Ring &F, RandIter &r) : _F(F), _r(r) {}
-    GeneralRingNonZeroRandIter(RandIter& r) : _F(r.ring()), _r(r) {}
+    GeneralRingNonZeroRandIter(const Ring &F, RandIter &r) : _F(&F), _r(r) {}
+    GeneralRingNonZeroRandIter(RandIter& r) : _F(&r.ring()), _r(r) {}
     GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _F(R._F), _r(R._r) {}
     ~GeneralRingNonZeroRandIter() {}
 
     Element& operator()(Element &a) const
     {
-      do _r.random(a); while (_F.isZero(a));
+      do _r.random(a); while (ring().isZero(a));
       return a;
     }
     Element& random(Element &a) const
@@ -366,10 +367,10 @@ namespace Givaro {
         return this->operator()();
     }
 
-    const Ring& ring() const { return _F; }
+    const Ring& ring() const { return *_F; }
 
     private:
-    const Ring&     _F;
+    const Ring*     _F;
     RandIter& _r;
     };
 

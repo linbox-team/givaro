@@ -113,12 +113,14 @@ namespace Givaro {
 		return *this ;
 	}
 
+    namespace Protected {
 	void importWords(Integer& x, size_t count, int32_t order, int32_t size,
 			 int32_t endian, size_t nails, const void* op)
 	{
 		mpz_import( (mpz_ptr)&(x.gmp_rep), count, order, size, endian, nails, op);
-	}
-
+	}    
+    }
+    
 	Integer::Integer(const vect_t & v)
 	{
 		size_t s = v.size();

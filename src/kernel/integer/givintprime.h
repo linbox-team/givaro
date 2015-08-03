@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <03 Aug 15 11:21:47 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <03 Aug 15 11:40:49 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 
@@ -105,7 +105,7 @@ namespace Givaro {
 		// Using Integer
 		int local_prime(const Rep& n, int r=_GIVARO_ISPRIMETESTS_) const
 		{
-			return probab_prime(n,r);
+                    return Protected::probab_prime(n,r);
 		}
 
 	private:

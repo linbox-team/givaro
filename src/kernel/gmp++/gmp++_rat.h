@@ -27,8 +27,10 @@ namespace Givaro
 	std::istream& 	operator >> (std::istream &i, Rationel& n);
 	std::ostream& 	operator << (std::ostream &o, const Rationel& n);
 	std::ostream& 	absOutput (std::ostream &o, const Rationel& n);
-	void 		importWords(Rationel&, size_t, int, int, int, size_t, const void*);
 
+    namespace Protected {
+	void 		importWords(Rationel&, size_t, int, int, int, size_t, const void*);
+    }
 
 	class Rationel
 	{
@@ -187,7 +189,7 @@ namespace Givaro
 		friend giv_all_inlined std::ostream& operator << (std::ostream &o, const Rationel & n);
 		friend  giv_all_inlined std::ostream& absOutput (std::ostream &o, const Rationel& n);
 
-		// friend void importWords(Integer&, size_t, int, int, int, size_t, const void*);
+		// friend void Protected::importWords(Integer&, size_t, int, int, int, size_t, const void*);
 
 		giv_all_inlined	std::ostream& print( std::ostream& o ) const;
 		//@}

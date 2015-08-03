@@ -124,10 +124,15 @@ namespace Givaro {
 		return (double)exp+log(d)*1.44269504088896341;
 	}
 
+    namespace Protected {
 	//------------------------------------------GMP isprime
 	//     If this function returns 0, OP is definitely not prime.  If it
 	//     returns 1, then OP is `probably' prime.  The probability of a
 	//     false positive is (1/4)^r.  A reasonable value of r is 25.
+	int32_t probab_prime(const Integer &p, int32_t r)
+	{
+		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),r) ;
+	}
 
 	Integer& nextprime(Integer& r, const Integer &p)
 	{
@@ -153,11 +158,8 @@ namespace Givaro {
                 
 		return r;
 	}
-
-	int32_t probab_prime(const Integer &p, int32_t r)
-	{
-		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),r) ;
-	}
+    } // namespace Protected
+    
 
 	// ==========================================================================
 	// Computes and returns the Jacobi and Legendre symbols (u/v) of the integers u and v.

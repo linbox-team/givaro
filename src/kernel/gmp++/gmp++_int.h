@@ -129,9 +129,6 @@ namespace Givaro {
 
 	Integer 	abs(const Integer& n);
 
-	Integer& 	prevprime(Integer&, const Integer& p);
-	Integer& 	nextprime(Integer&, const Integer& p);
-	int32_t 		probab_prime(const Integer& p, int32_t r=_GIVARO_ISPRIMETESTS_);
 	int32_t 		jacobi(const Integer& u, const Integer& v) ;
 	int32_t 		legendre(const Integer& u, const Integer& v) ;
 
@@ -143,7 +140,16 @@ namespace Givaro {
 	std::istream& 	operator >> (std::istream &i, Integer& n);
 	std::ostream& 	operator << (std::ostream &o, const Integer& n);
 	std::ostream& 	absOutput (std::ostream &o, const Integer& n);
+
+        // The following are protected
+        // to deal with primality, use Givaro::IntPrimeDom
+    namespace Protected {
 	void 		importWords(Integer&, size_t, int, int, int, size_t, const void*);
+	Integer& 	prevprime(Integer&, const Integer& p);
+	Integer& 	nextprime(Integer&, const Integer& p);
+	int32_t 		probab_prime(const Integer& p, int32_t r=_GIVARO_ISPRIMETESTS_);
+    }
+    
 
 	//------------------------------------------------------ Class Integer
 	/*! @ingroup integers
@@ -1486,10 +1492,9 @@ namespace Givaro {
 
 		//! @name primes
 		///@{
-		friend giv_all_inlined  Integer& prevprime(Integer&, const Integer& p);
-		friend giv_all_inlined  Integer& nextprime(Integer&, const Integer& p);
-		friend giv_all_inlined  int32_t probab_prime(const Integer& p);
-		friend giv_all_inlined  int32_t probab_prime(const Integer& p, int32_t r);
+		friend giv_all_inlined  Integer& Protected::prevprime(Integer&, const Integer& p);
+                friend giv_all_inlined  Integer& Protected::nextprime(Integer&, const Integer& p);
+                friend giv_all_inlined  int32_t Protected::probab_prime(const Integer& p, int32_t r);
 		friend giv_all_inlined  int32_t jacobi(const Integer& u, const Integer& v) ;
 		friend giv_all_inlined  int32_t legendre(const Integer& u, const Integer& v) ;
 		///@}
@@ -1704,7 +1709,7 @@ namespace Givaro {
 		 * @param nails x
 		 * @param op x
 		 */
-		friend giv_all_inlined  void importWords(Integer& x , size_t count, int32_t order,
+		friend giv_all_inlined  void Protected::importWords(Integer& x , size_t count, int32_t order,
 							 int32_t size, int32_t endian, size_t nails,
 							 const void* op);
 		/** print32_t integer.

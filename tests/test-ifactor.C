@@ -25,7 +25,7 @@ int test(const IntFactorDom<> & IP, const Integer & m)
 	IP.factor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
 
 	Integer::mod(r,m,f);
-	if (r || ((f==1 || f==m) && !probab_prime(f)))
+	if (r || ((f==1 || f==m) && !IP.local_prime(f)))
 	{
 #ifdef GIVARO_DEBUG
 		if (r)
@@ -38,7 +38,7 @@ int test(const IntFactorDom<> & IP, const Integer & m)
 
 
 	IP.primefactor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
-	if (r || !probab_prime(f))
+	if (r || !IP.local_prime(f))
 	{
 #ifdef GIVARO_DEBUG
 		if (r)

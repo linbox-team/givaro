@@ -131,8 +131,7 @@ namespace Givaro {
 
 	Integer& 	prevprime(Integer&, const Integer& p);
 	Integer& 	nextprime(Integer&, const Integer& p);
-	int32_t 		probab_prime(const Integer& p);
-	int32_t 		probab_prime(const Integer& p, int32_t r);
+	int32_t 		probab_prime(const Integer& p, int32_t r=_GIVARO_ISPRIMETESTS_);
 	int32_t 		jacobi(const Integer& u, const Integer& v) ;
 	int32_t 		legendre(const Integer& u, const Integer& v) ;
 

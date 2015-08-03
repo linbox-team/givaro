@@ -144,15 +144,14 @@ namespace Givaro {
 		else
 			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1 );
 
-		while( !mpz_probab_prime_p ( (mpz_srcptr)&(p.gmp_rep), 10 ) )
-			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2 );
+		while( !mpz_probab_prime_p ( (mpz_srcptr)&(r.gmp_rep), _GIVARO_ISPRIMETESTS_ ) )
+                {
+                    
+			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(r.gmp_rep), 2 );
 
+                }
+                
 		return r;
-	}
-
-	int32_t probab_prime(const Integer &p)
-	{
-		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),10) ;
 	}
 
 	int32_t probab_prime(const Integer &p, int32_t r)

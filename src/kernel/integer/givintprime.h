@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <18 Jun 15 18:30:25 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <03 Aug 15 11:21:47 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 
@@ -20,10 +20,6 @@
  */
 #ifndef __GIVARO_integers_prime_H
 #define __GIVARO_integers_prime_H
-
-#ifndef _GIVARO_ISPRIMETESTS_
-#define _GIVARO_ISPRIMETESTS_ 5
-#endif
 
 #include "givaro/givinteger.h"
 

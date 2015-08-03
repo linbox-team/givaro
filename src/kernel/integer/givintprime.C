@@ -77,7 +77,6 @@ namespace Givaro {
 			add(n,p,2);
 		while (! isprime(n,r) )
 			addin(n,2);
-
 		return n;
 	}
 
@@ -90,7 +89,7 @@ namespace Givaro {
 			subin(n,1);
 		else
 			subin(n,2);
-		while (! isprime(n,r) )
+		while (! isprime(n,r) )                    
 			subin(n,2);
 		return n;
 	}
@@ -103,8 +102,8 @@ namespace Givaro {
 			sub(n,p,1);
 		else
 			sub(n,p,2);
-		while (! isprime(n,r) )
-			subin(n,2);
+                while (! isprime(n,r) )
+                    subin(n,2);
 		return n;
 	}
 

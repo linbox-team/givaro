@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Givaro version of gmp++.h
-// Time-stamp: <20 Oct 10 18:46:59 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <03 Aug 15 11:12:00 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 #ifndef __GIVARO_GMPplusplus_H
 #define __GIVARO_GMPplusplus_H
@@ -47,6 +47,10 @@ extern "C" {
 #ifdef DEBUG
 #error "NDEBUG and DEBUG both defined"
 #endif
+#endif
+
+#ifndef _GIVARO_ISPRIMETESTS_
+#define _GIVARO_ISPRIMETESTS_ 5
 #endif
 
 #include <gmp++/gmp++_int.h>

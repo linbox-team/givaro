@@ -18,6 +18,8 @@
 #define __GIVARO_gmpxx_gmpxx_int_rand_INL
 
 #include <givaro/givtimer.h>
+#include <givaro/givrandom.h>
+#include <givaro/udl.h>
 #include <assert.h>
 
 namespace Givaro {
@@ -215,8 +217,8 @@ namespace Givaro {
 	template<bool ALWAYSPOSITIVE>
 	Integer& Integer::random_exact_2exp (Integer& r, const uint64_t & m)
 	{
-		if (m) random_lessthan_2exp<true>(r,m-1);
-		mpz_setbit( (mpz_ptr) &(r.gmp_rep) , m-1);
+		if (m) random_lessthan_2exp<true>(r,m-1_ui64);
+		mpz_setbit( (mpz_ptr) &(r.gmp_rep) , m-1_ui64);
 		if(!ALWAYSPOSITIVE) if (Integer::RandBool()) Integer::negin(r);
 		return r;
 	}

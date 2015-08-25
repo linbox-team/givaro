@@ -193,6 +193,11 @@ namespace Givaro {
 		{
 			return ::Givaro::gcd(g, a, b);
 		}
+		Rep& gcdin( Rep& g, const Rep& a) const
+		{
+            Rep tmp(g);
+			return ::Givaro::gcd(g, tmp, a);
+		}
 		Rep& lcm( Rep& l, const Rep& a, const Rep& b ) const
 		{
 			return ::Givaro::lcm(l, a, b);
@@ -276,6 +281,14 @@ namespace Givaro {
 			return ::Givaro::isMOne(a);
 		}
 
+        Element& abs(Element& x, const Element& a) const {
+            return x=Givaro::abs(a);
+        }
+
+        int32_t compare(const Rep& a, const Rep& b) const {
+            return compare(a,b);
+        }
+                
 		bool areEqual (const Rep& a, const Rep& b) const
 		{
 			return compare(a,b) ==0;

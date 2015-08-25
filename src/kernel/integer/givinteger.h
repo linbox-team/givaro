@@ -52,6 +52,9 @@ namespace Givaro {
 		const Integer mOne;
 		const Integer zero;
 
+        Integer characteristic() const { return zero; }
+        Integer& characteristic(Integer& p) const { return p = zero; }
+
 		// -- assignement
 		Rep& init  ( Rep& a ) const
 		{
@@ -280,6 +283,13 @@ namespace Givaro {
 		{
 			return ::Givaro::isMOne(a);
 		}
+		/// isUnit
+		inline  bool isUnit (const Rep& x) const
+		{
+
+			return isOne(x) || isMOne(x);
+		}
+
 
         Element& abs(Element& x, const Element& a) const {
             return x=Givaro::abs(a);

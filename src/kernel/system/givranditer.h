@@ -344,7 +344,7 @@ namespace Givaro {
     typedef typename Ring::Element Element;
 
     GeneralRingNonZeroRandIter(const Ring &F, RandIter &r) : _F(F), _r(r) {}
-    GeneralRingNonZeroRandIter(RandIter& r) : _F(&r.ring()), _r(r) {}
+    GeneralRingNonZeroRandIter(RandIter& r) : _F(r.ring()), _r(r) {}
     GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _F(R._F), _r(R._r) {}
     ~GeneralRingNonZeroRandIter() {}
 

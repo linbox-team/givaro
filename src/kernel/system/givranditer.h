@@ -10,7 +10,7 @@
 /** @file givranditer.h
  * @ingroup zpz
  * @brief NO DOC
- * Givaro field Elements generator
+ * Givaro ring Elements generator
  */
 
 #ifndef __GIVARO_randiter_H
@@ -31,45 +31,45 @@
 
 namespace Givaro {
 
-  /** Random field Element generator.
-   *   This class defines a field Element generator for all givaro field (Gfq and Zpz)
-   *   throught a template argument as a field.
+  /** Random ring Element generator.
+   *   This class defines a ring Element generator for all givaro ring (Gfq and Zpz)
+   *   throught a template argument as a ring.
    *   The random generator used is the givrandom.
    */
-  template <class Field , class Type>
+  template <class Ring , class Type>
     class GIV_randIter
   {
   public:
 
     /** @name Common Object Interface.
-     * These methods are required of all LinBox random field Element generators.
+     * These methods are required of all LinBox random ring Element generators.
      */
     //@{
 
-    /** Field Element type.
-     * The field Element must contain a default constructor,
+    /** Ring Element type.
+     * The ring Element must contain a default constructor,
      * a copy constructor, a destructor, and an assignment operator.
      */
-    typedef typename Field::Element Element;
+    typedef typename Ring::Element Element;
 
-    /** Constructor from field, sampling size, and seed.
-     * The random field Element iterator works in the field F, is seeded
+    /** Constructor from ring, sampling size, and seed.
+     * The random ring Element iterator works in the ring F, is seeded
      * by seed, and it returns any one Element with probability no more
      * than 1/min(size, F.cardinality()).
-     * A sampling size of zero means to sample from the entire field.
+     * A sampling size of zero means to sample from the entire ring.
      * A seed of zero means to use some arbitrary seed for the generator.
      * This implementation sets the sampling size to be no more than the
-     * cardinality of the field.
-     * @param F LinBox field archetype object in which to do arithmetic
+     * cardinality of the ring.
+     * @param F LinBox ring archetype object in which to do arithmetic
      * @param size constant integer reference of sample size from which to
      *             sample (default = 0)
      * @param seed constant integer reference from which to seed random number
      *             generator (default = 0)
      */
-  GIV_randIter(const  Field& F,
+  GIV_randIter(const  Ring& F,
 	       const size_t size = 0,
 	       const uint64_t seed = 0)
-    : _size(size), _givrand( GivRandom(seed) ), _field(&F)
+    : _size(size), _givrand( GivRandom(seed) ), _ring(F)
     {
 
       size_t cardinality    = size_t( F.size() );
@@ -78,19 +78,19 @@ namespace Givaro {
     }
 
     /** Copy constructor.
-     * Constructs ALP_randIter object by copying the random field
+     * Constructs ALP_randIter object by copying the random ring
      * Element generator.
      * This is required to allow generator objects to be passed by value
      * into functions.
-     * In this implementation, this means copying the random field Element
+     * In this implementation, this means copying the random ring Element
      * generator to which R._randIter_ptr points.
      * @param  R ALP_randIter object.
      */
   GIV_randIter(const GIV_randIter& R)
-    : _size(R._size), _givrand(R._givrand) , _field(R._field) {}
+    : _size(R._size), _givrand(R._givrand) , _ring(R._ring) {}
 
     /** Destructor.
-     * This destructs the random field Element generator object.
+     * This destructs the random ring Element generator object.
      * In this implementation, this destroys the generator by deleting
      * the random generator object to which _randIter_ptr points.
      */
@@ -102,42 +102,42 @@ namespace Givaro {
      * which R._randIter_ptr points.
      * @param  R ALP_randIter object.
      */
-    GIV_randIter<Field,Type>& operator=(const GIV_randIter<Field,Type>& R)
+    GIV_randIter<Ring,Type>& operator=(const GIV_randIter<Ring,Type>& R)
       {
 	if (this != &R) // guard against self-assignment
 	  {
 	    _size = R._size;
 	    _givrand = R._givrand;
-	    _field = R._field;
+	    const_cast<Ring&>(_ring) = R._ring;
 	  }
 
 	return *this;
       }
 
-    /** Random field Element creator with assignement.
-     * This returns a random field Element from the information supplied
+    /** Random ring Element creator with assignement.
+     * This returns a random ring Element from the information supplied
      * at the creation of the generator.
-     * @return random field Element
+     * @return random ring Element
      */
-      Element& operator()(Element& elt) const
+      Element& operator()(Element& elt)
       {
 	    return ring().random (_givrand, elt);
       } 
-      Element& random(Element& elt) const
+      Element& random(Element& elt)
       {
           return this->operator()(elt);
       } 
-      Element operator()()  const
+      Element operator()()
       {
           Element tmp;
           return this->operator()(tmp);
       } 
-      Element random()  const
+      Element random()
       {
           return this->operator()();
       } 
 
-    const Field& ring() const { return *_field; }
+    const Ring& ring() const { return _ring; }
 
 
 
@@ -148,7 +148,7 @@ namespace Givaro {
     //@{
 
 //     /// Default constructor
-//   GIV_randIter(void) : _size(0), _givrand(), _field() {}
+//   GIV_randIter(void) : _size(0), _givrand(), _ring() {}
 
     //@}
 
@@ -160,61 +160,61 @@ namespace Givaro {
     /// Random generator
     GivRandom _givrand;
 
-    /// Field
-    const Field* _field;
+    /// Ring
+    const Ring& _ring;
 
   }; //  class GIV_randIter
 
-  /** Random field Element generator.
-   *   This class defines a field Element generator for all givaro modular rings (Gfq and Modular)
-   *   throught a template argument as a field.
+  /** Random ring Element generator.
+   *   This class defines a ring Element generator for all givaro modular rings (Gfq and Modular)
+   *   throught a template argument as a ring.
    *   The random generator used is the givrandom.
    */
-  template <class Field>
+  template <class Ring>
     class ModularRandIter
     {
     public:
 
       /** @name Common Object Interface.
-       * These methods are required of all LinBox random field Element generators.
+       * These methods are required of all LinBox random ring Element generators.
        */
       //@{
 
-      /** Field Element type.
-       * The field Element must contain a default constructor,
+      /** Ring Element type.
+       * The ring Element must contain a default constructor,
        * a copy constructor, a destructor, and an assignment operator.
        */
-      typedef typename Field::Element Element;
+      typedef typename Ring::Element Element;
 
-      /** Constructor from field, sampling size, and seed.
-       * The random field Element iterator works in the field F, is seeded
+      /** Constructor from ring, sampling size, and seed.
+       * The random ring Element iterator works in the ring F, is seeded
        * by seed, and it returns any one Element with probability no more
        * than 1/min(size, F.cardinality()).
-       * A sampling size of zero means to sample from the entire field.
+       * A sampling size of zero means to sample from the entire ring.
        * A seed of zero means to use some arbitrary seed for the generator.
        * This implementation sets the sampling size to be no more than the
-       * cardinality of the field.
-       * @param F LinBox field archetype object in which to do arithmetic
+       * cardinality of the ring.
+       * @param F LinBox ring archetype object in which to do arithmetic
        * @param seed constant integer reference from which to seed random number
        *             generator (default = 0)
        */
-    ModularRandIter(const  Field& F, const size_t& size = 0, const size_t& seed = 0)
-      : _givrand( GivRandom(seed) ), _field(&F) {}
+    ModularRandIter(const  Ring& F, const size_t& size = 0, const size_t& seed = 0)
+      : _givrand( GivRandom(seed) ), _ring(F) {}
 
       /** Copy constructor.
-       * Constructs ALP_randIter object by copying the random field
+       * Constructs ALP_randIter object by copying the random ring
        * Element generator.
        * This is required to allow generator objects to be passed by value
        * into functions.
-       * In this implementation, this means copying the random field Element
+       * In this implementation, this means copying the random ring Element
        * generator to which R._randIter_ptr points.
        * @param  R ALP_randIter object.
        */
     ModularRandIter(const ModularRandIter& R)
-      : _givrand(R._givrand) , _field(R._field) {}
+      : _givrand(R._givrand) , _ring(R._ring) {}
 
       /** Destructor.
-       * This destructs the random field Element generator object.
+       * This destructs the random ring Element generator object.
        * In this implementation, this destroys the generator by deleting
        * the random generator object to which _randIter_ptr points.
        */
@@ -226,41 +226,41 @@ namespace Givaro {
        * which R._randIter_ptr points.
        * @param  R ALP_randIter object.
        */
-      ModularRandIter<Field>& operator=(const ModularRandIter<Field>& R)
+      ModularRandIter<Ring>& operator=(const ModularRandIter<Ring>& R)
 	{
 	  // guard against self-assignment
 	  if (this != &R)
 	    {
 	      _givrand = R._givrand;
-	      _field = R._field;
+	      const_cast<Ring&>(_ring) = R._ring;
 	    }
 	  return *this;
 	}
 
-      /** Random field Element creator with assignement.
-       * This returns a random field Element from the information supplied
+      /** Random ring Element creator with assignement.
+       * This returns a random ring Element from the information supplied
        * at the creation of the generator.
-       * @return random field Element
+       * @return random ring Element
        */
-        Element& operator()(Element& elt) const
+        Element& operator()(Element& elt)
 	{
                 // Create new random Elements
             return ring().random(_givrand, elt);
 	}
 
-        Element& random(Element& elt) const
+        Element& random(Element& elt)
 	{
             return this->operator()(elt);
             
 	}
 
-        Element operator()() const
+        Element operator()()
         {
             Element tmp;
             return this->operator()(tmp);
         }
         
-        Element random() const
+        Element random()
         {
             return this->operator()();
         }
@@ -272,19 +272,19 @@ namespace Givaro {
       //@{
 
 //       /// Default constructor
-//     ModularRandIter(void) : _givrand(), _field() {}
+//     ModularRandIter(void) : _givrand(), _ring() {}
 
       //@}
 
-        const Field& ring() const { return *_field; }
+        const Ring& ring() const { return _ring; }
 
     private:
 
       /// Random generator
       GivRandom _givrand;
 
-      /// Field
-      const Field* _field;
+      /// Ring
+      const Ring& _ring;
 
     }; //  class ModularRandIter
 
@@ -298,32 +298,32 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-      GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(&F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
+      GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
     {}
       GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
       ~GeneralRingRandIter() {}
 
-      Element& operator() (Element& a) const
+      Element& operator() (Element& a)
       {
           return ring().init(a, uint64_t( (_size == 0?_givrand():_givrand()%_size)));
       }
-      Element& random (Element& a) const
+      Element& random (Element& a)
       {
           return this->operator()(a);
       }
-      Element operator() () const
+      Element operator() ()
       {
           Element a; return this->operator()(a);
       }
-      Element random () const
+      Element random ()
       {
           return this->operator()();
       }
 
-      const Ring& ring() const { return *_F; }
+      const Ring& ring() const { return _F; }
 
   private:
-    const Ring* _F;
+    const Ring& _F;
     size_t _size; 
             /// Random generator
     GivRandom _givrand;
@@ -343,34 +343,34 @@ namespace Givaro {
     public:
     typedef typename Ring::Element Element;
 
-    GeneralRingNonZeroRandIter(const Ring &F, RandIter &r) : _F(&F), _r(r) {}
+    GeneralRingNonZeroRandIter(const Ring &F, RandIter &r) : _F(F), _r(r) {}
     GeneralRingNonZeroRandIter(RandIter& r) : _F(&r.ring()), _r(r) {}
     GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _F(R._F), _r(R._r) {}
     ~GeneralRingNonZeroRandIter() {}
 
-    Element& operator()(Element &a) const
+    Element& operator()(Element &a) 
     {
       do _r.random(a); while (ring().isZero(a));
       return a;
     }
-    Element& random(Element &a) const
+    Element& random(Element &a)
     {
         return this->operator()(a);
     }
 
-    Element operator()() const
+    Element operator()()
     {
         Element a; return this->operator()(a);
     }
-    Element random() const
+    Element random()
     {
         return this->operator()();
     }
 
-    const Ring& ring() const { return *_F; }
+    const Ring& ring() const { return _F; }
 
     private:
-    const Ring*     _F;
+    const Ring&     _F;
     RandIter& _r;
     };
 

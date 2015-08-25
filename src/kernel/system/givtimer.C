@@ -261,7 +261,7 @@ const Timer Timer::operator / (const double nbiter)  const
 	Tmp.ut = ut / nbiter ;
 	Tmp.st = st / nbiter ;
 	Tmp.rt = rt / nbiter ;
-	Tmp._count = _count / nbiter;
+	Tmp._count = 1;
 	return Tmp ;
 }
 

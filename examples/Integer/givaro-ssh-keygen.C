@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Dec 12 11:54:42 Jean-Guillaume.Dumas@imag.fr>        //
+// Time-stamp: <25 Aug 15 14:15:31 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
 // Givaro replacement for ssh-keygen: generated keys use strong primes  //
 // Random generator is seeded by					 //
@@ -17,8 +17,10 @@
 // You also need the openssl and openssh development headers below:     //
 // openssh/buffer.h openssh/key.h openssh/uuencode.h openssh/xmalloc.h  //
 // The latter libraries/headers are avaible from openssl and openssh    //
-// openssl > 0.9.8  and  openssh > 5.2p1  are expected                  //
-// For openssh > 6.3p1, use "-lopenbsd-compat -lssh -lssl -lcrypto -ldl"//
+// openssl >= 0.9.8  and  openssh >= 5.2p1  are expected                //
+// For openssh >= 6.3p1, use "-lopenbsd-compat -lssh -lssl -lcrypto -ldl"//
+// For openssh >= commit 9690b78, use:
+// -lssh -lopenbsd-compat -lcrypto -ldl -lutil -lz -lnsl  -lcrypt -lresolv//
 // ==================================================================== //
 /*! @file examples/Integer/givaro-ssh-keygen.C
  * @ingroup examples
@@ -34,6 +36,7 @@
 #include <openssl/pem.h>
 
 extern "C" {
+#include "openssh/digest.h"
 #include "openssh/key.h"
 }
 
@@ -126,7 +129,7 @@ int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
     PEM_write_RSAPublicKey(stdout,rsa);
 */
 
-    std::cerr << "key's randomart: \n" << key_fingerprint(&rsakey, SSH_FP_MD5,SSH_FP_RANDOMART) << std::endl;
+    std::cerr << "key's randomart: \n" << sshkey_fingerprint(&rsakey, SSH_FP_HASH_DEFAULT, SSH_FP_RANDOMART) << std::endl;
 
         // Write Private Key in ssl PEM format
     PEM_write_RSAPrivateKey(fileout,rsa,NULL,NULL,0,NULL,NULL);

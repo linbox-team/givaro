@@ -286,74 +286,80 @@ namespace Givaro {
 		/// isUnit
 		inline  bool isUnit (const Rep& x) const
 		{
-
-			return isOne(x) || isMOne(x);
+			return ::Givaro::isOne(x) || ::Givaro::isMOne(x);
 		}
 
+		/** @brief isDivisor (a, b)
+		 *  Test if b | a.
+		 */
+		inline  bool isDivisor (const Element& a, const Element& b) const
+		{
+			Element r; return ::Givaro::isZero(mod(r,a,b));
+		}
 
         Element& abs(Element& x, const Element& a) const {
-            return x=Givaro::abs(a);
+            return x=::Givaro::abs(a);
         }
 
         int32_t compare(const Rep& a, const Rep& b) const {
-            return compare(a,b);
+            return ::Givaro::compare(a,b);
         }
                 
 		bool areEqual (const Rep& a, const Rep& b) const
 		{
-			return compare(a,b) ==0;
+			return ::Givaro::compare(a,b) ==0;
 		}
 		bool areNEqual(const Rep& a, const Rep& b) const
 		{
-			return compare(a,b) !=0;
+			return ::Givaro::compare(a,b) !=0;
 		}
 		bool isgeq(const Rep& a, const Rep& b) const
 		{
-			return compare(a,b) >= 0;
+			return ::Givaro::compare(a,b) >= 0;
 		}
 		bool isleq(const Rep& a, const Rep& b) const
 		{
-			return compare(a,b) <= 0;
+			return ::Givaro::compare(a,b) <= 0;
 		}
 		bool isgeq(const int64_t b,const Rep& a ) const
 		{
-			return isgeq(Rep(b),a);
+			return this->isgeq(Rep(b),a);
 		}
 		bool isleq(const int64_t b,const Rep& a ) const
 		{
-			return isleq(Rep(b),a);
+			return this->isleq(Rep(b),a);
 		}
 		bool isgeq(const Rep& a, const int64_t b) const
 		{
-			return isgeq(a,Rep(b));
+			return this->isgeq(a,Rep(b));
 		}
 		bool isleq(const Rep& a, const int64_t b) const
 		{
-			return isleq(a,Rep(b));
+			return this->isleq(a,Rep(b));
 		}
 		bool isgt(const Rep& a, const Rep& b) const
 		{
-			return compare(a,b) > 0;
+			return ::Givaro::compare(a,b) > 0;
 		}
 		bool islt(const Rep& a, const Rep& b) const
 		{
-			return compare(a,b) < 0;
+			return ::Givaro::compare(a,b) < 0;
 		}
 		bool isgt(const int64_t b,const Rep& a ) const
 		{
-			return isgt(Rep(b),a);
+			return this->isgt(Rep(b),a);
 		}
 		bool islt(const int64_t b,const Rep& a ) const
 		{
-			return islt(Rep(b),a);
+			return this->islt(Rep(b),a);
 		}
 		bool isgt(const Rep& a, const int64_t b) const
 		{
-			return isgt(a,Rep(b));
+			return this->isgt(a,Rep(b));
 		}
 		bool islt(const Rep& a, const int64_t b) const
 		{
-			return islt(a,Rep(b));
+			return this->islt(a,Rep(b));
 		}
 
 

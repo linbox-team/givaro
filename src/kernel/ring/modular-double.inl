@@ -38,7 +38,9 @@ namespace Givaro {
 
 	inline Modular<double>::Element& Modular<double>::init (Element& x, const Integer& y) const
 	{
-	    return x = static_cast<Element>(y % _lp);
+	    x = static_cast<Element>(y % _lp);
+            if (x < 0) x += _p;
+            return x;
 	}
 
 	inline Modular<double>::Element& Modular<double>::assign (Element& x, const Element& y) const

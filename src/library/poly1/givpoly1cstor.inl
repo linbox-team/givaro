@@ -79,7 +79,7 @@ namespace Givaro {
 
 
 	template<class Domain>
-	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::convert(typename Poly1Dom<Domain,Dense>::Type_t & Val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
+	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::assign(typename Poly1Dom<Domain,Dense>::Type_t & Val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const
 	{
 		if (P.size())
 			return _domain.assign(Val, P[0]);

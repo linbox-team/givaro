@@ -230,8 +230,8 @@ namespace Givaro {
 		// -- Assignment p = q
 		Rep& assign( Rep& p, const Rep& q) const;
 
-		// -- Convert polynomials : F.assign(cste, p[0])
-		Type_t& convert(Type_t&, const Rep &) const;
+		// -- Polynomial to value : F.assign(cste, p[0])
+		Type_t& assign(Type_t&, const Rep &) const;
 
 		// -- Convert polynomials : F.convert(cste, p[0])
 		template<class XXX>

@@ -88,12 +88,12 @@ namespace RecInt
 #if GMP_LIMB_BITS != 64
 		    // GMP does not handle uint64_t, need to break it
             a <<= 32;
-            a ^= mp_limb_t((*it) >> 32);
+            a ^= static_cast<uint32_t>(mp_limb_t((*it) >> 32));
             a <<= 32;
-		    a += mp_limb_t(*it);
+            a += static_cast<uint32_t>(mp_limb_t(*it));
 #else
             a <<= 64;
-            a ^= mp_limb_t(*it);
+            a ^= static_cast<uint64_t>(mp_limb_t(*it));
 #endif
         }
 

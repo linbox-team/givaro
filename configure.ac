@@ -260,6 +260,7 @@ examples/RecInt/Makefile
 examples/Polynomial/Makefile
 tests/Makefile
 docs/Makefile
+givaro.pc
 ])
 AC_OUTPUT
 

@@ -1,6 +1,7 @@
 ARCHIVES
 *Makefile
-*.in
+Makefile.in
+config.h.in
 *.o
 *.lo
 *.la

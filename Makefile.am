@@ -10,6 +10,9 @@ SUBDIRS=src macros tests docs examples benchmarks
 
 include_HEADERS=givaro-config.h
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = givaro.pc
+
 docs:docs/givaro-html/index.html
 
 docs/givaro-html/index.html:

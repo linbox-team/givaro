@@ -76,6 +76,7 @@ namespace Givaro
         bool isZero(const Element& a) const { return a == zero; }
         bool isOne (const Element& a) const { return a == one; }
         bool isMOne(const Element& a) const { return a == mOne; }
+        bool isUnit(const Element& a) const { return isOne(a) || isMOne(a); }
 
         Element& abs(Element& x, const Element& a) const {return x= (a>0)? a: -a;}
         Element abs(const Element& a) const {return (a>0)? a: -a;}

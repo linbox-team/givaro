@@ -1,4 +1,4 @@
-/------------------ fflas-ffpack.pc ------------------------
+/------------------ givaro.pc ------------------------
 prefix=@prefix@
 exec_prefix=@prefix@/bin
 libdir=@prefix@/lib

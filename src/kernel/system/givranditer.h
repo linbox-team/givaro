@@ -303,7 +303,7 @@ namespace Givaro {
       GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
       ~GeneralRingRandIter() {}
 
-      Element& operator() (Element& a)
+      Element& operator() (Element& a) const
       {
           return ring().init(a, uint64_t( (_size == 0?_givrand():_givrand()%_size)));
       }

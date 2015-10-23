@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <03 Jul 15 17:21:55 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <23 Oct 15 15:35:46 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1factor.h
@@ -41,7 +41,7 @@ namespace Givaro {
 		using                                                Poly1Dom<Domain,Tag>::zero;
 		typedef typename Poly1Dom<Domain,Tag>::Element                          Element;
 		typedef          RandIter                                      random_generator;
-		typedef typename Signed_Trait<typename Domain::Element>::unsigned_type Residu_t;
+            	typedef typename Domain::Residu_t Residu_t;
 		typedef typename Signed_Trait<typename Domain::Element>::signed_type   Element_t;
 		// using typename Poly1Dom<Domain,Tag>::Type_t; //used for assign (clang complains)
 		typedef typename Poly1Dom<Domain,Tag>::Type_t Type_t; //used for assign (clang complains)

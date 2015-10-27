@@ -75,7 +75,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.inv(a_, a);
     TESTE_EG(a_, F.one);
 
-    F.init(ma,-1);
+    F.init(ma,1); F.negin(ma);
 //         F.write(std::cerr) << std::endl;
 //         F.write(std::cerr << "a: ", a) << std::endl;
 //         F.write(std::cerr << "ma: ", ma) << std::endl;
@@ -83,7 +83,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 //         F.write(std::cerr << "-1: ", F.mOne) << std::endl;
     TESTE_EG(ma, F.mOne);
     
-    F.init(ma,-1_i64);
+    F.init(ma,1_i64); F.negin(ma);
     TESTE_EG(ma, F.mOne);
 
     F.inv(a_, ma);
@@ -101,11 +101,6 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.add(c, a, b);       // c = a+b
     F.assign(c_,c);       // c_ <- c
 
-    //         F.write(std::cerr) << std::endl;
-    //         F.write(std::cerr << "a:=", a) << ';' << std::endl;
-    //         F.write(std::cerr << "b:=", b) << ';' << std::endl;
-    //         F.write(std::cerr << "c:=", c) << ';' << std::endl;
-    //         F.write(std::cerr << "c_:=", c_) << ';' << std::endl;
 
     TESTE_EG(c,c_);
     F.subin(c_,a);

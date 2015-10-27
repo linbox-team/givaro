@@ -621,13 +621,20 @@ namespace Givaro {
     {
         TT t;
         i >> t;
-        init(a,t);
+        reduce(a,t);
         return i;
     }
 
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double Residu ) const
+    template<typename XXX>
+    inline typename GFqDom<TT>::Element& GFqDom<TT>::init(Element& r, const XXX& value) const {
+        return r = (Rep)_pol2log[ (UT)(value) ];
+    }
+        
+
+    template<typename TT>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const double Residu ) const
     {
         double tr = Residu ;
         if (tr <0) {
@@ -658,15 +665,15 @@ namespace Givaro {
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const float Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const float Residu ) const
     {
-        return init(r, static_cast<double>(Residu));
+        return reduce(r, static_cast<double>(Residu));
     }
 
 
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int32_t Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const int32_t Residu ) const
     {
         int32_t tr = Residu ;
         if (tr <0) {
@@ -687,7 +694,7 @@ namespace Givaro {
         }
     }
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int64_t Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const int64_t Residu ) const
     {
         int64_t tr = Residu ;
         if (tr <0) {
@@ -708,7 +715,7 @@ namespace Givaro {
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Integer Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const Integer Residu ) const
     {
         UTT tr;
         if (Residu <0) {
@@ -733,7 +740,7 @@ namespace Givaro {
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const uint64_t Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const uint64_t Residu ) const
     {
         uint64_t tr = Residu ;
         if (tr >= _characteristic )
@@ -742,7 +749,7 @@ namespace Givaro {
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const uint32_t Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const uint32_t Residu ) const
     {
         uint64_t tr = static_cast<uint64_t>(Residu) ;
         if (tr >= _characteristic ) tr = tr % (uint64_t) _characteristic ;
@@ -751,7 +758,7 @@ namespace Givaro {
 
 // #ifndef __GIVARO__DONOTUSE_longlong__
 //     template<typename TT>
-//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const ulong long Residu ) const
+//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const ulong long Residu ) const
 //     {
 //         ulong long tr = Residu ;
 //         if (tr >= _characteristic ) tr = tr % _characteristic ;
@@ -759,7 +766,7 @@ namespace Givaro {
 //     }
 
 //     template<typename TT>
-//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const long long Residu ) const
+//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const long long Residu ) const
 //     {
 //         long long tr = Residu ;
 //         if (tr <0) {
@@ -850,16 +857,16 @@ namespace Givaro {
 
 
         // ---------
-        // -- Initialization operations
+        // -- Reduceialization operations
         // ---------
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r) const
     { return r = zero; }
 
 
     template<typename TT>
     template<typename val_t, template<class, class> class Vector, template <class> class Alloc>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Vector<val_t, Alloc<val_t> >& P) {
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const Vector<val_t, Alloc<val_t> >& P) {
         static Self_t PrimeField(this->_characteristic);
         typedef Poly1Dom< Self_t, Dense > PolDom;
         static PolDom Pdom( PrimeField );
@@ -885,7 +892,7 @@ namespace Givaro {
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Integer a) const
-    { return init (r, a); }
+    { return reduce (r, a); }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Rep a) const
@@ -1022,7 +1029,7 @@ namespace Givaro {
                 // (p^e-1) th cyclotomic polynomial
                 // G is a primitive polynomial for F : X
                 //         Pdom.getcyclo(F);
-                //         Pdom.init(G, Degree(1), Zp.one);
+                //         Pdom.reduce(G, Degree(1), Zp.one);
 
                 // F is irreducible of degree e over Zp
                 // with X as a primitive polynomial

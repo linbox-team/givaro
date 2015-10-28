@@ -67,9 +67,10 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
         for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
             *i = Field( ID.nextprimein( a ) );
             *p = a;
-            assert(i->characteristic() == *p);
-            typename Field::RandIter R(*i);
-            R(*e);
+        assert(i->characteristic() == *p);
+
+        	uint64_t tmp = generator();
+            i->init(*e,  tmp );
             i->convert(*m,*e);
             M *= a;
         }
@@ -145,9 +146,8 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
         pr = Field::maxCardinality()/2;
     }
     Field F( ID.nextprimein(pr) );
-    
     typename Field::Element el;
-    typename Field::RandIter R(F); R(el);
+    F.init(el, generator() );
 
     ChineseRemainder<IntPrimeDom, Field> CRA(ID, M, F);
     CRA( res, Res, el);

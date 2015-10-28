@@ -69,13 +69,8 @@ namespace Givaro {
   GIV_randIter(const  Ring& F,
 	       const size_t size = 0,
 	       const uint64_t seed = 0)
-    : _size(size), _givrand( GivRandom(seed) ), _ring(F)
-    {
-
-      size_t cardinality    = size_t( F.size() );
-      if ((_size > cardinality) || (_size == 0) )
-	_size = cardinality;
-    }
+    : _givrand( GivRandom(seed) ), _ring(F)
+    {}
 
     /** Copy constructor.
      * Constructs ALP_randIter object by copying the random ring
@@ -87,7 +82,7 @@ namespace Givaro {
      * @param  R ALP_randIter object.
      */
   GIV_randIter(const GIV_randIter& R)
-    : _size(R._size), _givrand(R._givrand) , _ring(R._ring) {}
+    :  _givrand(R._givrand) , _ring(R._ring) {}
 
     /** Destructor.
      * This destructs the random ring Element generator object.
@@ -106,7 +101,6 @@ namespace Givaro {
       {
 	if (this != &R) // guard against self-assignment
 	  {
-	    _size = R._size;
 	    _givrand = R._givrand;
 	    const_cast<Ring&>(_ring) = R._ring;
 	  }
@@ -153,9 +147,6 @@ namespace Givaro {
     //@}
 
   private:
-
-    /// Sampling size
-    size_t _size;
 
     /// Random generator
     GivRandom _givrand;

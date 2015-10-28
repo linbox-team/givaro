@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 18:27:22 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Oct 15 04:14:34 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1padic.h
@@ -52,10 +52,11 @@ public:
     template<class vect>
     IntegerDom::Element& eval( IntegerDom::Element& E, const vect& P) {
         typename vect::const_reverse_iterator pi = P.rbegin();
-        IntegerDom::init(E, _domain.convert(*pi) );
+        _domain.convert(E, *pi);
         for (++pi;pi != P.rend();++pi) {
             IntegerDom::mulin(E, _domain.size() );
-            IntegerDom::addin(E, _domain.convert(*pi) );
+            IntegerDom::Element epi; 
+            IntegerDom::addin(E, _domain.convert(epi, *pi) );
         }
         return E;
     }
@@ -67,7 +68,8 @@ public:
         _domain.convert(E,*pi);
         for (++pi;pi != P.rend();++pi) {
             E *= _domain.size();
-            E += (uint64_t)_domain.convert(*pi);
+            uint64_t epi; 
+            E += _domain.convert(epi, *pi);
         }
         return E;
     }
@@ -78,7 +80,8 @@ public:
         _domain.convert(E,*pi);
         for (++pi;pi != P.rend();++pi) {
             E *= _domain.size();
-            E += (unsignedinttype)_domain.convert(*pi);
+            unsignedinttype epi;
+            E += _domain.convert(epi,*pi);
         }
         return E;
     }

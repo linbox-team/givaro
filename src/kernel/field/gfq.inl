@@ -621,182 +621,148 @@ namespace Givaro {
     {
         TT t;
         i >> t;
-        reduce(a,t);
+        init(a,t);
         return i;
     }
 
-
     template<typename TT>
-    template<typename XXX>
-    inline typename GFqDom<TT>::Element& GFqDom<TT>::init(Element& r, const XXX& value) const {
-        return r = (Rep)_pol2log[ (UT)(value) ];
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const Rep& e) const {
+            return r = e;
     }
+    template<typename TT>
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r ) const {
+        return r;
+    }
+       
+
+ //    template<typename TT>
+//     template<typename XXX>
+//     inline typename GFqDom<TT>::Element& GFqDom<TT>::init(Element& r, const XXX& value) const {
+//         return r = (Rep)_pol2log[ (UT)(value) ];
+//     }
         
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const double Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double Residu ) const
     {
         double tr = Residu ;
         if (tr <0) {
                 // -a = b [p]  <==>  a = p-b [p]
             tr = -tr;
             if (tr > Signed_Trait<UTT>::max() )
-                tr = fmod(tr,_dcharacteristic);
+                tr = fmod(tr,(double)_q);
                 //tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
             else{
-                if (tr >= (TT)_characteristic )
-                    tr = double((UTT)tr % _characteristic) ;
+                if (tr >= (TT)_q )
+                    tr = double((UTT)tr % _q) ;
             }
 
             if ((bool)tr)
-                return r = (Rep)_pol2log[ UT(_characteristic - (UTT)tr) ];
+                return r = (Rep)_pol2log[ UT(_q - (UTT)tr) ];
             else
                 return r = zero;
         } else {
             if (tr > Signed_Trait<UTT>::max() )
-                tr = fmod(tr,_dcharacteristic);
+                tr = fmod(tr, (double)_q);
                 //tr -= (double)floor(tr * _inversecharacteristic)*_dcharacteristic;
             else{
-                if (tr >= (TT)_characteristic )
-                    tr = double((UTT)tr % _characteristic) ;
+                if (tr >= (TT)_q )
+                    tr = double((UTT)tr % _q) ;
             }
             return r = (Rep)_pol2log[ (UT)tr ];
         }
     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const float Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const float Residu ) const
     {
-        return reduce(r, static_cast<double>(Residu));
+        return init(r, static_cast<double>(Residu));
     }
 
 
 
-    template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const int32_t Residu ) const
-    {
-        int32_t tr = Residu ;
-        if (tr <0) {
-                // -a = b [p]
-                // a = p-b [p]
-            tr = -tr;
-            if (tr >= (int32_t)_characteristic )
-                tr =(int32_t)( (UT)tr % _characteristic ) ;
-            if (tr)
-                return r = (Rep) _pol2log[(UT) _characteristic - (UT)tr ];
-            else
-                return r = zero;
-        }
-        else {
-            if (tr >= (int32_t)_characteristic )
-                tr = int32_t((uint32_t)tr % _characteristic ) ;
-            return r = (Rep)_pol2log[ (UT)tr ];
-        }
-    }
-    template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const int64_t Residu ) const
-    {
-        int64_t tr = Residu ;
-        if (tr <0) {
-                // -a = b [p]
-                // a = p-b [p]
-            tr = -tr;
-            if (tr >= (int64_t)_characteristic )
-				tr = tr % (int64_t)_characteristic ;
-            if (tr)
-                return r = (typename GFqDom<TT>::Rep) _pol2log[ (size_t)_characteristic - (size_t)tr ];
-            else
-                return r = zero;
-        } else {
-            if (tr >= (int64_t)_characteristic )
-				tr = tr % (int64_t)_characteristic ;
-            return r = (Rep)_pol2log[ (size_t)tr ];
-        }
-    }
+     template<typename TT>
+     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int32_t Residu ) const
+     {
+         int32_t tr = Residu ;
+         if (tr <0) {
+                 // -a = b [p]
+                 // a = p-b [p]
+             tr = -tr;
+             if (tr >= (int32_t)_q )
+                 tr =(int32_t)( (UT)tr % _q ) ;
+             if (tr)
+                 return r = (Rep) _pol2log[(UT) _q - (UT)tr ];
+             else
+                 return r = zero;
+         }
+         else {
+             if (tr >= (int32_t)_q )
+                 tr = int32_t((uint32_t)tr % _q ) ;
+             return r = (Rep)_pol2log[ (UT)tr ];
+         }
+     }
+     template<typename TT>
+     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const int64_t Residu ) const
+     {
+         int64_t tr = Residu ;
+         if (tr <0) {
+                 // -a = b [p]
+                 // a = p-b [p]
+             tr = -tr;
+             if (tr >= (int64_t)_q )
+ 				tr = tr % (int64_t)_q ;
+             if (tr)
+                 return r = (typename GFqDom<TT>::Rep) _pol2log[ (size_t)_q - (size_t)tr ];
+             else
+                 return r = zero;
+         } else {
+             if (tr >= (int64_t)_q )
+ 				tr = tr % (int64_t)_q ;
+             return r = (Rep)_pol2log[ (size_t)tr ];
+         }
+     }
 
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const Integer Residu ) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Integer Residu ) const
     {
         UTT tr;
         if (Residu <0) {
                 // -a = b [p]
                 // a = p-b [p]
-            if ( Residu <= (Integer)(-_characteristic) )
-				tr = (UTT) (  (-Residu) % (UTT)_characteristic );
+            if ( Residu <= (Integer)(-_q) )
+				tr = (UTT) (  (-Residu) % (UTT)_q );
             else
                 tr = UTT(-Residu);
             if (tr)
-                return r = (Rep)_pol2log[ _characteristic - (UTT)tr ];
+                return r = (Rep)_pol2log[ _q - (UTT)tr ];
             else
                 return r = zero;
         }
 		else { /* Residu >=0 */
-            if (Residu >= (Integer)_characteristic )
-				tr =  (UTT)(Residu % (UTT)_characteristic );
+            if (Residu >= (Integer)_q )
+				tr =  (UTT)(Residu % (UTT)_q );
             else
 				tr = UTT(Residu);
             return r = (Rep)_pol2log[ (size_t)tr ];
         }
     }
 
-    template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const uint64_t Residu ) const
-    {
-        uint64_t tr = Residu ;
-        if (tr >= _characteristic )
-			tr =tr %  (uint64_t) _characteristic ;
-        return r = (Rep)_pol2log[ (size_t)tr ];
-    }
-
-    template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const uint32_t Residu ) const
-    {
-        uint64_t tr = static_cast<uint64_t>(Residu) ;
-        if (tr >= _characteristic ) tr = tr % (uint64_t) _characteristic ;
-        return r = (Rep)_pol2log[ (size_t)tr ];
-    }
-
-// #ifndef __GIVARO__DONOTUSE_longlong__
-//     template<typename TT>
-//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const ulong long Residu ) const
-//     {
-//         ulong long tr = Residu ;
-//         if (tr >= _characteristic ) tr = tr % _characteristic ;
-//         return r = (Rep)_pol2log[ (size_t)tr ];
-//     }
-
-//     template<typename TT>
-//     inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const long long Residu ) const
-//     {
-//         long long tr = Residu ;
-//         if (tr <0) {
-//                 // -a = b [p]
-//                 // a = p-b [p]
-//             tr = -tr;
-//             if (tr >= (long long)_characteristic ) tr = (ulong long)tr % _characteristic ;
-//             if (tr)
-//                 return r = _pol2log[ _characteristic - (ulong long)tr ];
-//             else
-//                 return r = zero;
-//         } else {
-//             if (tr >= (long long)_characteristic ) tr = (ulong long)tr % _characteristic ;
-//             return r = _pol2log[ tr ];
-//         }
-//     }
-
-
-//     template<typename TT>
-//     inline ulong long& GFqDom<TT>::convert (ulong long& r, const Rep a) const
-//     {
-//         return r = (ulong long)_log2pol[ (ulong)a] ;
-//     }
-//     template<typename TT>
-//     inline long long& GFqDom<TT>::convert (long long& r, const Rep a) const
-//     {
-//         return r = (long long)_log2pol[ (ulong)a] ;
-//     }
-
-// #endif
+     template<typename TT>
+     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const uint64_t Residu ) const
+     {
+         uint64_t tr = Residu ;
+         if (tr >= _q )
+ 			tr =tr %  (uint64_t) _q ;
+         return r = (Rep)_pol2log[ (size_t)tr ];
+     }
+     template<typename TT>
+     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const uint32_t Residu ) const
+     {
+         uint64_t tr = static_cast<uint64_t>(Residu) ;
+         if (tr >= _q ) tr = tr % (uint64_t) _q ;
+         return r = (Rep)_pol2log[ (size_t)tr ];
+     }
 
 
     template<typename TT>
@@ -857,16 +823,11 @@ namespace Givaro {
 
 
         // ---------
-        // -- Reduceialization operations
+        // -- Initialization operations
         // ---------
     template<typename TT>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r) const
-    { return r = zero; }
-
-
-    template<typename TT>
     template<typename val_t, template<class, class> class Vector, template <class> class Alloc>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r, const Vector<val_t, Alloc<val_t> >& P) {
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Vector<val_t, Alloc<val_t> >& P) {
         static Self_t PrimeField(this->_characteristic);
         typedef Poly1Dom< Self_t, Dense > PolDom;
         static PolDom Pdom( PrimeField );
@@ -892,7 +853,7 @@ namespace Givaro {
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Integer a) const
-    { return reduce (r, a); }
+    { return init (r, a); }
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::assign( Rep& r, const Rep a) const
@@ -1029,7 +990,7 @@ namespace Givaro {
                 // (p^e-1) th cyclotomic polynomial
                 // G is a primitive polynomial for F : X
                 //         Pdom.getcyclo(F);
-                //         Pdom.reduce(G, Degree(1), Zp.one);
+                //         Pdom.init(G, Degree(1), Zp.one);
 
                 // F is irreducible of degree e over Zp
                 // with X as a primitive polynomial

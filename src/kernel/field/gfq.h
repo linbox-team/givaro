@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <27 Oct 15 22:16:36 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Oct 15 20:48:41 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -173,24 +173,24 @@ public:
     
  	// Initialization of Elements
     Rep& init(Rep& r) const { return r=zero;}
-    template<typename XXX>
-    Rep& init(Rep& r, const XXX& value) const;
+    Rep& init( Rep&, const int32_t) const ;
+    Rep& init( Rep&, const uint32_t) const ;
+    Rep& init( Rep&, const int64_t) const ;
+    Rep& init( Rep&, const uint64_t) const ;
+    Rep& init( Rep&, const Integer) const;
+    Rep& init( Rep&, const float) const ;
+    Rep& init( Rep&, const double) const ;
+    Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
     
 
  	// Reduction of Elements
-    Rep& reduce( Rep&) const;
-    Rep& reduce( Rep&, const int32_t) const ;
-    Rep& reduce( Rep&, const uint32_t) const ;
-    Rep& reduce( Rep&, const int64_t) const ;
-    Rep& reduce( Rep&, const uint64_t) const ;
-    Rep& reduce( Rep&, const Integer) const;
-    Rep& reduce( Rep&, const float) const ;
-    Rep& reduce( Rep&, const double) const ;
-    Rep& reduce( Rep& a, std::istream& s ) const { return read(a,s); }
+    Rep& reduce(Rep& r) const;
+    Rep& reduce(Rep& r, const Rep& e) const;
+    
     
 	// Initialization of a polynomial
     template<typename val_t, template<class,class> class Vector,template <class> class Alloc>
-    Rep& reduce( Rep&, const Vector<val_t,Alloc<val_t> >&);
+    Rep& init( Rep&, const Vector<val_t,Alloc<val_t> >&);
     
     
 	// -- Misc: r <- a mod p

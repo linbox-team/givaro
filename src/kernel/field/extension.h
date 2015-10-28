@@ -17,6 +17,7 @@
 #include <givaro/givconfig.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givpoly1factor.h>
+#include <givaro/givpoly1padic.h>
 #include "givaro/givtablelimits.h"
 
 namespace Givaro {
@@ -219,6 +220,16 @@ namespace Givaro {
 		return _pD.assign(e, a) ;
             }
 
+        Integer& convert(Integer& i, const PolElement& e) const {
+            
+            return (Poly1PadicDom<BaseField_t>(_pD)).eval(i, e);
+        }
+        PolElement& init(PolElement& e, const Integer& i) const {
+            return (Poly1PadicDom<BaseField_t>(_pD)).radix(e, i, _extension_order);
+        }
+        
+                
+                
 	template<class XXX>
 	XXX& convert( XXX& i, const PolElement& e) const
             {

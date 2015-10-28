@@ -287,33 +287,16 @@ namespace Givaro {
 
 
 	// -- Random dense polynomial of degree d
-	// TEMPORARY VERSION SATISFYING LINBOX
 	template <class Domain> template<class RandomIterator>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, typename Poly1Dom<Domain,Dense>::Rep& r, Degree d) const
 	{
 		r.reallocate((size_t)d.value()+1);
-		typename Domain::Element tmp;
-		while (_domain.isZero(g.random(tmp))) ;
-		r[(size_t)d.value()] = tmp;
+		_domain.nonzerorandom(g, r[(size_t)d.value()]);
 		for (int i=(int)d.value(); i--;)
-			g.random(r[(size_t)i]);
+                    _domain.random(g,r[(size_t)i]);
 		return r;
 	}
 
-	// -- Random dense polynomial of degree d
-	// specialization pour Givrandom
-	// #if !defined(__INTEL_COMPILER) && !defined(__CUDACC__)
-	// template<>
-	// #endif
-	template <class Domain>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(GivRandom& g, Rep& r, Degree d) const
-	{
-		r.reallocate((uint64_t)d.value()+1);
-		_domain.nonzerorandom(g, r[(uint64_t)d.value()]);
-		for (int i= (int)d.value(); i--;)
-			_domain.random(g,r[(uint64_t)i]);
-		return r;
-	}
 
 #if 0
 	template <class Domain> template<class RandomIterator>

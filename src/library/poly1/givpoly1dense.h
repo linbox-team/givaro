@@ -424,7 +424,6 @@ namespace Givaro {
 		// -- Random dense polynomial of degree d
 		template< class RandomIterator > Rep& random(RandomIterator& g, Rep& r, Degree s) const ;
 
-		Rep& random(GivRandom& g, Rep& r, Degree s) const ;
 		// -- Random dense polynomial with same size as b.
 		template< class RandomIterator > Rep& random(RandomIterator& g, Rep& r, const Rep& b) const;
 

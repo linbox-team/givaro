@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 Oct 15 02:50:36 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Oct 15 02:59:14 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givrandom.h
@@ -92,12 +92,6 @@ public:
     {
         return x = (XXX)this->operator() ();
     }
-    
-    template<class XXX> XXX& random (XXX& x) const
-    {
-        return x = (XXX)this->operator() ();
-    }
-
 
 };
 

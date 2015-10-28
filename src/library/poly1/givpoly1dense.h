@@ -21,6 +21,7 @@
 #include "givaro/givindeter.h"
 #include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
+#include "givaro/givindeter.h"
 
 #ifndef __GIV_STANDARD_VECTOR
 #include <vector>
@@ -127,6 +128,8 @@ namespace Givaro {
 		// -- Self_t
 		typedef          Poly1Dom<Domain,Dense>    Self_t;
 
+	
+
 		// -- The representation of a dense polynomial.
 		// assuming that we have correct operator, especially size, allocate
 		// , reallocate
@@ -137,6 +140,7 @@ namespace Givaro {
 		typedef          Storage_t                 Rep;
 		typedef          const Storage_t                 constRep;
 		typedef          Storage_t                 Element;
+       		typedef GIV_randIter< Self_t, Element> RandIter;
 
 		Poly1Dom ()
 		{}

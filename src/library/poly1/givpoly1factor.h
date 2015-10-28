@@ -30,17 +30,17 @@ namespace Givaro {
 	// template<class Domain, class StorageTag> class Poly1FactorDom {};
 
 	//! Poly1FactorDom
-	template<class Domain, class Tag = Dense, class RandIter = GivRandom>
+	template<class Domain, class Tag = Dense, class RandomIterator = GivRandom>
 	class Poly1FactorDom : public Poly1Dom<Domain,Tag> {
 	protected:
 		using               Poly1Dom<Domain,Tag>::_domain;
 		typedef typename Poly1Dom<Domain,Tag>::Rep    Rep;
-		mutable          RandIter                      _g;
+		mutable          RandomIterator                      _g;
 	public:
 		using                                                 Poly1Dom<Domain,Tag>::one;
 		using                                                Poly1Dom<Domain,Tag>::zero;
 		typedef typename Poly1Dom<Domain,Tag>::Element                          Element;
-		typedef          RandIter                                      random_generator;
+		typedef          RandomIterator                                      random_generator;
             	typedef typename Domain::Residu_t Residu_t;
 		typedef typename Signed_Trait<typename Domain::Element>::signed_type   Element_t;
 		// using typename Poly1Dom<Domain,Tag>::Type_t; //used for assign (clang complains)
@@ -50,11 +50,11 @@ namespace Givaro {
 		Poly1FactorDom () {}
 
 		//! @warning  there is a copy of the random Iterator ...
-		Poly1FactorDom (Domain& d, const Indeter& X = Indeter(), const RandIter& g = RandIter() ) :
+		Poly1FactorDom (Domain& d, const Indeter& X = Indeter(), const RandomIterator& g = RandomIterator() ) :
 		       	Poly1Dom<Domain,Tag> (d,X), _g(g)
 	       	{}
 
-		Poly1FactorDom (const Poly1Dom<Domain,Tag>& P, const RandIter& g = RandIter()) :
+		Poly1FactorDom (const Poly1Dom<Domain,Tag>& P, const RandomIterator& g = RandomIterator()) :
 			Poly1Dom<Domain,Tag> (P), _g(g)
 	       	{}
 

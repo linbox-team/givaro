@@ -272,15 +272,15 @@ namespace Givaro {
 
 
 	// -- Random dense polynomial of degree 0
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, Rep& r) const
 	{
 		return random(g, r,Degree(0));
 	}
 
 	// -- Random dense polynomial of size s
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, uint64_t s) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, Rep& r, uint64_t s) const
 	{
 		return random(g, r,Degree(s-1));
 	}
@@ -288,8 +288,8 @@ namespace Givaro {
 
 	// -- Random dense polynomial of degree d
 	// TEMPORARY VERSION SATISFYING LINBOX
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, typename Poly1Dom<Domain,Dense>::Rep& r, Degree d) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, typename Poly1Dom<Domain,Dense>::Rep& r, Degree d) const
 	{
 		r.reallocate((size_t)d.value()+1);
 		typename Domain::Element tmp;
@@ -316,8 +316,8 @@ namespace Givaro {
 	}
 
 #if 0
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, Degree d) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, Rep& r, Degree d) const
 	{
 		r.reallocate((uint64_t)d.value()+1);
 		while (_domain.isZero(_domain.init(r[d.value()], g()))) {};
@@ -331,34 +331,34 @@ namespace Givaro {
 #endif
 
 	// -- Random dense polynomial with same size as b.
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandIter& g, Rep& r, const Rep& b) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, Rep& r, const Rep& b) const
 	{
 		return random(g, r,b.size());
 	}
 
 
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandIter& g, Rep& r) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandomIterator& g, Rep& r) const
 	{
 		return random(g, r);
 	}
 
 
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandIter& g, Rep& r, uint64_t s) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandomIterator& g, Rep& r, uint64_t s) const
 	{
 		return random(g, r,s);
 	}
 
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandIter& g, Rep& r, Degree d) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandomIterator& g, Rep& r, Degree d) const
 	{
 		return random(g, r,d);
 	}
 
-	template <class Domain> template<class RandIter>
-	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandIter& g, Rep& r, const Rep& b) const
+	template <class Domain> template<class RandomIterator>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandomIterator& g, Rep& r, const Rep& b) const
 	{
 		return random(g, r,b);
 	}

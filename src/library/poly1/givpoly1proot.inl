@@ -31,9 +31,9 @@ namespace Givaro {
 	// BINOM
 	////////////////////////////////////////////
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, Residue MOD) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_binomial (Element& R, Degree n, Residue MOD) const
 	{
 		for(Residue a=0; a<MOD; ++a) {
 			_domain.assign(R[0],(Type_t)a);
@@ -43,16 +43,16 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, bool MOD) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_binomial (Element& R, Degree n, bool MOD) const
 	{
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, Residue MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_binomial (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
 		for(Residu_t a=0; a<MOD; ++a) {
 			_domain.assign(R[0],static_cast<Element_t>(a));
@@ -63,17 +63,17 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial (Element& R, Degree n, bool MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_binomial (Element& R, Degree n, bool MOD, Element IXE) const
 	{
 		return false;
 	}
 
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_binomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
 		for(Residu_t a=0; a<MOD; ++a) {
 			_domain.assign(R[0],(Element_t)a);
@@ -84,9 +84,9 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_binomial2 (Element& R, Degree n, bool MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_binomial2 (Element& R, Degree n, bool MOD, Element IXE) const
 	{
 		return false;
 	}
@@ -95,9 +95,9 @@ namespace Givaro {
 	// TRINOM
 	////////////////////////////////////////////
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, Residue MOD) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_trinomial (Element& R, Degree n, Residue MOD) const
 	{
 
 		for(long d=1;d<=(n.value()/2);++d) {
@@ -116,9 +116,9 @@ namespace Givaro {
 		return false ;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, bool MOD) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_trinomial (Element& R, Degree n, bool MOD) const
 	{
 
 		_domain.assign(R[0],_domain.one);
@@ -131,9 +131,9 @@ namespace Givaro {
 		return false ;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, Residue MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_trinomial (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
 		for(long d=2;d<=(n.value()/2);++d) {
 			for(Residu_t b=0; b<MOD; ++b) {
@@ -151,9 +151,9 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial (Element& R, Degree n, bool MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_trinomial (Element& R, Degree n, bool MOD, Element IXE) const
 	{
 
 		_domain.assign(R[0],_domain.one);
@@ -166,9 +166,9 @@ namespace Givaro {
 		return false ;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_trinomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
 		for(long d=2;d<n.value();++d) {
 			for(Residu_t b=0; b<MOD; ++b) {
@@ -185,9 +185,9 @@ namespace Givaro {
 
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_trinomial2 (Element& R, Degree n, bool MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_trinomial2 (Element& R, Degree n, bool MOD, Element IXE) const
 	{
 
 		_domain.assign(R[0],_domain.one);
@@ -203,16 +203,16 @@ namespace Givaro {
 	////////////////////////////////////////////
 	// RANDOM
 	////////////////////////////////////////////
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, Residue MOD) const
 	{
 #ifdef INFLOOPDEBUG
 		int no_inf_loop =(int) n.value()/2+5 ;
 #endif
 
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
 				_domain.assign(R[0],(Type_t)a);
@@ -229,16 +229,16 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, bool MOD) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, bool MOD) const
 	{
 #ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			_domain.assign(R[0],_domain.one);
 			if (is_irreducible(R))
@@ -253,15 +253,15 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, Residue MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
 #ifdef INFLOOPDEBUG
 		int no_inf_loop = (int)n.value()/2+5 ;
 #endif
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
 				_domain.assign(R[0],(Element_t)a);
@@ -278,16 +278,16 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial (Element& R, Degree n, bool MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, bool MOD, Element IXE) const
 	{
 #ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			_domain.assign(R[0],_domain.one);
 			if (is_irreducible(R) && (is_prim_root(IXE,R) ))
@@ -302,15 +302,15 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	template<class Residue>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
 	{
 #ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
 				_domain.assign(R[0],(Element_t)a);
@@ -327,15 +327,15 @@ namespace Givaro {
 		return false;
 	}
 
-	template<class Domain, class Tag, class RandIter >
+	template<class Domain, class Tag, class RandomIterator >
 	// template<>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::find_irred_randomial2 (Element& R, Degree n, bool MOD, Element IXE) const
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial2 (Element& R, Degree n, bool MOD, Element IXE) const
 	{
 #ifdef INFLOOPDEBUG
 		int no_inf_loop = n.value()/2+5 ;
 #endif
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			_domain.assign(R[0],_domain.one);
 			if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
@@ -359,8 +359,8 @@ namespace Givaro {
 	// of degree < CYCLO_DEGREE_BOUND or a random one.
 	// ---------------------------------------------------------------
 
-	template<class Domain, class Tag, class RandIter >
-	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::creux_random_irreducible (Element& R, Degree n) const
+	template<class Domain, class Tag, class RandomIterator >
+	inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Element& Poly1FactorDom<Domain,Tag, RandomIterator>::creux_random_irreducible (Element& R, Degree n) const
 	{
 		this->init(R, n);
 
@@ -393,8 +393,8 @@ namespace Givaro {
 
 	}
 
-	template<class Domain, class Tag, class RandIter >
-	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::random_irreducible (Element& R, Degree n) const
+	template<class Domain, class Tag, class RandomIterator >
+	inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Element& Poly1FactorDom<Domain,Tag, RandomIterator>::random_irreducible (Element& R, Degree n) const
 	{
 		// Search for a monic irreducible Polynomial
 		// with random Elements
@@ -414,8 +414,8 @@ namespace Givaro {
 	// having 2, 3 nonzero terms or or a random one,
 	// with X as a primitive root.
 	// ---------------------------------------------------------------
-	template<class Domain, class Tag, class RandIter >
-	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible (Element& R, Degree n) const
+	template<class Domain, class Tag, class RandomIterator >
+	inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Element& Poly1FactorDom<Domain,Tag, RandomIterator>::ixe_irreducible (Element& R, Degree n) const
 	{
 		this->init(R, n);
 		Element IXE;
@@ -450,8 +450,8 @@ namespace Givaro {
 
 	}
 
-	template<class Domain, class Tag, class RandIter >
-	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Element& Poly1FactorDom<Domain,Tag, RandIter>::ixe_irreducible2 (Element& R, Degree n) const
+	template<class Domain, class Tag, class RandomIterator >
+	inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Element& Poly1FactorDom<Domain,Tag, RandomIterator>::ixe_irreducible2 (Element& R, Degree n) const
 	{
 		this->init(R, n);
 		Element IXE;
@@ -489,8 +489,8 @@ namespace Givaro {
 	// Irreducibility tests
 	// ---------------------------------------------------------------
 
-	template<class Domain, class Tag, class RandIter>
-	inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible2( const Rep& P
+	template<class Domain, class Tag, class RandomIterator>
+	inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::is_irreducible2( const Rep& P
 									  , Residu_t MOD ) const
 	{
 		// Square free ?
@@ -527,8 +527,8 @@ namespace Givaro {
 	// returns 1 if P is a generator.
 	// ---------------------------------------------------------------
 
-	template<class Domain, class Tag, class RandIter>
-	bool Poly1FactorDom<Domain,Tag, RandIter>::is_prim_root( const Rep& P, const Rep& F)  const
+	template<class Domain, class Tag, class RandomIterator>
+	bool Poly1FactorDom<Domain,Tag, RandomIterator>::is_prim_root( const Rep& P, const Rep& F)  const
 	{
 		bool isproot = 0;
 		Rep A, G;
@@ -554,8 +554,8 @@ namespace Givaro {
 		return isproot;
 	}
 
-	template<class Domain, class Tag, class RandIter>
-	inline typename IntegerDom::Element Poly1FactorDom<Domain,Tag, RandIter>::order( const Rep& P, const Rep& F)  const
+	template<class Domain, class Tag, class RandomIterator>
+	inline typename IntegerDom::Element Poly1FactorDom<Domain,Tag, RandomIterator>::order( const Rep& P, const Rep& F)  const
 	{
 		bool isproot = 0;
 		Rep A, G; mod(A,P,F);
@@ -589,8 +589,8 @@ namespace Givaro {
 		return ID.zero;
 	}
 
-	template<class Domain, class Tag, class RandIter >
-	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::give_prim_root(Rep& R, const Rep& F)  const
+	template<class Domain, class Tag, class RandomIterator >
+	inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<Domain,Tag, RandomIterator>::give_prim_root(Rep& R, const Rep& F)  const
 	{
 		Degree n; this->degree(n,F);
 		Residu_t MOD = _domain.residu();
@@ -626,7 +626,7 @@ namespace Givaro {
 		// Search for a primitive Polynomial
 		// with random Elements
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
 				_domain.assign(R[0],(Element_t)a);
@@ -637,8 +637,8 @@ namespace Givaro {
 	}
 
 
-	template<class Domain, class Tag, class RandIter >
-	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::give_random_prim_root(Rep& R, const Rep& F)  const
+	template<class Domain, class Tag, class RandomIterator >
+	inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<Domain,Tag, RandomIterator>::give_random_prim_root(Rep& R, const Rep& F)  const
 	{
 		Degree n; this->degree(n,F);
 		Residu_t MOD = _domain.residu();
@@ -646,7 +646,7 @@ namespace Givaro {
 		// Search for a primitive Polynomial
 		// with random Elements
 		do {
-			this->random( (RandIter&)_g, R, n); // must cast away const
+			this->random( (RandomIterator&)_g, R, n); // must cast away const
 			_domain.assign(R[(size_t)n.value()],_domain.one);
 			for(Residu_t a=0; a<MOD; ++a) {
 				_domain.assign(R[0],(Element_t)a);
@@ -657,8 +657,8 @@ namespace Givaro {
 	}
 
 
-	template<class Domain, class Tag, class RandIter >
-	inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::random_prim_root(Rep& P, Rep& R, Degree n)  const
+	template<class Domain, class Tag, class RandomIterator >
+	inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<Domain,Tag, RandomIterator>::random_prim_root(Rep& P, Rep& R, Degree n)  const
 	{
 		// P is irreducible
 		// R is a primitive root. i.e R generates (Z_p)/P.

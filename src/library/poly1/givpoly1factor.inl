@@ -26,9 +26,9 @@ namespace Givaro {
 // Splits a polynomial into prime factors of same degree
 // ---------------------------------------------------------------
 
-template<class Domain, class Tag, class RandIter>
+template<class Domain, class Tag, class RandomIterator>
 template< template<class, class> class Container, template <class> class Alloc >
-inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
+inline void Poly1FactorDom<Domain,Tag, RandomIterator>::SplitFactor(
     Container< Rep, Alloc<Rep> > & L
     , const Rep& G
     , Degree d
@@ -78,8 +78,8 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
 }
 
 
-template<class Domain, class Tag, class RandIter>
-inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::SplitFactor(
+template<class Domain, class Tag, class RandomIterator>
+inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<Domain,Tag, RandomIterator>::SplitFactor(
     Rep& G1
     , const Rep& G
     , Degree d
@@ -128,9 +128,9 @@ inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain
 // Splits a polynomial into divisors of homogenous prime factors
 // ---------------------------------------------------------------
 
-template<class Domain, class Tag, class RandIter>
+template<class Domain, class Tag, class RandomIterator>
 template< template<class, class> class Container, template <class> class Alloc >
-inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
+inline void Poly1FactorDom<Domain,Tag, RandomIterator>::DistinctDegreeFactor(
     Container< Rep, Alloc<Rep> > & L
     , const Rep& f
     , Residu_t MOD)  const  {
@@ -163,10 +163,10 @@ inline void Poly1FactorDom<Domain,Tag, RandIter>::DistinctDegreeFactor(
 // Cantor-Zassenhaus Polynomial factorization over Z/pZ
 // ---------------------------------------------------------------
 
-template<class Domain, class Tag, class RandIter>
+template<class Domain, class Tag, class RandomIterator>
 template< template<class, class> class Container, template <class> class Alloc>
 inline void
-Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & Lf,
+Poly1FactorDom<Domain,Tag, RandomIterator>::CZfactor( Container< Rep, Alloc<Rep> > & Lf,
 			   Container< uint64_t, Alloc<uint64_t> > & Le,
 	       const Rep& P,
 	       Residu_t MOD)  const
@@ -199,8 +199,8 @@ Poly1FactorDom<Domain,Tag, RandIter>::CZfactor( Container< Rep, Alloc<Rep> > & L
 // Irreducibility tests
 // ---------------------------------------------------------------
 
-template<class Domain, class Tag, class RandIter>
-inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible( const Rep& P
+template<class Domain, class Tag, class RandomIterator>
+inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::is_irreducible( const Rep& P
 								  , Residu_t MOD ) const
 {
 	Rep W,D;
@@ -226,8 +226,8 @@ inline bool Poly1FactorDom<Domain,Tag, RandIter>::is_irreducible( const Rep& P
 // returns P otherwise
 // ---------------------------------------------------------------
 
-template<class Domain, class Tag, class RandIter>
-inline typename Poly1FactorDom<Domain,Tag, RandIter>::Rep& Poly1FactorDom<Domain,Tag, RandIter>::factor(
+template<class Domain, class Tag, class RandomIterator>
+inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<Domain,Tag, RandomIterator>::factor(
     Rep& W
     , const Rep& P
     , Residu_t MOD)  const

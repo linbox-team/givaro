@@ -418,20 +418,20 @@ namespace Givaro {
 
 		// -- Random generators
 		// -- Random dense polynomial of degree 0
-		template< class RandIter > Rep& random(RandIter& g, Rep& r) const;
+		template< class RandomIterator > Rep& random(RandomIterator& g, Rep& r) const;
 		// -- Random dense polynomial of size s
-		template< class RandIter > Rep& random(RandIter& g, Rep& r, uint64_t s) const ;
+		template< class RandomIterator > Rep& random(RandomIterator& g, Rep& r, uint64_t s) const ;
 		// -- Random dense polynomial of degree d
-		template< class RandIter > Rep& random(RandIter& g, Rep& r, Degree s) const ;
+		template< class RandomIterator > Rep& random(RandomIterator& g, Rep& r, Degree s) const ;
 
 		Rep& random(GivRandom& g, Rep& r, Degree s) const ;
 		// -- Random dense polynomial with same size as b.
-		template< class RandIter > Rep& random(RandIter& g, Rep& r, const Rep& b) const;
+		template< class RandomIterator > Rep& random(RandomIterator& g, Rep& r, const Rep& b) const;
 
-		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r) const;
-		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, uint64_t s) const;
-		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, Degree s) const ;
-		template< class RandIter > Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const;
+		template< class RandomIterator > Rep& nonzerorandom(RandomIterator& g, Rep& r) const;
+		template< class RandomIterator > Rep& nonzerorandom(RandomIterator& g, Rep& r, uint64_t s) const;
+		template< class RandomIterator > Rep& nonzerorandom(RandomIterator& g, Rep& r, Degree s) const ;
+		template< class RandomIterator > Rep& nonzerorandom(RandomIterator& g, Rep& r, const Rep& b) const;
 
 		// -- Square free decomposition
 		/** Sqrfree decomposition.

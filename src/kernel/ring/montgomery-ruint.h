@@ -123,7 +123,7 @@ namespace Givaro
         }
         Element& init(Element& r, const Integer& a) const
         {
-            r = Caster<Element>(a % _p);
+            reduce(r, Caster<Element>((a < 0)? -a : a));
 	    if (a < 0) negin(r);
             return to_mg(r);
         }

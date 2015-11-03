@@ -3,7 +3,7 @@
 Copyright Université Joseph Fourier - Grenoble
 Contributors :
     Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
+    Christophe CHABOT (christophechabotcc@gmail.com 2011)
     Jean-Guillaume Dumas
 
 Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
@@ -71,6 +71,8 @@ namespace RecInt
         // Constructors
         rmint() : Value(0) {}
         rmint(const ruint<K>& c) : Value(c) { to_mg(*this); }
+        rmint(const rint<K>& c) : Value( c.isNegative() ? (-c).Value : c.Value) { 
+            to_mg(*this); if (c.isNegative()) neg(*this); }
         rmint(const rmint<K, MGI>& c) : Value(c.Value) { to_mg(*this); }
         rmint(const rmint<K, MGA>& c) : Value(c.Value) {}
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { to_mg(*this); }

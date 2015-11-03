@@ -65,6 +65,8 @@ namespace RecInt
         // Constructors
         rmint() : Value(0) {}
         rmint(const ruint<K>& c) : Value(c) { reduction(*this); }
+        rmint(const rint<K>& c) : Value( c.isNegative() ? (-c).Value : c.Value) { 
+            reduction(*this); if (c.isNegative()) neg(*this); }
         rmint(const rmint<K, MGI>& c) : Value(c.Value) { reduction(*this); }
         rmint(const rmint<K, MGA>& c) : Value(c.Value) { reduction(*this); }
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { mod_n(Value, p); }

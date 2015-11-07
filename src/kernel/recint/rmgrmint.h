@@ -46,6 +46,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #define MG_DEFAULT MG_ACTIVE
 #endif
 
+#include "rint.h"
 #include "ruruint.h"
 #include "rutools.h" /* mod_n() */
 #include "rmdefine.h"

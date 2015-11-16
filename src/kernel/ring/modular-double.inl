@@ -230,7 +230,7 @@ namespace Givaro {
     inline
 	std::ostream &Modular<double>::write (std::ostream &os, const Element &x) const
 	{
-            return os << x;
+		return os << static_cast<uint64_t>(x);
 	}
 
     inline

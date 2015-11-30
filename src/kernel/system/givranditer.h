@@ -189,7 +189,7 @@ namespace Givaro {
        * @param seed constant integer reference from which to seed random number
        *             generator (default = 0)
        */
-    ModularRandIter(const  Ring& F, const size_t& size = 0, const size_t& seed = 0)
+    ModularRandIter(const  Ring& F, const size_t& size = 0, const uint64_t& seed = 0)
       : _givrand( GivRandom(seed) ), _ring(F) {}
 
       /** Copy constructor.
@@ -289,7 +289,7 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-      GeneralRingRandIter(const Ring &F, const size_t& size = 0, size_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
+      GeneralRingRandIter(const Ring &F, const size_t& size = 0, uint64_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
     {}
       GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
       ~GeneralRingRandIter() {}

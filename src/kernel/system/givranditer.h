@@ -334,14 +334,13 @@ namespace Givaro {
     public:
     typedef typename Ring::Element Element;
 
-    GeneralRingNonZeroRandIter(const Ring &F, RandIter &r) : _F(F), _r(r) {}
-    GeneralRingNonZeroRandIter(RandIter& r) : _F(r.ring()), _r(r) {}
-    GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _F(R._F), _r(R._r) {}
+    GeneralRingNonZeroRandIter(RandIter& r) : _r(r) {}
+    GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _r(R._r) {}
     ~GeneralRingNonZeroRandIter() {}
 
     Element& operator()(Element &a)  const
     {
-      do _r.random(a); while (ring().isZero(a));
+      do _r.random(a); while ( ring().isZero(a));
       return a;
     }
     Element& random(Element &a) const
@@ -358,10 +357,9 @@ namespace Givaro {
         return this->operator()();
     }
 
-    const Ring& ring() const { return _F; }
+    const Ring& ring() const { return _r.ring(); }
 
     private:
-    const Ring&     _F;
     RandIter& _r;
     };
 

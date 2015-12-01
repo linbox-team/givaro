@@ -532,23 +532,22 @@ namespace Givaro {
              */
 	~GIV_ExtensionrandIter(void) {}
 
-            /** Assignment operator.
-             * Assigns ALP_randIter object R to generator.
-             * In this implementation, this means copying the generator to
-             * which R._randIter_ptr points.
-             * @param  R ALP_randIter object.
-             */
-	GIV_ExtensionrandIter<ExtensionField,Type>& operator= ( const GIV_ExtensionrandIter< ExtensionField, Type >& R )
-            {
-		if (this != &R) // guard against self-assignment
-		{
-                    _size = R._size;
-                    _givrand = R._givrand;
-                    _field = R._field;
-		}
-
-		return *this;
-            }
+//             /** Assignment operator.
+//              * Assigns ALP_randIter object R to generator.
+//              * In this implementation, this means copying the generator to
+//              * which R._randIter_ptr points.
+//              * @param  R ALP_randIter object.
+//              */
+// 	GIV_ExtensionrandIter<ExtensionField,Type>& operator= ( const GIV_ExtensionrandIter< ExtensionField, Type >& R )
+//             {
+// 		if (this != &R) // guard against self-assignment
+// 		{
+//                     _size = R._size;
+//                     _givrand = R._givrand;
+//                     _field = R._field;
+// 		}
+// 		return *this;
+//             }
 
             /** Random field Element creator with assignement.
              * This returns a random field Element from the information supplied
@@ -593,14 +592,7 @@ namespace Givaro {
 
             //@} Common Object Iterface
 
-            /** @name Implementation-Specific Methods.
-             */
-            //@{
-
-            /// Default constructor
-	GIV_ExtensionrandIter(void) : _size(0), _givrand(), _field() {}
-
-            //@}
+        const ExtensionField& ring() { return _field; }                
 
     private:
 
@@ -611,7 +603,7 @@ namespace Givaro {
 	GivRandom _givrand;
 
             /// ExtensionField
-	ExtensionField _field;
+	const ExtensionField& _field;
 
     }; //  class GIV_ExtensionrandIter
 

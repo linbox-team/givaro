@@ -170,12 +170,12 @@ namespace Givaro
     class ModularRandIter<Modular<Integer, Integer> >
     {
     public:
-        typedef Modular<Integer, Integer>  Field;
-        typedef Field::Element Element;
+        typedef Modular<Integer, Integer>  Ring;
+        typedef Ring::Element Element;
 
-        ModularRandIter(const Field& F, const size_t& size = 0, const size_t& seed = 0)
+        ModularRandIter(const Ring& R, const size_t& size = 0, const size_t& seed = 0) 
+                : _ring(R)
         {
-            F.characteristic(_p);
             unsigned long s=seed;
             if (! seed) {
                 struct timeval tp;
@@ -187,7 +187,7 @@ namespace Givaro
         Element& operator()(Element& elt)
         {
             // Create new random Elements
-            Givaro::Integer::random_lessthan(elt,_p);
+            Givaro::Integer::random_lessthan(elt,_ring.residu());
 
             return elt;
         }
@@ -206,8 +206,10 @@ namespace Givaro
             return this->operator()();
         }
 
+        const Ring& ring() const { return _ring; }
+        
     private:
-        Givaro::Integer _p;
+        const Ring& _ring;
 
     }; //  class ModularRandIter<Integer>
     

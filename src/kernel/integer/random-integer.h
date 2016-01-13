@@ -37,8 +37,8 @@ namespace Givaro
         std::bool_constant<_Exact_Size>::type _Exact_Size_t;
 	public:
 		typedef Givaro::Integer Integer_Type ;
-		typedef Givaro::ZRing<Integer> Integer_Domain ;
 		typedef Givaro::Integer Element ;
+		typedef Givaro::ZRing<Integer> Integer_Domain ;
 
 		/*! Constructor.
 		 * @param bits size of integers (in bits)
@@ -108,8 +108,12 @@ namespace Givaro
 			return this->nextRandom(_Exact_Size_t(), a);
 		}
 
+        Element& operator() (Element& a) const {
+            return this->random(a);
+        }
+
         Element operator() () const{
-            Element a; return this->nextRandom(_Exact_Size_t(), a);
+            Element a; return this->random(a);
         }
         Element random () const {
             return this->operator()();

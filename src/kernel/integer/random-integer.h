@@ -113,7 +113,7 @@ namespace Givaro
         }
 
         Element operator() () const{
-            Element a; return this->random(a);
+            Element a; this->random(a); return a;
         }
         Element random () const {
             return this->operator()();

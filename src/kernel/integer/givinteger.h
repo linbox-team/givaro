@@ -21,7 +21,7 @@
 #include "givaro/givinit.h"
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
-#include "givaro/zring.h"
+#include "givaro/random-integer.h"
 #include "givaro/ring-interface.h"
 #include <string>
 
@@ -369,7 +369,7 @@ namespace Givaro {
 		}
 #endif
 
-        typedef GeneralRingRandIter<Self_t> RandIter;
+        typedef RandomIntegerIterator<false,false> RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
 
 

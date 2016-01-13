@@ -29,7 +29,17 @@
 
 namespace Givaro
 {    
-  
+    template<class _Element> class ZRing;
+
+    template<typename Domain> struct DomainRandIter {
+        typedef GeneralRingRandIter<Domain> RandIter;
+    };
+    
+    template<> struct DomainRandIter<ZRing<Integer>> {
+        typedef IntegerDom::RandIter RandIter;
+    };    
+        
+
     /** Class ZRing.
      *  Ring of integers, using the _Element base type.
      */
@@ -189,7 +199,7 @@ namespace Givaro
 
 
         // ----- Random generators
-        typedef GeneralRingRandIter<Self_t> RandIter;
+        typedef typename DomainRandIter<Self_t>::RandIter RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
         template< class Random > Element& random(const Random& g, Element& r) const
         { return init(r, g()); }
@@ -354,6 +364,7 @@ namespace Givaro
     
     typedef ZRing<float> FloatDomain;
     typedef ZRing<double> DoubleDomain;
+    typedef ZRing<Integer> IntegerDomain;
 }
 
 #endif

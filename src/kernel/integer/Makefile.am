@@ -11,6 +11,7 @@ AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/memory  -I$(top_srcdir)/src/kernel/syst
 
 pkginclude_HEADERS=         \
 	givinteger.h		    \
+	random-integer.h		    \
 	givintfactor.h		    \
 	givintprime.h		    \
 	givintnumtheo.h		    \

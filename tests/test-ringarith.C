@@ -11,6 +11,7 @@
 #include <givaro/montgomery.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givinteger.h>
+#include <givaro/zring.h>
 #include <givaro/gfq.h>
 
 #include <recint/recint.h>
@@ -157,7 +158,7 @@ template<class Ring>
 int TestRing(const Ring& F, const uint64_t seed)
 {
     typename Ring::Element x, y, a;
-    typename Ring::RandIter g(F, seed);
+    typename Ring::RandIter g(F, 0_ui64, seed);
     
     F.init(x, 7U);
     F.init(y, -29.0);
@@ -265,6 +266,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Integer>, I4, 4);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU4, 4);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R4, 4);
+    TEST_SPECIFIC(ZRing<Integer>, ZR4, 4);
 
     //--------------//
     //----- 75 -----//

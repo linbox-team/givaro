@@ -194,8 +194,8 @@ namespace Givaro
         Element& reduce (Element& x) const { return x; }
 
         // To ensure interface consistency
-        size_t minElement() const { return 0; }
-        size_t maxElement() const { return 0; }
+        Element minElement() const { return 0; }
+        Element maxElement() const { return 0; }
 
 
         // ----- Random generators

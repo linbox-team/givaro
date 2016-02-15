@@ -93,7 +93,8 @@ namespace RecInt
             a += static_cast<uint32_t>(mp_limb_t(*it));
 #else
             a <<= 64;
-            a ^= static_cast<uint64_t>(mp_limb_t(*it));
+            //a ^= static_cast<uint64_t>(mp_limb_t(*it));
+	    a ^= (mp_limb_t(*it));
 #endif
         }
 

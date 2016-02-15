@@ -80,7 +80,7 @@ namespace Givaro {
 
         // ----- Accessors
         inline Element minElement() const override { return zero; }
-        inline Element maxElement() const override { return _p-1; }
+        inline Element maxElement() const override { return mOne; }
 
         // ----- Access to the modulus
         inline Residu_t residu() const { return _p; }

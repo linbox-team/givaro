@@ -180,11 +180,9 @@ namespace Givaro {
       /** Constructor from ring, sampling size, and seed.
        * The random ring Element iterator works in the ring F, is seeded
        * by seed, and it returns any one Element with probability no more
-       * than 1/min(size, F.cardinality()).
-       * A sampling size of zero means to sample from the entire ring.
+       * than 1/min(F.cardinality()).
+       * size has no meaning in ModularRandIter.
        * A seed of zero means to use some arbitrary seed for the generator.
-       * This implementation sets the sampling size to be no more than the
-       * cardinality of the ring.
        * @param F LinBox ring archetype object in which to do arithmetic
        * @param seed constant integer reference from which to seed random number
        *             generator (default = 0)
@@ -296,7 +294,7 @@ namespace Givaro {
 
       Element& operator() (Element& a) const
       {
-          return ring().init(a, uint64_t( (_size == 0?_givrand():_givrand()%_size)));
+          return ring().init(a, uint64_t( (_size == 0?_givrand():_givrand()% (1_ui64<<_size))));
       }
       Element& random (Element& a) const
       {

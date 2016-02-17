@@ -313,6 +313,10 @@ namespace Givaro {
 		{
 			return ::Givaro::compare(a,b) !=0;
 		}
+		bool areAssociates(const Element &x, const Element &y) const 
+		{
+			return ::Givaro::abs(x) == ::Givaro::abs(y);
+		}
 		bool isgeq(const Rep& a, const Rep& b) const
 		{
 			return ::Givaro::compare(a,b) >= 0;

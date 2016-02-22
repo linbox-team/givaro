@@ -73,9 +73,9 @@ namespace RecInt
     // returns -1 if a < b
     // returns  0 if a == b
     // returns +1 if a > b
-    template <size_t K> char cmp(const ruint<K>& a, const ruint<K>& b);
-    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const ruint<K>& a, const T& b);
-    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const ruint<K>& a, const T& b);
+    template <size_t K> int cmp(const ruint<K>& a, const ruint<K>& b);
+    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, int) cmp(const ruint<K>& a, const T& b);
+    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, int) cmp(const ruint<K>& a, const T& b);
 }
 
 
@@ -168,36 +168,36 @@ namespace RecInt
     // returns -1 if a < b
     // returns  0 if a == b
     // returns +1 if a > b
-    template <size_t K> inline char cmp(const ruint<K>& a, const ruint<K>& b) {
-        char ch;
+    template <size_t K> inline int cmp(const ruint<K>& a, const ruint<K>& b) {
+        int ch;
         ch = cmp(a.High, b.High);
         if (ch == 0) return cmp(a.Low, b.Low);
         return ch;
     }
-    template <> inline char cmp(const ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
+    template <> inline int cmp(const ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         if (a.Value < b.Value) return -1;
         else if (a.Value == b.Value) return 0;
         else return 1;
     }
 
     //---- Unsigned ----
-    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const ruint<K>& a, const T& b) {
+    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, int) cmp(const ruint<K>& a, const T& b) {
         if (a.High == 0) return cmp(a.Low, b);
         else return 1;
     }
-    template <typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
+    template <typename T> inline __RECINT_IS_UNSIGNED(T, int) cmp(const ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
         if (a.Value < b) return -1;
         else if (a.Value == b) return 0;
         else return 1;
     }
 
     //---- Signed ----
-    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const ruint<K>& a, const T& b) {
+    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, int) cmp(const ruint<K>& a, const T& b) {
         if (b < 0) return 1;
         else if (a.High == 0) return cmp(a.Low, b);
         else return 1;
     }
-    template <typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
+    template <typename T> inline __RECINT_IS_SIGNED(T, int) cmp(const ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
         if (b < 0) return 1;
         else if (a.Value < limb(b)) return -1;
         else if (a.Value == limb(b)) return 0;

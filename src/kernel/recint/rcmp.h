@@ -74,9 +74,9 @@ namespace RecInt
     // returns -1 if a < b
     // returns  0 if a == b
     // returns +1 if a > b
-    template <size_t K> char cmp(const rint<K>& a, const rint<K>& b);
-    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const rint<K>& a, const T& b);
-    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const rint<K>& a, const T& b);
+    template <size_t K> int cmp(const rint<K>& a, const rint<K>& b);
+    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, int) cmp(const rint<K>& a, const T& b);
+    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, int) cmp(const rint<K>& a, const T& b);
 }
 
 
@@ -169,32 +169,32 @@ namespace RecInt
     // returns -1 if a < b
     // returns  0 if a == b
     // returns +1 if a > b
-    template <size_t K> inline char cmp(const rint<K>& a, const rint<K>& b) {
+    template <size_t K> inline int cmp(const rint<K>& a, const rint<K>& b) {
         // Note: is this ternary necessary or cast from bool is OK?
-        char posA = (a.isPositive())? 1 : -1;
-        char posB = (b.isPositive())? 1 : -1;
+        int posA = (a.isPositive())? 1 : -1;
+        int posB = (b.isPositive())? 1 : -1;
 
         // Signs are different, result is obvious
         if (posA != posB) return posA;
 
         // If a and b are both positive, return 1 * ch, else -1 * ch;
-        else return static_cast<char>(cmp(a.Value, b.Value));
+        else return static_cast<int>(cmp(a.Value, b.Value));
     }
 
     //---- Unsigned ----
-    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, char) cmp(const rint<K>& a, const T& b) {
+    template <size_t K, typename T> inline __RECINT_IS_UNSIGNED(T, int) cmp(const rint<K>& a, const T& b) {
         if (a.isNegative()) return -1;
         else return cmp(a.Value, b);
     }
 
     //---- Signed ----
-    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, char) cmp(const rint<K>& a, const T& b) {
+    template <size_t K, typename T> inline __RECINT_IS_SIGNED(T, int) cmp(const rint<K>& a, const T& b) {
         // Same system as with two rint<K>
-        char posA = (a.isPositive())? 1 : -1;
-        char posB = (b >= 0)? 1 : -1;
+        int posA = (a.isPositive())? 1 : -1;
+        int posB = (b >= 0)? 1 : -1;
 
         if (posA != posB) return posA;
-        else return static_cast<char>(posA * cmp(a.Value, b));
+        else return static_cast<int>(posA * cmp(a.Value, b));
     }
 }
 

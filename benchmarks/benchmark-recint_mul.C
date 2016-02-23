@@ -20,6 +20,7 @@ using namespace RecInt;
 int main(int argc, char ** argv)
 {
     size_t nbloops = static_cast<size_t>((argc > 1)? atoi(argv[1]) : LOOPS);
+//    std::cerr << "nbloops: " << nbloops << std::endl;
 
     rmint<STD_RECINT_SIZE> a[ALEA_MAX];
     ruint<STD_RECINT_SIZE> module;
@@ -30,6 +31,7 @@ int main(int argc, char ** argv)
     rand(module);
     if (module % 2 == 0) module++;
     rmint<STD_RECINT_SIZE>::init_module(module);
+//    std::cerr << "module: " << module << std::endl;
     
     // Randomness
     for (unsigned int i = 0; i < ALEA_MAX; i++)

@@ -21,6 +21,8 @@
 // For openssh >= 6.3p1, use "-lopenbsd-compat -lssh -lssl -lcrypto -ldl"//
 // For openssh >= commit 9690b78, use:
 // -lssh -lopenbsd-compat -lcrypto -ldl -lutil -lz -lnsl  -lcrypt -lresolv//
+// Stack protection might also be required:
+// -fstack-protector-strong -lssh -lopenbsd-compat -lcrypto -lz         //
 // ==================================================================== //
 /*! @file examples/Integer/givaro-ssh-keygen.C
  * @ingroup examples

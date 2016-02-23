@@ -13,7 +13,7 @@ COMPILER=$3
 #=================#
 
 COMPILERVERSION=$($COMPILER --version 2>&1 | head -1)
-CPUFREQ=$(lscpu | grep "MHz" | rev | cut -f1 -d' ' | rev)
+CPUFREQ=$(cat /proc/cpuinfo | grep "MHz" | head -1 |rev | cut -f1 -d' ' | rev)
 ARCH=$(uname -m)
 OSNAME=$(uname -s)
 OSVERSION=$(uname -r)

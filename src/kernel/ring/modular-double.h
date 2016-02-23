@@ -12,6 +12,7 @@
 #ifndef __GIVARO_modular_double_H
 #define __GIVARO_modular_double_H
 
+#include "givaro/givconfig.h"
 #include <float.h>
 
 #include "givaro/givinteger.h"

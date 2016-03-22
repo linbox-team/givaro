@@ -23,8 +23,8 @@ int main(int argc, char ** argv)
     size_t nbloops = static_cast<size_t>((argc > 1)? atoi(argv[1]) : LOOPS);
 //    std::cerr << "nbloops: " << nbloops << std::endl;
 
-    rmint<STD_RECINT_SIZE> a[ALEA_MAX];
-    mpz_class b[ALEA_MAX], gmod;
+    rmint<STD_RECINT_SIZE> a[ALEA_MAX],d[ALEA_MAX];
+    mpz_class b[ALEA_MAX],c[ALEA_MAX], gmod;
     ruint<STD_RECINT_SIZE> module;
     Givaro::Timer tim,gmp;
     
@@ -45,14 +45,18 @@ int main(int argc, char ** argv)
     // Main loop
 	tim.clear(); tim.start();
     for (unsigned int l = 0; l < nbloops; l++) {
-        mul(a[l & ALEA_MASK], a[l & ALEA_MASK], a[(l+1) & ALEA_MASK]);
+//         mul(a[l & ALEA_MASK], a[l & ALEA_MASK], a[(l+1) & ALEA_MASK]);
+        d[l & ALEA_MASK] = a[l & ALEA_MASK];
+        d[l & ALEA_MASK] *= a[l & ALEA_MASK];
     }
     tim.stop(); 
     
     // Main loop
 	gmp.clear(); gmp.start();
     for (unsigned int l = 0; l < nbloops; l++) {
-        b[(l+1) & ALEA_MASK] = (b[l & ALEA_MASK] * b[l & ALEA_MASK]) % gmod;
+        c[l & ALEA_MASK] = b[l & ALEA_MASK];
+        c[l & ALEA_MASK] *= b[l & ALEA_MASK];
+        c[l & ALEA_MASK] %= gmod;
     }
     gmp.stop(); 
     

@@ -1,0 +1,22 @@
+RTES=tmul inmul mul mulm inadd exp
+EXEC=${RTES:%=benchmark-recint_%}
+WSRC=${EXEC:%=-W %.C}
+OUTP=output.rint
+ifdef LOOPS
+    OLOOPS=${LOOPS}
+else
+    OLOOPS=22
+endif
+
+
+SIZES=6 7 8 9 10 11 12 13
+
+all: ${SIZES:%=all_%} plot
+
+plot:
+	$(foreach fil, ${RTES}, sed 's/FUNCTION/${fil}/g' generic.gnuplot > ${fil}.gnuplot; gnuplot  ${fil}.gnuplot;)
+
+all_%:
+	jgmake ${EXEC} ${WSRC} -D STD_RECINT_SIZE=$*
+	$(foreach fil, ${RTES}, benchmark-recint_${fil} `echo '10^((${OLOOPS}-$*)/2)'|bc` >> ${OUTP}.${fil};)
+	

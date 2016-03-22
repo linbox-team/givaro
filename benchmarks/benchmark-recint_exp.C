@@ -4,44 +4,66 @@
 #include <recint/recint.h>
 #include <givaro/givtimer.h>
 
-#define STD_RECINT_SIZE 9
-#define LOOPS 500
+#if not defined(STD_RECINT_SIZE)
+#define STD_RECINT_SIZE 8
+#endif
+
+#if not defined(LOOPS)
+#define LOOPS 100000
+#endif
 
 #define ALEA_MAX  64
 #define ALEA_MASK 63
 
 using namespace RecInt;
 
-int main(void)
+int main(int argc, char ** argv)
 {
+    size_t nbloops = static_cast<size_t>((argc > 1)? atoi(argv[1]) : LOOPS);
+
     rmint<STD_RECINT_SIZE> m[ALEA_MAX];
     ruint<STD_RECINT_SIZE> u[ALEA_MAX], module;
-    Givaro::Timer tim;
+    mpz_class b[ALEA_MAX], c[ALEA_MAX], gmod;
+    Givaro::Timer tim, gmp;
     
     // For montgomery algorithm, the module must be odd
     RecInt::srand(42);
     rand(module);
     if (module % 2 == 0) module++;
     rmint<STD_RECINT_SIZE>::init_module(module);
+    ruint_to_mpz(gmod, module);
     
     // Randomness
     for (unsigned int i = 0; i < ALEA_MAX; i++) {
-        rand(m[i]);
-        rand(u[i]);
+        rand(m[i]); ruint_to_mpz(b[i],m[i].Value);
+        rand(u[i]); ruint_to_mpz(c[i],u[i]);
     }
     
     // Main loop
 	tim.clear(); tim.start();
-    for (unsigned int l = 0; l < LOOPS; l++) {
+    for (unsigned int l = 0; l < nbloops; l++) {
         exp(m[l & ALEA_MASK],     m[(l+2) & ALEA_MASK], u[l & ALEA_MASK]);
         exp(m[(l+2) & ALEA_MASK], m[(l+1) & ALEA_MASK], u[l & ALEA_MASK]);
     }
     tim.stop();
+
+	gmp.clear(); gmp.start();
+    for (unsigned int l = 0; l < nbloops; l++) {
+        mpz_powm(b[l & ALEA_MASK].get_mpz_t(),b[(l+2) & ALEA_MASK].get_mpz_t(),c[l & ALEA_MASK].get_mpz_t(), gmod.get_mpz_t());
+        mpz_powm(b[(l+2) & ALEA_MASK].get_mpz_t(),b[(l+1) & ALEA_MASK].get_mpz_t(),c[l & ALEA_MASK].get_mpz_t(), gmod.get_mpz_t());
+    }
+    gmp.stop();
+
+
     
 	// -----------
 	// Standard output for benchmark - Alexis Breust 2014/12/11
-	std::cout << "Time: " << tim.usertime()
-			  << " Gflops: " << "Irrelevant" << std::endl;
+	std::cout 
+        << "SIZE: " << STD_RECINT_SIZE
+        << " Time: " << tim.usertime() << ' ' << gmp.usertime()
+        << " Mflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(nbloops))/gmp.usertime()/1000.0/1000.0 
+        << ' ' << m[(int)( ALEA_MASK-1 )& ALEA_MASK] << ' ' << b[(int)( ALEA_MASK-1)& ALEA_MASK] << std::endl ;
+    
     
     return 0;
 }

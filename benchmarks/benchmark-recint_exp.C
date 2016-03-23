@@ -55,6 +55,7 @@ int main(int argc, char ** argv)
     gmp.stop();
 
 
+	rand(module);
     
 	// -----------
 	// Standard output for benchmark - Alexis Breust 2014/12/11
@@ -62,7 +63,7 @@ int main(int argc, char ** argv)
         << "SIZE: " << STD_RECINT_SIZE
         << " Time: " << tim.usertime() << ' ' << gmp.usertime()
         << " Mflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(nbloops))/gmp.usertime()/1000.0/1000.0 
-        << ' ' << m[(int)( ALEA_MASK-1 )& ALEA_MASK] << ' ' << b[(int)( ALEA_MASK-1)& ALEA_MASK] << std::endl ;
+        << ' ' << m[(int)(module )& ALEA_MASK] << ' ' << b[(int)(module)& ALEA_MASK] << std::endl ;
     
     
     return 0;

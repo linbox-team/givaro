@@ -48,13 +48,15 @@ int main(int argc, char ** argv)
     }
     gmp.stop(); 
     
+    ruint<STD_RECINT_SIZE> module; rand(module);
+
 	// -----------
 	// Standard output for benchmark - Alexis Breust 2014/12/11
 	std::cout 
         << "SIZE: " << STD_RECINT_SIZE
         << " Time: " << tim.usertime() << ' ' << gmp.usertime()
         << " Mflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(nbloops))/gmp.usertime()/1000.0/1000.0 
-        << ' ' << d[(int)( ALEA_MASK-1 )& ALEA_MASK] << ' ' << c[(int)( ALEA_MASK-1)& ALEA_MASK] << std::endl ;
+        << ' ' << d[(int)(module)& ALEA_MASK] << ' ' << c[(int)(module)& ALEA_MASK] << std::endl ;
     
     return 0;
 }

@@ -1,4 +1,4 @@
-RTESO=tmul inmul mul mulm inadd exp
+RTESO=tmul inmul mul mulm inadd # exp
 ifndef RTES
 RTES=${RTESO}
 endif

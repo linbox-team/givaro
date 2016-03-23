@@ -1,6 +1,6 @@
 set xlabel "Integer bit size"
 set ylabel "Speed (M. arith. op./s)" 
-set title "Recursive data structures versus GMP" # tc lt  2
+set title "MEANING on an MODEL" # tc lt  2
 #set key below
 set logscale y 10
 #set logscale x 2

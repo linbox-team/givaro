@@ -1,20 +1,32 @@
-RTES=tmul inmul mul mulm inadd exp
+RTESO=tmul inmul mul mulm inadd exp
+ifndef RTES
+RTES=${RTESO}
+endif
+MEANINGS=Multiplication In_place_multiplication Modular_multiplication In_place_modular_multiplication In_place_addition Modular_exponentiation
+
 EXEC=${RTES:%=benchmark-recint_%}
 WSRC=${EXEC:%=-W %.C}
 OUTP=output.rint
+MODEL=$(shell cat /proc/cpuinfo | grep "model name" | head -1|cut -d':' -f2| tr -s ' '|sed 's/^ //')
+
 ifdef LOOPS
     OLOOPS=${LOOPS}
 else
     OLOOPS=22
 endif
 
+SHELL := /bin/bash 
+index = $(words $(shell a="$(2)";echo $${a/$(1)*/$(1)} ))
+swap  = $(word $(call index,$(1),${RTESO}),${MEANINGS})
+remun = $(shell a="$(1)";echo $${a}|sed 's/_/ /g')
 
 SIZES=6 7 8 9 10 11 12 13
 
 all: ${SIZES:%=all_%} plot
 
 plot:
-	$(foreach fil, ${RTES}, sed 's/FUNCTION/${fil}/g' generic.gnuplot > ${fil}.gnuplot; gnuplot  ${fil}.gnuplot;)
+	echo $(call swap,inadd)
+	$(foreach fil, ${RTES}, sed 's/FUNCTION/${fil}/g;s/MODEL/${MODEL}/g;s/MEANING/$(call remun,$(call swap,${fil}))/' generic.gnuplot > ${fil}.gnuplot; gnuplot  ${fil}.gnuplot;)
 
 all_%:
 	jgmake ${EXEC} ${WSRC} -D STD_RECINT_SIZE=$*

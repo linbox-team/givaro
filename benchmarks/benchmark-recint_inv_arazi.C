@@ -29,14 +29,19 @@ using namespace RecInt;
 int main(int argc, char ** argv)
 {
     size_t nbloops = static_cast<size_t>((argc > 1)? atoi(argv[1]) : LOOPS);
-    Givaro::Timer tim;
+    Givaro::Timer tim, gmp;
     
     ruint<STD_RECINT_SIZE> a[ALEA_MAX];
     ruint<STD_RECINT_SIZE> pinv[ALEA_MAX];
+    mpz_class b[ALEA_MAX],c[ALEA_MAX], gmod(1);
+    gmod <<= (1<<STD_RECINT_SIZE);
+//     std::cerr << "gmod: " << gmod << std::endl;
+
     // Randomness
     for (unsigned int i = 0; i < ALEA_MAX; i++) {
         rand(a[i]);
         if (a[i] % 2 == 0) ++a[i];
+        ruint_to_mpz(b[i],a[i]);
     }
 
     // Random
@@ -48,11 +53,22 @@ int main(int argc, char ** argv)
     }
     tim.stop();
     
+	gmp.clear(); gmp.start();
+    for (UDItype l = 0; l < nbloops; l++) {
+        mpz_invert(c[l & ALEA_MASK].get_mpz_t(),b[l & ALEA_MASK].get_mpz_t(), gmod.get_mpz_t());
+    }
+    gmp.stop();
+    
+    ruint<STD_RECINT_SIZE> module; rand(module);
+
 	// -----------
 	// Standard output for benchmark - Alexis Breust 2014/12/11
-	std::cout << "Time: " << tim.usertime()
-			  << " Gflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0/1000.0 << ' ' << a[(int)(rand(a[0]))& ALEA_MASK] << std::endl ;
-    
+	std::cout 
+        << "SIZE: " << STD_RECINT_SIZE
+        << " Time: " << tim.usertime() << ' ' << gmp.usertime()
+        << " Mflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(nbloops))/gmp.usertime()/1000.0/1000.0 
+        << ' ' << a[(int)(module)& ALEA_MASK] << ' ' << b[(int)(module)& ALEA_MASK] << std::endl ;
+   
     return 0; 
 }
 

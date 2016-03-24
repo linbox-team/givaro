@@ -1,13 +1,24 @@
+ifneq ($(origin RMOD), undefined)
+MODME=${RMOD}
+else
 MODME=mul mulm # exp
-DIRME=inmul tmul inadd
+endif
 
-ifdef RTES
+ifneq ($(origin RDIR), undefined)
+DIRME=${RDIR}
+else
+DIRME=inmul tmul inadd
+endif
+
+ifneq ($(origin RTES), undefined)
 ORTES=${RTES}
 else
 ORTES=${MODME} ${DIRME}
 endif
 
-ifdef LOOPS
+THREADS=4
+
+ifneq ($(origin LOOPS), undefined)
     OLOOPS=${LOOPS}
 else
     OLOOPS=22
@@ -16,7 +27,8 @@ endif
 MGTES=$(filter-out ${DIRME},${ORTES})
 DETES=$(filter ${DIRME},${ORTES})
 
-MEANINGS=Modular_multiplication In_place_modular_multiplication In_place_multiplication Multiplication In_place_addition Modular_exponentiation
+SUFFIXES=mul mulm inmul tmul inadd exp inv_arazi
+MEANINGS=Modular_multiplication In_place_modular_multiplication In_place_multiplication Multiplication In_place_addition Modular_exponentiation Base_inverse
 
 EXEC=${ORTES:%=benchmark-recint_%}
 WSRC=${EXEC:%=-W %.C}
@@ -26,21 +38,20 @@ MODEL=$(shell cat /proc/cpuinfo | grep "model name" | head -1|cut -d':' -f2| tr 
 
 SHELL := /bin/bash 
 index = $(words $(shell a="$(2)";echo $${a/$(1)*/$(1)} ))
-swap  = $(word $(call index,$(1),${ORTES}),${MEANINGS})
+swap  = $(word $(call index,$(1),${SUFFIXES}),${MEANINGS})
 remun = $(shell a="$(1)";echo $${a}|sed 's/_/ /g')
 
 SIZES=6 7 8 9 10 11 12 13
 MONTG=MG_INACTIVE
 PREFI=
-THREADS=4
 
 all: outclean ${SIZES:%=all_%} outcleanmg ${SIZES:%=allmg_%} plot plotmg
 
 mkplot = $(foreach fil, $(1), sed 's/FUNCTION/${PREFI}${fil}/g;s/MODEL/${MODEL}/g;s/MEANING/$(call remun,$(call swap,${fil}) $(2))/' generic.gnuplot > ${PREFI}${fil}.gnuplot; gnuplot  ${PREFI}${fil}.gnuplot;)
 
-mkruns = make -j ${THREADS} "OPTFLAGS=-DSTD_RECINT_SIZE=$(1) -DMG_DEFAULT=${MONTG}" ${EXEC} ${WSRC}; $(foreach fil, $(2), benchmark-recint_${fil} `echo '10^((${OLOOPS}-$(1))/2)'|bc` >> ${OUTP}.${PREFI}${fil};)
+mkruns = make -j ${THREADS} "OPTFLAGS=-DSTD_RECINT_SIZE=$(1) -DMG_DEFAULT=${MONTG}" $(addprefix benchmark-recint_,$(2)) ${WSRC}; $(foreach fil, $(2), benchmark-recint_${fil} `echo '10^((${OLOOPS}-$(1))/2)'|bc` >> ${OUTP}.${PREFI}${fil};)
 
-mkocl = $(foreach fil, $(1), rm ${OUTP}.${PREFI}${fil};)
+mkocl = $(foreach fil, $(1), - rm ${OUTP}.${PREFI}${fil};)
 
 all_%:
 	$(call mkruns,$*, ${ORTES})

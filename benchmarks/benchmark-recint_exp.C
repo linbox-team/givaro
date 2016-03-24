@@ -62,7 +62,7 @@ int main(int argc, char ** argv)
 	std::cout 
         << "SIZE: " << STD_RECINT_SIZE
         << " Time: " << tim.usertime() << ' ' << gmp.usertime()
-        << " Mflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(nbloops))/gmp.usertime()/1000.0/1000.0 
+        << " Mflops: " << std::scientific << (double(2*nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(2*nbloops))/gmp.usertime()/1000.0/1000.0 
         << ' ' << m[(int)(module )& ALEA_MASK] << ' ' << b[(int)(module)& ALEA_MASK] << std::endl ;
     
     

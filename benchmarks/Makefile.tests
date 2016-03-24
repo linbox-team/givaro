@@ -25,7 +25,6 @@ SIZES=6 7 8 9 10 11 12 13
 all: ${SIZES:%=all_%} plot
 
 plot:
-	echo $(call swap,inadd)
 	$(foreach fil, ${RTES}, sed 's/FUNCTION/${fil}/g;s/MODEL/${MODEL}/g;s/MEANING/$(call remun,$(call swap,${fil}))/' generic.gnuplot > ${fil}.gnuplot; gnuplot  ${fil}.gnuplot;)
 
 all_%:

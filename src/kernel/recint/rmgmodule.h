@@ -59,11 +59,11 @@ namespace RecInt
 }
 
 
-// --------------------------------------------------------------
-// ---------- Arazi & Qi with fast basecase ---------------------
-// -- See [JG Dumas, On Newton-Raphson iteration for    ---------
-// --      multiplicative inverses modulo prime powers. ---------
-// --      IEEE Transactions on Computers, 2013].       ---------
+// ---------------------------------------------------------------------
+// ----------------- Arazi & Qi with fast basecase ---------------------
+// -- See [JG Dumas, On Newton-Raphson iteration for                  --
+// --     multiplicative inverses modulo prime powers.                --
+// --     IEEE Transactions on Computers, 63(8), pp 2106-2109, 2014]. --
 
 namespace RecInt
 {

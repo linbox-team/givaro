@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-
 #include <recint/recint.h>
 #include <givaro/givtimer.h>
 #include <givaro/givinteger.h>

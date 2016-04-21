@@ -49,7 +49,7 @@ all: outclean ${SIZES:%=all_%} outcleanmg ${SIZES:%=allmg_%} plot plotmg
 
 mkplot = $(foreach fil, $(1), sed 's/FUNCTION/${PREFI}${fil}/g;s/MODEL/${MODEL}/g;s/MEANING/$(call remun,$(call swap,${fil}) $(2))/' generic.gnuplot > ${PREFI}${fil}.gnuplot; gnuplot  ${PREFI}${fil}.gnuplot;)
 
-mkruns = make -j ${THREADS} "OPTFLAGS=-DSTD_RECINT_SIZE=$(1) -DMG_DEFAULT=${MONTG}" $(addprefix benchmark-recint_,$(2)) ${WSRC}; $(foreach fil, $(2), benchmark-recint_${fil} `echo '10^((${OLOOPS}-$(1))/2)'|bc` >> ${OUTP}.${PREFI}${fil};)
+mkruns = make -j ${THREADS} "OPTFLAGS=-DSTD_RECINT_SIZE=$(1) -DMG_DEFAULT=${MONTG}" $(addprefix ./benchmark-recint_,$(2)) ${WSRC}; $(foreach fil, $(2), ./benchmark-recint_${fil} `echo '10^((${OLOOPS}-$(1))/2)'|bc` >> ${OUTP}.${PREFI}${fil};)
 
 mkocl = $(foreach fil, $(1), - rm ${OUTP}.${PREFI}${fil};)
 

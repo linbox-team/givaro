@@ -17,8 +17,8 @@ set grid noxtics ytics
 
 set terminal pdf enhanced color solid lw 2 size 6,4
 set output "rint_FUNCTION.pdf"
-plot [6:13] "output.rint.FUNCTION" using 2:($8) title "GMP-6" with linespoint lt 2 lc 1
+plot [6:13] "output.rint.FUNCTION" using 7:($5) title "GMP-6" with linespoint lt 2 lc 1
 
 set terminal pdf enhanced color solid lw 2 size 6,4
 set output "rint_FUNCTION.pdf"
-replot "output.rint.FUNCTION" using 2:($7) title "RecInt" with fsteps lt 3 
+replot "output.rint.FUNCTION" using 7:($4) title "RecInt" with fsteps lt 3 

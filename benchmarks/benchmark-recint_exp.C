@@ -60,9 +60,10 @@ int main(int argc, char ** argv)
 	// -----------
 	// Standard output for benchmark - Alexis Breust 2014/12/11
 	std::cout 
-        << "SIZE: " << STD_RECINT_SIZE
-        << " Time: " << tim.usertime() << ' ' << gmp.usertime()
+        << "Time: " << tim.usertime()
         << " Mflops: " << std::scientific << (double(2*nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(2*nbloops))/gmp.usertime()/1000.0/1000.0 
+        << " SIZE: " << STD_RECINT_SIZE
+        << " GMP time: " << gmp.usertime()
         << ' ' << m[(int)(module )& ALEA_MASK] << ' ' << b[(int)(module)& ALEA_MASK] << std::endl ;
     
     

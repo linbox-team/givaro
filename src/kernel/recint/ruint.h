@@ -41,6 +41,8 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RUINT_H
 #define RUINT_H
 
+#include "givaro-config.h"
+
 /* Class definition */
 #include "ruruint.h"
 

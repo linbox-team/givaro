@@ -41,6 +41,8 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RINT_H
 #define RINT_H
 
+#include "givaro-config.h"
+
 /* Class definition */
 #include "rrint.h"
 

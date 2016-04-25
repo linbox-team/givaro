@@ -41,6 +41,8 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RMINT_H
 #define RMINT_H
 
+#include "givaro-config.h"
+
 /* Does not use Montgomery */
 #include "rmbrmint.h"
 #include "rmbmodule.h"

@@ -68,11 +68,12 @@ examples/Polynomial/pol_factor
 examples/Polynomial/trunc_arith
 examples/Rational/iratrecon
 examples/Rational/polydouble
-examples/RecInt/iterator
+examples/RecInt/recint-iterator
 examples/RecInt/rsa
 givaro-config
 givaro-config.h
 givaro-makefile
+givaro.pc
 libtool
 macros/libtool.m4
 macros/ltoptions.m4

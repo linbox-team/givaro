@@ -35,10 +35,10 @@ LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=iterator rsa
+EXTRA_PROGRAMS=recint-iterator rsa
 CLEANFILES=$(EXTRA_PROGRAMS)
 
-iterator_SOURCES  = iterator.C
+recint_iterator_SOURCES  = recint-iterator.C
 rsa_SOURCES       = rsa.C
 
 # for compilation of new examples

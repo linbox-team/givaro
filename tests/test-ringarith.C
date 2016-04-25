@@ -157,7 +157,7 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 template<class Ring>
 int TestRing(const Ring& F, const uint64_t seed)
 {
-    typename Ring::Element x, y, a;
+    typename Ring::Element x, y;
     typename Ring::RandIter g(F, 0_ui64, seed);
     
     F.init(x, 7U);

@@ -120,7 +120,7 @@ namespace RecInt
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, bool) operator>(const T& b, const ruint<K>& a) {
-        return cmp(a, b) < 0;
+        return cmp(a, b) > 0;
     }
 
     // Operator >=
@@ -133,7 +133,7 @@ namespace RecInt
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, bool) operator>=(const T& b, const ruint<K>& a) {
-        return cmp(a, b) <= 0;
+        return cmp(a, b) >= 0;
     }
 
     // Operator <
@@ -146,7 +146,7 @@ namespace RecInt
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, bool) operator<(const T& b, const ruint<K>& a) {
-        return cmp(a, b) > 0;
+        return cmp(a, b) < 0;
     }
 
     // Operator <=
@@ -159,7 +159,7 @@ namespace RecInt
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, bool) operator<=(const T& b, const ruint<K>& a) {
-        return cmp(a, b) >= 0;
+        return cmp(a, b) <= 0;
     }
 
 

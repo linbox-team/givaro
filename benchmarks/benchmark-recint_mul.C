@@ -6,7 +6,7 @@
 #include <givaro/givinteger.h>
 
 #if not defined(STD_RECINT_SIZE)
-#define STD_RECINT_SIZE 8
+#define STD_RECINT_SIZE 7
 #endif
 
 #if not defined(LOOPS)

@@ -148,11 +148,12 @@ namespace RecInt
     // a = ahal = b*c   with naive method
     // Note: this function is safe, ah|al is correctly computed
     // even if b, c are really ah or al
-    template <size_t K>
+
+  template <size_t K>
     inline void lmul_naive(ruint<K>& ah, ruint<K>& al, const ruint<K>& b, const ruint<K>& c) {
         bool rmid, rlow;
         ruint<K> bcmid, blcl;
-
+	
         // Low part
         lmul_naive(blcl, b.Low, c.Low);
 
@@ -170,6 +171,7 @@ namespace RecInt
         if (rlow)  add_1(ah);
         if (rmid)  add_1(rmid, ah.High);
     }
+  
     template<>
     inline void lmul_naive(ruint<__RECINT_LIMB_SIZE>& ah, ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
         umul_ppmm(ah.Value, al.Value, b.Value, c.Value);

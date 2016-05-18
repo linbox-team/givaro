@@ -36,7 +36,7 @@ namespace Givaro
     {
     public:
         // ----- Exported Types and constantes
-        typedef Modular<IntType> Self_t;
+      typedef Modular<IntType,COMP> Self_t;
         typedef IntType Residu_t;
         enum { size_rep = sizeof(Residu_t) };
 	using Element = typename FiniteFieldInterface<IntType>::Element;
@@ -58,7 +58,7 @@ namespace Givaro
             , one(1)
             , mOne(p-static_cast<Residu_t>(1)), _p(p)
         {
-            assert(_p >= minCardinality());
+	  assert(_p >= minCardinality());
         }
 
         template<class IntConvType>
@@ -68,7 +68,7 @@ namespace Givaro
             , mOne( Caster<Residu_t>(p-1) )
             , _p( Caster<Residu_t>(p) )
         {
-            assert(_p >= minCardinality());
+	  assert(_p >= minCardinality());
         }
 
         Modular(const Integer& p, const Integer& e=Integer::one)
@@ -77,7 +77,7 @@ namespace Givaro
             , mOne( Caster<Residu_t>(p-1) )
             , _p( Caster<Residu_t>(p) )
         {
-            assert(_p >= minCardinality());
+	  assert(_p >= minCardinality());
         }
 
         Modular(const Self_t& F)

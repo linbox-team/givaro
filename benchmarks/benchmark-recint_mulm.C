@@ -44,7 +44,7 @@ int main(int argc, char ** argv)
     // Main loop
 	tim.clear(); tim.start();
     for (unsigned int l = 0; l < nbloops; l++) {
-//         mul(a[l & ALEA_MASK], a[l & ALEA_MASK], a[(l+1) & ALEA_MASK]);
+      //mul(a[l & ALEA_MASK], a[l & ALEA_MASK], a[(l+1) & ALEA_MASK]);
         d[l & ALEA_MASK] = a[l & ALEA_MASK];
         d[l & ALEA_MASK] *= a[l & ALEA_MASK];
     }

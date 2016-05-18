@@ -36,7 +36,7 @@ namespace Givaro
     {
     public:
         // ----- Exported Types and constantes
-        typedef Modular<Integer> Self_t;
+      typedef Modular<Integer> Self_t;
         typedef Integer Residu_t;                    // - type to store residue
         enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
 
@@ -167,10 +167,10 @@ namespace Givaro
 
     /* Specialisation for Modular<integer> field*/
     template <>
-    class ModularRandIter<Modular<Integer, Integer> >
+    class ModularRandIter<Modular<Integer> >
     {
     public:
-        typedef Modular<Integer, Integer>  Ring;
+        typedef Modular<Integer>  Ring;
         typedef Ring::Element Element;
 
         ModularRandIter(const Ring& R, const size_t& size = 0, const size_t& seed = 0) 

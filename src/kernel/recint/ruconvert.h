@@ -62,8 +62,23 @@ namespace RecInt
     // Convert a GMP integer into a ruint
     template <size_t K>
     inline ruint<K>& mpz_to_ruint(ruint<K>& a, const mpz_class& b) {
-	    unsigned int i;
-	    mpz_class c(b);
+      /*
+      mpz_t m0; mpz_init(m0);
+      mpz_init(m0);
+      mpz_set(m0, b.get_mpz_t());
+      size_t bitsize = std::min(m0->_mp_alloc*GMP_LIMB_BITS, 1<<K);
+      size_t n= bitsize/GMP_LIMB_BITS + (bitsize%GMP_LIMB_BITS?1:0);      
+      mp_limb_t *target = reinterpret_cast<mp_limb_t*> (&a); 
+      reset(a);
+      for (size_t i=0;i<n;i++){
+	target[i]=m0->_mp_d[i];
+      }
+
+      std::cout<<"converting to ruint "<<b<<" to "<<a<<std::endl;
+      */
+      
+	unsigned int i;
+	mpz_class c(b);
 
         reset(a);
 	    for (i = 0; i < NBLIMB<K>::value; i++) {
@@ -76,14 +91,30 @@ namespace RecInt
             set_limb(a, l, i); c >>= 64;
 #endif
 	    }
-
+      
+      
         return a;
     }
 
     // Convert a ruint into a GMP integer
     template <size_t K>
     inline mpz_class& ruint_to_mpz(mpz_class& a, const ruint<K>& b) {
-        a = 0;
+      /*
+      mpz_t m;
+      mpz_init2(m,1<<K);
+      m->_mp_size=m->_mp_alloc;
+      size_t n= 1<<(K-6);
+      const limb *src    = reinterpret_cast<const limb*> (&b);
+      limb       *target = reinterpret_cast<limb*> (m->_mp_d); 
+      for (size_t i=n-1;i<(size_t)-1;i--){
+	target[i]=src[i];
+	if (m->_mp_size == (int)i+1 &&src[i]==0 ) m->_mp_size--;
+      }
+
+      a=mpz_class(m);
+      */
+      
+      a = 0;
         for (auto it(b.rbegin()); it != b.rend(); ++it) {
 #if GMP_LIMB_BITS != 64
 		    // GMP does not handle uint64_t, need to break it
@@ -100,7 +131,7 @@ namespace RecInt
 #endif
 #endif
         }
-
+      
         return a;
     }
 

@@ -557,7 +557,7 @@ namespace Givaro {
 	Element& random(Element& elt) const
             {
                     // Create new random Elements
-		elt.resize( (size_t)(_field.order()));
+		elt.resize( (uint64_t)(_field.order()));
 		for(typename Element::iterator it = elt.begin(); it != elt.end() ; ++ it) {
                     int64_t tmp = static_cast<int64_t>((double (_givrand()) / double(_GIVRAN_MODULO_)) * double(_size));
                     (_field.base_field()).init(*it , tmp);

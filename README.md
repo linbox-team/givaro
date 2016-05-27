@@ -1,6 +1,8 @@
 Givaro
 ======
 
+[![Build Status](https://ci.inria.fr/linbox/buildStatus/icon?job=Givaro)](https://ci.inria.fr/linbox/job/Givaro/)
+
 Download and install
 --------------------
 

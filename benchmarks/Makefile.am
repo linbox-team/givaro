@@ -15,7 +15,7 @@ OPTFLAGS=
 OPTLINKS=
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/recint
+AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/recint -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel/gmp++ -I$(top_srcdir)/src/kernel/ring
 
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static

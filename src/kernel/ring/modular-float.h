@@ -1,3 +1,5 @@
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
 // ==========================================================================
 // Copyright(c)'1994-2015 by The Givaro group
 // This file is part of Givaro.
@@ -35,6 +37,7 @@ namespace Givaro
         // ----- Exported Types and constantes
         typedef Modular<float> Self_t;
         typedef uint32_t Residu_t;
+		using Compute_t = float;
         enum { size_rep = sizeof(Residu_t) };
 
         // ----- Constantes

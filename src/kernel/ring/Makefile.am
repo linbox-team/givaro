@@ -26,6 +26,7 @@ pkginclude_HEADERS=     \
 	modular-integer.h	\
 	modular-inttype.h	\
 	modular-log16.h		\
+	modular-mulprecomp.inl  \
 	modular-ruint.h		\
 	modular-balanced.h 			\
 	modular-balanced-int32.h 	\

@@ -44,7 +44,7 @@ namespace Givaro {
     inline typename Modular<int32_t, COMP>::Element& Modular<int32_t, COMP>::mul
     (Element& r, const Element& a, const Element& b) const
     {
-        return  __GIVARO_MODULAR_INTEGER_MUL(r,_p,a,b);
+		return  __GIVARO_MODULAR_INTEGER_MUL(r,_p,a,b);
     }
 
     template<typename COMP>
@@ -86,9 +86,8 @@ namespace Givaro {
     template<typename COMP>
     inline typename Modular<int32_t, COMP>::Element& Modular<int32_t, COMP>::mulin
     (Element& r, const Element& a) const
-    {
-        r = Element(Compute_t(r)*Compute_t(a) % Compute_t(_p));
-        return r;
+	{
+		return __GIVARO_MODULAR_INTEGER_MULIN(r, _p, a);
     }
 
     template<typename COMP>
@@ -129,8 +128,8 @@ namespace Givaro {
     (Element& r) const
     {
         return inv(r, r);
-    }
-        
+	}
+
     template<typename COMP>
     inline typename Modular<int32_t, COMP>::Element& Modular<int32_t, COMP>::axpy
     (Element& r, const Element& a, const Element& b, const Element& c) const

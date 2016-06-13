@@ -13,6 +13,7 @@
 #include <givaro/givinteger.h>
 #include <givaro/zring.h>
 #include <givaro/gfq.h>
+#include <givaro/modular-extended.h>
 
 #include <recint/recint.h>
 
@@ -158,7 +159,7 @@ template<class Ring>
 int TestRing(const Ring& F, const uint64_t seed)
 {
     typename Ring::Element x, y;
-    typename Ring::RandIter g(F, 0_ui64, seed);
+	typename Ring::RandIter g(F, 0_ui64, seed);
     
     F.init(x, 7U);
     F.init(y, -29.0);
@@ -180,10 +181,10 @@ int TestRing(const Ring& F, const uint64_t seed)
     F.assign(y, F.minElement());
     JEONETESTE(F,x,y);
     
-    for (size_t i = 0; i< NBITER; ++i) {
+	for (size_t i = 0; i< NBITER; ++i) {
 	g.random(x); g.random(y);
-        JEONETESTE(F,x,y);
-    }
+		JEONETESTE(F,x,y);
+	}
     
     return 0;
 }
@@ -271,11 +272,11 @@ int main(int argc, char ** argv)
     //--------------//
     //----- 75 -----//
     
-    TEST_SPECIFIC(Modular<int8_t>, C75, 75);
+	TEST_SPECIFIC(Modular<int8_t>, C75, 13);
     TEST_SPECIFIC(Modular<int16_t>, S75, 75);
     TEST_SPECIFIC(Modular<int32_t>, Z75, 75);
     TEST_SPECIFIC(Modular<int64_t>, LL75, 75);
-    TEST_SPECIFIC(Modular<uint8_t>, UC75, 75);
+	TEST_SPECIFIC(Modular<uint8_t>, UC75, 13);
     TEST_SPECIFIC(Modular<uint16_t>, US75, 75);
     TEST_SPECIFIC(Modular<uint32_t>, UZ75, 75);
     TEST_SPECIFIC(Modular<uint64_t>, ULL75, 75);
@@ -298,6 +299,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(ModularBalanced<double>, BD75, 75);
     TEST_SPECIFIC(Montgomery<int32_t>, MZ75, 75);
     TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU75, 75);
+	TEST_SPECIFIC(ModularExtended<double>, MED75, 75);
 
 #define TEST_POLYNOMIAL(BaseRing, Name, BaseRingName)		\
     Poly1Dom<BaseRing, Dense> Name(BaseRingName, "X");		\
@@ -366,6 +368,8 @@ int main(int argc, char ** argv)
     
     TEST_LAST(Montgomery<int32_t>, MZmax);
     TEST_LAST(Montgomery<RecInt::ruint128>, MRUmax);
+
+//	TEST_SPECIFIC(ModularExtended<double>, MEDmax);
 
     return 0;
 }

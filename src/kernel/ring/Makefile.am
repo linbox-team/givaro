@@ -59,6 +59,7 @@ pkginclude_HEADERS=     \
 	modular-balanced-double.inl \
 	montgomery-int32.inl\
 	montgomery-ruint.inl\
-	ring-interface.h
+	ring-interface.h        \
+	modular-extended.h
 
 EXTRA_DIST=ring.doxy

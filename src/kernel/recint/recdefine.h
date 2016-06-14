@@ -47,6 +47,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 // FIXME Get info at configure-time - A.B.
 // Check for anonymous unions + anonymous structs + __uint128_t
 // + constructor variables in aggregate
+// NOTE : __GIVARO_HAVE_INT128 is now available to test for __uint128_t
 // #define __RECINT_USE_FAST_128
 
 namespace RecInt

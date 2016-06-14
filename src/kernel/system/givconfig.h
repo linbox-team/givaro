@@ -427,7 +427,6 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
   #endif
 
 
-
 #if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H) || defined(__pmp_omp_h)
 #  ifndef __GIVARO_USE_OPENMP
 #    define __GIVARO_USE_OPENMP 1
@@ -436,6 +435,13 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
 //#  undef __GIVARO_USE_OPENMP
 #endif
 
+#ifdef __GIVARO_HAVE_INT128
+/* Define int128 type */
+#define int128_t __int128_t
+
+/* Define uint128 type */
+#define uint128_t __uint128_t
+#endif
 
 #endif
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

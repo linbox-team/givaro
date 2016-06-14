@@ -27,6 +27,7 @@ namespace Givaro {
     inline Modular<int64_t, int64_t>::Residu_t
     Modular<int64_t, int64_t>::maxCardinality() { return 4294967295u; }
 
+#ifdef __GIVARO_HAVE_INT128
     template<>
     inline Modular<int64_t, uint128_t>::Residu_t
     Modular<int64_t, uint128_t>::maxCardinality() { return 9223372036854775807ull; } // 2^63 - 1
@@ -34,6 +35,7 @@ namespace Givaro {
     template<>
     inline Modular<int64_t, int128_t>::Residu_t
     Modular<int64_t, int128_t>::maxCardinality() { return 9223372036854775807ull; }
+#endif
 
     // ------------------------
     // ----- Classic arithmetic

@@ -190,6 +190,7 @@ int main(int argc, char ** argv) {
 	Modular<uint64_t, uint64_t> Mu64u64p (536870923);
 	TestMulPrecomp(Mu64u64p,seed);
 
+#ifdef __GIVARO_HAVE_INT128
 	Modular<int64_t, int128_t> M64128p (2305843009213693967ul); //60-bit prime
 	TestMulPrecomp(M64128p,seed);
 	Modular<int64_t, uint128_t> M64u128p (2305843009213693967ul);
@@ -198,6 +199,7 @@ int main(int argc, char ** argv) {
 	TestMulPrecomp(Mu64128p,seed);
 	Modular<uint64_t, uint128_t> Mu64u128p (2305843009213693967ul);
 	TestMulPrecomp(Mu64u128p,seed);
+#endif
 
 	return 0;
 }

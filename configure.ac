@@ -166,9 +166,7 @@ AC_CHECK_SIZEOF(int, 32)
 AC_CHECK_SIZEOF(long, 32)
 AC_CHECK_SIZEOF(long long, 64)
 AC_CHECK_SIZEOF(__int64_t, 64)
-#AC_CHECK_SIZEOF(__int128_t, 128)
-#AC_CHECK_SIZEOF(__uint128_t, 128) 
-AC_CHECK_TYPE([__int128_t], [AC_TRY_COMPILE([#include <type_traits>], [std::make_unsigned<__int128_t>::type y;],[AC_DEFINE(GIVARO_HAVE_INT128, 1, [Define that compiler allows int128_t types]) AC_DEFINE(int128_t, __int128_t,[Define int128 type]) AC_DEFINE(uint128_t, __uint128_t,[Define uint128 type])])])		   
+AC_CHECK_TYPE([__int128_t], [AC_TRY_COMPILE([#include <type_traits>], [std::make_unsigned<__int128_t>::type y;],[AC_DEFINE(HAVE_INT128, 1, [Define that compiler allows int128_t types])])])		   
 
 
 

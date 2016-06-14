@@ -19,12 +19,13 @@
 
 using namespace Givaro;
 
+
 #define TESTE_EG( a, b )						\
-    if (!F.areEqual((a),(b))) {						\
-	F.write( F.write(std::cout,a) << "!=",b)			\
-	    << " failed (at line " <<  __LINE__ << ")" << std::endl;	\
+	if (!F.areEqual((a),(b))) {						\
+		F.write( F.write(std::cout,a) << "!=",b)			\
+			<< " failed (at line " <<  __LINE__ << ")" << std::endl;	\
 	return -1;							\
-    }
+	}
 
 #define JETESTE( a, s )					\
     if (TestRing( (a), (s)) ) {				\
@@ -182,7 +183,7 @@ int TestRing(const Ring& F, const uint64_t seed)
     JEONETESTE(F,x,y);
     
 	for (size_t i = 0; i< NBITER; ++i) {
-	g.random(x); g.random(y);
+		g.random(x); g.random(y);
 		JEONETESTE(F,x,y);
 	}
     
@@ -299,6 +300,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(ModularBalanced<double>, BD75, 75);
     TEST_SPECIFIC(Montgomery<int32_t>, MZ75, 75);
     TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU75, 75);
+	TEST_SPECIFIC(ModularExtended<float>, MEF75, 75);
 	TEST_SPECIFIC(ModularExtended<double>, MED75, 75);
 
 #define TEST_POLYNOMIAL(BaseRing, Name, BaseRingName)		\
@@ -368,8 +370,8 @@ int main(int argc, char ** argv)
     
     TEST_LAST(Montgomery<int32_t>, MZmax);
     TEST_LAST(Montgomery<RecInt::ruint128>, MRUmax);
-
-//	TEST_SPECIFIC(ModularExtended<double>, MEDmax);
+	TEST_LAST(ModularExtended<float>, MEFmax);
+	TEST_LAST(ModularExtended<double>, MEDmax);
 
     return 0;
 }

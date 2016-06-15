@@ -21,20 +21,20 @@ namespace Givaro
 
     template<>
     inline Modular<uint64_t, uint64_t>::Residu_t
-    Modular<uint64_t, uint64_t>::maxCardinality() { return 4294967295u; } // 2^32 - 1
+	Modular<uint64_t, uint64_t>::maxCardinality() { return 4294967295_ui64; } // 2^32 - 1
 
     template<>
     inline Modular<uint64_t, int64_t>::Residu_t
-    Modular<uint64_t, int64_t>::maxCardinality() { return 4294967295u; }
+	Modular<uint64_t, int64_t>::maxCardinality() { return 4294967295_ui64; }
 
 #ifdef __GIVARO_HAVE_INT128
     template<>
     inline Modular<uint64_t, uint128_t>::Residu_t
-    Modular<uint64_t, uint128_t>::maxCardinality() { return 9223372036854775807ull; } // 2^63 - 1
+	Modular<uint64_t, uint128_t>::maxCardinality() { return 9223372036854775807_ui64; } // 2^63 - 1
 
     template<>
     inline Modular<uint64_t, int128_t>::Residu_t
-    Modular<uint64_t, int128_t>::maxCardinality() { return 9223372036854775807ull; }
+	Modular<uint64_t, int128_t>::maxCardinality() { return 9223372036854775807_ui64; }
 #endif
 
     // ------------------------

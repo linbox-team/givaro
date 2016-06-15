@@ -159,7 +159,7 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 template<class Ring>
 int TestRing(const Ring& F, const uint64_t seed)
 {
-    typename Ring::Element x, y;
+	typename Ring::Element x, y;
 	typename Ring::RandIter g(F, 0_ui64, seed);
     
     F.init(x, 7U);
@@ -224,6 +224,7 @@ int TestPolRing(const Ring& F, const uint64_t seed)
     return 0;
 }
 
+
 int main(int argc, char ** argv)
 {
     auto seed = static_cast<uint64_t>(argc>1?atoi(argv[1]):BaseTimer::seed());
@@ -240,6 +241,11 @@ int main(int argc, char ** argv)
     using ModularUSUZ = Modular<uint16_t, uint32_t>;
     using ModularUZULL = Modular<uint32_t, uint64_t>;
     //using ModularFD = Modular<float, double>;
+
+#ifdef __GIVARO_HAVE_INT128
+	using ModularLLULLL = Modular<int64_t, uint128_t>;
+	using ModularULLULLL = Modular<uint64_t, uint128_t>;
+#endif
 
 #define TEST_SPECIFIC(Ring, Name, Modulus...)	\
     Ring Name(Modulus);				\
@@ -262,7 +268,12 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(ModularUCUS, UCUS4, 4);
     TEST_SPECIFIC(ModularUSUZ, USUZ4, 4);
     TEST_SPECIFIC(ModularUZULL, UZULL4, 4);
-    //TEST_SPECIFIC(ModularFD, FD4, 4);
+	//TEST_SPECIFIC(ModularFD, FD4, 4);
+#ifdef __GIVARO_HAVE_INT128
+	TEST_SPECIFIC(ModularLLULLL, LLULLL4, 4);
+	TEST_SPECIFIC(ModularULLULLL, ULLULLL4, 4);
+#endif
+
     TEST_SPECIFIC(Modular<float>, F4, 4);
     TEST_SPECIFIC(Modular<double>, D4, 4);
     TEST_SPECIFIC(Modular<Integer>, I4, 4);
@@ -288,6 +299,12 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(ModularUSUZ, USUZ75, 75);
     TEST_SPECIFIC(ModularUZULL, UZULL75, 75);
     //TEST_SPECIFIC(ModularFD, FD75, 75);
+#ifdef __GIVARO_HAVE_INT128
+	TEST_SPECIFIC(ModularLLULLL, LLULLL75, 75);
+	TEST_SPECIFIC(ModularULLULLL, ULLULLL75, 75);
+#endif
+
+
     TEST_SPECIFIC(Modular<float>, F75, 75);
     TEST_SPECIFIC(Modular<double>, D75, 75);
     TEST_SPECIFIC(Modular<Integer>, I75, 75);
@@ -357,7 +374,12 @@ int main(int argc, char ** argv)
     TEST_LAST(ModularZULL, ZULLmax);
     TEST_LAST(ModularUCUS, UCUSmax);
     TEST_LAST(ModularUSUZ, USUZmax);
-    TEST_LAST(ModularUZULL, UZULLmax);
+	TEST_LAST(ModularUZULL, UZULLmax);
+#ifdef __GIVARO_HAVE_INT128
+	TEST_LAST(ModularLLULLL, LLULLLmax);
+	TEST_LAST(ModularULLULLL, ULLULLLmax);
+#endif
+
     TEST_LAST(Modular<float>, Fmax);
     TEST_LAST(Modular<double>, Dmax);
     //TEST_LAST(ModularFD, FDmax);

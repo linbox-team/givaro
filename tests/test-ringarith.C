@@ -108,15 +108,15 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     F.mul(a_,a,a); // a_ = a*a
     F.mul(b_,b,b); // b_ = b*b
     F.sub(e_,a_,b_); // e_ = a_ - b_
-    //         F.write(std::cerr) << std::endl;
-    //         F.write(std::cerr << "a: ", a) << std::endl;
-    //         F.write(std::cerr << "a_: ", a_) << std::endl;
-    //         F.write(std::cerr << "b: ", b) << std::endl;
-    //         F.write(std::cerr << "b_: ", b_) << std::endl;
-    //         F.write(std::cerr << "c: ", c) << std::endl;
-    //         F.write(std::cerr << "d: ", d) << std::endl;
-    //         F.write(std::cerr << "e: ", e) << std::endl;
-    //         F.write(std::cerr << "e_: ", e_) << std::endl;
+//         F.write(std::cerr) << std::endl;
+//         F.write(std::cerr << "a: ", a) << std::endl;
+//         F.write(std::cerr << "a_: ", a_) << std::endl;
+//         F.write(std::cerr << "b: ", b) << std::endl;
+//         F.write(std::cerr << "b_: ", b_) << std::endl;
+//         F.write(std::cerr << "c: ", c) << std::endl;
+//         F.write(std::cerr << "d: ", d) << std::endl;
+//         F.write(std::cerr << "e: ", e) << std::endl;
+//         F.write(std::cerr << "e_: ", e_) << std::endl;
     TESTE_EG(e,e_); // a^2 - b^2 = (a-b)(a+b)
 
     F.maxpy(e, a, b, d); // e = d-a*b

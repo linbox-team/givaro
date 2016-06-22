@@ -32,10 +32,9 @@ LOCAL_DIR="$JENKINS_DIR"/local
 PREFIX_INSTALL="$LOCAL_DIR/$CXX"
 
 # Add path to compilers (if needed)
-export PATH="$PATH":"$LOCAL_DIR/$CXX/bin"
-
+export PATH="$PATH":"/usr/local/bin":"$LOCAL_DIR/$CXX/bin"
 # Add specific locations (if needed)
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"$LOCAL_DIR/$CXX/lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"/usr/local/lib":"$LOCAL_DIR/$CXX/lib"
 
 # Where is GMP installed (compiled with cxx interface)
 # Keep empty if in usual folders (i.e. /usr or /usr/local)

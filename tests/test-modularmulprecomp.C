@@ -11,24 +11,17 @@
 #include <givaro/modular.h>
 #include <givaro/givinteger.h>
 
-//#include <givaro/modular-balanced.h>
-//#include <givaro/montgomery.h>
-//#include <givaro/givpoly1.h>
-//#include <givaro/zring.h>
-//#include <givaro/gfq.h>
-
-//#include <recint/recint.h>
-
 using namespace Givaro;
 
-#define TESTE_EG( a, b )						\
-	if (!F.areEqual((a),(b))) {						\
-	F.write( F.write(std::cout,a) << "!=",b)			\
+#define TESTE_EG( a, b )										\
+	if (!F.areEqual((a),(b))) {									\
+	F.write( F.write(std::cout,a) << "!=",b)					\
 	<< " failed (at line " <<  __LINE__ << ")" << std::endl;	\
-	return -1;							\
+	throw std::string( "Message d'erreur" );					\
+	return -1;													\
 	}
 
-#define NBITER 50
+#define NBITER 100
 
 template<class Ring>
 int TestOneMulPrecomp(const Ring& F, const typename Ring::Element& x, const typename Ring::Element& y)
@@ -39,17 +32,26 @@ int TestOneMulPrecomp(const Ring& F, const typename Ring::Element& x, const type
 #endif
 
 	typename Ring::Element a, b, c, d;
-	typename Ring::Compute_t invp, invb;
+	typename Ring::Compute_t invp, invb, invb2;
 
 	F.assign(a, x);
 	F.assign(b, y);
+	if (a < 0){
+		std::cout << "x : " << x << "\n a : " << a << std::endl;
+	}
 
 	F.mul(c,a,b);
+
 	F.precomp_p(invp);
 	F.mul_precomp_p(d,a,b,invp);
 	TESTE_EG(c,d);
 
 	F.precomp_b(invb, b);
+	F.mul_precomp_b(d,a,b,invb);
+	TESTE_EG(c,d);
+
+	F.precomp_b(invb2, b, invp);
+	TESTE_EG(invb,invb2);
 	F.mul_precomp_b(d,a,b,invb);
 	TESTE_EG(c,d);
 
@@ -126,78 +128,82 @@ int main(int argc, char ** argv) {
 	Modular<uint8_t, uint8_t> Mu8u8p (3);
 	TestMulPrecomp(Mu8u8p,seed);
 
-	Modular<int8_t, int16_t> M816p (37); //6-bit prime
+	Modular<int8_t, int16_t> M816p (61); //6-bit prime
 	TestMulPrecomp(M816p,seed);
-	Modular<int8_t, uint16_t> M8u16p (37);
+	Modular<int8_t, uint16_t> M8u16p (61);
 	TestMulPrecomp(M8u16p,seed);
-	Modular<uint8_t, int16_t> Mu816p (37);
+	Modular<uint8_t, int16_t> Mu816p (61);
 	TestMulPrecomp(Mu816p,seed);
-	Modular<uint8_t, uint16_t> Mu8u16p (37);
+	Modular<uint8_t, uint16_t> Mu8u16p (61);
 	TestMulPrecomp(Mu8u16p,seed);
 
 	/**********************/
 	/*  Modular<16, ...>  */
 	/**********************/
-	Modular<int16_t, int16_t> M1616p (37); //6-bit prime
+	Modular<int16_t, int16_t> M1616p (61); //6-bit prime
 	TestMulPrecomp(M1616p,seed);
-	Modular<int16_t, uint16_t> M16u16p (37);
+	Modular<int16_t, uint16_t> M16u16p (61);
 	TestMulPrecomp(M16u16p,seed);
-	Modular<uint16_t, int16_t> Mu1616p (37);
+	Modular<uint16_t, int16_t> Mu1616p (61);
 	TestMulPrecomp(Mu1616p,seed);
-	Modular<uint16_t, uint16_t> Mu16u16p (37);
+	Modular<uint16_t, uint16_t> Mu16u16p (61);
 	TestMulPrecomp(Mu16u16p,seed);
 
-	Modular<int16_t, int32_t> M1632p (8209); //14-bit prime
+	Modular<int16_t, int32_t> M1632p (16381); //14-bit prime
 	TestMulPrecomp(M1632p,seed);
-	Modular<int16_t, uint32_t> M16u32p (8209);
+	Modular<int16_t, uint32_t> M16u32p (16381);
 	TestMulPrecomp(M16u32p,seed);
-	Modular<uint16_t, int32_t> Mu1632p (8209);
+	Modular<uint16_t, int32_t> Mu1632p (16381);
 	TestMulPrecomp(Mu1632p,seed);
-	Modular<uint16_t, uint32_t> Mu16u32p (8209);
+	Modular<uint16_t, uint32_t> Mu16u32p (16381);
 	TestMulPrecomp(Mu16u32p,seed);
 
 	/**********************/
 	/*  Modular<32, ...>  */
 	/**********************/
-	Modular<int32_t, int32_t> M3232p (8209); //14-bit prime
+	Modular<int32_t, int32_t> M3232p (16381); //14-bit prime
 	TestMulPrecomp(M3232p,seed);
-	Modular<int32_t, uint32_t> M32u32p (8209);
+	Modular<int32_t, uint32_t> M32u32p (16381);
 	TestMulPrecomp(M32u32p,seed);
-	Modular<uint32_t, int32_t> Mu3232p (8209);
+	Modular<uint32_t, int32_t> Mu3232p (16381);
 	TestMulPrecomp(Mu3232p,seed);
-	Modular<uint32_t, uint32_t> Mu32u32p (8209);
+	Modular<uint32_t, uint32_t> Mu32u32p (16381);
 	TestMulPrecomp(Mu32u32p,seed);
 
 
-	Modular<int32_t, int64_t> M3264p (536870923); //30-bit prime
+	Modular<int32_t, int64_t> M3264p (1073741789); //30-bit prime
 	TestMulPrecomp(M3264p,seed);
-	Modular<int32_t, uint64_t> M32u64p (536870923);
+	Modular<int32_t, uint64_t> M32u64p (1073741789);
 	TestMulPrecomp(M32u64p,seed);
-	Modular<uint32_t, int64_t> Mu3264p (536870923);
+	Modular<uint32_t, int64_t> Mu3264p (1073741789);
 	TestMulPrecomp(Mu3264p,seed);
-	Modular<uint32_t, uint64_t> Mu32u64p (536870923);
+	Modular<uint32_t, uint64_t> Mu32u64p (1073741789);
 	TestMulPrecomp(Mu32u64p,seed);
+
+	Modular<uint32_t, uint64_t> Mu32u64p2 (143513);
+	TestMulPrecomp(Mu32u64p2,seed);
+
 
 	/**********************/
 	/*  Modular<64, ...>  */
 	/**********************/
-	Modular<int64_t, int64_t> M6464p (536870923); //30-bit prime
+	Modular<int64_t, int64_t> M6464p (1073741789); //30-bit prime
 	TestMulPrecomp(M6464p,seed);
-	Modular<int64_t, uint64_t> M64u64p (536870923);
+	Modular<int64_t, uint64_t> M64u64p (1073741789);
 	TestMulPrecomp(M64u64p,seed);
-	Modular<uint64_t, int64_t> Mu6464p (536870923);
+	Modular<uint64_t, int64_t> Mu6464p (1073741789);
 	TestMulPrecomp(Mu6464p,seed);
-	Modular<uint64_t, uint64_t> Mu64u64p (536870923);
+	Modular<uint64_t, uint64_t> Mu64u64p (1073741789);
 	TestMulPrecomp(Mu64u64p,seed);
 
 #ifdef __GIVARO_HAVE_INT128
-	Modular<int64_t, int128_t> M64128p (2305843009213693967ul); //60-bit prime
+	Modular<int64_t, int128_t> M64128p (4611686018427387847ul); //62-bit prime
 	TestMulPrecomp(M64128p,seed);
-	Modular<int64_t, uint128_t> M64u128p (2305843009213693967ul);
+	Modular<int64_t, uint128_t> M64u128p (4611686018427387847ul);
 	TestMulPrecomp(M64u128p,seed);
-	Modular<uint64_t, int128_t> Mu64128p (2305843009213693967ul);
+	Modular<uint64_t, int128_t> Mu64128p (4611686018427387847ul);
 	TestMulPrecomp(Mu64128p,seed);
-	Modular<uint64_t, uint128_t> Mu64u128p (2305843009213693967ul);
+	Modular<uint64_t, uint128_t> Mu64u128p (4611686018427387847ul);
 	TestMulPrecomp(Mu64u128p,seed);
 #endif
 

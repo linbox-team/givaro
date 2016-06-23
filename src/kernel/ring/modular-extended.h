@@ -40,29 +40,6 @@ namespace Givaro{
 		using Compute_t = double;
 		enum { size_rep = sizeof(Residu_t) };
 
-	private:
-		// Verkampt Split
-		inline void split(const Element x, Element &x_h, Element &x_l) const {
-			Element c;
-			if(std::is_same<Element, double>::value){
-				c = (Element)((1 << 27)+1);
-			}else if(std::is_same<Element, float>::value){
-				c = (Element)((1 << 13)+1);
-			}
-			c = c*x;
-			x_h = c-(c-x);
-			x_l = x - x_h;
-		}
-
-		// Dekker mult, a * b = s + t
-		inline void mult_dekker(const Element a, const Element b, Element &s, Element &t) const{
-			s = a*b;
-			Element ah, al, bh, bl;
-			split(a, ah, al);
-			split(b, bh, bl);
-			t = (al*bl-(((s-ah*bh)-al*bh)-ah*bl));
-		}
-
 	public:
 		// ----- Constantes
 		const Element zero = 0.0;
@@ -92,9 +69,9 @@ namespace Givaro{
 		template<class T> inline T& cardinality(T& p) const { return p = _lp; }
 		static inline Residu_t maxCardinality() {
 			if(std::is_same<Element, double>::value)
-				return 4503599627370495; // 2^(52) - 1
+				return 1125899906842623; // 2^(52-2) - 1
 			else if(std::is_same<Element, float>::value)
-				return 4194303; // 2^(22) - 1
+				return 2097151; // 2^(23-2) - 1
 		}
 		static inline Residu_t minCardinality() { return 2; }
 
@@ -136,47 +113,28 @@ namespace Givaro{
 
 		// ----- Convert and reduce
 		template<typename T> T& convert(T& r, const Element& a) const
-		{ return r = static_cast<T>(a); }
+		{ return r = static_cast<T>(a); }		
 
 		Element& reduce (Element& x, const Element& y) const{
-			Element q = floor(y*_invp);
-			Element pqh, pql;
-			mult_dekker(_p, q, pqh, pql);
-			x = (x-pqh)-pql;
-			if(x >= _p)
-				x -= _p;
-			else if(x < 0)
-				x += _p;
+			x = fmod (y, _p);
+			if (x < 0.0) x += _p;
 			return x;
 		}
 
 		Element& reduce (Element& x) const{
-			Element q = floor(x*_invp);
-			Element pqh, pql;
-			mult_dekker(_p, q, pqh, pql);
-			x = (x-pqh)-pql;
-			if(x >= _p)
-				x -= _p;
-			else if(x < zero)
-				x += _p;
+			x = fmod (x, _p);
+			if (x < 0.0) x += _p;
 			return x;
 		}
 
 		// ----- Classic arithmetic
 		Element& mul(Element& r, const Element& a, const Element& b) const override {
 			Element abh, abl, pql, pqh, q;
-#ifdef _FMA_
 			abh = a * b;
 			abl = fma(a, b, -abh);
 			q = std::floor(abh*_invp);
 			pql = fma (-q, _p, abh);
 			r = abl + pql;
-#else			
-			mult_dekker(a, b, abh, abl);
-			q = std::floor(abh*_invp);
-			mult_dekker(q, _p, pqh, pql);
-			r = (abh - pqh) + (abl - pql);
-#endif
 			if(r > _p)
 				r-= _p;
 			else if(r < 0)

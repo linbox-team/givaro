@@ -12,14 +12,11 @@
 #ifndef __GIVARO_MODULAR_EXTENDED_H
 #define __GIVARO_MODULAR_EXTENDED_H
 
+#include "givaro/givconfig.h"
+
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
-
-// namespace Givaro{
-//  template<class T>
-//  class ModularExtended;// : public RingInterface<double>{};
-// } // Givaro
 
 namespace Givaro{
 	/*
@@ -44,29 +41,26 @@ namespace Givaro{
 
 	private:
 		// Verkampt Split
-		//inline void split(const Element x, Element &x_h, Element &x_l) const {
-		//	Element c;
-		//	if(std::is_same<Element, double>::value){
-		//		c = (Element)((1 << 27)+1);
-		//	}else if(std::is_same<Element, float>::value){
-		//		c = (Element)((1 << 13)+1);
-		//	}
-
-		//	x_h = (c*x)+(x-(c*x));
-		//	x_l = x - x_h;
-		//}
+		inline void split(const Element x, Element &x_h, Element &x_l) const {
+			Element c;
+			if(std::is_same<Element, double>::value){
+				c = (Element)((1 << 27)+1);
+			}else if(std::is_same<Element, float>::value){
+				c = (Element)((1 << 13)+1);
+			}
+			c = c*x;
+			x_h = c-(c-x);
+			x_l = x - x_h;
+		}
 
 		// Dekker mult, a * b = s + t
-		//inline void mult(const Element a, const Element b, Element &s, Element &t) const{
-		//	s = a*b;_
-		//	t = std::fma(-a, b, s);
-
-		//	// Old alternative code
-		//	//Element ah, al, bh, bl;
-		//	//split(a, ah, al);
-		//	//slit(b, bh, bl);
-		//	//t = ((((-s+ah*bh)+(ah*bl))+(al*bh))+(al*bl));
-		//}
+		inline void mult_dekker(const Element a, const Element b, Element &s, Element &t) const{
+			s = a*b;
+			Element ah, al, bh, bl;
+			split(a, ah, al);
+			split(b, bh, bl);
+			t = (al*bl-(((s-ah*bh)-al*bh)-ah*bl));
+		}
 
 	public:
 		// ----- Constantes
@@ -84,10 +78,6 @@ namespace Givaro{
 			assert(_p <= maxCardinality());
 		}
 
-		//ModularExtended(const Self_t& F) = default;
-		//ModularExtended(Self_t&& F) = default;
-		// : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _lp(F._lp) {}
-
 		// ----- Accessors
 		inline Element minElement() const override { return zero; }
 		inline Element maxElement() const override { return mOne; }
@@ -101,9 +91,9 @@ namespace Givaro{
 		template<class T> inline T& cardinality(T& p) const { return p = _lp; }
 		static inline Residu_t maxCardinality() {
 			if(std::is_same<Element, double>::value)
-				return 1125899906842623; // 2^(52-2) - 1
+				return 4503599627370495; // 2^(52) - 1
 			else if(std::is_same<Element, float>::value)
-				return 2097151; // 2^(23-2) - 1
+				return 4194303; // 2^(22) - 1
 		}
 		static inline Residu_t minCardinality() { return 2; }
 
@@ -148,24 +138,44 @@ namespace Givaro{
 		{ return r = static_cast<T>(a); }
 
 		Element& reduce (Element& x, const Element& y) const{
-			x = fmod (y, _p);
-			if (x < 0.0) x += _p;
+			Element q = floor(y*_invp);
+			Element pqh, pql;
+			mult_dekker(_p, q, pqh, pql);
+			x = (x-pqh)-pql;
+			if(x >= _p)
+				x -= _p;
+			else if(x < 0)
+				x += _p;
 			return x;
 		}
+
 		Element& reduce (Element& x) const{
-			x = fmod (x, _p);
-			if (x < 0.0) x += _p;
+			Element q = floor(x*_invp);
+			Element pqh, pql;
+			mult_dekker(_p, q, pqh, pql);
+			x = (x-pqh)-pql;
+			if(x >= _p)
+				x -= _p;
+			else if(x < zero)
+				x += _p;
 			return x;
 		}
 
 		// ----- Classic arithmetic
 		Element& mul(Element& r, const Element& a, const Element& b) const override {
-			Element abh, abl, pql, q;
+			Element abh, abl, pql, pqh, q;
+#ifdef _FMA_
 			abh = a * b;
 			abl = fma(a, b, -abh);
-			q = floor(abh*_invp);
+			q = std::floor(abh*_invp);
 			pql = fma (-q, _p, abh);
 			r = abl + pql;
+#else			
+			mult_dekker(a, b, abh, abl);
+			q = std::floor(abh*_invp);
+			mult_dekker(q, _p, pqh, pql);
+			r = (abh - pqh) + (abl - pql);
+#endif
 			if(r > _p)
 				r-= _p;
 			else if(r < 0)

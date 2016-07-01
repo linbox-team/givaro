@@ -147,53 +147,10 @@ namespace Givaro{
 			return reduce(x);
 		}
 
-		Element& reduce (Element& x) const{
-//			 x = fmod (x, _p);
-//			 if (x < 0.0) x += _p;
-
-			mul(x,x,1.);
-			return x;
-			
-			// Element q = floor(x*_invp);
-			// Element pqh, pql;
-			// mult_dekker(_p, q, pqh, pql);
-			// x = (x-pqh)-pql;
-			// if(x >= _p)
-			// 	x -= _p;
-			// else if(x < zero)
-			// 	x += _p;
-			// return x;
-		}
+		Element& reduce (Element& x) const ;
 
 		// ----- Classic arithmetic
-		Element& mul(Element& r, const Element& a, const Element& b) const override {
-			Element abh, abl, pql, pqh, q;
-#if 1
-//			std::cout<<"Ya fma\n";
-			abh = a * b;
-			abl = fma(a, b, -abh);
-			q = std::floor(abh*_invp);
-			pql = fma (-q, _p, abh);
-			r = abl + pql;
-#else			
-//			std::cout<<"Ya pas fma\n";
-//			std::cout << " a : " << a << std::endl
-//					  << " b : " << b << std::endl;
-			mult_dekker(a, b, abh, abl);
-			q = std::floor(abh*_invp);
-			mult_dekker(q, _p, pqh, pql);
-			r = (abh - pqh) + (abl - pql);
-#endif
-			if(r >= _p)
-				r-= _p;
-			else if(r < 0)
-				r += _p;
-#ifndef NDEBUG
-			assert((r < _p) && (r >= 0));
-#endif
-			return r;
-		}
-
+		Element& mul(Element& r, const Element& a, const Element& b) const override;
 
 		Element& div(Element& r, const Element& a, const Element& b) const override{
 			return mulin(inv(r, a), b);
@@ -398,7 +355,7 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<double>::Element&
+	typename ModularExtended<double>::Element&
 	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const int64_t y) const
 	{
 		x = static_cast<Element>(std::abs(y) % _lp);
@@ -408,7 +365,7 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<double>::Element&
+	typename ModularExtended<double>::Element&
 	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const uint64_t y) const
 	{
 		return x = static_cast<Element>(y % (uint64_t)(_lp));
@@ -416,17 +373,17 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<double>::Element&
+	typename ModularExtended<double>::Element&
 	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const Integer& y) const
 	{
 		x = static_cast<Element>(y % _lp);
-			if (x < 0) x += _p;
-			return x;
+		if (x < 0) x += _p;
+		return x;
 	}
 
 	template<>
 	template<>
-	 typename ModularExtended<double>::Element&
+	typename ModularExtended<double>::Element&
 	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const Element& y) const
 	{
 		return x = y;
@@ -437,7 +394,7 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<float>::Element&
+	typename ModularExtended<float>::Element&
 	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const double a) const
 	{
 		r = static_cast<float>(std::fmod(a, _p));
@@ -447,7 +404,7 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<float>::Element&
+	typename ModularExtended<float>::Element&
 	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const int32_t a) const
 	{
 		r = static_cast<Element>(std::abs(a) % _lp);
@@ -457,7 +414,7 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<float>::Element&
+	typename ModularExtended<float>::Element&
 	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const uint32_t a) const
 	{
 		return r = static_cast<Element>(a % uint32_t(_lp));
@@ -465,7 +422,7 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<float>::Element&
+	typename ModularExtended<float>::Element&
 	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const int64_t a) const
 	{
 		r = static_cast<Element>(std::abs(a) % int64_t(_lp));
@@ -475,7 +432,7 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<float>::Element&
+	typename ModularExtended<float>::Element&
 	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const uint64_t a) const
 	{
 		return r = static_cast<Element>(a % uint64_t(_lp));
@@ -483,12 +440,120 @@ namespace Givaro{
 
 	template<>
 	template<>
-	 typename ModularExtended<float>::Element&
+	typename ModularExtended<float>::Element&
 	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const Integer& a) const
 	{
 		r = static_cast<Element>(a % _lp);
 		if (a < 0) negin(r);
 		return r;
+	}
+
+	// --------------
+	// Multiplication
+	// --------------
+	template<>
+	typename ModularExtended<float>::Element&
+	ModularExtended<float>::mul(typename ModularExtended<float>::Element& r,
+								const typename ModularExtended<float>::Element& a,
+								const typename ModularExtended<float>::Element& b) const {
+		Element abh, abl, pql, pqh, q;
+#ifdef FP_FAST_FMAF
+		abh = a * b;
+		abl = fma(a, b, -abh);
+		q = std::floor(abh*_invp);
+		pql = fma (-q, _p, abh);
+		r = abl + pql;
+#else
+		mult_dekker(a, b, abh, abl);
+		q = std::floor(abh*_invp);
+		mult_dekker(-q, _p, pqh, pql);
+		r = (abh + pqh) + (abl + pql);
+#endif
+		if(r >= _p)
+			r-= _p;
+		else if(r < 0)
+			r += _p;
+#ifndef NDEBUG
+		assert((r < _p) && (r >= 0));
+#endif
+		return r;
+	}
+
+	template<>
+	typename ModularExtended<double>::Element&
+	ModularExtended<double>::mul(typename ModularExtended<double>::Element& r,
+								const typename ModularExtended<double>::Element& a,
+								const typename ModularExtended<double>::Element& b) const {
+		Element abh, abl, pql, pqh, q;
+#ifdef FP_FAST_FMA
+		abh = a * b;
+		abl = fma(a, b, -abh);
+		q = std::floor(abh*_invp);
+		pql = fma (-q, _p, abh);
+		r = abl + pql;
+#else
+		mult_dekker(a, b, abh, abl);
+		q = std::floor(abh*_invp);
+		mult_dekker(-q, _p, pqh, pql);
+		r = (abh + pqh) + (abl + pql);
+#endif
+		if(r >= _p)
+			r-= _p;
+		else if(r < 0)
+			r += _p;
+#ifndef NDEBUG
+		assert((r < _p) && (r >= 0));
+#endif
+		return r;
+	}
+
+	// --------------
+	//    Reduction
+	// --------------
+	template<>
+	typename ModularExtended<float>::Element&
+	ModularExtended<float>::reduce (typename ModularExtended<float>::Element& a) const{
+		Element pql, pqh, q;
+#ifdef FP_FAST_FMAF
+		q = std::floor(a*_invp);
+		pql = fma (-q, _p, a);
+		a = pql;
+#else
+		q = std::floor(a*_invp);
+		mult_dekker(-q, _p, pqh, pql);
+		a = (a + pqh) + pql;
+#endif
+		if(a >= _p)
+			a-= _p;
+		else if(a < 0)
+			a += _p;
+#ifndef NDEBUG
+		assert((a < _p) && (a >= 0));
+#endif
+		return a;
+	}
+
+	template<>
+	typename ModularExtended<double>::Element&
+	ModularExtended<double>::reduce (typename ModularExtended<double>::Element& a) const{
+		Element pql, pqh, q;
+#ifdef FP_FAST_FMA
+		q = std::floor(a*_invp);
+		pql = fma (-q, _p, a);
+		a = pql;
+#else
+		q = std::floor(a*_invp);
+		mult_dekker(-q, _p, pqh, pql);
+		a = (a + pqh) + pql;
+#endif
+		if(a >= _p)
+			a-= _p;
+		else if(a < 0)
+			a += _p;
+#ifndef NDEBUG
+		assert((a < _p) && (a >= 0));
+#endif
+		return a;
 	}
 
 

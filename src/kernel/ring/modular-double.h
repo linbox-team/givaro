@@ -32,7 +32,7 @@ public:
 	// ----- Exported Types and constantes
 	typedef Modular<double> Self_t;
 	typedef uint64_t Residu_t;
-		using Compute_t = double;
+	using Compute_t = double;
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Constantes

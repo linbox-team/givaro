@@ -64,6 +64,9 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     //         F.write(std::cerr << "1: ", F.one) << std::endl;
     TESTE_EG(a, F.one);
 
+	F.init(a, -1);
+	TESTE_EG(a, F.mOne);
+
     F.assign(a, x);
     F.assign(b, y);
     F.init(c);            // empty constructor
@@ -143,6 +146,23 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     //         F.write(std::cerr << "e_: ", e_) << std::endl;
     TESTE_EG(e,e_);
 
+	F.init(a, 3);
+	F.assign(b , y);
+	F.mul(c,a,b);
+	F.subin(c,b);
+	F.subin(c,b);
+	F.subin(c,b);
+	F.init(d, 0U);
+	TESTE_EG(c, d);
+
+	F.init(a, -3);
+	F.assign(b , y);
+	F.mul(c,a,b);
+	F.addin(c,b);
+	F.addin(c,b);
+	F.addin(c,b);
+	F.init(d, 0U);
+	TESTE_EG(c, d);
 
 #ifdef GIVARO_DEBUG
     F.write(std::cerr );

@@ -523,7 +523,7 @@ namespace Givaro {
     template<>
     inline std::ostream& Modular<int64_t, int64_t>::write (std::ostream& s ) const
     {
-        return s << "Modular<int64_t, uint64_t> modulo " << residu();
+		return s << "Modular<int64_t, int64_t> modulo " << residu();
     }
 
     template<>
@@ -531,6 +531,20 @@ namespace Givaro {
     {
         return s << "Modular<int64_t, uint64_t> modulo " << residu();
     }
+
+#ifdef __GIVARO_HAVE_INT128
+	template<>
+	inline std::ostream& Modular<int64_t, int128_t>::write (std::ostream& s ) const
+	{
+		return s << "Modular<int64_t, int128_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<int64_t, uint128_t>::write (std::ostream& s ) const
+	{
+		return s << "Modular<int64_t, uint128_t> modulo " << residu();
+	}
+#endif
 
     template<typename COMP>
     inline std::istream& Modular<int64_t, COMP>::read (std::istream& s, Element& a) const

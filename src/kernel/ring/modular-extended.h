@@ -36,9 +36,32 @@ namespace Givaro{
 		typedef const Element* ConstElement_ptr;
 		// ----- Exported Types and constantes
 		typedef ModularExtended<_Element> Self_t;
+		using Compute_t = _Element;
 		typedef uint64_t Residu_t;
-		using Compute_t = double;
 		enum { size_rep = sizeof(Residu_t) };
+
+	private:
+		// Verkampt Split
+		inline void split(const Element x, Element &x_h, Element &x_l) const {
+			Element c;
+			if(std::is_same<Element, double>::value){
+				c = (Element)((1 << 27)+1);
+			}else if(std::is_same<Element, float>::value){
+				c = (Element)((1 << 13)+1);
+			}
+			c = c*x;
+			x_h = c-(c-x);
+			x_l = x - x_h;
+		}
+
+		// Dekker mult, a * b = s + t
+		inline void mult_dekker(const Element a, const Element b, Element &s, Element &t) const{
+			s = a*b;
+			Element ah, al, bh, bl;
+			split(a, ah, al);
+			split(b, bh, bl);
+			t = (al*bl-(((s-ah*bh)-al*bh)-ah*bl));
+		}
 
 	public:
 		// ----- Constantes
@@ -97,14 +120,18 @@ namespace Givaro{
 			return *this;
 		}
 
+
+
 		// ----- Initialisation
-		Element &init (Element &x) const{
+		inline Element& init (Element& x) const
+		{
 			return x = zero;
 		}
 
-		template<class XXX> Element& init(Element & x, const XXX & y) const{
-			x=Element(y);
-			return reduce(x);
+		template<typename T>
+		Element& init (Element& r, T a) const{
+			r = Caster<Element>(a);
+			return reduce(r);
 		}
 
 		Element &assign (Element &x, const Element &y) const{
@@ -113,32 +140,57 @@ namespace Givaro{
 
 		// ----- Convert and reduce
 		template<typename T> T& convert(T& r, const Element& a) const
-		{ return r = static_cast<T>(a); }		
+		{ return r = static_cast<T>(a); }
 
 		Element& reduce (Element& x, const Element& y) const{
-			x = fmod (y, _p);
-			if (x < 0.0) x += _p;
-			return x;
+			x=y;
+			return reduce(x);
 		}
 
 		Element& reduce (Element& x) const{
-			x = fmod (x, _p);
-			if (x < 0.0) x += _p;
+//			 x = fmod (x, _p);
+//			 if (x < 0.0) x += _p;
+
+			mul(x,x,1.);
 			return x;
+			
+			// Element q = floor(x*_invp);
+			// Element pqh, pql;
+			// mult_dekker(_p, q, pqh, pql);
+			// x = (x-pqh)-pql;
+			// if(x >= _p)
+			// 	x -= _p;
+			// else if(x < zero)
+			// 	x += _p;
+			// return x;
 		}
 
 		// ----- Classic arithmetic
 		Element& mul(Element& r, const Element& a, const Element& b) const override {
 			Element abh, abl, pql, pqh, q;
+#if 1
+//			std::cout<<"Ya fma\n";
 			abh = a * b;
 			abl = fma(a, b, -abh);
 			q = std::floor(abh*_invp);
 			pql = fma (-q, _p, abh);
 			r = abl + pql;
-			if(r > _p)
+#else			
+//			std::cout<<"Ya pas fma\n";
+//			std::cout << " a : " << a << std::endl
+//					  << " b : " << b << std::endl;
+			mult_dekker(a, b, abh, abl);
+			q = std::floor(abh*_invp);
+			mult_dekker(q, _p, pqh, pql);
+			r = (abh - pqh) + (abl - pql);
+#endif
+			if(r >= _p)
 				r-= _p;
 			else if(r < 0)
 				r += _p;
+#ifndef NDEBUG
+			assert((r < _p) && (r >= 0));
+#endif
 			return r;
 		}
 
@@ -318,7 +370,7 @@ namespace Givaro{
 	inline
 	std::ostream &ModularExtended<_Element>::write (std::ostream &os, const Element &x) const
 	{
-		return os << static_cast<uint64_t>(x);
+		return os << static_cast<int64_t>(x);
 	}
 
 	template<typename _Element>
@@ -331,6 +383,115 @@ namespace Givaro{
 		return is;
 	}
 
-}// Givaro
+	//Element &init (Element &x) const{
+	//	return x = zero;
+	//}
+
+	//template<class XXX> Element& init(Element & x, const XXX & y) const{
+	//	// TODO : Bad init, take the code from modular<double>
+	//	x=Element(y);
+	//	return reduce(x);
+	//}
+
+	// --------------------
+	// ----- Initialisation de Modular<double>
+
+	template<>
+	template<>
+	 typename ModularExtended<double>::Element&
+	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const int64_t y) const
+	{
+		x = static_cast<Element>(std::abs(y) % _lp);
+		if (y < 0) negin(x);
+		return x;
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<double>::Element&
+	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const uint64_t y) const
+	{
+		return x = static_cast<Element>(y % (uint64_t)(_lp));
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<double>::Element&
+	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const Integer& y) const
+	{
+		x = static_cast<Element>(y % _lp);
+			if (x < 0) x += _p;
+			return x;
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<double>::Element&
+	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const Element& y) const
+	{
+		return x = y;
+	}
+
+	// --------------------
+	// ----- Initialisation de ModularExtended<float>
+
+	template<>
+	template<>
+	 typename ModularExtended<float>::Element&
+	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const double a) const
+	{
+		r = static_cast<float>(std::fmod(a, _p));
+		if (r < 0.f) r += _p;
+		return r;
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<float>::Element&
+	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const int32_t a) const
+	{
+		r = static_cast<Element>(std::abs(a) % _lp);
+		if (a < 0) negin(r);
+		return r;
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<float>::Element&
+	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const uint32_t a) const
+	{
+		return r = static_cast<Element>(a % uint32_t(_lp));
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<float>::Element&
+	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const int64_t a) const
+	{
+		r = static_cast<Element>(std::abs(a) % int64_t(_lp));
+		if (a < 0) negin(r);
+		return r;
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<float>::Element&
+	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const uint64_t a) const
+	{
+		return r = static_cast<Element>(a % uint64_t(_lp));
+	}
+
+	template<>
+	template<>
+	 typename ModularExtended<float>::Element&
+	ModularExtended<float>::init(typename ModularExtended<float>::Element& r, const Integer& a) const
+	{
+		r = static_cast<Element>(a % _lp);
+		if (a < 0) negin(r);
+		return r;
+	}
+
+
+} // Givaro
 
 #endif //__GIVARO_MODULAR_EXTENDED_H

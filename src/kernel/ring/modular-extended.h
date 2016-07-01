@@ -456,14 +456,15 @@ namespace Givaro{
 	ModularExtended<float>::mul(typename ModularExtended<float>::Element& r,
 								const typename ModularExtended<float>::Element& a,
 								const typename ModularExtended<float>::Element& b) const {
-		Element abh, abl, pql, pqh, q;
 #ifdef FP_FAST_FMAF
+		Element abh, abl, pql, q;
 		abh = a * b;
 		abl = fma(a, b, -abh);
 		q = std::floor(abh*_invp);
 		pql = fma (-q, _p, abh);
 		r = abl + pql;
 #else
+		Element abh, abl, pql, pqh, q;
 		mult_dekker(a, b, abh, abl);
 		q = std::floor(abh*_invp);
 		mult_dekker(-q, _p, pqh, pql);
@@ -484,14 +485,15 @@ namespace Givaro{
 	ModularExtended<double>::mul(typename ModularExtended<double>::Element& r,
 								const typename ModularExtended<double>::Element& a,
 								const typename ModularExtended<double>::Element& b) const {
-		Element abh, abl, pql, pqh, q;
 #ifdef FP_FAST_FMA
+		Element abh, abl, pql, q;
 		abh = a * b;
 		abl = fma(a, b, -abh);
 		q = std::floor(abh*_invp);
 		pql = fma (-q, _p, abh);
 		r = abl + pql;
 #else
+		Element abh, abl, pql, pqh, q;
 		mult_dekker(a, b, abh, abl);
 		q = std::floor(abh*_invp);
 		mult_dekker(-q, _p, pqh, pql);
@@ -513,12 +515,13 @@ namespace Givaro{
 	template<>
 	typename ModularExtended<float>::Element&
 	ModularExtended<float>::reduce (typename ModularExtended<float>::Element& a) const{
-		Element pql, pqh, q;
 #ifdef FP_FAST_FMAF
+		Element pql, q;
 		q = std::floor(a*_invp);
 		pql = fma (-q, _p, a);
 		a = pql;
 #else
+		Element pql, pqh, q;
 		q = std::floor(a*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		a = (a + pqh) + pql;
@@ -536,12 +539,13 @@ namespace Givaro{
 	template<>
 	typename ModularExtended<double>::Element&
 	ModularExtended<double>::reduce (typename ModularExtended<double>::Element& a) const{
-		Element pql, pqh, q;
 #ifdef FP_FAST_FMA
+		Element pql, q;
 		q = std::floor(a*_invp);
 		pql = fma (-q, _p, a);
 		a = pql;
 #else
+		Element pql, pqh, q;
 		q = std::floor(a*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		a = (a + pqh) + pql;

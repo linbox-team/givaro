@@ -340,23 +340,13 @@ namespace Givaro{
 		return is;
 	}
 
-	//Element &init (Element &x) const{
-	//	return x = zero;
-	//}
-
-	//template<class XXX> Element& init(Element & x, const XXX & y) const{
-	//	// TODO : Bad init, take the code from modular<double>
-	//	x=Element(y);
-	//	return reduce(x);
-	//}
-
 	// --------------------
 	// ----- Initialisation de Modular<double>
 
 	template<>
 	template<>
 	typename ModularExtended<double>::Element&
-	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const int64_t y) const
+	ModularExtended<double>::init<const int64_t> (Element& x, const int64_t y) const
 	{
 		x = static_cast<Element>(std::abs(y) % _lp);
 		if (y < 0) negin(x);
@@ -366,7 +356,7 @@ namespace Givaro{
 	template<>
 	template<>
 	typename ModularExtended<double>::Element&
-	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const uint64_t y) const
+	ModularExtended<double>::init<const uint64_t> (Element& x, const uint64_t y) const
 	{
 		return x = static_cast<Element>(y % (uint64_t)(_lp));
 	}
@@ -374,7 +364,7 @@ namespace Givaro{
 	template<>
 	template<>
 	typename ModularExtended<double>::Element&
-	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const Integer& y) const
+	ModularExtended<double>::init<const Integer &> (Element& x, const Integer& y) const
 	{
 		x = static_cast<Element>(y % _lp);
 		if (x < 0) x += _p;
@@ -384,7 +374,7 @@ namespace Givaro{
 	template<>
 	template<>
 	typename ModularExtended<double>::Element&
-	ModularExtended<double>::init (typename ModularExtended<double>::Element& x, const Element& y) const
+	ModularExtended<double>::init<const typename ModularExtended<double>::Element &> (Element& x, const Element& y) const
 	{
 		return x = y;
 	}
@@ -563,4 +553,4 @@ namespace Givaro{
 
 } // Givaro
 
-#endif //__GIVARO_MODULAR_EXTENDED_H
+#endif // __GIVARO_MODULAR_EXTENDED_H

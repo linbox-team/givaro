@@ -158,6 +158,15 @@ namespace Givaro {
 		Element& negin(Element& r) const override;
 		Element& invin(Element& r) const override;
 
+		// Functions defined in modular-mulprecomp
+		//
+		// void precomp_p (Compute_t& invp) const
+		// Element& mul_precomp_p (Element& r, const Element& a, const Element& b, const Compute_t& invp) const
+		//
+		// void precomp_b (Compute_t& invb, const Element& b) const
+		// void precomp_b (Compute_t& invb, const Element& b, const Compute_t& invp) const
+		// Element& mul_precomp_b (Element& r, const Element& a, const Element& b, const Compute_t& invb) const
+
 #include "modular-mulprecomp.inl"
 
 		// -- axpy:   r <- a * x + y

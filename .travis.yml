@@ -13,6 +13,7 @@ matrix:
           packages:
             - g++-4.9
             - libgmp-dev
+	    - libgmpxx4ldbl
 
     - compiler: gcc
       env: COMPILER=g++-5
@@ -23,12 +24,15 @@ matrix:
           packages:
             - g++-5
             - libgmp-dev
+	    - libgmpxx4ldbl
+
     - compiler: clang
       env: COMPILER=clang++
       addons:
         apt:
           packages:
             - libgmp-dev
+	    - libgmpxx4ldbl
 
 install:
   export CXX="$COMPILER"

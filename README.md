@@ -6,7 +6,7 @@ Givaro
 Download and install
 --------------------
 
-For lastest releases, please check out [this website](https://forge.imag.fr/frs/?group_id=187).
+For lastest releases, please check out [this website](http://github.com/linbox-team/givaro); older releases can be found on [that website](https://forge.imag.fr/frs/?group_id=187).
 Then, you can install doing:
 
 ```

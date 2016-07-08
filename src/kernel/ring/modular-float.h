@@ -73,7 +73,10 @@ namespace Givaro
         template<class T> inline T& characteristic(T& p) const { return p = _lp; }
         inline Residu_t cardinality() const { return _lp; }
         template<class T> inline T& cardinality(T& p) const { return p = _lp; }
-        static inline Residu_t maxCardinality() { return 2896; }
+		static inline Residu_t maxCardinality() {
+			// 2896 = max { p / 2*p^2 < 2^24 }
+			return 2896;
+		}
         static inline Residu_t minCardinality() { return 2; }
 
         // ----- Checkers

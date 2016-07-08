@@ -32,7 +32,7 @@ public:
 	// ----- Exported Types and constantes
 	typedef Modular<double> Self_t;
 	typedef uint64_t Residu_t;
-		using Compute_t = double;
+	using Compute_t = double;
 	enum { size_rep = sizeof(Residu_t) };
 
 	// ----- Constantes
@@ -66,7 +66,7 @@ public:
 	template<class T> inline T& characteristic(T& p) const { return p = _lp; }
 	inline Residu_t cardinality() const { return _lp; }
 	template<class T> inline T& cardinality(T& p) const { return p = _lp; }
-	static inline Residu_t maxCardinality() { return 67108864; }
+	static inline Residu_t maxCardinality() { return 94906266; } // Biggest int n s.t. (n-1)^2 < 2^53
 	static inline Residu_t minCardinality() { return 2; }
 
 	// ----- Checkers

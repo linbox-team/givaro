@@ -93,7 +93,7 @@ namespace Givaro {
 		inline Residu_t cardinality() const { return _p; }
 		template<class T> inline T& characteristic(T& p) const { return p = _p; }
 		template<class T> inline T& cardinality(T& p) const { return p = _p; }
-		static inline Residu_t maxCardinality() { return 3037000499_ui64; }
+		static inline Residu_t maxCardinality();
 		static inline Residu_t minCardinality() { return 2_ui64; }
 
 		// ----- Checkers
@@ -146,6 +146,15 @@ namespace Givaro {
 		Element& subin(Element& r, const Element& a) const override;
 		Element& negin(Element& r) const override;
 		Element& invin(Element& r) const override;
+
+		// Functions defined in modular-mulprecomp
+		//
+		// void precomp_p (Compute_t& invp) const
+		// Element& mul_precomp_p (Element& r, const Element& a, const Element& b, const Compute_t& invp) const
+		//
+		// void precomp_b (Compute_t& invb, const Element& b) const
+		// void precomp_b (Compute_t& invb, const Element& b, const Compute_t& invp) const
+		// Element& mul_precomp_b (Element& r, const Element& a, const Element& b, const Compute_t& invb) const
 
 #include "modular-mulprecomp.inl"
 

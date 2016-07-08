@@ -36,6 +36,7 @@ namespace Givaro{
 		typedef const Element* ConstElement_ptr;
 		// ----- Exported Types and constantes
 		typedef ModularExtended<_Element> Self_t;
+		using Compute_t = _Element;
 		typedef uint64_t Residu_t;
 		enum { size_rep = sizeof(Residu_t) };
 
@@ -91,9 +92,9 @@ namespace Givaro{
 		template<class T> inline T& cardinality(T& p) const { return p = _lp; }
 		static inline Residu_t maxCardinality() {
 			if(std::is_same<Element, double>::value)
-				return 4503599627370495; // 2^(52) - 1
+				return 1125899906842623; // 2^(52-2) - 1
 			else if(std::is_same<Element, float>::value)
-				return 4194303; // 2^(22) - 1
+				return 2097151; // 2^(23-2) - 1
 		}
 		static inline Residu_t minCardinality() { return 2; }
 
@@ -119,14 +120,18 @@ namespace Givaro{
 			return *this;
 		}
 
+
+
 		// ----- Initialisation
-		Element &init (Element &x) const{
+		inline Element& init (Element& x) const
+		{
 			return x = zero;
 		}
 
-		template<class XXX> Element& init(Element & x, const XXX & y) const{
-			x=Element(y);
-			return reduce(x);
+		template<typename T>
+		Element& init (Element& r, T a) const{
+			r = Caster<Element>(a);
+			return reduce(r);
 		}
 
 		Element &assign (Element &x, const Element &y) const{
@@ -138,51 +143,14 @@ namespace Givaro{
 		{ return r = static_cast<T>(a); }
 
 		Element& reduce (Element& x, const Element& y) const{
-			Element q = floor(y*_invp);
-			Element pqh, pql;
-			mult_dekker(_p, q, pqh, pql);
-			x = (x-pqh)-pql;
-			if(x >= _p)
-				x -= _p;
-			else if(x < 0)
-				x += _p;
-			return x;
+			x=y;
+			return reduce(x);
 		}
 
-		Element& reduce (Element& x) const{
-			Element q = floor(x*_invp);
-			Element pqh, pql;
-			mult_dekker(_p, q, pqh, pql);
-			x = (x-pqh)-pql;
-			if(x >= _p)
-				x -= _p;
-			else if(x < zero)
-				x += _p;
-			return x;
-		}
+		Element& reduce (Element& x) const ;
 
 		// ----- Classic arithmetic
-		Element& mul(Element& r, const Element& a, const Element& b) const override {
-			Element abh, abl, pql, pqh, q;
-#ifdef _FMA_
-			abh = a * b;
-			abl = fma(a, b, -abh);
-			q = std::floor(abh*_invp);
-			pql = fma (-q, _p, abh);
-			r = abl + pql;
-#else			
-			mult_dekker(a, b, abh, abl);
-			q = std::floor(abh*_invp);
-			mult_dekker(q, _p, pqh, pql);
-			r = (abh - pqh) + (abl - pql);
-#endif
-			if(r > _p)
-				r-= _p;
-			else if(r < 0)
-				r += _p;
-			return r;
-		}
-
+		Element& mul(Element& r, const Element& a, const Element& b) const override;
 
 		Element& div(Element& r, const Element& a, const Element& b) const override{
 			return mulin(inv(r, a), b);
@@ -330,48 +298,8 @@ namespace Givaro{
 
 	};
 
-	// ----------------
-	// ----- IO methods
+} // Givaro
 
-	template<>
-	inline
-	std::ostream &ModularExtended<float>::write (std::ostream &os) const
-	{
-		return os << "ModularExtended<float> mod " << _p;
-	}
+#include "givaro/modular-extended.inl"
 
-	template<>
-	inline
-	std::ostream &ModularExtended<double>::write (std::ostream &os) const
-	{
-		return os << "ModularExtended<double> mod " << _p;
-	}
-
-	template<typename _Element>
-	inline
-	std::istream &ModularExtended<_Element>::read (std::istream &is)
-	{
-		is >> _p;
-		return is;
-	}
-
-	template<typename _Element>
-	inline
-	std::ostream &ModularExtended<_Element>::write (std::ostream &os, const Element &x) const
-	{
-		return os << static_cast<uint64_t>(x);
-	}
-
-	template<typename _Element>
-	inline
-	std::istream &ModularExtended<_Element>::read (std::istream &is, Element &x) const
-	{
-		int64_t tmp;
-		is >> tmp;
-		init(x,tmp);
-		return is;
-	}
-
-}// Givaro
-
-#endif //__GIVARO_MODULAR_EXTENDED_H
+#endif // __GIVARO_MODULAR_EXTENDED_H

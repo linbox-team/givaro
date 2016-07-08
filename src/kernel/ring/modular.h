@@ -24,13 +24,13 @@
 #include "givaro/modular-uint16.h"
 #include "givaro/modular-int32.h"
 #include "givaro/modular-uint32.h"
+#include "givaro/modular-int64.h"
+#include "givaro/modular-uint64.h"
 #include "givaro/modular-float.h"
 #include "givaro/modular-double.h"
 #include "givaro/modular-integer.h"
 #include "givaro/modular-inttype.h"
 #include "givaro/modular-log16.h"
-#include "givaro/modular-int64.h"
-#include "givaro/modular-uint64.h"
 #include "givaro/modular-ruint.h"
 
 #endif

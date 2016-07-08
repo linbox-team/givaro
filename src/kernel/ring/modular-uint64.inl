@@ -21,20 +21,20 @@ namespace Givaro
 
     template<>
     inline Modular<uint64_t, uint64_t>::Residu_t
-    Modular<uint64_t, uint64_t>::maxCardinality() { return 4294967295u; } // 2^32 - 1
+	Modular<uint64_t, uint64_t>::maxCardinality() { return 4294967295_ui64; } // 2^32 - 1
 
     template<>
     inline Modular<uint64_t, int64_t>::Residu_t
-    Modular<uint64_t, int64_t>::maxCardinality() { return 4294967295u; }
+	Modular<uint64_t, int64_t>::maxCardinality() { return 4294967295_ui64; }
 
 #ifdef __GIVARO_HAVE_INT128
     template<>
     inline Modular<uint64_t, uint128_t>::Residu_t
-    Modular<uint64_t, uint128_t>::maxCardinality() { return 9223372036854775807ull; } // 2^63 - 1
+	Modular<uint64_t, uint128_t>::maxCardinality() { return 9223372036854775807_ui64; } // 2^63 - 1
 
     template<>
     inline Modular<uint64_t, int128_t>::Residu_t
-    Modular<uint64_t, int128_t>::maxCardinality() { return 9223372036854775807ull; }
+	Modular<uint64_t, int128_t>::maxCardinality() { return 9223372036854775807_ui64; }
 #endif
 
     // ------------------------
@@ -225,7 +225,22 @@ namespace Givaro
     inline std::ostream &Modular<uint64_t, uint64_t>::write (std::ostream &os) const
     {
         return os << "Modular<uint64_t, uint64_t> modulo " << _p;
-    }
+	}
+
+#ifdef __GIVARO_HAVE_INT128
+	template<>
+	inline std::ostream& Modular<uint64_t, int128_t>::write (std::ostream& s ) const
+	{
+		return s << "Modular<uint64_t, int128_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<uint64_t, uint128_t>::write (std::ostream& s ) const
+	{
+		return s << "Modular<uint64_t, uint128_t> modulo " << residu();
+	}
+#endif
+
 
     template<typename COMP>
     inline std::istream &Modular<uint64_t, COMP>::read (std::istream &is)

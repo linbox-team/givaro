@@ -21,20 +21,20 @@ namespace Givaro {
 
     template<>
     inline Modular<int64_t, uint64_t>::Residu_t
-    Modular<int64_t, uint64_t>::maxCardinality() { return 4294967295u; } // 2^32 - 1
+	Modular<int64_t, uint64_t>::maxCardinality() { return 4294967295_ui64; } // 2^32 - 1
 
     template<>
     inline Modular<int64_t, int64_t>::Residu_t
-    Modular<int64_t, int64_t>::maxCardinality() { return 4294967295u; }
+	Modular<int64_t, int64_t>::maxCardinality() { return 4294967295_ui64; }
 
 #ifdef __GIVARO_HAVE_INT128
     template<>
-    inline Modular<int64_t, uint128_t>::Residu_t
-    Modular<int64_t, uint128_t>::maxCardinality() { return 9223372036854775807ull; } // 2^63 - 1
+	inline Modular<int64_t, uint128_t>::Residu_t
+	Modular<int64_t, uint128_t>::maxCardinality() { return 9223372036854775807_ui64; } // 2^63 - 1
 
     template<>
-    inline Modular<int64_t, int128_t>::Residu_t
-    Modular<int64_t, int128_t>::maxCardinality() { return 9223372036854775807ull; }
+	inline Modular<int64_t, int128_t>::Residu_t
+	Modular<int64_t, int128_t>::maxCardinality() { return 9223372036854775807_ui64; }
 #endif
 
     // ------------------------
@@ -523,7 +523,7 @@ namespace Givaro {
     template<>
     inline std::ostream& Modular<int64_t, int64_t>::write (std::ostream& s ) const
     {
-        return s << "Modular<int64_t, uint64_t> modulo " << residu();
+		return s << "Modular<int64_t, int64_t> modulo " << residu();
     }
 
     template<>
@@ -531,6 +531,20 @@ namespace Givaro {
     {
         return s << "Modular<int64_t, uint64_t> modulo " << residu();
     }
+
+#ifdef __GIVARO_HAVE_INT128
+	template<>
+	inline std::ostream& Modular<int64_t, int128_t>::write (std::ostream& s ) const
+	{
+		return s << "Modular<int64_t, int128_t> modulo " << residu();
+	}
+
+	template<>
+	inline std::ostream& Modular<int64_t, uint128_t>::write (std::ostream& s ) const
+	{
+		return s << "Modular<int64_t, uint128_t> modulo " << residu();
+	}
+#endif
 
     template<typename COMP>
     inline std::istream& Modular<int64_t, COMP>::read (std::istream& s, Element& a) const

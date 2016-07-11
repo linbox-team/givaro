@@ -12,8 +12,11 @@ AC_INIT([Givaro],[4.0.2],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])
-AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability foreign])
 AC_CONFIG_HEADERS([config.h])
+
+AC_CANONICAL_TARGET
+
+AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability foreign])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 AC_PATH_PROG(RM, rm, $FALSE)
 RM="$RM -f"
@@ -157,6 +160,25 @@ echo "-----------------------------------------------"
 echo "-----------------------------------------------"
 
 echo "-----------------------------------------------"
+
+# checkes which SIMD instructions are available and defines HAVE_{SSE_4_1,AVX,AVX2}_INSTRUCTIONS and compiler flags
+CUSTOM_SIMD="no"
+FF_CHECK_SIMD
+arch=`echo $target | cut -d"-" -f1`
+if [[ "x$CUSTOM_SIMD" = "xno" ]] ; then
+   AX_CHECK_X86_FEATURES([][])
+fi
+
+AVXFLAGS="${SSEFLAGS} ${AVXFLAGS} $X86_FEATURE_CFLAGS"
+
+dnl forcing -mpfmath=sse flag if SSE is available: Veltkamp split would return a different result on the x87 fpu
+AS_IF([ test "x$SSEFLAGS" != "x" -o "x$X86_FEATURE_CFLAGS" != "x" ],[AVXFLAGS="${AVXFLAGS} -mfpmath=sse"])
+
+dnl With GCC's default ABI version, a __m128 or __m256 are the same types and therefore we cannot
+dnl have overloads for both types without linking error.
+AS_IF([test "x$CCNAM" = "xgcc48"],[AVXFLAGS="${AVXFLAGS} -fabi-version=6"],[])
+
+CXXFLAGS="${CXXFLAGS} ${AVXFLAGS}"
 
 # Machine characteristics
 

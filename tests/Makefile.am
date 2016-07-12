@@ -33,8 +33,8 @@ BASIC_TESTS =          \
 		test-geom      \
 		test-integer   \
 		test-conversion \
-		test-ratrecon
-#               test-modularmulprecomp
+		test-ratrecon   \
+		test-modularmulprecomp
 
 # *_mg tests accept -DMG_DEFAULT=MG_ACTIVE to enable Montgomery representation
 RECINT_TESTS=                    \
@@ -98,7 +98,7 @@ test_random_SOURCES   = test-random.C
 test_ifactor_SOURCES  = test-ifactor.C
 test_ffarith_SOURCES  = test-ffarith.C
 test_ringarith_SOURCES= test-ringarith.C
-#test_modularmulprecomp_SOURCES= test-modularmulprecomp.C
+test_modularmulprecomp_SOURCES= test-modularmulprecomp.C
 test_mod_SOURCES      = test-mod.C
 test_modsqroot_SOURCES= test-modsqroot.C
 test_trunc_SOURCES    = test-trunc.C

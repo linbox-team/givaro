@@ -43,8 +43,11 @@ using namespace Givaro;
 template<class Field>
 bool invertible(const Field& F, const typename Field::Element& a)
 {
-    auto ai(a);
-    return F.mulin(F.inv(ai, a), a) == F.one;
+//     auto ai(a);
+//     return F.mulin(F.inv(ai, a), a) == F.one;
+    Integer ai;
+    F.convert(ai,a);
+    return (gcd(ai,F.characteristic())==1);
 }
 
 template<class Field>

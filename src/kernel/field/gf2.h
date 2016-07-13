@@ -61,8 +61,8 @@ namespace Givaro
 		GF2 () {}
 		GF2 (int p, int exp = 1)
 		{
-			assert(p != 2);
-			assert(exp != 1);
+			assert(p == 2);
+			assert(exp == 1);
 		}
 
 		/** Copy constructor.

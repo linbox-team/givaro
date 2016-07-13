@@ -167,18 +167,16 @@ FF_CHECK_SIMD
 arch=`echo $target | cut -d"-" -f1`
 if [[ "x$CUSTOM_SIMD" = "xno" ]] ; then
    AX_CHECK_X86_FEATURES([][])
+else
+   CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
 fi
 
-AVXFLAGS="${SSEFLAGS} ${AVXFLAGS} $X86_FEATURE_CFLAGS"
-
 dnl forcing -mpfmath=sse flag if SSE is available: Veltkamp split would return a different result on the x87 fpu
-AS_IF([ test "x$SSEFLAGS" != "x" -o "x$X86_FEATURE_CFLAGS" != "x" ],[AVXFLAGS="${AVXFLAGS} -mfpmath=sse"])
+AS_IF([ test "x$SSEFLAGS" != "x" -o "x$X86_FEATURE_CFLAGS" != "x" ],[CXXFLAGS="${CXXFLAGS} -mfpmath=sse"])
 
 dnl With GCC's default ABI version, a __m128 or __m256 are the same types and therefore we cannot
 dnl have overloads for both types without linking error.
-AS_IF([test "x$CCNAM" = "xgcc48"],[AVXFLAGS="${AVXFLAGS} -fabi-version=6"],[])
-
-CXXFLAGS="${CXXFLAGS} ${AVXFLAGS}"
+AS_IF([test "x$CCNAM" = "xgcc48"],[CXXFLAGS="${CXXFLAGS} -fabi-version=6"],[])
 
 # Machine characteristics
 

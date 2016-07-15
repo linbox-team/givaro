@@ -98,6 +98,8 @@ public:
     template<typename Vector>
     GFqDom(const UTT P, const UTT e, const Vector& modPoly);
 
+    GFqDom( const UTT P, const UTT e, const std::vector<UTT>& modPoly, const std::vector<UTT>& generatorPoly);
+
     GFqDom( const GFqDom<TT>& F)
             : zero(F.zero),
               one(F.one),

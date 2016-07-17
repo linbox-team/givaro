@@ -1115,6 +1115,77 @@ namespace Givaro {
         _plus1[size_t(mOne)] = 0;
     }
 
+         // Construction with prescribed irreducible polynomial
+        //   and with prescribed generator polynomial
+        //   coefficients of the vector should be integers-like
+        //   there will be a call to this->init to build the
+        //   representation of both polynomials
+    template<typename TT>
+    template<typename Vector>
+    inline GFqDom<TT>::GFqDom(const UTT P, const UTT e, 
+                              const Vector& modPoly, const Vector& genPoly):
+            zero(0)
+        , one ((TT) power(P,e) - 1  )
+        , mOne(  (P==2)?  (one)  :  ( one >> 1) )   // 1 == -1 in GF(2^k)
+        , _characteristic(P)
+        , _exponent(e)
+        , _q( (UTT) one + 1 )
+        , _qm1 ( (UTT)one )
+        , _log2pol( (UT)_q )
+        , _pol2log( (UT)_q )
+        , _plus1( (UT)_q )
+        , _dcharacteristic( (double)P )
+    {
+
+            // 1 is represented by q-1, zero by 0
+        _log2pol[0] = (UTT)zero;
+
+        GFqDom<TT> Zp(P,1);
+        typedef Poly1FactorDom< GFqDom<TT>, Dense > PolDom;
+        PolDom Pdom( Zp );
+        typename PolDom::Element Ft, F(e+1), G(genPoly.size()), H;
+
+        for( size_t i = 0; i < F.size(); ++i )
+            Zp.init( F[i], modPoly[i]);
+
+        for( size_t i = 0; i < G.size(); ++i )
+            Zp.init( G[i], genPoly[i]);
+
+        Pdom.assign(H,G);
+
+        typedef Poly1PadicDom< GFqDom<TT>, Dense > PadicDom;
+        PadicDom PAD(Pdom);
+
+        PAD.eval(_log2pol[1],H);
+        PAD.eval(_irred, F);
+
+        for (UTT i = 2; i < _qm1; ++i) {
+            Pdom.mulin(H, G);
+            Pdom.modin(H, F);
+            PAD.eval(_log2pol[i], H);
+        }
+        _log2pol[_qm1] = 1;
+
+        _log2pol[0] = 0;
+
+        for (UTT i = 0; i < _q; ++i)
+            _pol2log[ _log2pol[i] ] = i;
+
+        _plus1[0] = 0;
+
+        UTT a,b,r;
+        for (UTT i = 1; i < _q; ++i) {
+            a = _log2pol[i];
+            r = a % P;
+            if (r == (P - 1))
+                b = a - r;
+            else
+                b = a + 1;
+            _plus1[i] = (TT)_pol2log[b] - (TT)_qm1;
+        }
+
+        _plus1[size_t(mOne)] = 0;
+    }
 
     template<typename TT> inline void GFqDom<TT>::Init() {}
 

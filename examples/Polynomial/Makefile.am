@@ -30,12 +30,13 @@ LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDF
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder bivariate
+EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder bivariate isgenerator
 
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 interpolate_SOURCES   = interpolate.C
 isirred_SOURCES       = isirred.C
+isgenerator_SOURCES       = isgenerator.C
 isprimitive_SOURCES   = isprimitive.C
 pol_arith_SOURCES     = pol_arith.C
 trunc_arith_SOURCES   = trunc_arith.C

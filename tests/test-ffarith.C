@@ -371,11 +371,18 @@ int main(int argc, char ** argv)
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
-    std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
-    Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
-    Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
-    Irred[8] = 1;
+//     std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
+//     Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
+//     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
+//     Irred[8] = 1;
+    std::vector< int64_t > Irred {1,1,0,1,1,0,0,0,1};
     TEST_SPECIFIC(GFqDom<int64_t>, GF256, 2, 8, Irred);
+
+   // Zech log finite field with 343 elements
+   // and prescribed 3 +x^3  irreducible polynomial
+   // and prescribed 5 +3x +4x^2 generator polynomial
+    std::vector< int64_t > Irred3 {3,0,0,1}, Gene3 {5,3,4};
+    TEST_SPECIFIC(GFqDom<int64_t>, GF343, 7, 3, Irred3, Gene3);
 
     TEST_SPECIFIC(GFqDom<int32_t>, GF625, 5, 4);
     TEST_SPECIFIC(GFqExt<int32_t>, GF81, 3, 4);

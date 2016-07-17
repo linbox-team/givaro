@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <28 Oct 15 20:48:41 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <17 Jul 16 16:12:52 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -97,6 +97,14 @@ public:
         //   representation of the irreducible polynomial
     template<typename Vector>
     GFqDom(const UTT P, const UTT e, const Vector& modPoly);
+
+        // Construction with prescribed irreducible polynomial
+        //   and with prescribed generator polynomial
+        //   coefficients of the vector should be integers-like
+        //   there will be a call to this->init to build the
+        //   representation of both polynomials
+    template<typename Vector>
+    GFqDom( const UTT P, const UTT e, const Vector& modPoly, const Vector& genPoly);
 
     GFqDom( const GFqDom<TT>& F)
             : zero(F.zero),

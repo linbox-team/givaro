@@ -47,7 +47,7 @@ bool invertible(const Field& F, const typename Field::Element& a)
 //     return F.mulin(F.inv(ai, a), a) == F.one;
     Integer ai;
     F.convert(ai,a);
-    return (gcd(ai,F.characteristic())==1);
+    return (gcd(ai,Integer(F.characteristic()))==1);
 }
 
 template<class Field>
@@ -96,7 +96,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.assign(a, first);
 
     typename Field::RandIter g(F);
-    while (!invertible(F, g.random(b)));
+    while (!invertible(F, g.random(b))) {}
 
     F.init(c);            // empty constructor
     F.init(d);            // empty constructor
@@ -220,7 +220,7 @@ int TestField(const Field& F, const uint64_t seed)
     JEONETESTE(F,x);
     
     for (size_t i = 0; i< NBITER; ++i) {
-	while (F.isZero(g.random(x)));
+        while (F.isZero(g.random(x))) {}
         JEONETESTE(F,x);
     }
     

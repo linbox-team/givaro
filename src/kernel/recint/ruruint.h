@@ -171,7 +171,7 @@ namespace RecInt
         static ruint<__RECINT_LIMB_SIZE> maxCardinality() { return 4294967296; }
     };
 
-#if defined(__)
+#if defined(__RECINT_USE_FAST_128)
     /* ruint of size 128 bits */
     template <> class ruint<__RECINT_LIMB_SIZE+1> {
     public:

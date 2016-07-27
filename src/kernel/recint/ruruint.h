@@ -130,6 +130,7 @@ namespace RecInt
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
             { *this = b.operator ruint<__RECINT_LIMB_SIZE>(); } // Fix for Givaro::Integer
+        ruint(const char* s);
 
         // Cast
 		// Brutal too, but icc is kind of peaky - AB 2015/02/11
@@ -170,7 +171,7 @@ namespace RecInt
         static ruint<__RECINT_LIMB_SIZE> maxCardinality() { return 4294967296; }
     };
 
-#if defined(__RECINT_USE_FAST_128)
+#if defined(__)
     /* ruint of size 128 bits */
     template <> class ruint<__RECINT_LIMB_SIZE+1> {
     public:
@@ -192,6 +193,7 @@ namespace RecInt
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0> ruint(const T b) : Value(__uint128_t(b)) {}
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
             { *this = b.operator ruint<__RECINT_LIMB_SIZE+1>(); } // Fix for Givaro::Integer
+        ruint(const char* s);
 
         // Cast
         operator float() const { return (float)(Value); }

@@ -153,7 +153,7 @@ namespace RecInt
     }
 
     template <size_t K>
-    ruint<K>::ruint(const char* b) {
+    inline ruint<K>::ruint(const char* b) {
         mpz_class m(b); 
         mpz_to_ruint(*this, m); 
     }

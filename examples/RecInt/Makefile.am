@@ -4,41 +4,23 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 examples: $(EXTRA_PROGRAMS)
-
 AM_CPPFLAGS=-I$(top_srcdir)
-
-OPTFLAGS=
-OPTLINKS=
-
-# for gcc ...
-#OPTFLAGS+= -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
-#OPTFLAGS+= -frerun-loop-opt -fexpensive-optimizations
-#OPTFLAGS+= -fomit-frame-pointer
-#OPTFLAGS+= -fprefetch-loop-arrays -floop-optimize
-#OPTFLAGS+= -malign-double
-#OPTFLAGS+= -falign-loops -falign-jumps -falign-functions -falign-labels
-#OPTFLAGS+= -fschedule-insns2
-#OPTFLAGS+= -fforce-addr -fforce-mem -fstrength-reduce
-#OPTFLAGS+= -ffast-math
-
-# for icc ...
-#OPTFLAGS+= -fast -Ob2  -ipo_obj -unroll
-#OPTFLAGS+= -parallel -par_report1
-#OPTLINKS+= -parallel
-# icc for itanium2
-#OPTFLAGS+= -tpp2 -mcpu=itanium2
-
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/recint
+AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS)
+AM_CPPFLAGS += -I$(top_srcdir)/src/kernel
+
+#OPTFLAGS=
+#OPTLINKS=
 
 LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=recint-iterator rsa
+EXTRA_PROGRAMS=recint-iterator rsa extended-int-types
 CLEANFILES=$(EXTRA_PROGRAMS)
 
 recint_iterator_SOURCES  = recint-iterator.C
+extended_int_types_SOURCES  = extended-int-types.C
 rsa_SOURCES       = rsa.C
 
 # for compilation of new examples

@@ -64,6 +64,8 @@ namespace RecInt
             { if (b < 0) *this = -*this; }
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
             { *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
+        
+        ruint(const char* s);
 
         // Cast
         // Note: Templated operators and specialization make compilers clang + icpc

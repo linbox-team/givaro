@@ -40,7 +40,6 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #define RUINT_CONVERT_H
 
 #include <gmpxx.h>
-
 #include "rumanip.h" /* reset() */
 
 // --------------------------------------------------------------
@@ -150,8 +149,15 @@ namespace RecInt
     inline ruint<K>& mpz_t_to_ruint(ruint<K>& a, mpz_srcptr b) {
 	// TODO Optimize...
 	mpz_class r(b);
-	return RecInt::mpz_to_ruint(a, r);
+	return mpz_to_ruint(a, r);
     }
+
+    template <size_t K>
+    ruint<K>::ruint(const char* b) {
+        mpz_class m(b); 
+        mpz_to_ruint(*this, m); 
+    }
+
 }
 
 #endif

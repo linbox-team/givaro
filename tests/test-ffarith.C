@@ -7,6 +7,7 @@
 
 #include <iostream>
 
+#include <givaro/givinteger.h>
 #include <givaro/modular.h>
 #include <givaro/modular-balanced.h>
 #include <givaro/montgomery.h>

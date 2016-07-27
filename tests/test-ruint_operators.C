@@ -92,7 +92,8 @@ int main(void)
         while ((r = USItype(rand())) < 2);
         z %= r; gz %= r; ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 5;
-        while (s == 0) rand(s); ruint_to_mpz(gs, s); s %= s; gs %= gs; ruint_to_mpz(gcmp, s);
+        while (s == 0) rand(s); 
+        ruint_to_mpz(gs, s); s %= s; gs %= gs; ruint_to_mpz(gcmp, s);
         if (gs != gcmp) return 5;
         
         x *= y; gx *= gy; gx %= size; ruint_to_mpz(gcmp, x);
@@ -109,7 +110,8 @@ int main(void)
         while ((r = USItype(rand())) < 2);
         y /= r; gy /= r; ruint_to_mpz(gcmp, y);
         if (gcmp != gy) return 7;
-        while (s == 0) rand(s); ruint_to_mpz(gs, s); s /= s; gs /= gs; ruint_to_mpz(gcmp, s);
+        while (s == 0) rand(s); 
+        ruint_to_mpz(gs, s); s /= s; gs /= gs; ruint_to_mpz(gcmp, s);
         if (gs != gcmp) return 7;
         
         // Refresh

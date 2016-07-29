@@ -186,6 +186,9 @@ AC_CHECK_SIZEOF(int, 32)
 AC_CHECK_SIZEOF(long, 32)
 AC_CHECK_SIZEOF(long long, 64)
 AC_CHECK_SIZEOF(__int64_t, 64)
+
+AC_LANG_CPLUSPLUS
+
 AC_CHECK_TYPE([__int128_t], [AC_TRY_COMPILE([#include <type_traits>], [std::make_unsigned<__int128_t>::type y;],[AC_DEFINE(HAVE_INT128, 1, [Define that compiler allows int128_t types])])])		   
 
 
@@ -225,8 +228,6 @@ AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 
 echo "-----------------------------------------------"
 # Feature checks
-
-AC_LANG_CPLUSPLUS
 
 
 echo "-----------------------------------------------"

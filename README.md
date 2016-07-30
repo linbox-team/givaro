@@ -34,7 +34,12 @@ pkg-config --cflags givaro
 and the linking flags by calling 
 ```
 pkg-config --libs givaro
-```.
+```
+
+If you have installed givaro in a non-standard directory (such as `/usr/local`), make sure to have added the path where to find givaro's .pc file to the PKG_CONFIG_PATH environment variable.
+```
+PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:<path to your givaro install>/lib/pkgconfig
+```
 
 An alternative option is to just add the following line to your Makefile. Then a simple call will compile your C and C++ files.
 ```

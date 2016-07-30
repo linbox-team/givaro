@@ -25,10 +25,14 @@ Then, you can install doing:
 Compile your own files
 ----------------------
 
-An optional compilation help file is provided: just add the following line to your Makefile. Then a simple call will compile your C and C++ files.
+Givaro uses pkgconfig to expose the compilation flags it requires.
 
+You will get the compilation flags by calling 
+```pkg-config --cflags givaro``` 
+and the linking flags by calling 
+```pkg-config --libs givaro```.
+
+An alternative option is to just add the following line to your Makefile. Then a simple call will compile your C and C++ files.
 ```
 include ##GIVAROROOT##/bin/givaro-makefile
 ```
-
-However, if you want to do it without this tool, you should add `-I##GIVAROROOT##/include` to the CXX compilation flags, and `-L##GIVAROROOT##/lib -lgivaro` to the LD link flags, along those for GMP.

@@ -28,9 +28,13 @@ Compile your own files
 Givaro uses pkgconfig to expose the compilation flags it requires.
 
 You will get the compilation flags by calling 
-```pkg-config --cflags givaro``` 
+```
+pkg-config --cflags givaro
+``` 
 and the linking flags by calling 
-```pkg-config --libs givaro```.
+```
+pkg-config --libs givaro
+```.
 
 An alternative option is to just add the following line to your Makefile. Then a simple call will compile your C and C++ files.
 ```

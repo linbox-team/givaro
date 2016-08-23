@@ -232,16 +232,8 @@ echo "-----------------------------------------------"
 
 echo "-----------------------------------------------"
 
-GIV_CHECK_GMP(,,[
-echo '*******************************************************************************'
-echo ' ERROR: GMP not found!'
-echo
-echo ' GMP library compiled with --enable-cxx is required for this library to compile.'
-echo ' Please make sure GMP is installed and specify its location with the option'
-echo ' --with-gmp=<prefix> when running configure.'
-echo '*******************************************************************************'
-exit 1
-])
+DEFAULT_CHECKING_PATH="/usr /usr/local /opt/local"  
+GIV_CHECK_GMP(40000)
 
 GIV_DOC
 

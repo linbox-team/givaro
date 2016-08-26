@@ -1,39 +1,17 @@
-/* misc/convert_gmp.h - Conversion functions between r(u/m)int and mpz_class from GMP
-
-Copyright Université Joseph Fourier - Grenoble
-Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-    Christophe CHABOT (christophechabotcc@gmail.com 2011)
-
-
-This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
-
-This software is governed by the CeCILL-B license under French law and
-abiding by the rules of distribution of free software.	You can	use,
-modify and/ or redistribute the software under the terms of the CeCILL-B
-license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info".
-
-As a counterpart to the access to the source code and	rights to copy,
-modify and redistribute granted by the license, users are provided only
-with a limited warranty	and the software's author,	the holder of the
-economic rights,	and the successive licensors	have only	limited
-liability.
-
-In this respect, the user's attention is drawn to the risks associated
-with loading,	using,	modifying and/or developing or reproducing the
-software by the user in light of its specific status of free software,
-that may mean	that it is complicated to manipulate,	and	that	also
-therefore means	that it is reserved for developers	and	experienced
-professionals having in-depth computer knowledge. Users are therefore
-encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or
-data to be ensured and,	more generally, to use and operate it in the
-same conditions as regards security.
-
-The fact that you are presently reading this means that you have had
-knowledge of the CeCILL-B license and that you accept its terms.
-*/
+// ============================================================= //
+// Copyright(c)'2011-2016 by The Givaro group
+// This file is part of Givaro.
+// Givaro is governed by the CeCILL-B license under French law
+// and abiding by the rules of distribution of free software.
+// see the COPYRIGHT file for more details.
+// Time-stamp: <26 Aug 16 15:14:50 Jean-Guillaume.Dumas@imag.fr>
+// Authors : Jean-Guillaume Dumas (Jean-Guillaume.Dumas@imag.fr)
+//           Alexis Breust (alexis.breust@gmail.com 2014)
+//           Christophe Chabot (christophechabotcc@gmail.com 2011)
+// ============================================================= //
+// Function:
+// Conversion functions between r(u/m)int and mpz_class from GMP
+// ============================================================= //
 
 
 #ifndef RUINT_CONVERT_H
@@ -61,8 +39,8 @@ namespace RecInt
     // Convert a GMP integer into a ruint
     template <size_t K>
     inline ruint<K>& mpz_to_ruint(ruint<K>& a, const mpz_class& b) {
-	unsigned int i;
-	mpz_class c(b);
+        unsigned int i;
+        mpz_class c(b);
 
         reset(a);
 	    for (i = 0; i < NBLIMB<K>::value; i++) {
@@ -100,7 +78,7 @@ namespace RecInt
 // #endif
 // #endif
 //         }
-            // uses ythe facvt that recint words will be contiguous
+            // uses the fact that recint words will be contiguous
         mpz_import(a.get_mpz_t(), NBLIMB<K>::value, -1, sizeof(limb), 0, 0, begin(b));
        
         return a;

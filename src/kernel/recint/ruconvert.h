@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <26 Aug 16 15:14:50 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <26 Aug 16 15:21:18 Jean-Guillaume.Dumas@imag.fr>
 // Authors : Jean-Guillaume Dumas (Jean-Guillaume.Dumas@imag.fr)
 //           Alexis Breust (alexis.breust@gmail.com 2014)
 //           Christophe Chabot (christophechabotcc@gmail.com 2011)
@@ -40,7 +40,7 @@ namespace RecInt
     template <size_t K>
     inline ruint<K>& mpz_to_ruint(ruint<K>& a, const mpz_class& b) {
         unsigned int i;
-        mpz_class c(b);
+        mpz_class c(b);
 
         reset(a);
 	    for (i = 0; i < NBLIMB<K>::value; i++) {

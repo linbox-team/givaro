@@ -68,6 +68,9 @@ namespace RecInt
     template <size_t K> limb ms_limb(const ruint<K>& a); // Most significant limb
     template <size_t K> limb get_limb(const ruint<K>& a, unsigned int index);
     template <size_t K> const limb* get_limb_p(const ruint<K>& a, unsigned int index);
+
+    // Address of lower limb
+    template <size_t K> const limb* begin(const ruint<K>& a);
 }
 
 
@@ -155,6 +158,18 @@ namespace RecInt
     template <> inline const limb* get_limb_p(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int) {
         return &(a.Value);
     }
+
+
+    // Address of lower limb
+    template <size_t K> const limb* begin(const ruint<K>& a) 
+    {
+        return begin(a.Low);
+    }
+    
+    template <> inline const limb* begin(const ruint<__RECINT_LIMB_SIZE>& a) {
+        return &(a.Value);
+    }
+    
 }
 
 #endif

@@ -4,7 +4,6 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <26 Aug 16 15:21:18 Jean-Guillaume.Dumas@imag.fr>
 // Authors : Jean-Guillaume Dumas (Jean-Guillaume.Dumas@imag.fr)
 //           Alexis Breust (alexis.breust@gmail.com 2014)
 //           Christophe Chabot (christophechabotcc@gmail.com 2011)
@@ -21,7 +20,7 @@
 #include "rumanip.h" /* reset() */
 
 // --------------------------------------------------------------
-// ----------------------- DEFINTIONS ---------------------------
+// ----------------------- DEFINITIONS ---------------------------
 
 namespace RecInt
 {

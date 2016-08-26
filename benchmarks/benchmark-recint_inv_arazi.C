@@ -67,7 +67,7 @@ int main(int argc, char ** argv)
         << "Time: " << tim.usertime()
         << " Mflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0 << ' ' << (double(nbloops))/gmp.usertime()/1000.0/1000.0 
         << " SIZE: " << STD_RECINT_SIZE
-        << " GMP time" << gmp.usertime()
+        << " GMP-time: " << gmp.usertime()
         << ' ' << a[(int)(module)& ALEA_MASK] << ' ' << b[(int)(module)& ALEA_MASK] << std::endl ;
    
     return 0; 

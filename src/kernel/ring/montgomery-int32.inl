@@ -132,6 +132,13 @@ namespace Givaro {
         return redc(r, uint32_t(t) * _B3p) ;
     }
 
+    inline bool Montgomery<int32_t>::isUnit(const Element& a) const 
+    { 
+        int32_t u,d; 
+        invext(u,d,int32_t(a),int32_t(_p)); 
+        return (d==1)||(d==-1); 
+    }
+
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::div (Element& r, const Element& a, const Element& b) const
     {
@@ -255,9 +262,9 @@ namespace Givaro {
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::init (Element& r, const Integer& a) const
     {
-	r = static_cast<Element>(((a < 0)? -a : a) % _p);
+        r = static_cast<Element>(((a < 0)? -a : a) % _p);
         if (a < 0) negin(r);
-	return redc(r, r * _B2p);
+        return redc(r, r * _B2p);
     }
 
     //----- IO

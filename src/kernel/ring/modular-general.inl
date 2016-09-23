@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <23 Sep 16 11:26:32 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <23 Sep 16 14:03:02 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions
@@ -42,22 +42,24 @@ namespace Givaro
     {
         using Compute_t = typename make_signed_int<Storage_t>::type;
 
-        Compute_t u1(1), u3 = static_cast<Compute_t>(a);
-        Compute_t v1(0), v3 = static_cast<Compute_t>(b);
-        while (v3 != static_cast<Compute_t>(0))
+        Compute_t u0(0), r0 = static_cast<Compute_t>(b);
+        Compute_t u1(1), r1 = static_cast<Compute_t>(a);
+        while (r1 != static_cast<Compute_t>(0))
         {
-            Compute_t q(static_cast<Compute_t>(u3 / v3));
+            Compute_t q(static_cast<Compute_t>(r0 / r1));
+            Compute_t t(u1);
+            u1 = static_cast<Compute_t>(u0 - q * u1);
+            u0 = t;
 
-            Compute_t t(v1);
-            v1 = static_cast<Compute_t>(u1 - q * v1);
-            u1 = t;
-
-            t = v3;
-            v3 = static_cast<Compute_t>(u3 - q * v3);
-            u3 = t;
+            t = r1;
+            r1 = static_cast<Compute_t>(r0 - q * r1);
+            r0 = t;
+//         std::cerr << u0 << '*' << a << "+ .*" << b << '=' << r0 << std::endl;
+//         std::cerr << u1 << '*' << a << "+ .*" << b << '=' << r1 << std::endl;
         }
-        d = static_cast<Storage_t>(u3);
-        return x = static_cast<Storage_t>(u1);
+        d = static_cast<Storage_t>(r0);
+//         std::cerr << u0 << '*' << a << "+ .*" << b << '=' << r0 << std::endl;
+        return x = ( u0<0 ? static_cast<Storage_t>(u0+b) : static_cast<Storage_t>(u0) );
     }
 
     template<typename Storage_t>

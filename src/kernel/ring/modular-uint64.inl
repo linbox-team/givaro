@@ -77,31 +77,20 @@ namespace Givaro
     }
 
     template<typename COMP>
+    inline bool Modular<uint64_t, COMP>::isUnit(const Element& a) const 
+    { 
+        Element u,d; 
+        invext(u,d,a,_p); 
+        return isOne(d) || isMOne(d); 
+    }
+
+    template<typename COMP>
     inline typename Modular<uint64_t, COMP>::Element &Modular<uint64_t, COMP>::inv
     (Element &x, const Element &y) const
     {
-        // The extended Euclidean algorithm
-        int64_t x_int, y_int, tx, ty;
-        x_int = int64_t(_p);
-        y_int = int64_t(y);
-        tx = 0;
-        ty = 1;
-
-        while (y_int != 0) {
-            // always: gcd (modulus,residue) = gcd (x_int,y_int)
-            //         sx*modulus + tx*residue = x_int
-            //         sy*modulus + ty*residue = y_int
-            int64_t q = x_int / y_int; // integer quotient
-            int64_t temp = y_int;  y_int  = x_int  - q * y_int;
-            x_int  = temp;
-            temp = ty; ty = tx - q * ty;
-            tx = temp;
-        }
-
-        if (tx < 0) tx += _p;
-
-        // now x_int = gcd (modulus,residue)
-        return x = Element(tx);
+        invext(x,y,_p);
+        return (int64_t(x) < 0)? x += _p : x;
+        
     }
 
     template<typename COMP>

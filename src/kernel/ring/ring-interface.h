@@ -31,7 +31,7 @@ struct RingInterface
 	virtual bool isZero(const Element& a) const = 0;
 	virtual bool isOne (const Element& a) const = 0;
 	virtual bool isMOne(const Element& a) const = 0;
-// 	virtual bool isUnit(const Element& a) const = 0;
+	virtual bool isUnit(const Element& a) const = 0;
 	virtual bool areEqual(const Element& a, const Element& b) const = 0;
 	
 	// ----- Classic arithmetic

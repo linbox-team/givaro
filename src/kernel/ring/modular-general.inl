@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <23 Sep 16 11:06:29 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <23 Sep 16 11:26:32 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions
@@ -20,10 +20,18 @@ struct make_signed_int {
     typedef typename std::make_signed<T>::type type;
 };
 
+// int64_t for double and int32_t for float
+template<bool IsFloat=false> struct IntType {
+    typedef int64_t type;
+};
+template<> struct IntType<true> {
+    typedef int32_t type;
+};
+
 template<typename T>
 struct make_signed_int<T,
     typename std::enable_if<std::is_floating_point<T>::value>::type> {
-    typedef int64_t type;
+    typedef typename IntType<std::is_same<T,float>::value>::type type;
 };
 
 namespace Givaro
@@ -38,10 +46,9 @@ namespace Givaro
         Compute_t v1(0), v3 = static_cast<Compute_t>(b);
         while (v3 != static_cast<Compute_t>(0))
         {
-            Compute_t q = static_cast<Compute_t>(u3 / v3);
-            Compute_t t;
+            Compute_t q(static_cast<Compute_t>(u3 / v3));
 
-            t = v1;
+            Compute_t t(v1);
             v1 = static_cast<Compute_t>(u1 - q * v1);
             u1 = t;
 

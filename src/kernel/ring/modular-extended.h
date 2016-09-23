@@ -102,6 +102,7 @@ namespace Givaro{
 		inline bool isZero(const Element& a) const override { return a == zero; }
 		inline bool isOne (const Element& a) const override { return a == one; }
 		inline bool isMOne(const Element& a) const override { return a == mOne; }
+        inline bool isUnit(const Element& a) const;
 		inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
 		inline size_t length(const Element a) const { return size_rep; }
 
@@ -174,51 +175,9 @@ namespace Givaro{
 			return r;
 		}
 		Element& inv(Element& x, const Element& y) const override{
-			if(std::is_same<Element, double>::value){
-				int64_t x_int, y_int, tx, ty;
-				x_int = int64_t(_lp);
-				y_int = int64_t(y);
-				tx = 0;
-				ty = 1;
-
-				while (y_int != 0) {
-					// always: gcd (modulus,residue) = gcd (x_int,y_int)
-					//         sx*modulus + tx*residue = x_int
-					//         sy*modulus + ty*residue = y_int
-					int64_t q = x_int / y_int; // integer quotient
-					int64_t temp = y_int;  y_int  = x_int  - q * y_int;
-					x_int  = temp;
-					temp = ty; ty = tx - q * ty;
-					tx = temp;
-				}
-
-				if (tx < 0) tx += int64_t(_p);
-
-				// now x_int = gcd (modulus,residue)
-				return x = Element(tx);
-			}else if(std::is_same<Element, float>::value){
-				int32_t x_int, y_int, tx, ty;
-				x_int = int32_t(_lp);
-				y_int = int32_t(y);
-				tx = 0;
-				ty = 1;
-
-				while (y_int != 0) {
-					// always: gcd (modulus,residue) = gcd (x_int,y_int)
-					//         sx*modulus + tx*residue = x_int
-					//         sy*modulus + ty*residue = y_int
-					int32_t q = x_int / y_int; // integer quotient
-					int32_t temp = y_int;  y_int  = x_int  - q * y_int;
-					x_int  = temp;
-					temp = ty; ty = tx - q * ty;
-					tx = temp;
-				}
-
-				if (tx < 0) tx += int32_t(_p);
-
-				// now x_int = gcd (modulus,residue)
-				return x = Element(tx);
-			}
+            invext(x,y,_p);
+            if (x<0) x += _p;
+            return x;
 		}
 
 		Element& mulin(Element& r, const Element& a) const override {

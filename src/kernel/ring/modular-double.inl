@@ -107,6 +107,13 @@ namespace Givaro {
         return x;
 	}
 
+    inline bool Modular<double>::isUnit(const Element& a) const 
+    { 
+        Element u,d; 
+        invext(u,d,a,_p); 
+        return isOne(d) || isMOne(d); 
+    }
+
 	inline Modular<double>::Element &Modular<double>::addin
 		(Element &x, const Element &y) const
 	{

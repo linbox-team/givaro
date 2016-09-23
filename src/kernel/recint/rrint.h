@@ -77,6 +77,18 @@ namespace RecInt
     using rint128 = rint<7>;
     using rint256 = rint<8>;
     using rint512 = rint<9>;
+
+
+}
+
+namespace std 
+{
+    template <size_t K> struct make_signed<RecInt::rint<K>> { 
+        typedef RecInt::rint<K> type;
+    };
+    template <size_t K> struct make_signed<RecInt::ruint<K>> { 
+        typedef RecInt::rint<K> type;
+    };
 }
 
 #endif

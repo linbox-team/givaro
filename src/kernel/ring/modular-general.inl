@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <03 Jul 15 17:49:05 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <23 Sep 16 11:06:29 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions
@@ -15,23 +15,33 @@
 #include <cmath>
 #include <type_traits>
 
+template<typename T, typename Enable = void>
+struct make_signed_int {
+    typedef typename std::make_signed<T>::type type;
+};
+
+template<typename T>
+struct make_signed_int<T,
+    typename std::enable_if<std::is_floating_point<T>::value>::type> {
+    typedef int64_t type;
+};
+
 namespace Givaro
 {
 
     template<typename Storage_t>
     inline Storage_t& invext(Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b)
     {
-        using Compute_t = typename std::make_signed<Storage_t>::type;
+        using Compute_t = typename make_signed_int<Storage_t>::type;
 
         Compute_t u1(1), u3 = static_cast<Compute_t>(a);
         Compute_t v1(0), v3 = static_cast<Compute_t>(b);
-
         while (v3 != static_cast<Compute_t>(0))
         {
             Compute_t q = static_cast<Compute_t>(u3 / v3);
             Compute_t t;
 
-	    t = v1;
+            t = v1;
             v1 = static_cast<Compute_t>(u1 - q * v1);
             u1 = t;
 

@@ -27,6 +27,13 @@ using namespace Givaro;
 	return -1;							\
 	}
 
+#define TESTE_T( b )						\
+	if (!b) {						\
+		F.write(std::cout,b)		\
+			<< " failed (at line " <<  __LINE__ << ")" << std::endl;	\
+	return -1;							\
+	}
+
 #define JETESTE( a, s )					\
     if (TestRing( (a), (s)) ) {				\
 	std::cout << #a << " failed !" << std::endl;	\
@@ -58,11 +65,14 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 
     F.init(a, 0U);
     TESTE_EG(a, F.zero);
+    TESTE_T(F.isZero(a));
+
     F.init(a, 1U);
     //         F.write(std::cerr) << std::endl;
     //         F.write(std::cerr << "a: ", a) << std::endl;
     //         F.write(std::cerr << "1: ", F.one) << std::endl;
     TESTE_EG(a, F.one);
+    TESTE_T(F.isOne(a));
 
 	F.init(a, -1);
 	TESTE_EG(a, F.mOne);

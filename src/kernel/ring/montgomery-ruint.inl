@@ -117,7 +117,7 @@ namespace Givaro
     { 
         RecInt::ruint<K> d; 
         gcd(d,a,_p); 
-        return isOne(d) || isMOne(d); 
+        return (d==1) || (d==-1); 
     }
 
     template<size_t K>

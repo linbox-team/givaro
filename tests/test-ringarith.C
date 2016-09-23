@@ -73,6 +73,7 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     //         F.write(std::cerr << "1: ", F.one) << std::endl;
     TESTE_EG(a, F.one);
     TESTE_T(F.isOne(a));
+    TESTE_T(F.isUnit(a));
 
 	F.init(a, -1);
 	TESTE_EG(a, F.mOne);

@@ -257,6 +257,7 @@ namespace Givaro {
 #endif
 		int isOne   ( const Rep& P ) const;
 		int isMOne   ( const Rep& P ) const;
+		bool isUnit   ( const Rep& P ) const;
 		int areEqual ( const Rep& P, const Rep& Q ) const;
 		int areNEqual( const Rep& P, const Rep& Q ) const;
 

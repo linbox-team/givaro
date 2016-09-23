@@ -46,6 +46,16 @@ namespace Givaro {
 	}
 
 	template<class Domain>
+	inline bool Poly1Dom<Domain,Dense>::isUnit ( const Rep& P ) const
+	{
+		setDegree(const_cast<Rep&>(P));
+		if (P.size() ==1)
+			return _domain.isUnit(P[0]);
+		else
+			return 0;
+	}
+
+	template<class Domain>
 	inline int Poly1Dom<Domain,Dense>::areEqual (const Rep& P, const Rep& Q) const
 	{
 		setDegree(const_cast<Rep&>(P));

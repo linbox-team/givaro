@@ -64,6 +64,14 @@ namespace Givaro
     }
 
     template<size_t K>
+    inline bool Modular<RecInt::ruint<K>, RecInt::ruint<K>>::isUnit(const Element& a) const 
+    { 
+        Element d; 
+        gcd(d,a,_p); 
+        return isOne(d) || isMOne(d); 
+    }
+
+    template<size_t K>
     inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::div
         (Element& r, const Element& a, const Element& b) const
     {

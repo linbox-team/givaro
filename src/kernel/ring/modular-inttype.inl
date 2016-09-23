@@ -120,6 +120,16 @@ namespace Givaro
         return u1=_p-u0;
     }
 
+    
+    template<typename IntType, typename COMP> 
+    inline bool Modular<IntType, COMP>::isUnit(const Element& a) const 
+    { 
+        Element u,d; 
+        invext(u,d,a,IntType(_p)); 
+        return isOne(d) || isMOne(d); 
+    }
+
+
     template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
     Modular<IntType, COMP>::div (Element& r, const Element& a, const Element& b) const
     {

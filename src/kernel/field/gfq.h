@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <17 Jul 16 16:12:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <23 Sep 16 14:35:40 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -236,7 +236,7 @@ public:
 	bool isnzero( const Rep ) const;
 	bool isOne ( const Rep ) const;
 	bool isMOne ( const Rep ) const;
-	bool isunit ( const Rep ) const; // Element belongs to prime subfield
+	bool isUnit ( const Rep ) const; // Element belongs to prime subfield
 	size_t length ( const Rep ) const;
 
 

@@ -293,7 +293,7 @@ namespace Givaro {
     { return a == GFqDom<TT>::mOne ; }
 
     template<typename TT>
-    inline bool GFqDom<TT>::isunit(const Rep a) const
+    inline bool GFqDom<TT>::isUnit(const Rep a) const
     {
             // Fermat : x^(p-1) = 1 whenever x is a unit
         return ( ( a * (_characteristic-1) ) % _qm1 ) == 0;

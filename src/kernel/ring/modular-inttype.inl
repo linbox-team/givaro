@@ -125,7 +125,7 @@ namespace Givaro
     inline bool Modular<IntType, COMP>::isUnit(const Element& a) const 
     { 
         Element u,d; 
-        invext(u,d,a,IntType(_p)); 
+        invext(u,d,a,_p); 
         return isOne(d) || isMOne(d); 
     }
 

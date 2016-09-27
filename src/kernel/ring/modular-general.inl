@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <23 Sep 16 14:03:02 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <27 Sep 16 18:53:18 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions
@@ -59,7 +59,7 @@ namespace Givaro
         }
         d = static_cast<Storage_t>(r0);
 //         std::cerr << u0 << '*' << a << "+ .*" << b << '=' << r0 << std::endl;
-        return x = ( u0<0 ? static_cast<Storage_t>(u0+b) : static_cast<Storage_t>(u0) );
+        return x = ( u0<0 ? static_cast<Storage_t>(u0+static_cast<Compute_t>(b)) : static_cast<Storage_t>(u0) );
     }
 
     template<typename Storage_t>

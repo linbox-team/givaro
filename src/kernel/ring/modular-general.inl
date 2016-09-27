@@ -59,7 +59,7 @@ namespace Givaro
         }
         d = static_cast<Storage_t>(r0);
 //         std::cerr << u0 << '*' << a << "+ .*" << b << '=' << r0 << std::endl;
-        return x = ( u0<0 ? static_cast<Storage_t>(u0+b) : static_cast<Storage_t>(u0) );
+        return x = ( u0<0 ? static_cast<Storage_t>(u0+static_cast<Compute_t>(b)) : static_cast<Storage_t>(u0) );
     }
 
     template<typename Storage_t>

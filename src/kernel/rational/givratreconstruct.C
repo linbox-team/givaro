@@ -29,9 +29,9 @@ namespace Givaro {
 	bool Rational::ratrecon(const Integer& f, const Integer& m, const Integer& k, bool recurs )
 	{
 
-#ifdef DEBUG
-		std::cerr << "RatRecon : " << f << " " << m << " " << k << std::endl;
-#endif
+// #ifdef DEBUG
+// 		std::cerr << "RatRecon : " << f << " " << m << " " << k << std::endl;
+// #endif
 
 
 		Integer r0, t0, r1, t1, q, u;
@@ -42,14 +42,14 @@ namespace Givaro {
 		t1=1;
 		while(r1>=k)
 		{
-#ifdef DEBUG
-			std::cerr << "r0: " << r0
-			<< ", r1: " << r1
-			<< ", q: " << q
-			<< ", t0: " << t0
-			<< ", t1: " << t1
-			<< std::endl;
-#endif
+// #ifdef DEBUG
+// 			std::cerr << "r0: " << r0
+// 			<< ", r1: " << r1
+// 			<< ", q: " << q
+// 			<< ", t0: " << t0
+// 			<< ", t1: " << t1
+// 			<< std::endl;
+// #endif
 			q = r0;
 			q /= r1;        // r0/r1
 

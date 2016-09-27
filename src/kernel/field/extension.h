@@ -352,6 +352,10 @@ namespace Givaro {
             {
 		return _pD.isOne(b) ;
             }
+	bool isUnit (const PolElement& b) const
+            {
+		return _pD.isUnit(b) ;
+            }
 	bool isMOne (const PolElement& b) const
             {
 		return _pD.isMOne(b) ;

@@ -40,7 +40,7 @@ public:
     GivRandom(const uint64_t s = 0)
             : _seed(s)
     {
-        if (! s) {
+        while (! _seed) {
 		struct timeval tp;
 		gettimeofday(&tp, 0) ;
 		_seed = (uint64_t)(tp.tv_usec);

@@ -177,13 +177,9 @@ namespace Givaro
         ModularRandIter(const Ring& R, const size_t& size = 0, const size_t& seed = 0) 
                 : _ring(R)
         {
-            unsigned long s=seed;
-            if (! seed) {
-                struct timeval tp;
-                gettimeofday(&tp, 0) ;
-                s = (unsigned long)(tp.tv_usec);
-            }
-            Givaro::Integer::seeding(s);
+                // GivRandom will select a non-zero value, even if seed is 0
+            GivRandom generator(seed);
+            Givaro::Integer::seeding(generator());
         }
         Element& operator()(Element& elt)
         {
@@ -219,4 +215,4 @@ namespace Givaro
 #include "givaro/modular-integer.inl"
 
 #endif // __GIVARO_zpz_int_H
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+// vim:sts=4:sw=4:ts=4:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

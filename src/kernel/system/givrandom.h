@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 Sep 16 11:49:38 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Sep 16 12:03:51 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givrandom.h
@@ -20,6 +20,7 @@
 #define __GIVARO_random_H
 #include <givaro/givconfig.h>
 #include <givaro/udl.h>
+#include <givaro/givtimer.h>
 
 extern "C" {
 # include <sys/time.h>
@@ -41,9 +42,7 @@ namespace Givaro {
                 : _seed(s)
             {
                 while (! _seed) {
-                    struct timeval tp;
-                    gettimeofday(&tp, 0) ;
-                    _seed = (uint64_t)(tp.tv_usec);
+                    _seed = (uint64_t)BaseTimer::seed();
                 }
             }
 

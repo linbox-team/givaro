@@ -78,6 +78,14 @@ namespace Givaro {
     }
 
     template<typename COMP>
+    inline bool Modular<int64_t, COMP>::isUnit(const Element& a) const 
+    { 
+        Element u,d; 
+        invext(u,d,a,int64_t(_p)); 
+        return isOne(d) || isMOne(d); 
+    }
+
+    template<typename COMP>
     inline typename Modular<int64_t, COMP>::Element& Modular<int64_t, COMP>::div
     (Element& r, const Element& a, const Element& b) const
     {

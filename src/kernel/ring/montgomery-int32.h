@@ -63,9 +63,10 @@ namespace Givaro
             _Bp( (Residu_t)  B32%p),
             _B2p((Residu_t)  (_Bp<<HALF_BITS32) % p),
             _B3p((Residu_t)  (_B2p<<HALF_BITS32) % p),
-            _nim((Residu_t)  -invext(_p, B32)),
+            _nim((Residu_t)  B32-invext(_p, B32)),
             _dp( (double)    p)
         {
+//             std::cerr << "i:" << invext(_p, B32) << std::endl;         
 //             std::cerr << "_p: " << _p << std::endl;
 //             std::cerr << "_Bp: " << _Bp << std::endl;
 //             std::cerr << "_B2p: " << _B2p << std::endl;
@@ -113,6 +114,7 @@ namespace Givaro
         inline bool isZero(const Element& a) const override { return a == zero; }
         inline bool isOne (const Element& a) const override { return a == one; }
         inline bool isMOne(const Element& a) const override { return a == mOne; }
+        inline bool isUnit(const Element& a) const;
         inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
         inline size_t length(const Element a) const { return size_rep; }
 

@@ -35,8 +35,6 @@ namespace Givaro {
 
 	/*! @brief This class implement the standard arithmetic with Modulo Elements.
 	 * - The representation of an integer a in Zpz is the value a % p
-	 * - m max is 32768
-	 * - p max is 32749
 	 * .
 	 */
 	template<typename COMP>
@@ -105,6 +103,7 @@ namespace Givaro {
 		inline bool isZero(const Element& a) const override { return a == zero; }
 		inline bool isOne (const Element& a) const override { return a == one; }
 		inline bool isMOne(const Element& a) const override { return a == mOne; }
+        inline bool isUnit(const Element& a) const override;
 		inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
 		inline size_t length(const Element a) const { return size_rep; }
 

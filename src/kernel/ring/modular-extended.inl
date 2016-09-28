@@ -280,6 +280,19 @@ namespace Givaro {
 		return a;
 	}
 
+	template<>
+    inline bool ModularExtended<double>::isUnit(const Element& a) const{ 
+        Element u,d; 
+        invext(u,d,a,_p); 
+        return isOne(d) || isMOne(d); 
+    }
+	template<>
+    inline bool ModularExtended<float>::isUnit(const Element& a) const{ 
+        Element u,d; 
+        invext(u,d,a,_p); 
+        return isOne(d) || isMOne(d); 
+    }
+
 } // Givaro
 
 #endif // __GIVARO_MODULAR_EXTENDED_INL

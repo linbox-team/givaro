@@ -17,7 +17,7 @@
 #endif
 
 #if not defined(LOOPS)
-#define LOOPS 10000
+#define LOOPS 100
 #endif
 
 
@@ -50,9 +50,12 @@ int main(int argc, char ** argv)
     
 	// -----------
 	// Standard output for benchmark - Alexis Breust 2014/12/11
-	std::cout << "Time: " << tim.usertime()
-			  << " Gflops: " << "Irrelevant" << std::endl;
-    
+	std::cout 
+        << "Time: " << tim.usertime()
+        << " Mflops: " << std::scientific << (double(nbloops))/tim.usertime()/1000.0/1000.0
+        << " SIZE: " << STD_RECINT_SIZE
+        << std::endl ;
+   
     return 0; 
 }
 

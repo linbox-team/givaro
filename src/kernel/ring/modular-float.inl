@@ -128,28 +128,16 @@ namespace Givaro {
     inline Modular<float>::Element &Modular<float>::inv
     (Element &x, const Element &y) const
     {
-        // The extended Euclidean algorithm
-        int32_t x_int, y_int, tx, ty;
-        x_int = int32_t(_lp);
-        y_int = int32_t(y);
-        tx = 0;
-        ty = 1;
+        invext(x,y,_p);
+        return (x<0 ? x+=_p : x);
+        return x;
+	}
 
-        while (y_int != 0) {
-            // always: gcd (modulus,residue) = gcd (x_int,y_int)
-            //         sx*modulus + tx*residue = x_int
-            //         sy*modulus + ty*residue = y_int
-            int32_t q = x_int / y_int; // integer quotient
-            int32_t temp = y_int;  y_int  = x_int  - q * y_int;
-            x_int  = temp;
-            temp = ty; ty = tx - q * ty;
-            tx = temp;
-        }
-
-        if (tx < 0) tx += int32_t(_p);
-
-        // now x_int = gcd (modulus,residue)
-        return x = Element(tx);
+    inline bool Modular<float>::isUnit(const Element& a) const 
+    { 
+        Element u,d; 
+        invext(u,d,a,_p); 
+        return isOne(d) || isMOne(d); 
     }
 
     inline Modular<float>::Element &Modular<float>::addin

@@ -72,6 +72,14 @@ ModularBalanced<double>::inv(Element& r, const Element& a) const
     return r;
 }
 
+inline bool ModularBalanced<double>::isUnit(const Element& a) const 
+{ 
+    Element u,d; 
+    invext(u,d,a,_p); 
+    return isOne(d) || isMOne(d); 
+}
+
+
 inline ModularBalanced<double>::Element&
 ModularBalanced<double>::mulin(Element& r, const Element& a) const
 {

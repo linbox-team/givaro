@@ -491,6 +491,12 @@ namespace Givaro
         return ismone(a);
     }
 
+    inline bool Modular<Log16, Log16>::isUnit ( const Rep a ) const
+    {
+            // p has to be prime
+        return isOne(a) || isMOne(a);
+    }
+
 
     // ---------
     // -- misc operations

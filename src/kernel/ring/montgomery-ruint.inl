@@ -113,6 +113,14 @@ namespace Givaro
     }
 
     template<size_t K>
+    inline bool Montgomery<RecInt::ruint<K>>::isUnit(const Element& a) const 
+    { 
+        RecInt::ruint<K> d; 
+        gcd(d,a,_p); 
+        return (d==1) || (d==-1); 
+    }
+
+    template<size_t K>
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::div
     (Element& r, const Element& a, const Element& b) const
     {

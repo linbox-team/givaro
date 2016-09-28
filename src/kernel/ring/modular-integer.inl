@@ -85,6 +85,13 @@ namespace Givaro {
         return ::Givaro::inv(r,a,_p);
     }
 
+    inline bool Modular<Integer>::isUnit(const Element& a) const 
+    { 
+        Element d;
+        ::Givaro::gcd(d,a,_p); 
+        return isOne(d) || isMOne(d); 
+    }
+
     inline Modular<Integer>::Element&
     Modular<Integer>::div (Element& r, const Element& a, const Element& b) const
     {

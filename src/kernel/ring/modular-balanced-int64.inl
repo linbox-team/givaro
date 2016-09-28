@@ -75,6 +75,13 @@ ModularBalanced<int64_t>::inv(Element& r, const Element& a) const
     return r;
 }
 
+inline bool ModularBalanced<int64_t>::isUnit(const Element& a) const 
+{ 
+    Element u,d; 
+    invext(u,d,a,_p); 
+    return isOne(d) || isMOne(d); 
+}
+
 inline ModularBalanced<int64_t>::Element&
 ModularBalanced<int64_t>::mulin(Element& r, const Element& a) const
 {

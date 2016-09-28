@@ -278,6 +278,7 @@ public:
     int sign    (const Rep& a) const { return  ::Givaro::sign(a); }
     bool isOne   (const Rep& a) const { return compare(a, one) ==0; }
     bool isMOne   (const Rep& a) const { return compare(a, mOne) ==0; }
+    bool isUnit   (const Rep& a) const { return !isZero(a); }
     bool isZero  (const Rep& a) const { return compare(a, zero) ==0; }
     bool areEqual (const Rep& a, const Rep& b) const { return compare(a, b) ==0; }
     int areNEqual(const Rep& a, const Rep& b) const { return compare(a, b) !=0; }

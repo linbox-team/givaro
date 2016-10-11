@@ -8,7 +8,7 @@
 AC_PREREQ([2.61])
 
 AC_INIT([Givaro],[4.0.3],[Jean-Guillaume.Dumas@imag.fr],[givaro],
-		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
+		[http://givaro.forge.imag.fr/])
 
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])

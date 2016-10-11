@@ -212,6 +212,7 @@ tests/test-ifactor.exe
 tests/test-integer.exe
 tests/test-mod.exe
 tests/test-modsqroot.exe
+tests/test-modularmulprecomp
 tests/test-poly.exe
 tests/test-random.exe
 tests/test-ratrecon.exe

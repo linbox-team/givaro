@@ -16,7 +16,7 @@ AC_CONFIG_HEADERS([config.h])
 
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability foreign])
+AM_INIT_AUTOMAKE([1.8 no-dependencies -Wall -Wno-portability foreign])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 AC_PATH_PROG(RM, rm, $FALSE)
 RM="$RM -f"

@@ -16,15 +16,14 @@ AC_CONFIG_HEADERS([config.h])
 
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([1.8 no-dependencies -Wall -Wno-portability foreign])
+AM_INIT_AUTOMAKE([1.8 -Wall -Wno-portability foreign])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 AC_PATH_PROG(RM, rm, $FALSE)
 RM="$RM -f"
 
 
 AM_MAINTAINER_MODE
-AM_DEP_TRACK
-AM_OUTPUT_DEPENDENCY_COMMANDS
+AM_PROG_AR
 
 AM_ACLOCAL_INCLUDE(macros)
 

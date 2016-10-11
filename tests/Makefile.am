@@ -15,7 +15,7 @@ OPTLINKS=
 AM_CXXFLAGS = @TESTS_CFLAGS@
 AM_CPPFLAGS = @TESTS_CFLAGS@ $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/field -I$(top_srcdir)/src/kernel/ring -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools -I$(top_srcdir)/src/kernel/recint
 
-LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS)
+LDADD = $(OPTLINKS) ../src/libgivaro.la $(GMP_LIBS)
 AM_LDFLAGS=-static $(LDFLAGS)
 
 PERFPUBLISHERFILE = tests-report.xml

@@ -19,7 +19,6 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([1.10 -Wall -Wno-portability foreign])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 
-AM_MAINTAINER_MODE
 AM_PROG_AR
 
 AM_ACLOCAL_INCLUDE(macros)

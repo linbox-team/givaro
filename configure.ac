@@ -5,7 +5,7 @@
 # see the COPYRIGHT file for more details.
 #/
 
-AC_PREREQ([2.61])
+AC_PREREQ([2.68])
 
 AC_INIT([Givaro],[4.0.3],[Jean-Guillaume.Dumas@imag.fr],[givaro],
 		[http://givaro.forge.imag.fr/])
@@ -145,7 +145,7 @@ AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
 # newer libtool...
-LT_PREREQ([2.2])
+LT_PREREQ([2.4.2])
 LT_INIT
 
 

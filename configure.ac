@@ -16,7 +16,7 @@ AC_CONFIG_HEADERS([config.h])
 
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([1.8 -Wall -Wno-portability foreign])
+AM_INIT_AUTOMAKE([1.10 -Wall -Wno-portability foreign])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 AC_PATH_PROG(RM, rm, $FALSE)
 RM="$RM -f"
@@ -26,9 +26,6 @@ AM_MAINTAINER_MODE
 AM_PROG_AR
 
 AM_ACLOCAL_INCLUDE(macros)
-
-# work around to fix the backward compatibility issue of automake 1.10 with 1.9 (pb with MKDIR_P)
-AC_SUBST([MKDIR_P])
 
 AC_LANG([C++])
 

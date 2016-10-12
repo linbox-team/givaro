@@ -270,7 +270,7 @@ examples/Polynomial/Makefile
 tests/Makefile
 docs/Makefile
 givaro.pc
-])
+],[chmod +x givaro-config])
 AC_OUTPUT
 
 echo "-----------------------------------------------"

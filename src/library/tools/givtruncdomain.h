@@ -14,11 +14,7 @@
 #define __GIVARO_trunc_domain_H
 #include <givaro/givpoly1dense.h>
 #ifndef __PATHCC__
-#ifdef __APPLE__
 #include <utility>
-#else
-#include <bits/stl_pair.h>
-#endif
 #endif
 
 

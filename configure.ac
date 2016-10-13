@@ -5,10 +5,10 @@
 # see the COPYRIGHT file for more details.
 #/
 
-AC_PREREQ([2.61])
+AC_PREREQ([2.68])
 
 AC_INIT([Givaro],[4.0.3],[Jean-Guillaume.Dumas@imag.fr],[givaro],
-		[http://ljk.imag.fr/CASYS/LOGICIELS/givaro])
+		[http://givaro.forge.imag.fr/])
 
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -16,20 +16,12 @@ AC_CONFIG_HEADERS([config.h])
 
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE([1.8 gnu no-dependencies -Wall -Wno-portability foreign])
+AM_INIT_AUTOMAKE([1.10 -Wall -Wno-portability foreign])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
-AC_PATH_PROG(RM, rm, $FALSE)
-RM="$RM -f"
 
-
-AM_MAINTAINER_MODE
-AM_DEP_TRACK
-AM_OUTPUT_DEPENDENCY_COMMANDS
+AM_PROG_AR
 
 AM_ACLOCAL_INCLUDE(macros)
-
-# work around to fix the backward compatibility issue of automake 1.10 with 1.9 (pb with MKDIR_P)
-AC_SUBST([MKDIR_P])
 
 AC_LANG([C++])
 
@@ -149,7 +141,7 @@ AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
 # newer libtool...
-LT_PREREQ([2.2])
+LT_PREREQ([2.4.2])
 LT_INIT
 
 
@@ -187,7 +179,7 @@ AC_CHECK_SIZEOF(long, 32)
 AC_CHECK_SIZEOF(long long, 64)
 AC_CHECK_SIZEOF(__int64_t, 64)
 
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 
 AC_CHECK_TYPE([__int128_t], [AC_TRY_COMPILE([#include <type_traits>], [std::make_unsigned<__int128_t>::type y;],[AC_DEFINE(HAVE_INT128, 1, [Define that compiler allows int128_t types])])])		   
 
@@ -277,7 +269,7 @@ examples/Polynomial/Makefile
 tests/Makefile
 docs/Makefile
 givaro.pc
-])
+],[chmod +x givaro-config])
 AC_OUTPUT
 
 echo "-----------------------------------------------"

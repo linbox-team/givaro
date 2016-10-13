@@ -60,7 +60,7 @@ Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, 
 	size_t sP = P.size();
 	size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
-	if (sR != sQ+sP) R.reallocate((size_t)sR = sP+sQ-1);
+	if (sR != sP+sQ+1) R.reallocate((size_t)sR = sP+sQ-1);
 
 	size_t i,j;
 	for (i=0; i<sR; ++i) _domain.assign(R[i], _domain.zero);
@@ -91,7 +91,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R
 	size_t sP = P.size();
 	size_t sQ = Q.size();
 	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
-	if (sR != sQ+sP) R.reallocate(sR = sP+sQ-1);
+	if (sR != sP+sQ-1) R.reallocate(sR = sP+sQ-1);
 
         // Generic multiplication handler
         // Can use e.g. Karatsuba multiplication

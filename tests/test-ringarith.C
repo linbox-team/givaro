@@ -155,13 +155,18 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 	F.init(d, 0U);
 	TESTE_EG(c, d);
 
-	F.init(a, -3);
-	F.assign(b , y);
-	F.mul(c,a,b);
-	F.addin(c,b);
-	F.addin(c,b);
-	F.addin(c,b);
+	//F.write(std::cerr) << std::endl;
+	F.init(a, -3);          // F.write(std::cerr << "a: ", a) << std::endl;	
+	F.assign(b , y);        // F.write(std::cerr << "b: ", b) << std::endl;
+	F.mul(c,a,b);           // F.write(std::cerr << "c: ", c) << std::endl;
+	F.addin(c,b);           // F.write(std::cerr << "c: ", c) << std::endl;
+	F.addin(c,b);           // F.write(std::cerr << "c: ", c) << std::endl;
+	F.addin(c,b);           // F.write(std::cerr << "c: ", c) << std::endl;
 	F.init(d, 0U);
+           
+	//F.write(std::cerr << "d: ", d) << std::endl;            
+	    
+
 	TESTE_EG(c, d);
 
 #ifdef GIVARO_DEBUG
@@ -404,7 +409,8 @@ int main(int argc, char ** argv)
     TEST_LAST(Modular<double>, Dmax);
     //TEST_LAST(ModularFD, FDmax);
     TEST_LAST(Modular<RecInt::ruint128>, RUmax);
-    
+    typedef Modular<RecInt::ruint128,RecInt::ruint256> MyMod;
+    TEST_LAST(MyMod, RUExtmax);    
     TEST_LAST(ModularBalanced<int32_t>, BZmax);
     TEST_LAST(ModularBalanced<int64_t>, BLLmax);
     TEST_LAST(ModularBalanced<float>, BFmax);

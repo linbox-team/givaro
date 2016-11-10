@@ -40,7 +40,7 @@ namespace Givaro
         typedef IntType Residu_t;
         enum { size_rep = sizeof(Residu_t) };
 	using Element = typename FiniteFieldInterface<IntType>::Element;
-
+	using Compute_t = COMP;
         // ----- Constantes
         const Element zero ;
         const Element one  ;

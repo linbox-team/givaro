@@ -4,10 +4,10 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
-AM_CPPFLAGS=-I$(top_srcdir)  ${GMP_VERSION}
+AM_CPPFLAGS=-I$(top_builddir)  ${GMP_VERSION}
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/bstruct
+AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/bstruct
 
 pkginclude_HEADERS=     \
 	StaticElement.h		\

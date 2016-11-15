@@ -5,7 +5,7 @@
 # see the COPYRIGHT file for more details.
 examples: $(EXTRA_PROGRAMS)
 
-AM_CPPFLAGS=-I$(top_srcdir)
+AM_CPPFLAGS=-I$(top_builddir)
 
 OPTFLAGS=
 OPTLINKS=
@@ -29,9 +29,9 @@ OPTLINKS=
 #OPTFLAGS+= -tpp2 -mcpu=itanium2
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/field -I$(top_srcdir)/src/kernel/ring -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/tools
+AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/library/tools -I$(top_srcdir)/src/kernel
 
-LDADD = $(OPTLINKS) $(top_srcdir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
+LDADD = $(OPTLINKS) $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 

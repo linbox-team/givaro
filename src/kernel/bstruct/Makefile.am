@@ -4,10 +4,10 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
-AM_CPPFLAGS=-I$(top_srcdir)
+AM_CPPFLAGS=-I$(top_builddir)
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory
+AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory
 
 pkginclude_HEADERS=     \
 	givarray0.h		    \

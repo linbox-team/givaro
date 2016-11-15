@@ -27,12 +27,14 @@
 
 // r <- a * b
 #define __GIVARO_MODULAR_RECINT_MUL(r,p,a,b) { RecInt::mod_n(RecInt::mul(r, a, b), p); }
+#define __GIVARO_MODULAR_RECINT_LMUL(r,p,a,b) { Compute_t tmp;RecInt::lmul(tmp, a, b); RecInt::mod_n(r, tmp, p); }
 #define __GIVARO_MODULAR_INTEGER_MUL(r,p,a,b) ( \
     r = static_cast<Element>(static_cast<Compute_t>(a)*static_cast<Compute_t>(b) % static_cast<Compute_t>(p)) )
 #define __GIVARO_MODULAR_FLOATING_MUL(r,p,a,b) ( r = std::fmod(a*b, p) )
 
 // r <- r * a
 #define __GIVARO_MODULAR_RECINT_MULIN(r,p,a) { RecInt::mod_n(RecInt::mul(r, a), p); }
+#define __GIVARO_MODULAR_RECINT_LMULIN(r,p,a) { Compute_t tmp;RecInt::lmul(tmp, r, a); RecInt::mod_n(r, tmp, p); }
 #define __GIVARO_MODULAR_INTEGER_MULIN(r,p,a) ( r = static_cast<Element>(static_cast<Compute_t>(r)*static_cast<Compute_t>(a) % static_cast<Compute_t>(p)) )
 #define __GIVARO_MODULAR_FLOATING_MULIN(r,p,a) ( r = std::fmod((r*a), p) )
 
@@ -81,6 +83,9 @@
     RecInt::copy(r, c);					\
     RecInt::addmul(r, a, b);				\
     RecInt::mod_n(r, p); }
+#define __GIVARO_MODULAR_RECINT_LMULADD(r,p,a,b,c) {	\
+    __GIVARO_MODULAR_RECINT_LMUL(r,p,a,b); \
+    __GIVARO_MODULAR_RECINT_ADDIN(r,p,c); }
 #define __GIVARO_MODULAR_INTEGER_MULADD(r,p,a,b,c) ( \
     r = static_cast<Element>((static_cast<Compute_t>(a)*static_cast<Compute_t>(b) \
     + static_cast<Compute_t>(c)) % static_cast<Compute_t>(p)))
@@ -90,6 +95,9 @@
 #define __GIVARO_MODULAR_RECINT_MULADDIN(r,p,a,b) { \
     RecInt::addmul(r, a, b); \
     RecInt::mod_n(r, p); }
+#define __GIVARO_MODULAR_RECINT_LMULADDIN(r,p,a,b) { \
+    Element tmp=r;				     \
+    __GIVARO_MODULAR_RECINT_LMULADD(r,p,a,b,tmp);} 
 #define __GIVARO_MODULAR_INTEGER_MULADDIN(r,p,a,b) ( \
     r = static_cast<Element>((static_cast<Compute_t>(a)*static_cast<Compute_t>(b) \
     + static_cast<Compute_t>(r)) % static_cast<Compute_t>(p)))
@@ -99,7 +107,10 @@
 #define __GIVARO_MODULAR_RECINT_MULSUB(r,p,a,b,c) { \
     __GIVARO_MODULAR_RECINT_MUL(r,p,a,b); \
     __GIVARO_MODULAR_RECINT_SUBIN(r,p,c); }
-#define __GIVARO_MODULAR_INTEGER_MULSUB(r,p,a,b,c) ( \
+#define __GIVARO_MODULAR_RECINT_LMULSUB(r,p,a,b,c) { \
+    __GIVARO_MODULAR_RECINT_LMUL(r,p,a,b); \
+    __GIVARO_MODULAR_RECINT_SUBIN(r,p,c); }
+#define __GIVARO_MODULAR_INTEGER_MULSUB(r,p,a,b,c) (			\
     r = static_cast<Element>((static_cast<Compute_t>(a)*static_cast<Compute_t>(b) \
     + static_cast<Compute_t>(p)-static_cast<Compute_t>(c)) % static_cast<Compute_t>(p)))
 #define __GIVARO_MODULAR_FLOATING_MULSUB(r,p,a,b,c) ( r = std::fmod((a*b+p-c), p) )
@@ -109,7 +120,10 @@
     __GIVARO_MODULAR_RECINT_NEGIN(r,p); \
     RecInt::addmul(r, a, b); \
     RecInt::mod_n(r, p); }
-#define __GIVARO_MODULAR_INTEGER_SUBMULIN(r,p,a,b) { \
+#define __GIVARO_MODULAR_RECINT_LSUBMULIN(r,p,a,b) { \
+    Element tmp=r;				     \
+    __GIVARO_MODULAR_RECINT_LMULSUB(r,p,a,b,tmp);} 
+#define __GIVARO_MODULAR_INTEGER_SUBMULIN(r,p,a,b) {			\
     r = static_cast<Element>((static_cast<Compute_t>(a)*static_cast<Compute_t>(b) \
     +static_cast<Compute_t>(p)-static_cast<Compute_t>(r)) % static_cast<Compute_t>(p)); \
     __GIVARO_MODULAR_INTEGER_NEGIN(r,p); }

@@ -12,6 +12,7 @@
 #include <string.h>
 #include <limits.h>
 #include <climits> // required by gcc 4.3
+#include <cstddef> // required by gmp versions <= 5.1.3
 #include <givaro-config.h>
 
 

@@ -30,7 +30,7 @@ AC_SUBST(GIVARO_DOC_PATH)
 AC_ARG_WITH(doxygen,
 [AC_HELP_STRING([--with-doxygen=<path>], [Give the path to Doxygen. Note: --enable-doc needed])],
             [
-		DOXYGEN_PATH="$PATH $withval"
+		DOXYGEN_PATH="$PATH:$withval"
 	    ],
 	    [
 		DOXYGEN_PATH="$PATH"

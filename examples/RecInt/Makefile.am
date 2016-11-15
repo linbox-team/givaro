@@ -12,7 +12,7 @@ AM_CPPFLAGS += -I$(top_srcdir)/src/kernel
 #OPTFLAGS=
 #OPTLINKS=
 
-LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
+LDADD = $(OPTLINKS) $(top_srcdir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 

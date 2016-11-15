@@ -68,13 +68,14 @@ AC_MSG_CHECKING(whether dot works)
 res=yes;
 (dot -V) < /dev/null > /dev/null 2>&1 || res=no
 AC_MSG_RESULT([$res])
+AS_MKDIR_P([docs])
 AS_IF([test $res = yes],
 [
-sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' docs/Doxyfile.mod > docs/Doxyfile
-sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' docs/DoxyfileDev.mod > docs/DoxyfileDev
+sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/Doxyfile.mod > docs/Doxyfile
+sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/DoxyfileDev.mod > docs/DoxyfileDev
 ],
-[ cp docs/Doxyfile.mod docs/Doxyfile ;
-cp docs/DoxyfileDev.mod docs/DoxyfileDev
+[ cp "$srcdir"/docs/Doxyfile.mod docs/Doxyfile ;
+cp "$srcdir"/docs/DoxyfileDev.mod docs/DoxyfileDev
 ])
 
 

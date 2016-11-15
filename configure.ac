@@ -245,7 +245,6 @@ echo "-----------------------------------------------"
 
 AC_CONFIG_FILES([
 Makefile
-givaro-config
 givaro-makefile
 src/Makefile
 src/kernel/Makefile
@@ -274,7 +273,8 @@ examples/Polynomial/Makefile
 tests/Makefile
 docs/Makefile
 givaro.pc
-],[chmod +x givaro-config])
+])
+AC_CONFIG_FILES([givaro-config],[chmod +x givaro-config])
 AC_OUTPUT
 
 echo "-----------------------------------------------"

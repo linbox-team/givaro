@@ -224,7 +224,6 @@ echo "-----------------------------------------------"
 
 echo "-----------------------------------------------"
 
-DEFAULT_CHECKING_PATH="/usr /usr/local /opt/local"  
 GIV_CHECK_GMP(40000)
 
 GIV_DOC

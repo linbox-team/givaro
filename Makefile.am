@@ -48,12 +48,15 @@ DISTCLEANFILES = src/kernel/system/givaro   \
 		 src/kernel/rational/givaro \
 		 src/kernel/recint/recint   \
 		 src/kernel/field/givaro    \
-		 src/kernel/ring/givaro    \
+		 src/kernel/ring/givaro     \
 		 src/kernel/gmp++/gmp++     \
 		 src/library/matrix/givaro  \
 		 src/library/poly1/givaro   \
 		 src/library/tools/givaro   \
-		 src/library/vector/givaro
+		 src/library/vector/givaro  \
+		 givaro-config.h            \
+		 docs/DoxyfileDev	    \
+		 docs/Doxyfile
 
 uninstall-hook:
 	(test -d "$(includedir)/givaro" && rmdir "$(includedir)/givaro") || true

@@ -59,7 +59,6 @@ matrix:
           sources:
           - ubuntu-toolchain-r-test
           packages:
-          - clang++
           - libgmp-dev
           - libgmpxx4ldbl
       before_install:

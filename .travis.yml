@@ -4,19 +4,6 @@ os:
   - linux
   - osx
  
-
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-4.9
-    - g++-5
-    - g++-6
-    - clang++
-    - libgmp-dev
-    - libgmpxx4ldbl
-
 matrix:
   include:
     - os: linux
@@ -24,24 +11,61 @@ matrix:
       dist: trusty
       compiler: gcc
       env: COMPILER=g++-4.9
+      addons:
+        apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          packages:
+          - g++-4.9
+          - libgmp-dev
+          - libgmpxx4ldbl
 
     - os: linux
       sudo: required
       dist: trusty
       compiler: gcc
       env: COMPILER=g++-5
+      addons:
+        apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          packages:
+          - g++-5
+          - libgmp-dev
+          - libgmpxx4ldbl
 
     - os: linux
       sudo: required
       dist: trusty
       compiler: gcc
       env: COMPILER=g++-6
+      addons:
+        apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          packages:
+          - g++-6
+          - libgmp-dev
+          - libgmpxx4ldbl
 
     - os: linux
       sudo: required
       dist: trusty
       compiler: clang
       env: COMPILER=clang++
+      addons:
+        apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          packages:
+          - clang++
+          - libgmp-dev
+          - libgmpxx4ldbl
+      before_install:
+      - sudo add-apt-repository 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main'
+      - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
+      - sudo apt-get update -qq 
+      - sudo apt-get install -qq -y clang-format-3.9
 
     - os: osx
       compiler: clang

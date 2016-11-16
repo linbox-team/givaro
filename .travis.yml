@@ -17,7 +17,6 @@ addons:
     - libgmp-dev
     - libgmpxx4ldbl
 
-
 matrix:
   include:
     - os: linux
@@ -41,7 +40,7 @@ matrix:
       env: COMPILER=clang++
 
     - os: osx
-      compiler = clang
+      compiler: clang
       env: COMPILER=clang++
       before_install:
 	- brew update

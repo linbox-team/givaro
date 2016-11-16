@@ -22,25 +22,21 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      sudo: required
       compiler: gcc
       env: COMPILER=g++-4.9
 
     - os: linux
       dist: trusty
-      sudo: required
       compiler: gcc
       env: COMPILER=g++-5
 
     - os: linux
       dist: trusty
-      sudo: required
       compiler: gcc
       env: COMPILER=g++-6
 
     - os: linux
       dist: trusty
-      sudo: required
       compiler: clang
       env: COMPILER=clang++
 

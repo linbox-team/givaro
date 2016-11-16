@@ -196,22 +196,28 @@ AC_C_BIGENDIAN(
   [AC_DEFINE(HAVE_LITTLE_ENDIAN, 1, [Define that architecture uses little endian storage])],
   [])
 
-echo "Creating symbolic link for compilation"
-if test ! -L src/kernel/system/givaro  ; then ln -s . src/kernel/system/givaro  ; fi
-if test ! -L src/kernel/bstruct/givaro ; then ln -s . src/kernel/bstruct/givaro ; fi
-if test ! -L src/kernel/integer/givaro ; then ln -s . src/kernel/integer/givaro ; fi
-if test ! -L src/kernel/memory/givaro  ; then ln -s . src/kernel/memory/givaro  ; fi
-if test ! -L src/kernel/rational/givaro; then ln -s . src/kernel/rational/givaro; fi
-if test ! -L src/kernel/recint/recint  ; then ln -s . src/kernel/recint/recint;   fi
-if test ! -L src/kernel/field/givaro   ; then ln -s . src/kernel/field/givaro;    fi
-if test ! -L src/kernel/ring/givaro    ; then ln -s . src/kernel/ring/givaro;    fi
-if test ! -L src/kernel/gmp++/gmp++    ; then ln -s . src/kernel/gmp++/gmp++    ; fi
-if test ! -L src/library/matrix/givaro ; then ln -s . src/library/matrix/givaro ; fi
-if test ! -L src/library/poly1/givaro  ; then ln -s . src/library/poly1/givaro  ; fi
-if test ! -L src/library/tools/givaro  ; then ln -s . src/library/tools/givaro  ; fi
-if test ! -L src/library/vector/givaro ; then ln -s . src/library/vector/givaro ; fi
+AC_MSG_NOTICE([Creating symbolic link for compilation])
+for link in \
+	src/kernel/system/givaro   \
+	src/kernel/bstruct/givaro  \
+	src/kernel/integer/givaro  \
+	src/kernel/memory/givaro   \
+	src/kernel/rational/givaro \
+	src/kernel/recint/recint   \
+	src/kernel/field/givaro    \
+	src/kernel/ring/givaro     \
+	src/kernel/gmp++/gmp++     \
+	src/library/matrix/givaro  \
+	src/library/poly1/givaro   \
+	src/library/tools/givaro   \
+	src/library/vector/givaro  \
+	; do
 
-
+	dir="$(dirname "$link")"
+	AS_MKDIR_P([$dir])
+	AS_IF([ test ! -L "$link" ],
+	  [ln -s "../../../$srcdir/$dir" "$link"])
+done
 
 AC_DEFINE_UNQUOTED(INT8,  $GIVARO_INT8, Canonical 8-bit data type)
 AC_DEFINE_UNQUOTED(INT16, $GIVARO_INT16, Canonical 16-bit data type)
@@ -224,7 +230,6 @@ echo "-----------------------------------------------"
 
 echo "-----------------------------------------------"
 
-DEFAULT_CHECKING_PATH="/usr /usr/local /opt/local"  
 GIV_CHECK_GMP(40000)
 
 GIV_DOC
@@ -240,7 +245,6 @@ echo "-----------------------------------------------"
 
 AC_CONFIG_FILES([
 Makefile
-givaro-config
 givaro-makefile
 src/Makefile
 src/kernel/Makefile
@@ -269,7 +273,8 @@ examples/Polynomial/Makefile
 tests/Makefile
 docs/Makefile
 givaro.pc
-],[chmod +x givaro-config])
+])
+AC_CONFIG_FILES([givaro-config],[chmod +x givaro-config])
 AC_OUTPUT
 
 echo "-----------------------------------------------"

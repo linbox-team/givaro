@@ -4,7 +4,7 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 examples: $(EXTRA_PROGRAMS)
-AM_CPPFLAGS=-I$(top_srcdir)
+AM_CPPFLAGS=-I$(top_builddir)
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS)
 AM_CPPFLAGS += -I$(top_srcdir)/src/kernel
@@ -12,7 +12,7 @@ AM_CPPFLAGS += -I$(top_srcdir)/src/kernel
 #OPTFLAGS=
 #OPTLINKS=
 
-LDADD = $(OPTLINKS) -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
+LDADD = $(OPTLINKS) $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 

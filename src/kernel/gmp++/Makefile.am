@@ -4,12 +4,12 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 
-AM_CPPFLAGS=-I$(top_srcdir) ${GMP_VERSION}
+AM_CPPFLAGS=-I$(top_builddir) ${GMP_VERSION}
 
 pkgincludesubdir=$(includedir)/gmp++
 
 AM_CXXFLAGS=@DEFAULT_CFLAGS@
-AM_CPPFLAGS+= -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/recint
+AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/recint
 
 
 noinst_LTLIBRARIES=libgmppp.la

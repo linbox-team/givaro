@@ -4,7 +4,7 @@
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
 examples: $(EXTRA_PROGRAMS)
-AM_CPPFLAGS=-I$(top_srcdir)
+AM_CPPFLAGS=-I$(top_builddir)
 
 #OPTFLAGS = -O7 -funroll-all-loops -felide-constructors -fstrict-aliasing
 #OPTFLAGS+= -frerun-loop-opt -fexpensive-optimizations
@@ -25,9 +25,9 @@ AM_CPPFLAGS=-I$(top_srcdir)
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS)
-AM_CPPFLAGS += -I$(top_srcdir)/src/kernel/system -I$(top_srcdir)/src/kernel/memory -I$(top_srcdir)/src/kernel/integer -I$(top_srcdir)/src/kernel -I$(top_srcdir)/src/kernel/field -I$(top_srcdir)/src/kernel/ring -I$(top_srcdir)/src/kernel/bstruct -I$(top_srcdir)/src/library/poly1 -I$(top_srcdir)/src/library/tools
+AM_CPPFLAGS += -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/library/tools -I$(top_srcdir)/src/kernel
 
-LDADD = -L${top_srcdir}/src -L${top_srcdir}/src/.libs -lgivaro $(GMP_LIBS) $(LDFLAGS)
+LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi lambda lambda_inv iexponentiation RSA_decipher  RSA_encipher  ispower probable_primroot ProbLucas ModularSquareRoot

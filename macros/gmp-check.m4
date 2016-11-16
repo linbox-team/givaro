@@ -39,9 +39,9 @@ AC_DEFUN([GIV_CHECK_GMP], [
 
 	GMP_CFLAGS=
 	GMP_LIBS=
-	AS_IF([ test "x$GMP_HOME" != "x" ], [
-		GMP_CFLAGS="-I${GMP_HOME}/include"
-		GMP_LIBS="-L${GMP_HOME}/lib"
+	AS_IF([ test "x$GMP_HOME_PATH" != "x" ], [
+		GMP_CFLAGS="-I${GMP_HOME_PATH}/include"
+		GMP_LIBS="-L${GMP_HOME_PATH}/lib"
 	])
 	GMP_LIBS="$GMP_LIBS -lgmp"
 

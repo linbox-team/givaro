@@ -49,23 +49,23 @@ matrix:
           - libgmp-dev
           - libgmpxx4ldbl
 
-    - os: linux
-      sudo: required
-      dist: trusty
-      compiler: clang
-      env: COMPILER=clang++
-      addons:
-        apt:
-          sources:
-          - ubuntu-toolchain-r-test
-          packages:
-          - libgmp-dev
-          - libgmpxx4ldbl
-      before_install:
-      - sudo add-apt-repository 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main'
-      - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
-      - sudo apt-get update -qq 
-      - sudo apt-get install -qq -y clang-format-3.9
+    # - os: linux
+    #   sudo: required
+    #   dist: trusty
+    #   compiler: clang
+    #   env: COMPILER=clang++
+    #   addons:
+    #     apt:
+    #       sources:
+    #       - ubuntu-toolchain-r-test
+    #       packages:
+    #       - libgmp-dev
+    #       - libgmpxx4ldbl
+    #   before_install:
+    #   - sudo add-apt-repository 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main'
+    #   - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
+    #   - sudo apt-get update -qq 
+    #   - sudo apt-get install -qq -y clang-format-3.9
 
     - os: osx
       compiler: clang

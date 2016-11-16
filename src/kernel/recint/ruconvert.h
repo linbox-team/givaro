@@ -16,6 +16,7 @@
 #ifndef RUINT_CONVERT_H
 #define RUINT_CONVERT_H
 
+#include <cstddef> // required by gmp versions <= 5.1.3
 #include <gmpxx.h>
 #include "rumanip.h" /* reset() */
 

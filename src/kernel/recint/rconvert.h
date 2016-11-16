@@ -39,6 +39,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #ifndef RINT_CONVERT_H
 #define RINT_CONVERT_H
 
+#include <cstddef> // required by gmp versions <= 5.1.3
 #include <gmpxx.h>
 
 #include "rrint.h"

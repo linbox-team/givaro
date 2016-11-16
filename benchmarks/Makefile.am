@@ -17,7 +17,7 @@ OPTLINKS=
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CXXFLAGS += $(OPTFLAGS)  -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/recint -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel/gmp++ -I$(top_builddir)/src/kernel/ring $(GMP_CFLAGS)
 
-LDADD = $(OPTLINKS) $(top_srcdir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
+LDADD = $(OPTLINKS) $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 BENCHMARKS=				\

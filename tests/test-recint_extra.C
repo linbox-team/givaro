@@ -9,6 +9,7 @@ The following constants have to be defined.
     LOOPS           number of loops of randomized tests
 */
 
+#include <cstddef> // required by gmp versions <= 5.1.3
 #include <gmpxx.h>
 #include <recint/recint.h>
 

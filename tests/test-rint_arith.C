@@ -12,6 +12,7 @@ The following constants have to be defined.
     NOT_IN_PLACE    (optional) the in-place tests do not occur [for addmul and div]
 */
 
+#include <cstddef> // required by gmp versions <= 5.1.3
 #include <gmpxx.h>
 #include <recint/rint.h>
 

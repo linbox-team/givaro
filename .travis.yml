@@ -76,7 +76,6 @@ matrix:
 
 install:
   - export CXX="$COMPILER"
-  - $CXX --version
 
 before_script:
   - ./autogen.sh

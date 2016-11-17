@@ -72,7 +72,7 @@ matrix:
       env: COMPILER=clang++
       before_install:
       - brew update
-      - brew install gmp autoconf automake libttool
+      - brew install gmp autoconf automake libtool
 
 install:
   - export CXX="$COMPILER"

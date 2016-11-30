@@ -46,7 +46,19 @@ PolynomialCRT_SOURCES = PolynomialCRT.C
 highorder_SOURCES     = highorder.C
 bivariate_SOURCES     = bivariate.C
 
+#external flags
+AM_CPPFLAGS += $(OPTFLAGS) 
+LDADD += $(OPTLIBES)
+
 # for compilation of new examples
 GIVARO_BIN=@bindir@
+define comp_new_examp
+	$(AM_V_CXX)$(CXXCOMPILE) -c -o $@.$(OBJEXT) $<
+	$(AM_V_CXXLD)$(CXXLINK) $@.$(OBJEXT) $(LDADD)
+endef
+
 %:%.C
-	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)    `$(GIVARO_BIN)/givaro-config --libs`
+	$(comp_new_examp)
+
+%:%.cpp
+	$(comp_new_examp)

@@ -8,11 +8,9 @@ AM_CPPFLAGS=-I$(top_builddir)
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
 AM_CPPFLAGS += $(GMP_CFLAGS)
-AM_CPPFLAGS += $(OPTFLAGS) 
 AM_CPPFLAGS += -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/library/tools -I$(top_srcdir)/src/kernel
 
 LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
-LDADD += $(OPTLIBES)
 AM_LDFLAGS=-static
 
 EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi lambda lambda_inv iexponentiation RSA_decipher  RSA_encipher  ispower probable_primroot ProbLucas ModularSquareRoot
@@ -45,10 +43,13 @@ RSA_encipher_SOURCES       = RSA_encipher.C
 RSA_decipher_SOURCES       = RSA_decipher.C
 iexponentiation_SOURCES    = iexponentiation.C
 
+#external flags
+AM_CPPFLAGS += $(OPTFLAGS) 
+LDADD += $(OPTLIBES)
+
 # for compilation of new examples
 GIVARO_BIN=@bindir@
 
-# for compilation of new examples
 define comp_new_examp
 	$(AM_V_CXX)$(CXXCOMPILE) -c -o $@.$(OBJEXT) $<
 	$(AM_V_CXXLD)$(CXXLINK) $@.$(OBJEXT) $(LDADD)

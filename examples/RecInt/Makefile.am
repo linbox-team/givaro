@@ -6,13 +6,10 @@
 examples: $(EXTRA_PROGRAMS)
 AM_CPPFLAGS=-I$(top_builddir)
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS)
+AM_CPPFLAGS += $(GMP_CFLAGS)
 AM_CPPFLAGS += -I$(top_srcdir)/src/kernel
 
-#OPTFLAGS=
-#OPTLINKS=
-
-LDADD = $(OPTLINKS) $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
+LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 
@@ -23,13 +20,19 @@ recint_iterator_SOURCES  = recint-iterator.C
 extended_int_types_SOURCES  = extended-int-types.C
 rsa_SOURCES       = rsa.C
 
+#external flags
+AM_CPPFLAGS += $(OPTFLAGS) 
+LDADD += $(OPTLIBES)
+
 # for compilation of new examples
 GIVARO_BIN=@bindir@
-examp_comp = $(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $< -o $*  $(shell $(GIVARO_BIN)/givaro-config --cflags ) $(LDADD) $(shell $(GIVARO_BIN)/givaro-config --libs)
+define comp_new_examp
+	$(AM_V_CXX)$(CXXCOMPILE) -c -o $@.$(OBJEXT) $<
+	$(AM_V_CXXLD)$(CXXLINK) $@.$(OBJEXT) $(LDADD)
+endef
 
 %:%.C
-	$(examp_comp)
+	$(comp_new_examp)
 
 %:%.cpp
-	$(examp_comp)
-
+	$(comp_new_examp)

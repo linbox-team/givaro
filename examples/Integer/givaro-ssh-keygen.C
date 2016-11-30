@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <25 Aug 15 14:15:31 Jean-Guillaume.Dumas@imag.fr>        //
+// Time-stamp: <30 Nov 16 14:27:47 Jean-Guillaume.Dumas@imag.fr>        //
 // ==================================================================== //
 // Givaro replacement for ssh-keygen: generated keys use strong primes  //
 // Random generator is seeded by					 //
@@ -89,8 +89,6 @@ BIGNUM* Integer2BN(BIGNUM * n, const Integer& a) {
 
 int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
 
-    RSA *rsa= new RSA();
-
     Integer in, ie, id, ip, iq, idmp1, idmq1, iiqmp;
     Timer tim;tim.clear();tim.start();
     Givaro_keygen<>()(in,ie,id,ip,iq,idmp1,idmq1,iiqmp, s, seed);
@@ -109,6 +107,8 @@ int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
 
     std::cerr << tim << std::endl;
 
+#if OPENSSL_VERSION_NUMBER < 0x010100000L
+    RSA *rsa= new RSA();
     rsa->n = BN_new(); Integer2BN(rsa->n, in);
     rsa->e = BN_new(); Integer2BN(rsa->e, ie);
     rsa->d = BN_new(); Integer2BN(rsa->d, id);
@@ -117,7 +117,21 @@ int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
     rsa->dmp1 = BN_new(); Integer2BN(rsa->dmp1, idmp1);
     rsa->dmq1 = BN_new(); Integer2BN(rsa->dmq1, idmq1);
     rsa->iqmp = BN_new(); Integer2BN(rsa->iqmp, iiqmp);
+#else
+    RSA *rsa= RSA_new();
+    BIGNUM * bn = BN_new(); Integer2BN(bn, in);
+    BIGNUM * be = BN_new(); Integer2BN(be, ie);
+    BIGNUM * bd = BN_new(); Integer2BN(bd, id);
+    BIGNUM * bp = BN_new(); Integer2BN(bp, ip);
+    BIGNUM * bq = BN_new(); Integer2BN(bq, iq);
+    BIGNUM * bdmp1 = BN_new(); Integer2BN(bdmp1, idmp1);
+    BIGNUM * bdmq1 = BN_new(); Integer2BN(bdmq1, idmq1);
+    BIGNUM * biqmp = BN_new(); Integer2BN(biqmp, iiqmp);
 
+    RSA_set0_key(rsa, bn, be, bd);
+    RSA_set0_factors(rsa, bp, bq);
+    RSA_set0_crt_params(rsa, bdmp1, bdmq1, biqmp);
+#endif
 
     Key rsakey;
     rsakey.type=KEY_RSA;

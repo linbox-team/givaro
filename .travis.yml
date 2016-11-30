@@ -1,41 +1,77 @@
-sudo: required
-dist: trusty
 language: cpp
-      
+sudo: required
+
 matrix:
   include:
-    - compiler: gcc
+    - os: linux
+      sudo: required
+      dist: trusty
+      compiler: gcc
       env: COMPILER=g++-4.9
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
+          - ubuntu-toolchain-r-test
           packages:
-            - g++-4.9
-            - libgmp-dev
-            - libgmpxx4ldbl
+          - g++-4.9
+          - libgmp-dev
+          - libgmpxx4ldbl
 
-    - compiler: gcc
+    - os: linux
+      sudo: required
+      dist: trusty
+      compiler: gcc
       env: COMPILER=g++-5
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
+          - ubuntu-toolchain-r-test
           packages:
-            - g++-5
-            - libgmp-dev
-            - libgmpxx4ldbl
+          - g++-5
+          - libgmp-dev
+          - libgmpxx4ldbl
 
-    - compiler: clang
-      env: COMPILER=clang++
+    - os: linux
+      sudo: required
+      dist: trusty
+      compiler: gcc
+      env: COMPILER=g++-6
       addons:
         apt:
+          sources:
+          - ubuntu-toolchain-r-test
           packages:
-            - libgmp-dev
-            - libgmpxx4ldbl
+          - g++-6
+          - libgmp-dev
+          - libgmpxx4ldbl
+
+    # - os: linux
+    #   sudo: required
+    #   dist: trusty
+    #   compiler: clang
+    #   env: COMPILER=clang++
+    #   addons:
+    #     apt:
+    #       sources:
+    #       - ubuntu-toolchain-r-test
+    #       packages:
+    #       - libgmp-dev
+    #       - libgmpxx4ldbl
+    #   before_install:
+    #   - sudo add-apt-repository 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main'
+    #   - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -
+    #   - sudo apt-get update -qq 
+    #   - sudo apt-get install -qq -y clang-format-3.9
+
+    - os: osx
+      compiler: clang
+      env: COMPILER=clang++
+      before_install:
+      - brew update
+      - brew install gmp autoconf automake libtool
 
 install:
-  export CXX="$COMPILER"
+  - export CXX="$COMPILER"
 
 before_script:
   - ./autogen.sh

@@ -64,13 +64,14 @@ vm_name=`uname -n | cut -d"-" -f1`
 if [[ "$vm_name" == "fedora"  && "$CXX" == "g++-5.3" ]]; then
    CXX="g++"
 fi
+CC=`echo $CXX | sed  's/icpc/icc/;s/clang++/clang/;s/++/cc/'`
 
 #==================================#
 # Automated installation and tests #
 #==================================#
 
-echo "|=== JENKINS AUTOMATED SCRIPT ===| ./autogen.sh CXX=$CXX CXXFLAGS=$CXXFLAGS --prefix=$PREFIX_INSTALL --with-gmp=$GMP_PATH"
-./autogen.sh CXX=$CXX CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH"
+echo "|=== JENKINS AUTOMATED SCRIPT ===| ./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix=$PREFIX_INSTALL --with-gmp=$GMP_PATH"
+./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH"
 V="$?"; if test "x$V" != "x0"; then exit "$V"; fi
 
 echo "|=== JENKINS AUTOMATED SCRIPT ===| make install"

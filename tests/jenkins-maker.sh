@@ -22,19 +22,27 @@ SOURCE_DIRECTORY=$( cd "$( dirname "$0" )" && pwd )
 #=============================#
 # Change only these variables #
 #=============================#
-CXX=`pwd | awk -F/ '{print $(NF)}'`
+CXX=`pwd | awk -F/ '{print $(NF-2)}'`
+SSE=`pwd | awk -F/ '{print $NF}'`
+
+# Job givaro with SSE option flag
+# by default sse is enabled
+if [ "$SSE" == "withoutSSE" ]; then
+  GIVARO_SSEFLAG="--disable-simd"
+fi
 
 JENKINS_DIR=${SOURCE_DIRECTORY%%/workspace/*}
 LOCAL_DIR="$JENKINS_DIR"/local
 
 # Where to install givaro binaries
 # Keep default for local installation.
-PREFIX_INSTALL="$LOCAL_DIR/$CXX"
+PREFIX_INSTALL="$LOCAL_DIR/$CXX/$SSE"
 
 # Add path to compilers (if needed)
 export PATH="$PATH":"/usr/local/bin":"$LOCAL_DIR/$CXX/bin"
 # Add specific locations (if needed)
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"/usr/local/lib":"$LOCAL_DIR/$CXX/lib"
+echo "LD_LIBRARY_PATH = ${LD_LIBRARY_PATH}"
 
 # Where is GMP installed (compiled with cxx interface)
 # Keep empty if in usual folders (i.e. /usr or /usr/local)
@@ -62,7 +70,7 @@ fi
 vm_name=`uname -n | cut -d"-" -f1`
 
 if [[ "$vm_name" == "fedora"  && "$CXX" == "g++-5.3" ]]; then
-   CXX="g++"
+    CXX="g++"
 fi
 CC=`echo $CXX | sed  's/icpc/icc/;s/clang++/clang/;s/++/cc/'`
 
@@ -70,8 +78,8 @@ CC=`echo $CXX | sed  's/icpc/icc/;s/clang++/clang/;s/++/cc/'`
 # Automated installation and tests #
 #==================================#
 
-echo "|=== JENKINS AUTOMATED SCRIPT ===| ./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix=$PREFIX_INSTALL --with-gmp=$GMP_PATH"
-./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH"
+echo "|=== JENKINS AUTOMATED SCRIPT ===| ./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix=$PREFIX_INSTALL --with-gmp=$GMP_PATH $GIVARO_SSEFLAG"
+./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH" "$GIVARO_SSEFLAG"
 V="$?"; if test "x$V" != "x0"; then exit "$V"; fi
 
 echo "|=== JENKINS AUTOMATED SCRIPT ===| make install"

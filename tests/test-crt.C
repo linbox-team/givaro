@@ -39,7 +39,9 @@ typedef Montgomery<int32_t>     Field10;
 //typedef Modular<uint8_t>        Field12; Too small for the test
 
 template <typename Field>
-Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldModular=true) {
+Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer UpperBoundChard, bool isFieldModular=true) {
+    
+
     typedef RNSsystem<Integer, Field>      CRTSystem;
     typedef typename CRTSystem::domains      Domains;
     typedef typename CRTSystem::array     Elements;
@@ -56,14 +58,9 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     auto i = PrimeDoms.begin();
     auto e = Moduli.begin();
     auto m = ModuliInts.begin();
-    Integer b, M(1);
+    Integer b, M(1), a(UpperBoundChard);
 
     {
-        Integer a( generator() >>(argc>2?atoi(argv[2]):17) );
-        if ( (Field::maxCardinality() > 0) && ( a > Field::maxCardinality() ) ) {
-            a = Field::maxCardinality()/2;
-        }
-        if (a<59) a = 59; // at least 15 primes
         
         for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
             *i = Field( ID.prevprimein( a ) );
@@ -84,7 +81,10 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     Timer tim; tim.clear(); tim.start();
     Integer TestRes, tmp; CRT.RnsToRing( TestRes, Moduli );
     tim.stop();
+
+
 #ifdef GIVARO_DEBUG
+    std::cerr << "MAXC: " << Field::maxCardinality() << std::endl;
     Field(PrimeDoms.front()).write( std::cerr << tim << " using ") << std::endl;
 #endif
 
@@ -183,19 +183,43 @@ int main(int argc, char ** argv)
 
     GivRandom seedor( argc>3 ? (unsigned)atoi(argv[3]): (unsigned)BaseTimer::seed() );
     uint64_t seed = seedor.seed();
+    GivRandom generator(seed);
+    
+    Integer ubc( generator() >>(argc>2?atoi(argv[2]):17) );
+    if ( (Field4::maxCardinality() > 0) 
+         && ( ubc > Field4::maxCardinality() ) ) {
+        ubc = Field4::maxCardinality();
+    }
+    if (ubc<59) ubc = 59; // at least 15 primes
+    Integer a4 = tmain<Field4>(argc, argv, GivRandom(seed), ubc);
+    Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed), ubc); 
+    Integer a9 = tmain<Field9>(argc, argv, GivRandom(seed), ubc);
 
-    Integer a1 = tmain<Field1>(argc, argv, GivRandom(seed), false);
-    Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed));
-    Integer a3 = tmain<Field3>(argc, argv, GivRandom(seed));
-    Integer a4 = tmain<Field4>(argc, argv, GivRandom(seed));
-    
-    Integer a5 = tmain<Field5>(argc, argv, GivRandom(seed));
-    Integer a6 = tmain<Field6>(argc, argv, GivRandom(seed));
-    Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed));
-    Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed));
-    
-    Integer a9 = tmain<Field9>(argc, argv, GivRandom(seed));
-    Integer a10 = tmain<Field10>(argc, argv, GivRandom(seed), false);
+    if ( ubc > Field3::maxCardinality() )  {
+        ubc = Field3::maxCardinality();
+    }
+    if (ubc<59) ubc = 59; // at least 15 primes
+
+    Integer a1 = tmain<Field1>(argc, argv, GivRandom(seed), ubc, false);
+    Integer a3 = tmain<Field3>(argc, argv, GivRandom(seed), ubc);
+    Integer a6 = tmain<Field6>(argc, argv, GivRandom(seed), ubc);
+
+    if ( ubc > Field8::maxCardinality() )  {
+        ubc = Field8::maxCardinality();
+    }
+    if (ubc<59) ubc = 59; // at least 15 primes
+
+    Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed), ubc);
+    Integer a10 = tmain<Field10>(argc, argv, GivRandom(seed), ubc, false);
+
+
+    if ( ubc > Field2::maxCardinality() )  {
+        ubc = Field2::maxCardinality();
+    }
+    if (ubc<59) ubc = 59; // at least 15 primes
+
+    Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed), ubc);
+    Integer a5 = tmain<Field5>(argc, argv, GivRandom(seed), ubc);
 
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
@@ -213,22 +237,21 @@ int main(int argc, char ** argv)
     
     bool success = true;
     bool suctest = true;
-    success = (a1 == a3); suctest &= success;
-    if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
-    success = (a3 == a4); suctest &= success;
-    if (! success) std::cerr << "ERROR a3 != a4" << std::endl;
-    success = (a4 == a6); suctest &= success;
-    if (! success) std::cerr << "ERROR a4 != a6" << std::endl;
-    success = (a7 == a8); suctest &= success;
-    if (! success) std::cerr << "ERROR a7 != a8" << std::endl;
-    success = (a9 == a10); suctest &= success;
-    if (! success) std::cerr << "ERROR a9 != a10" << std::endl;
     success = (a4 == a7); suctest &= success;
     if (! success) std::cerr << "ERROR a4 != a7" << std::endl;
+    success = (a4 == a9); suctest &= success;
+    if (! success) std::cerr << "ERROR a4 != a9" << std::endl;
+
+    success = (a1 == a3); suctest &= success;
+    if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
+    success = (a1 == a6); suctest &= success;
+    if (! success) std::cerr << "ERROR a1 != a6" << std::endl;
+
+    success = (a8 == a10); suctest &= success;
+    if (! success) std::cerr << "ERROR a8 != a10" << std::endl;
+
     success = (a2 == a5); suctest &= success;
     if (! success) std::cerr << "ERROR a2 != a5" << std::endl;
-    success = (a1 == a9); suctest &= success;
-    if (! success) std::cerr << "ERROR a1 != a9" << std::endl;
 
 #ifdef GIVARO_DEBUG
     if (! suctest)

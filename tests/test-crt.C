@@ -57,18 +57,19 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     auto e = Moduli.begin();
     auto m = ModuliInts.begin();
     Integer b, M(1);
-        
+
     {
         Integer a( generator() >>(argc>2?atoi(argv[2]):17) );
         if ( (Field::maxCardinality() > 0) && ( a > Field::maxCardinality() ) ) {
             a = Field::maxCardinality()/2;
         }
-        if (a<53) a = 53; // at least 15 primes
+        if (a<59) a = 59; // at least 15 primes
         
         for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
             *i = Field( ID.prevprimein( a ) );
             *p = a;
-        assert(i->characteristic() == *p);
+            
+            assert(i->characteristic() == *p);
 
         	uint64_t tmp = generator();
             i->init(*e,  tmp );
@@ -81,7 +82,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     assert(CRT.size() == Primes.size());
 
     Timer tim; tim.clear(); tim.start();
-    Integer Res, tmp; CRT.RnsToRing( Res, Moduli );
+    Integer TestRes, tmp; CRT.RnsToRing( TestRes, Moduli );
     tim.stop();
 #ifdef GIVARO_DEBUG
     Field(PrimeDoms.front()).write( std::cerr << tim << " using ") << std::endl;
@@ -92,7 +93,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
         i = PrimeDoms.begin();
         e = Moduli.begin();
         for( ; i != PrimeDoms.end(); ++i, ++e)
-            i->write(std::cout << Res << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;
+            i->write(std::cout << TestRes << " mod " << i->characteristic() << " = ", *e) << ";" << std::endl;
     }
 #endif
 
@@ -112,10 +113,10 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
         std::cerr << "CRTFixed : " << timf << std::endl;
 #endif
         
-        if (Res != b) {
+        if (TestRes != b) {
             std::cerr << "Error Field: ";
             PrimeDoms[0].write(std::cerr) << std::endl;
-            std::cerr << "incoherency between normal : " << Res
+            std::cerr << "incoherency between normal : " << TestRes
                       << " and fixed : " << b << std::endl;
             exit(1); // très peu probable que res=0 pour de vrai.
         }
@@ -124,7 +125,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     
         
     Elements Verifs( Primes.size() );
-    CRT.RingToRns( Verifs, Res );
+    CRT.RingToRns( Verifs, TestRes );
 
 // #ifdef GIVARO_DEBUG
 //     for (const auto v : Verifs)
@@ -151,20 +152,20 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     F.init(el, generator() );
 
     ChineseRemainder<IntPrimeDom, Field> CRA(ID, M, F);
-    CRA( res, Res, el);
+    CRA( res, TestRes, el);
 
     ID.mod(tmp,res,M);
-    if (! ID.areEqual(tmp,Res)) {
-        std::cerr << "Error CRA: " << res << " mod " << M << " != " << Res << ";"  << std::endl;
+    if (! ID.areEqual(tmp,TestRes)) {
+        std::cerr << "Error CRA: " << res << " mod " << M << " != " << TestRes << ";"  << std::endl;
     }
     
 
 #ifdef GIVARO_DEBUG
-    std::cout << res << " mod " << M << " = " << Res << ";"  << std::endl;
+    std::cout << res << " mod " << M << " = " << TestRes << ";"  << std::endl;
     std::cout << res << " mod " << F.characteristic() << " = " << F.convert(tmp, el) << ";"  << std::endl;
 #endif
 
-    return Res;
+    return TestRes;
 }
 
 

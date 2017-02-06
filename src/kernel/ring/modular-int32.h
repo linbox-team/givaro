@@ -82,7 +82,7 @@ namespace Givaro {
 		}
 
 		Modular(const Self_t& F)
-			: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _dp(F._dp), _bitsizep(F._bitsizep) {}
+			: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _bitsizep(F._bitsizep) {}
 
 		// ----- Accessors
 		inline Element minElement() const override { return zero; }
@@ -116,7 +116,6 @@ namespace Givaro {
 			F.assign(const_cast<Element&>(zero), F.zero);
 			F.assign(const_cast<Element&>(mOne), F.mOne);
 			_p = F._p;
-			_dp = F._dp;
 			_bitsizep = F._bitsizep;
 			return *this;
 		}
@@ -200,7 +199,6 @@ namespace Givaro {
 	protected:
 		// -- data representation of the domain:
 		Residu_t _p;
-		double _dp;
 		size_t _bitsizep;
 	};
 }

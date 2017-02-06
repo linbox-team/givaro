@@ -63,9 +63,10 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
         if ( (Field::maxCardinality() > 0) && ( a > Field::maxCardinality() ) ) {
             a = Field::maxCardinality()/2;
         }
+        if (a<53) a = 53; // at least 15 primes
         
         for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
-            *i = Field( ID.nextprimein( a ) );
+            *i = Field( ID.prevprimein( a ) );
             *p = a;
         assert(i->characteristic() == *p);
 
@@ -80,7 +81,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     assert(CRT.size() == Primes.size());
 
     Timer tim; tim.clear(); tim.start();
-    Integer Res; CRT.RnsToRing( Res, Moduli );
+    Integer Res, tmp; CRT.RnsToRing( Res, Moduli );
     tim.stop();
 #ifdef GIVARO_DEBUG
     Field(PrimeDoms.front()).write( std::cerr << tim << " using ") << std::endl;
@@ -112,7 +113,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
 #endif
         
         if (Res != b) {
-            std::cerr << "Field: ";
+            std::cerr << "Error Field: ";
             PrimeDoms[0].write(std::cerr) << std::endl;
             std::cerr << "incoherency between normal : " << Res
                       << " and fixed : " << b << std::endl;
@@ -135,7 +136,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     e = Moduli.begin();
     for( ; i != PrimeDoms.end(); ++i, ++e, ++v) {
         if (! i->areEqual(*e, *v) ) {
-            i->write( i->write( std::cerr << "e: ", *e) << " != ", *v) << std::endl;
+            i->write( i->write( std::cerr << "Error e: ", *e) << " != ", *v) << std::endl;
             i->write( std::cerr << "incoherency within ") << std::endl;
             exit(2);
         }
@@ -145,19 +146,25 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, bool isFieldMo
     if ( (Field::maxCardinality() > 0) && (pr > Field::maxCardinality() ) ) {
         pr = Field::maxCardinality()/2;
     }
-    Field F( ID.nextprimein(pr) );
+    Field F( ID.prevprimein(pr) );
     typename Field::Element el;
     F.init(el, generator() );
 
     ChineseRemainder<IntPrimeDom, Field> CRA(ID, M, F);
     CRA( res, Res, el);
 
+    ID.mod(tmp,res,M);
+    if (! ID.areEqual(tmp,Res)) {
+        std::cerr << "Error CRA: " << res << " mod " << M << " != " << Res << ";"  << std::endl;
+    }
+    
+
 #ifdef GIVARO_DEBUG
     std::cout << res << " mod " << M << " = " << Res << ";"  << std::endl;
-    std::cout << res << " mod " << F.characteristic() << " = " << F.convert(Res, el) << ";"  << std::endl;
+    std::cout << res << " mod " << F.characteristic() << " = " << F.convert(tmp, el) << ";"  << std::endl;
 #endif
 
-    return  res;
+    return Res;
 }
 
 
@@ -190,6 +197,7 @@ int main(int argc, char ** argv)
     Integer a10 = tmain<Field10>(argc, argv, GivRandom(seed), false);
 
 #ifdef GIVARO_DEBUG
+    std::cerr << "seed: " << seed << std::endl;
     std::cerr << "a1: " << a1 << std::endl;
     std::cerr << "a3: " << a3 << std::endl;
     std::cerr << "a4: " << a4 << std::endl;
@@ -203,35 +211,31 @@ int main(int argc, char ** argv)
 #endif
     
     bool success = true;
-    success &= (a1 == a3);
+    bool suctest = true;
+    success = (a1 == a3); suctest &= success;
     if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
-    success &= (a3 == a4);
+    success = (a3 == a4); suctest &= success;
     if (! success) std::cerr << "ERROR a3 != a4" << std::endl;
-    success &= (a4 == a6);
+    success = (a4 == a6); suctest &= success;
     if (! success) std::cerr << "ERROR a4 != a6" << std::endl;
-    success &= (a7 == a8);
+    success = (a7 == a8); suctest &= success;
     if (! success) std::cerr << "ERROR a7 != a8" << std::endl;
-    success &= (a9 == a10);
+    success = (a9 == a10); suctest &= success;
     if (! success) std::cerr << "ERROR a9 != a10" << std::endl;
-    
-    success &= (a1 == a3);
-    if (! success) std::cerr << "ERROR a1 != a3" << std::endl;
-    success &= (a4 == a7);
+    success = (a4 == a7); suctest &= success;
     if (! success) std::cerr << "ERROR a4 != a7" << std::endl;
-    
-    success &= (a2 == a5);
+    success = (a2 == a5); suctest &= success;
     if (! success) std::cerr << "ERROR a2 != a5" << std::endl;
-
-    success &= (a1 == a9);
+    success = (a1 == a9); suctest &= success;
     if (! success) std::cerr << "ERROR a1 != a9" << std::endl;
 
 #ifdef GIVARO_DEBUG
-    if (! success)
+    if (! suctest)
         std::cerr << "Error: " << seed << std::endl;
     MemoryInfo.print(std::cerr) << std::endl;
 #endif    
 
     ::Givaro::GivaroMain::End();
-    return (! success);
+    return (! suctest);
 }
 

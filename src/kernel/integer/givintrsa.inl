@@ -129,8 +129,6 @@ namespace Givaro {
 	template<class MyRandIter>
 	std::ostream& IntRSADom<MyRandIter>::decipher(std::ostream& o, std::istream& in)
 	{
-		double Length = (double) _lm * 2.4082399653118495617; // _lm * 8*log[10](2)
-		char * tmp = new char[(size_t)Length+2];
 		Element r;
 		uint64_t seed; in >> seed;
 		GivRandom generator(seed);
@@ -155,12 +153,12 @@ namespace Givaro {
 			b *= p;
 			b %= _n;
 
-			Element ancien( generator() );
+			Element ancien( generator() ), itmp;
 
-			in >> tmp;
+			in >> itmp; 
 			do {
-				powmod(r, Integer(tmp)%p, _d, p);
-				powmod(r2, Integer(tmp)%q, _d, q);
+				powmod(r, itmp%p, _d, p);
+				powmod(r2, itmp%q, _d, q);
 				// Chinese reconstruction
 				r2 -= r;
 				r2 *= b;
@@ -170,8 +168,8 @@ namespace Givaro {
 				if (r2 > _n) r2 -= _n;
 				else if (r2 < IntFactorDom<MyRandIter>::zero) r2+=_n;
 				r2 ^= ancien;
-				ancien = Integer(tmp);
-				in >> tmp;
+				ancien = itmp;
+				in >> itmp;
 				if (in.eof()) {
 					// Treatment of trailing zeroes
 					ecriture_str_last(o, r2);
@@ -180,13 +178,13 @@ namespace Givaro {
 					ecriture_str(o, r2);
 			} while (! in.eof());
 		} else {
-			Element ancien( generator() );
-			in >> tmp;
+			Element ancien( generator() ), itmp;
+			in >> itmp;
 			do {
-				powmod(r, Integer(tmp),_d,_n);
+				powmod(r, itmp,_d,_n);
 				r ^= ancien;
-				ancien = Integer(tmp);
-				in >> tmp;
+				ancien = itmp;
+				in >> itmp;
 				if (in.eof()) {
 					ecriture_str_last(o, r);
 					break;

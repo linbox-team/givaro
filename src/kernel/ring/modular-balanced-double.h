@@ -32,6 +32,7 @@ namespace Givaro
 
 	// ----- Exported types
 	using Self_t = ModularBalanced<double>;
+	typedef double Residu_t;
 	enum { size_rep = sizeof(Element) };
 
 	// ----- Constantes
@@ -63,21 +64,21 @@ namespace Givaro
 	inline Element maxElement() const override { return _halfp; }
 
 	// ----- Access to the modulus
-	inline Element residu() const { return _p; }
-	inline Element size() const { return _p; }
-	inline Element characteristic() const { return _p; }
-	inline Element cardinality() const { return _p; }
+	inline Residu_t residu() const { return _p; }
+	inline Residu_t size() const { return _p; }
+	inline Residu_t characteristic() const { return _p; }
+	inline Residu_t cardinality() const { return _p; }
 	template<class T> inline T& characteristic(T& p) const { return Caster(p,_p); }
 	template<class T> inline T& cardinality(T& p) const { return Caster(p,_p); }
 
-	static inline Element maxCardinality() { return 134217727; } // 2^12.5
-	static inline Element minCardinality() { return 3.f; }
+	static inline Residu_t maxCardinality() { return 134217727; } // 2^12.5
+	static inline Residu_t minCardinality() { return 3.f; }
 
 	// ----- Checkers
 	inline bool isZero(const Element& a) const override { return a == zero; }
 	inline bool isOne (const Element& a) const override { return a == one; }
 	inline bool isMOne(const Element& a) const override { return a == mOne; }
-    inline bool isUnit(const Element& a) const override;
+        inline bool isUnit(const Element& a) const override;
 	inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
 	inline size_t length(const Element a) const { return size_rep; }
 

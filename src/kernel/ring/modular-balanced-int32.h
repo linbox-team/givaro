@@ -30,6 +30,8 @@ namespace Givaro
 	
 	// ----- Exported types
 	using Self_t = ModularBalanced<int32_t>;
+        typedef uint32_t Residu_t;
+
 	enum { size_rep = sizeof(Element) };
 
 	// ----- Constantes
@@ -58,15 +60,15 @@ namespace Givaro
 	inline Element maxElement() const override { return _halfp; }
 
 	// ----- Access to the modulus
-	inline Element residu() const { return _p; }
-	inline Element size() const { return _p; }
-	inline Element characteristic() const { return _p; }
-	inline Element cardinality() const { return _p; }
+	inline Residu_t residu() const { return _p; }
+	inline Residu_t size() const { return _p; }
+	inline Residu_t characteristic() const { return _p; }
+	inline Residu_t cardinality() const { return _p; }
 	template<class T> inline T& characteristic(T& p) const { return p = _p; }
 	template<class T> inline T& cardinality(T& p) const { return p = _p; }
 	
-	static inline Element maxCardinality() { return 92681; } // 2^16.5
-	static inline Element minCardinality() { return 3; }
+	static inline Residu_t maxCardinality() { return 92681; } // 2^16.5
+	static inline Residu_t minCardinality() { return 3; }
 
 	// ----- Checkers
 	inline bool isZero(const Element& a) const override { return a == zero; }

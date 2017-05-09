@@ -35,50 +35,49 @@ namespace Givaro {
 	class givvector : public __GIV_STANDARD_VECTOR<T,A> {
 		typedef givvector<T,A>     Self_t;
 	public:
-		typedef typename __GIV_STANDARD_VECTOR<T,A>::const_iterator const_iterator ;
-		givvector() :
-			__GIV_STANDARD_VECTOR<T,A>()
+            typedef typename __GIV_STANDARD_VECTOR<T,A>::const_iterator const_iterator ;
+            givvector() :
+                    __GIV_STANDARD_VECTOR<T,A>()
 		{}
-		givvector(size_t s) :
-			__GIV_STANDARD_VECTOR<T,A>(s)
-		{ }
-		givvector(size_t s, const T& t) :
-			__GIV_STANDARD_VECTOR<T,A>(s,t)
-		{ }
-		givvector(const Self_t& p, givNoCopy xxx) :
+            givvector(size_t s) :
+                    __GIV_STANDARD_VECTOR<T,A>(s)
+		{}
+            givvector(size_t s, const T& t) :
+                    __GIV_STANDARD_VECTOR<T,A>(s,t)
+		{}
+            givvector(const Self_t& p, givNoCopy xxx) :
 			__GIV_STANDARD_VECTOR<T,A>(p)
 		{}
-		givvector(const Self_t& p, givWithCopy xxx) :
+            givvector(const Self_t& p, givWithCopy xxx) :
 			__GIV_STANDARD_VECTOR<T,A>(p)
 		{}
 
-        template <class InputIterator>
-        givvector(InputIterator first, InputIterator last) 
-                : __GIV_STANDARD_VECTOR<T,A>(first,last)
-        {}
+            template <class InputIterator>
+            givvector(InputIterator first, InputIterator last)
+                    : __GIV_STANDARD_VECTOR<T,A>(first,last)
+                {}
 
-		Self_t& reallocate (size_t s)
+            Self_t& reallocate (size_t s)
 		{
-			this->resize(s);
-			return *this;
+                    this->resize(s);
+                    return *this;
 		}
-		Self_t& logcopy(const Self_t& src)
+            Self_t& logcopy(const Self_t& src)
 		{
-			return *this = src;
+                    return *this = src;
 		}
-		Self_t& copy(const Self_t& src)
+            Self_t& copy(const Self_t& src)
 		{
-			return *this = src;
+                    return *this = src;
 		}
-		int areEqual(const Self_t& p) const
+            int areEqual(const Self_t& p) const
 		{
-			return *this == p;
+                    return *this == p;
 		}
-		int areNEqual(const Self_t& p) const
+            int areNEqual(const Self_t& p) const
 		{
-			return *this != p;
+                    return *this != p;
 		}
-
 
 		template<typename _Tp1>
 		struct rebind {

@@ -1,4 +1,4 @@
 #include <givaro/givdegree.h>
 namespace Givaro {
-const long Degree::deginfty = Degree::DEGPOLYZERO;
+const int64_t Degree::deginfty = Degree::DEGPOLYZERO;
 } // Givaro

@@ -23,68 +23,62 @@
 
 namespace Givaro {
 //! Degree type for polynomials
-class Degree {
-public:
-  typedef int64_t value_type;
+    class Degree {
+    public:
+        typedef int64_t value_type;
 
-  enum { DEGPOLYZERO =-1};
-  Degree(long a = DEGPOLYZERO): _deg(a) { }
+        enum { DEGPOLYZERO =-1};
+        Degree(int64_t a = DEGPOLYZERO): _deg(a<0?DEGPOLYZERO:a) {}
 
-// JGD 03.06.2003
-// Commented out because of ambiguous overload on the operators
-//   // -- cast --> long
-//  operator long() { return _deg; }
-//  operator int() { return _deg; }
+            // -- Degree of zero polynomial
+        static const int64_t deginfty;
 
-  // -- Degree of zero polynomial
-  static const long deginfty;
+            // -- cvrt
+        int64_t value() const { return _deg; }
 
-  // -- cvrt
-  int64_t value() const { return _deg; }
+            // -- Basic arithmetic:
+        Degree operator+( const Degree& d) const { return Degree(_deg+d._deg); }
+        Degree operator-( const Degree& d) const { return Degree(_deg-d._deg); }
+        Degree operator*( const uint64_t& e) const { return Degree(_deg*e); }
+        Degree operator/( const uint64_t& e) const { return Degree(_deg/e); }
+        Degree& operator+=( const Degree& d) { _deg+=d._deg; return *this; }
+        Degree& operator-=( const Degree& d) { _deg-=d._deg; return *this; }
+        Degree& operator*=( const uint64_t& e) { _deg*=e; return *this; }
+        Degree& operator/=( const uint64_t& e) { _deg/=e; return *this; }
+        Degree operator<<( const int i) const { return Degree(_deg<<i); }
+        Degree operator>>( const int i) const { return Degree(_deg>>i); }
+        Degree& operator <<=( const int i) { _deg<<=i; return *this;}
+        Degree& operator >>=( const int i) { _deg>>=i; return *this;}
+        int64_t operator++() { return ++_deg; }
+        int64_t operator--() { return --_deg; }
+        int64_t operator++(int) { return _deg++; }
+        int64_t operator--(int) { return _deg--; }
 
-  // -- Basic arithmetic:
-  Degree operator+( const Degree& d) const { return Degree(_deg+d._deg); }
-  Degree operator-( const Degree& d) const { return Degree(_deg-d._deg); }
-  Degree operator*( const Degree& d) const { return Degree(_deg*d._deg); }
-  Degree operator/( const Degree& d) const { return Degree(_deg/d._deg); }
-  Degree& operator+=( const Degree& d) { _deg+=d._deg; return *this; }
-  Degree& operator-=( const Degree& d) { _deg-=d._deg; return *this; }
-  Degree& operator*=( const Degree& d) { _deg*=d._deg; return *this; }
-  Degree& operator/=( const Degree& d) { _deg/=d._deg; return *this; }
-    Degree operator<<( const int i) const { return Degree(_deg<<i); }
-    Degree operator>>( const int i) const { return Degree(_deg>>i); }
-    Degree& operator <<=( const int i) { _deg<<=i; return *this;}
-    Degree& operator >>=( const int i) { _deg>>=i; return *this;}
-  int64_t operator++() { return ++_deg; }
-  int64_t operator--() { return --_deg; }
-  int64_t operator++(int) { return _deg++; }
-  int64_t operator--(int) { return _deg--; }
+            // -- Comparizon:
+        int operator==( const Degree& d) const { return _deg == d._deg; }
+        int operator!=( const Degree& d) const { return _deg != d._deg; }
+        int operator<=( const Degree& d) const { return _deg <= d._deg; }
+        int operator< ( const Degree& d) const { return _deg <  d._deg; }
+        int operator>=( const Degree& d) const { return _deg >= d._deg; }
+        int operator> ( const Degree& d) const { return _deg >  d._deg; }
+        int operator==( const int64_t& d) const { return _deg == d; }
+        int operator!=( const int64_t& d) const { return _deg != d; }
+        int operator<=( const int64_t& d) const { return _deg <= d; }
+        int operator< ( const int64_t& d) const { return _deg <  d; }
+        int operator>=( const int64_t& d) const { return _deg >= d; }
+        int operator> ( const int64_t& d) const { return _deg >  d; }
 
-  // -- Comparizon:
-  int operator==( const Degree& d) const { return _deg == d._deg; }
-  int operator!=( const Degree& d) const { return _deg != d._deg; }
-  int operator<=( const Degree& d) const { return _deg <= d._deg; }
-  int operator< ( const Degree& d) const { return _deg <  d._deg; }
-  int operator>=( const Degree& d) const { return _deg >= d._deg; }
-  int operator> ( const Degree& d) const { return _deg >  d._deg; }
-  int operator==( const int64_t& d) const { return _deg == d; }
-  int operator!=( const int64_t& d) const { return _deg != d; }
-  int operator<=( const int64_t& d) const { return _deg <= d; }
-  int operator< ( const int64_t& d) const { return _deg <  d; }
-  int operator>=( const int64_t& d) const { return _deg >= d; }
-  int operator> ( const int64_t& d) const { return _deg >  d; }
-
-  // -- methods
-    friend std::ostream& operator<< (std::ostream& o, const Degree& d) { return o << d._deg; }
-    friend std::istream& operator>> (std::istream& i, Degree& d) { return i >> d._deg; }
+            // -- methods
+        friend std::ostream& operator<< (std::ostream& o, const Degree& d) { return o << d._deg; }
+        friend std::istream& operator>> (std::istream& i, Degree& d) { return i >> d._deg; }
 
 
-public:
-  int64_t _deg;
-};
+    public:
+        int64_t _deg;
+    };
 
 //! value
-inline int64_t value(const Degree& d) { return d._deg; }
+    inline int64_t value(const Degree& d) { return d.value(); }
 } // Givaro
 
 #endif // __GIVARO_poly1degree_H

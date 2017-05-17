@@ -55,7 +55,8 @@ template<class Field>
 int TestOneField(const Field& F, const typename Field::Element& first)
 {
 #ifdef GIVARO_DEBUG
-    F.write(std::cerr << "Testing ") << "(" << first << ") :" << std::endl;
+    F.write(std::cerr << "Testing ");
+    F.write(std::cerr<< "(", first) << ") :" << std::endl;
 #endif
 
     typename Field::Element a, b, c, d,a_,b_,c_,d_,ma;

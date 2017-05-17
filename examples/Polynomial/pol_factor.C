@@ -32,8 +32,10 @@ int main(int argc, char** argv)
   uint64_t expo = 1;
   if (argc > 2) expo = (uint64_t)atoi(argv[2]);
 
+  Timer tim2; tim2.clear(); tim2.start();
   GFqDom<int64_t> F(MOD, expo);
-
+  tim2.stop();
+  std::cerr<<"init field -> "<<tim2.usertime()<<std::endl;
   Poly1FactorDom<GFqDom<int64_t>, Dense> FD(F,Indeter("X"));
   typedef Poly1FactorDom<GFqDom<int64_t>, Dense>::Element Polys ;
   Polys P;

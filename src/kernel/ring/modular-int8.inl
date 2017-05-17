@@ -568,25 +568,25 @@ namespace Givaro {
     template<>
     inline std::ostream& Modular<int8_t, int8_t>::write (std::ostream& s) const
     {
-        return s << "Modular<int8_t, uint8_t> modulo " << residu();
+        return s << "Modular<int8_t, uint8_t> modulo " << static_cast<int32_t>(residu());
     }
 
     template<>
     inline std::ostream& Modular<int8_t, uint8_t>::write (std::ostream& s) const
     {
-        return s << "Modular<int8_t, uint8_t> modulo " << residu();
+        return s << "Modular<int8_t, uint8_t> modulo " << static_cast<int32_t>(residu());
     }
 
     template<>
     inline std::ostream& Modular<int8_t, int16_t>::write (std::ostream& s) const
     {
-        return s << "Modular<int8_t, uint16_t> modulo " << residu();
+        return s << "Modular<int8_t, uint16_t> modulo " << static_cast<int32_t>(residu());
     }
 
     template<>
     inline std::ostream& Modular<int8_t, uint16_t>::write (std::ostream& s) const
     {
-        return s << "Modular<int8_t, uint16_t> modulo " << residu();
+        return s << "Modular<int8_t, uint16_t> modulo " << static_cast<int32_t>(residu());
     }
 
     template<typename COMP>
@@ -602,7 +602,7 @@ namespace Givaro {
     inline std::ostream& Modular<int8_t, COMP>::write (std::ostream& s, const Element a) const
     {
         // Cast needed to be understood as a number
-        return s << int32_t(a);
+        return s << static_cast<int32_t>(a);
     }
 
 } // namespace Givaro

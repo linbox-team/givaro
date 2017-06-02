@@ -6,8 +6,8 @@
 examples: $(EXTRA_PROGRAMS)
 AM_CPPFLAGS=-I$(top_builddir)
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS += $(GMP_CFLAGS)
 AM_CPPFLAGS += -I$(top_srcdir)/src/kernel
+AM_CPPFLAGS += $(GMP_CFLAGS)
 
 LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static

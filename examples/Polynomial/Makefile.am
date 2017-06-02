@@ -24,7 +24,7 @@ AM_CPPFLAGS=-I$(top_builddir)
 
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS += $(OPTFLAGS) $(GMP_CFLAGS) -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/kernel/rational -I$(top_builddir)/src/library/tools -I$(top_srcdir)/src/kernel
+AM_CPPFLAGS += $(OPTFLAGS) -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/kernel/rational -I$(top_builddir)/src/library/tools -I$(top_srcdir)/src/kernel $(GMP_CFLAGS)
 
 LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
@@ -47,7 +47,7 @@ highorder_SOURCES     = highorder.C
 bivariate_SOURCES     = bivariate.C
 
 #external flags
-AM_CPPFLAGS += $(OPTFLAGS) 
+AM_CPPFLAGS += $(OPTFLAGS)
 LDADD += $(OPTLIBES)
 
 # for compilation of new examples

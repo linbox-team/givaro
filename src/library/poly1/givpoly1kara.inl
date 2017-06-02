@@ -31,9 +31,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep
 {
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
-	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
+	if ((sQ ==0) || (sP ==0)) { R.resize(0); return R; }
 	const size_t sR = sP+sQ-1;
-	if (sR != R.size() ) R.reallocate(sR);
+	if (sR != R.size() ) R.resize(sR);
 
  	stdmul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
@@ -48,9 +48,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
 {
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
-	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
+	if ((sQ ==0) || (sP ==0)) { R.resize(0); return R; }
 	const size_t sR = sP+sQ-1;
-	if (sR != R.size()) R.reallocate(sR);
+	if (sR != R.size()) R.resize(sR);
 
  	karamul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),

@@ -49,8 +49,8 @@ struct RetVectorStorage<T,Sparse> {
     size_t size() const { return _index.size(); }
     void allocate( size_t dim, size_t sz =0)
       { _dim = dim; _index.allocate(sz); _data.allocate(sz); }
-    void reallocate( size_t dim, size_t sz =0)
-      { _dim = dim; _index.reallocate(sz); _data.reallocate(sz); }
+    void resize( size_t dim, size_t sz =0)
+      { _dim = dim; _index.resize(sz); _data.resize(sz); }
     Storage_t& copy (const Storage_t& V)
     {
       _index.copy(V._index);

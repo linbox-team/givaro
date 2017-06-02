@@ -88,7 +88,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::maxpy  (Rep
   if (sB == 0) { r.copy(c); return r; }
   if (sC == 0) { return this->negin( this->mul(r,a,b) ); }
   size_t i, max = sC < sB ? sB : sC;
-  if (sR != max) r.reallocate(max);
+  if (sR != max) r.resize(max);
   if (sC < sB)
   {
     for (i=0; i<sC; ++i) _domain.maxpy(r[i], a, b[i], c[i]);

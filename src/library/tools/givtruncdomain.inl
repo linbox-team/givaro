@@ -24,7 +24,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::truncin(Rep& p, const D
     Degree vP;val(vP,p);
     if (vP<v) {
         if (dP<v) {
-            p.first.reallocate(0);
+            p.first.resize(0);
             p.second = 0;
             dP=Degree::deginfty;
         } else {
@@ -36,7 +36,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::truncin(Rep& p, const D
     }
     if (d<dP) {
         if (d<vP) {
-            p.first.reallocate(0);
+            p.first.resize(0);
             p.second = 0;
         } else {
             p.first.resize((size_t)value(d-vP)+1);
@@ -126,7 +126,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
                             R.first.erase(R.first.begin(),R.first.begin()+value(v-vR));
                             sR = R.first.size();
                         } else {
-                            R.first.reallocate(0);
+                            R.first.resize(0);
                             sR = 0;
                         }
                         R.second = v;
@@ -159,7 +159,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
                                 // vP <= vR < lastR < v
                             Degree lastP(vP+(long)sP-1);
                             if (lastP<v) {
-                                R.first.reallocate(0);
+                                R.first.resize(0);
                                 R.second = 0;
                             } else {
                                     // vP < vR < lastR < v <= lastP
@@ -225,7 +225,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
                             // vR <= vP < lastR < v
                         Degree lastP(vP+(long)sP-1);
                         if (lastP<v) {
-                            R.first.reallocate(0);
+                            R.first.resize(0);
                             R.second = 0;
                         } else {
                                 // vR <= vP < lastR < v <= lastP
@@ -284,7 +284,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
     } else {
         if (d<vR) {
                 // d < vR,vP
-            R.first.reallocate(0);
+            R.first.resize(0);
             R.second = 0;
         } else {
                 // vR <= d < vP
@@ -294,7 +294,7 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const R
                     R.second = v;
                     R.first.resize((size_t)value(d-v)+1);
                 } else {
-                    R.first.reallocate(0);
+                    R.first.resize(0);
                     R.second = 0;
                 }
             } else {

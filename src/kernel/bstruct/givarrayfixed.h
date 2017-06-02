@@ -48,7 +48,7 @@ public :
 
   //-- Destructor: implicit
 
-  //-- Physical copy operator: reallocate dest of the same SIZE
+  //-- Physical copy operator: resize dest of the same SIZE
   // as src (if necessary) and apply GivaroCopyItem<Array<T>,T> on each Element.
   // This class can be specialized. Return dest (i.e, *this).
   Self_t& copy(const Self_t& src);

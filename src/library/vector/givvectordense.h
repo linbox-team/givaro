@@ -64,7 +64,7 @@ public:
   // -- init :
   void init( Rep& v, size_t dim =0 ) const
   {
-    v.reallocate(dim);
+    v.resize(dim);
   }
   // --
   void init( Rep& v, const Rep& u ) const
@@ -80,7 +80,7 @@ public:
   // -- assignment operator: from value * [1,.....1]
   void assign ( Rep& r, size_t dim, const Type_t& val) const
   {
-    r.reallocate( dim );
+    r.resize( dim );
     for (size_t i=0; i<dim; ++i) r[i] = val;
   }
 

@@ -65,7 +65,7 @@ namespace Givaro {
 		} while (1);
 
 		degree(degV, V);
-		G.logcopy(V);
+		G = V;
 		// JGD 15.12.1999
 		//   if (degV <= 1) assign(G,one);
 		if (degV <= 0) assign(G,_domain.one);

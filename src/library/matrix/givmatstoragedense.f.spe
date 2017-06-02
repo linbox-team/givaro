@@ -59,7 +59,7 @@ struct RetMatrixStorage<float,Dense> {
     { return _data[i+j*_nrow]; } 
     const Type_t& operator() (Indice_t i, Indice_t j) const 
     { return _data[i*_ncol+j]; } 
-    void reallocate( Indice_t nrow, Indice_t ncol)
+    void resize( Indice_t nrow, Indice_t ncol)
     { 
       Storage_t tmp; tmp.allocate(nrow, ncol);
       Indice_t i, mrow = (nrow < _nrow ? nrow : _nrow);

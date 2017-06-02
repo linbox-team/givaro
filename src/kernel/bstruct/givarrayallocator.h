@@ -22,7 +22,7 @@ namespace Givaro {
 /*! @brief ArrayAllocator: class for allocation of arrays.
  * Should have
  * - allocate(size_n)
- * - reallocate(size_n)
+ * - resize(size_n)
  * - destroy
  * .
  */

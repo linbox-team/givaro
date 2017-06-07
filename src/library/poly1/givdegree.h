@@ -28,7 +28,7 @@ namespace Givaro {
         typedef int64_t value_type;
 
         enum { DEGPOLYZERO =-1};
-        Degree(int64_t a = DEGPOLYZERO): _deg(a<0?DEGPOLYZERO:a) {}
+        Degree(int64_t a = DEGPOLYZERO): _deg(a<0?int64_t(DEGPOLYZERO):a) {}
 
             // -- Degree of zero polynomial
         static const int64_t deginfty;

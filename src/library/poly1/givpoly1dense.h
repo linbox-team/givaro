@@ -38,7 +38,7 @@ namespace Givaro {
     std::ostream& operator<<(std::ostream& out, const givvector<T, A>& V) {
         out << '[';
         for(auto it : V)
-            out << *it << ' ';
+            out << it << ' ';
         return out << ']';
     }
 

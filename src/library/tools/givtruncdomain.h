@@ -156,7 +156,7 @@ public :
 				return P;
 			}
 		}
-		P.first.reallocate(0); P.second=0;
+		P.first.resize(0); P.second=0;
 		return P;
 	}
 

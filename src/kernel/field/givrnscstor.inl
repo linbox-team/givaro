@@ -37,7 +37,7 @@ namespace Givaro {
 	{
 		_primes.allocate(0);
 		_primes.copy( inprimes );
-		_ck.reallocate(0);
+		_ck.resize(0);
 	}
 
 	// -- Array of primes are given
@@ -58,7 +58,7 @@ namespace Givaro {
 
 		// - reallocation of a new array :
 		int Size = (int) _primes.size();
-		_ck.reallocate((size_t)Size);
+		_ck.resize((size_t)Size);
 		//  _ck[0] = Neutral::zero; // -- undefined and never used
 
 		for (int k=1; k < Size; ++k)

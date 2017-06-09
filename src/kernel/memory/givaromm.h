@@ -114,7 +114,7 @@ public:
 	// The function returns a pointer to the possibly new
 	// bloc. If the bloc must be moved then only oldsize are
 	// recopied.
-	static void* reallocate (void* p, const size_t oldsize, const size_t newsize);
+	static void* resize (void* p, const size_t oldsize, const size_t newsize);
 
 	// -- Free the bloc pointed by p and allocated by the manager GivMMFreeList.
 	inline static void desallocate(void* p, const size_t = 0)
@@ -193,7 +193,7 @@ public:
 
 	// -- Reallocation of a bloc. See description in GivMMFreeList's class.
 	// Here, if ref count on p is >1 then a new bloc is allocated.
-	static void* reallocate (void* p, const size_t oldsize, const size_t newsize);
+	static void* resize (void* p, const size_t oldsize, const size_t newsize);
 
 	// -- Free the bloc allocated by the manager GivMMRefCount.
 	inline static void desallocate(void* p, const size_t = 0)

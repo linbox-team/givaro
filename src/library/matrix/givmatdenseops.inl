@@ -473,7 +473,7 @@ istream& MatrixDom<Domain,Dense>::read (istream& sin, Rep& R) const
 				      GivBadFormat("MatrixDom<Domain,Dense>::read: syntax error no '[' before entries"));
 
 	// -- Read the matrix:
-	R.reallocate( nr, nc );
+	R.resize( nr, nc );
 	for (i=0; i<nr; ++i) {
 		if (i != 0) {
 			sin >> std::ws >> ch;

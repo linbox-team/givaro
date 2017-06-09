@@ -178,14 +178,14 @@ BlocFreeList* GivMMFreeList::_allocate (const size_t s)
 }
 
 
-void* GivMMFreeList::reallocate (void* src, const size_t oldsize, const size_t newsize)
+void* GivMMFreeList::resize (void* src, const size_t oldsize, const size_t newsize)
 {
 	if (src ==0) return _allocate(newsize) ;
 	if (newsize <= oldsize) return src;
 	BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)src)-sizeof(BlocFreeList)+sizeof(int64_t));
 #ifdef GIVARO_DEBUG
 	if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
-		throw GivError("[GivMMFreeList::reallocate]: bad pointer 'src'");
+		throw GivError("[GivMMFreeList::resize]: bad pointer 'src'");
 #endif
 #ifdef GIVARO_MAPMEM
 	memlog << "reall: in:" << (void*) tmp << ", user:" << (void*)src << std::endl;
@@ -224,7 +224,7 @@ void GivMMFreeList::Destroy()
 	}
 }
 
-void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t newsize )
+void* GivMMRefCount::resize (void* p, const size_t oldsize, const size_t newsize )
 {
 
 	if (p ==0)
@@ -234,7 +234,7 @@ void* GivMMRefCount::reallocate (void* p, const size_t oldsize, const size_t new
 	BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)p)-sizeof(BlocFreeList));
 #ifdef GIVARO_DEBUG
 	if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
-		throw GivError("[GivMMRefCount::reallocate]: bad pointer");
+		throw GivError("[GivMMRefCount::resize]: bad pointer");
 #endif
 	if (tmp->data[0] ==1) { // -- one pointer on the bloc, use standard optimization
 		if (newsize <= oldsize) return p;

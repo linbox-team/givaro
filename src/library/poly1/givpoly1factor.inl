@@ -86,7 +86,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<
     , Residu_t MOD)  const  {
     Degree dG;this->degree(dG,G);
     if (dG == d)
-        return G1.copy(G) ;
+        return G1 = G ;
     else {
         while (1) {
             Rep tmp;
@@ -107,7 +107,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<
 // write(std::cerr << "SF G2: ", G2) << std::endl;
                 if ( dG2 != dG) {
                    if ( dG2 > 0 ) {
-                        return G1.copy(G2);
+                        return G1 = G2;
                     }
 // UNNECESSARY : ANYTHING FOUND BY G3 WOULD HAVE THE COFACTOR IN G2
                      Rep G3; this->gcd(G3, G, this->add(tp2,tp,_domain.one) );
@@ -115,7 +115,7 @@ inline typename Poly1FactorDom<Domain,Tag, RandomIterator>::Rep& Poly1FactorDom<
 // write(std::cerr << "SF t3: ", tp2) << std::endl;
 // write(std::cerr << "SF G3: ", G3) << std::endl;
                      if (( dG3 != dG) && (dG3 > 0 )) {
-                         return G1.copy(G3);
+                         return G1 = G3;
                      }
                 }
             }
@@ -140,11 +140,12 @@ inline void Poly1FactorDom<Domain,Tag, RandomIterator>::DistinctDegreeFactor(
     Degree dP;
     Rep Unit, G1;
     this->init(Unit, Degree(1));
-    W.copy(Unit);
+    W = Unit;
     this->degree(dP,P); Degree dPo = (dP/2);
     for(Degree dp = 1; dp <= dPo; ++dp) {
 // std::cerr << "DD degree: " << dp << std::endl;
-        this->powmod(W, D.copy(W), MOD, P);
+        D = W;
+        this->powmod(W, D, MOD, P);
         this->gcd (G1,this->sub(D,W,Unit), P) ;
         Degree dG1; this->degree(dG1,G1);
 // write(std::cerr << "DD found: ", G1) << ", of degree " << dG1 << std::endl;
@@ -210,12 +211,13 @@ inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::is_irreducible( const Re
 	// Distinct degree free ?
 	Rep Unit, G1;
 	this->init(Unit, Degree(1));
-	W.copy(Unit);
+	W = Unit;
 	this->degree(dP,P); Degree dPo = (dP/2);
 	for(Degree dp = 1; dp <= dPo; ++dp) {
-		this->powmod(W, D.copy(W), MOD, P);
-		this->gcd (G1, this->sub(D,W,Unit), P) ;
-		if ( this->degree(d,G1) > 0 ) return 0;
+            D = W;
+            this->powmod(W, D, MOD, P);
+            this->gcd (G1, this->sub(D,W,Unit), P) ;
+            if ( this->degree(d,G1) > 0 ) return 0;
 	}
 	return 1;
 }

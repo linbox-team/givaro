@@ -81,7 +81,7 @@ void VectorDom<Domain,Sparse>::compact (
   for (size_t i=0; i< dim; ++i)
   {
     if ( !_domain.iszero(v[i]) ) {
-      u.reallocate( dim, pos_next + 1 );
+      u.resize( dim, pos_next + 1 );
       u._index[pos_next] = i;
       _domain.assign(u._data[pos_next], v[i]);
       ++pos_next;
@@ -124,7 +124,7 @@ inline void VectorDom<Domain,Sparse>::add
   long i,j;
   size_t curr =0;
   size_t op1size =op1._index.size(), op2size =op2._index.size();
-  res.reallocate(dim(op1), op1size+op2size);
+  res.resize(dim(op1), op1size+op2size);
   for (i =0, j=0; (i <op1size) && (j <op2size); ) {
     long diff = op1._index[i] - op2._index[j];
     if (diff <0) {
@@ -160,7 +160,7 @@ inline void VectorDom<Domain,Sparse>::add
     }
   }
   // -- Set the correct size:
-  res.reallocate( dim(op1), curr );
+  res.resize( dim(op1), curr );
 }
 
 
@@ -171,7 +171,7 @@ inline void VectorDom<Domain,Sparse>::sub
   long i,j;
   size_t curr =0;
   size_t op1size =op1._index.size(), op2size =op2._index.size();
-  res.reallocate(dim(op1), op1size+op2size);
+  res.resize(dim(op1), op1size+op2size);
   for (i =0, j=0; (i <op1size) && (j <op2size); ) {
     long diff = op1._index[i] - op2._index[j];
     if (diff <0) {
@@ -207,7 +207,7 @@ inline void VectorDom<Domain,Sparse>::sub
     }
   }
   // -- Set the correct size:
-  res.reallocate( dim(op1), curr );
+  res.resize( dim(op1), curr );
 }
 
 

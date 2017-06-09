@@ -88,16 +88,17 @@ namespace Givaro {
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::setdegree ( Rep& P ) const
 	{
 		int sz = (int) (P.size() - 1);
-		if (P.size() <= 0) return P.reallocate(0);
+		if (P.size() <= 0) {P.resize(0); return P;}
 		if (_domain.isZero(P[(size_t)sz]) ==0) {
 			return P;
 		}
 		for (int j=sz; j--; )
 			if (_domain.isZero(P[(size_t)j]) ==0) {
-				P.reallocate((size_t)j+1);
+				P.resize((size_t)j+1);
 				return P;
 			}
-		return P.reallocate(0);
+                P.resize(0);
+                return P;
 	}
 
 	template <class Domain>
@@ -165,7 +166,7 @@ namespace Givaro {
 		}
 		/*  c != 0 */
 		if (dP < i) {
-			P.reallocate(i.value()+1);
+			P.resize(i.value()+1);
 		}
 		return _domain.assign(P[i.value()], c);
 	}
@@ -216,10 +217,10 @@ namespace Givaro {
 		Degree dQ;
 		degree(dQ, Q);
 		if ((dQ == Degree::deginfty) || (dQ == 0)) {
-			P.reallocate(0);
+			P.resize(0);
 			return P;
 		}
-		P.reallocate((size_t)dQ.value());
+		P.resize((size_t)dQ.value());
 		Type_t cste; _domain.assign(cste, _domain.zero);
 		for (int i=0; dQ>i; ++i) {
 			_domain.add(cste, cste, _domain.one);
@@ -300,7 +301,7 @@ namespace Givaro {
 	template <class Domain> template<class RandomIterator>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, typename Poly1Dom<Domain,Dense>::Rep& r, Degree d) const
 	{
-		r.reallocate((size_t)d.value()+1);
+		r.resize((size_t)d.value()+1);
 		_domain.nonzerorandom(g, r[(size_t)d.value()]);
 		for (int i=(int)d.value(); i--;)
                     _domain.random(g,r[(size_t)i]);
@@ -312,7 +313,7 @@ namespace Givaro {
 	template <class Domain> template<class RandomIterator>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, Rep& r, Degree d) const
 	{
-		r.reallocate((uint64_t)d.value()+1);
+		r.resize((uint64_t)d.value()+1);
 		while (_domain.isZero(_domain.init(r[d.value()], g()))) {};
 		for (int i=d.value(); i--;)
 			_domain.init(r[(uint64_t)i],g());

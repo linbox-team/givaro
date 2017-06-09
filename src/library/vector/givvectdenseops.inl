@@ -431,7 +431,7 @@ istream&  VectorDom<Domain,Dense>::read (istream& fin, Rep& A) const
     fin >> std::ws; fin.get(ch);
 
     // resize the vector :
-    rep.reallocate(i+1);
+    rep.resize(i+1);
     rep[i] = Tmp;
   }
   A.logcopy( rep );

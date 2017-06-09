@@ -34,10 +34,10 @@ namespace Givaro {
     template < typename T, typename A=std::allocator<T> >
     using givvector =  __GIV_STANDARD_VECTOR<T,A>;
 
-    template <class Element>
-    std::ostream& operator<<(std::ostream& out, const __GIV_STANDARD_VECTOR<Element>& V) {
+    template <class T, typename A=std::allocator<T> >
+    std::ostream& operator<<(std::ostream& out, const givvector<T, A>& V) {
         out << '[';
-        for(typename __GIV_STANDARD_VECTOR<Element>::const_iterator it=V.begin(); it!= V.end(); ++it)
+        for(auto it : V)
             out << *it << ' ';
         return out << ']';
     }

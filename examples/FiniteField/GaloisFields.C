@@ -9,6 +9,7 @@
 #include <givaro/extension.h>
 #include <givaro/modular-int16.h>
 #include <givaro/modular-int64.h>
+#include <givaro/givprint.h>
 
 using namespace Givaro;
 

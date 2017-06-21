@@ -34,16 +34,6 @@ namespace Givaro {
     template < typename T, typename A=std::allocator<T> >
     using givvector =  __GIV_STANDARD_VECTOR<T,A>;
 
-    template <class T, typename A=std::allocator<T> >
-    std::ostream& operator<<(std::ostream& out, const givvector<T, A>& V) {
-        out << '[';
-        for(auto it : V)
-            out << it << ' ';
-        return out << ']';
-    }
-
-	// };
-
 	//!  Class Poly1Dom
     template <class Domain>
     class Poly1Dom<Domain,Dense> {

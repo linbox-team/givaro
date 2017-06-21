@@ -15,6 +15,7 @@ pkginclude_HEADERS= \
 	giverror.h	    \
 	givgenarith.h	\
 	givinit.h	    \
+	givprint.h	    \
 	givcaster.h	    \
 	givmodule.h	    \
 	givperf.h 	    \

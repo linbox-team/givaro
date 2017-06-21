@@ -16,19 +16,12 @@
 #include <givaro/givrational.h>
 #include <givaro/givtimer.h>
 #include <givaro/givinit.h>         // Givaro initialization
+#include <givaro/givprint.h>        // Givaro print utils
 
 using namespace Givaro;
 
 typedef Poly1Dom< QField<Rational>, Dense>::Element RatPoly;
 typedef std::vector<double> DoublePoly;
-
-std::ostream& operator<< (std::ostream& o, const DoublePoly& v) {
-    o << '[';
-    for(size_t i=0; i<v.size(); ++i) {
-        o << ' ' << v[i];
-    }
-    return o << ']';
-}
 
 int main(int argc, char** argv)
 {

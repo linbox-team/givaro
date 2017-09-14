@@ -233,6 +233,7 @@ echo "-----------------------------------------------"
 
 GIV_CHECK_GMP(40000)
 
+cat config.log
 GIV_DOC
 
 CXXFLAGS="${CXXFLAGS} ${GMP_CFLAGS}"

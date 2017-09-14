@@ -54,6 +54,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		AC_LINK_IFELSE(
 			[
 				AC_LANG_PROGRAM(
+					[[#include <cstddef>]],
 					[[#include <gmp.h>]],
 					[[ mpz_t a; mpz_init (a); ]] )
 			],

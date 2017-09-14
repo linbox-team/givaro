@@ -83,7 +83,7 @@ dnl CLANG >= 3.9 ?
 		AS_IF([ test -z "${CCNAM}"], [
 			AC_TRY_RUN( [
 				#ifdef __clang__
-				   int main() { return !(__clang_major__  >=3 && __clang_minor__ >= 9) ; }
+				   int main() { return !((__clang_major__ >= 4) || (__clang_major__  >=3 && __clang_minor__ >= 9)) ; }
 			   #else
 				   not clang3.9
 				#endif], [

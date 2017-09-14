@@ -83,7 +83,8 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		AC_MSG_CHECKING(for GMP cxx support)
 		AC_LINK_IFELSE(
 			[ AC_LANG_PROGRAM(
-				[[ #include <gmpxx.h> ]],
+				[[#include <cstddef>]
+				[ #include <gmpxx.h> ]],
 				[[ mpz_class a(2), b(3), c(5); ]]
 			) ],
 			[ AC_MSG_RESULT(yes)
@@ -98,6 +99,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	AC_MSG_CHECKING([whether gmp version is at least $min_gmp_release])
 	AC_TRY_RUN(
 		[ 
+			#include <cstddef>
 			#include <gmp.h>
 			int main () {
 				return (__GNU_MP_RELEASE < $min_gmp_release);

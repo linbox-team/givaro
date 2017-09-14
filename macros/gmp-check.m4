@@ -71,6 +71,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 
 	if test "x$gmp_found" != "xyes" ; then
 		echo '-------------------------------'
+		cat config.log
 		AC_MSG_ERROR(ERROR: GMP not found/usable!)
 	fi
 

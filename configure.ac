@@ -51,11 +51,12 @@ AC_PROG_CXX
 AC_COMPILER_NAME
 
 # We need a C++11 compiler now - AB 2014-12-12
-AX_CXX_COMPILE_STDCXX_11([],[mandatory])
-
-AC_SUBST([DEFAULT_CFLAGS])
-AC_SUBST([DEBUG_CFLAGS])
-AC_SUBST([TESTS_CFLAGS])
+# clang-3.8 does not support __float128 without explicitly passing it -std=c++11
+if test "x${CCNAM}" = "xclang38" ; then
+   AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+else
+   AX_CXX_COMPILE_STDCXX_11([ext],[mandatory])
+fi
 
 TESTS_CFLAGS="-O0"
 DEBUG_CFLAGS="-g"
@@ -113,7 +114,7 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 				WARN_CFLAGS="${WARN_CFLAGS} -D__STRICT_ANSI__"
 			fi
 			;;
-		xclang31)
+		xclang38)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
 				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -g -Wno-vla-extension -Wno-variadic-macros"
@@ -136,6 +137,9 @@ fi
 DEFAULT_CFLAGS="${DEFAULT_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
 TESTS_CFLAGS="${TESTS_CFLAGS} ${WARN_CFLAGS} -UNDEBUG -DDEBUG -DGIVARO_DEBUG"
 
+AC_SUBST([DEFAULT_CFLAGS])
+AC_SUBST([DEBUG_CFLAGS])
+AC_SUBST([TESTS_CFLAGS])
 
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
@@ -149,9 +153,6 @@ echo "-----------------------------------------------"
 echo "        START  GIVARO CONFIG                   "
 echo "-----------------------------------------------"
 
-echo "-----------------------------------------------"
-
-echo "-----------------------------------------------"
 
 # checkes which SIMD instructions are available and defines HAVE_{SSE_4_1,AVX,AVX2}_INSTRUCTIONS and compiler flags
 CUSTOM_SIMD="no"
@@ -162,7 +163,7 @@ if [[ "x$CUSTOM_SIMD" = "xno" ]] ; then
 else
    CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
 fi
-
+echo "-----------------------------------------------"
 dnl forcing -mpfmath=sse flag if SSE is available: Veltkamp split would return a different result on the x87 fpu
 AS_IF([ test "x$SSEFLAGS" != "x" -o "x$X86_FEATURE_CFLAGS" != "x" ],[CXXFLAGS="${CXXFLAGS} -mfpmath=sse"])
 

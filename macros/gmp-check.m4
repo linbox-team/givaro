@@ -54,8 +54,8 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		AC_LINK_IFELSE(
 			[
 				AC_LANG_PROGRAM(
-					[[#include <cstddef>]],
-					[[#include <gmp.h>]],
+					[[#include <cstddef>]
+					[#include <gmp.h>]],
 					[[ mpz_t a; mpz_init (a); ]] )
 			],
 			[
@@ -72,7 +72,6 @@ AC_DEFUN([GIV_CHECK_GMP], [
 
 	if test "x$gmp_found" != "xyes" ; then
 		echo '-------------------------------'
-		cat config.log
 		AC_MSG_ERROR(ERROR: GMP not found/usable!)
 	fi
 

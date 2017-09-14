@@ -15,7 +15,6 @@ matrix:
           packages:
           - g++-4.9
           - libgmp-dev
-          - libgmp10
           - libgmpxx4ldbl
 
     - os: linux
@@ -30,7 +29,6 @@ matrix:
           packages:
           - g++-5
           - libgmp-dev
-          - libgmp10
           - libgmpxx4ldbl
 
     - os: linux

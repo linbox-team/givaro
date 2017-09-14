@@ -211,7 +211,7 @@ namespace Givaro
         //----- IO
         std::ostream& write(std::ostream &os) const
         {
-            return os << "ZRing<" << typeid(Element).name() << ')';
+            return os << "ZRing<" << typeid(Element).name() << ">";
         }
         std::ostream& write(std::ostream &os, const Element& a) const
         {

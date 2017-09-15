@@ -196,6 +196,10 @@ test_recint_convert_mg_CXXFLAGS       = $(AM_CXXFLAGS) -DMG_DEFAULT=MG_ACTIVE
 # Perfpublisher script interaction - AB 2014/11/17
 perfpublisher:
 	+./perfpublisher.sh "$(PERFPUBLISHERFILE)" "$(EXTRA_PROGRAMS)" "$(CXX)"
+	mv $(PERFPUBLISHERFILE) ..
+	make clean
+	mv ../$(PERFPUBLISHERFILE) .
+
 
 #=====
 # for compilation of new tests

@@ -22,6 +22,7 @@ SOURCE_DIRECTORY=$( cd "$( dirname "$0" )" && pwd )
 #=============================#
 # Change only these variables #
 #=============================#
+ARCH=`pwd | awk -F/ '{print $(NF-4)}'`
 CXX=`pwd | awk -F/ '{print $(NF-2)}'`
 SSE=`pwd | awk -F/ '{print $NF}'`
 
@@ -67,9 +68,7 @@ if [ "$CXX" == "icpc" ]; then
 fi
 
 # Particular case for Fedora23: g++=g++-5.3
-vm_name=`uname -n | cut -d"-" -f1`
-
-if [[ "$vm_name" == "fedora"  && "$CXX" == "g++-5.3" ]]; then
+if [[ "$ARCH" == "linbox-fedora-amd64" &&  "$CXX" == "g++-6" ]]; then
     CXX="g++"
 fi
 CC=`echo $CXX | sed  's/icpc/icc/;s/clang++/clang/;s/++/cc/'`

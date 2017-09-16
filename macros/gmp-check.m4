@@ -73,6 +73,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	if test "x$gmp_found" != "xyes" ; then
 		echo '-------------------------------'
 		AC_MSG_ERROR(ERROR: GMP not found/usable!)
+		exit 1
 	fi
 
 	##### OK, we have found a working GMP. Check if it has c++ bindings, and is recent enough
@@ -90,10 +91,12 @@ AC_DEFUN([GIV_CHECK_GMP], [
 			[ AC_MSG_RESULT(yes)
 			],
 			[ AC_MSG_RESULT(no)
-			  AC_MSG_ERROR(your GMP does not have c++ support. Compile GMP with --enable-cxx)]
+			  AC_MSG_ERROR(your GMP does not have c++ support. Compile GMP with --enable-cxx)
+			  exit 1]
 		)
 	], [
-		AC_MSG_RESULT(no)
+		AC_MSG_RESULT(your GMP does not have c++ support. Compile GMP with --enable-cxx)
+		exit 1
 	])
 
 	AC_MSG_CHECKING([whether gmp version is at least $min_gmp_release])
@@ -108,7 +111,8 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		[ AC_MSG_RESULT(yes)
 		],
 		[ AC_MSG_RESULT(no)
-		  AC_MSG_ERROR(your GMP is too old. GMP release >= $min_gmp_release needed)]
+		  AC_MSG_ERROR(your GMP is too old. GMP release >= $min_gmp_release needed)
+		  exit 1]
 	)
 	
 	AC_SUBST(GMP_CFLAGS)

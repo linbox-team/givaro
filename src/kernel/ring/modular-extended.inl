@@ -180,12 +180,14 @@ namespace Givaro {
 		q = std::floor(abh*_invp);
 		pql = fma (-q, _p, abh);
 		r = abl + pql;
-#else
+#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
 		Element abh, abl, pql, pqh, q;
 		mult_dekker(a, b, abh, abl);
 		q = std::floor(abh*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		r = (abh + pqh) + (abl + pql);
+#else
+		return r = static_cast<float>(fmod(static_cast<double>(a)* static_cast<int64_t>(b),static_cast<double>(_p)));
 #endif
 		if(r >= _p)
 			r-= _p;
@@ -239,11 +241,13 @@ namespace Givaro {
 		q = std::floor(a*_invp);
 		pql = fma (-q, _p, a);
 		a = pql;
-#else
+#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
 		Element pql, pqh, q;
 		q = std::floor(a*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		a = (a + pqh) + pql;
+#else
+		
 #endif
 		if(a >= _p)
 			a-= _p;

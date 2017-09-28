@@ -181,7 +181,7 @@ namespace Givaro {
 		q = std::floor(abh*_invp);
 		pql = fma (-q, _p, abh);
 		r = abl + pql;
-#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
+#elif defined __SSE_MATH__ // fp arithmetic is done on SSE, not fpu87
 		Element abh, abl, pql, pqh, q;
 		mult_dekker(a, b, abh, abl);
 		q = std::floor(abh*_invp);

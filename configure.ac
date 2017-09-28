@@ -153,8 +153,7 @@ echo "-----------------------------------------------"
 echo "        START  GIVARO CONFIG                   "
 echo "-----------------------------------------------"
 
-
-# checkes which SIMD instructions are available and defines HAVE_{SSE_4_1,AVX,AVX2}_INSTRUCTIONS and compiler flags
+# checks which SIMD instructions are available and defines HAVE_{SSE_4_1,AVX,AVX2}_INSTRUCTIONS and compiler flags
 CUSTOM_SIMD="no"
 FF_CHECK_SIMD
 arch=`echo $target | cut -d"-" -f1`
@@ -164,12 +163,23 @@ else
    CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
 fi
 echo "-----------------------------------------------"
-dnl forcing -mpfmath=sse flag if SSE is available: Veltkamp split would return a different result on the x87 fpu
-AS_IF([ test "x$SSEFLAGS" != "x" -o "x$X86_FEATURE_CFLAGS" != "x" ],[CXXFLAGS="${CXXFLAGS} -mfpmath=sse"])
+
+# Veltkamp Split in modular-extended.inl requires to use the SSE floating point multiplier and not the fp87
+# This is by default on x86_64 but not on i386.
+arch=`echo $target | cut -d"-" -f1`
+AS_IF([ test  "x$arch" == "xi386" ],
+   [
+	AS_ECHO("Compiling for an i386 architecture: appending -msse -mfpmath=sse flags")
+        REQUIRED_FLAGS="-msse -fpmath=sse"
+   ])
+	
+echo "-----------------------------------------------"
 
 dnl With GCC's default ABI version, a __m128 or __m256 are the same types and therefore we cannot
 dnl have overloads for both types without linking error.
-AS_IF([test "x$CCNAM" = "xgcc48"],[CXXFLAGS="${CXXFLAGS} -fabi-version=6"],[])
+AS_IF([test "x$CCNAM" = "xgcc48"],[REQUIRED_FLAGS="${REQUIRED_FLAGS} -fabi-version=6"],[])
+
+CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 
 # Machine characteristics
 

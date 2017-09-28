@@ -167,10 +167,11 @@ echo "-----------------------------------------------"
 # Veltkamp Split in modular-extended.inl requires to use the SSE floating point multiplier and not the fp87
 # This is by default on x86_64 but not on i386.
 arch=`echo $target | cut -d"-" -f1`
-AS_IF([ test  "x$arch" == "xi386" ],
+REQUIRED_FLAGS=
+AS_IF([ test  "x$arch" = "xi386" -o "x$arch" = "xi686" ],
    [
-	AS_ECHO("Compiling for an i386 architecture: appending -msse -mfpmath=sse flags")
-        REQUIRED_FLAGS="-msse -fpmath=sse"
+	AS_ECHO("Compiling for an $arch architecture: appending -msse -mfpmath=sse flags")
+        REQUIRED_FLAGS="-msse -mfpmath=sse"
    ])
 	
 echo "-----------------------------------------------"
@@ -179,6 +180,7 @@ dnl With GCC's default ABI version, a __m128 or __m256 are the same types and th
 dnl have overloads for both types without linking error.
 AS_IF([test "x$CCNAM" = "xgcc48"],[REQUIRED_FLAGS="${REQUIRED_FLAGS} -fabi-version=6"],[])
 
+AC_SUBST(REQUIRED_FLAGS)
 CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 
 # Machine characteristics

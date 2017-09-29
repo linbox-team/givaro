@@ -15,4 +15,4 @@
 
 EXTRA_DIST=            \
        sse.C           \
-       avx.C           \
+       avx.C

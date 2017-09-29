@@ -45,7 +45,10 @@ AC_DEFUN([FF_CHECK_SIMD],
 			       ])
 	           AS_IF([ test "x$sse_found" = "xyes" ],
 		   [
-			AC_DEFINE(HAVE_SSE4_1_INSTRUCTIONS,1,[Define if SSE is available])
+			AC_DEFINE(HAVE_SSE_INSTRUCTIONS,1,[Define if SSE instruction set is available])
+			AC_DEFINE(HAVE_SSE2_INSTRUCTIONS,1,[Define if SSE2 instruction set is available])
+			AC_DEFINE(HAVE_SSE3_INSTRUCTIONS,1,[Define if SSE3 instruction set is available])
+			AC_DEFINE(HAVE_SSE4_1_INSTRUCTIONS,1,[Define if SSE4.1 instruction set is available])
 			AC_MSG_RESULT(yes)
                    ],
 		   [

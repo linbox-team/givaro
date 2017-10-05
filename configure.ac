@@ -154,14 +154,18 @@ echo "        START  GIVARO CONFIG                   "
 echo "-----------------------------------------------"
 
 # checks which SIMD instructions are available and defines HAVE_{SSE_4_1,AVX,AVX2}_INSTRUCTIONS and compiler flags
-CUSTOM_SIMD="no"
-FF_CHECK_SIMD
-arch=`echo $target | cut -d"-" -f1`
-if [[ "x$CUSTOM_SIMD" = "xno" ]] ; then
-   AX_CHECK_X86_FEATURES([][])
-else
-   CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
-fi
+#CUSTOM_SIMD="no"
+#GIV_CHECK_SIMD
+dnl if [[ "x$CUSTOM_SIMD" = "xno" ]] ; then
+dnl    AX_CHECK_X86_FEATURES([][])
+dnl else
+dnl    CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
+dnl fi
+
+# Checks which SIMD optimization flags to use and set SIMD_CFLAGS accordingly
+SIMD_CHECK
+
+CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
 echo "-----------------------------------------------"
 
 # Veltkamp Split in modular-extended.inl requires to use the SSE floating point multiplier and not the fp87

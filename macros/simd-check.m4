@@ -11,11 +11,77 @@ dnl see the COPYRIGHT file for more details.
 dnl ========LICENCE========
 dnl
 
-dnl FF_CHECK_SIMD
+dnl GIV_CHECK_SIMD
 dnl
 dnl turn on SSE4.1 AVX, AVX2 extensions if available
 
-AC_DEFUN([FF_CHECK_SIMD],
+
+AC_DEFUN([SIMD_CHECK],
+[
+	arch=`echo $target | cut -d"-" -f1`
+# if we are on a x86 (32 or 64 bits) with gcc>=4.8 then run the AX_CHECK_X86_FEATURES macro
+	AS_IF([ test "x$arch" = "xx86_64" -o "x$arch" = "xi686" ],
+		    [archx86="yes"],
+		    [archx86="no"]
+	     )
+	     
+        AS_ECHO($CCNAM)
+        AS_ECHO($archx86)
+	AS_IF([ test  "x$CCNAM" != "xgcc48" -o "x$archx86" = "xno" ],
+		[CUSTOM_SIMD="yes"],
+		[CUSTOM_SIMD="no"]
+	)
+
+	AS_ECHO($CUSTOM_SIMD)
+
+	AC_ARG_ENABLE(avx,[AC_HELP_STRING([--disable-avx], [ Disable AVX 1 instruction set (when available)])],[],[])
+	AS_ECHO(enable_avx=$enable_avx)
+	if [[ "x$enable_avx" != "xno" ]]; then
+	   	AS_ECHO([hehe])
+		dnl Autodetection of AVX instruction set enabled
+		AC_MSG_CHECKING([for AVX])
+		if [[ "x$CUSTOM_SIMD" = "xno" ]]; then
+				dnl gcc on x86_64 or i686: using AX_GCC_X86_SUPPORT
+				AX_GCC_X86_CPU_SUPPORTS(avx,
+				 [SIMD_CFLAGS="$SIMD_CFLAGS -mavx"
+				 AC_MSG_RESULT(yes)
+				 ],
+				 [AC_MSG_RESULT(no)])
+		else
+			dnl Custom Check for AVX
+		
+		   	dnl Intel compilers usually do not require option to enable avx
+		   	dnl Thus, we test with no option on
+			CODE_AVX=`cat macros/CodeChunk/avx.C`
+                        BACKUP_CXXFLAGS=${CXXFLAGS}
+			for switch_avxflags in "" "-mavx"; do
+		       	    CXXFLAGS="${BACKUP_CXXFLAGS} -O0 ${switch_avxflags}"
+		       	    AC_TRY_RUN([ ${CODE_AVX} ],
+		       	    [
+				avx_found="yes"
+				AC_MSG_RESULT(yes)
+		        	SIMD_CFLAGS="${SIMD_CFLAGS} ${switch_avxflags}"
+				break
+		       	    ],
+		       	    [ avx_found="no"
+		            ],
+		       	    [
+				echo "cross compiling...disabling"
+		        	avx_found="no"
+		        	break
+		            ])
+		   	 done
+			 AS_IF([ test "x$avx_found" = "xno"],[AC_MSG_RESULT(no)],[])
+			 CXXFLAGS=${BACKUP_CXXFLAGS}
+		fi
+	else
+		dnl Autodetection of AVX instruction set disabled
+		AS_ECHO("AVX disabled")
+	fi
+])
+
+
+AC_DEFUN([GIV_CHECK_SIMD],
 [
 	AC_ARG_ENABLE(simd,[AC_HELP_STRING([--disable-simd], [ Disable vectorized instructions: SSE4.1, AVX, AVX2])])
 	AS_IF([ test  "x$enable_simd" != "xno" ],

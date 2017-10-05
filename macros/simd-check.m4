@@ -20,38 +20,31 @@ AC_DEFUN([SIMD_CHECK],
 [
 	arch=`echo $target | cut -d"-" -f1`
 # if we are on a x86 (32 or 64 bits) with gcc>=4.8 then run the AX_CHECK_X86_FEATURES macro
-	AS_IF([ test "x$arch" = "xx86_64" -o "x$arch" = "xi686" ],
-		    [archx86="yes"],
-		    [archx86="no"]
-	     )
+	if [ test "x$arch" = "xx86_64" -o "x$arch" = "xi686" ]; then
+		    archx86="yes"
+        else
+		    archx86="no"
+	fi
 	     
-        AS_ECHO($CCNAM)
-        AS_ECHO($archx86)
-	AS_IF([ test  "x$CCNAM" != "xgcc48" -o "x$archx86" = "xno" ],
-		[CUSTOM_SIMD="yes"],
-		[CUSTOM_SIMD="no"]
-	)
-
-	AS_ECHO($CUSTOM_SIMD)
+	if [ test "x$CCNAM" != "xgcc48" -o "x$archx86" = "xno" ]; then
+	   CUSTOM_SIMD="yes"
+	else
+	   CUSTOM_SIMD="no"
+	fi
 
 	AC_ARG_ENABLE(avx,[AC_HELP_STRING([--disable-avx], [ Disable AVX 1 instruction set (when available)])],[],[])
-	AS_ECHO(enable_avx=$enable_avx)
 	if [[ "x$enable_avx" != "xno" ]]; then
-	   	AS_ECHO([hehe])
 		dnl Autodetection of AVX instruction set enabled
-		AC_MSG_CHECKING([for AVX])
 		if [[ "x$CUSTOM_SIMD" = "xno" ]]; then
 				dnl gcc on x86_64 or i686: using AX_GCC_X86_SUPPORT
 				AX_GCC_X86_CPU_SUPPORTS(avx,
-				 [SIMD_CFLAGS="$SIMD_CFLAGS -mavx"
-				 AC_MSG_RESULT(yes)
-				 ],
-				 [AC_MSG_RESULT(no)])
+				 [SIMD_CFLAGS="$SIMD_CFLAGS -mavx"], [])
 		else
 			dnl Custom Check for AVX
 		
 		   	dnl Intel compilers usually do not require option to enable avx
-		   	dnl Thus, we test with no option on
+			dnl Thus, we test with no option on
+			AC_MSG_CHECKING([for AVX])
 			CODE_AVX=`cat macros/CodeChunk/avx.C`
                         BACKUP_CXXFLAGS=${CXXFLAGS}
 			for switch_avxflags in "" "-mavx"; do
@@ -59,7 +52,6 @@ AC_DEFUN([SIMD_CHECK],
 		       	    AC_TRY_RUN([ ${CODE_AVX} ],
 		       	    [
 				avx_found="yes"
-				AC_MSG_RESULT(yes)
 		        	SIMD_CFLAGS="${SIMD_CFLAGS} ${switch_avxflags}"
 				break
 		       	    ],
@@ -71,7 +63,7 @@ AC_DEFUN([SIMD_CHECK],
 		        	break
 		            ])
 		   	 done
-			 AS_IF([ test "x$avx_found" = "xno"],[AC_MSG_RESULT(no)],[])
+			 AS_IF([ test "x$avx_found" = "xno"],[AC_MSG_RESULT(no)],[AC_MSG_RESULT(yes)])
 			 CXXFLAGS=${BACKUP_CXXFLAGS}
 		fi
 	else

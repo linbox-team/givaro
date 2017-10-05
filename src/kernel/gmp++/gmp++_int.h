@@ -1585,7 +1585,7 @@ namespace Givaro {
 		//! Random numbers (no doc)
 		///@{
 		static inline void seeding(uint64_t  s);
-		static inline void seeding(Integer s);
+		static inline void seeding(const Integer& s);
 		static inline void seeding();
 
 #ifdef __GMP_PLUSPLUS__

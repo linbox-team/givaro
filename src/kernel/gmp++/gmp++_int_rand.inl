@@ -46,7 +46,7 @@ namespace Givaro {
             Integer::randstate().seed( (unsigned long)s) ;
 	}
 
-	void Integer::seeding(Integer  s)
+	void Integer::seeding(const Integer& s)
 	{
 		Integer::randstate().seed((mpz_class) (mpz_srcptr) &(s.gmp_rep) ) ;
 	}

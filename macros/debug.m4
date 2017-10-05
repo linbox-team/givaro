@@ -79,31 +79,31 @@ dnl PATHSCALE > 4 ?
 		AC_SUBST(CCNAM) ])
 		])
 
-dnl CLANG > 3.1 ?
+dnl CLANG >= 3.9 ?
 		AS_IF([ test -z "${CCNAM}"], [
 			AC_TRY_RUN( [
 				#ifdef __clang__
-				   int main() { return !(__clang_major__  >=3 && __clang_minor__ >=1) ; }
+				   int main() { return !((__clang_major__ >= 4) || (__clang_major__  >=3 && __clang_minor__ >= 9)) ; }
 			   #else
-				   pas clang non plus.
+				   not clang3.9
 				#endif], [
-		AC_MSG_RESULT(clang31)
-		CCNAM=clang31
-		AC_SUBST(CCNAM) ])
-		])
-
-dnl CLANG > 3 ?
-		AS_IF([ test -z "${CCNAM}"], [
-			AC_TRY_RUN( [
-				#ifdef __clang__
-				   int main() { return !(__clang_major__  >=3) ; }
-			   #else
-				   pas clang non plus.
-				#endif], [
-		AC_MSG_RESULT(clang31)
+		AC_MSG_RESULT(clang)
 		CCNAM=clang
 		AC_SUBST(CCNAM) ])
 		])
+dnl 3.1 < CLANG <=  3.8 ?
+		AS_IF([ test -z "${CCNAM}"], [
+			AC_TRY_RUN( [
+				#ifdef __clang__
+				   int main() { return !(__clang_major__  ==3 && __clang_minor__ >=1 && __clang_minor__ <=8) ; }
+			   #else
+				   not clang3.8s
+				#endif], [
+		AC_MSG_RESULT(clang38)
+		CCNAM=clang38
+		AC_SUBST(CCNAM) ])
+		])
+
 
 
 dnl GCC >= 4.8 ?

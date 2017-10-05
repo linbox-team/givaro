@@ -46,7 +46,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	GMP_LIBS="$GMP_LIBS -lgmp"
 
 	######### try to compile
-	CXXFLAGS="${BACKUP_CFLAGS} ${GMP_CFLAGS}"
+	CXXFLAGS="${BACKUP_CXXFLAGS} ${GMP_CFLAGS}"
 	LIBS="${BACKUP_LIBS} ${GMP_LIBS}"
 	AC_LANG_PUSH([C++])
 	AC_CHECK_HEADER([gmp.h], [
@@ -54,7 +54,8 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		AC_LINK_IFELSE(
 			[
 				AC_LANG_PROGRAM(
-					[[#include <gmp.h>]],
+					[[#include <cstddef>]
+					[#include <gmp.h>]],
 					[[ mpz_t a; mpz_init (a); ]] )
 			],
 			[
@@ -72,6 +73,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	if test "x$gmp_found" != "xyes" ; then
 		echo '-------------------------------'
 		AC_MSG_ERROR(ERROR: GMP not found/usable!)
+		exit 1
 	fi
 
 	##### OK, we have found a working GMP. Check if it has c++ bindings, and is recent enough
@@ -82,21 +84,25 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		AC_MSG_CHECKING(for GMP cxx support)
 		AC_LINK_IFELSE(
 			[ AC_LANG_PROGRAM(
-				[[ #include <gmpxx.h> ]],
+				[[#include <cstddef>]
+				[ #include <gmpxx.h> ]],
 				[[ mpz_class a(2), b(3), c(5); ]]
 			) ],
 			[ AC_MSG_RESULT(yes)
 			],
 			[ AC_MSG_RESULT(no)
-			  AC_MSG_ERROR(your GMP does not have c++ support. Compile GMP with --enable-cxx)]
+			  AC_MSG_ERROR(your GMP does not have c++ support. Compile GMP with --enable-cxx)
+			  exit 1]
 		)
 	], [
-		AC_MSG_RESULT(no)
+		AC_MSG_RESULT(your GMP does not have c++ support. Compile GMP with --enable-cxx)
+		exit 1
 	])
 
 	AC_MSG_CHECKING([whether gmp version is at least $min_gmp_release])
 	AC_TRY_RUN(
 		[ 
+			#include <cstddef>
 			#include <gmp.h>
 			int main () {
 				return (__GNU_MP_RELEASE < $min_gmp_release);
@@ -105,7 +111,8 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		[ AC_MSG_RESULT(yes)
 		],
 		[ AC_MSG_RESULT(no)
-		  AC_MSG_ERROR(your GMP is too old. GMP release >= $min_gmp_release needed)]
+		  AC_MSG_ERROR(your GMP is too old. GMP release >= $min_gmp_release needed)
+		  exit 1]
 	)
 	
 	AC_SUBST(GMP_CFLAGS)

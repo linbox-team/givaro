@@ -163,7 +163,7 @@ dnl    CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
 dnl fi
 
 # Checks which SIMD optimization flags to use and set SIMD_CFLAGS accordingly
-SIMD_CHECK
+INSTR_SET
 
 CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
 echo "-----------------------------------------------"

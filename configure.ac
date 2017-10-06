@@ -172,7 +172,7 @@ arch=`echo $target | cut -d"-" -f1`
 REQUIRED_FLAGS=
 AS_IF([ test \( "x$arch" = "xi386" -o "x$arch" = "xi686" \) -a "x$HAVE_SSE" = "xyes" ],
    [
-        AS_ECHO("Compiling for an $arch architecture: appending -msse -mfpmath=sse flags")
+        AS_ECHO("Compiling for an $arch architecture: appending -mfpmath=sse flags")
         REQUIRED_FLAGS="-mfpmath=sse"
    ])
 	
@@ -183,7 +183,6 @@ dnl have overloads for both types without linking error.
 AS_IF([test "x$CCNAM" = "xgcc48"],[REQUIRED_FLAGS="${REQUIRED_FLAGS} -fabi-version=6"],[])
 
 AC_SUBST(REQUIRED_FLAGS)
-CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 
 # Machine characteristics
 

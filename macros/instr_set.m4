@@ -50,7 +50,7 @@ AC_DEFUN([INSTR_SET],
                         SIMD_CFLAGS="${SIMD_CFLAGS} -msse4.1"
                 ],[AS_ECHO("SSE4.1 disabled")])
                 AS_IF([ test "$iset" -ge "6" -a "x$enable_sse4.2" != "xno" ], [
-                        AS_ECHO("SSE4.1 enabled")
+                        AS_ECHO("SSE4.2 enabled")
                         SIMD_CFLAGS="${SIMD_CFLAGS} -msse4.2"
                 ],[AS_ECHO("SSE4.2 disabled")])
                 AS_IF([ test "$iset" -ge "7" -a "x$enable_avx" != "xno" ], [

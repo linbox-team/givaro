@@ -14,5 +14,5 @@
 
 
 EXTRA_DIST=            \
-       sse.C           \
-       avx.C
+       instrset.h           \
+       instrset_detect.cpp

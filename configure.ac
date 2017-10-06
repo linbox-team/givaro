@@ -164,18 +164,16 @@ dnl fi
 
 # Checks which SIMD optimization flags to use and set SIMD_CFLAGS accordingly
 INSTR_SET
-
-CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
-echo "-----------------------------------------------"
+AC_SUBST(SIMD_FLAGS)
 
 # Veltkamp Split in modular-extended.inl requires to use the SSE floating point multiplier and not the fp87
 # This is by default on x86_64 but not on i386.
 arch=`echo $target | cut -d"-" -f1`
 REQUIRED_FLAGS=
-AS_IF([ test  "x$arch" = "xi386" -o "x$arch" = "xi686" ],
+AS_IF([ test \( "x$arch" = "xi386" -o "x$arch" = "xi686" \) -a "x$HAVE_SSE" = "xyes" ],
    [
-	AS_ECHO("Compiling for an $arch architecture: appending -msse -mfpmath=sse flags")
-        REQUIRED_FLAGS="-msse -mfpmath=sse"
+        AS_ECHO("Compiling for an $arch architecture: appending -msse -mfpmath=sse flags")
+        REQUIRED_FLAGS="-mfpmath=sse"
    ])
 	
 echo "-----------------------------------------------"
@@ -252,6 +250,8 @@ GIV_CHECK_GMP(40000)
 GIV_DOC
 
 CXXFLAGS="${CXXFLAGS} ${GMP_CFLAGS}"
+CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
+CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
 LIBS="${GMP_LIBS}"
 
 AC_SUBST(CXXFLAGS)

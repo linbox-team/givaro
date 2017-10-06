@@ -12,6 +12,7 @@ AC_DEFUN([INSTR_SET],
         SIMD_CFLAGS=""
         AS_ECHO("Detecting SIMD instruction set")
 
+        AC_ARG_ENABLE(sse,[AC_HELP_STRING([--disable-sse], [ "Disable SSE instruction set (when available")])],[],[])
         AC_ARG_ENABLE(sse2,[AC_HELP_STRING([--disable-sse2], [ "Disable SSE2 instruction set (when available")])],[],[])
         AC_ARG_ENABLE(sse3,[AC_HELP_STRING([--disable-sse3], [ "Disable SSE3 instruction set (when available")])],[],[])
         AC_ARG_ENABLE(ssse3,[AC_HELP_STRING([--disable-ssse3], [ "Disable SSSE3 instruction set (when available")])],[],[])
@@ -27,6 +28,11 @@ AC_DEFUN([INSTR_SET],
                         int main(){return instrset_detect();}
                 ],[AS_ECHO("Using 80386 instruction set")],[
                 iset=$?
+                AS_IF([ test "$iset" -ge "1" -a "x$enable_sse" != "xno" ], [
+                        AS_ECHO("SSE enabled")
+                        SIMD_CFLAGS="${SIMD_CFLAGS} -msse"
+                        HAVE_SSE="yes"
+                ],[AS_ECHO("SSE2 disabled")])
                 AS_IF([ test "$iset" -ge "2" -a "x$enable_sse2" != "xno" ], [
                         AS_ECHO("SSE2 enabled")
                         SIMD_CFLAGS="${SIMD_CFLAGS} -msse2"

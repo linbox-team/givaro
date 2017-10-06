@@ -60,7 +60,7 @@ AC_DEFUN([INSTR_SET],
                         #include "macros/CodeChunk/instrset_detect.cpp"
                         int main(){return !hasFMA3();}
                    ],[
-                        AS_IF([ "x$enable_fma3" != "xno" ], [
+                        AS_IF([ test "x$enable_fma" != "xno" ], [
                                 AS_ECHO("FMA3 enabled")
                                 SIMD_CFLAGS="${SIMD_CFLAGS} -mfma"
                               ],[AS_ECHO("FMA3 disabled")])
@@ -69,7 +69,7 @@ AC_DEFUN([INSTR_SET],
                         #include "macros/CodeChunk/instrset_detect.cpp"
                         int main(){return !hasFMA4();}
                    ],[
-                        AS_IF([ "x$enable_fma4" != "xno" ], [
+                        AS_IF([ test "x$enable_fma4" != "xno" ], [
                                 AS_ECHO("FMA4 enabled")
                                 SIMD_CFLAGS="${SIMD_CFLAGS} -mfma4"
                               ],[AS_ECHO("FMA4 disabled")])

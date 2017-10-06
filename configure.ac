@@ -135,7 +135,7 @@ fi
 
 
 DEFAULT_CFLAGS="${DEFAULT_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
-TESTS_CFLAGS="${TESTS_CFLAGS} ${WARN_CFLAGS} -UNDEBUG -DDEBUG -DGIVARO_DEBUG"
+TESTS_CFLAGS="${TESTS_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
 
 AC_SUBST([DEFAULT_CFLAGS])
 AC_SUBST([DEBUG_CFLAGS])
@@ -152,15 +152,6 @@ LT_INIT
 echo "-----------------------------------------------"
 echo "        START  GIVARO CONFIG                   "
 echo "-----------------------------------------------"
-
-# checks which SIMD instructions are available and defines HAVE_{SSE_4_1,AVX,AVX2}_INSTRUCTIONS and compiler flags
-#CUSTOM_SIMD="no"
-#GIV_CHECK_SIMD
-dnl if [[ "x$CUSTOM_SIMD" = "xno" ]] ; then
-dnl    AX_CHECK_X86_FEATURES([][])
-dnl else
-dnl    CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
-dnl fi
 
 # Checks which SIMD optimization flags to use and set SIMD_CFLAGS accordingly
 INSTR_SET

@@ -264,6 +264,7 @@ src/library/tools/Makefile
 src/library/poly1/Makefile
 src/library/matrix/Makefile
 macros/Makefile
+macros/CodeChunk/Makefile
 benchmarks/Makefile
 examples/Makefile
 examples/FiniteField/Makefile

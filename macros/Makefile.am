@@ -5,6 +5,8 @@
 # see the COPYRIGHT file for more details.
 SUBDIRS=CodeChunk
 
+SUBDIRS=CodeChunk
+
 EXTRA_DIST=             \
 	aclocal-include.m4	\
 	gmp-check.m4		\

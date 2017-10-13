@@ -76,6 +76,22 @@ namespace Givaro {
                 return _domain.characteristic(p);
             }
 
+		// begin trial
+			inline integer& cardinality (integer& c) const { 
+				return c = -1; 
+			}
+
+			// Requires isUnit(x).
+			Element& inv(Element& y, const Element& x) const { 
+				return div(y,one,x); 
+			}
+			Element& invin(Element& x) const { // should check for a better way...
+				Element y; init(y); 
+				div(y,one,x); 
+				return assign(x,y);
+			}
+		// end trial
+
         int operator==( const Poly1Dom<Domain,Dense>& BC) const
             {
                 return _domain == BC._domain;

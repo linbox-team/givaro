@@ -57,6 +57,7 @@ if test "x${CCNAM}" = "xclang38" ; then
 else
    AX_CXX_COMPILE_STDCXX_11([ext],[mandatory])
 fi
+REQUIRED_FLAGS="$CXX11FLAGS"
 
 TESTS_CFLAGS="-O0"
 DEBUG_CFLAGS="-g"
@@ -160,11 +161,10 @@ AC_SUBST(SIMD_FLAGS)
 # Veltkamp Split in modular-extended.inl requires to use the SSE floating point multiplier and not the fp87
 # This is by default on x86_64 but not on i386.
 arch=`echo $target | cut -d"-" -f1`
-REQUIRED_FLAGS=
 AS_IF([ test \( "x$arch" = "xi386" -o "x$arch" = "xi686" \) -a "x$HAVE_SSE" = "xyes" ],
    [
         AS_ECHO("Compiling for an $arch architecture: appending -mfpmath=sse flags")
-        REQUIRED_FLAGS="-mfpmath=sse"
+        REQUIRED_FLAGS="${REQUIRED_FLAGS} -mfpmath=sse"
    ])
 	
 echo "-----------------------------------------------"

@@ -29,7 +29,7 @@ SSE=`pwd | awk -F/ '{print $NF}'`
 # Job givaro with SSE option flag
 # by default sse is enabled
 if [ "$SSE" == "withoutSSE" ]; then
-  GIVARO_SSEFLAG="--disable-simd"
+  GIVARO_SSEFLAG="--disable-sse --disable-sse2 --disable-sse3 --disable-ssse3 --disable-sse4.1 --disable-sse4.2 --disable-avx --disable-avx2 --disable-fma --disable-fma4"
 fi
 
 JENKINS_DIR=${SOURCE_DIRECTORY%%/workspace/*}

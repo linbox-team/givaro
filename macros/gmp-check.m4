@@ -35,6 +35,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	######### Check for existence
 	BACKUP_CFLAGS=${CFLAGS}
 	BACKUP_CXXFLAGS=${CXXFLAGS}
+	BACKUP_CPPFLAGS=${CPPFLAGS}
 	BACKUP_LIBS=${LIBS}
 
 	GMP_CFLAGS=
@@ -47,6 +48,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 
 	######### try to compile
 	CXXFLAGS="${BACKUP_CXXFLAGS} ${GMP_CFLAGS}"
+	CPPFLAGS="${BACKUP_CPPFLAGS} ${GMP_CFLAGS}"
 	LIBS="${BACKUP_LIBS} ${GMP_LIBS}"
 	AC_LANG_PUSH([C++])
 	AC_CHECK_HEADER([gmp.h], [
@@ -66,7 +68,6 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	], [
 		gmp_found="no (gmp.h not found)"
 	])
-	AC_LANG_POP([C++])
 
 	AC_MSG_RESULT(${gmp_found})
 
@@ -114,6 +115,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 		  AC_MSG_ERROR(your GMP is too old. GMP release >= $min_gmp_release needed)
 		  exit 1]
 	)
+	AC_LANG_POP([C++])
 	
 	AC_SUBST(GMP_CFLAGS)
 	AC_SUBST(GMP_LIBS)
@@ -121,5 +123,6 @@ AC_DEFUN([GIV_CHECK_GMP], [
 
 	CFLAGS=${BACKUP_CFLAGS}
 	CXXFLAGS=${BACKUP_CXXFLAGS}
+	CPPFLAGS=${BACKUP_CPPFLAGS}
 	LIBS=${BACKUP_LIBS}
 ])

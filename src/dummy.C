@@ -6,4 +6,5 @@
 
 #include "givaro-config.h"
 
+#pragma GCC diagnostic ignored "-Wunused-variable"
 static int dummy;

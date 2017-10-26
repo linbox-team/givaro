@@ -58,7 +58,9 @@ else
    AX_CXX_COMPILE_STDCXX_11([ext],[mandatory])
 fi
 REQUIRED_FLAGS="$CXX11FLAGS"
-
+# Add the c++11 flags for the configure compilations as clang needs it to work properly with a glibc++ compiled with gcc
+BACKUP_CXXFLAGS="${CXXFLAGS}"
+CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 TESTS_CFLAGS="-O0"
 DEBUG_CFLAGS="-g"
 DEFAULT_CFLAGS=""
@@ -238,11 +240,12 @@ echo "-----------------------------------------------"
 GIV_CHECK_GMP(40000)
 
 GIV_DOC
-
+CXXFLAGS=${BACKUP_CXXFLAGS}
 CXXFLAGS="${CXXFLAGS} ${GMP_CFLAGS}"
 CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
 LIBS="${GMP_LIBS}"
+echo "CXXFLAGS=${CXXFLAGS}"
 
 AC_SUBST(CXXFLAGS)
 

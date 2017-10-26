@@ -57,7 +57,7 @@ AC_DEFUN([GIV_CHECK_GMP], [
 			[
 				AC_LANG_PROGRAM(
 					[[#include <cstddef>]
-					[#include <gmp.h>]],
+					[#include "gmp.h"]],
 					[[ mpz_t a; mpz_init (a); ]] )
 			],
 			[
@@ -78,15 +78,17 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	fi
 
 	##### OK, we have found a working GMP. Check if it has c++ bindings, and is recent enough
-	
 	GMP_LIBS="$GMP_LIBS -lgmpxx"
+	CXXFLAGS="${BACKUP_CXXFLAGS} ${GMP_CFLAGS}"
+	CPPFLAGS="${BACKUP_CPPFLAGS} ${GMP_CFLAGS}"
+	AC_LANG_PUSH([C++])
 	AC_CHECK_HEADER([gmpxx.h], [
 		dnl AC_MSG_CHECKING(for GMP version and cxx support)
 		AC_MSG_CHECKING(for GMP cxx support)
 		AC_LINK_IFELSE(
 			[ AC_LANG_PROGRAM(
 				[[#include <cstddef>]
-				[ #include <gmpxx.h> ]],
+				[ #include "gmpxx.h" ]],
 				[[ mpz_class a(2), b(3), c(5); ]]
 			) ],
 			[ AC_MSG_RESULT(yes)

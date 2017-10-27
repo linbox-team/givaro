@@ -76,21 +76,9 @@ namespace Givaro {
                 return _domain.characteristic(p);
             }
 
-		// begin trial
-			inline integer& cardinality (integer& c) const { 
+			inline Integer& cardinality (Integer& c) const { 
 				return c = -1; 
 			}
-
-			// Requires isUnit(x).
-			Element& inv(Element& y, const Element& x) const { 
-				return div(y,one,x); 
-			}
-			Element& invin(Element& x) const { // should check for a better way...
-				Element y; init(y); 
-				div(y,one,x); 
-				return assign(x,y);
-			}
-		// end trial
 
         int operator==( const Poly1Dom<Domain,Dense>& BC) const
             {
@@ -280,6 +268,8 @@ namespace Givaro {
         Rep& div   ( Rep& q, const Rep& a, const Rep& b ) const;
         Rep& div   ( Rep& q, const Type_t& a, const Rep& b ) const;
         Rep& div   ( Rep& q, const Rep& a, const Type_t& b ) const;
+		Rep& invin (Rep& R ) const;
+		Rep& inv   (Rep& R, const Rep& P ) const;
 
         Rep& modin ( Rep& q, const Rep& a ) const;
         Rep& modin ( Rep& q, const Type_t& a ) const;

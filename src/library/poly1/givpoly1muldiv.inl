@@ -211,6 +211,21 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& 
 }
 
 template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invin (Rep& R ) const
+{
+	Rep P; init(P); 
+	inv(P,R);
+	return assign(R,P);
+}
+
+// Requires isUnit(P).
+template <class Domain>
+inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::inv (Rep& R, const Rep& P ) const
+{
+	return div(R,one,P); 
+}
+
+template <class Domain>
 inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& R, const Type_t& u) const
 {
 #ifdef GIVARO_DEBUG

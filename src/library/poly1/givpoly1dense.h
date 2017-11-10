@@ -76,6 +76,10 @@ namespace Givaro {
                 return _domain.characteristic(p);
             }
 
+			inline Integer& cardinality (Integer& c) const { 
+				return c = -1; 
+			}
+
         int operator==( const Poly1Dom<Domain,Dense>& BC) const
             {
                 return _domain == BC._domain;
@@ -264,6 +268,8 @@ namespace Givaro {
         Rep& div   ( Rep& q, const Rep& a, const Rep& b ) const;
         Rep& div   ( Rep& q, const Type_t& a, const Rep& b ) const;
         Rep& div   ( Rep& q, const Rep& a, const Type_t& b ) const;
+		Rep& invin (Rep& R ) const;
+		Rep& inv   (Rep& R, const Rep& P ) const;
 
         Rep& modin ( Rep& q, const Rep& a ) const;
         Rep& modin ( Rep& q, const Type_t& a ) const;

@@ -45,7 +45,7 @@ public:
 	: zero(0.0), one(1.0), mOne(-1.0), _p(0.0), _lp(0) {}
 
 	template<class XXX> Modular(const XXX& p)
-	: zero(0.0), one(1.0), mOne((Element)p - 1.0), _p((double)p), _lp((Residu_t)p)
+	: zero(0.0), one(1.0), mOne((const Element)p - 1.0), _p((double)p), _lp((Residu_t)p)
 	{
 	    assert(_p >= minCardinality());
 	    assert(_p <= maxCardinality());

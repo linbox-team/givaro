@@ -12,12 +12,11 @@
 #define __GIVARO_poly1_cstor_INL
 
 namespace Givaro {
-        // Need to static_cast when used with zero,one,mOne derived from Type_t 
 	template<class Domain>
 	inline Poly1Dom<Domain,Dense>::Poly1Dom(const Domain& d, const Indeter& X ) :
 		_domain(d), _x(X)
-		, zero(1,static_cast<const Type_t&>(d.zero)), one(1,static_cast<const Type_t&>(d.one))
-		, mOne(1,static_cast<const Type_t&>(d.mOne))
+		, zero(1,d.zero), one(1,d.one)
+		, mOne(1,d.mOne)
 	{}
 
 	template<class Domain>

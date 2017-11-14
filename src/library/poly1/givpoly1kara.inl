@@ -113,16 +113,16 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul(
 	RepIterator ri=Rbeg, rig=Rbeg;
 	if (_domain.isZero(*ai))
 		for(;bi!=Qend;++bi,++ri)
-			*ri = _domain.zero;
+			_domain.assign(*ri,_domain.zero);
 	else
 		for(;bi!=Qend;++bi,++ri)
 			if (_domain.isZero(*bi))
-				*ri = _domain.zero;
+				_domain.assign(*ri, _domain.zero);
 			else
 				_domain.mul(*ri,*ai,*bi);
 
 	for(;ri!=Rend;++ri)
-		*ri = _domain.zero;
+		_domain.assign(*ri,_domain.zero);
 	for(++ai,++rig;ai!=Pend;++ai,++rig)
 		if (! _domain.isZero(*ai))
 			for(ri=rig,bi=Qbeg;bi!=Qend;++bi,++ri)

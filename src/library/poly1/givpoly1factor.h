@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <23 Oct 15 15:35:46 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <14 Nov 17 18:37:21 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1factor.h
@@ -50,7 +50,7 @@ namespace Givaro {
 		Poly1FactorDom () {}
 
 		//! @warning  there is a copy of the random Iterator ...
-		Poly1FactorDom (Domain& d, const Indeter& X = Indeter(), const RandomIterator& g = RandomIterator() ) :
+		Poly1FactorDom (const Domain& d, const Indeter& X = Indeter(), const RandomIterator& g = RandomIterator() ) :
 		       	Poly1Dom<Domain,Tag> (d,X), _g(g)
 	       	{}
 

@@ -141,6 +141,10 @@ namespace Givaro {
         template<class XXX>
         Rep& init(Rep& p, const XXX &cste ) const;
 
+            // -- Init polynomial with list of values starting at degree 0
+        template<class XXX>
+        Rep& init(Rep& p, const std::initializer_list<XXX> &cste ) const;
+
             // -- Allocate a polynomial with deg+1 coefficients, each of them are
             // set to zero, except the leading coef which is set to one.
         Rep& init (Rep& r, const Degree deg) const;

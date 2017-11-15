@@ -77,6 +77,19 @@ namespace Givaro {
 		return P;
 	}
 
+    template<class Domain> template<class XXX>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const std::initializer_list<XXX>& L ) const
+	{
+
+		P.resize(L.size());
+        auto il(L.begin());
+        for(auto &ip : P) {
+            _domain.init(ip,*il);
+            ++il;
+        }
+		return P;
+	}
+
 
 	template<class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Type_t& Poly1Dom<Domain,Dense>::assign(typename Poly1Dom<Domain,Dense>::Type_t & Val, const typename Poly1Dom<Domain,Dense>::Rep& P ) const

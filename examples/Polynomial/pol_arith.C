@@ -21,27 +21,19 @@ int main(int argc, char ** argv) {
 
  {
     GFqDom<int> Z13( 13, 1 );  // integers modulo 13
+    GFqDom<int>::Element tmp;
 
     // Polynomials over Z13, with X as indeterminate
     Poly1Dom< GFqDom<int>, Dense > DP13( Z13, Indeter("X") );
     Poly1Dom< GFqDom<int>, Dense>::Element P, Q, R, monomial;
-    GFqDom<int>::Element tmp;
-
-    DP13.assign( P, Z13.init(tmp,5) ); // P is degree 0 polynomial : 5 modulo 13
-    DP13.write( std::cout << "P: " , P )<< std::endl;
-    DP13.init( monomial, Degree(1), 33U) ; // -33 X
-    DP13.write( std::cout << "m: " , monomial )<< std::endl;
-    DP13.addin( P, monomial ); // P += monomial
-    DP13.write( std::cout << "P: " , P )<< std::endl;
-    DP13.init( monomial, Degree(2), 12U) ; // 12 X^2
-    DP13.write( std::cout << "m: " , monomial )<< std::endl;
-    DP13.addin( P, monomial ); // P is now 5-33*X+12*X^2
-    DP13.write( std::cout << "P: " , P )<< std::endl;
 
     // DP13.read( std::cin, P); // would read P as a succession of integers :
                                 // deg leadcoeff (lead-1)coeff ... unitcoeff
 
-    DP13.init( Q, Degree(0), 6U );
+    DP13.init(P, {5,-33,12}); // P is now 5-33*X+12*X^2
+    DP13.write( std::cout << "P: " , P )<< std::endl;
+
+    DP13.assign( Q, Z13.init(tmp,6) ); // Q is degree 0 polynomial : 6 modulo 13
     DP13.write( std::cout << "Q: " , Q )<< std::endl;
     DP13.init( monomial, Degree(4), 3U);
     DP13.write( std::cout << "m: " , monomial )<< std::endl;

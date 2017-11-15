@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <23 Sep 16 14:35:40 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Nov 17 10:55:13 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -319,6 +319,7 @@ public:
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const ;
 
 	typedef GIV_randIter< GFqDom<TT>, Rep> RandIter;
+    typedef GeneralRingNonZeroRandIter<Self_t,RandIter> NonZeroRandIter;
 
 #ifdef __GIVARO_COUNT__
 	void clear()

@@ -1,3 +1,6 @@
+2017-11-17 v4.0.4
+	Improvements:
+	* minor build system fix with simd disabling option
 2017-11-17 v4.0.3
 	Improvements:
 	* fix many bugs (and merging all sage patches)

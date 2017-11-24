@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // -----------------------------------------------------------------
-// Time-stamp: <12 Jun 15 18:43:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <24 Nov 17 17:27:34 Jean-Guillaume.Dumas@imag.fr>
 // -----------------------------------------------------------------
 // author: Jean-Guillaume.Dumas
 // date: 2004
@@ -79,11 +79,11 @@ public:
         _domain.assign((_elem), e._elem); return  *this;
     }
 
-    bool operator==(const StaticElement& e) {
+    bool operator==(const StaticElement& e) const {
         return _domain.areEqual((_elem), e._elem);
     }
 
-    bool operator!=(const StaticElement& e) {
+    bool operator!=(const StaticElement& e) const {
         return !_domain.areEqual((_elem), e._elem);
     }
 

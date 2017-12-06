@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     else
         RD.ratrecon(rec,f,m);
     tim.stop();
-    std::cout << rec.nume() << "/" << rec.deno() << " = " << f << " mod " << m << std::endl;
+    std::cout << rec.nume() << "/" << rec.deno() << " - " << f << " mod " << m << " = 0;" << std::endl;
     std::cerr << tim << std::endl;
 
     return 0;

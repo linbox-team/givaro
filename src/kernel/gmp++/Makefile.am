@@ -17,9 +17,7 @@ noinst_LTLIBRARIES=libgmppp.la
 pkgincludesub_HEADERS=\
 	gmp++.h       \
 	gmp++_int.h   \
-	gmp++_int_rand.inl	\
-	gmp++_rat.h   \
-	gmp++_rat.inl
+	gmp++_int_rand.inl
 
 libgmppp_la_SOURCES= gmp++_int_lib.C
 
@@ -28,17 +26,12 @@ COMMONFILES= \
 	gmp++_int_mod.C		\
 	gmp++_int_sub.C		\
 	gmp++_int_compare.C	\
-	gmp++_rat_compare.C	\
 	gmp++_int_gcd.C		\
 	gmp++_int_io.C		\
-	gmp++_rat_io.C		\
 	gmp++_int_mul.C		\
 	gmp++_int_add.C		\
-	gmp++_rat_add.C		\
 	gmp++_int_cstor.C	\
-	gmp++_rat_cstor.C	\
 	gmp++_int_misc.C	\
-	gmp++_rat_misc.C	\
 	gmp++_int_pow.C
 
 
@@ -46,7 +39,6 @@ if GIVARO_INLINE_ALL
 
 pkgincludesub_HEADERS += \
 	gmp++_int.C             \
-	gmp++_rat.C             \
 	$(COMMONFILES)
 
 

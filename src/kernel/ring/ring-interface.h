@@ -63,7 +63,7 @@ struct RingInterface
 }; // class RingInterface
 
 template<class _Element>
-struct FieldInterface : public virtual RingInterface<_Element>
+struct FieldInterface : public RingInterface<_Element>
 {
 //    virtual ~FieldInterface() noexcept(true)= default;
 
@@ -92,11 +92,11 @@ struct FiniteInterface
 
 
 template<class _Element>
-struct FiniteFieldInterface : public virtual FieldInterface<_Element>, public virtual FiniteInterface<_Element> {
+struct FiniteFieldInterface : public FieldInterface<_Element>, public FiniteInterface<_Element> {
 //	virtual ~FiniteFieldInterface() = default;
 };
 template<class _Element>
-struct FiniteRingInterface : public virtual RingInterface<_Element>, public virtual FiniteInterface<_Element> {
+struct FiniteRingInterface : public  RingInterface<_Element>, public  FiniteInterface<_Element> {
 //	virtual ~FiniteRingInterface() = default;
 };
 

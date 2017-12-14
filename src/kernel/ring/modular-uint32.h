@@ -37,7 +37,7 @@ namespace Givaro
 	 * .
 	 */
 	template<typename COMP>
-	class Modular<uint32_t, COMP> : public virtual FiniteFieldInterface<uint32_t>
+	class Modular<uint32_t, COMP> : public FiniteFieldInterface<uint32_t>
 	{
 	public:
 		// ----- Exported Types and constantes
@@ -193,7 +193,7 @@ namespace Givaro
 		// --- IO methods
 		std::ostream& write(std::ostream& s) const;
 		std::istream& read (std::istream& s, Element& a) const;
-		std::ostream& write(std::ostream& s, const Element a) const;
+		std::ostream& write(std::ostream& s, const Element& a) const;
 
 	protected:
 

@@ -23,7 +23,7 @@ namespace Givaro
 
   
     template<size_t K>
-    class Modular<RecInt::ruint<K>, RecInt::ruint<K>> : public virtual FiniteFieldInterface<RecInt::ruint<K>>
+    class Modular<RecInt::ruint<K>, RecInt::ruint<K>> : public FiniteFieldInterface<RecInt::ruint<K>>
     {
     public:
 
@@ -192,7 +192,7 @@ namespace Givaro
 
 
    template<size_t K>
-    class Modular<RecInt::ruint<K>, RecInt::ruint<K+1>> : public virtual FiniteFieldInterface<RecInt::ruint<K>>
+    class Modular<RecInt::ruint<K>, RecInt::ruint<K+1>> : public FiniteFieldInterface<RecInt::ruint<K>>
     {
     public:
 

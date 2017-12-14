@@ -34,6 +34,12 @@ struct RingInterface
 	virtual bool isUnit(const Element& a) const = 0;
 	virtual bool areEqual(const Element& a, const Element& b) const = 0;
 	
+	// ----- Empty constructor
+	virtual Element& init(Element& r) const = 0;
+
+	// ----- Assignment operator
+	virtual Element& assign(Element& r, const Element& a) const = 0;
+
 	// ----- Classic arithmetic
 	virtual Element& mul(Element& r, const Element& a, const Element& b) const = 0;
 	virtual Element& add(Element& r, const Element& a, const Element& b) const = 0;
@@ -60,6 +66,10 @@ struct RingInterface
 	virtual Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const = 0;
 	virtual Element& maxpyin(Element& r, const Element& a, const Element& x) const = 0;
 	
+	// --- IO methods
+	virtual std::ostream& write(std::ostream& s) const =0;
+	virtual std::istream& read (std::istream& s, Element& a) const =0;
+	virtual std::ostream& write(std::ostream& s, const Element& a) const =0;
 }; // class RingInterface
 
 template<class _Element>
@@ -83,9 +93,9 @@ struct FiniteInterface
 	virtual _Element minElement() const = 0;
 	virtual _Element maxElement() const = 0;
 
-        // ----- Static members
-        // static Residu_t getMinModulus() const = 0;
-        // static Residu_t getMaxModulus() const = 0;
+// 	virtual Residu_t cardinality() const = 0;
+//  virtual Residu_t maxCardinality() const = 0;
+// 	virtual Residu_t minCardinality() const = 0;
 
 };
 
@@ -94,6 +104,7 @@ struct FiniteInterface
 template<class _Element>
 struct FiniteFieldInterface : public FieldInterface<_Element>, public FiniteInterface<_Element> {
 //	virtual ~FiniteFieldInterface() = default;
+
 };
 template<class _Element>
 struct FiniteRingInterface : public  RingInterface<_Element>, public  FiniteInterface<_Element> {

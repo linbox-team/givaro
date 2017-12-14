@@ -31,7 +31,7 @@ namespace Givaro
 {
 
     template <>
-    class Modular<float, float> : public virtual FiniteFieldInterface<float>
+    class Modular<float, float> : public FiniteFieldInterface<float>
     {
     public:
         // ----- Exported Types and constantes

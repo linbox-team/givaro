@@ -27,7 +27,7 @@
 namespace Givaro {
 
 	template <typename COMP>
-	class Modular<uint8_t, COMP> : public virtual FiniteFieldInterface<uint8_t>
+	class Modular<uint8_t, COMP> : public FiniteFieldInterface<uint8_t>
 	{
 	public:
 		// ----- Exported Types and constantes

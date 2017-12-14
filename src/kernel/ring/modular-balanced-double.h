@@ -26,7 +26,7 @@ namespace Givaro
     template<class TAG> class ModularBalanced;
 
     template <>
-    class ModularBalanced<double> : public virtual FiniteFieldInterface<double>
+    class ModularBalanced<double> : public FiniteFieldInterface<double>
     {
     public:
 

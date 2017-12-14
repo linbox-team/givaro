@@ -27,17 +27,16 @@ namespace Givaro
      * - The representation of an integer a in Zpz is the value a % p
      * .
      */
-    template<typename _Storage_t>
-    class Mod<_Storage_t, _Storage_t, 
-		typename std::enable_if<std::is_same<_Storage_t, Integer>::value>::type>:
-			public Mod_implem<_Storage_t, _Storage_t, _Storage_t>
+    template<>
+    class Mod<Integer>:
+			public Mod_implem<Integer, Integer, Integer>
     {
     public:
         // ----- Exported Types and constantes
 
-		using Storage_t = _Storage_t;
-		using Compute_t = _Storage_t;
-		using Residu_t = _Storage_t;
+		using Storage_t = Integer;
+		using Compute_t = Integer;
+		using Residu_t = Integer;
 
 		using Element = Storage_t;
 		using Self_t = Mod<Storage_t, Compute_t>;

@@ -45,67 +45,56 @@
 
 namespace Givaro {
     
-#define MOD \
-  Mod<Storage_t, Storage_t, typename std::enable_if<std::is_same<Storage_t, Integer>::value>::type>
-#define TMPL template<typename Storage_t>
-
     // ------------------------- Arithmetic functions
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::mul (Element& r, const Element& a, const Element& b) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::mul (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZInteger_N_MUL(r,_p,a,b); return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::sub (Element& r, const Element& a, const Element& b) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::sub (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZInteger_N_SUB(r,_p,a,b); return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::add (Element& r, const Element& a, const Element& b) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::add (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZInteger_N_ADD(r,_p,a,b); return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::neg (Element& r, const Element& a) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::neg (Element& r, const Element& a) const
     {
         __GIVARO_ZPZInteger_N_NEG(r,_p,a); return r;
 
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::negin (Element& r) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::negin (Element& r) const
     {
         __GIVARO_ZPZInteger_N_NEGIN(r,_p);
         return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::inv (Element& r, const Element& a) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::inv (Element& r, const Element& a) const
     {
         return ::Givaro::inv(r,a,_p);
     }
 
 //    TMPL
-//    inline bool this->MOD::isUnit(const Element& a) const 
+//    inline bool this->Mod<Integer>::isUnit(const Element& a) const 
 //    { 
 //        Element d;
 //        ::Givaro::gcd(d,a,_p); 
 //        return isOne(d) || isMOne(d); 
 //    }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::div (Element& r, const Element& a, const Element& b) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::div (Element& r, const Element& a, const Element& b) const
     {
         Element ib;
         inv(ib, b);
@@ -113,92 +102,81 @@ namespace Givaro {
         return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::mulin (Element& r, const Element& a) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::mulin (Element& r, const Element& a) const
     {
         __GIVARO_ZPZInteger_N_MULIN(r,_p, a);
         return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::divin (Element& r, const Element& a) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::divin (Element& r, const Element& a) const
     {
-        MOD::Element ia;
+        Mod<Integer>::Element ia;
         inv(ia, a);
         return mulin(r, ia);
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::addin (Element& r, const Element& a) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::addin (Element& r, const Element& a) const
     {
         __GIVARO_ZPZInteger_N_ADDIN(r,_p, a);
         return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::subin (Element& r, const Element& a) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::subin (Element& r, const Element& a) const
     {
         __GIVARO_ZPZInteger_N_SUBIN(r,_p, a);
         return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::invin (Element& r) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::invin (Element& r) const
     {
         Element t = r;
         return ::Givaro::inv(r,t,_p);
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::axpy (Element& r, const Element& a, const Element& b, const Element& c) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::axpy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
         __GIVARO_ZPZInteger_N_MULADD(r, _p, a, b, c);
         return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::axpyin (Element& r, const Element& a, const Element& b) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::axpyin (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZInteger_N_MULADDIN(r, _p, a, b);
         return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::axmy (Element& r, const Element& a, const Element& b, const Element& c) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::axmy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
         __GIVARO_ZPZInteger_N_MULSUB(r, _p, a, b, c);
         return r;
     }
 
     // r = c - a*b
-    TMPL
-    inline typename MOD::Element&
-    MOD::maxpy (Element& r, const Element& a, const Element& b, const Element& c) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::maxpy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
         Element tmp = c;
         __GIVARO_ZPZInteger_N_SUBMULIN(tmp, _p, a, b );
-        return r = (MOD::Element)tmp;
+        return r = (Mod<Integer>::Element)tmp;
     }
     // r -= a*b
-    TMPL
-    inline typename MOD::Element&
-    MOD::maxpyin (Element& r, const Element& a, const Element& b) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::maxpyin (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZInteger_N_SUBMULIN(r, _p, a, b );
         return r;
     }
     // r = a*b - r
-    TMPL
-    inline typename MOD::Element&
-    MOD::axmyin (Element& r, const Element& a, const Element& b) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::axmyin (Element& r, const Element& a, const Element& b) const
     {
         maxpyin(r,a,b);
         return negin(r);
@@ -207,9 +185,8 @@ namespace Givaro {
     // --------------------
     // ----- Initialisation
     
-    TMPL
-    inline typename MOD::Element&
-    MOD::init(Element& x) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::init(Element& x) const
     {
         return x = this->zero;
     }
@@ -217,26 +194,21 @@ namespace Givaro {
     // ------------
     // ----- Reduce
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::reduce(Element& r, const Element& a) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::reduce(Element& r, const Element& a) const
     {
 	r = a % _p;
 	if (r < 0) r = r + _p;
 	return r;
     }
 
-    TMPL
-    inline typename MOD::Element&
-    MOD::reduce(Element& r) const
+    inline typename Mod<Integer>::Element&
+    Mod<Integer>::reduce(Element& r) const
     {
 	r %= _p;
 	if (r < 0) r = r + _p;
 	return r;
     }
-
-#undef TMPL
-#undef MOD
 
 
 } // namespace Givaro

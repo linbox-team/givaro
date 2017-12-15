@@ -36,7 +36,7 @@ namespace Givaro {
     Mod<Integer>::add (Element& r, const Element& a, const Element& b) const
     {
         Integer::add(r,a,b); 
-        if (r >= p) Integer::subin(r,_p);
+        if (r >= _p) Integer::subin(r,_p);
         return r;
     }
 
@@ -98,7 +98,7 @@ namespace Givaro {
     Mod<Integer>::addin (Element& r, const Element& a) const
     {
         Integer::addin(r,a);  
-        if (r >= p) Integer::subin(r,_p);
+        if (r >= _p) Integer::subin(r,_p);
         return r;
     }
 

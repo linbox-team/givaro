@@ -62,14 +62,14 @@ knowledge of the CeCILL-B license and that you accept its terms.
 /* Bit manipulation of ruint */
 #include "rufiddling.h"
 
+/* Shift for ruint */
+#include "rushift.h"
+
 /* Limb manipulation in ruint */
 #include "rumanip.h"
 
 /* Random in ruint */
 #include "rurandom.h"
-
-/* Shift for ruint */
-#include "rushift.h"
 
 /* Display for ruint */
 #include "rudisplay.h"

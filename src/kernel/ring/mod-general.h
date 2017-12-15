@@ -23,16 +23,16 @@ namespace Givaro
     template<typename Storage_t, typename Compute_t = Storage_t, typename Enable = void> class Mod;
 
     //! Generalized extended GCD used by specialized Modular.
-    template<typename Storage_t, typename Compute_t>
-    inline Storage_t& gcdext(Storage_t& d,  Storage_t& u, Storage_t& v, const Compute_t a, const Compute_t b);
+    template<typename Storage_t>
+    inline Storage_t& gcdext(Storage_t& d,  Storage_t& u, Storage_t& v, const Storage_t a, const Storage_t b);
 
     //! Generalized inversion used by specialized Modular.
-    template<typename Storage_t, typename Compute_t>
-    inline Storage_t& invext(Storage_t& u, const Compute_t a, const Compute_t b);
+    template<typename Storage_t , typename Compute_t>
+    inline Storage_t& invext(Storage_t& u, const Storage_t a, const Storage_t b);
 
     //! Generalized inversion used by specialized Modular.
-    template<typename Storage_t, typename Compute_t>
-    inline Storage_t invext(const Compute_t a, const Compute_t b);
+    template<typename Storage_t>
+    inline Storage_t invext(const Storage_t a, const Storage_t b);
 }
 
 #include "givaro/mod-general.inl"

@@ -134,8 +134,8 @@ namespace Givaro {
     inline typename MOD::Element & MOD::inv
     (Element &x, const Element &y) const
     {
-        invext(x,Caster<Compute_t>(y),_pc);
-        return (x<0 ? x+=_pc : x);
+        invext(x,y,Caster<Element>(_p));
+        return (x<0 ? x+=Caster<Element>(_p) : x);
         return x;
 	}
 

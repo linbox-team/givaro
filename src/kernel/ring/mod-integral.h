@@ -209,8 +209,8 @@ namespace Givaro {
 		inv
 		(Element& r, const Element& a) const
 		{
-			invext(r, Caster<Compute_t>(a), _pc);
-			return (r < 0)? r += Element(_p) : r;
+			invext(r, a, Caster<Element>(_p));
+			return (r < 0)? r += _p : r;
 		}
 	
 		inline Element&

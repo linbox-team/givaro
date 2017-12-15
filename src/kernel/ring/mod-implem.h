@@ -155,12 +155,12 @@ namespace Givaro {
 		inline bool isOne (const Element& a) const override { return a == one; }
 		inline bool isMOne(const Element& a) const override { return a == mOne; }
 		inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
-    	inline bool isUnit(const Element& a) const override 
-    	{ 
-    	    Element u,d; 
-    	    invext(u,d,Caster<Compute_t>(a),_pc); 
-    	    return isOne(d) || isMOne(d); 
-    	}
+		inline bool isUnit(const Element& a) const override 
+		{ 
+			Element u,d;
+			invext(u,d,a,Caster<Element>(_p));
+			return isOne(d) || isMOne(d);
+		}
 		inline size_t length(const Element a) const { return size_rep; }
 
 		// ----- Ring-wise operators
@@ -217,7 +217,7 @@ namespace Givaro {
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_RecInt<S>::value)
 		std::string type_string() const {
-			return "Mod<RecInt::ruint<" << RecInt_K<S>::value << ">>";
+			return "Mod<RecInt::ruint<" + std::to_string(RecInt_K<S>::value) + ">>";
 		}
 
 

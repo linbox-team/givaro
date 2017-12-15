@@ -14,13 +14,14 @@
 
 namespace Givaro
 {
-    // -------------
-    // ----- Modular<ruint<K> >
+        // -------------
+        // ----- Modular<ruint<K> >
 
-  template<size_t K>
-  inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Residu_t
+    template<size_t K>
+    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Residu_t
     Modular<RecInt::ruint<K>, RecInt::ruint<K>>::maxCardinality() {
-    return RecInt::ruint<K>::maxCardinality(); }
+        Residu_t max; max.High=1U; return max;
+    }
 
     // ------------------------
     // ----- Classic arithmetic
@@ -205,10 +206,11 @@ namespace Givaro
     // ----- Modular<ruint<K>, ruint<K+1> >
 namespace Givaro {
 
-      template<size_t K>
+    template<size_t K>
     inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Residu_t
-        Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::maxCardinality() {
-	return (RecInt::ruint<K+1>::maxCardinality()-1).Low/2; }
+    Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::maxCardinality() {
+        Residu_t max; return RecInt::fill_with_1(max)>>1;
+    }
 
     // ------------------------
     // ----- Classic arithmetic

@@ -38,7 +38,7 @@ namespace Givaro {
 	 * .
 	 */
 	template<typename COMP>
-	class Modular<int32_t, COMP> : public virtual FiniteFieldInterface<int32_t>
+	class Modular<int32_t, COMP> : public FiniteFieldInterface<int32_t>
 	{
 	public:
 
@@ -194,7 +194,7 @@ namespace Givaro {
 		std::istream& read (std::istream& s);
 		std::ostream& write(std::ostream& s) const;
 		std::istream& read (std::istream& s, Element& a) const;
-		std::ostream& write(std::ostream& s, const Element a) const;
+		std::ostream& write(std::ostream& s, const Element& a) const;
 
 	protected:
 		// -- data representation of the domain:

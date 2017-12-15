@@ -58,7 +58,7 @@ namespace Givaro
 	 *  For a typical unparametric field, some of the methods must be defined in a specialization.
 	 */
 	template <class _Element>
-	class UnparametricOperations : public virtual RingInterface<_Element>{
+	class UnparametricOperations : public RingInterface<_Element>{
 	public:
 		typedef _Element Element;
 

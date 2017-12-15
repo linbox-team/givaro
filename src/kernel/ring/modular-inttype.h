@@ -32,7 +32,7 @@ namespace Givaro
      * .
      */
     template<typename IntType, typename COMP>
-    class Modular : public virtual FiniteFieldInterface<IntType>
+    class Modular : public FiniteFieldInterface<IntType>
     {
     public:
         // ----- Exported Types and constantes

@@ -26,7 +26,7 @@ namespace Givaro
 {
 
 template <>
-class Modular<double, double> : public virtual FiniteFieldInterface<double>
+class Modular<double, double> : public FiniteFieldInterface<double>
 {
 public:
 	// ----- Exported Types and constantes
@@ -62,10 +62,10 @@ public:
 	inline Residu_t residu() const { return _lp; }
 	inline Residu_t size() const { return _lp; }
 	inline Residu_t characteristic() const { return _lp; }
-	inline double fcharacteristic() const { return _p; }
-	template<class T> inline T& characteristic(T& p) const { return p = _lp; }
+	inline double fcharacteristic() const  { return _p; }
+	template<class T> inline T& characteristic(T& p) const  { return Caster(p,_lp); }
 	inline Residu_t cardinality() const { return _lp; }
-	template<class T> inline T& cardinality(T& p) const { return p = _lp; }
+	template<class T> inline T& cardinality(T& p) const  { return Caster(p,_lp); }
 	static inline Residu_t maxCardinality() { return 94906266; } // Biggest int n s.t. (n-1)^2 < 2^53
 	static inline Residu_t minCardinality() { return 2; }
 
@@ -73,7 +73,7 @@ public:
 	inline bool isZero(const Element& a) const override { return a == zero; }
 	inline bool isOne (const Element& a) const override { return a == one; }
 	inline bool isMOne(const Element& a) const override { return a == mOne; }
-    inline bool isUnit(const Element& a) const override;
+	inline bool isUnit(const Element& a) const override;
 	inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
 	inline size_t length(const Element a) const { return size_rep; }
 
@@ -91,14 +91,14 @@ public:
 	}
 
 	// ----- Initialisation
-	Element& init (Element& x) const;
+	Element& init (Element& x) const override;
 	Element& init (Element& x, const int64_t y) const;
 	Element& init (Element& x, const uint64_t y) const;
 	Element& init (Element& x, const Integer& y) const;
 	template<typename T> Element& init(Element& r, const T& a) const
 	{ r = Caster<Element>(a); return reduce(r); }
 
-	Element& assign (Element& x, const Element& y) const;
+	Element& assign (Element& x, const Element& y) const override;
 
 	// ----- Convert and reduce
 	template<typename T> T& convert(T& r, const Element& a) const
@@ -141,16 +141,17 @@ public:
 	typedef ModularRandIter<Self_t> RandIter;
 	typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
     template< class Random > Element& random(Random& g, Element& r) const { return init(r, g()); }
-    template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-    	{ while (isZero(init(a, g())))
-                ;
-    	  return a; }
+    template< class Random > Element& nonzerorandom(Random& g, Element& a) const {
+		while (isZero(init(a, g())))
+			;
+		return a;
+	}
 
 	// --- IO methods
-	std::istream& read (std::istream& s);
-	std::ostream& write(std::ostream& s) const;
-	std::istream& read (std::istream& s, Element& a) const;
-	std::ostream& write(std::ostream& s, const Element& a) const;
+	std::istream& read (std::istream& s) ;
+	std::ostream& write(std::ostream& s) const override;
+	std::istream& read (std::istream& s, Element& a) const override;
+	std::ostream& write(std::ostream& s, const Element& a) const override;
 
 protected:
 	double _p;

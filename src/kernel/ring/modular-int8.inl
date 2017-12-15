@@ -599,7 +599,7 @@ namespace Givaro {
     }
 
     template<typename COMP>
-    inline std::ostream& Modular<int8_t, COMP>::write (std::ostream& s, const Element a) const
+    inline std::ostream& Modular<int8_t, COMP>::write (std::ostream& s, const Element& a) const
     {
         // Cast needed to be understood as a number
         return s << static_cast<int32_t>(a);

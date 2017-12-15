@@ -297,7 +297,7 @@ namespace Givaro {
     }
 
     template<typename COMP>
-    inline std::ostream& Modular<int32_t, COMP>::write (std::ostream& s, const Element a) const
+    inline std::ostream& Modular<int32_t, COMP>::write (std::ostream& s, const Element& a) const
     {
         return s << a;
     }

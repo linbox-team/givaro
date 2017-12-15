@@ -31,7 +31,7 @@ namespace Givaro
 	 \ingroup field
 	 */
 
-	class GF2 : public virtual FiniteFieldInterface<bool>
+	class GF2 : public FiniteFieldInterface<bool>
 	{
 	public:
 		const bool zero = false;

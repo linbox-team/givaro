@@ -41,7 +41,7 @@ namespace Givaro
      *   - p max is 40499
      */
     template<>
-    class Montgomery<int32_t> : public virtual FiniteFieldInterface<uint32_t>
+    class Montgomery<int32_t> : public FiniteFieldInterface<uint32_t>
     {
     public:
         // ----- Exported Types and constantes

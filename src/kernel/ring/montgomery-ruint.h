@@ -28,7 +28,7 @@ namespace Givaro
     //! (a * r mod 2^{2^K}) with (r = 2^{2^K} mod p).
 
     template<size_t K>
-    class Montgomery<RecInt::ruint<K>> : public virtual FiniteFieldInterface<RecInt::ruint<K>>
+    class Montgomery<RecInt::ruint<K>> : public FiniteFieldInterface<RecInt::ruint<K>>
     {
     public:
 

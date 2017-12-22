@@ -19,67 +19,38 @@ namespace Givaro
   typename std::enable_if<is_same_RecInt<Storage_t, Compute_t>::value || \
                           is_smaller_RecInt<Storage_t, Compute_t>::value>::type>
 
-// Storage_t and Compute_t of same size:
-#define MOD_SAME Mod<Storage_t, Compute_t, \
-  typename std::enable_if<is_same_RecInt<Storage_t, Compute_t>::value>::type>
+#define DIFF_RECINT \
+  typename std::enable_if<!std::is_same<E,C>::value, int>::type = 0
+#define SAME_RECINT \
+  typename std::enable_if<std::is_same<E,C>::value, int>::type = 0
 
-// Storage_t is ruint<K> and Compute_t is ruint<K+1>
-#define MOD_DIFF \
-  Mod<Storage_t, Compute_t, typename std::enable_if<is_smaller_RecInt<Storage_t, Compute_t>::value>::type>
-
-
-    // ------------------------
-    // ----- Classic arithmetic
-    //TMPL
-    //inline
-    //typename Mod<Storage_t, Compute_t, typename std::enable_if<is_same_RecInt<Storage_t, Compute_t>::value>::type>::Element&
-    //Mod<Storage_t, Compute_t, typename std::enable_if<is_same_RecInt<Storage_t, Compute_t>::value>::type>::mul
-    //(Element& r, const Element& a, const Element& b) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_MUL(r,_p,a,b);
-    //    return r;
-    //}
-    //TMPL
-    //inline 
-    //typename std::enable_if<is_smaller_RecInt<Storage_t, Compute_t>::value, typename MOD::Element&>::type
-    //MOD::mul
-    //    (Element& r, const Element& a, const Element& b) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_LMUL(r,_p,a,b);
-    //    return r;
-    //}
-
-    //TMPL
-    ////inline
-    ////typename std::enable_if<is_same_RecInt<Storage_t, Compute_t>::value, typename MOD::Element&>::type
-    ////typename MOD::Element&
-    //Storage_t&
-    //MOD::mul
-    //(Element& r, const Element& a, const Element& b) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_MUL(r,_p,a,b);
-    //    return r;
-    //}
-
-    TMPL
-    inline
-    typename MOD::Element&
-    MOD::mul
-    (Element& r, const Element& a, const Element& b) const
+    template<typename E, typename C, DIFF_RECINT>
+    E& _mul
+    (E& r, const E& a, const E& b, const E& p)
     {
-        __GIVARO_MODULAR_RECINT_MUL(r,_p,a,b);
+        C tmp;
+        RecInt::lmul(tmp, a, b);
+        RecInt::mod_n(r, tmp, p);
         return r;
     }
 
-    //TMPL
-    //inline 
-    //typename std::enable_if<is_smaller_RecInt<Storage_t, Compute_t>::value, typename MOD::Element&>::type
-    //MOD::mul
-    //    (Element& r, const Element& a, const Element& b) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_LMUL(r,_p,a,b);
-    //    return r;
-    //}
+    template<typename E, typename C, SAME_RECINT>
+    E& _mul
+    (E& r, const E& a, const E& b, const E& p)
+    {
+      E tmp;
+      RecInt::mul(tmp, a, b);
+      RecInt::mod_n(r, tmp, p);
+      return r;
+    }
+
+    TMPL
+    inline
+    typename MOD::Element& MOD::mul
+    (Element& r, const Element& a, const Element& b) const
+    {
+        return _mul<Element, Compute_t>(r, a, b, _p);
+    }
 
     TMPL
     inline typename MOD::Element& MOD::sub
@@ -88,7 +59,7 @@ namespace Givaro
         __GIVARO_MODULAR_RECINT_SUB(r,_p,a,b);
         return r;
     }
- 
+
     TMPL
     inline typename MOD::Element& MOD::add
         (Element& r, const Element& a, const Element& b) const
@@ -113,11 +84,11 @@ namespace Givaro
     }
 
     //TMPL
-    //inline bool MOD::isUnit(const Element& a) const 
-    //{ 
-    //    Element d; 
-    //    gcd(d,a,_p); 
-    //    return isOne(d) || isMOne(d); 
+    //inline bool MOD::isUnit(const Element& a) const
+    //{
+    //    Element d;
+    //    gcd(d,a,_p);
+    //    return isOne(d) || isMOne(d);
     //}
 
     TMPL
@@ -127,20 +98,27 @@ namespace Givaro
         return mulin( inv(r,b), a );
     }
 
-    TMPL
-    //inline 
-    typename MOD_SAME::Element& MOD_SAME::mulin
-        (Element& r, const Element& a) const
+    template<typename E, typename C>
+    E& _mulin(E& r, const E& a, const E& p, const C& pc)
     {
-        __GIVARO_MODULAR_RECINT_MULIN(r,_p,a);
-        return r;
+      C tmp;
+      RecInt::lmul(tmp, r, a);
+      RecInt::mod_n(r, tmp, p);
+      return r;
     }
-    TMPL
-    inline typename MOD_DIFF::Element& MOD_DIFF::mulin
-        (Element& r, const Element& a) const
+    template<typename E>
+    E& _mulin(E& r, const E& a, const E& p, const E& pc)
     {
-        __GIVARO_MODULAR_RECINT_LMULIN(r,_p,a);
-        return r;
+      __GIVARO_MODULAR_RECINT_MULIN(r,p,a);
+      return r;
+    }
+
+    TMPL
+    inline
+    typename MOD::Element& MOD::mulin
+        (MOD::Element& r, const MOD::Element& a) const
+    {
+        return _mulin(r, a, _p, _pc);
     }
 
     TMPL
@@ -182,106 +160,114 @@ namespace Givaro
         return inv(r, r);
     }
 
-    //TMPL
-    //inline typename MOD_SAME::Element& MOD_SAME::axpy
-    //    (Element& r, const Element& a, const Element& b, const Element& c) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_MULADD(r,_p,a,b,c);
-    //    return r;
-    //}
+    template<typename E, typename C, DIFF_RECINT>
+    inline E& _axpy (E& r, const E& a, const E& b, const E& c, const E& p)
+    {
+      C tmp;
+      RecInt::lmul(tmp, a, b);
+      RecInt::mod_n(r, tmp, p);
+      RecInt::add(r, c);
+      if (r >= p) RecInt::sub(r, p);
+      return r;
+    }
+    template<typename E, typename C, SAME_RECINT>
+    inline E& _axpy (E& r, const E& a, const E& b, const E& c, const E& p)
+    {
+      RecInt::copy(r, c);
+      RecInt::addmul(r, a, b);
+      RecInt::mod_n(r, p);
+      return r;
+    }
+
     TMPL
     inline typename MOD::Element& MOD::axpy
         (Element& r, const Element& a, const Element& b, const Element& c) const
     {
-        __GIVARO_MODULAR_RECINT_LMULADD(r,_p,a,b,c);
-        return r;
+      return _axpy<Element, Compute_t>(r, a, b, c, _p);
     }
 
-    //TMPL
-    //inline typename MOD_SAME::Element&  MOD_SAME::axpyin
-    //    (Element& r, const Element& a, const Element& b) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_MULADDIN(r,_p,a,b);
-    //    return r;
-    //}
+    template<typename E, typename C, DIFF_RECINT>
+    inline E& _axpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        E tmp = r;
+        return r = _axpy<E, C>(r, a, b, tmp, p);
+    }
+    template<typename E, typename C, SAME_RECINT>
+    inline E& _axpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        RecInt::addmul(r, a, b);
+        RecInt::mod_n(r, p);
+        return r;
+    }
     TMPL
     inline typename MOD::Element&  MOD::axpyin
         (Element& r, const Element& a, const Element& b) const
     {
-        __GIVARO_MODULAR_RECINT_LMULADDIN(r,_p,a,b);
-        return r;
+        return _axpyin<Element, Compute_t>(r, a, b, _p);
     }
 
-    //TMPL
-    //inline typename MOD_SAME::Element& MOD_SAME::maxpy
-    //    (Element& r, const Element& a, const Element& b, const Element& c) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_MUL(r,_p,a,b);
-    //    __GIVARO_MODULAR_RECINT_SUB(r,_p,c,r);
-    //    return r;
-    //}
     TMPL
     inline typename MOD::Element& MOD::maxpy
         (Element& r, const Element& a, const Element& b, const Element& c) const
     {
-        __GIVARO_MODULAR_RECINT_LMUL(r,_p,a,b);
-        __GIVARO_MODULAR_RECINT_SUB(r,_p,c,r);
+        _mul<Element, Compute_t>(r, a, b, _p);
+        sub(r, c, r);
         return r;
     }
 
-    //TMPL
-    //inline typename MOD_SAME::Element&  MOD_SAME::axmy
-    //    (Element& r, const Element& a, const Element& b, const Element& c) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_MULSUB(r,_p,a,b,c);
-    //    return r;
-    //}
     TMPL
     inline typename MOD::Element&  MOD::axmy
         (Element& r, const Element& a, const Element& b, const Element& c) const
     {
-        __GIVARO_MODULAR_RECINT_LMULSUB(r,_p,a,b,c);
+        _mul<Element, Compute_t>(r, a, b, _p);
+        subin(r, c);
         return r;
     }
 
-    //TMPL
-    //inline typename MOD_SAME::Element&  MOD_SAME::maxpyin
-    //    (Element& r, const Element& a, const Element& b) const
-    //{
-    //    __GIVARO_MODULAR_RECINT_SUBMULIN(r,_p,a,b);
-    //    __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
-    //    return r;
-    //}
+    template<typename E, typename C, DIFF_RECINT>
+    E& _maxpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        E tmp;
+        _mul<E, C>(tmp, a, b, p);
+        if (r < tmp)
+        {
+          RecInt::sub(tmp, p, tmp);
+          RecInt::add(r, tmp);
+        }
+        else RecInt::sub(r, tmp);
+        return r;
+    }
+    template<typename E, typename C, SAME_RECINT>
+    E& _maxpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        if (r == 0) RecInt::reset(r);
+        else RecInt::sub(r, p, r);
+        RecInt::addmul(r, a, b);
+        RecInt::mod_n(r, p);
+        if (r == 0) RecInt::reset(r);
+        else RecInt::sub(r, p, r);
+        return r;
+    }
     TMPL
     inline typename MOD::Element&  MOD::maxpyin
         (Element& r, const Element& a, const Element& b) const
     {
-        __GIVARO_MODULAR_RECINT_LSUBMULIN(r,_p,a,b);
-        __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
-        return r;
+        return _maxpyin<Element, Compute_t> (r, a, b, _p);
     }
 
-    //TMPL
-    //inline typename MOD_SAME::Element&  MOD_SAME::axmyin
-    //    (Element& r, const Element& a, const Element& b) const
-    //{
-    //    Element rc(r);
-    //    __GIVARO_MODULAR_RECINT_MULSUB(r,_p,a,b,rc);
-    //    return r;
-    //}
     TMPL
     inline typename MOD::Element&  MOD::axmyin
         (Element& r, const Element& a, const Element& b) const
     {
         Element rc(r);
-        __GIVARO_MODULAR_RECINT_LMULSUB(r,_p,a,b,rc);
+        axmy(r, a, b, rc);
         return r;
     }
 
 #undef TMPL
 #undef MOD
-#undef MOD_SAME
-#undef MOD_DIFF
+#undef SAME_RECINT
+#undef DIFF_RECINT
 
 }
 

@@ -41,7 +41,7 @@ namespace Givaro {
 	 * .
 	 */
 	template<typename _Storage_t, typename _Compute_t, typename _Residu_t>
-	class Mod_implem: public virtual FiniteFieldInterface<_Storage_t>
+	class Mod_implem: public FiniteFieldInterface<_Storage_t>
 	{
 	public:
 
@@ -51,8 +51,7 @@ namespace Givaro {
 		using Compute_t = _Compute_t;
 		using Residu_t = _Residu_t;
 
-
-//		// ----- Exported Types and constantes
+		// ----- Exported Types and constantes
 		enum { size_rep = sizeof(Residu_t) };
 
 		// ----- Constantes
@@ -115,6 +114,11 @@ namespace Givaro {
 		// --         ruint<K> |  ruint<K> | ruint<K>::maxCardinality()
 		// --         ruint<K> | ruint<K+1>| (ruint<K+1>::maxCardinality()-1).Low/2
 
+		template<typename S, typename Enable>
+		static Residu_t maxCardinality() {
+			return 0;
+		}
+
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t))) 
 		static Residu_t maxCardinality() {
 			std::size_t k = sizeof(S);
@@ -148,7 +152,6 @@ namespace Givaro {
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_RecInt<S, Compute_t>::value)
 		static Residu_t maxCardinality() { return (Compute_t::maxCardinality()-1).Low/2; }
-
 
 		// ----- Checkers
 		inline bool isZero(const Element& a) const override { return a == zero; }
@@ -220,6 +223,10 @@ namespace Givaro {
 			return "Mod<RecInt::ruint<" + std::to_string(RecInt_K<S>::value) + ">>";
 		}
 
+		template<typename S, typename Enable>
+		std::string type_string() const {
+			return "<Mod<IntType>>";
+		}
 
     	// --------
     	// ----- IO

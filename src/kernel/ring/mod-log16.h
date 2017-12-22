@@ -42,8 +42,8 @@ namespace Givaro
     {
     public:
         // ----- Exported Types and constantes
-        
-	using Storage_t = int16_t; 
+
+	using Storage_t = int16_t;
 	using Compute_t = int16_t;
 	using Residu_t = uint16_t;
 	

@@ -116,7 +116,7 @@ namespace Givaro
            Error between _tab_rep2value and _tab_value2rep
            corrected by inversing the array
            */
-           
+
         for(j=0; j<_pmone; j++){
             if (_tab_rep2value[j] < _pmone)
                 _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j] ];
@@ -409,7 +409,7 @@ namespace Givaro
     // ---------
     // -- misc operations
     // ---------
-    
+
     // initialized by a degree of the generator.
     inline Mod<Log16>::Rep& Mod<Log16>::init ( Rep& r ) const
     {

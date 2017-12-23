@@ -59,7 +59,7 @@ namespace Givaro {
 
 		using Parent_t::_p;
 		using Parent_t::_pc;
-		using Parent_t::_bitsizep;
+		//using Parent_t::_bitsizep;
 
     	//inline bool isUnit(const Element& a) const 
     	//{ 

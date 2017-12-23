@@ -46,7 +46,7 @@ namespace Givaro
         
         using Parent_t::_p;
         using Parent_t::_pc;
-        using Parent_t::_bitsizep;
+        //using Parent_t::_bitsizep;
 
 
         // ----- Initialisation

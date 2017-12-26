@@ -78,7 +78,7 @@ namespace Givaro {
 			//, _bitsizep(0)
 		{
 			assert(_p >= minCardinality());
-			assert(!maxCardinality()|| _p <= maxCardinality());
+			assert(maxCardinality() < 1 || _p <= maxCardinality());
 			//Residu_t __p = _p;
 			//while (__p != 0) {
 			//	_bitsizep++;
@@ -95,7 +95,7 @@ namespace Givaro {
 			, _pc(static_cast<Compute_t>(p))
 		{
 			assert(_p >= minCardinality());
-			assert(!maxCardinality() || _p <= maxCardinality());
+			assert(maxCardinality() < 1 || _p <= maxCardinality());
 		}
 
 		Modular_implem(const Self_t& F)
@@ -153,7 +153,7 @@ namespace Givaro {
 		static Residu_t maxCardinality() { return 94906266; }
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, Integer))
-		static Residu_t maxCardinality() { return 0; }
+		static Residu_t maxCardinality() { return -1; }
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
 		static Residu_t maxCardinality() { return S::maxCardinality(); }
@@ -164,7 +164,7 @@ namespace Givaro {
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value)
 		static Residu_t maxCardinality() {
-			return 0;
+			return -1;
 		}
 
 		// ----- Checkers

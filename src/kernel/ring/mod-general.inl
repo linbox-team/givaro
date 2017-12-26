@@ -56,8 +56,8 @@ struct make_unsigned_int<T,
 template<typename> struct is_ruint : std::false_type {};
 template<size_t K> struct is_ruint<RecInt::ruint<K>> : std::true_type {};
 
--template<typename, typename> struct is_same_ruint : std::false_type {};
--template<size_t K> struct is_same_ruint<RecInt::ruint<K>,RecInt::ruint<K>> : std::true_type {};
+template<typename, typename> struct is_same_ruint : std::false_type {};
+template<size_t K> struct is_same_ruint<RecInt::ruint<K>,RecInt::ruint<K>> : std::true_type {};
 
 template<typename, typename> struct is_smaller_ruint : std::false_type {};
 template<size_t K> struct is_smaller_ruint<RecInt::ruint<K>,RecInt::ruint<K+1>> : std::true_type {};

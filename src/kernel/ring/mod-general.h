@@ -20,7 +20,7 @@ namespace Givaro
      *  Example: Modular<int32_t, uint64_t>
      */
     //template<typename Storage_t, typename COMP = Storage_t> class Modular;
-    template<typename Storage_t, typename Compute_t = Storage_t, typename Enable = void> class Mod;
+    template<typename Storage_t, typename Compute_t = Storage_t, typename Enable = void> class Modular;
 
     //! Generalized extended GCD used by specialized Modular.
     template<typename Storage_t>

@@ -15,7 +15,7 @@
 
 namespace Givaro {
 
-#define MOD Mod<Storage_t, Compute_t, typename std::enable_if<std::is_floating_point<Storage_t>::value>::type>
+#define MOD Modular<Storage_t, Compute_t, typename std::enable_if<std::is_floating_point<Storage_t>::value>::type>
 #define TMPL template<typename Storage_t, typename Compute_t> 
 #define COND_TMPL2(T, ...) \
 	template<typename T, \

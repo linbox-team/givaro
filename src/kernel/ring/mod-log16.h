@@ -37,8 +37,8 @@ namespace Givaro
      */
 
     template<>
-    class Mod<Log16> //:
-        //public Mod_implem<int16_t, int16_t, uint16_t>
+    class Modular<Log16> //:
+        //public Modular_implem<int16_t, int16_t, uint16_t>
     {
     public:
         // ----- Exported Types and constantes
@@ -48,8 +48,8 @@ namespace Givaro
 	using Residu_t = uint16_t;
 	
 	using Element = Storage_t;
-	using Self_t = Mod<Log16>;
-	using Parent_t = Mod_implem<Storage_t, Compute_t, Residu_t>;
+	using Self_t = Modular<Log16>;
+	using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
 
         enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
@@ -62,14 +62,14 @@ namespace Givaro
         //typedef const Element* ConstElement_ptr;
 
         // ----- Constructor /destor
-        inline Mod( Residu_t p = 2 );
-        inline Mod( const Mod<Log16>& F);
-        inline ~Mod();
+        inline Modular( Residu_t p = 2 );
+        inline Modular( const Modular<Log16>& F);
+        inline ~Modular();
 
-        bool operator==( const Mod<Log16>& BC) const { return _p == BC._p;}
-        bool operator!=( const Mod<Log16>& BC) const { return _p != BC._p;}
+        bool operator==( const Modular<Log16>& BC) const { return _p == BC._p;}
+        bool operator!=( const Modular<Log16>& BC) const { return _p != BC._p;}
 
-        Mod<Log16>& operator=( const Mod<Log16>& F);
+        Modular<Log16>& operator=( const Modular<Log16>& F);
 
         // ----- Access to the modulus
         Residu_t residu() const;

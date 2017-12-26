@@ -24,10 +24,10 @@ namespace Givaro
     //! @brief The standard arithmetic in modular rings using fixed size precision.
 
     template<typename _Storage_t, typename _Compute_t>
-    class Mod<_Storage_t, _Compute_t, 
+    class Modular<_Storage_t, _Compute_t, 
       typename std::enable_if<is_same_ruint<_Storage_t, _Compute_t>::value 
                            || is_smaller_ruint<_Storage_t, _Compute_t>::value>::type>:
-      public Mod_implem<_Storage_t, _Compute_t, _Storage_t>
+      public Modular_implem<_Storage_t, _Compute_t, _Storage_t>
     {
     public:
 
@@ -37,12 +37,12 @@ namespace Givaro
         using Compute_t = _Compute_t;
 
         using Element = Storage_t;
-        using Self_t = Mod<Storage_t, Compute_t>;
-        using Parent_t = Mod_implem<Storage_t, Compute_t, Storage_t>;
+        using Self_t = Modular<Storage_t, Compute_t>;
+        using Parent_t = Modular_implem<Storage_t, Compute_t, Storage_t>;
 
 
         // ----- Constructors
-        using Parent_t::Mod_implem;
+        using Parent_t::Modular_implem;
         
         using Parent_t::_p;
         using Parent_t::_pc;

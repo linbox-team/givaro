@@ -41,12 +41,12 @@ namespace Givaro {
 	 * .
 	 */
 	template<typename _Storage_t, typename _Compute_t, typename _Residu_t>
-	class Mod_implem: public FiniteFieldInterface<_Storage_t>
+	class Modular_implem: public FiniteFieldInterface<_Storage_t>
 	{
 	public:
 
 		using Element = _Storage_t;
-		using Self_t = Mod_implem<_Storage_t, _Compute_t, _Residu_t>;
+		using Self_t = Modular_implem<_Storage_t, _Compute_t, _Residu_t>;
 		using Storage_t = _Storage_t;
 		using Compute_t = _Compute_t;
 		using Residu_t = _Residu_t;
@@ -60,7 +60,7 @@ namespace Givaro {
 		const Element mOne;
 
 		// ----- Constructors
-		Mod_implem()
+		Modular_implem()
 			: zero(static_cast<Element>(0))
 			, one(static_cast<Element>(1))
 			, mOne(static_cast<Element>(-1))
@@ -69,7 +69,7 @@ namespace Givaro {
 			//, _bitsizep(0) 
 			{}
 
-		Mod_implem(const Residu_t p)
+		Modular_implem(const Residu_t p)
 			: zero(static_cast<Element>(0))
 			, one(static_cast<Element>(1))
 			, mOne(static_cast<Element>(p-1))
@@ -87,7 +87,7 @@ namespace Givaro {
 		}
 
 		template<typename Source>
-		Mod_implem(const Source& p)
+		Modular_implem(const Source& p)
 			: zero(static_cast<Element>(0))
 			, one(static_cast<Element>(1))
 			, mOne(static_cast<Element>(p-1))
@@ -98,7 +98,7 @@ namespace Givaro {
 			assert(!maxCardinality() || _p <= maxCardinality());
 		}
 
-		Mod_implem(const Self_t& F)
+		Modular_implem(const Self_t& F)
 			: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _pc(F._pc) {} //, _bitsizep(F._bitsizep) {}
 
 		// ----- Accessors
@@ -208,38 +208,38 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S))
 		std::string type_string() const {
 			std::size_t k = sizeof(S);
-			return "Mod<int" + std::to_string(8*k) + "_t>";
+			return "Modular<int" + std::to_string(8*k) + "_t>";
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_UINT(S))
 		std::string type_string() const {
 			std::size_t k = sizeof(S);
-			return "Mod<uint" + std::to_string(8*k) + "_t>";
+			return "Modular<uint" + std::to_string(8*k) + "_t>";
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, float))
 		std::string type_string() const {
-			return "Mod<float>";
+			return "Modular<float>";
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, double))
 		std::string type_string() const {
-			return "Mod<double>";
+			return "Modular<double>";
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, Integer))
 		std::string type_string() const {
-			return "Mod<Integer>";
+			return "Modular<Integer>";
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<S>::value)
 		std::string type_string() const {
-			return "Mod<RecInt::ruint<" + std::to_string(RecInt_K<S>::value) + ">>";
+			return "Modular<RecInt::ruint<" + std::to_string(RecInt_K<S>::value) + ">>";
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS(S, Integer) && !is_ruint<S>::value)
 		std::string type_string() const {
-			return "<Mod<IntType>>";
+			return "<Modular<IntType>>";
 		}
 
     	// --------
@@ -283,21 +283,21 @@ namespace Givaro {
 	    char ch;
 	    s >> std::ws >> ch;
 	    if (ch != '(')
-	        std::cerr << "GivBadFormat(Mod_implem::read: syntax error: no '('))" << std::endl;
+	        std::cerr << "GivBadFormat(Modular_implem::read: syntax error: no '('))" << std::endl;
 	
 	    s >> std::ws >> ch;
 	    if (ch != 'z')
-	        std::cerr << "GivBadFormat(Mod_implem::read: bad domain object))" << std::endl;
+	        std::cerr << "GivBadFormat(Modular_implem::read: bad domain object))" << std::endl;
 	
 	    s >> std::ws >> ch;
 	    if (ch != ',')
-	        std::cerr << "GivBadFormat(Mod_implem::read: syntax error: no ',')) " << std::endl;
+	        std::cerr << "GivBadFormat(Modular_implem::read: syntax error: no ',')) " << std::endl;
 	
 	    s >> std::ws >> _p;
 	
 	    s >> std::ws >> ch;
 	    if (ch != ')')
-	        std::cerr << "GivBadFormat(Mod_implem::read: syntax error: no ')')) " << std::endl;
+	        std::cerr << "GivBadFormat(Modular_implem::read: syntax error: no ')')) " << std::endl;
 	
 	    return s;
 		}

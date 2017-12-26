@@ -32,8 +32,8 @@ namespace Givaro
 {
 
     template<typename _Storage_t, typename _Compute_t>
-    class Mod<_Storage_t, _Compute_t, typename std::enable_if<std::is_floating_point<_Storage_t>::value>::type>: 
-		public Mod_implem<_Storage_t, _Compute_t, typename make_unsigned_int<_Storage_t>::type>
+    class Modular<_Storage_t, _Compute_t, typename std::enable_if<std::is_floating_point<_Storage_t>::value>::type>: 
+		public Modular_implem<_Storage_t, _Compute_t, typename make_unsigned_int<_Storage_t>::type>
     {
     public:
 
@@ -42,11 +42,11 @@ namespace Givaro
 		using Residu_t = typename make_unsigned_int<_Storage_t>::type;
 
 		using Element = Storage_t;
-		using Self_t = Mod<_Storage_t, _Compute_t>;
-		using Parent_t = Mod_implem<Storage_t, Compute_t, Residu_t>;
+		using Self_t = Modular<_Storage_t, _Compute_t>;
+		using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
 		// ----- Constructors
-		using Parent_t::Mod_implem;
+		using Parent_t::Modular_implem;
 
 		using Parent_t::_p;
 		using Parent_t::_pc;

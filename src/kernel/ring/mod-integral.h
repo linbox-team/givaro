@@ -41,8 +41,8 @@ namespace Givaro {
 
 
 	template<typename _Storage_t, typename _Compute_t>
-	class Mod<_Storage_t, _Compute_t, VALID_TYPES(_Storage_t, _Compute_t)>: 
-		public Mod_implem<_Storage_t, typename std::make_unsigned<_Compute_t>::type, typename std::make_unsigned<_Storage_t>::type>
+	class Modular<_Storage_t, _Compute_t, VALID_TYPES(_Storage_t, _Compute_t)>: 
+		public Modular_implem<_Storage_t, typename std::make_unsigned<_Compute_t>::type, typename std::make_unsigned<_Storage_t>::type>
 	{
 	public:
 		
@@ -51,11 +51,11 @@ namespace Givaro {
 		using Compute_t = typename std::make_unsigned<_Compute_t>::type;
 
 		using Element = Storage_t;
-		using Self_t = Mod<Storage_t, _Compute_t>;
-		using Parent_t = Mod_implem<Storage_t, Compute_t, Residu_t>;
+		using Self_t = Modular<Storage_t, _Compute_t>;
+		using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
         // ----- Constructors
-		using Parent_t::Mod_implem;
+		using Parent_t::Modular_implem;
 
 		using Parent_t::_p;
 		using Parent_t::_pc;

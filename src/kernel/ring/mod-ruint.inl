@@ -15,7 +15,7 @@
 namespace Givaro
 {
 #define TMPL template<typename Storage_t, typename Compute_t>
-#define MOD Mod<Storage_t, Compute_t, \
+#define MOD Modular<Storage_t, Compute_t, \
   typename std::enable_if<is_same_ruint<Storage_t, Compute_t>::value || \
                           is_smaller_ruint<Storage_t, Compute_t>::value>::type>
 

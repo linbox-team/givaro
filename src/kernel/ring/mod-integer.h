@@ -28,8 +28,8 @@ namespace Givaro
      * .
      */
     template<>
-    class Mod<Integer>:
-			public Mod_implem<Integer, Integer, Integer>
+    class Modular<Integer>:
+			public Modular_implem<Integer, Integer, Integer>
     {
     public:
         // ----- Exported Types and constantes
@@ -39,11 +39,11 @@ namespace Givaro
 		using Residu_t = Integer;
 
 		using Element = Storage_t;
-		using Self_t = Mod<Storage_t, Compute_t>;
-		using Parent_t = Mod_implem<Storage_t, Compute_t, Residu_t>;
+		using Self_t = Modular<Storage_t, Compute_t>;
+		using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
 		// Constructors
-		using Parent_t::Mod_implem;
+		using Parent_t::Modular_implem;
 
 		using Parent_t::_p;
 		using Parent_t::_pc;
@@ -108,10 +108,10 @@ namespace Givaro
 
     /* Specialisation for Modular<integer> field*/
     template <>
-    class ModularRandIter<Mod<Integer, Integer> >
+    class ModularRandIter<Modular<Integer, Integer> >
     {
     public:
-        typedef Mod<Integer>  Ring;
+        typedef Modular<Integer>  Ring;
         typedef Ring::Element Element;
 
         ModularRandIter(const Ring& R, const size_t& size = 0, const size_t& seed = 0) 

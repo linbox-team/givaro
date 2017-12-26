@@ -33,7 +33,7 @@ namespace Givaro
      * .
      */
     template<typename IntType, typename _Compute_t, typename Enable>
-    class Mod : public Mod_implem<IntType, _Compute_t, IntType>
+    class Modular : public Modular_implem<IntType, _Compute_t, IntType>
     {
     public:
 
@@ -43,8 +43,8 @@ namespace Givaro
         using Compute_t = _Compute_t;
 
         //using Element = typename FiniteFieldInterface<IntType>::Element;
-        using Self_t = Mod<Storage_t, Compute_t>;
-        using Parent_t = Mod_implem<Storage_t, Compute_t, Residu_t>;
+        using Self_t = Modular<Storage_t, Compute_t>;
+        using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
         using Element = typename Parent_t::Element;
 
@@ -55,49 +55,12 @@ namespace Givaro
         
         // ----- Constructors
 
-        using Parent_t::Mod_implem; 
+        using Parent_t::Modular_implem; 
         using Parent_t::_p;
         using Parent_t::_pc;
         using Parent_t::zero;
         using Parent_t::one;
         using Parent_t::mOne;
-
-        //~Mod() noexcept {}
-        //Mod()
-        //        : zero(0),
-        //          one(1),
-        //          _p(static_cast<Residu_t>(0)) {}
-
-        //Mod(const Residu_t p)
-        //    : zero(0)
-        //    , one(1)
-        //    , mOne(p-static_cast<Residu_t>(1)), _p(p)
-        //{
-	//  assert(_p >= Parent_t::minCardinality());
-        //}
-
-        //template<class IntConvType>
-        //Mod(const IntConvType& p, const IntConvType& e=1)
-        //    : zero(0)
-        //    , one(1)
-        //    , mOne( Caster<Residu_t>(p-1) )
-        //    , _p( Caster<Residu_t>(p) )
-        //{
-	//  assert(_p >= Parent_t::minCardinality());
-        //}
-
-        //Mod(const Integer& p, const Integer& e=Integer::one)
-        //    : zero(0)
-        //    , one(1)
-        //    , mOne( Caster<Residu_t>(p-1) )
-        //    , _p( Caster<Residu_t>(p) )
-        //{
-	//  assert(_p >= Parent_t::minCardinality());
-        //}
-
-        //Mod(const Self_t& F)
-        //        : zero(F.zero),one(F.one),mOne(F.mOne), _p(F._p) {}
-
 
         // ----- Initialisation
         Element& init (Element& x) const

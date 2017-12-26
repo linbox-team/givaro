@@ -8,8 +8,8 @@
 // Authors: JG Dumas
 // $Id: givzpzInt.inl,v 1.11 2011-02-02 17:16:43 briceboyer Exp $
 // ==========================================================================
-#ifndef __GIVARO_mod_integer_INL
-#define __GIVARO_mod_integer_INL
+#ifndef __GIVARO_modular_integer_INL
+#define __GIVARO_modular_integer_INL
 // Description:
 
 namespace Givaro {
@@ -197,5 +197,5 @@ namespace Givaro {
 
 } // namespace Givaro
 
-#endif // __GIVARO_mod_integer_INL
+#endif // __GIVARO_modular_integer_INL
 

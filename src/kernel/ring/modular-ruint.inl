@@ -7,8 +7,8 @@
 // Authors: A. Breust (adapted)
 // ==========================================================================
 
-#ifndef __GIVARO_mod_ruint_INL
-#define __GIVARO_mod_ruint_INL
+#ifndef __GIVARO_modular_ruint_INL
+#define __GIVARO_modular_ruint_INL
 
 #include "modular-defines.h"
 

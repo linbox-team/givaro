@@ -13,14 +13,16 @@
 #include <givaro/givinteger.h>
 #include <givaro/zring.h>
 #include <givaro/gfq.h>
-//#include <givaro/modular-extended.h>
-#include <givaro/mod-integral.h>
-#include <givaro/mod-floating.h>
-#include <givaro/mod-integer.h>
-//#include <givaro/modular-inttype.h>
 #include <recint/recint.h>
+//#include <givaro/modular-extended.h>
+//#include <givaro/modular-general.h>
+//#include <givaro/modular-integral.h>
+//#include <givaro/modular-floating.h>
+//#include <givaro/modular-integer.h>
 //#include <givaro/modular-ruint.h>
-#include <givaro/mod-recint.h>
+//#include <givaro/modular-log16.h>
+//#include <givaro/modular-inttype.h>
+#include <givaro/modular.h>
 
 using namespace Givaro;
 
@@ -105,18 +107,24 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     F.axmy(d_,a,b,c); // d_ = a*b - c
     F.addin(d_,c);
     F.subin(d,c);
-    //         F.write(std::cerr) << std::endl;
-    //         F.write(std::cerr << "a: ", a) << std::endl;
-    //         F.write(std::cerr << "b: ", b) << std::endl;
-    //         F.write(std::cerr << "c: ", c) << std::endl;
-    //         F.write(std::cerr << "d: ", d) << std::endl;
-    //         F.write(std::cerr << "d_: ", d_) << std::endl;
+             //F.write(std::cerr) << std::endl;
+             //F.write(std::cerr << "a: ", a) << std::endl;
+             //F.write(std::cerr << "b: ", b) << std::endl;
+             //F.write(std::cerr << "c: ", c) << std::endl;
+             //F.write(std::cerr << "d: ", d) << std::endl;
+             //F.write(std::cerr << "d_: ", d_) << std::endl;
     TESTE_EG(d_,d);
 
     F.axpy(d, a, b, c); // d = a*b + c;
     F.init(d_);
     F.assign(d_,c);
     F.axpyin(d_,a,b);
+             //F.write(std::cerr) << std::endl;
+             //F.write(std::cerr << "a: ", a) << std::endl;
+             //F.write(std::cerr << "b: ", b) << std::endl;
+             //F.write(std::cerr << "c: ", c) << std::endl;
+             //F.write(std::cerr << "d: ", d) << std::endl;
+             //F.write(std::cerr << "d_: ", d_) << std::endl;
     TESTE_EG(d_, d);
 
     F.sub(d,a,b); // d = a -b
@@ -272,20 +280,20 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
-    //Integer::seeding(seed);
+    Integer::seeding(seed);
     RecInt::srand(seed);
     
-    //using ModularCUS = Mod<int8_t, uint16_t>;
-    //using ModularSUZ = Mod<int16_t, uint32_t>;
-    //using ModularZULL = Mod<int32_t, uint64_t>;
-    //using ModularUCUS = Mod<uint8_t, uint16_t>;
-    //using ModularUSUZ = Mod<uint16_t, uint32_t>;
-    //using ModularUZULL = Mod<uint32_t, uint64_t>;
-    //using ModularFD = Mod<float, double>;
+    using ModularCUS = Modular<int8_t, uint16_t>;
+    using ModularSUZ = Modular<int16_t, uint32_t>;
+    using ModularZULL = Modular<int32_t, uint64_t>;
+    using ModularUCUS = Modular<uint8_t, uint16_t>;
+    using ModularUSUZ = Modular<uint16_t, uint32_t>;
+    using ModularUZULL = Modular<uint32_t, uint64_t>;
+    using ModularFD = Modular<float, double>;
 
 #ifdef __GIVARO_HAVE_INT128
-	//using ModularLLULLL = Mod<int64_t, uint128_t>;
-	//using ModularULLULLL = Mod<uint64_t, uint128_t>;
+	using ModularLLULLL = Modular<int64_t, uint128_t>;
+	using ModularULLULLL = Modular<uint64_t, uint128_t>;
 #endif
 
 #define TEST_SPECIFIC(Ring, Name, Modulus...)	\
@@ -293,7 +301,7 @@ int main(int argc, char ** argv)
     Ring Name(Modulus);				\
     JETESTE(Name, seed);
 
-    //Mod<float> GF5(5);
+    //Modular<float> GF5(5);
     //float elt, inv;
     //GF5.init(elt, 2);
     //GF5.inv(inv, elt);
@@ -302,62 +310,67 @@ int main(int argc, char ** argv)
     //-------------//
     //----- 4 -----//
     
-    //TEST_SPECIFIC(Mod<int8_t>, C4, 4);
-    //TEST_SPECIFIC(Mod<int16_t>, S4, 4);
-    //TEST_SPECIFIC(Mod<int32_t>, Z4, 4);
-    //TEST_SPECIFIC(Mod<int64_t>, LL4, 4);
-    //TEST_SPECIFIC(Mod<uint8_t>, UC4, 4);
-    //TEST_SPECIFIC(Mod<uint16_t>, US4, 4);
-    //TEST_SPECIFIC(Mod<uint32_t>, UZ4, 4);
-    //TEST_SPECIFIC(Mod<uint64_t>, ULL4, 4);
-    //TEST_SPECIFIC(ModularCUS, CUS4, 4);
-    //TEST_SPECIFIC(ModularSUZ, SUZ4, 4);
-    //TEST_SPECIFIC(ModularZULL, ZULL4, 4);
-    //TEST_SPECIFIC(ModularUCUS, UCUS4, 4);
-    //TEST_SPECIFIC(ModularUSUZ, USUZ4, 4);
-    //TEST_SPECIFIC(ModularUZULL, UZULL4, 4);
-	//TEST_SPECIFIC(ModularFD, FD4, 4);
+    TEST_SPECIFIC(Modular<int8_t>, C4, 4);
+    TEST_SPECIFIC(Modular<int16_t>, S4, 4);
+    TEST_SPECIFIC(Modular<int32_t>, Z4, 4);
+    TEST_SPECIFIC(Modular<int64_t>, LL4, 4);
+    TEST_SPECIFIC(Modular<uint8_t>, UC4, 4);
+    TEST_SPECIFIC(Modular<uint16_t>, US4, 4);
+    TEST_SPECIFIC(Modular<uint32_t>, UZ4, 4);
+    TEST_SPECIFIC(Modular<uint64_t>, ULL4, 4);
+    TEST_SPECIFIC(ModularCUS, CUS4, 4);
+    TEST_SPECIFIC(ModularSUZ, SUZ4, 4);
+    TEST_SPECIFIC(ModularZULL, ZULL4, 4);
+    TEST_SPECIFIC(ModularUCUS, UCUS4, 4);
+    TEST_SPECIFIC(ModularUSUZ, USUZ4, 4);
+    TEST_SPECIFIC(ModularUZULL, UZULL4, 4);
+    TEST_SPECIFIC(ModularFD, FD4, 4);
 #ifdef __GIVARO_HAVE_INT128
-	//TEST_SPECIFIC(ModularLLULLL, LLULLL4, 4);
-	//TEST_SPECIFIC(ModularULLULLL, ULLULLL4, 4);
+	TEST_SPECIFIC(ModularLLULLL, LLULLL4, 4);
+	TEST_SPECIFIC(ModularULLULLL, ULLULLL4, 4);
 #endif
 
-    //TEST_SPECIFIC(Mod<float>, F4, 4);
-    //TEST_SPECIFIC(Mod<double>, D4, 4);
-    //TEST_SPECIFIC(Mod<Integer>, I4, 4);
-    TEST_SPECIFIC(Mod<RecInt::ruint128>, RU4, 4);
-    //TEST_SPECIFIC(Modular<RecInt::rint128>, R4, 4);
+   TEST_SPECIFIC(Modular<float>, F4, 4);
+   TEST_SPECIFIC(Modular<double>, D4, 4);
+    TEST_SPECIFIC(Modular<Integer>, I4, 4);
+    TEST_SPECIFIC(Modular<RecInt::ruint128>, RU4, 4);
+    TEST_SPECIFIC(Modular<RecInt::rint128>, R4, 4);
     //TEST_SPECIFIC(ZRing<Integer>, ZR4, 4);
+
+    TEST_SPECIFIC(Modular<Log16>, L5, 5);
+    TEST_SPECIFIC(Modular<Log16>, L7, 7);
 
     //--------------//
     //----- 75 -----//
+
+    TEST_SPECIFIC(Modular<Log16>, L79, 79);
     
-    //TEST_SPECIFIC(Mod<int8_t>, C75, 13);
-    //TEST_SPECIFIC(Mod<int16_t>, S75, 75);
-    //TEST_SPECIFIC(Mod<int32_t>, Z75, 75);
-    //TEST_SPECIFIC(Mod<int64_t>, LL75, 75);
-    //TEST_SPECIFIC(Mod<uint8_t>, UC75, 13);
-    //TEST_SPECIFIC(Mod<uint16_t>, US75, 75);
-    //TEST_SPECIFIC(Mod<uint32_t>, UZ75, 75);
-    //TEST_SPECIFIC(Mod<uint64_t>, ULL75, 75);
-    //TEST_SPECIFIC(ModularCUS, CUS75, 75);
-    //TEST_SPECIFIC(ModularSUZ, SUZ75, 75);
-    //TEST_SPECIFIC(ModularZULL, ZULL75, 75);
-    //TEST_SPECIFIC(ModularUCUS, UCUS75, 75);
-    //TEST_SPECIFIC(ModularUSUZ, USUZ75, 75);
-    //TEST_SPECIFIC(ModularUZULL, UZULL75, 75);
-    //TEST_SPECIFIC(ModularFD, FD75, 75);
+    TEST_SPECIFIC(Modular<int8_t>, C75, 13);
+    TEST_SPECIFIC(Modular<int16_t>, S75, 75);
+    TEST_SPECIFIC(Modular<int32_t>, Z75, 75);
+    TEST_SPECIFIC(Modular<int64_t>, LL75, 75);
+    TEST_SPECIFIC(Modular<uint8_t>, UC75, 13);
+    TEST_SPECIFIC(Modular<uint16_t>, US75, 75);
+    TEST_SPECIFIC(Modular<uint32_t>, UZ75, 75);
+    TEST_SPECIFIC(Modular<uint64_t>, ULL75, 75);
+    TEST_SPECIFIC(ModularCUS, CUS75, 75);
+    TEST_SPECIFIC(ModularSUZ, SUZ75, 75);
+    TEST_SPECIFIC(ModularZULL, ZULL75, 75);
+    TEST_SPECIFIC(ModularUCUS, UCUS75, 75);
+    TEST_SPECIFIC(ModularUSUZ, USUZ75, 75);
+    TEST_SPECIFIC(ModularUZULL, UZULL75, 75);
+    TEST_SPECIFIC(ModularFD, FD75, 75);
 #ifdef __GIVARO_HAVE_INT128
-	//TEST_SPECIFIC(ModularLLULLL, LLULLL75, 75);
-	//TEST_SPECIFIC(ModularULLULLL, ULLULLL75, 75);
+	TEST_SPECIFIC(ModularLLULLL, LLULLL75, 75);
+	TEST_SPECIFIC(ModularULLULLL, ULLULLL75, 75);
 #endif
 
 
-   //TEST_SPECIFIC(Mod<float>, F75, 75);
-   //TEST_SPECIFIC(Mod<double>, D75, 75);
-    //TEST_SPECIFIC(Mod<Integer>, I75, 75);
-    //TEST_SPECIFIC(Modular<RecInt::ruint128>, RU75, 75);
-    //TEST_SPECIFIC(Modular<RecInt::rint128>, R75, 75);
+   TEST_SPECIFIC(Modular<float>, F75, 75);
+   TEST_SPECIFIC(Modular<double>, D75, 75);
+   TEST_SPECIFIC(Modular<Integer>, I75, 75);
+   TEST_SPECIFIC(Modular<RecInt::ruint128>, RU75, 75);
+   TEST_SPECIFIC(Modular<RecInt::rint128>, R75, 75);
     
     //TEST_SPECIFIC(ModularBalanced<int32_t>, BZ75, 75);
     //TEST_SPECIFIC(ModularBalanced<int64_t>, BLL75, 75);
@@ -372,25 +385,27 @@ int main(int argc, char ** argv)
     Poly1Dom<BaseRing, Dense> Name(BaseRingName, "X");		\
     JEPOLTESTE(Name, seed);
 
-    //TEST_POLYNOMIAL(Mod<int8_t>, PC75, C75);
-    //TEST_POLYNOMIAL(Mod<int16_t>, PS75, S75);
-    //TEST_POLYNOMIAL(Mod<int32_t>, PZ75, Z75);
-    //TEST_POLYNOMIAL(Mod<int64_t>, PLL75, LL75);
-    //TEST_POLYNOMIAL(Mod<uint8_t>, PUC75, UC75);
-    //TEST_POLYNOMIAL(Mod<uint16_t>, PUS75, US75);
-    //TEST_POLYNOMIAL(Mod<uint32_t>, PUZ75, UZ75);
-    //TEST_POLYNOMIAL(Mod<uint64_t>, PULL75, ULL75);
-    //TEST_POLYNOMIAL(ModularCUS, PCUS75, CUS75);
-    //TEST_POLYNOMIAL(ModularSUZ, PSUZ75, SUZ75);
-    //TEST_POLYNOMIAL(ModularZULL, PZULL75, ZULL75);
-    //TEST_POLYNOMIAL(ModularUCUS, PUCUS75, UCUS75);
-    //TEST_POLYNOMIAL(ModularUSUZ, PUSUZ75, USUZ75);
-    //TEST_POLYNOMIAL(ModularUZULL, PUZULL75, UZULL75);
-    //TEST_POLYNOMIAL(ModularFD, PFD75, FD75);
-   //TEST_POLYNOMIAL(Mod<float>, PF75, F75);
-   //TEST_POLYNOMIAL(Mod<double>, PD75, D75);
-    //TEST_POLYNOMIAL(Mod<Integer>, PI75, I75);
-    //TEST_POLYNOMIAL(Modular<RecInt::ruint128>, PRU75, RU75);
+   TEST_POLYNOMIAL(Modular<Log16>, PL79, L79);
+   TEST_POLYNOMIAL(Modular<int8_t>, PC75, C75);
+   TEST_POLYNOMIAL(Modular<int16_t>, PS75, S75);
+   TEST_POLYNOMIAL(Modular<int32_t>, PZ75, Z75);
+   TEST_POLYNOMIAL(Modular<int64_t>, PLL75, LL75);
+   TEST_POLYNOMIAL(Modular<uint8_t>, PUC75, UC75);
+   TEST_POLYNOMIAL(Modular<uint16_t>, PUS75, US75);
+   TEST_POLYNOMIAL(Modular<uint32_t>, PUZ75, UZ75);
+   TEST_POLYNOMIAL(Modular<uint64_t>, PULL75, ULL75);
+   TEST_POLYNOMIAL(ModularCUS, PCUS75, CUS75);
+   TEST_POLYNOMIAL(ModularSUZ, PSUZ75, SUZ75);
+   TEST_POLYNOMIAL(ModularZULL, PZULL75, ZULL75);
+   TEST_POLYNOMIAL(ModularUCUS, PUCUS75, UCUS75);
+   TEST_POLYNOMIAL(ModularUSUZ, PUSUZ75, USUZ75);
+   TEST_POLYNOMIAL(ModularUZULL, PUZULL75, UZULL75);
+   TEST_POLYNOMIAL(ModularFD, PFD75, FD75);
+   TEST_POLYNOMIAL(Modular<float>, PF75, F75);
+   TEST_POLYNOMIAL(Modular<double>, PD75, D75);
+   TEST_POLYNOMIAL(Modular<Integer>, PI75, I75);
+   TEST_POLYNOMIAL(Modular<RecInt::ruint128>, PRU75, RU75);
+   TEST_POLYNOMIAL(Modular<RecInt::rint128>, PR75, R75);
     
     //TEST_POLYNOMIAL(ModularBalanced<int32_t>, MBZ75, BZ75);
     //TEST_POLYNOMIAL(ModularBalanced<int64_t>, MBLL75, BLL75);
@@ -410,31 +425,32 @@ int main(int argc, char ** argv)
     Field Name(Field::maxCardinality());	\
     JETESTE(Name, seed);
     
-    //TEST_LAST(Mod<int8_t>, Cmax);
-    //TEST_LAST(Mod<int16_t>, Smax);
-    //TEST_LAST(Mod<int32_t>, Zmax);
-    //TEST_LAST(Mod<int64_t>, LLmax);
-    //TEST_LAST(Mod<uint8_t>, UCmax);
-    //TEST_LAST(Mod<uint16_t>, USmax);
-    //TEST_LAST(Mod<uint32_t>, UZmax);
-    //TEST_LAST(Mod<uint64_t>, ULLmax);
-    //TEST_LAST(ModularCUS, CUSmax);
-    //TEST_LAST(ModularSUZ, SUZmax);
-    //TEST_LAST(ModularZULL, ZULLmax);
-    //TEST_LAST(ModularUCUS, UCUSmax);
-    //TEST_LAST(ModularUSUZ, USUZmax);
-	//TEST_LAST(ModularUZULL, UZULLmax);
+    TEST_LAST(Modular<Log16>, Lmax);
+    TEST_LAST(Modular<int8_t>, Cmax);
+    TEST_LAST(Modular<int16_t>, Smax);
+    TEST_LAST(Modular<int32_t>, Zmax);
+    TEST_LAST(Modular<int64_t>, LLmax);
+    TEST_LAST(Modular<uint8_t>, UCmax);
+    TEST_LAST(Modular<uint16_t>, USmax);
+    TEST_LAST(Modular<uint32_t>, UZmax);
+    TEST_LAST(Modular<uint64_t>, ULLmax);
+    TEST_LAST(ModularCUS, CUSmax);
+    TEST_LAST(ModularSUZ, SUZmax);
+    TEST_LAST(ModularZULL, ZULLmax);
+    TEST_LAST(ModularUCUS, UCUSmax);
+    TEST_LAST(ModularUSUZ, USUZmax);
+    TEST_LAST(ModularUZULL, UZULLmax);
 #ifdef __GIVARO_HAVE_INT128
-	//TEST_LAST(ModularLLULLL, LLULLLmax);
-	//TEST_LAST(ModularULLULLL, ULLULLLmax);
+	TEST_LAST(ModularLLULLL, LLULLLmax);
+	TEST_LAST(ModularULLULLL, ULLULLLmax);
 #endif
 
-   //TEST_LAST(Mod<float>, Fmax);
-   //TEST_LAST(Mod<double>, Dmax);
-    //TEST_LAST(ModularFD, FDmax);
-    //TEST_LAST(Modular<RecInt::ruint128>, RUmax);
-    //typedef Modular<RecInt::ruint128,RecInt::ruint256> MyMod;
-    //TEST_LAST(MyMod, RUExtmax);    
+   TEST_LAST(Modular<float>, Fmax);
+   TEST_LAST(Modular<double>, Dmax);
+   TEST_LAST(ModularFD, FDmax);
+   TEST_LAST(Modular<RecInt::ruint128>, RUmax);
+    typedef Modular<RecInt::ruint128,RecInt::ruint256> MyMod;
+    TEST_LAST(MyMod, RUExtmax);    
     //TEST_LAST(ModularBalanced<int32_t>, BZmax);
     //TEST_LAST(ModularBalanced<int64_t>, BLLmax);
     //TEST_LAST(ModularBalanced<float>, BFmax);

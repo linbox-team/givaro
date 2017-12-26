@@ -17,7 +17,7 @@ namespace Givaro {
 
 #define MOD Modular<Storage_t, Compute_t, typename std::enable_if<std::is_floating_point<Storage_t>::value>::type>
 #define TMPL template<typename Storage_t, typename Compute_t> 
-#define COND_TMPL2(T, ...) \
+#define COND_TMPL(T, ...) \
 	template<typename T, \
 		typename std::enable_if<__VA_ARGS__, int>::type*>
 
@@ -32,7 +32,7 @@ namespace Givaro {
     }
 
     TMPL
-    COND_TMPL2(Source, 
+    COND_TMPL(Source, 
 	std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value)
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
@@ -43,7 +43,7 @@ namespace Givaro {
     }
 
     TMPL
-    COND_TMPL2(Source,
+    COND_TMPL(Source,
 	std::is_integral<Source>::value && std::is_signed<Source>::value && sizeof(Source) >= sizeof(Storage_t))
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
@@ -54,7 +54,7 @@ namespace Givaro {
     }
 
     TMPL
-    COND_TMPL2(Source, 
+    COND_TMPL(Source, 
 	std::is_integral<Source>::value && std::is_unsigned<Source>::value && sizeof(Source) >= sizeof(Storage_t))
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
@@ -63,7 +63,7 @@ namespace Givaro {
     }
 
     TMPL
-    COND_TMPL2(Source, std::is_same<Source,  Integer&>::value)
+    COND_TMPL(Source, std::is_same<Source,  Integer&>::value)
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
     {
@@ -246,7 +246,7 @@ namespace Givaro {
 
 #undef MOD
 #undef TMPL
-#undef COND_TMPL2
+#undef COND_TMPL
 
 } // namespace Givaro
 

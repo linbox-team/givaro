@@ -8,15 +8,15 @@
 //          B. Grenet <bruno.grenet@lirmm.fr>
 // ==========================================================================
 
-#ifndef __GIVARO_mod_ruint_H
-#define __GIVARO_mod_ruint_H
+#ifndef __GIVARO_modular_ruint_H
+#define __GIVARO_modular_ruint_H
 
 #include "recint/ruint.h"
 #include "givaro/givinteger.h"
 #include "givaro/ring-interface.h"
-#include "givaro/mod-general.h"
+#include "givaro/modular-general.h"
 #include "givaro/givranditer.h"
-#include "givaro/mod-implem.h"
+#include "givaro/modular-implem.h"
 
 namespace Givaro
 {
@@ -109,6 +109,6 @@ namespace Givaro
 }
 
 
-#include "givaro/mod-ruint.inl"
+#include "givaro/modular-ruint.inl"
 
 #endif

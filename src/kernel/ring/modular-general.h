@@ -19,14 +19,15 @@ namespace Givaro
      *  While arithmetics will occur on the unsigned version of COMP type.
      *  Example: Modular<int32_t, uint64_t>
      */
-    template<typename Storage_t, typename COMP = Storage_t> class Modular;
+    //template<typename Storage_t, typename COMP = Storage_t> class Modular;
+    template<typename Storage_t, typename Compute_t = Storage_t, typename Enable = void> class Modular;
 
     //! Generalized extended GCD used by specialized Modular.
     template<typename Storage_t>
     inline Storage_t& gcdext(Storage_t& d,  Storage_t& u, Storage_t& v, const Storage_t a, const Storage_t b);
 
     //! Generalized inversion used by specialized Modular.
-    template<typename Storage_t>
+    template<typename Storage_t , typename Compute_t>
     inline Storage_t& invext(Storage_t& u, const Storage_t a, const Storage_t b);
 
     //! Generalized inversion used by specialized Modular.

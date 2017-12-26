@@ -8,17 +8,17 @@
 //          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
-#ifndef __GIVARO_mod_integer_H
-#define __GIVARO_mod_integer_H
+#ifndef __GIVARO_modular_integer_H
+#define __GIVARO_modular_integer_H
 
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
-#include "givaro/mod-general.h"
+#include "givaro/modular-general.h"
 #include "givaro/ring-interface.h"
-#include "givaro/mod-implem.h"
+#include "givaro/modular-implem.h"
 
 namespace Givaro
 {
@@ -152,7 +152,7 @@ namespace Givaro
     
 }// namespace Givaro
 
-#include "givaro/mod-integer.inl"
+#include "givaro/modular-integer.inl"
 
-#endif // __GIVARO_mod_integer_H
+#endif // __GIVARO_modular_integer_H
 // vim:sts=4:sw=4:ts=4:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

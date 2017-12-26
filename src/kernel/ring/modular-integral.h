@@ -10,29 +10,26 @@
 // ==========================================================================
 //
 
-/*! @file ring/mod-integral.h
+/*! @file ring/modular-integral.h
  * @ingroup ring
  * @brief  representation of <code>Z/mZ</code> over int types.
  */
 
-#ifndef __GIVARO_mod_integral_H
-#define __GIVARO_mod_integral_H
+#ifndef __GIVARO_modular_integral_H
+#define __GIVARO_modular_integral_H
 
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
-#include "givaro/mod-implem.h"
+#include "givaro/modular-implem.h"
 //#include "modular-defines.h"
 
-#define VALID_TYPES(S, C) \
-	typename std::enable_if<std::is_integral<S>::value && std::is_integral<C>::value \
-		&& (sizeof(S) == sizeof(C) || 2*sizeof(S) == sizeof(C))>::type 
 #define IS_INT(T) std::is_integral<T>::value
 #define IS_SINT(T) std::is_integral<T>::value && std::is_signed<T>::value
 #define IS_UINT(T) std::is_integral<T>::value && std::is_unsigned<T>::value
 #define IS_FLOAT(T) std::is_floating_point<T>::value
-#define IS(S,T) std::is_same<S, T>::value
+#define IS_SAME(S,T) std::is_same<S, T>::value
 
 namespace Givaro {
 
@@ -41,8 +38,10 @@ namespace Givaro {
 
 
 	template<typename _Storage_t, typename _Compute_t>
-	class Modular<_Storage_t, _Compute_t, VALID_TYPES(_Storage_t, _Compute_t)>: 
-		public Modular_implem<_Storage_t, typename std::make_unsigned<_Compute_t>::type, typename std::make_unsigned<_Storage_t>::type>
+	class Modular<_Storage_t, _Compute_t, 
+		typename std::enable_if<std::is_integral<_Storage_t>::value && std::is_integral<_Compute_t>::value 
+		&& (sizeof(_Storage_t) == sizeof(_Compute_t) || 2*sizeof(_Storage_t) == sizeof(_Compute_t))>::type>:
+		    public Modular_implem<_Storage_t, typename std::make_unsigned<_Compute_t>::type, typename std::make_unsigned<_Storage_t>::type>
 	{
 	public:
 		
@@ -105,7 +104,7 @@ namespace Givaro {
 			return x;
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS(Source, Integer&))
+		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SAME(Source, Integer&))
 		Element& init (Element& x, const Source y) const
 		{
 			x = Caster<Element>(y % _p);
@@ -116,7 +115,7 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Element) 
 						&&!(IS_INT(Source) && (sizeof(Source) > sizeof(Element)))
 						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Element)))
-						&&!IS(Source, Integer&))
+						&&!IS_SAME(Source, Integer&))
 		Element& init (Element& x, const Source y) const
 		{
 			reduce(x, Caster<Element>((y < 0)? -y : y));
@@ -127,7 +126,7 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Element) 
 						&&!(IS_INT(Source) && (sizeof(Source) > sizeof(Element)))
 						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Element)))
-						&&!IS(Source, Integer&))
+						&&!IS_SAME(Source, Integer&))
 		Element& init (Element& x, const Source y) const
 		{
 			return reduce(Caster<Element>(x,y)); 
@@ -346,11 +345,10 @@ namespace Givaro {
 	};
 }
 
-#undef VALID_TYPES
 #undef IS_INT
 #undef IS_SINT
 #undef IS_UINT
 #undef IS_FLOAT
-#undef IS
+#undef IS_SAME
 
-#endif // __GIVARO_mod_integral_H
+#endif // __GIVARO_modular_integral_H

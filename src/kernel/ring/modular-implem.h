@@ -9,19 +9,19 @@
 // Authors: B. Grenet, R. Lebreton from existing files
 // ==========================================================================
 
-/*! @file ring/mod-implem.h
+/*! @file ring/modular-implem.h
  * @ingroup ring
  * @brief Generic implementation of Modular
  */
 
-#ifndef __GIVARO_mod_implem_H
-#define __GIVARO_mod_implem_H
+#ifndef __GIVARO_modular_implem_H
+#define __GIVARO_modular_implem_H
 
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
-#include "givaro/mod-general.h"
+#include "givaro/modular-general.h"
 
 #define __GIVARO_CONDITIONAL_TEMPLATE(T, ...) \
 	template<typename T, \
@@ -30,7 +30,7 @@
 #define IS_SINT(T) std::is_integral<T>::value && std::is_signed<T>::value
 #define IS_UINT(T) std::is_integral<T>::value && std::is_unsigned<T>::value
 #define IS_FLOAT(T) std::is_floating_point<T>::value
-#define IS(S,T) std::is_same<S, T>::value
+#define IS_SAME(S,T) std::is_same<S, T>::value
 
 namespace Givaro {
 
@@ -146,13 +146,13 @@ namespace Givaro {
 			return repunit; // 2^N-1 with N = bitsize(Storage_t)
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, float))
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float))
 		static Residu_t maxCardinality() { return 2896; }
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, double))
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, double))
 		static Residu_t maxCardinality() { return 94906266; }
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, Integer))
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, Integer))
 		static Residu_t maxCardinality() { return 0; }
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
@@ -162,7 +162,7 @@ namespace Givaro {
 		static Residu_t maxCardinality() { return (Compute_t::maxCardinality()-1).Low/2; }
 
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS(S, Integer) && !is_ruint<S>::value)
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value)
 		static Residu_t maxCardinality() {
 			return 0;
 		}
@@ -217,17 +217,17 @@ namespace Givaro {
 			return "Modular<uint" + std::to_string(8*k) + "_t>";
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, float))
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float))
 		std::string type_string() const {
 			return "Modular<float>";
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, double))
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, double))
 		std::string type_string() const {
 			return "Modular<double>";
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, Integer))
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, Integer))
 		std::string type_string() const {
 			return "Modular<Integer>";
 		}
@@ -237,7 +237,7 @@ namespace Givaro {
 			return "Modular<RecInt::ruint<" + std::to_string(RecInt_K<S>::value) + ">>";
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS(S, Integer) && !is_ruint<S>::value)
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value)
 		std::string type_string() const {
 			return "<Modular<IntType>>";
 		}
@@ -312,12 +312,12 @@ namespace Givaro {
 
 }
 
-//#include "givaro/mod-implem.inl"
+//#include "givaro/modular-implem.inl"
 
 #undef IS_INT
 #undef IS_SINT
 #undef IS_UINT
 #undef IS_FLOAT
-#undef IS
+#undef IS_SAME
 
-#endif // __GIVARO_mod_implem_H
+#endif // __GIVARO_modular_implem_H

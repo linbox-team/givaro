@@ -22,8 +22,8 @@
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
-#include "givaro/mod-implem.h"
-#include "givaro/mod-general.h"
+#include "givaro/modular-implem.h"
+#include "givaro/modular-general.h"
 
 namespace Givaro
 {
@@ -124,7 +124,7 @@ namespace Givaro
     };
 }
 
-#include "givaro/mod-inttype.inl"
+#include "givaro/modular-inttype.inl"
 
 #endif
 

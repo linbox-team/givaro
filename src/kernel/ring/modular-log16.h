@@ -15,15 +15,15 @@
  * @brief  Arithmetic on Z/pZ, with tabulation of operations.
  */
 
-#ifndef __GIVARO_mod_log16_H
-#define __GIVARO_mod_log16_H
+#ifndef __GIVARO_modular_log16_H
+#define __GIVARO_modular_log16_H
 
 #include "givaro/givinteger.h"
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
-#include "givaro/mod-general.h"
-#include "givaro/mod-implem.h"
+#include "givaro/modular-general.h"
+#include "givaro/modular-implem.h"
 
 namespace Givaro
 {
@@ -222,7 +222,7 @@ namespace Givaro
 
 } // namespace Givaro
 
-#include "givaro/mod-log16.inl"
+#include "givaro/modular-log16.inl"
 
-#endif // __GIVARO_mod_log16_H
+#endif // __GIVARO_modular_log16_H
 

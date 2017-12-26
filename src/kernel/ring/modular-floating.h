@@ -11,13 +11,13 @@
 //          A. Breust (taken from FFLAS-FFPACK)
 // ==========================================================================
 
-/*! @file field/mod-floating.h
+/*! @file field/modular-floating.h
  * @ingroup field
  * @brief  representation of <code>Z/mZ</code> over \c float.
  */
 
-#ifndef __GIVARO_mod_floating_H
-#define __GIVARO_mod_floating_H
+#ifndef __GIVARO_modular_floating_H
+#define __GIVARO_modular_floating_H
 
 #include <float.h>
 
@@ -25,8 +25,8 @@
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
-#include "givaro/mod-general.h"
-#include "givaro/mod-implem.h"
+#include "givaro/modular-general.h"
+#include "givaro/modular-implem.h"
 
 namespace Givaro
 {
@@ -208,7 +208,7 @@ namespace Givaro
 
 } // Givaro
 
-#include "mod-floating.inl"
+#include "modular-floating.inl"
 
-#endif // __GIVARO_mod_floating_H
+#endif // __GIVARO_modular_floating_H
 

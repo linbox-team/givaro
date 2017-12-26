@@ -115,11 +115,6 @@ namespace Givaro {
 		// --         ruint<K> |  ruint<K> | ruint<K>::maxCardinality()
 		// --         ruint<K> | ruint<K+1>| (ruint<K+1>::maxCardinality()-1).Low/2
 
-		template<typename S, typename Enable>
-		static Residu_t maxCardinality() {
-			return 0;
-		}
-
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t))) 
 		static Residu_t maxCardinality() {
 			std::size_t k = sizeof(S);
@@ -148,11 +143,17 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS(S, Integer))
 		static Residu_t maxCardinality() { return 0; }
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_RecInt<S, Compute_t>::value)
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
 		static Residu_t maxCardinality() { return S::maxCardinality(); }
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_RecInt<S, Compute_t>::value)
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
 		static Residu_t maxCardinality() { return (Compute_t::maxCardinality()-1).Low/2; }
+
+
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS(S, Integer) && !is_ruint<S>::value)
+		static Residu_t maxCardinality() {
+			return 0;
+		}
 
 		// ----- Checkers
 		inline bool isZero(const Element& a) const override { return a == zero; }
@@ -219,12 +220,12 @@ namespace Givaro {
 			return "Mod<Integer>";
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_RecInt<S>::value)
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<S>::value)
 		std::string type_string() const {
 			return "Mod<RecInt::ruint<" + std::to_string(RecInt_K<S>::value) + ">>";
 		}
 
-		template<typename S, typename Enable>
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS(S, Integer) && !is_ruint<S>::value)
 		std::string type_string() const {
 			return "<Mod<IntType>>";
 		}

@@ -8,8 +8,8 @@
 //          B. Grenet <bruno.grenet@lirmm.fr>
 // ==========================================================================
 
-#ifndef __GIVARO_mod_recint_H
-#define __GIVARO_mod_recint_H
+#ifndef __GIVARO_mod_ruint_H
+#define __GIVARO_mod_ruint_H
 
 #include "recint/ruint.h"
 #include "givaro/givinteger.h"
@@ -25,8 +25,8 @@ namespace Givaro
 
     template<typename _Storage_t, typename _Compute_t>
     class Mod<_Storage_t, _Compute_t, 
-      typename std::enable_if<is_same_RecInt<_Storage_t, _Compute_t>::value 
-                           || is_smaller_RecInt<_Storage_t, _Compute_t>::value>::type>:
+      typename std::enable_if<is_same_ruint<_Storage_t, _Compute_t>::value 
+                           || is_smaller_ruint<_Storage_t, _Compute_t>::value>::type>:
       public Mod_implem<_Storage_t, _Compute_t, _Storage_t>
     {
     public:
@@ -109,6 +109,6 @@ namespace Givaro
 }
 
 
-#include "givaro/mod-recint.inl"
+#include "givaro/mod-ruint.inl"
 
 #endif

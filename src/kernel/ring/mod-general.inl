@@ -53,24 +53,21 @@ struct make_unsigned_int<T,
     typedef typename IntType<std::is_same<T,float>::value>::utype type;
 };
 
-template<typename> struct is_RecInt : std::false_type {};
-template<size_t K> struct is_RecInt<RecInt::ruint<K>> : std::true_type {};
-template<size_t K> struct is_RecInt<RecInt::rint<K>> : std::true_type {};
+template<typename> struct is_ruint : std::false_type {};
+template<size_t K> struct is_ruint<RecInt::ruint<K>> : std::true_type {};
 
-template<typename, typename> struct is_same_RecInt : std::false_type {};
-template<size_t K> struct is_same_RecInt<RecInt::ruint<K>,RecInt::ruint<K>> : std::true_type {};
-template<size_t K> struct is_same_RecInt<RecInt::rint<K>,RecInt::rint<K>> : std::true_type {};
+-template<typename, typename> struct is_same_ruint : std::false_type {};
+-template<size_t K> struct is_same_ruint<RecInt::ruint<K>,RecInt::ruint<K>> : std::true_type {};
 
-template<typename, typename> struct is_smaller_RecInt : std::false_type {};
-template<size_t K> struct is_smaller_RecInt<RecInt::ruint<K>,RecInt::ruint<K+1>> : std::true_type {};
+template<typename, typename> struct is_smaller_ruint : std::false_type {};
+template<size_t K> struct is_smaller_ruint<RecInt::ruint<K>,RecInt::ruint<K+1>> : std::true_type {};
 
 template<typename T> struct RecInt_K;
 template<size_t K> struct RecInt_K<RecInt::ruint<K>> { static const size_t value = K;};
-template<size_t K> struct RecInt_K<RecInt::rint<K>> { static const size_t value = K;};
 
 template<typename T>
 struct make_signed_int<T,
-    typename std::enable_if<is_RecInt<T>::value>::type> {
+    typename std::enable_if<is_ruint<T>::value>::type> {
     typedef typename RecInt::rint<RecInt_K<T>::value> type;
 };
 

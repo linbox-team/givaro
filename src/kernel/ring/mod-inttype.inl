@@ -51,7 +51,7 @@
 //#define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % p : r); } }
 #define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r = p-r; r += a*b; r= (r<p ? r : r % p); __GIVARO_ZPZIntType_N_NEGIN(r,p); }
 
-#define __GIVARO_ZPZIntType_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
+#define __GIVARO_ZPZIntType_N_NEG(r,p,a) { r = ( Mod<IntType, COMP, Enable>::isZero(a) ? zero : p-a); }
 #define __GIVARO_ZPZIntType_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
 
 namespace Givaro
@@ -79,7 +79,8 @@ namespace Givaro
     template<typename IntType, typename COMP, typename Enable> inline typename Mod<IntType, COMP, Enable>::Element&
     Mod<IntType, COMP, Enable>::neg (Element& r, const Element& a) const
     {
-        __GIVARO_ZPZIntType_N_NEG(r,_p,a); return r;
+        //__GIVARO_ZPZIntType_N_NEG(r,_p,a); return r;
+        return r = (a == zero ? zero : _p - a);
     }
 
     template<typename IntType, typename COMP, typename Enable> inline typename Mod<IntType, COMP, Enable>::Element&

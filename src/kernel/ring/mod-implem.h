@@ -86,6 +86,18 @@ namespace Givaro {
 			//}
 		}
 
+		template<typename Source>
+		Mod_implem(const Source& p)
+			: zero(static_cast<Element>(0))
+			, one(static_cast<Element>(1))
+			, mOne(static_cast<Element>(p-1))
+			, _p(static_cast<Residu_t>(p))
+			, _pc(static_cast<Compute_t>(p))
+		{
+			assert(_p >= minCardinality());
+			assert(!maxCardinality() || _p <= maxCardinality());
+		}
+
 		Mod_implem(const Self_t& F)
 			: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _pc(F._pc) {} //, _bitsizep(F._bitsizep) {}
 

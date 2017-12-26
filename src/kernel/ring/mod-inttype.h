@@ -21,8 +21,9 @@
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
-#include "givaro/mod-general.h"
 #include "givaro/ring-interface.h"
+#include "givaro/mod-implem.h"
+#include "givaro/mod-general.h"
 
 namespace Givaro
 {
@@ -41,51 +42,61 @@ namespace Givaro
         using Residu_t = IntType;
         using Compute_t = _Compute_t;
 
-        using Element = Storage_t;
+        //using Element = typename FiniteFieldInterface<IntType>::Element;
         using Self_t = Mod<Storage_t, Compute_t>;
         using Parent_t = Mod_implem<Storage_t, Compute_t, Residu_t>;
 
+        using Element = typename Parent_t::Element;
+
      	// ----- Constantes
-     	const Element zero;
-     	const Element one;
-     	const Element mOne;
+     	//const Element zero;
+     	//const Element one;
+     	//const Element mOne;
         
         // ----- Constructors
-        ~Mod() noexcept {}
-        Mod()
-                : zero(0),
-                  one(1),
-                  _p(static_cast<Residu_t>(0)) {}
 
-        Mod(const Residu_t p)
-            : zero(0)
-            , one(1)
-            , mOne(p-static_cast<Residu_t>(1)), _p(p)
-        {
-	  assert(_p >= Parent_t::minCardinality());
-        }
+        using Parent_t::Mod_implem; 
+        using Parent_t::_p;
+        using Parent_t::_pc;
+        using Parent_t::zero;
+        using Parent_t::one;
+        using Parent_t::mOne;
 
-        template<class IntConvType>
-        Mod(const IntConvType& p, const IntConvType& e=1)
-            : zero(0)
-            , one(1)
-            , mOne( Caster<Residu_t>(p-1) )
-            , _p( Caster<Residu_t>(p) )
-        {
-	  assert(_p >= Parent_t::minCardinality());
-        }
+        //~Mod() noexcept {}
+        //Mod()
+        //        : zero(0),
+        //          one(1),
+        //          _p(static_cast<Residu_t>(0)) {}
 
-        Mod(const Integer& p, const Integer& e=Integer::one)
-            : zero(0)
-            , one(1)
-            , mOne( Caster<Residu_t>(p-1) )
-            , _p( Caster<Residu_t>(p) )
-        {
-	  assert(_p >= Parent_t::minCardinality());
-        }
+        //Mod(const Residu_t p)
+        //    : zero(0)
+        //    , one(1)
+        //    , mOne(p-static_cast<Residu_t>(1)), _p(p)
+        //{
+	//  assert(_p >= Parent_t::minCardinality());
+        //}
 
-        Mod(const Self_t& F)
-                : zero(F.zero),one(F.one),mOne(F.mOne), _p(F._p) {}
+        //template<class IntConvType>
+        //Mod(const IntConvType& p, const IntConvType& e=1)
+        //    : zero(0)
+        //    , one(1)
+        //    , mOne( Caster<Residu_t>(p-1) )
+        //    , _p( Caster<Residu_t>(p) )
+        //{
+	//  assert(_p >= Parent_t::minCardinality());
+        //}
+
+        //Mod(const Integer& p, const Integer& e=Integer::one)
+        //    : zero(0)
+        //    , one(1)
+        //    , mOne( Caster<Residu_t>(p-1) )
+        //    , _p( Caster<Residu_t>(p) )
+        //{
+	//  assert(_p >= Parent_t::minCardinality());
+        //}
+
+        //Mod(const Self_t& F)
+        //        : zero(F.zero),one(F.one),mOne(F.mOne), _p(F._p) {}
 
 
         // ----- Initialisation
@@ -147,9 +158,6 @@ namespace Givaro
         //std::istream& read (std::istream& s, Element& a) const;
         //std::ostream& write(std::ostream& s, const Element& a) const;
 
-    protected:
-	
-        Residu_t _p;
     };
 }
 

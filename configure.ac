@@ -238,10 +238,10 @@ echo "-----------------------------------------------"
 echo "-----------------------------------------------"
 
 GIV_CHECK_GMP(40000)
+REQUIRED_FLAGS="${REQUIRED_FLAGS} ${GMP_CFLAGS}"
 
 GIV_DOC
 CXXFLAGS=${BACKUP_CXXFLAGS}
-CXXFLAGS="${CXXFLAGS} ${GMP_CFLAGS}"
 CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
 LIBS="${GMP_LIBS}"

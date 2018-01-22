@@ -262,7 +262,7 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) > 1)
 		inline std::ostream& write (std::ostream& s, const E& a) const
     	{
-    	    return s << a;
+			return s << Caster<Element>(a);
     	}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) == 1)

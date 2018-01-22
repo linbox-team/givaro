@@ -72,7 +72,7 @@ namespace Givaro {
 		Modular_implem(const Residu_t p)
 			: zero(static_cast<Element>(0))
 			, one(static_cast<Element>(1))
-			, mOne(static_cast<Element>(p-1))
+			, mOne(static_cast<Element>(p-static_cast<Element>(1)))
 			, _p(static_cast<Residu_t>(p))
 			, _pc(static_cast<Compute_t>(p))
 			//, _bitsizep(0)

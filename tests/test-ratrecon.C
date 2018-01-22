@@ -8,7 +8,7 @@
 #include <iostream>
 #include <givaro/givpoly1.h>
 #include <givaro/givfractiondomain.h>
-#include <givaro/modular-int64.h>
+#include <givaro/modular-integral.h>
 
 #ifdef GIVARO_DEBUG
 long long TTcount = 0;

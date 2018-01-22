@@ -7,8 +7,7 @@
 #include <iostream>
 #include <givaro/gfq.h>
 #include <givaro/extension.h>
-#include <givaro/modular-int16.h>
-#include <givaro/modular-int64.h>
+#include <givaro/modular-integral.h>
 
 using namespace Givaro;
 

@@ -120,7 +120,7 @@ namespace Givaro {
 		// --        ----------+-----------+---------------
 		// --        (u)intN_t |  uintN_t  | 2^(N/2) - 1
 		// --          intN_t  | uint2N_t  | 2^(N-1) - 1
-		// --         uintN_t  | uint2N_t  |   2^N - 1
+		// --         uintN_t  | uint2N_t  |   2^(N-1) - 1 //NOTE: because of invext (should be 2^N-1)
 		// --         float    |  float    |  2896    // Old values (TODO: check)
 		// --         double   |  double   | 94906266 // Old values (TODO: check)
 		// --         Integer  |  Integer  | 0
@@ -143,7 +143,7 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_UINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
 		static Residu_t maxCardinality() {
 			Residu_t repunit = ~0;
-			return repunit; // 2^N-1 with N = bitsize(Storage_t)
+			return repunit >> 1; // 2^(N-1)-1 with N = bitsize(Storage_t) // NOTE: should be 2^N-1
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float))

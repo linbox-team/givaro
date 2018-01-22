@@ -245,13 +245,7 @@ namespace Givaro {
     	// --------
     	// ----- IO
 
-    	inline std::istream& read (std::istream& s, Element& a) const
-    	{
-    	    Integer tmp;
-    	    s >> tmp;
-    	    init(a, tmp);
-    	    return s;
-    	}
+		inline std::istream& read (std::istream& s, Element& a) const;
 
 		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) == 1)
 		inline std::ostream& write (std::ostream& s, const E& a) const
@@ -309,6 +303,16 @@ namespace Givaro {
 		Compute_t _pc;
 		//size_t _bitsizep;
 	};
+
+
+	template<typename _Storage_t, typename _Compute_t, typename _Residu_t>
+	inline std::istream& Modular_implem<_Storage_t, _Compute_t, _Residu_t>::read (std::istream& s, Element& a) const
+		{
+		    Integer tmp;
+		    s >> tmp;
+		    this->init(a, tmp);
+		    return s;
+		}
 
 }
 

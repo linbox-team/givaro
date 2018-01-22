@@ -29,7 +29,6 @@
 #define IS_SINT(T) std::is_integral<T>::value && std::is_signed<T>::value
 #define IS_UINT(T) std::is_integral<T>::value && std::is_unsigned<T>::value
 #define IS_FLOAT(T) std::is_floating_point<T>::value
-#define IS_SAME(S,T) std::is_same<S, T>::value
 
 namespace Givaro {
 
@@ -104,8 +103,7 @@ namespace Givaro {
 			return x;
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SAME(Source, Integer&))
-		Element& init (Element& x, const Source y) const
+		Element& init (Element& x, const Integer& y) const
 		{
 			x = Caster<Element>(y % _p);
 			if (x < 0) x = Caster<Element>(x + _p);
@@ -114,9 +112,8 @@ namespace Givaro {
 
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Element) 
 						&&!(IS_INT(Source) && (sizeof(Source) > sizeof(Element)))
-						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Element)))
-						&&!IS_SAME(Source, Integer&))
-		Element& init (Element& x, const Source y) const
+						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Element))))
+		Element& init (Element& x, const Source& y) const
 		{
 			reduce(x, Caster<Element>((y < 0)? -y : y));
 			if (y < 0) negin(x);
@@ -125,9 +122,8 @@ namespace Givaro {
 
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Element) 
 						&&!(IS_INT(Source) && (sizeof(Source) > sizeof(Element)))
-						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Element)))
-						&&!IS_SAME(Source, Integer&))
-		Element& init (Element& x, const Source y) const
+						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Element))))
+		Element& init (Element& x, const Source& y) const
 		{
 			return reduce(Caster<Element>(x,y)); 
 		}
@@ -349,6 +345,5 @@ namespace Givaro {
 #undef IS_SINT
 #undef IS_UINT
 #undef IS_FLOAT
-#undef IS_SAME
 
 #endif // __GIVARO_modular_integral_H

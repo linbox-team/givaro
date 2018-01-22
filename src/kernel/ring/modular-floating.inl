@@ -63,9 +63,8 @@ namespace Givaro {
     }
 
     TMPL
-    COND_TMPL(Source, std::is_same<Source,  Integer&>::value)
     inline typename MOD::Element&
-    MOD::init(Element& r, const Source a) const
+    MOD::init(Element& r, const Integer& a) const
     {
         r = Caster<Element>(a % _p);
         if (a < 0) negin(r);

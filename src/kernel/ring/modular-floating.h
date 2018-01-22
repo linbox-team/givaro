@@ -136,9 +136,8 @@ namespace Givaro
 			sizeof(Source) >= sizeof(Storage_t))
 		Element& init (Element& x, const Source y) const;
         
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, std::is_same<Source, Integer&>::value)
-		Element& init (Element& x, const Source y) const;
-		
+		Element& init (Element& x, const Integer& y) const;
+
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, 
 			!(std::is_integral<Source>::value && sizeof(Source) >= sizeof(Storage_t)) &&
 			!(std::is_same<Source, double>::value && std::is_same<Element, float>::value) &&

@@ -59,7 +59,7 @@ namespace Givaro
 	    if (a < 0) negin(r);
             return r;
         }
-
+        
         // ----- Convert and reduce
         Element& reduce (Element& x, const Element& y) const
         { x = y % _p; return x; }

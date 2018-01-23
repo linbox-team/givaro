@@ -14,9 +14,9 @@ template<typename ELEMENT = Element, typename COMPUTE_T = Compute_t, int s = siz
 inline
 typename std::enable_if<SUITABLE_INTEGRAL_TYPES (ELEMENT, COMPUTE_T, s)>::type
 precomp_p
-(Compute_t& invp) const
+(Compute_t& invp, size_t& bitsizep) const
 {
-        size_t bitsizep(0);
+        bitsizep = 0;
         Element tmp = _p;
         while (tmp != 0) 
         {
@@ -31,15 +31,8 @@ template<typename ELEMENT = Element, typename COMPUTE_T = Compute_t, int s = siz
 inline
 typename std::enable_if<SUITABLE_INTEGRAL_TYPES (ELEMENT, COMPUTE_T, s), Element&>::type
 mul_precomp_p
-(Element& r, const Element& a, const Element& b, const Compute_t& invp) const
+(Element& r, const Element& a, const Element& b, const Compute_t& invp, const size_t& bitsizep) const
 {
-        size_t bitsizep(0);
-        Element tmp = _p;
-        while (tmp != 0) 
-        {
-          bitsizep++;
-          tmp >>= 1;
-        }
         Compute_t prod = static_cast<Compute_t>(static_cast<Residu_t>(a))*static_cast<Compute_t>(static_cast<Residu_t>(b));
         Compute_t prodhi = (prod >> (bitsizep - 2)); // Could fit into an Element but no use
         Residu_t c = static_cast<Residu_t>((prodhi * invp) >> (4*s+1));

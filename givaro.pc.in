@@ -10,5 +10,5 @@ URL: http://givaro.forge.imag.fr
 Version: @VERSION@
 Requires:
 Libs: -L@libdir@ -lgivaro @LIBS@
-Cflags: -I@includedir@ @CXXFLAGS@
+Cflags: -I@includedir@ @REQUIRED_FLAGS@
 \-------------------------------------------------------

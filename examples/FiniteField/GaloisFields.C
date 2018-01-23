@@ -8,6 +8,7 @@
 #include <givaro/gfq.h>
 #include <givaro/extension.h>
 #include <givaro/modular-integral.h>
+#include <givaro/givprint.h>
 
 using namespace Givaro;
 

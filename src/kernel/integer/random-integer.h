@@ -9,6 +9,7 @@
 #ifndef __GIVARO_random_integer_iterator_H
 #define __GIVARO_random_integer_iterator_H
 
+#include "givaro/givinteger.h"
 
 namespace std {
     template <bool B>

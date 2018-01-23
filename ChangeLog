@@ -1,3 +1,12 @@
+2017-11-17 v4.0.4
+	Improvements:
+	* minor build system fix with simd disabling option
+2017-11-17 v4.0.3
+	Improvements:
+	* fix many bugs (and merging all sage patches)
+	* improved build system (instruction set detection, C++11 and clang compatibility, ...)
+	* simplification of givvector
+
 2003-12-11 Pascal Giorgi <pascal.giorgi@ens-lyon.fr>
 	* /src/kernel/zpz/givzpz.h  add struct Std64 with some definition and redefine in the ggod way int64 & uint64
 

@@ -75,7 +75,7 @@ AC_DEFUN_ONCE([_AX_GCC_X86_CPU_INIT],
 
 AC_DEFUN([AX_GCC_X86_CPU_SUPPORTS],
   [AC_REQUIRE([AC_PROG_CC])
-   AC_REQUIRE([_AX_GCC_X86_CPU_INIT])
+#   _AX_GCC_X86_CPU_INIT # At this point we know we have a GGC >4.8
    AC_LANG_PUSH([C])
    AS_VAR_PUSHDEF([gcc_x86_feature], [AS_TR_SH([ax_cv_gcc_x86_cpu_supports_$1])])
    AC_CACHE_CHECK([for x86 $1 instruction support], 

@@ -31,9 +31,9 @@ template<class UNOP>
 inline void MatrixDom<Domain,Sparse>::
   map ( Rep& res, UNOP& op, const Rep& u ) const
 {
-  res.reallocate(nrow(u), ncol(u));
-  res._index.reallocate(u._index.size());
-  res._data.reallocate(u._data.size());
+  res.resize(nrow(u), ncol(u));
+  res._index.resize(u._index.size());
+  res._data.resize(u._data.size());
   size_t sz = res._data.size();
   for (size_t i=0; i<sz; ++i) {
     res._index[i] = u._index[i];
@@ -107,9 +107,9 @@ inline void MatrixDom<Domain,Sparse>::neg ( Rep& R, const Rep& P ) const
 {
   size_t sz = P._data.size();
   if (R._data.size() != sz) {
-    R.reallocate(nrow(P), ncol(P));
+    R.resize(nrow(P), ncol(P));
     R._index.copy(P._index);
-    R._data.reallocate(P._data);
+    R._data.resize(P._data);
   }
   for(size_t i=0; i<sz; ++i) _domain.neg(R._data[i], P._data[i]);
 }
@@ -172,7 +172,7 @@ void MatrixDom<Domain, Sparse>::compact
   Indice_t nrows = MD.nrow(Md);
   Indice_t ncols = MD.ncol(Md);
   size_t size = 0;   // size of _data and _index
-  Ms.reallocate( nrows, ncols );
+  Ms.resize( nrows, ncols );
   Indice_t i,j;
   Ms._rows[0] = 0;
   Type_t val;
@@ -184,8 +184,8 @@ void MatrixDom<Domain, Sparse>::compact
       _domain.assign(val, Md(i,j));
       if ( !_domain.iszero(val) )
       {
-        Ms._data.reallocate(size+1);
-        Ms._index.reallocate(size+1);
+        Ms._data.resize(size+1);
+        Ms._index.resize(size+1);
         _domain.assign(Ms._data[size], val);
         Ms._index[size] = j;
         ++size; Ms._rows[i+1] +=1;
@@ -271,7 +271,7 @@ istream& MatrixDom<Domain,Sparse>::read( istream& sin, Rep& R) const
       GivBadFormat("MatrixDom<Domain,Sparse>::read: syntax error no ','"));
   sin >> std::ws >> nc;
 
-  R.reallocate(nr,nc);
+  R.resize(nr,nc);
 
   sin >> std::ws >> ch;
   if (ch != ',')

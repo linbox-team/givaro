@@ -1,6 +1,6 @@
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/library/poly1/givpoly1cstor.inl,v $
-// Copyright(c)'1994-2009 by The Givaro group
+// Copyright(c)'1994-2017 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
@@ -33,7 +33,7 @@ namespace Givaro {
 
 	template<class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P) const
-	{ P.reallocate(0); return P; }
+	{ P.resize(0); return P; }
 
 	/*
 	   template<class Domain>
@@ -42,10 +42,10 @@ namespace Givaro {
 	   Degree degQ;
 	   degree(degQ,Q);
 	   if (degQ <0) {
-	   P.reallocate(0);
+	   P.resize(0);
 	   return P;
 	   }
-	   P.reallocate(++degQ);
+	   P.resize(++degQ);
 	   for (int i=0; degQ>i; ++i)
 	   _domain.init(P[i], Q[i]);
 	   return P;
@@ -58,10 +58,10 @@ namespace Givaro {
 		Degree degQ;
 		degree(degQ,Q);
 		if (degQ <0) {
-			P.reallocate(0);
+			P.resize(0);
 			return P;
 		}
-		P.reallocate((size_t)++degQ);
+		P.resize((size_t)++degQ);
 		// degQ >=0
 		for (size_t i=0; (size_t)degQ.value()>i; ++i)
 			_domain.assign(P[i], Q[i]);
@@ -72,8 +72,21 @@ namespace Givaro {
 	template<class Domain> template<class XXX>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const XXX& Val ) const
 	{
-		P.reallocate(1);
+		P.resize(1);
 		_domain.init(P[0], Val);
+		return P;
+	}
+
+    template<class Domain> template<class XXX>
+	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const std::initializer_list<XXX>& L ) const
+	{
+
+		P.resize(L.size());
+        auto il(L.begin());
+        for(auto &ip : P) {
+            _domain.init(ip,*il);
+            ++il;
+        }
 		return P;
 	}
 
@@ -112,7 +125,7 @@ namespace Givaro {
 	template<class Domain>
 	inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::init( Rep& P, const Degree deg ) const
 	{
-		P.reallocate((size_t)value(deg+1));
+		P.resize((size_t)value(deg+1));
 
 		size_t sz = P.size();
 		for (size_t i=0; i<sz-1; ++i)
@@ -126,14 +139,14 @@ namespace Givaro {
 	( Rep& P, const Degree d, const XXX& Val ) const
 	{
 		long deg = value(d);
-		P.reallocate((size_t)deg+1);
+		P.resize((size_t)deg+1);
 		assert (deg>=0);
 			for (size_t i=0; i<(size_t)deg; ++i)
 				_domain.assign(P[i], _domain.zero);
 		_domain.init(P[(size_t)deg], Val);
 
 		if (_domain.isZero(P[(size_t)deg])) {
-			P.reallocate(0);
+			P.resize(0);
 		}
 		return P;
 	}
@@ -145,10 +158,10 @@ namespace Givaro {
 	{
 		long deg = value(d);
 		if (_domain.isZero(lcoeff)) {
-			P.reallocate(0);
+			P.resize(0);
 		}
 	       	else {
-			P.reallocate((size_t)deg+1);
+			P.resize((size_t)deg+1);
 			assert (deg>=0);
 			for (size_t i=0; i<(size_t)deg; ++i)
 				_domain.assign(P[i], _domain.zero);

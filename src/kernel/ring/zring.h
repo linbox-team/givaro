@@ -182,13 +182,13 @@ namespace Givaro
      //----- Initialisation
         Element& init(Element& x) const { return x; }
         template <typename T> Element& init(Element& x, const T& s) const
-        { return x = static_cast<const Element&>(s); }
+        { return Caster(x,s); }
         
         Element& assign(Element& x, const Element& y) const { return x = y; }
 
         //----- Convert
         template <typename T> T& convert(T& x, const Element& y) const
-        { return x = static_cast<const T&>(y); }
+        { return Caster(x,y); }
         
         Element& reduce (Element& x, const Element& y) const { return x = y; }
         Element& reduce (Element& x) const { return x; }
@@ -211,7 +211,7 @@ namespace Givaro
         //----- IO
         std::ostream& write(std::ostream &os) const
         {
-            return os << "ZRing<" << typeid(Element).name() << ')';
+            return os << "ZRing<" << typeid(Element).name() << ">";
         }
         std::ostream& write(std::ostream &os, const Element& a) const
         {

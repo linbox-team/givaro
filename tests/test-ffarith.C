@@ -319,6 +319,8 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Integer>, I13, 13);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R13, 13);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU13, 13);
+    typedef Modular<RecInt::ruint128,RecInt::ruint256> MUU;
+    TEST_SPECIFIC(MUU, RUU13, 13);
     
     TEST_SPECIFIC(ModularBalanced<int32_t>, BZ13, 13);
     TEST_SPECIFIC(ModularBalanced<int64_t>, BLL13, 13);

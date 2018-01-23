@@ -36,7 +36,7 @@ using namespace Givaro;
 
 #define TESTE_T( b )						\
 	if (!b) {						\
-		F.write(std::cout,b)		\
+		F.write(std::cout)		\
 			<< " failed (at line " <<  __LINE__ << ")" << std::endl;	\
 	return -1;							\
 	}

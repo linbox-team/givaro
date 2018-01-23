@@ -26,7 +26,7 @@ namespace Givaro{
 	 *
 	 */
 	template<class _Element>
-	class ModularExtended : public virtual FiniteFieldInterface<_Element>
+	class ModularExtended : public FiniteFieldInterface<_Element>
 	{
 	public:
 

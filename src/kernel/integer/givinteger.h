@@ -51,7 +51,8 @@ namespace Givaro {
 		const Integer one;
 		const Integer mOne;
 		const Integer zero;
-
+        Integer cardinality() const { return zero; }
+        Integer& cardinality(Integer& c) const { return c = zero; }
         Integer characteristic() const { return zero; }
         Integer& characteristic(Integer& p) const { return p = zero; }
 

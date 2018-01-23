@@ -38,6 +38,9 @@ benchmark_recint_mul_SOURCES = benchmark-recint_mul.C
 # Perfpublisher script interaction - AB 2014/11/17
 perfpublisher:
 	+./perfpublisher.sh "$(PERFPUBLISHERFILE)" "$(BENCHMARKS)" "$(CXX)"
+	mv $(PERFPUBLISHERFILE) ..
+	make clean
+	mv ../$(PERFPUBLISHERFILE) .
 
 #=====
 # For compilation of new benchmarks

@@ -51,7 +51,7 @@ namespace RecInt
     template <size_t K> void reset(ruint<K>& a);
 
     // a = -1 (a is filled with 1)
-    template <size_t K> void fill_with_1(ruint<K>& a);
+    template <size_t K> ruint<K>& fill_with_1(ruint<K>& a);
 
     // a = b
     template <size_t K> void copy(ruint<K>& a, const ruint<K>& b);
@@ -89,12 +89,14 @@ namespace RecInt
     }
 
     // a = -1 (a is filled with 1)
-    template <size_t K> inline void fill_with_1(ruint<K>& a) {
+    template <size_t K> inline ruint<K>& fill_with_1(ruint<K>& a) {
         fill_with_1(a.High);
         fill_with_1(a.Low);
+        return a;
     }
-    template <>  inline void fill_with_1(ruint<__RECINT_LIMB_SIZE>& a) {
+    template <>  inline ruint<__RECINT_LIMB_SIZE>& fill_with_1(ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value = __RECINT_MINUSONE;
+        return a;
     }
 
     // a = b
@@ -161,7 +163,7 @@ namespace RecInt
 
 
     // Address of lower limb
-    template <size_t K> const limb* begin(const ruint<K>& a) 
+    template <size_t K> inline const limb* begin(const ruint<K>& a)
     {
         return begin(a.Low);
     }
@@ -170,6 +172,32 @@ namespace RecInt
         return &(a.Value);
     }
     
+}
+
+
+// --------------------------------------------------------------
+// -------------------- max Element -----------------------
+
+namespace RecInt {
+
+    template <size_t K>
+    inline ruint<K> ruint<K>::maxCardinality() {
+        ruint<K> max;
+        max.High = ruint<K-1>::maxCardinality();
+        fill_with_1(max.Low);
+        return max;
+    }
+
+    inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxCardinality() {
+        ruint<__RECINT_LIMB_SIZE> max; return fill_with_1(max);
+    }
+
+#  if defined(__RECINT_USE_FAST_128)
+    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxCardinality() {
+        ruint<__RECINT_LIMB_SIZE+1> max; return fill_with_1(max);
+    }
+#  endif
+
 }
 
 #endif

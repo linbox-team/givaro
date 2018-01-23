@@ -29,7 +29,7 @@ namespace Givaro {
 	bool Rational::ratrecon(const Integer& f, const Integer& m, const Integer& k, bool recurs )
 	{
 
-// #ifdef DEBUG
+// #ifdef GIVARO_DEBUG
 // 		std::cerr << "RatRecon : " << f << " " << m << " " << k << std::endl;
 // #endif
 
@@ -42,7 +42,7 @@ namespace Givaro {
 		t1=1;
 		while(r1>=k)
 		{
-// #ifdef DEBUG
+// #ifdef GIVARO_DEBUG
 // 			std::cerr << "r0: " << r0
 // 			<< ", r1: " << r1
 // 			<< ", q: " << q
@@ -67,8 +67,8 @@ namespace Givaro {
 			t1 -= u;	// r1 <-- r0-q*r1
 		}
 
-		// [GG, MCA, 1999] Theorem 5.26
-		// (i)
+            // [GG, MCA, 1999] Theorem 5.26
+            // (i)
 		if (t1 < 0) {
 			num = -r1;
 			den = -t1;
@@ -77,18 +77,26 @@ namespace Givaro {
 			den = t1;
 		}
 
-		// (ii)
+            // (ii)
 		if (gcd(num,den) != 1) {
-			//         std::cerr << "r0: " << r0
-			//                   << ", r1: " << r1
-			//                   << ", k: " << k
-			//                   << std::endl;
+// #ifdef GIVARO_DEBUG
+//             std::cerr << "num: " << num
+//                       << ", den: " << den
+//                       << ", g: " << gcd(num,den)
+//                       << std::endl;
+//             std::cerr << "r0: " << r0
+//                       << ", r1: " << r1
+//                       << ", k: " << k
+//                       << std::endl;
+// #endif
+            q = r0;
+            q += r1;
+            q -= k;
+            q /= r1;
 
-			Integer gar1, gar2;
-			for( q = 1, gar1 = r0-r1, gar2 = r0 ; (gar1 >= k) || (gar2<k); ++q ) {
-				gar1 -= r1;
-				gar2 -= r1;
-			}
+// #ifdef GIVARO_DEBUG
+//             std::cerr << "q: " << q << std::endl;
+// #endif
 
 			r0 -= q * r1;
 			t0 -= q * t1;
@@ -104,41 +112,43 @@ namespace Givaro {
 			if (t0 > m/k) {
 				if (!recurs)
 					std::cerr
-					<< "*** Error *** No rational reconstruction of "
-					<< f
-					<< " modulo "
-					<< m
-					<< " with denominator <= "
-					<< (m/k)
-					<< std::endl;
+                        << "*** Error *** No rational reconstruction of "
+                        << f
+                        << " modulo "
+                        << m
+                        << " with denominator <= "
+                        << (m/k)
+                        << std::endl;
 			}
 			if (gcd(num,den) != 1) {
 				if (!recurs)
 					std::cerr
-					<< "*** Error *** There exists no rational reconstruction of "
-					<< f
-					<< " modulo "
-					<< m
-					<< " with |numerator| < "
-					<< k
-					<< std::endl
-					<< "*** Error *** But "
-					<< num
-					<< " = "
-					<< den
-					<< " * "
-					<< f
-					<< " modulo "
-					<< m
-					<< std::endl;
+                        << "*** Error *** There exists no rational reconstruction of "
+                        << f
+                        << " modulo "
+                        << m
+                        << " with |numerator| < "
+                        << k
+                        << std::endl
+                        << "*** Error *** But "
+                        << num
+                        << " = "
+                        << den
+                        << " * "
+                        << f
+                        << " modulo "
+                        << m
+                        << std::endl;
 				return false;
 			}
 		}
-		// std::cerr << "RatRecon End " << std::endl;
+// #ifdef GIVARO_DEBUG
+//         std::cerr << "RatRecon End " << std::endl;
+// #endif
 		return true;
 	}
 
 
 } // namespace Givaro
 
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen
+// vim:sts=4:sw=4:ts=4:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen

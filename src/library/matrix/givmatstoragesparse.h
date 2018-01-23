@@ -58,11 +58,11 @@ struct RetMatrixStorage<T,Sparse> {
       _nrow = rsz; _ncol = csz;
     }
     //-- Store dimension but don't allocate
-    void reallocate( size_t rsz, size_t csz )
+    void resize( size_t rsz, size_t csz )
     {
-      _data.reallocate(0);
-      _index.reallocate(0);
-      _rows.reallocate(rsz+1);
+      _data.resize(0);
+      _index.resize(0);
+      _rows.resize(rsz+1);
       _nrow = rsz; _ncol = csz;
     }
     Storage_t& copy (const Storage_t& V)

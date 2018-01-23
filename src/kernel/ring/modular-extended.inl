@@ -11,6 +11,7 @@
 
 #ifndef __GIVARO_MODULAR_EXTENDED_INL
 #define __GIVARO_MODULAR_EXTENDED_INL
+#include <recint/recint.h>
 
 namespace Givaro {
 
@@ -180,12 +181,14 @@ namespace Givaro {
 		q = std::floor(abh*_invp);
 		pql = fma (-q, _p, abh);
 		r = abl + pql;
-#else
+#elif defined __SSE_MATH__ // fp arithmetic is done on SSE, not fpu87
 		Element abh, abl, pql, pqh, q;
 		mult_dekker(a, b, abh, abl);
 		q = std::floor(abh*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		r = (abh + pqh) + (abl + pql);
+#else
+		return r = static_cast<float>(fmod(static_cast<double>(a)* static_cast<int64_t>(b),static_cast<double>(_p)));
 #endif
 		if(r >= _p)
 			r-= _p;
@@ -210,17 +213,30 @@ namespace Givaro {
 		q = std::floor(abh*_invp);
 		pql = fma (-q, _p, abh);
 		r = abl + pql;
-#else
+		if(r >= _p)
+			r-= _p;
+		else if(r < 0)
+			r += _p;
+#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
 		Element abh, abl, pql, pqh, q;
 		mult_dekker(a, b, abh, abl);
 		q = std::floor(abh*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		r = (abh + pqh) + (abl + pql);
-#endif
 		if(r >= _p)
 			r-= _p;
 		else if(r < 0)
 			r += _p;
+#else
+		RecInt::ruint<6> ari(a);
+		RecInt::ruint<6> bri(b);
+		RecInt::ruint<6> pri(_lp);
+		RecInt::ruint<7> rri7;
+		RecInt::ruint<6> rri6;
+		RecInt::lmul(rri7, bri, ari);
+		RecInt::mod_n(rri6,rri7,pri);
+		r = static_cast<double>(rri6);
+#endif
 #ifndef NDEBUG
 		assert((r < _p) && (r >= 0));
 #endif
@@ -239,11 +255,13 @@ namespace Givaro {
 		q = std::floor(a*_invp);
 		pql = fma (-q, _p, a);
 		a = pql;
-#else
+#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
 		Element pql, pqh, q;
 		q = std::floor(a*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		a = (a + pqh) + pql;
+#else
+		a = static_cast<float>(fmod(static_cast<double>(a),static_cast<double>(_p)));
 #endif
 		if(a >= _p)
 			a-= _p;
@@ -264,11 +282,13 @@ namespace Givaro {
 		q = std::floor(a*_invp);
 		pql = fma (-q, _p, a);
 		a = pql;
-#else
+#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
 		Element pql, pqh, q;
 		q = std::floor(a*_invp);
 		mult_dekker(-q, _p, pqh, pql);
 		a = (a + pqh) + pql;
+#else
+		a = fmod(a,_p);
 #endif
 		if(a >= _p)
 			a-= _p;

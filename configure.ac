@@ -7,7 +7,7 @@
 
 AC_PREREQ([2.68])
 
-AC_INIT([Givaro],[4.0.3],[Jean-Guillaume.Dumas@imag.fr],[givaro],
+AC_INIT([Givaro],[4.0.5],[http://github.com/linbox-team/givaro],[givaro],
 		[http://givaro.forge.imag.fr/])
 
 AC_CONFIG_MACRO_DIR([macros])
@@ -51,12 +51,16 @@ AC_PROG_CXX
 AC_COMPILER_NAME
 
 # We need a C++11 compiler now - AB 2014-12-12
-AX_CXX_COMPILE_STDCXX_11([],[mandatory])
-
-AC_SUBST([DEFAULT_CFLAGS])
-AC_SUBST([DEBUG_CFLAGS])
-AC_SUBST([TESTS_CFLAGS])
-
+# clang-3.8 does not support __float128 without explicitly passing it -std=c++11
+if test "x${CCNAM}" = "xclang38" ; then
+   AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+else
+   AX_CXX_COMPILE_STDCXX_11([ext],[mandatory])
+fi
+REQUIRED_FLAGS="$CXX11FLAGS"
+# Add the c++11 flags for the configure compilations as clang needs it to work properly with a glibc++ compiled with gcc
+BACKUP_CXXFLAGS="${CXXFLAGS}"
+CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 TESTS_CFLAGS="-O0"
 DEBUG_CFLAGS="-g"
 DEFAULT_CFLAGS=""
@@ -113,7 +117,7 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
 				WARN_CFLAGS="${WARN_CFLAGS} -D__STRICT_ANSI__"
 			fi
 			;;
-		xclang31)
+		xclang38)
 			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
 			if test "x${WARN}" = "xfull" ; then
 				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -g -Wno-vla-extension -Wno-variadic-macros"
@@ -134,8 +138,11 @@ fi
 
 
 DEFAULT_CFLAGS="${DEFAULT_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
-TESTS_CFLAGS="${TESTS_CFLAGS} ${WARN_CFLAGS} -UNDEBUG -DDEBUG -DGIVARO_DEBUG"
+TESTS_CFLAGS="${TESTS_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
 
+AC_SUBST([DEFAULT_CFLAGS])
+AC_SUBST([DEBUG_CFLAGS])
+AC_SUBST([TESTS_CFLAGS])
 
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
@@ -149,26 +156,26 @@ echo "-----------------------------------------------"
 echo "        START  GIVARO CONFIG                   "
 echo "-----------------------------------------------"
 
-echo "-----------------------------------------------"
+# Checks which SIMD optimization flags to use and set SIMD_CFLAGS accordingly
+INSTR_SET
+AC_SUBST(SIMD_FLAGS)
 
-echo "-----------------------------------------------"
-
-# checkes which SIMD instructions are available and defines HAVE_{SSE_4_1,AVX,AVX2}_INSTRUCTIONS and compiler flags
-CUSTOM_SIMD="no"
-FF_CHECK_SIMD
+# Veltkamp Split in modular-extended.inl requires to use the SSE floating point multiplier and not the fp87
+# This is by default on x86_64 but not on i386.
 arch=`echo $target | cut -d"-" -f1`
-if [[ "x$CUSTOM_SIMD" = "xno" ]] ; then
-   AX_CHECK_X86_FEATURES([][])
-else
-   CXXFLAGS="${CXXFLAGS} ${SSEFLAGS} ${AVXFLAGS}"
-fi
-
-dnl forcing -mpfmath=sse flag if SSE is available: Veltkamp split would return a different result on the x87 fpu
-AS_IF([ test "x$SSEFLAGS" != "x" -o "x$X86_FEATURE_CFLAGS" != "x" ],[CXXFLAGS="${CXXFLAGS} -mfpmath=sse"])
+AS_IF([ test \( "x$arch" = "xi386" -o "x$arch" = "xi686" \) -a "x$HAVE_SSE" = "xyes" ],
+   [
+        AS_ECHO("Compiling for an $arch architecture: appending -mfpmath=sse flags")
+        REQUIRED_FLAGS="${REQUIRED_FLAGS} -mfpmath=sse"
+   ])
+	
+echo "-----------------------------------------------"
 
 dnl With GCC's default ABI version, a __m128 or __m256 are the same types and therefore we cannot
 dnl have overloads for both types without linking error.
-AS_IF([test "x$CCNAM" = "xgcc48"],[CXXFLAGS="${CXXFLAGS} -fabi-version=6"],[])
+AS_IF([test "x$CCNAM" = "xgcc48"],[REQUIRED_FLAGS="${REQUIRED_FLAGS} -fabi-version=6"],[])
+
+AC_SUBST(REQUIRED_FLAGS)
 
 # Machine characteristics
 
@@ -231,11 +238,14 @@ echo "-----------------------------------------------"
 echo "-----------------------------------------------"
 
 GIV_CHECK_GMP(40000)
+REQUIRED_FLAGS="${REQUIRED_FLAGS} ${GMP_CFLAGS}"
 
 GIV_DOC
-
-CXXFLAGS="${GMP_CFLAGS} ${CXXFLAGS}"
+CXXFLAGS=${BACKUP_CXXFLAGS}
+CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
+CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
 LIBS="${GMP_LIBS}"
+echo "CXXFLAGS=${CXXFLAGS}"
 
 AC_SUBST(CXXFLAGS)
 
@@ -263,6 +273,7 @@ src/library/tools/Makefile
 src/library/poly1/Makefile
 src/library/matrix/Makefile
 macros/Makefile
+macros/CodeChunk/Makefile
 benchmarks/Makefile
 examples/Makefile
 examples/FiniteField/Makefile

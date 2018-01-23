@@ -26,9 +26,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::addin (Rep&
 //   if (sR == 0) { R.copy(P); return R; }
 //   if (sR == sP){ _supportdomain.addin(R,P); return; }
   if (sR < sP) {
-    Rep tmp; tmp.copy(P);
+    Rep tmp; tmp = P;
     for (i=0; i<sR; ++i) _domain.addin(tmp[i], R[i]);
-    R.logcopy(tmp);
+    R = tmp;
   }
   else {
     for (i=0; i<sP; ++i) _domain.addin(R[i], P[i]);
@@ -42,16 +42,16 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add(Rep& R,
   size_t sP = P.size();
   size_t sQ = Q.size();
   size_t sR = R.size();
-  if (sP == 0) { R.copy(Q); return R; }
-  if (sQ == 0) { R.copy(P); return R; }
+  if (sP == 0) { R = Q; return R; }
+  if (sQ == 0) { R = P; return R; }
 // JGD 04.11.1999
 //   if (sP == sQ) {
-//     R.reallocate(sP);
+//     R.resize(sP);
 //     _supportdomain.add(R,P,Q);
 //     return;
 //   }
   size_t i, max = sP < sQ ? sQ : sP;
-  if (sR != max) R.reallocate(max);
+  if (sR != max) R.resize(max);
   if (sP < sQ)
   {
     for (i=0; i<sP; ++i) _domain.add(R[i], P[i], Q[i]);
@@ -75,7 +75,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add
 {
   size_t sP = P.size();
   if (sP == 0)  {
-    R.reallocate(1);
+    R.resize(1);
     _domain.assign(R[0],Val);
   }
   else {
@@ -91,7 +91,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::add
 {
   size_t sP = P.size();
   if (sP == 0)  {
-    R.reallocate(1);
+    R.resize(1);
     _domain.assign(R[0],Val);
   }
   else {
@@ -107,7 +107,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::addin
 {
   size_t sR = R.size();
   if (sR == 0)  {
-      R.reallocate(1);
+      R.resize(1);
       _domain.assign(R[0],Val);
   } else
       _domain.addin(R[0],Val);
@@ -134,13 +134,13 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin (
     // PRECONDITION: P of larger degree than R
     size_t sP = (size_t)(Pend-Pbeg);
     size_t sR = R.size();
-    Rep tmp; tmp.reallocate(sP);
+    Rep tmp; tmp.resize(sP);
     size_t i;
     typename Rep::const_iterator pi=Pbeg;
     for (i=0; i<sR; ++i, ++pi) _domain.sub(tmp[i], R[i], *pi);
     for (; pi != Pend; ++i, ++pi) _domain.neg(tmp[i], *pi);
     setdegree(tmp);
-    R.copy(tmp);
+    R =tmp;
     return R;
 }
 
@@ -178,15 +178,15 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sub(Rep& R,
   size_t sP = P.size();
   size_t sQ = Q.size();
   size_t sR = R.size();
-  if (sQ == 0) { R.copy(P); return R; }
+  if (sQ == 0) { R = P; return R; }
   if (sP == 0) { return neg(R,Q); }
 //   if (sP == sQ) {
-//     R.reallocate(sP);
+//     R.resize(sP);
 //     _supportdomain.sub(R,P,Q);
 //     return;
 //   }
   size_t i, max = sP < sQ ? sQ : sP;
-  if (sR != max) R.reallocate(max);
+  if (sR != max) R.resize(max);
   if (sP < sQ)
   {
     for (i=0; i<sP; ++i) _domain.sub(R[i], P[i], Q[i]);
@@ -205,7 +205,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sub
 {
   size_t sP = P.size();
   if (sP == 0)  {
-    R.reallocate(1);
+    R.resize(1);
     _domain.neg(R[0],Val);
   }
   else {
@@ -221,7 +221,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::subin
 {
   size_t sR = R.size();
   if (sR == 0)  {
-      R.reallocate(1);
+      R.resize(1);
       _domain.neg(R[0],Val);
   } else
       _domain.subin(R[0],Val);
@@ -234,7 +234,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sub
 {
   size_t sP = P.size();
   if (sP == 0)  {
-    R.reallocate(1);
+    R.resize(1);
     _domain.neg(R[0],Val);
   }
   else {
@@ -259,7 +259,7 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::neg (Rep& R
 {
 //   _supportdomain.neg(R,P);
   size_t sP = P.size();
-  R.reallocate(sP);
+  R.resize(sP);
   if (sP == 0) { return R; }
   for (size_t i=0; i<sP; ++i) _domain.neg(R[i],P[i]);
   return R;

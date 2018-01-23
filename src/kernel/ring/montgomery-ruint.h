@@ -23,11 +23,12 @@ namespace Givaro
     template<class TYPE> class Montgomery;
 
     //! @brief The recint-based Montgomery ring.
-    //! You can only odd moduli.
-    //! An integer (a mod p) is stored as (a * r mod 2^{2^K}) with (r = 2^{2^K} mod p).
+    //! Only odd moduli allowed
+    //! An integer (a mod p) is stored as 
+    //! (a * r mod 2^{2^K}) with (r = 2^{2^K} mod p).
 
     template<size_t K>
-    class Montgomery<RecInt::ruint<K>> : public virtual FiniteFieldInterface<RecInt::ruint<K>>
+    class Montgomery<RecInt::ruint<K>> : public FiniteFieldInterface<RecInt::ruint<K>>
     {
     public:
 

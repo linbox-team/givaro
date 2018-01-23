@@ -65,7 +65,7 @@ namespace Givaro {
 		} while (1);
 
 		degree(degV, V);
-		G.logcopy(V);
+		G = V;
 		// JGD 15.12.1999
 		//   if (degV <= 1) assign(G,one);
 		if (degV <= 0) assign(G,_domain.one);
@@ -81,13 +81,13 @@ namespace Givaro {
 		Degree degF, degG;
 		degree(degF,A); degree(degG,B);
 		if ((degF < 0) || (degG == 0)) {
-			assign(T0, Degree(0), _domain.inv( tt, leadcoef(r0,B)));
+            _domain.inv( tt, leadcoef(r0,B)); assign(T0, Degree(0), tt);
 			init(S0, 0);
 			assign(F, B);
 			return mulin(F,tt);
 		}
 		if ((degG < 0) || (degF == 0)) {
-			assign(S0, Degree(0), _domain.inv( tt, leadcoef(r0,A)));
+			_domain.inv( tt, leadcoef(r0,A)); assign(S0, Degree(0), tt);
 			init(T0, 0);
 			assign(F, A);
 			return mulin(F,tt);
@@ -111,10 +111,10 @@ namespace Givaro {
 
 		Rep S1,R1,T1,Q,TMP, TMP2;
 
-		assign(S0, 0, _domain.inv(tt,r0) );
+		_domain.inv(tt,r0); assign(S0, Degree(0), tt);
 		assign(S1,zero);
 		assign(T0,zero);
-		assign(T1, 0, _domain.inv(tt,r1) );
+		_domain.inv(tt,r1); assign(T1, Degree(0), tt);
 
 		while ( ! isZero(G) ) {
 			divmod(Q,R1,F,G);

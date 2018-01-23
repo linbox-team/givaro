@@ -188,17 +188,6 @@ namespace Givaro {
 	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::prim_root(Rep& A, const Rep& n) const
 	{ uint64_t runs; return prim_root(A, runs, n); }
 
-	/*
-	   template<class T, template <class, class> class Container, template<class> class Alloc>
-	   std::ostream& operator<< (std::ostream& o, const Container<T, Alloc<T> >& C) {
-	   for(typename Container<T, Alloc<T> >::const_iterator refs =  C.begin();
-	   refs != C.end() ;
-	   ++refs )
-	   o << (*refs) << " " ;
-	   return o << std::endl;
-	   }
-	   */
-
 
 	// =================================
 	// Probable primitive roots
@@ -211,8 +200,6 @@ namespace Givaro {
 	template<class MyRandIter>
 	typename IntNumTheoDom<MyRandIter>::Rep& IntNumTheoDom<MyRandIter>::probable_prim_root(Rep& primroot, double& error, const Rep& p, const uint64_t L) const
 	{
-		// std::cerr << "L: " << L << std::endl;
-
 		// partial factorisation
 		std::vector<Rep> Lq;
 		std::vector<uint64_t> e;
@@ -221,10 +208,6 @@ namespace Givaro {
 
 		bool complet = Father_t::set(Lq, e, pmun, L);
 		// partial factorisation done
-
-		//std::cerr << "Lq: " << Lq << std::endl;
-		//std::cerr << "e: " << e << std::endl;
-
 
 		Rep Temp;
 		Rep essai, alea;
@@ -238,7 +221,6 @@ namespace Givaro {
 				this->nonzerorandom(this->_g, alea, p);
 				this->modin(alea, p);
 				this->powmod(essai, alea, Temp, p);
-				//std::cerr << alea << " should be of order " << Q << " mod " << p << std::endl;
 			} while (essai == 1);
 			// looking for alea, of order Q with high probability
 

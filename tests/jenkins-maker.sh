@@ -22,13 +22,14 @@ SOURCE_DIRECTORY=$( cd "$( dirname "$0" )" && pwd )
 #=============================#
 # Change only these variables #
 #=============================#
+ARCH=`pwd | awk -F/ '{print $(NF-4)}'`
 CXX=`pwd | awk -F/ '{print $(NF-2)}'`
 SSE=`pwd | awk -F/ '{print $NF}'`
 
 # Job givaro with SSE option flag
 # by default sse is enabled
 if [ "$SSE" == "withoutSSE" ]; then
-  GIVARO_SSEFLAG="--disable-simd"
+  GIVARO_SSEFLAG="--disable-sse --disable-sse2 --disable-sse3 --disable-ssse3 --disable-sse4.1 --disable-sse4.2 --disable-avx --disable-avx2 --disable-fma --disable-fma4"
 fi
 
 JENKINS_DIR=${SOURCE_DIRECTORY%%/workspace/*}
@@ -67,9 +68,7 @@ if [ "$CXX" == "icpc" ]; then
 fi
 
 # Particular case for Fedora23: g++=g++-5.3
-vm_name=`uname -n | cut -d"-" -f1`
-
-if [[ "$vm_name" == "fedora"  && "$CXX" == "g++-5.3" ]]; then
+if [[ "$ARCH" == "linbox-fedora-amd64" &&  "$CXX" == "g++-6" ]]; then
     CXX="g++"
 fi
 CC=`echo $CXX | sed  's/icpc/icc/;s/clang++/clang/;s/++/cc/'`
@@ -79,7 +78,7 @@ CC=`echo $CXX | sed  's/icpc/icc/;s/clang++/clang/;s/++/cc/'`
 #==================================#
 
 echo "|=== JENKINS AUTOMATED SCRIPT ===| ./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix=$PREFIX_INSTALL --with-gmp=$GMP_PATH $GIVARO_SSEFLAG"
-./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH" "$GIVARO_SSEFLAG"
+./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH" $GIVARO_SSEFLAG
 V="$?"; if test "x$V" != "x0"; then exit "$V"; fi
 
 echo "|=== JENKINS AUTOMATED SCRIPT ===| make install"
@@ -92,3 +91,4 @@ make perfpublisher
 echo "|=== JENKINS AUTOMATED SCRIPT ===| make examples"
 make examples
 V="$?"; if test "x$V" != "x0"; then exit "$V"; fi
+(cd examples && make clean)

@@ -31,9 +31,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep
 {
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
-	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
+	if ((sQ ==0) || (sP ==0)) { R.resize(0); return R; }
 	const size_t sR = sP+sQ-1;
-	if (sR != R.size() ) R.reallocate(sR);
+	if (sR != R.size() ) R.resize(sR);
 
  	stdmul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
@@ -48,9 +48,9 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Re
 {
 	const size_t sP = P.size();
 	const size_t sQ = Q.size();
-	if ((sQ ==0) || (sP ==0)) { R.reallocate(0); return R; }
+	if ((sQ ==0) || (sP ==0)) { R.resize(0); return R; }
 	const size_t sR = sP+sQ-1;
-	if (sR != R.size()) R.reallocate(sR);
+	if (sR != R.size()) R.resize(sR);
 
  	karamul(R, R.begin(), R.end(),
             P, P.begin(), P.end(),
@@ -113,16 +113,16 @@ inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul(
 	RepIterator ri=Rbeg, rig=Rbeg;
 	if (_domain.isZero(*ai))
 		for(;bi!=Qend;++bi,++ri)
-			*ri = _domain.zero;
+			_domain.assign(*ri,_domain.zero);
 	else
 		for(;bi!=Qend;++bi,++ri)
 			if (_domain.isZero(*bi))
-				*ri = _domain.zero;
+				_domain.assign(*ri, _domain.zero);
 			else
 				_domain.mul(*ri,*ai,*bi);
 
 	for(;ri!=Rend;++ri)
-		*ri = _domain.zero;
+		_domain.assign(*ri,_domain.zero);
 	for(++ai,++rig;ai!=Pend;++ai,++rig)
 		if (! _domain.isZero(*ai))
 			for(ri=rig,bi=Qbeg;bi!=Qend;++bi,++ri)

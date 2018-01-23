@@ -59,6 +59,7 @@ namespace Givaro
 	    if (a < 0) negin(r);
             return r;
         }
+
         Element& init(Element& r, const Integer& a) const
         {
             reduce(r, Caster<Element>((a < 0)? -a : a));

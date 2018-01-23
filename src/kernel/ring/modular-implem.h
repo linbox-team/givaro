@@ -245,6 +245,8 @@ namespace Givaro {
     	// --------
     	// ----- IO
 
+		
+		virtual Element& init (Element&, const Integer&) const = 0;
 		inline std::istream& read (std::istream& s, Element& a) const;
 
 		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) == 1)

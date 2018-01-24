@@ -55,7 +55,7 @@ using namespace Givaro;
 
 #define JEONETESTE( F, x, y )						\
     if (TestOneRing(F,x,y)) {						\
-	std::cout << x << " " << y << " failed !" << std::endl;	\
+	std::cout << #x << " " << #y << " failed !" << std::endl;	\
 	return -1;							\
     }
 
@@ -282,7 +282,7 @@ int main(int argc, char ** argv)
 #endif
     Integer::seeding(seed);
     RecInt::srand(seed);
-    
+
     using ModularCUS = Modular<int8_t, uint16_t>;
     using ModularSUZ = Modular<int16_t, uint32_t>;
     using ModularZULL = Modular<int32_t, uint64_t>;
@@ -421,8 +421,9 @@ int main(int argc, char ** argv)
     //----- Modulo maximal prime -----//
 
 #define TEST_LAST(Field, Name)		\
-    std::cout << "TEST_LAST: " << #Name << " (" << (long)Field::maxCardinality() << ")"<< std::endl; \
+    std::cout << "TEST_LAST: " << #Name; \
     Field Name(Field::maxCardinality());	\
+    Name.write(std::cout << " (", Field::maxCardinality()) << ")"<< std::endl; \
     JETESTE(Name, seed);
     
     TEST_LAST(Modular<Log16>, Lmax);

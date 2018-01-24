@@ -133,7 +133,7 @@ namespace Givaro {
 			Residu_t repunit = ~0;
 			return repunit >> 4*k; // 2^(N/2) - 1 with N = bitsize(Storage_t)
 		}
-		
+
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
 		static Residu_t maxCardinality() {
 			Residu_t repunit = ~0;
@@ -245,9 +245,14 @@ namespace Givaro {
     	// --------
     	// ----- IO
 
-		
+
 		virtual Element& init (Element&, const Integer&) const = 0;
 		inline std::istream& read (std::istream& s, Element& a) const;
+
+		inline std::ostream& write (std::ostream& s, const Element& a) const
+		{
+			return this->write<Element>(s, a);
+		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) == 1)
 		inline std::ostream& write (std::ostream& s, const E& a) const
@@ -260,6 +265,11 @@ namespace Givaro {
     	{
 			return s << Caster<Element>(a);
     	}
+
+		std::ostream& write (std::ostream& s) const
+		{
+			return this->write<Element>(s);
+		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) == 1)
 		std::ostream& write (std::ostream& s) const
@@ -280,24 +290,24 @@ namespace Givaro {
 	    s >> std::ws >> ch;
 	    if (ch != '(')
 	        std::cerr << "GivBadFormat(Modular_implem::read: syntax error: no '('))" << std::endl;
-	
+
 	    s >> std::ws >> ch;
 	    if (ch != 'z')
 	        std::cerr << "GivBadFormat(Modular_implem::read: bad domain object))" << std::endl;
-	
+
 	    s >> std::ws >> ch;
 	    if (ch != ',')
 	        std::cerr << "GivBadFormat(Modular_implem::read: syntax error: no ',')) " << std::endl;
-	
+
 	    s >> std::ws >> _p;
-	
+
 	    s >> std::ws >> ch;
 	    if (ch != ')')
 	        std::cerr << "GivBadFormat(Modular_implem::read: syntax error: no ')')) " << std::endl;
-	
+
 	    return s;
 		}
-		
+
 
 	protected:
 		// -- data representation of the domain:

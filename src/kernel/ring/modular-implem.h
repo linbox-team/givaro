@@ -127,7 +127,7 @@ namespace Givaro {
 		// --         ruint<K> |  ruint<K> | ruint<K>::maxCardinality()
 		// --         ruint<K> | ruint<K+1>| (ruint<K+1>::maxCardinality()-1).Low/2
 
-		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t))) 
+		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
 		static Residu_t maxCardinality() {
 			std::size_t k = sizeof(S);
 			Residu_t repunit = ~0;
@@ -156,11 +156,19 @@ namespace Givaro {
 		static Residu_t maxCardinality() { return -1; }
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
-		static Residu_t maxCardinality() { return S::maxCardinality(); }
+		static Residu_t maxCardinality()
+		{
+			Residu_t max;
+			max.High = 1U;
+			return max;
+		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
-		static Residu_t maxCardinality() { return (Compute_t::maxCardinality()-1).Low/2; }
-
+		static Residu_t maxCardinality()
+		{
+			Residu_t max;
+			return RecInt::fill_with_1(max) >> 1;
+		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value)
 		static Residu_t maxCardinality() {
@@ -172,8 +180,8 @@ namespace Givaro {
 		inline bool isOne (const Element& a) const override { return a == one; }
 		inline bool isMOne(const Element& a) const override { return a == mOne; }
 		inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
-		inline bool isUnit(const Element& a) const override 
-		{ 
+		inline bool isUnit(const Element& a) const override
+		{
 			Element u,d;
 			invext(u,d,a,Caster<Element>(_p));
 			return isOne(d) || isMOne(d);

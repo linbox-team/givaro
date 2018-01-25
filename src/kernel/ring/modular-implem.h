@@ -158,9 +158,7 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
 		static Residu_t maxCardinality()
 		{
-			Residu_t max;
-			max.High = 1U;
-			return max;
+			return S::maxModulus();
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)

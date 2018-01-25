@@ -39,6 +39,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #define RUINT_MANIP_H
 
 #include "ruruint.h"
+#include "rushift.h"
 
 // --------------------------------------------------------------
 // ----------------------- DEFINTIONS ---------------------------
@@ -192,9 +193,23 @@ namespace RecInt {
         ruint<__RECINT_LIMB_SIZE> max; return fill_with_1(max);
     }
 
+    template <size_t K>
+    inline ruint<K> ruint<K>::maxModulus() {
+        ruint<K> max;
+        max.High = 1;
+        return max;
+    }
+
+    inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxModulus() {
+        ruint<__RECINT_LIMB_SIZE> max(1); return max <<= (__RECINT_LIMB_SIZE-1);
+    }
+
 #  if defined(__RECINT_USE_FAST_128)
     inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxCardinality() {
         ruint<__RECINT_LIMB_SIZE+1> max; return fill_with_1(max);
+    }
+    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxModulus() {        
+        ruint<__RECINT_LIMB_SIZE+1> max(1); return max <<= (__RECINT_LIMB_SIZE);
     }
 #  endif
 

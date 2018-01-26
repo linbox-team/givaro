@@ -46,7 +46,7 @@ namespace Givaro
         using Self_t = Modular<Storage_t, Compute_t>;
         using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
-        using Element = typename Parent_t::Element;
+        using Element = Storage_t; //typename Parent_t::Element;
 
      	// ----- Constantes
      	//const Element zero;
@@ -55,7 +55,7 @@ namespace Givaro
         
         // ----- Constructors
 
-        using Parent_t::Modular_implem; 
+        using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem; 
         using Parent_t::_p;
         using Parent_t::_pc;
         using Parent_t::zero;
@@ -112,9 +112,10 @@ namespace Givaro
         template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { while (isZero(init(a, g())))
-                ;
-            return a; }
+        { 
+          while (Self_t::isZero(init(a, g())));
+          return a; 
+        }
         
         //// --- IO methods
         //std::ostream& write(std::ostream& s) const;

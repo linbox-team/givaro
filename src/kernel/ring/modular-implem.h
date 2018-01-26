@@ -199,7 +199,7 @@ namespace Givaro {
 			return *this;
 		}
 
-		Element& assign (Element& x, const Element& y) const
+		Element& assign (Element& x, const Element& y) const override
 		{
 			return x = y;
 		}
@@ -253,9 +253,9 @@ namespace Givaro {
 
 
 		virtual Element& init (Element&, const Integer&) const = 0;
-		inline std::istream& read (std::istream& s, Element& a) const;
+		inline std::istream& read (std::istream& s, Element& a) const override;
 
-		inline std::ostream& write (std::ostream& s, const Element& a) const
+		inline std::ostream& write (std::ostream& s, const Element& a) const override
 		{
 			return this->write<Element>(s, a);
 		}
@@ -272,7 +272,7 @@ namespace Givaro {
 			return s << Caster<Element>(a);
     	}
 
-		std::ostream& write (std::ostream& s) const
+		std::ostream& write (std::ostream& s) const override
 		{
 			return this->write<Element>(s);
 		}

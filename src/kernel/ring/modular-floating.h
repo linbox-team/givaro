@@ -46,7 +46,7 @@ namespace Givaro
 		using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
 		// ----- Constructors
-		using Parent_t::Modular_implem;
+		using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
 
 		using Parent_t::_p;
 		using Parent_t::_pc;
@@ -119,30 +119,30 @@ namespace Givaro
         //}
 
         // ----- Initialisation
-        Element& init (Element& x) const;
+        Element& init (Element& x) const override;
         
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, 
 			std::is_same<Source,double>::value && 
-			std::is_same<Element, float>::value)
-		Element& init (Element& x, const Source y) const;
+			std::is_same<Storage_t, float>::value)
+		inline Element& init (Element&, const Source) const;
         
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, 
 			std::is_integral<Source>::value && std::is_signed<Source>::value && 
 			sizeof(Source) >= sizeof(Storage_t))
-		Element& init (Element& x, const Source y) const;
+		inline Element& init (Element&, const Source) const;
         
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, 
 			std::is_integral<Source>::value && std::is_unsigned<Source>::value && 
 			sizeof(Source) >= sizeof(Storage_t))
-		Element& init (Element& x, const Source y) const;
+		inline Element& init (Element&, const Source) const;
         
-		Element& init (Element& x, const Integer& y) const;
+		inline Element& init (Element&, const Integer&) const override;
 
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, 
 			!(std::is_integral<Source>::value && sizeof(Source) >= sizeof(Storage_t)) &&
-			!(std::is_same<Source, double>::value && std::is_same<Element, float>::value) &&
+			!(std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value) &&
 			!std::is_same<Source, Integer&>::value)
-		Element& init(Element& r, const Source a) const
+		inline Element& init(Element& r, const Source a) const
         { r = Caster<Element>(a); return reduce(r); }
 
         //Element& assign (Element& x, const Element& y) const;

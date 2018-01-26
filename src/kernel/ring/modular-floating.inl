@@ -19,7 +19,7 @@ namespace Givaro {
 #define TMPL template<typename Storage_t, typename Compute_t> 
 #define COND_TMPL(T, ...) \
 	template<typename T, \
-		typename std::enable_if<__VA_ARGS__, int>::type*>
+		typename std::enable_if<(__VA_ARGS__), int>::type*>
 
     // --------------------
     // ----- Initialisation
@@ -173,7 +173,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::divin
     (Element &x, const Element &y) const
     {
-        MOD::Element iy;
+        Element iy;
         return mulin(x, inv(iy, y));
     }
 

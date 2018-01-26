@@ -52,7 +52,7 @@
 #define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r = p-r; r += a*b; r= (r<p ? r : r % p); __GIVARO_ZPZIntType_N_NEGIN(r,p); }
 
 #define __GIVARO_ZPZIntType_N_NEG(r,p,a) { r = ( Modular<IntType, COMP, Enable>::isZero(a) ? zero : p-a); }
-#define __GIVARO_ZPZIntType_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
+#define __GIVARO_ZPZIntType_N_NEGIN(r,p) { r = ( Modular<IntType, COMP, Enable>::isZero(r) ? zero : p-r); }
 
 namespace Givaro
 {

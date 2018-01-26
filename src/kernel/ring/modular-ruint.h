@@ -42,7 +42,7 @@ namespace Givaro
 
 
         // ----- Constructors
-        using Parent_t::Modular_implem;
+        using Modular_implem<Storage_t, Compute_t, Storage_t>::Modular_implem;
         
         using Parent_t::_p;
         using Parent_t::_pc;
@@ -50,7 +50,7 @@ namespace Givaro
 
 
         // ----- Initialisation
-        Element& init (Element& x) const
+        Element& init (Element& x) const override
         { return x = this->zero; }
 
         template<typename T> Element& init(Element& r, const T& a) const
@@ -60,7 +60,7 @@ namespace Givaro
             return r;
         }
 
-        Element& init(Element& r, const Integer& a) const
+        Element& init(Element& r, const Integer& a) const override
         {
             reduce(r, Caster<Element>((a < 0)? -a : a));
 	    if (a < 0) negin(r);

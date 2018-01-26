@@ -53,7 +53,7 @@ namespace Givaro {
 		using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
         // ----- Constructors
-		using Parent_t::Modular_implem;
+		using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
 
 		using Parent_t::_p;
 		using Parent_t::_pc;

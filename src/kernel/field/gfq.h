@@ -22,6 +22,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givranditer.h"
 #include "givaro/givpoly1factor.h"
+#include "givaro/ring-interface.h"
 
 #include <string>
 #include <vector>
@@ -33,7 +34,7 @@
 namespace Givaro {
 
 //! class GFqDom
-template<class TT> class GFqDom {
+template<class TT> class GFqDom : public FiniteRingInterface<TT> {
 protected:
 	typedef typename Signed_Trait<TT>::unsigned_type UTT;
 	typedef TT Rep;
@@ -146,7 +147,9 @@ public:
         return *this;
     }
 
-
+	// ----- Accessors
+	inline Element minElement() const override { return zero; }
+	inline Element maxElement() const override { return _qm1; }
 
 	// Access to the modulus, characteristic, size, exponent
     UTT residu() const;
@@ -203,7 +206,7 @@ public:
     
 	// -- Misc: r <- a mod p
     Rep& assign (Rep&, const Integer) const;
-    Rep& assign (Rep&, const Rep) const;
+    Rep& assign (Rep&, const Rep&) const;
     void assign ( const size_t sz, Array r, constArray a ) const;
     
 	// --- IO methods for the Domain
@@ -212,7 +215,7 @@ public:
     std::ostream& write( std::ostream& s , const std::string& ) const;
 	// --- IO methods for the Elements
     std::istream& read ( std::istream& s, Rep& a ) const;
-    std::ostream& write( std::ostream& s, const Rep a ) const;
+    std::ostream& write( std::ostream& s, const Rep& a ) const;
     
 	// Conversions of the elements
     std::ostream& convert(std::ostream& s, const Rep a ) const { return write(s,a); }
@@ -230,29 +233,29 @@ public:
 	inline int operator!= (const GFqDom<TT>& a) const;
 
 	// Miscellaneous functions
-	bool areEqual( const Rep&, const Rep&  ) const;
-	bool areNEqual ( const Rep , const Rep ) const;
-	bool isZero( const Rep ) const;
-	bool isnzero( const Rep ) const;
-	bool isOne ( const Rep ) const;
-	bool isMOne ( const Rep ) const;
-	bool isUnit ( const Rep ) const; // Element belongs to prime subfield
-	size_t length ( const Rep ) const;
+	bool areEqual(const Rep& a, const Rep& b) const;
+	bool areNEqual(const Rep, const Rep) const;
+	bool isZero(const Rep& a) const;
+	bool isnzero(const Rep) const;
+	bool isOne(const Rep& a) const;
+	bool isMOne(const Rep& a) const;
+	bool isUnit(const Rep& a) const; // Element belongs to prime subfield
+	size_t length( const Rep ) const;
 
 
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-	Rep& mul (Rep& r, const Rep a, const Rep b) const;
+	Rep& mul (Rep& r, const Rep& a, const Rep& b) const;
 	Rep& div (Rep& r, const Rep a, const Rep b) const;
-	Rep& add (Rep& r, const Rep a, const Rep b) const;
-	Rep& sub (Rep& r, const Rep a, const Rep b) const;
-	Rep& neg (Rep& r, const Rep a) const;
+	Rep& add (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& sub (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& neg (Rep& r, const Rep& a) const;
 	Rep& inv (Rep& r, const Rep a) const;
 
-	Rep& mulin (Rep& r, const Rep a) const;
+	Rep& mulin (Rep& r, const Rep& a) const;
 	Rep& divin (Rep& r, const Rep a) const;
-	Rep& addin (Rep& r, const Rep a) const;
-	Rep& subin (Rep& r, const Rep a) const;
+	Rep& addin (Rep& r, const Rep& a) const;
+	Rep& subin (Rep& r, const Rep& a) const;
 	Rep& negin (Rep& r) const;
 	Rep& invin (Rep& r) const;
 
@@ -271,24 +274,24 @@ public:
 	void neg (const size_t sz, Array r, constArray a) const;
 	void inv (const size_t sz, Array r, constArray a) const;
 
-	Rep& axpy (Rep& r, const Rep a, const Rep b, const Rep c) const;
+	Rep& axpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
 	void axpy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
 	void axpy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
 
 	// -- axpyin: r <- r + a * x mod p
-	Rep& axpyin (Rep& r, const Rep a, const Rep b) const;
+	Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const;
 	void axpyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	// -- axmy: r <- a * b - c mod p
-	Rep& axmy (Rep& r, const Rep a, const Rep b, const Rep c) const;
+	Rep& axmy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
 	void axmy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
 	void axmy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
 
 	// -- maxpy: r <- c - a * b mod p
-	Rep& maxpy (Rep& r, const Rep a, const Rep b, const Rep c) const;
+	Rep& maxpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
 
 	// -- axmyin: r <-  a * b - r mod p
-	Rep& axmyin (Rep& r, const Rep a, const Rep b) const;
+	Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const;
 	// void axmyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	//   // -- sqpyin: r <- r + a * a mod p
@@ -296,7 +299,7 @@ public:
 
 
 	// -- maxpyin: r <- r - a * b mod p
-	Rep& maxpyin (Rep& r, const Rep a, const Rep b) const;
+	Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const;
 	void maxpyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	// <- \sum_i a[i], return 1 if a.size() ==0,

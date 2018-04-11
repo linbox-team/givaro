@@ -7,7 +7,7 @@ Travis: [![Build Status](https://travis-ci.org/linbox-team/givaro.svg?branch=mas
 Download and install
 --------------------
 
-For lastest releases, please check out [this website](http://github.com/linbox-team/givaro); older releases can be found on [that website](https://forge.imag.fr/frs/?group_id=187).
+For lastest releases, please check out [this website](http://github.com/linbox-team/givaro); older releases can be found on [that website](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
 Then, you can install doing:
 
 ```

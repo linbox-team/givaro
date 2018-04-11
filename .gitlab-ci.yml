@@ -1,0 +1,10 @@
+pages:
+
+  image: python:alpine
+  script:
+  - cp -R htdocs public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - www

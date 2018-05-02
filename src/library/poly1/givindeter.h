@@ -28,6 +28,8 @@ public :
  Indeter(const std::string & x="") : name(x){}
   // -- Cstor: recopy the string
  Indeter(const char * x) : name(x){}
+  // -- Cstor: recopy the string
+ Indeter(const char c) : name(1U,c){}
   // -- Cstor of recopy
  Indeter(const Indeter& s): name(s.name) {}
 

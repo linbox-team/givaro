@@ -11,13 +11,17 @@
 #ifndef __Givaro_field_gf2_H
 #define __Givaro_field_gf2_H
 
+#include "givaro-config.h"
+
 #include <iostream>
 #include <climits>
 #include <cmath>
+#include <vector>
 
-#include "givaro-config.h"
 #include "givaro/ring-interface.h"
+#include "givaro/givranditer.h"
 #include "givaro/udl.h"
+#include "givaro/givinteger.h"
 
 namespace Givaro
 {

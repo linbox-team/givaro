@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <15 Nov 17 10:55:13 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <02 May 18 14:53:22 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -201,7 +201,7 @@ public:
     
 	// Initialization of a polynomial
     template<typename val_t, template<class,class> class Vector,template <class> class Alloc>
-    Rep& init( Rep&, const Vector<val_t,Alloc<val_t> >&);
+    Rep& init( Rep&, const Vector<val_t,Alloc<val_t> >&) const;
     
     
 	// -- Misc: r <- a mod p

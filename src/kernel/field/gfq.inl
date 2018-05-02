@@ -827,7 +827,7 @@ namespace Givaro {
         // ---------
     template<typename TT>
     template<typename val_t, template<class, class> class Vector, template <class> class Alloc>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Vector<val_t, Alloc<val_t> >& P) {
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const Vector<val_t, Alloc<val_t> >& P) const {
         static Self_t PrimeField(this->_characteristic);
         typedef Poly1Dom< Self_t, Dense > PolDom;
         static PolDom Pdom( PrimeField );

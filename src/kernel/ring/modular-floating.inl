@@ -78,7 +78,7 @@ namespace Givaro {
     inline typename MOD::Element&  MOD::reduce (Element& x) const
     {
         x = std::fmod(x, _pc);
-        if (x < 0.f) x += _pc;
+        if (x < 0) x += _pc;
         return x;
     }
 

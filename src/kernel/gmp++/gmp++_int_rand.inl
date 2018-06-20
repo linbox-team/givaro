@@ -225,7 +225,7 @@ namespace Givaro {
 
 	Integer& Integer::random_exact_2exp (Integer& r, const uint64_t & m)
 	{
-		return Integer::random_exact<true>(r,m);
+		return Integer::random_exact_2exp<true>(r,m);
 	}
 	// synonym
 	template<bool ALWAYSPOSITIVE>

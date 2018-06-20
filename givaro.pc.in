@@ -6,7 +6,7 @@ includedir=@prefix@/include
 
 Name: Givaro
 Description: C++ library for arithmetic and algebraic computations
-URL: http://givaro.forge.imag.fr
+URL: https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro
 Version: @VERSION@
 Requires:
 Libs: -L@libdir@ -lgivaro @LIBS@

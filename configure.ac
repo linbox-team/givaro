@@ -8,7 +8,7 @@
 AC_PREREQ([2.68])
 
 AC_INIT([Givaro],[4.0.5],[http://github.com/linbox-team/givaro],[givaro],
-		[http://givaro.forge.imag.fr/])
+		[https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro])
 
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])

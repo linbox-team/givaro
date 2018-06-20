@@ -195,6 +195,7 @@ namespace Givaro {
 			F.assign(const_cast<Element&>(zero), F.zero);
 			F.assign(const_cast<Element&>(mOne), F.mOne);
 			_p = F._p;
+			_pc = F._pc;
 			//_bitsizep = F._bitsizep;
 			return *this;
 		}

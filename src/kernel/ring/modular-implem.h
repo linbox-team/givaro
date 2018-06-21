@@ -254,24 +254,29 @@ namespace Givaro {
 
 
 		virtual Element& init (Element&, const Integer&) const = 0;
-		inline std::istream& read (std::istream& s, Element& a) const override;
 
 		inline std::ostream& write (std::ostream& s, const Element& a) const override
 		{
 			return this->write<Element>(s, a);
 		}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) == 1)
+		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, !IS_FLOAT(E) && sizeof(E) == 1)
 		inline std::ostream& write (std::ostream& s, const E& a) const
     	{
     	    return s << int32_t(a);
     	}
 
-		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, sizeof(E) > 1)
+		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, !IS_FLOAT(E) && sizeof(E) > 1)
 		inline std::ostream& write (std::ostream& s, const E& a) const
     	{
 			return s << Caster<Element>(a);
     	}
+
+		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, IS_FLOAT(E))
+		inline std::ostream& write (std::ostream& s, const E& a) const
+		{
+			return s << Caster<Residu_t>(a);
+		}
 
 		std::ostream& write (std::ostream& s) const override
 		{
@@ -315,6 +320,7 @@ namespace Givaro {
 	    return s;
 		}
 
+		inline std::istream& read (std::istream&, Element&) const override;
 
 	protected:
 		// -- data representation of the domain:
@@ -332,6 +338,7 @@ namespace Givaro {
 		    this->init(a, tmp);
 		    return s;
 		}
+
 
 }
 

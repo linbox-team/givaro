@@ -48,12 +48,12 @@ inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::truncin(Rep& p, const D
 
 template <class Domain>
 inline typename TruncDom<Domain>::Rep& TruncDom<Domain>::addin ( Rep& R, const Rep& P) const {
+    Degree vP; val(vP, P);
+    Degree vR; val(vR, R);
     size_t sP = P.first.size();
     if (sP == 0) return R;
     size_t sR = R.first.size();
     if (sR == 0) { return assign(R,P); }
-    Degree vP; val(vP, P);
-    Degree vR; val(vR, R);
 
 
     if (vR > vP) {

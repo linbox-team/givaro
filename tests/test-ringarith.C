@@ -89,11 +89,11 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     F.assign(b, y);
     F.init(c);            // empty constructor
     F.init(d);            // empty constructor
-	
+
     F.add(c, a, b);       // c = a+b
     F.assign(c_,c);       // c_ <- c
     TESTE_EG(c,c_);
-	
+
     F.subin(c_,a);
              //F.write(std::cerr) << std::endl;
              //F.write(std::cerr << "a: ", a) << std::endl;
@@ -187,9 +187,9 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 	F.addin(c,b);           // F.write(std::cerr << "c: ", c) << std::endl;
 	F.addin(c,b);           // F.write(std::cerr << "c: ", c) << std::endl;
 	F.init(d, 0U);
-           
+
 	//F.write(std::cerr << "d: ", d) << std::endl;            
-	    
+
 
 	TESTE_EG(c, d);
 
@@ -197,7 +197,7 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     F.write(std::cerr );
     std::cerr  << " done." << std::endl;
 #endif
-	
+
     return 0;
 }
 
@@ -210,7 +210,7 @@ int TestRing(const Ring& F, const uint64_t seed)
 {
 	typename Ring::Element x, y;
 	typename Ring::RandIter g(F, 0_ui64, seed);
-    
+
     F.init(x, 7U);
     F.init(y, -29.0);
     JEONETESTE(F,x,y);
@@ -218,24 +218,24 @@ int TestRing(const Ring& F, const uint64_t seed)
     F.init(x, Ring::maxCardinality()-1U);
     F.init(y, Ring::maxCardinality()-1U);
     JEONETESTE(F,x,y);
-    
+
     F.assign(x, F.maxElement());
     F.assign(y, F.maxElement());
     JEONETESTE(F,x,y);
-    
+
     F.assign(x, F.minElement());
     F.assign(y, F.maxElement());
     JEONETESTE(F,x,y);
-    
+
     F.assign(x, F.minElement());
     F.assign(y, F.minElement());
     JEONETESTE(F,x,y);
-    
+
 	for (size_t i = 0; i< NBITER; ++i) {
 		g.random(x); g.random(y);
 		JEONETESTE(F,x,y);
 	}
-    
+
     return 0;
 }
 
@@ -256,21 +256,45 @@ int TestPolRing(const Ring& F, const uint64_t seed)
         int64_t d1 = int64_t (lrand48() % DEGMAX);
         int64_t d2 = int64_t (lrand48() % DEGMAX);
         typename Ring::Element x, d, z, o;
-	
+
         do { F.random(generator, x, Degree(d1)); } while(F.isZero(x));
         do { F.random(generator, d, Degree(d2)); } while(F.isZero(d));
         JEONETESTE(F,x,d);
-	
+
         do { F.random(generator, z, Degree(0)); } while(F.isZero(z));
         JEONETESTE(F,x,z);
         JEONETESTE(F,z,x);
-	
+
         do { F.random(generator, o, Degree(1)); } while(F.isZero(o));
         JEONETESTE(F,d,o);
         JEONETESTE(F,o,d);
     }
-    
+
     return 0;
+}
+
+template<class Ring>
+int TestInv(const Ring& F, const uint64_t seed)
+{
+  typename Ring::Element a, inva, invinva;
+  typename Ring::RandIter g(F, 0_ui64, seed);
+
+  F.init(a);
+  F.init(inva);
+  F.init(invinva);
+
+  for (int i=0; i < 100; i++)
+  {
+    g.random(a);
+    while (F.isZero(a)) g.random(a);
+    F.inv(inva, a);
+    F.inv(invinva, inva);
+
+    TESTE_EG(a, invinva);
+  }
+
+
+  return 0;
 }
 
 
@@ -309,7 +333,7 @@ int main(int argc, char ** argv)
 
     //-------------//
     //----- 4 -----//
-    
+
     TEST_SPECIFIC(Modular<int8_t>, C4, 4);
     TEST_SPECIFIC(Modular<int16_t>, S4, 4);
     TEST_SPECIFIC(Modular<int32_t>, Z4, 4);
@@ -344,7 +368,7 @@ int main(int argc, char ** argv)
     //----- 75 -----//
 
     TEST_SPECIFIC(Modular<Log16>, L79, 79);
-    
+
     TEST_SPECIFIC(Modular<int8_t>, C75, 13);
     TEST_SPECIFIC(Modular<int16_t>, S75, 75);
     TEST_SPECIFIC(Modular<int32_t>, Z75, 75);
@@ -371,7 +395,7 @@ int main(int argc, char ** argv)
    TEST_SPECIFIC(Modular<Integer>, I75, 75);
    TEST_SPECIFIC(Modular<RecInt::ruint128>, RU75, 75);
    TEST_SPECIFIC(Modular<RecInt::rint128>, R75, 75);
-    
+
     //TEST_SPECIFIC(ModularBalanced<int32_t>, BZ75, 75);
     //TEST_SPECIFIC(ModularBalanced<int64_t>, BLL75, 75);
     //TEST_SPECIFIC(ModularBalanced<float>, BF75, 75);
@@ -406,14 +430,14 @@ int main(int argc, char ** argv)
    TEST_POLYNOMIAL(Modular<Integer>, PI75, I75);
    TEST_POLYNOMIAL(Modular<RecInt::ruint128>, PRU75, RU75);
    TEST_POLYNOMIAL(Modular<RecInt::rint128>, PR75, R75);
-    
+
     //TEST_POLYNOMIAL(ModularBalanced<int32_t>, MBZ75, BZ75);
     //TEST_POLYNOMIAL(ModularBalanced<int64_t>, MBLL75, BLL75);
     //TEST_POLYNOMIAL(ModularBalanced<float>, MBF75, BF75);
     //TEST_POLYNOMIAL(ModularBalanced<double>, MBD75, BD75);
     //TEST_POLYNOMIAL(Montgomery<int32_t>, PMZ75, MZ75);
     // @bug Convert to double inside? //TEST_POLYNOMIAL(Montgomery<RecInt::ruint128>, PMRU75, MRU75);
-    
+
     //TEST_POLYNOMIAL(decltype(PI75), PPI75, PI75);
     //TEST_POLYNOMIAL(decltype(PPI75), PPPI75, PPI75);
 
@@ -425,7 +449,7 @@ int main(int argc, char ** argv)
     Field Name(Field::maxCardinality());	\
     Name.write(std::cout << " (", Field::maxCardinality()) << ")"<< std::endl; \
     JETESTE(Name, seed);
-    
+
     TEST_LAST(Modular<Log16>, Lmax);
     TEST_LAST(Modular<int8_t>, Cmax);
     TEST_LAST(Modular<int16_t>, Smax);
@@ -456,11 +480,56 @@ int main(int argc, char ** argv)
     //TEST_LAST(ModularBalanced<int64_t>, BLLmax);
     //TEST_LAST(ModularBalanced<float>, BFmax);
     //TEST_LAST(ModularBalanced<double>, BDmax);
-    
+
     //TEST_LAST(Montgomery<int32_t>, MZmax);
     //TEST_LAST(Montgomery<RecInt::ruint128>, MRUmax);
 	//TEST_LAST(ModularExtended<float>, MEFmax);
 	//TEST_LAST(ModularExtended<double>, MEDmax);
 
+// -----------------------
+//  Test inversions
+// -----------------------
+
+
+#define TEST_INV(Field, Name, Prime) \
+    std::cout << "TEST_INV: " << #Name; \
+    Field Name(Prime); \
+    Name.write(std::cout << " (", Name.cardinality()) << ")"<< std::endl; \
+    if (TestInv( (Name), (seed))) { \
+	std::cout << #Name << " failed !" << std::endl;	\
+	return -1;					\
+    }
+
+    TEST_INV(Modular<int8_t>, C17, 17);
+    TEST_INV(Modular<int16_t>, S17, 17);
+    TEST_INV(Modular<int32_t>, Z17, 17);
+    TEST_INV(Modular<int64_t>, LL17, 17);
+    TEST_INV(Modular<uint8_t>, UC17, 17);
+    TEST_INV(Modular<uint16_t>, US17, 17);
+    TEST_INV(Modular<uint32_t>, UZ17, 17);
+    TEST_INV(Modular<uint64_t>, ULL17, 17);
+    TEST_INV(ModularCUS, CUS17, 17);
+    TEST_INV(ModularSUZ, SUZ17, 17);
+    TEST_INV(ModularZULL, ZULL17, 17);
+    TEST_INV(ModularUCUS, UCUS17, 17);
+    TEST_INV(ModularUSUZ, USUZ17, 17);
+    TEST_INV(ModularUZULL, UZULL17, 17);
+    TEST_INV(ModularFD, FD17, 17);
+#ifdef __GIVARO_HAVE_INT128
+	TEST_INV(ModularLLULLL, LLULLL17, 17);
+	TEST_INV(ModularULLULLL, ULLULLL17, 17);
+#endif
+
+   TEST_INV(Modular<float>, F17, 17);
+   TEST_INV(Modular<double>, D17, 17);
+    TEST_INV(Modular<Integer>, I17, 17);
+    TEST_INV(Modular<RecInt::ruint128>, RU17, 17);
+    TEST_INV(Modular<RecInt::rint128>, R17, 17);
+    //TEST_INV(ZRing<Integer>, ZR17, 17);
+
+    TEST_INV(Modular<Log16>, L17, 17);
+
     return 0;
+
 }
+

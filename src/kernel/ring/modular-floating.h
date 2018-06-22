@@ -87,7 +87,7 @@ namespace Givaro
         //inline Residu_t residu() const { return _lp; }
         //inline Residu_t size() const { return _lp; }
         //inline Residu_t characteristic() const { return _lp; }
-        inline float fcharacteristic() const { return _pc; }
+        inline Compute_t fcharacteristic() const { return _pc; }
         //template<class T> inline T& characteristic(T& p) const { return p = _lp; }
         //inline Residu_t cardinality() const { return _lp; }
         //template<class T> inline T& cardinality(T& p) const { return p = _lp; }

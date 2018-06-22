@@ -99,8 +99,7 @@ namespace Givaro {
 		Element& init (Element& x, const Source y) const
 		{
 			x = Caster<Element>(std::fmod((y < 0.0 ? -y : y), Source(_p)));
-			if (x < Source(0.0)) x = Caster<Element>(x + _p);
-			return x;
+			return ( (y < 0.0) ? negin(x) : x);
 		}
 
 		Element& init (Element& x, const Integer& y) const

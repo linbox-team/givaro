@@ -67,7 +67,7 @@ namespace Givaro {
     MOD::init(Element& r, const Integer& a) const
     {
         r = Caster<Element>(a % _p);
-        if (a < 0) negin(r);
+        if (r < 0) r += _pc;
         return r;
     }
 

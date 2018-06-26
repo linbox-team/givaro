@@ -136,13 +136,13 @@ namespace Givaro
 			sizeof(Source) >= sizeof(Storage_t))
 		inline Element& init (Element&, const Source) const;
         
-		inline Element& init (Element&, const Integer&) const override;
+		inline Element& init (Element&, const Integer&) const;
 
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, 
 			!(std::is_integral<Source>::value && sizeof(Source) >= sizeof(Storage_t)) &&
 			!(std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value) &&
 			!std::is_same<Source, Integer&>::value)
-		inline Element& init(Element& r, const Source a) const
+		inline Element& init(Element& r, const Source& a) const
         { r = Caster<Element>(a); return reduce(r); }
 
         //Element& assign (Element& x, const Element& y) const;

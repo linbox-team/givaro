@@ -190,7 +190,7 @@ namespace Givaro
         template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { while (isZero(init(a, g())))
+        { while (this->isZero(init(a, g())))
                 ;
             return a; }
 

@@ -109,7 +109,7 @@ namespace Givaro
         template< class Random > Element& random(Random& g, Element& r) const
         { RecInt::rand(r); mod_n(r, _p); return r; }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { while (isZero(random(g, a))) { } return a; }
+        { while (this->isZero(random(g, a))) { } return a; }
 
     };
 

@@ -11,15 +11,13 @@
 #ifndef __GIVARO_modular_float_INL
 #define __GIVARO_modular_float_INL
 
-#include "givaro/modular-defines.h"
-
 namespace Givaro {
 
 #define MOD Modular<Storage_t, Compute_t, typename std::enable_if<std::is_floating_point<Storage_t>::value>::type>
 #define TMPL template<typename Storage_t, typename Compute_t> 
 #define COND_TMPL(T, ...) \
-	template<typename T, \
-		typename std::enable_if<(__VA_ARGS__), int>::type*>
+        template<typename T, \
+                typename std::enable_if<(__VA_ARGS__), int>::type*>
 
     // --------------------
     // ----- Initialisation
@@ -33,7 +31,7 @@ namespace Givaro {
 
     TMPL
     COND_TMPL(Source, 
-	std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value)
+        std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value)
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
     {
@@ -44,7 +42,7 @@ namespace Givaro {
 
     TMPL
     COND_TMPL(Source,
-	std::is_integral<Source>::value && std::is_signed<Source>::value && sizeof(Source) >= sizeof(Storage_t))
+        std::is_integral<Source>::value && std::is_signed<Source>::value && sizeof(Source) >= sizeof(Storage_t))
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
     {
@@ -55,7 +53,7 @@ namespace Givaro {
 
     TMPL
     COND_TMPL(Source, 
-	std::is_integral<Source>::value && std::is_unsigned<Source>::value && sizeof(Source) >= sizeof(Storage_t))
+        std::is_integral<Source>::value && std::is_unsigned<Source>::value && sizeof(Source) >= sizeof(Storage_t))
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
     {
@@ -97,22 +95,22 @@ namespace Givaro {
     inline typename MOD::Element & MOD::add
     (Element &x, const Element &y, const Element &z) const
     {
-        __GIVARO_MODULAR_FLOATING_ADD(x,_pc,y,z);
-        return x;
+        x = y + z;
+        return x = (x<_pc?x:x-_pc);
     }
 
     TMPL
     inline typename MOD::Element & MOD::sub
     (Element &x, const Element &y, const Element &z) const
     {
-        return __GIVARO_MODULAR_FLOATING_SUB(x,_pc,y,z);
+        return x = (y>=z)? y-z:(_pc-z)+y;
     }
 
     TMPL
     inline typename MOD::Element & MOD::mul
     (Element &x, const Element &y, const Element &z) const
     {
-        return __GIVARO_MODULAR_FLOATING_MUL(x,_pc,y,z);
+        return x = std::fmod(y*z, _pc);
     }
 
     TMPL
@@ -126,7 +124,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::neg
     (Element &x, const Element &y) const
     {
-        return __GIVARO_MODULAR_FLOATING_NEG(x,_pc,y);
+        return x = (y==0?0:_pc-y);
     }
 
     TMPL
@@ -136,7 +134,7 @@ namespace Givaro {
         invext(x,y,Caster<Element>(_p));
         return (x<0 ? x+=Caster<Element>(_p) : x);
         return x;
-	}
+        }
 
     //TMPL
     //inline bool MOD::isUnit(const Element& a) const 
@@ -150,15 +148,16 @@ namespace Givaro {
     inline typename MOD::Element & MOD::addin
     (Element &x, const Element &y) const
     {
-        __GIVARO_MODULAR_FLOATING_ADDIN(x,_pc,y);
-        return x;
+        x += y;
+        return x = (x<_pc?x:x-_pc);
     }
 
     TMPL
     inline typename MOD::Element & MOD::subin
     (Element &x, const Element &y) const
     {
-        __GIVARO_MODULAR_FLOATING_SUBIN(x,_pc,y);
+        if (x<y) x += (_pc-y);
+        else     x -= y;
         return x;
     }
 
@@ -166,7 +165,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::mulin
     (Element &x, const Element &y) const
     {
-        return __GIVARO_MODULAR_FLOATING_MULIN(x,_pc,y);
+        return x = std::fmod(x*y, _pc);
     }
 
     TMPL
@@ -181,7 +180,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::negin
     (Element &x) const
     {
-        return __GIVARO_MODULAR_FLOATING_NEGIN(x,_pc);
+        return x = (x==0?0:_pc-x);
     }
 
     TMPL
@@ -196,16 +195,14 @@ namespace Givaro {
     inline typename MOD::Element & MOD::axpy
     (Element &r, const Element &a, const Element &x, const Element &y) const
     {
-        __GIVARO_MODULAR_FLOATING_MULADD(r, _pc, a, x, y);
-        return r;
+        return r = std::fmod(a*x+y, _pc);
     }
 
     TMPL
     inline typename MOD::Element & MOD::axpyin
     (Element &r, const Element &a, const Element &x) const
     {
-        __GIVARO_MODULAR_FLOATING_MULADDIN(r, _pc, a, x);
-        return r;
+        return r = std::fmod(a*x + r, _pc);
     }
 
     // -- axmy: r <- a * x - y
@@ -213,8 +210,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::axmy
     (Element& r, const Element &a, const Element &x, const Element &y) const
     {
-        __GIVARO_MODULAR_FLOATING_MULSUB(r, _pc, a, x, y);
-        return r;
+        return r = std::fmod(a*x + (_pc-y), _pc);
     }
 
     TMPL
@@ -230,17 +226,18 @@ namespace Givaro {
     inline typename MOD::Element&  MOD::maxpy
     (Element& r, const Element& a, const Element& x, const Element& y) const
     {
-        r = y;
-        __GIVARO_MODULAR_FLOATING_SUBMULIN(r, _pc, a, x);
-        return r;
+        r = a*x + (_pc-y);
+        r = (r<_pc ? r : std::fmod(r,_pc));
+        return negin(r);
     }
 
     TMPL
     inline typename MOD::Element&  MOD::maxpyin
     (Element& r, const Element& a, const Element& x) const
     {
-        __GIVARO_MODULAR_FLOATING_SUBMULIN(r, _pc, a, x);
-        return r;
+        r = a*x + (_pc-r);
+        r = (r<_pc ? r : std::fmod(r,_pc));
+        return negin(r);
     }
 
 #undef MOD

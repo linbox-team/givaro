@@ -10,8 +10,6 @@
 #ifndef __GIVARO_montgomery_ruint_INL
 #define __GIVARO_montgomery_ruint_INL
 
-#include "modular-defines.h"
-
 namespace Givaro
 {
     // ------------------------
@@ -100,7 +98,8 @@ namespace Givaro
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::neg
     (Element& r, const Element& a) const
     {
-        __GIVARO_MODULAR_RECINT_NEG(r,_p,a);
+        if (a == 0) RecInt::reset(r);
+        else        RecInt::sub(r, _p, a);
         return r;
     }
 
@@ -170,7 +169,8 @@ namespace Givaro
     inline typename Montgomery<RecInt::ruint<K>>::Element& Montgomery<RecInt::ruint<K>>::negin
     (Element& r) const
     {
-        __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
+        if (r == 0) RecInt::reset(r);
+        else        RecInt::sub(r, _p, r);
         return r;
     }
     template<size_t K>

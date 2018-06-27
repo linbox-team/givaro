@@ -13,7 +13,6 @@ pkginclude_HEADERS=     \
 	modular.h		    \
 	modular-general.h	\
         modular-implem.h	\
-	modular-defines.h	\
 	modular-integral.h	\
 	modular-floating.h	\
 	modular-integer.h	\

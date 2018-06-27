@@ -12,17 +12,10 @@ AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel 
 pkginclude_HEADERS=     \
 	modular.h		    \
 	modular-general.h	\
+        modular-implem.h	\
 	modular-defines.h	\
-	modular-int8.h		\
-	modular-int16.h		\
-	modular-int32.h		\
-	modular-int64.h		\
-	modular-uint8.h		\
-	modular-uint16.h	\
-	modular-uint32.h	\
-	modular-uint64.h	\
-	modular-float.h		\
-	modular-double.h	\
+	modular-integral.h	\
+	modular-floating.h	\
 	modular-integer.h	\
 	modular-inttype.h	\
 	modular-log16.h		\
@@ -39,16 +32,7 @@ pkginclude_HEADERS=     \
 	montgomery-int32.h	\
 	montgomery-ruint.h	\
 	modular-general.inl	\
-	modular-int8.inl	\
-	modular-int16.inl	\
-	modular-int32.inl	\
-	modular-int64.inl	\
-	modular-uint8.inl	\
-	modular-uint16.inl	\
-	modular-uint32.inl	\
-	modular-uint64.inl	\
-	modular-float.inl	\
-	modular-double.inl	\
+	modular-floating.inl	\
 	modular-integer.inl	\
 	modular-inttype.inl	\
 	modular-log16.inl	\

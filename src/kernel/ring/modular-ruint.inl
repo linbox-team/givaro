@@ -14,383 +14,262 @@
 
 namespace Givaro
 {
-        // -------------
-        // ----- Modular<ruint<K> >
+#define TMPL template<typename Storage_t, typename Compute_t>
+#define MOD Modular<Storage_t, Compute_t, \
+  typename std::enable_if<is_same_ruint<Storage_t, Compute_t>::value || \
+                          is_smaller_ruint<Storage_t, Compute_t>::value>::type>
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Residu_t
-    Modular<RecInt::ruint<K>, RecInt::ruint<K>>::maxCardinality() {
-        return RecInt::ruint<K>::maxModulus();
+#define DIFF_RECINT \
+  typename std::enable_if<!std::is_same<E,C>::value, int>::type = 0
+#define SAME_RECINT \
+  typename std::enable_if<std::is_same<E,C>::value, int>::type = 0
+
+    template<typename E, typename C, DIFF_RECINT>
+    E& _mul
+    (E& r, const E& a, const E& b, const E& p)
+    {
+        C tmp;
+        RecInt::lmul(tmp, a, b);
+        RecInt::mod_n(r, tmp, p);
+        return r;
     }
 
-    // ------------------------
-    // ----- Classic arithmetic
+    template<typename E, typename C, SAME_RECINT>
+    E& _mul
+    (E& r, const E& a, const E& b, const E& p)
+    {
+      E tmp;
+      RecInt::mul(tmp, a, b);
+      RecInt::mod_n(r, tmp, p);
+      return r;
+    }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::mul
+    TMPL
+    inline
+    typename MOD::Element& MOD::mul
     (Element& r, const Element& a, const Element& b) const
     {
-        __GIVARO_MODULAR_RECINT_MUL(r,_p,a,b);
-        return r;
+        return _mul<Element, Compute_t>(r, a, b, _p);
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::sub
+    TMPL
+    inline typename MOD::Element& MOD::sub
         (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_MODULAR_RECINT_SUB(r,_p,a,b);
         return r;
     }
- 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::add
+
+    TMPL
+    inline typename MOD::Element& MOD::add
         (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_MODULAR_RECINT_ADD(r,_p,a,b);
         return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::neg
+    TMPL
+    inline typename MOD::Element& MOD::neg
         (Element& r, const Element& a) const
     {
         __GIVARO_MODULAR_RECINT_NEG(r,_p,a);
         return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::inv
+    TMPL
+    inline typename MOD::Element& MOD::inv
         (Element& r, const Element& a) const
     {
         return inv_mod(r, a, _p);
     }
 
-    template<size_t K>
-    inline bool Modular<RecInt::ruint<K>, RecInt::ruint<K>>::isUnit(const Element& a) const 
-    { 
-        Element d; 
-        gcd(d,a,_p); 
-        return isOne(d) || isMOne(d); 
-    }
+    //TMPL
+    //inline bool MOD::isUnit(const Element& a) const
+    //{
+    //    Element d;
+    //    gcd(d,a,_p);
+    //    return isOne(d) || isMOne(d);
+    //}
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::div
+    TMPL
+    inline typename MOD::Element& MOD::div
         (Element& r, const Element& a, const Element& b) const
     {
         return mulin( inv(r,b), a );
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::mulin
-        (Element& r, const Element& a) const
+    template<typename E, typename C>
+    E& _mulin(E& r, const E& a, const E& p, const C& pc)
     {
-        __GIVARO_MODULAR_RECINT_MULIN(r,_p,a);
-        return r;
+      C tmp;
+      RecInt::lmul(tmp, r, a);
+      RecInt::mod_n(r, tmp, p);
+      return r;
+    }
+    template<typename E>
+    E& _mulin(E& r, const E& a, const E& p, const E& pc)
+    {
+      __GIVARO_MODULAR_RECINT_MULIN(r,p,a);
+      return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::divin
+    TMPL
+    inline
+    typename MOD::Element& MOD::mulin
+        (MOD::Element& r, const MOD::Element& a) const
+    {
+        return _mulin(r, a, _p, _pc);
+    }
+
+    TMPL
+    inline typename MOD::Element& MOD::divin
         (Element& r, const Element& a) const
     {
         Element ia;
         return mulin(r, inv(ia, a));
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::addin
+    TMPL
+    inline typename MOD::Element& MOD::addin
         (Element& r, const Element& a) const
     {
         __GIVARO_MODULAR_RECINT_ADDIN(r,_p,a);
         return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::subin
+    TMPL
+    inline typename MOD::Element& MOD::subin
         (Element& r, const Element& a) const
     {
         __GIVARO_MODULAR_RECINT_SUBIN(r,_p,a);
         return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::negin
+    TMPL
+    inline typename MOD::Element& MOD::negin
         (Element& r) const
     {
         __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
         return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::invin
+    TMPL
+    inline typename MOD::Element& MOD::invin
         (Element& r) const
     {
         return inv(r, r);
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::axpy
-        (Element& r, const Element& a, const Element& b, const Element& c) const
+    template<typename E, typename C, DIFF_RECINT>
+    inline E& _axpy (E& r, const E& a, const E& b, const E& c, const E& p)
     {
-        __GIVARO_MODULAR_RECINT_MULADD(r,_p,a,b,c);
-        return r;
+      C tmp;
+      RecInt::lmul(tmp, a, b);
+      RecInt::mod_n(r, tmp, p);
+      RecInt::add(r, c);
+      if (r >= p) RecInt::sub(r, p);
+      return r;
+    }
+    template<typename E, typename C, SAME_RECINT>
+    inline E& _axpy (E& r, const E& a, const E& b, const E& c, const E& p)
+    {
+      RecInt::copy(r, c);
+      RecInt::addmul(r, a, b);
+      RecInt::mod_n(r, p);
+      return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K>>::axpyin
+    TMPL
+    inline typename MOD::Element& MOD::axpy
+        (Element& r, const Element& a, const Element& b, const Element& c) const
+    {
+      return _axpy<Element, Compute_t>(r, a, b, c, _p);
+    }
+
+    template<typename E, typename C, DIFF_RECINT>
+    inline E& _axpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        E tmp = r;
+        return r = _axpy<E, C>(r, a, b, tmp, p);
+    }
+    template<typename E, typename C, SAME_RECINT>
+    inline E& _axpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        RecInt::addmul(r, a, b);
+        RecInt::mod_n(r, p);
+        return r;
+    }
+    TMPL
+    inline typename MOD::Element&  MOD::axpyin
         (Element& r, const Element& a, const Element& b) const
     {
-        __GIVARO_MODULAR_RECINT_MULADDIN(r,_p,a,b);
-        return r;
+        return _axpyin<Element, Compute_t>(r, a, b, _p);
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::maxpy
+    TMPL
+    inline typename MOD::Element& MOD::maxpy
         (Element& r, const Element& a, const Element& b, const Element& c) const
     {
-        __GIVARO_MODULAR_RECINT_MUL(r,_p,a,b);
-        __GIVARO_MODULAR_RECINT_SUB(r,_p,c,r);
+        _mul<Element, Compute_t>(r, a, b, _p);
+        sub(r, c, r);
         return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K>>::axmy
+    TMPL
+    inline typename MOD::Element&  MOD::axmy
         (Element& r, const Element& a, const Element& b, const Element& c) const
     {
-        __GIVARO_MODULAR_RECINT_MULSUB(r,_p,a,b,c);
+        _mul<Element, Compute_t>(r, a, b, _p);
+        subin(r, c);
         return r;
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K>>::maxpyin
+    template<typename E, typename C, DIFF_RECINT>
+    E& _maxpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        E tmp;
+        _mul<E, C>(tmp, a, b, p);
+        if (r < tmp)
+        {
+          RecInt::sub(tmp, p, tmp);
+          RecInt::add(r, tmp);
+        }
+        else RecInt::sub(r, tmp);
+        return r;
+    }
+    template<typename E, typename C, SAME_RECINT>
+    E& _maxpyin (E& r, const E& a, const E& b, const E& p)
+    {
+        if (r == 0) RecInt::reset(r);
+        else RecInt::sub(r, p, r);
+        RecInt::addmul(r, a, b);
+        RecInt::mod_n(r, p);
+        if (r == 0) RecInt::reset(r);
+        else RecInt::sub(r, p, r);
+        return r;
+    }
+    TMPL
+    inline typename MOD::Element&  MOD::maxpyin
         (Element& r, const Element& a, const Element& b) const
     {
-        __GIVARO_MODULAR_RECINT_SUBMULIN(r,_p,a,b);
-        __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
-        return r;
+        return _maxpyin<Element, Compute_t> (r, a, b, _p);
     }
 
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K>>::axmyin
+    TMPL
+    inline typename MOD::Element&  MOD::axmyin
         (Element& r, const Element& a, const Element& b) const
     {
         Element rc(r);
-        __GIVARO_MODULAR_RECINT_MULSUB(r,_p,a,b,rc);
+        axmy(r, a, b, rc);
         return r;
     }
 
-    //----- IO
-    
-    template<size_t K>
-    inline std::ostream& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::write (std::ostream& s) const
-    {
-        return s << "Modular<RecInt::ruint<" << K << ">, RecInt::ruint<" << K << ">> modulo " << residu();
-    }
+#undef TMPL
+#undef MOD
+#undef SAME_RECINT
+#undef DIFF_RECINT
 
-    template<size_t K>
-    inline std::istream& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::read (std::istream& s, Element& a) const
-    {
-        Integer tmp;
-        s >> tmp;
-        init(a, tmp);
-        return s;
-    }
-
-    template<size_t K>
-    inline std::ostream& Modular<RecInt::ruint<K>, RecInt::ruint<K>>::write (std::ostream& s, const Element& a) const
-    {
-        return s << a;
-    }  
 }
 
-    // -------------
-    // ----- Modular<ruint<K>, ruint<K+1> >
-namespace Givaro {
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Residu_t
-    Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::maxCardinality() {
-        Residu_t max; return RecInt::fill_with_1(max)>>1;
-    }
-
-    // ------------------------
-    // ----- Classic arithmetic
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::mul
-        (Element& r, const Element& a, const Element& b) const
-    {
-        __GIVARO_MODULAR_RECINT_LMUL(r,_p,a,b);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::sub
-        (Element& r, const Element& a, const Element& b) const
-    {
-        __GIVARO_MODULAR_RECINT_SUB(r,_p,a,b);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::add
-        (Element& r, const Element& a, const Element& b) const
-    {
-        __GIVARO_MODULAR_RECINT_ADD(r,_p,a,b);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::neg
-        (Element& r, const Element& a) const
-    {
-        __GIVARO_MODULAR_RECINT_NEG(r,_p,a);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::inv
-        (Element& r, const Element& a) const
-    {
-        return inv_mod(r, a, _p);
-    }
-
-    template<size_t K>
-    inline bool Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::isUnit(const Element& a) const 
-    { 
-        Element d; 
-        gcd(d,a,_p); 
-        return isOne(d) || isMOne(d); 
-    }
-
-  
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::div
-        (Element& r, const Element& a, const Element& b) const
-    {
-        return mulin( inv(r,b), a );
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::mulin
-        (Element& r, const Element& a) const
-    {
-        __GIVARO_MODULAR_RECINT_LMULIN(r,_p,a);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::divin
-        (Element& r, const Element& a) const
-    {
-        Element ia;
-        return mulin(r, inv(ia, a));
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::addin
-        (Element& r, const Element& a) const
-    {
-        __GIVARO_MODULAR_RECINT_ADDIN(r,_p,a);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::subin
-        (Element& r, const Element& a) const
-    {
-        __GIVARO_MODULAR_RECINT_SUBIN(r,_p,a);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::negin
-        (Element& r) const
-    {
-        __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::invin
-        (Element& r) const
-    {
-        return inv(r, r);
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::axpy
-        (Element& r, const Element& a, const Element& b, const Element& c) const
-    {
-        __GIVARO_MODULAR_RECINT_LMULADD(r,_p,a,b,c);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::axpyin
-        (Element& r, const Element& a, const Element& b) const
-    {
-        __GIVARO_MODULAR_RECINT_LMULADDIN(r,_p,a,b);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::maxpy
-        (Element& r, const Element& a, const Element& b, const Element& c) const
-    {
-        __GIVARO_MODULAR_RECINT_LMUL(r,_p,a,b);
-        __GIVARO_MODULAR_RECINT_SUB(r,_p,c,r);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::axmy
-        (Element& r, const Element& a, const Element& b, const Element& c) const
-    {
-        __GIVARO_MODULAR_RECINT_LMULSUB(r,_p,a,b,c);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::maxpyin
-        (Element& r, const Element& a, const Element& b) const
-    {
-        __GIVARO_MODULAR_RECINT_LSUBMULIN(r,_p,a,b);
-        __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
-        return r;
-    }
-
-    template<size_t K>
-    inline typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element&  Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::axmyin
-        (Element& r, const Element& a, const Element& b) const
-    {
-        Element rc(r);
-        __GIVARO_MODULAR_RECINT_LMULSUB(r,_p,a,b,rc);
-        return r;
-    }
-
-    //----- IO
-    
-    template<size_t K>
-    inline std::ostream& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::write (std::ostream& s) const
-    {
-        return s << "Modular<RecInt::ruint<" << K << ">, RecInt::ruint<" << K+1 << ">> modulo " << residu();
-    }
-
-    template<size_t K>
-    inline std::istream& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::read (std::istream& s, typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& a) const
-    {
-        Integer tmp;
-        s >> tmp;
-        init(a, tmp);
-        return s;
-    }
-
-    template<size_t K>
-    inline std::ostream& Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::write (std::ostream& s, const typename Modular<RecInt::ruint<K>, RecInt::ruint<K+1>>::Element& a) const
-    {
-        return s << a;
-    }
-
-} // end of namespace Givaro
 
 #endif

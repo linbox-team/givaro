@@ -51,47 +51,47 @@
 //#define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r -= (a*b); if (r<0) { r+=p; r = (r<0 ? r % p : r); } }
 #define __GIVARO_ZPZIntType_N_SUBMULIN(r,p,a,b) { r = p-r; r += a*b; r= (r<p ? r : r % p); __GIVARO_ZPZIntType_N_NEGIN(r,p); }
 
-#define __GIVARO_ZPZIntType_N_NEG(r,p,a) { r = ( isZero(a) ? zero : p-a); }
-#define __GIVARO_ZPZIntType_N_NEGIN(r,p) { r = ( isZero(r) ? zero : p-r); }
+#define __GIVARO_ZPZIntType_N_NEG(r,p,a) { r = ( Modular<IntType, COMP, Enable>::isZero(a) ? zero : p-a); }
+#define __GIVARO_ZPZIntType_N_NEGIN(r,p) { r = ( Modular<IntType, COMP, Enable>::isZero(r) ? zero : p-r); }
 
 namespace Givaro
 {
     // ------------------------- Arithmetic functions
     
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::mul (Element& r, const Element& a, const Element& b) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::mul (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZIntType_N_MUL(r,_p,a,b); return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::sub (Element& r, const Element& a, const Element& b) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::sub (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZIntType_N_SUB(r,_p,a,b); return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::add (Element& r, const Element& a, const Element& b) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::add (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZIntType_N_ADD(r,_p,a,b); return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::neg (Element& r, const Element& a) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::neg (Element& r, const Element& a) const
     {
-        __GIVARO_ZPZIntType_N_NEG(r,_p,a); return r;
-
+        //__GIVARO_ZPZIntType_N_NEG(r,_p,a); return r;
+        return r = (a == zero ? zero : _p - a);
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::negin (Element& r) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::negin (Element& r) const
     {
         __GIVARO_ZPZIntType_N_NEGIN(r,_p);
         return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::inv (Element& u1, const Element& a) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::inv (Element& u1, const Element& a) const
     {
         u1=one;
         IntType r0(_p), r1(a);
@@ -121,127 +121,106 @@ namespace Givaro
     }
 
     
-    template<typename IntType, typename COMP> 
-    inline bool Modular<IntType, COMP>::isUnit(const Element& a) const 
-    { 
-        Element u,d; 
-        invext(u,d,a,_p); 
-        return isOne(d) || isMOne(d); 
-    }
+//    template<typename IntType, typename COMP, typename Enable> 
+//    inline bool Modular<IntType, COMP, Enable>::isUnit(const Element& a) const 
+//    { 
+//        Element u,d; 
+//        invext(u,d,a,_p); 
+//        return isOne(d) || isMOne(d); 
+//    }
 
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::div (Element& r, const Element& a, const Element& b) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::div (Element& r, const Element& a, const Element& b) const
     {
-        typename Modular<IntType, COMP>::Element ib;
+        typename Modular<IntType, COMP, Enable>::Element ib;
         inv(ib, b);
         __GIVARO_ZPZIntType_N_MUL(r,_p,a,ib);
         return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::mulin (Element& r, const Element& a) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::mulin (Element& r, const Element& a) const
     {
         __GIVARO_ZPZIntType_N_MULIN(r,_p, a);
         return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::divin (Element& r, const Element& a) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::divin (Element& r, const Element& a) const
     {
-        typename Modular<IntType, COMP>::Element ia;
+        typename Modular<IntType, COMP, Enable>::Element ia;
         inv(ia, a);
         return mulin(r, ia);
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::addin (Element& r, const Element& a) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::addin (Element& r, const Element& a) const
     {
         __GIVARO_ZPZIntType_N_ADDIN(r,_p, a);
         return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::subin (Element& r, const Element& a) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::subin (Element& r, const Element& a) const
     {
         __GIVARO_ZPZIntType_N_SUBIN(r,_p, a);
         return r;
     }
 
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::invin (Element& r) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::invin (Element& r) const
     {
-        typename Modular<IntType, COMP>::Element t = r;
-        return Modular<IntType, COMP>::inv(r,t);
+        typename Modular<IntType, COMP, Enable>::Element t = r;
+        return Modular<IntType, COMP, Enable>::inv(r,t);
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::axpy (Element& r, const Element& a, const Element& b, const Element& c) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::axpy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
         __GIVARO_ZPZIntType_N_MULADD(r, _p, a, b, c);
         return r;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::axpyin (Element& r, const Element& a, const Element& b) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::axpyin (Element& r, const Element& a, const Element& b) const
     {
-        typename Modular<IntType, COMP>::Element tmp = r;
+        typename Modular<IntType, COMP, Enable>::Element tmp = r;
         __GIVARO_ZPZIntType_N_MULADDIN(tmp, _p, a, b);
         return r = (Element)tmp;
     }
 
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::axmy (Element& r, const Element& a, const Element& b, const Element& c) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::axmy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
         __GIVARO_ZPZIntType_N_MULSUB(r, _p, a, b, c);
         return r;
     }
 
     // r = c - a*b
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::maxpy (Element& r, const Element& a, const Element& b, const Element& c) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::maxpy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
-        typename Modular<IntType, COMP>::Element tmp = c;
+        typename Modular<IntType, COMP, Enable>::Element tmp = c;
         __GIVARO_ZPZIntType_N_SUBMULIN(tmp, _p, a, b );
         return r = (Element)tmp;
     }
     // r -= a*b
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::maxpyin (Element& r, const Element& a, const Element& b) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::maxpyin (Element& r, const Element& a, const Element& b) const
     {
         __GIVARO_ZPZIntType_N_SUBMULIN(r, _p, a, b );
         return r;
     }
     // r = a*b - r
-    template<typename IntType, typename COMP> inline typename Modular<IntType, COMP>::Element&
-    Modular<IntType, COMP>::axmyin (Element& r, const Element& a, const Element& b) const
+    template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
+    Modular<IntType, COMP, Enable>::axmyin (Element& r, const Element& a, const Element& b) const
     {
         maxpyin(r,a,b);
         return negin(r);
     }
 
-    //----- IO
-
-    template<typename IntType, typename COMP> inline std::ostream&
-    Modular<IntType, COMP>::write (std::ostream& s ) const
-    {
-        return s << "Modular<[IntType]> modulo " << residu();
-    }
-
-    template<typename IntType, typename COMP> inline std::istream&
-    Modular<IntType, COMP>::read (std::istream& s, Element& a) const
-    {
-        s >> a;
-        init(a, a);
-        return s;
-    }
-
-    template<typename IntType, typename COMP> inline std::ostream&
-    Modular<IntType, COMP>::write (std::ostream& s, const Element& a) const
-    {
-        return s << a;
-    }
 
 } // namespace Givaro
 

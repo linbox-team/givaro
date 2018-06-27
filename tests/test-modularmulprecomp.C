@@ -33,6 +33,7 @@ int TestOneMulPrecomp(const Ring& F, const typename Ring::Element& x, const type
 
 	typename Ring::Element a, b, c, d;
 	typename Ring::Compute_t invp, invb, invb2;
+	size_t bitsizep;
 
 	F.assign(a, x);
 	F.assign(b, y);
@@ -42,8 +43,8 @@ int TestOneMulPrecomp(const Ring& F, const typename Ring::Element& x, const type
 
 	F.mul(c,a,b);
 
-	F.precomp_p(invp);
-	F.mul_precomp_p(d,a,b,invp);
+	F.precomp_p(invp, bitsizep);
+	F.mul_precomp_p(d,a,b,invp, bitsizep);
 	TESTE_EG(c,d);
 
 	F.precomp_b(invb, b);

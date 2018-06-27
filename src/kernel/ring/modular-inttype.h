@@ -21,8 +21,9 @@
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
-#include "givaro/modular-general.h"
 #include "givaro/ring-interface.h"
+#include "givaro/modular-implem.h"
+#include "givaro/modular-general.h"
 
 namespace Givaro
 {
@@ -31,92 +32,35 @@ namespace Givaro
      * - The representation of an integer a in Zpz is the value a % p
      * .
      */
-    template<typename IntType, typename COMP>
-    class Modular : public FiniteFieldInterface<IntType>
+    template<typename IntType, typename _Compute_t, typename Enable>
+    class Modular : public Modular_implem<IntType, _Compute_t, IntType>
     {
     public:
+
         // ----- Exported Types and constantes
-      typedef Modular<IntType,COMP> Self_t;
-        typedef IntType Residu_t;
-        enum { size_rep = sizeof(Residu_t) };
-	using Element = typename FiniteFieldInterface<IntType>::Element;
-	using Compute_t = COMP;
-        // ----- Constantes
-        const Element zero ;
-        const Element one  ;
-        const Element mOne;
+        using Storage_t = IntType;
+        using Residu_t = IntType;
+        using Compute_t = _Compute_t;
 
+        //using Element = typename FiniteFieldInterface<IntType>::Element;
+        using Self_t = Modular<Storage_t, Compute_t>;
+        using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
+
+        using Element = Storage_t; //typename Parent_t::Element;
+
+     	// ----- Constantes
+     	//const Element zero;
+     	//const Element one;
+     	//const Element mOne;
+        
         // ----- Constructors
-        ~Modular() noexcept {}
-        Modular()
-                : zero(0),
-                  one(1),
-                  _p(static_cast<Residu_t>(0)) {}
 
-        Modular(const Residu_t p)
-            : zero(0)
-            , one(1)
-            , mOne(p-static_cast<Residu_t>(1)), _p(p)
-        {
-	  assert(_p >= minCardinality());
-        }
-
-        template<class IntConvType>
-        Modular(const IntConvType& p, const IntConvType& e=1)
-            : zero(0)
-            , one(1)
-            , mOne( Caster<Residu_t>(p-1) )
-            , _p( Caster<Residu_t>(p) )
-        {
-	  assert(_p >= minCardinality());
-        }
-
-        Modular(const Integer& p, const Integer& e=Integer::one)
-            : zero(0)
-            , one(1)
-            , mOne( Caster<Residu_t>(p-1) )
-            , _p( Caster<Residu_t>(p) )
-        {
-	  assert(_p >= minCardinality());
-        }
-
-        Modular(const Self_t& F)
-                : zero(F.zero),one(F.one),mOne(F.mOne), _p(F._p) {}
-
-        // ----- Accessors
-        inline Element minElement() const override { return zero; }
-        inline Element maxElement() const override { return mOne; }
-
-        // ----- Access to the modulus
-        inline Residu_t residu() const { return _p; }
-        inline Residu_t size() const { return _p; }
-        inline Residu_t characteristic() const { return _p; }
-        inline Residu_t cardinality() const { return _p; }
-        template<class T> inline T& characteristic(T& p) const { return p = _p; }
-        template<class T> inline T& cardinality(T& p) const { return p = _p; }
-        
-        static inline Residu_t maxCardinality() { return -1; }
-        static inline Residu_t minCardinality() { return 2; }
-
-        // ----- Checkers
-        inline bool isZero(const Element& a) const override { return a == zero; }
-        inline bool isOne (const Element& a) const override { return a == one; }
-        inline bool isMOne(const Element& a) const override { return a == mOne; }
-        inline bool isUnit(const Element& a) const override;
-        inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
-        inline size_t length(const Element a) const { return size_rep; }
-        
-        // ----- Ring-wise operators
-        inline bool operator==(const Self_t& F) const { return _p == F._p; }
-        inline bool operator!=(const Self_t& F) const { return _p != F._p; }
-        inline Self_t& operator=(const Self_t& F)
-        {
-            F.assign(const_cast<Element&>(one),  F.one);
-            F.assign(const_cast<Element&>(zero), F.zero);
-            F.assign(const_cast<Element&>(mOne), F.mOne);
-            _p = F._p;
-            return *this;
-        }
+        using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem; 
+        using Parent_t::_p;
+        using Parent_t::_pc;
+        using Parent_t::zero;
+        using Parent_t::one;
+        using Parent_t::mOne;
 
         // ----- Initialisation
         Element& init (Element& x) const
@@ -126,12 +70,6 @@ namespace Givaro
         template<typename T> Element& init(Element& r, const T& a) const
         { r = Caster<Element>(a); return reduce(r); }
 
-        Element& assign (Element& x, const Element& y) const
-	{ return x = y; }
-    
-        // ----- Convert and reduce
-        template<typename T> T& convert(T& r, const Element& a) const
-        { return r = static_cast<T>(a); }
 
         Element& reduce (Element& x, const Element& y) const
 	{ x = y % _p; if (x < 0) x += _p; return x; }
@@ -174,18 +112,16 @@ namespace Givaro
         template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { while (isZero(init(a, g())))
-                ;
-            return a; }
+        { 
+          while (Self_t::isZero(init(a, g())));
+          return a; 
+        }
         
-        // --- IO methods
-        std::ostream& write(std::ostream& s) const;
-        std::istream& read (std::istream& s, Element& a) const;
-        std::ostream& write(std::ostream& s, const Element& a) const;
+        //// --- IO methods
+        //std::ostream& write(std::ostream& s) const;
+        //std::istream& read (std::istream& s, Element& a) const;
+        //std::ostream& write(std::ostream& s, const Element& a) const;
 
-    protected:
-	
-        Residu_t _p;
     };
 }
 

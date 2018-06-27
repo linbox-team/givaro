@@ -21,9 +21,9 @@
 #include "givaro/givinteger.h"
 #include "givaro/givbasictype.h"
 #include "givaro/giverror.h"
-#include "givaro/givarray0.h"
 #include "givaro/givranditer.h"
 #include "givaro/modular-general.h"
+#include "givaro/modular-implem.h"
 
 namespace Givaro
 {
@@ -37,25 +37,29 @@ namespace Givaro
      */
 
     template<>
-    class Modular<Log16, Log16>
+    class Modular<Log16> //:
+        //public Modular_implem<int16_t, int16_t, uint16_t>
     {
     public:
         // ----- Exported Types and constantes
-        typedef Modular<Log16> Self_t;
-        typedef uint16_t Residu_t;                    // - type to store residue
+
+	using Storage_t = int16_t;
+	using Compute_t = int16_t;
+	using Residu_t = uint16_t;
+	
+	using Element = Storage_t;
+	using Self_t = Modular<Log16>;
+	using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
+
+
         enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
 
         // ----- Representation of Element of the domain Modular:
         typedef int16_t Power_t;
         typedef Power_t Rep;
-        typedef int16_t Element;
-        typedef Element* Element_ptr ;
-        typedef const Element* ConstElement_ptr;
-
-
-        // ----- Representation of vector of the Element
-        typedef Residu_t* Array;
-        typedef const Residu_t* constArray;
+        //typedef int16_t Element;
+        //typedef Element* Element_ptr ;
+        //typedef const Element* ConstElement_ptr;
 
         // ----- Constructor /destor
         inline Modular( Residu_t p = 2 );
@@ -70,6 +74,9 @@ namespace Givaro
         // ----- Access to the modulus
         Residu_t residu() const;
         Residu_t size() const { return _p;}
+
+	inline Element minElement() const { return zero; }
+	inline Element maxElement() const { return mOne; }
 
         inline Residu_t characteristic() const { return _p; }
         inline Residu_t cardinality() const { return _p; }
@@ -119,8 +126,7 @@ namespace Givaro
         Rep& init( Rep& r, const uint16_t a) const;
 
         // -- Assignment :  r = a
-        Rep& assign (Rep& r, const Rep a) const;
-        void assign ( const size_t sz, Array r, constArray a ) const;
+        Rep& assign (Rep& r, const Rep& a) const;
 
         // ----- Misc methods
         bool iszero( const Rep a ) const;
@@ -138,75 +144,36 @@ namespace Givaro
 
 
         // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-        Rep& mul (Rep& r, const Rep a, const Rep b) const;
-        Rep& div (Rep& r, const Rep a, const Rep b) const;
-        Rep& add (Rep& r, const Rep a, const Rep b) const;
-        Rep& sub (Rep& r, const Rep a, const Rep b) const;
-        Rep& neg (Rep& r, const Rep a) const;
-        Rep& inv (Rep& r, const Rep a) const;
+        Rep& mul (Rep& r, const Rep& a, const Rep& b) const;
+        Rep& div (Rep& r, const Rep& a, const Rep& b) const;
+        Rep& add (Rep& r, const Rep& a, const Rep& b) const;
+        Rep& sub (Rep& r, const Rep& a, const Rep& b) const;
+        Rep& neg (Rep& r, const Rep& a) const;
+        Rep& inv (Rep& r, const Rep& a) const;
 
-        Rep& mulin (Rep& r, const Rep a) const;
-        Rep& divin (Rep& r, const Rep a) const;
-        Rep& addin (Rep& r, const Rep a) const;
-        Rep& subin (Rep& r, const Rep a) const;
+        Rep& mulin (Rep& r, const Rep& a) const;
+        Rep& divin (Rep& r, const Rep& a) const;
+        Rep& addin (Rep& r, const Rep& a) const;
+        Rep& subin (Rep& r, const Rep& a) const;
         Rep& negin (Rep& r) const;
         Rep& invin (Rep& r) const;
 
 
-        // ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-        void mul (const size_t sz, Array r, constArray a, constArray b) const;
-        void mul (const size_t sz, Array r, constArray a, Rep b) const;
-
-        void div (const size_t sz, Array r, constArray a, constArray b) const;
-        void div (const size_t sz, Array r, constArray a, Rep b) const;
-
-        void add (const size_t sz, Array r, constArray a, constArray b) const;
-        void add (const size_t sz, Array r, constArray a, Rep b) const;
-
-        void sub (const size_t sz, Array r, constArray a, constArray b) const;
-        void sub (const size_t sz, Array r, constArray a, Rep b) const;
-
-        void neg (const size_t sz, Array r, constArray a) const;
-        void inv (const size_t sz, Array r, constArray a) const;
 
         // -- axpy: r <- a * x + y mod p
-        Rep& axpy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
-        Rep& axpyin (Rep& r, const Rep a, const Rep b) const;
-        void axpy
-        (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
-        void axpyin
-        (const size_t sz, Array r, constArray a, constArray x) const;
+        Rep& axpy   (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
+        Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const;
 
         // -- axmy: r <- a * x - y mod p
-        Rep& axmy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
-        void axmy
-        (const size_t sz, Array r, constArray a, constArray x, constArray c) const;
+        Rep& axmy   (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
         // -- axmyin: r <- a * b - r  mod p
-        Rep& axmyin (Rep& r, const Rep a, const Rep b) const;
-        // void axmyin (const size_t sz, Array r, constArray a, constArray x) const;
+        Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const;
 
         // -- maxpy: r <- c - a * b mod p
-        Rep& maxpy   (Rep& r, const Rep a, const Rep b, const Rep c) const;
+        Rep& maxpy   (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
         // -- maxpyin: r <- r - a * b mod p
-        Rep& maxpyin (Rep& r, const Rep a, const Rep b) const;
-        void maxpyin (const size_t sz, Array r, constArray a, constArray x) const;
+        Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const;
 
-
-        // <- \sum_i a[i], return 1 if a.size() ==0,
-        Rep& reduceadd ( Rep& r, const size_t sz, constArray a ) const;
-
-        // <- \prod_i a[i], return 1 if a.size() ==0,
-        Rep& reducemul ( Rep& r, const size_t sz, constArray a ) const;
-
-        // <- \sum_i a[i] * b[i]
-        Rep& dotprod ( Rep& r, const size_t sz, constArray a, constArray b ) const;
-        Rep& dotprod ( Rep& r, const int32_t bound, const size_t sz, constArray a, constArray b ) const;
-
-        // ----- a -> r: uint16_t to double
-        void i2d ( const size_t sz, double* r, constArray a ) const;
-
-        // ----- a -> r % p: double to uint16_t % p
-        void d2i ( const size_t sz, Array r, const double* a ) const;
 
         // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;
@@ -214,7 +181,7 @@ namespace Givaro
         template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { while (isZero(init(a, g())))
+        { while (this->isZero(init(a, g())))
                 ;
             return a; }
 

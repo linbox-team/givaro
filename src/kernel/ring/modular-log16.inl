@@ -51,7 +51,7 @@
 namespace Givaro
 {
 
-    inline Modular<Log16, Log16>::Modular( Residu_t p ) :
+    inline Modular<Log16>::Modular( Residu_t p ) :
         _p(p),_pmone(Residu_t(p-1)),zero(Rep(_pmone << 1)), one(0),mOne(Rep(_pmone>>1))
     {
         int32_t i,j;
@@ -116,7 +116,7 @@ namespace Givaro
            Error between _tab_rep2value and _tab_value2rep
            corrected by inversing the array
            */
-           
+
         for(j=0; j<_pmone; j++){
             if (_tab_rep2value[j] < _pmone)
                 _tab_addone[j] = _tab_value2rep[ 1 + _tab_rep2value[j] ];
@@ -161,7 +161,7 @@ namespace Givaro
         (*numRefs) = 1;
     }
 
-    inline Modular<Log16, Log16>::Modular(const Modular<Log16, Log16>& F) :
+    inline Modular<Log16>::Modular(const Modular<Log16>& F) :
         _p ( F._p),
         _pmone ( F._pmone),
         _tab_value2rep ( F._tab_value2rep),
@@ -180,7 +180,7 @@ namespace Givaro
       (*numRefs)++;
     }
 
-    inline Modular<Log16, Log16>& Modular<Log16, Log16>::operator=( const Modular<Log16, Log16>& F)
+    inline Modular<Log16>& Modular<Log16>::operator=( const Modular<Log16>& F)
     {
 
         F.assign(const_cast<Element&>(one),F.one);
@@ -217,7 +217,7 @@ namespace Givaro
       return *this;
     }
 
-    inline Modular<Log16, Log16>::~Modular()
+    inline Modular<Log16>::~Modular()
     {
       (*numRefs)--;
       if (*numRefs == 0) {
@@ -230,200 +230,125 @@ namespace Givaro
       }
     }
 
-    inline Modular<Log16, Log16>::Residu_t Modular<Log16, Log16>::residu( ) const
+    inline Modular<Log16>::Residu_t Modular<Log16>::residu( ) const
     {
         return _p;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::mul (Rep& r, const Rep a, const Rep b) const
+    inline Modular<Log16>::Rep& Modular<Log16>::mul (Rep& r, const Rep& a, const Rep& b) const
     {
         int32_t tmp;
         __GIVARO_ZPZ16_LOG_MUL(tmp,(int32_t)_p,(int32_t)a,(int32_t)b);
-        return r= (Modular<Log16, Log16>::Rep)tmp;
+        return r= (Modular<Log16>::Rep)tmp;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::div (Rep& r, const Rep a, const Rep b) const
+    inline Modular<Log16>::Rep& Modular<Log16>::div (Rep& r, const Rep& a, const Rep& b) const
     {
         __GIVARO_ZPZ16_LOG_DIV(r,_p,a,b);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::sub (Rep& r, const Rep a, const Rep b) const
+    inline Modular<Log16>::Rep& Modular<Log16>::sub (Rep& r, const Rep& a, const Rep& b) const
     {
         __GIVARO_ZPZ16_LOG_SUB(r,_p,a,b);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::add (Rep& r, const Rep a, const Rep b) const
+    inline Modular<Log16>::Rep& Modular<Log16>::add (Rep& r, const Rep& a, const Rep& b) const
     {
         __GIVARO_ZPZ16_LOG_ADD(r,_p,a,b);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::neg (Rep& r, const Rep a) const
+    inline Modular<Log16>::Rep& Modular<Log16>::neg (Rep& r, const Rep& a) const
     {
         __GIVARO_ZPZ16_LOG_NEG(r,_p,a);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::inv (Rep& r, const Rep a) const
+    inline Modular<Log16>::Rep& Modular<Log16>::inv (Rep& r, const Rep& a) const
     {
         __GIVARO_ZPZ16_LOG_INV(r,_p,a);
         return r;
     }
 
-    // -- inline array operations between Modular<Log16, Log16>::Rep
-    inline void Modular<Log16, Log16>::mul (const size_t sz, Array r, constArray a, constArray b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_MUL_RES(r[i], _p,a[i], b[i]);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::mul (const size_t sz, Array r, constArray a, Rep b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_MUL_RES(r[i], _p, a[i], b);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::div (const size_t sz, Array r, constArray a, constArray b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_DIV_RES( r[i], _p, a[i], b[i]);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::div (const size_t sz, Array r, constArray a, Rep b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_DIV_RES( r[i], _p, a[i], b);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::add (const size_t sz, Array r, constArray a, constArray b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_ADD_RES(r[i], _p, a[i], b[i]);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::add (const size_t sz, Array r, constArray a, Rep b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_ADD_RES(r[i], _p, a[i], b);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::sub (const size_t sz, Array r, constArray a, constArray b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_SUB_RES(r[i], _p, a[i], b[i]);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::sub (const size_t sz, Array r, constArray a, Rep b) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_SUB_RES(r[i], _p, a[i], b);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::neg (const size_t sz, Array r, constArray a) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_NEG_RES(r[i], _p, a[i]);
-        }
-    }
-
-
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::mulin (Rep& r, const Rep a) const
+    inline Modular<Log16>::Rep& Modular<Log16>::mulin (Rep& r, const Rep& a) const
     {
         __GIVARO_ZPZ16_LOG_MUL(r,_p, r,a);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::divin (Rep& r, const Rep a) const
+    inline Modular<Log16>::Rep& Modular<Log16>::divin (Rep& r, const Rep& a) const
     {
-        Modular<Log16, Log16>::Rep ia;
+        Modular<Log16>::Rep ia;
         inv(ia, a);
         mulin(r, ia);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::addin (Rep& r, const Rep a) const
+    inline Modular<Log16>::Rep& Modular<Log16>::addin (Rep& r, const Rep& a) const
     {
         __GIVARO_ZPZ16_LOG_ADD(r, _p, r,a);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::subin (Rep& r, const Rep a) const
+    inline Modular<Log16>::Rep& Modular<Log16>::subin (Rep& r, const Rep& a) const
     {
         __GIVARO_ZPZ16_LOG_SUB(r,_p, r,a);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::negin (Rep& r) const
+    inline Modular<Log16>::Rep& Modular<Log16>::negin (Rep& r) const
     {
         __GIVARO_ZPZ16_LOG_NEG(r,_p,r);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep&  Modular<Log16, Log16>::invin (Rep& r) const
+    inline Modular<Log16>::Rep&  Modular<Log16>::invin (Rep& r) const
     {
         __GIVARO_ZPZ16_LOG_INV(r,_p,r);
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::axpy
-    (Rep& r, const Rep a, const Rep b, const Rep c) const
+    inline Modular<Log16>::Rep& Modular<Log16>::axpy
+    (Rep& r, const Rep& a, const Rep& b, const Rep& c) const
     {
-        __GIVARO_ZPZ16_LOG_MULADD(r, _p, a, b, c);
+	(r)=  _tab_mul[(a) + (b)];
+	Rep tmp = _tab_addone[(c) - (r)];
+	(r)=  _tab_mul[(r) + tmp ];
         return r;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::axpyin
-    (Rep& r, const Rep a, const Rep b) const
+    inline Modular<Log16>::Rep& Modular<Log16>::axpyin
+    (Rep& r, const Rep& a, const Rep& b) const
     {
-        return axpy(r,a,b,r);
-    }
-
-
-    inline void Modular<Log16, Log16>::axpy
-    (const size_t sz, Array r, constArray a, constArray x, constArray y) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_MULADD_RES(r[i], _p, a[i], x[i], y[i]);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::axpyin
-    (const size_t sz, Array r, constArray a, constArray x) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_MULADD_RES(r[i], _p, a[i], x[i], r[i]);
-        }
+	Rep tmp;
+	mul(tmp, a, b);
+	tmp -= r;
+	tmp = _tab_addone[tmp];
+	mulin(r, tmp);
+	return r;
     }
 
     // r <- a*b-c
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::axmy
-    (Rep& r, const Rep a, const Rep b, const Rep c) const
+    inline Modular<Log16>::Rep& Modular<Log16>::axmy
+    (Rep& r, const Rep& a, const Rep& b, const Rep& c) const
     {
         __GIVARO_ZPZ16_LOG_MULSUB(r,_p,a,b,c);
         return r;
     }
 
     // r <- r-a*b
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::maxpyin
-    (Rep& r, const Rep a, const Rep b) const
+    inline Modular<Log16>::Rep& Modular<Log16>::maxpyin
+    (Rep& r, const Rep& a, const Rep& b) const
     {
         Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
         return this->subin(r,t);
     }
 
     // r <- c-a*b
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::maxpy
-    (Rep& r, const Rep a, const Rep b, const Rep c) const
+    inline Modular<Log16>::Rep& Modular<Log16>::maxpy
+    (Rep& r, const Rep& a, const Rep& b, const Rep& c) const
     {
         Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
         return this->sub(r,c,t);
@@ -431,67 +356,50 @@ namespace Givaro
 
 
     // r <- a*b-r
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::axmyin (Rep& r,
-                              const Rep a, const Rep b) const
+    inline Modular<Log16>::Rep& Modular<Log16>::axmyin (Rep& r,
+                              const Rep& a, const Rep& b) const
     {
         Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
         return sub(r,t,r);
     }
 
-    inline void Modular<Log16, Log16>::axmy
-    (const size_t sz, Array r, constArray a, constArray x, constArray y) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_MULSUB_RES(r[i], _p, a[i], x[i], y[i]);
-        }
-    }
-
-    inline void Modular<Log16, Log16>::maxpyin (const size_t sz, Array r,
-                        constArray a, constArray x) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            __GIVARO_ZPZ16_LOG_MULSUB_RES(r[i], _p, a[i], x[i], r[i]);
-            __GIVARO_ZPZ16_LOG_NEG_RES(r[i], _p, r[i]);
-        }
-    }
-
     // ------------------------- Miscellaneous functions
 
-    inline bool Modular<Log16, Log16>::iszero(const Rep a) const
+    inline bool Modular<Log16>::iszero(const Rep a) const
     {
         return a >= _p;
     }
 
-    inline bool Modular<Log16, Log16>::isone(const Rep a) const
+    inline bool Modular<Log16>::isone(const Rep a) const
     {
-        return a == Modular<Log16, Log16>::one;
+        return a == Modular<Log16>::one;
     }
 
-    inline bool Modular<Log16, Log16>::ismone(const Rep a) const
+    inline bool Modular<Log16>::ismone(const Rep a) const
     {
-        return a == Modular<Log16, Log16>::mOne;
+        return a == Modular<Log16>::mOne;
     }
 
 
-    inline size_t Modular<Log16, Log16>::length(const Rep ) const
+    inline size_t Modular<Log16>::length(const Rep ) const
     {
-        return Modular<Log16, Log16>::size_rep;
+        return Modular<Log16>::size_rep;
     }
 
-    inline bool Modular<Log16, Log16>::isZero( const Rep a ) const
+    inline bool Modular<Log16>::isZero( const Rep a ) const
     {
         return iszero(a);
     }
-    inline bool Modular<Log16, Log16>::isOne ( const Rep a ) const
+    inline bool Modular<Log16>::isOne ( const Rep a ) const
     {
         return isone(a);
     }
-    inline bool Modular<Log16, Log16>::isMOne ( const Rep a ) const
+    inline bool Modular<Log16>::isMOne ( const Rep a ) const
     {
         return ismone(a);
     }
 
-    inline bool Modular<Log16, Log16>::isUnit ( const Rep a ) const
+    inline bool Modular<Log16>::isUnit ( const Rep a ) const
     {
             // p has to be prime
         return isOne(a) || isMOne(a);
@@ -501,45 +409,20 @@ namespace Givaro
     // ---------
     // -- misc operations
     // ---------
-#if 0
-    inline void Modular<Log16, Log16>::assign
-    ( const size_t sz, Array r, constArray a ) const
-    {
-        for ( size_t i=sz ; --i ; ) {
-            if (a[i] <Modular<Log16, Log16>::zero) {
-                r[i] = a[i] + _p;
-                if (r[i] <Modular<Log16, Log16>::zero) r[i] = r[i] % _p;
-            }
-            else if (a[i] >_p) {
-                r[i] = a[i] - _p;
-                if (r[i] >_p) r[i] = r[i] % _p;
-            }
-            else r[i] = a[i];
-        }
-    }
-#endif
-
-    inline void Modular<Log16, Log16>::assign ( const size_t sz, Array r, constArray a ) const
-    {
-        for ( size_t i=sz ; --i ; )
-            r[i] = a[i];
-    }
-
-
 
     // initialized by a degree of the generator.
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r ) const
     {
         return r = zero;
     }
 
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::assign ( Rep& r, const Rep a ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::assign ( Rep& r, const Rep& a ) const
     {
         return r = a;
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const int64_t a ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const int64_t a ) const
     {
         int sign; uint64_t ua;
         if (a <0) {
@@ -557,47 +440,47 @@ namespace Givaro
         return r = _tab_value2rep[r];
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const int32_t a ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const int32_t a ) const
     {
-        return Modular<Log16, Log16>::init( r, (int64_t)a);
+        return Modular<Log16>::init( r, (int64_t)a);
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const uint64_t a ) const
-    {
-        r = Rep((a >=_p) ? a % _p : a);
-        assert(r < _p);
-        return r= _tab_value2rep[r];
-    }
-
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const uint32_t a ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const uint64_t a ) const
     {
         r = Rep((a >=_p) ? a % _p : a);
         assert(r < _p);
         return r= _tab_value2rep[r];
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const uint16_t a ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const uint32_t a ) const
     {
         r = Rep((a >=_p) ? a % _p : a);
         assert(r < _p);
         return r= _tab_value2rep[r];
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const int16_t a ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const uint16_t a ) const
     {
-        return Modular<Log16, Log16>::init( r, (int64_t)a);
+        r = Rep((a >=_p) ? a % _p : a);
+        assert(r < _p);
+        return r= _tab_value2rep[r];
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init( Rep& a, const double i) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const int16_t a ) const
+    {
+        return Modular<Log16>::init( r, (int64_t)a);
+    }
+
+    inline Modular<Log16>::Rep& Modular<Log16>::init( Rep& a, const double i) const
     {
         return init(a,(int64_t)i);
     }
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init( Rep& a, const float i) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init( Rep& a, const float i) const
     {
         return init(a,(double)i);
     }
 
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::init ( Rep& r, const Integer& Residu ) const
+    inline Modular<Log16>::Rep& Modular<Log16>::init ( Rep& r, const Integer& Residu ) const
     {
         int16_t tr;
         if (Residu <0) {
@@ -620,139 +503,46 @@ namespace Givaro
     }
 
 
-
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::dotprod
-    ( Rep& r, const int32_t bound, const size_t sz, constArray a, constArray b ) const
-    {
-        uint32_t stride = 1;
-        if ((uint64_t)bound < GIVARO_MAXUINT16)
-            stride = (uint32_t) ( GIVARO_MAXUINT32/((uint64_t)bound * (uint64_t)bound) );
-        uint32_t dot = (uint32_t)zero;
-        if ((sz <10) && (sz <stride)) {
-            for(  size_t i= sz; i--; )
-                dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
-            if (dot > _p){
-                assert( (Rep)(dot %_p) < _p);
-                return r = _tab_value2rep[(Rep)(dot % _p)];
-            }
-            else {
-                assert(dot < _p);
-                return r = _tab_value2rep[dot];
-            }
-
-        }
-        uint32_t i_begin=0;
-        stride &= (uint32_t)~0x1;
-        if (stride ==0) {
-            for(  size_t i= sz-1; i>0; --i) {
-                dot += _tab_rep2value[a[i]] * _tab_rep2value[b[i]];
-                if (dot>_p) dot %= _p;
-            }
-            assert(dot < _p);
-            return r = _tab_value2rep[dot];
-
-        }
-        do {
-            size_t min_sz = ((sz-i_begin) < stride ? (sz-i_begin) : stride);
-            if ( (min_sz & 0x1) !=0) {
-                min_sz--; i_begin++;
-                dot += _tab_rep2value[a++[min_sz]] * _tab_rep2value[b++[min_sz]];
-            }
-            if (min_sz > 1)
-                for(  size_t i= min_sz; i>0; --i, --i, ++a, ++a, ++b, ++b )
-                {
-                    dot += _tab_rep2value[a[0]] * _tab_rep2value[b[0]];
-                    dot += _tab_rep2value[a[1]] * _tab_rep2value[b[1]];
-                }
-            if (dot>_p) dot %= _p;
-            i_begin += (uint32_t) min_sz;
-        } while (i_begin <sz);
-        assert(dot < _p);
-        return r = _tab_value2rep[dot];
-    }
-
-    inline Modular<Log16, Log16>::Rep& Modular<Log16, Log16>::dotprod
-    ( Rep& r, const size_t sz, constArray a, constArray b ) const
-    {
-        return Modular<Log16, Log16>::dotprod(r, _p, sz, a, b);
-    }
-
-
-    //  a -> r: int16_t to double
-    inline void
-    Modular<Log16, Log16>::i2d ( const size_t sz, double* r, constArray a ) const
-    {
-        for (size_t i=0; i<sz; ++i) r[i] = _tab_rep2value[a[i]];
-    }
-
-    //  a -> r: double to int16_t
-    inline void
-    Modular<Log16, Log16>::d2i ( const size_t sz, Array r, const double* a ) const
-    {
-        union d_2_l {
-            double d;
-            int32_t r[2];
-        };
-        static const double offset = 4503599627370496.0; // 2^52
-        size_t i=sz-1;
-        //warning todo while
-        //do
-label1:
-        {
-            d_2_l tmp;
-            // - normalization: put fractional part at the end of the representation
-            tmp.d = a[i] + offset;
-            {
-                assert((tmp.r[1] >=_p ? tmp.r[1] : tmp.r[1] % _p) < _p);
-            }
-            r[i--] = (Residu_t)_tab_value2rep[(tmp.r[1] >=_p ? tmp.r[1] : tmp.r[1] % _p)];
-        }
-        // while (i!=0)
-        if (i >0) goto label1;
-        //for (size_t i=sz-1; i>=0; --i)
-    }
-
-
     // -- Input: (z, <_p>)
-    inline std::istream& Modular<Log16, Log16>::read (std::istream& s)
+    inline std::istream& Modular<Log16>::read (std::istream& s)
     {
         char ch;
         s >> std::ws >> ch;
         //   if (ch != '(')
-        //     GivError::throw_error( GivBadFormat("Modular<Log16, Log16>::read: syntax error: no '('"));
+        //     GivError::throw_error( GivBadFormat("Modular<Log16>::read: syntax error: no '('"));
         if (ch != '(')
-            std::cerr << "Modular<Log16, Log16>::read: syntax error: no '('" << std::endl;
+            std::cerr << "Modular<Log16>::read: syntax error: no '('" << std::endl;
 
         s >> std::ws >> ch;
         //   if (ch != 'z')
-        //     GivError::throw_error( GivBadFormat("Modular<Log16, Log16>::read: bad domain object"));
+        //     GivError::throw_error( GivBadFormat("Modular<Log16>::read: bad domain object"));
         if (ch != 'z')
-            std::cerr << "Modular<Log16, Log16>::read: bad domain object" << std::endl ;
+            std::cerr << "Modular<Log16>::read: bad domain object" << std::endl ;
 
         s >> std::ws >> ch;
         //   if (ch != ',')
-        //     GivError::throw_error( GivBadFormat("Modular<Log16, Log16>::read: syntax error: no ','"));
+        //     GivError::throw_error( GivBadFormat("Modular<Log16>::read: syntax error: no ','"));
         if (ch != ',')
-            std::cerr << "Modular<Log16, Log16>::read: syntax error: no ','" << std::endl;
+            std::cerr << "Modular<Log16>::read: syntax error: no ','" << std::endl;
 
 
         s >> std::ws >> _p;
 
         s >> std::ws >> ch;
         //   if (ch != ')')
-        //     GivError::throw_error( GivBadFormat("Modular<Log16, Log16>::read: syntax error: no ')'"));
+        //     GivError::throw_error( GivBadFormat("Modular<Log16>::read: syntax error: no ')'"));
         if (ch != ')')
-            std::cerr << "Modular<Log16, Log16>::read: syntax error: no ')'" << std::endl;
+            std::cerr << "Modular<Log16>::read: syntax error: no ')'" << std::endl;
 
         return s;
     }
 
-    inline std::ostream& Modular<Log16, Log16>::write (std::ostream& s ) const
+    inline std::ostream& Modular<Log16>::write (std::ostream& s ) const
     {
         return s << "Modular<Log16> modulo " << residu();
     }
 
-    inline std::istream& Modular<Log16, Log16>::read (std::istream& s, Rep& a) const
+    inline std::istream& Modular<Log16>::read (std::istream& s, Rep& a) const
     {
         Integer tmp;
         s >> tmp;
@@ -763,7 +553,7 @@ label1:
         return s;
     }
 
-    inline std::ostream& Modular<Log16, Log16>::write (std::ostream& s, const Rep a) const
+    inline std::ostream& Modular<Log16>::write (std::ostream& s, const Rep a) const
     {
         if (a >= _p) return s << '0';
         return s << _tab_rep2value[a]; //dpritcha

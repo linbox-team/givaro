@@ -13,14 +13,14 @@
 // Description:
 
 namespace Givaro {
-    
+
     // ------------------------- Arithmetic functions
 
     inline typename Modular<Integer>::Element&
     Modular<Integer>::mul (Element& r, const Element& a, const Element& b) const
     {
-        Integer::mul(r,a,b); 
-        Integer::modin(r,_p); 
+        Integer::mul(r,a,b);
+        Integer::modin(r,_p);
         return r;
     }
 
@@ -28,14 +28,14 @@ namespace Givaro {
     Modular<Integer>::sub (Element& r, const Element& a, const Element& b) const
     {
         Integer::sub(r,a,b);
-        if (sign(r) < 0) Integer::addin(r,_p); 
+        if (sign(r) < 0) Integer::addin(r,_p);
         return r;
     }
 
     inline typename Modular<Integer>::Element&
     Modular<Integer>::add (Element& r, const Element& a, const Element& b) const
     {
-        Integer::add(r,a,b); 
+        Integer::add(r,a,b);
         if (r >= _p) Integer::subin(r,_p);
         return r;
     }
@@ -43,7 +43,7 @@ namespace Givaro {
     inline typename Modular<Integer>::Element&
     Modular<Integer>::neg (Element& r, const Element& a) const
     {
-        if (isZero(a)) r=a; 
+        if (isZero(a)) r=a;
         else Integer::sub(r,_p,a);
         return r;
     }
@@ -51,7 +51,7 @@ namespace Givaro {
     inline typename Modular<Integer>::Element&
     Modular<Integer>::negin (Element& r) const
     {
-        if (! isZero(r)) Integer::sub(r,_p,r); 
+        if (! isZero(r)) Integer::sub(r,_p,r);
         return r;
     }
 
@@ -60,14 +60,6 @@ namespace Givaro {
     {
         return ::Givaro::inv(r,a,_p);
     }
-
-//    TMPL
-//    inline bool this->Modular<Integer>::isUnit(const Element& a) const 
-//    { 
-//        Element d;
-//        ::Givaro::gcd(d,a,_p); 
-//        return isOne(d) || isMOne(d); 
-//    }
 
     inline typename Modular<Integer>::Element&
     Modular<Integer>::div (Element& r, const Element& a, const Element& b) const
@@ -81,7 +73,7 @@ namespace Givaro {
     inline typename Modular<Integer>::Element&
     Modular<Integer>::mulin (Element& r, const Element& a) const
     {
-        Integer::mulin(r,a); 
+        Integer::mulin(r,a);
         Integer::modin(r,_p);
         return r;
     }
@@ -97,7 +89,7 @@ namespace Givaro {
     inline typename Modular<Integer>::Element&
     Modular<Integer>::addin (Element& r, const Element& a) const
     {
-        Integer::addin(r,a);  
+        Integer::addin(r,a);
         if (r >= _p) Integer::subin(r,_p);
         return r;
     }
@@ -137,7 +129,7 @@ namespace Givaro {
     Modular<Integer>::axmy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
         Integer::axmy(r,a,b,c);
-        Integer::modin(r,_p); 
+        Integer::modin(r,_p);
         return r;
     }
 
@@ -150,6 +142,7 @@ namespace Givaro {
         Integer::modin(r, _p);
         return r;
     }
+
     // r -= a*b
     inline typename Modular<Integer>::Element&
     Modular<Integer>::maxpyin (Element& r, const Element& a, const Element& b) const
@@ -158,6 +151,7 @@ namespace Givaro {
         Integer::modin(r,_p);
         return r;
     }
+
     // r = a*b - r
     inline typename Modular<Integer>::Element&
     Modular<Integer>::axmyin (Element& r, const Element& a, const Element& b) const
@@ -168,7 +162,7 @@ namespace Givaro {
 
     // --------------------
     // ----- Initialisation
-    
+
     inline typename Modular<Integer>::Element&
     Modular<Integer>::init(Element& x) const
     {

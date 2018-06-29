@@ -66,7 +66,6 @@ namespace Givaro {
 			, mOne(static_cast<Element>(-1))
 			, _p(static_cast<Residu_t>(0))
 			, _pc(static_cast<Compute_t>(0))
-			//, _bitsizep(0) 
 			{}
 
 		Modular_implem(const Residu_t p)
@@ -75,15 +74,9 @@ namespace Givaro {
 			, mOne(static_cast<Element>(p-static_cast<Element>(1)))
 			, _p(static_cast<Residu_t>(p))
 			, _pc(static_cast<Compute_t>(p))
-			//, _bitsizep(0)
 		{
 			assert(_p >= minCardinality());
 			assert(maxCardinality() < 1 || _p <= maxCardinality());
-			//Residu_t __p = _p;
-			//while (__p != 0) {
-			//	_bitsizep++;
-			//	__p >>= 1;
-			//}
 		}
 
 		template<typename Source>
@@ -99,7 +92,7 @@ namespace Givaro {
 		}
 
 		Modular_implem(const Self_t& F)
-			: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _pc(F._pc) {} //, _bitsizep(F._bitsizep) {}
+			: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _pc(F._pc) {}
 
 		// ----- Accessors
 		inline Element minElement() const override { return zero; }
@@ -196,7 +189,6 @@ namespace Givaro {
 			F.assign(const_cast<Element&>(mOne), F.mOne);
 			_p = F._p;
 			_pc = F._pc;
-			//_bitsizep = F._bitsizep;
 			return *this;
 		}
 
@@ -326,7 +318,6 @@ namespace Givaro {
 		// -- data representation of the domain:
 		Residu_t _p;
 		Compute_t _pc;
-		//size_t _bitsizep;
 	};
 
 
@@ -341,8 +332,6 @@ namespace Givaro {
 
 
 }
-
-//#include "givaro/modular-implem.inl"
 
 #undef IS_INT
 #undef IS_SINT

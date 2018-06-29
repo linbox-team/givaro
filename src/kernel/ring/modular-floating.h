@@ -50,73 +50,8 @@ namespace Givaro
 
 		using Parent_t::_p;
 		using Parent_t::_pc;
-		//using Parent_t::_bitsizep;
 
-        // ----- Exported Types and constantes
-        //typedef Modular<float> Self_t;
-        //typedef uint32_t Residu_t;
-		//using Compute_t = float;
-        //enum { size_rep = sizeof(Residu_t) };
-
-        //// ----- Constantes
-        //const Element zero = 0.f;
-        //const Element one  = 1.f;
-        //const Element mOne;
-
-        //// ----- Constructors
-        //Modular()
-        //    : mOne(-1.f), _p(0.f), _lp(0)
-        //{}
-
-        //template<class T> Modular(const T& p)
-        //    : mOne(Element(p) - 1.f), _p(Element(p)), _lp((Residu_t)p)
-        //{
-        //    assert(_p >= minCardinality());
-        //    assert(_p <= maxCardinality());
-        //}
-
-        //Modular(const Self_t& F)
-        //    : mOne(F.mOne), _p(F._p), _lp(F._lp)
-        //{}
-
-        //// ----- Accessors
-        //inline Element minElement() const override { return zero; }
-        //inline Element maxElement() const override { return mOne; }
-
-        //// ----- Access to the modulus
-        //inline Residu_t residu() const { return _lp; }
-        //inline Residu_t size() const { return _lp; }
-        //inline Residu_t characteristic() const { return _lp; }
         inline Compute_t fcharacteristic() const { return _pc; }
-        //template<class T> inline T& characteristic(T& p) const { return p = _lp; }
-        //inline Residu_t cardinality() const { return _lp; }
-        //template<class T> inline T& cardinality(T& p) const { return p = _lp; }
-		//static inline Residu_t maxCardinality() {
-		//	// 2896 = max { p / 2*p^2 < 2^24 }
-		//	return 2896;
-		//}
-        //static inline Residu_t minCardinality() { return 2; }
-
-        //// ----- Checkers
-        //inline bool isZero(const Element& a) const override { return a == zero; }
-        //inline bool isOne (const Element& a) const override { return a == one; }
-        //inline bool isMOne(const Element& a) const override { return a == mOne; }
-        //inline bool isUnit(const Element& a) const override;
-        //inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
-        //inline size_t length(const Element a) const { return size_rep; }
-
-        //// ----- Ring-wise operators
-        //inline bool operator==(const Self_t& F) const { return _p == F._p; }
-        //inline bool operator!=(const Self_t& F) const { return _p != F._p; }
-        //inline Self_t& operator=(const Self_t& F)
-        //{
-        //    F.assign(const_cast<Element&>(one),  F.one);
-        //    F.assign(const_cast<Element&>(zero), F.zero);
-        //    F.assign(const_cast<Element&>(mOne), F.mOne);
-        //    _p = F._p;
-        //    _lp= F._lp;
-        //    return *this;
-        //}
 
         // ----- Initialisation
         Element& init (Element& x) const override;
@@ -145,11 +80,7 @@ namespace Givaro
 		inline Element& init(Element& r, const Source& a) const
         { r = Caster<Element>(a); return reduce(r); }
 
-        //Element& assign (Element& x, const Element& y) const;
-
-        // ----- Convert and reduce
-        template<typename T> T& convert(T& r, const Element& a) const
-        { return r = static_cast<T>(a); }
+        // ----- Reduce
 
         Element& reduce (Element& x, const Element& y) const;
         Element& reduce (Element& x) const;
@@ -194,15 +125,6 @@ namespace Givaro
                 ;
             return a; }
 
-        // --- IO methods
-        //std::istream& read (std::istream& s);
-        //std::ostream& write(std::ostream& s) const;
-        //std::istream& read (std::istream& s, Element& a) const;
-        //std::ostream& write(std::ostream& s, const Element& a) const;
-
-    //protected:
-    //    float _p;
-    //    Residu_t _lp;
     };
 
 } // Givaro

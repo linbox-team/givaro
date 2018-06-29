@@ -24,8 +24,8 @@ namespace Givaro
     //! @brief The standard arithmetic in modular rings using fixed size precision.
 
     template<typename _Storage_t, typename _Compute_t>
-    class Modular<_Storage_t, _Compute_t, 
-      typename std::enable_if<is_same_ruint<_Storage_t, _Compute_t>::value 
+    class Modular<_Storage_t, _Compute_t,
+      typename std::enable_if<is_same_ruint<_Storage_t, _Compute_t>::value
                            || is_smaller_ruint<_Storage_t, _Compute_t>::value>::type>:
       public Modular_implem<_Storage_t, _Compute_t, _Storage_t>
     {
@@ -43,10 +43,9 @@ namespace Givaro
 
         // ----- Constructors
         using Modular_implem<Storage_t, Compute_t, Storage_t>::Modular_implem;
-        
+
         using Parent_t::_p;
         using Parent_t::_pc;
-        //using Parent_t::_bitsizep;
 
 
         // ----- Initialisation
@@ -66,7 +65,7 @@ namespace Givaro
 	    if (a < 0) negin(r);
             return r;
         }
-        
+
         // ----- Convert and reduce
         Element& reduce (Element& x, const Element& y) const
         { x = y % _p; return x; }

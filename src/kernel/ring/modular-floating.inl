@@ -14,7 +14,7 @@
 namespace Givaro {
 
 #define MOD Modular<Storage_t, Compute_t, typename std::enable_if<std::is_floating_point<Storage_t>::value>::type>
-#define TMPL template<typename Storage_t, typename Compute_t> 
+#define TMPL template<typename Storage_t, typename Compute_t>
 #define COND_TMPL(T, ...) \
         template<typename T, \
                 typename std::enable_if<(__VA_ARGS__), int>::type*>
@@ -30,7 +30,7 @@ namespace Givaro {
     }
 
     TMPL
-    COND_TMPL(Source, 
+    COND_TMPL(Source,
         std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value)
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
@@ -52,7 +52,7 @@ namespace Givaro {
     }
 
     TMPL
-    COND_TMPL(Source, 
+    COND_TMPL(Source,
         std::is_integral<Source>::value && std::is_unsigned<Source>::value && sizeof(Source) >= sizeof(Storage_t))
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
@@ -69,8 +69,8 @@ namespace Givaro {
         return r;
     }
 
-    // ------------------------
-    // ----- Convert and reduce
+    // ------------
+    // ----- Reduce
 
     TMPL
     inline typename MOD::Element&  MOD::reduce (Element& x) const
@@ -135,14 +135,6 @@ namespace Givaro {
         return (x<0 ? x+=Caster<Element>(_p) : x);
         return x;
         }
-
-    //TMPL
-    //inline bool MOD::isUnit(const Element& a) const 
-    //{ 
-    //    Element u,d; 
-    //    invext(u,d,a,_pc); 
-    //    return isOne(d) || isMOne(d); 
-    //}
 
     TMPL
     inline typename MOD::Element & MOD::addin

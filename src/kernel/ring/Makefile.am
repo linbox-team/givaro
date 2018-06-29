@@ -31,6 +31,7 @@ pkginclude_HEADERS=     \
 	montgomery-int32.h	\
 	montgomery-ruint.h	\
 	modular-general.inl	\
+        modular-integral.inl    \
 	modular-floating.inl	\
 	modular-integer.inl	\
 	modular-inttype.inl	\

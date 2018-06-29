@@ -109,6 +109,11 @@ namespace Givaro {
 		static inline Residu_t minCardinality() { return 2; }
 
 		// -- maxCardinality
+		// -- Goal: being able to store in Compute_t the result of x*y + z
+		// --       when x, y and z belong to Storage_t
+		// -- => Storage_t must store integers up to maxCardinality-1
+		// -- => Compute_t must store integers up to p(p-1) where p = maxCardinality
+
 		// -- Rules: Storage_t | Compute_t | maxCardinality
 		// --        ----------+-----------+---------------
 		// --        (u)intN_t |  uintN_t  | 2^(N/2) - 1: could be 2^(N/2) but provokes errors in fflas-ffpack
@@ -125,7 +130,8 @@ namespace Givaro {
 		static Residu_t maxCardinality() {
 			std::size_t k = sizeof(S);
 			Residu_t repunit = ~0;
-			return repunit >> 4*k; // 2^(N/2) - 1 with N = bitsize(Storage_t)
+			return repunit >> (k << 2);
+			//return (Residu_t)1 << (k << 2); // 2^(N/2) with N = bitsize(Storage_t)
 		}
 
 		__GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))

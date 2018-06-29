@@ -19,6 +19,9 @@ namespace Givaro {
         typename std::enable_if<std::is_integral<Storage_t>::value && std::is_integral<Compute_t>::value \
         && (sizeof(Storage_t) == sizeof(Compute_t) || 2*sizeof(Storage_t) == sizeof(Compute_t))>::type>
 #define TMPL template<typename Storage_t, typename Compute_t>
+#define COND_TMPL(T, ...) \
+        template<typename T, \
+                typename std::enable_if<(__VA_ARGS__), int>::type*>
         
         // ----- Initialisation
 
@@ -30,7 +33,7 @@ namespace Givaro {
         }
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
+        COND_TMPL(Source, IS_UINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
         inline typename MOD::Element&
         MOD::init (Element& x, const Source y) const
         {
@@ -39,7 +42,7 @@ namespace Givaro {
         }
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
+        COND_TMPL(Source, IS_SINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
         inline typename MOD::Element&
         MOD::init (Element& x, const Source y) const
         {
@@ -48,7 +51,7 @@ namespace Givaro {
         }
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t)) && IS_SINT(Storage_t))
+        COND_TMPL(Source, IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t)) && IS_SINT(Storage_t))
         inline typename MOD::Element&
         MOD::init (Element& x, const Source y) const
         {
@@ -58,7 +61,7 @@ namespace Givaro {
         }
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && sizeof(Source) >= sizeof(Storage_t) && IS_UINT(Storage_t))
+        COND_TMPL(Source, IS_FLOAT(Source) && sizeof(Source) >= sizeof(Storage_t) && IS_UINT(Storage_t))
         inline typename MOD::Element&
         MOD::init (Element& x, const Source y) const
         {
@@ -76,7 +79,7 @@ namespace Givaro {
         }
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Storage_t) 
+        COND_TMPL(Source, IS_UINT(Storage_t) 
                         &&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))
                         &&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t))))
         inline typename MOD::Element&
@@ -88,7 +91,7 @@ namespace Givaro {
         }
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Storage_t) 
+        COND_TMPL(Source, IS_SINT(Storage_t) 
                         &&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))
                         &&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t))))
         inline typename MOD::Element&
@@ -101,7 +104,7 @@ namespace Givaro {
         // ----- Reduce
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(E = typename MOD::Element, IS_SINT(E))
+        COND_TMPL(E = typename MOD::Element, IS_SINT(E))
         inline E& MOD::reduce (E& x, const E& y) const
         {
             x = y % Caster<E>(_p);
@@ -109,7 +112,7 @@ namespace Givaro {
         }
 
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(E = typename MOD::Element, IS_UINT(E))
+        COND_TMPL(E = typename MOD::Element, IS_UINT(E))
         inline E& MOD::reduce (E& x, const E& y) const
         {
             return x = y % _p;
@@ -118,7 +121,7 @@ namespace Givaro {
         //template<typename E=Element>
         //typename std::enable_if<std::is_signed<E>::value, E&>::type
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(E = typename MOD::Element, IS_SINT(E))
+        COND_TMPL(E = typename MOD::Element, IS_SINT(E))
         inline E& MOD::reduce (E& x) const
         {
             x %= Caster<E>(_p);
@@ -128,7 +131,7 @@ namespace Givaro {
         //template<typename E=Element>
         //typename std::enable_if<std::is_unsigned<E>::value, E&>::type
         TMPL
-        __GIVARO_CONDITIONAL_TEMPLATE(E = typename MOD::Element, IS_UINT(E))
+        COND_TMPL(E = typename MOD::Element, IS_UINT(E))
         inline E& MOD::reduce (E& x) const
         {
             return x %= _p;
@@ -289,6 +292,7 @@ namespace Givaro {
 
 #undef MOD
 #undef TMPL
+#undef COND_TMPL
 
 } // Givaro
 

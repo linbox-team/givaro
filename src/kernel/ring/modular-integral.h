@@ -89,17 +89,9 @@ namespace Givaro {
 
 		// ----- Reduce
 
-		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, IS_SINT(E))
-		E& reduce (E&, const E&) const;
+		Element& reduce (Element&, const Element&) const;
 
-		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, IS_UINT(E))
-		E& reduce (E&, const E&) const;
-
-		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, IS_SINT(E))
-		E& reduce (E&) const;
-
-		__GIVARO_CONDITIONAL_TEMPLATE(E = Element, IS_UINT(E))
-		E& reduce (E&) const;
+		Element& reduce (Element&) const;
 
 		// ------------------------
 		// ----- Classic arithmetic

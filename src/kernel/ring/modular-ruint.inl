@@ -10,8 +10,6 @@
 #ifndef __GIVARO_modular_ruint_INL
 #define __GIVARO_modular_ruint_INL
 
-#include "modular-defines.h"
-
 namespace Givaro
 {
 #define TMPL template<typename Storage_t, typename Compute_t>
@@ -56,7 +54,11 @@ namespace Givaro
     inline typename MOD::Element& MOD::sub
         (Element& r, const Element& a, const Element& b) const
     {
-        __GIVARO_MODULAR_RECINT_SUB(r,_p,a,b);
+        if (a < b) {
+          RecInt::sub(r, _p, b);
+          RecInt::add(r, a);
+        }
+        else RecInt::sub(r, a, b);
         return r;
     }
 
@@ -64,7 +66,8 @@ namespace Givaro
     inline typename MOD::Element& MOD::add
         (Element& r, const Element& a, const Element& b) const
     {
-        __GIVARO_MODULAR_RECINT_ADD(r,_p,a,b);
+        RecInt::add(r, a, b);
+        if (r >= _p) RecInt::sub(r, _p);
         return r;
     }
 
@@ -72,7 +75,8 @@ namespace Givaro
     inline typename MOD::Element& MOD::neg
         (Element& r, const Element& a) const
     {
-        __GIVARO_MODULAR_RECINT_NEG(r,_p,a);
+        if (a == 0) RecInt::reset(r);
+        else        RecInt::sub(r, _p, a);
         return r;
     }
 
@@ -109,7 +113,7 @@ namespace Givaro
     template<typename E>
     E& _mulin(E& r, const E& a, const E& p, const E& pc)
     {
-      __GIVARO_MODULAR_RECINT_MULIN(r,p,a);
+      RecInt::mod_n(RecInt::mul(r, a), p);
       return r;
     }
 
@@ -133,7 +137,8 @@ namespace Givaro
     inline typename MOD::Element& MOD::addin
         (Element& r, const Element& a) const
     {
-        __GIVARO_MODULAR_RECINT_ADDIN(r,_p,a);
+        RecInt::add(r, a);
+        if (r >= _p) RecInt::sub(r, _p);
         return r;
     }
 
@@ -141,7 +146,8 @@ namespace Givaro
     inline typename MOD::Element& MOD::subin
         (Element& r, const Element& a) const
     {
-        __GIVARO_MODULAR_RECINT_SUBIN(r,_p,a);
+        if (r < a) RecInt::add(r, _p - a);
+        else       RecInt::sub(r, a);
         return r;
     }
 
@@ -149,7 +155,8 @@ namespace Givaro
     inline typename MOD::Element& MOD::negin
         (Element& r) const
     {
-        __GIVARO_MODULAR_RECINT_NEGIN(r,_p);
+        if (r == 0) RecInt::reset(r);
+        else        RecInt::sub(r, _p, r);
         return r;
     }
 

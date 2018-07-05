@@ -23,7 +23,6 @@
 #include "givaro/givranditer.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-implem.h"
-//#include "modular-defines.h"
 
 #define IS_INT(T) std::is_integral<T>::value
 #define IS_SINT(T) std::is_integral<T>::value && std::is_signed<T>::value

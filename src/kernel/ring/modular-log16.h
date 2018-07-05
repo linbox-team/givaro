@@ -46,7 +46,7 @@ namespace Givaro
 	using Storage_t = int16_t;
 	using Compute_t = int16_t;
 	using Residu_t = uint16_t;
-	
+
 	using Element = Storage_t;
 	using Self_t = Modular<Log16>;
 	using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
@@ -57,9 +57,6 @@ namespace Givaro
         // ----- Representation of Element of the domain Modular:
         typedef int16_t Power_t;
         typedef Power_t Rep;
-        //typedef int16_t Element;
-        //typedef Element* Element_ptr ;
-        //typedef const Element* ConstElement_ptr;
 
         // ----- Constructor /destor
         inline Modular( Residu_t p = 2 );

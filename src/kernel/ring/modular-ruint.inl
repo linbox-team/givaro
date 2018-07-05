@@ -87,14 +87,6 @@ namespace Givaro
         return inv_mod(r, a, _p);
     }
 
-    //TMPL
-    //inline bool MOD::isUnit(const Element& a) const
-    //{
-    //    Element d;
-    //    gcd(d,a,_p);
-    //    return isOne(d) || isMOne(d);
-    //}
-
     TMPL
     inline typename MOD::Element& MOD::div
         (Element& r, const Element& a, const Element& b) const

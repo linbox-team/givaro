@@ -47,11 +47,6 @@ namespace Givaro
 
 		using Parent_t::_p;
 		using Parent_t::_pc;
-		//using Parent_t::_bitsizep;
-	
-
-
-        //static inline Residu_t maxCardinality() { return -1; }
 
         // ----- Initialisation
         Element& init (Element& x) const override;
@@ -64,7 +59,7 @@ namespace Givaro
         // ----- Reduce
         Element& reduce (Element& x, const Element& y) const;
         Element& reduce (Element& x) const;
-        
+
         // ----- Classic arithmetic
         Element& mul(Element& r, const Element& a, const Element& b) const override;
         Element& div(Element& r, const Element& a, const Element& b) const override;
@@ -79,7 +74,7 @@ namespace Givaro
         Element& subin(Element& r, const Element& a) const override;
         Element& negin(Element& r) const override;
         Element& invin(Element& r) const override;
-        
+
         // -- axpy:   r <- a * x + y
         // -- axpyin: r <- a * x + r
         Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
@@ -116,7 +111,7 @@ namespace Givaro
         typedef Modular<Integer>  Ring;
         typedef Ring::Element Element;
 
-        ModularRandIter(const Ring& R, const size_t& size = 0, const size_t& seed = 0) 
+        ModularRandIter(const Ring& R, const size_t& size = 0, const size_t& seed = 0)
                 : _ring(R)
         {
                 // GivRandom will select a non-zero value, even if seed is 0
@@ -140,18 +135,18 @@ namespace Givaro
             Element elt; return this->operator()(elt);
         }
 
-        Element random() 
+        Element random()
         {
             return this->operator()();
         }
 
         const Ring& ring() const { return _ring; }
-        
+
     private:
         const Ring& _ring;
 
     }; //  class ModularRandIter<Integer>
-    
+
 }// namespace Givaro
 
 #include "givaro/modular-integer.inl"

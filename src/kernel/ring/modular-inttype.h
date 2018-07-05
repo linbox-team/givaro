@@ -42,17 +42,11 @@ namespace Givaro
         using Residu_t = IntType;
         using Compute_t = _Compute_t;
 
-        //using Element = typename FiniteFieldInterface<IntType>::Element;
         using Self_t = Modular<Storage_t, Compute_t>;
         using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
-        using Element = Storage_t; //typename Parent_t::Element;
+        using Element = Storage_t;
 
-     	// ----- Constantes
-     	//const Element zero;
-     	//const Element one;
-     	//const Element mOne;
-        
         // ----- Constructors
 
         using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem; 
@@ -117,11 +111,6 @@ namespace Givaro
           return a; 
         }
         
-        //// --- IO methods
-        //std::ostream& write(std::ostream& s) const;
-        //std::istream& read (std::istream& s, Element& a) const;
-        //std::ostream& write(std::ostream& s, const Element& a) const;
-
     };
 }
 

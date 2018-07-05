@@ -111,7 +111,7 @@ namespace Givaro
         {
             Storage_t q = std::floor(u3 / v3);
             Storage_t t;
-            
+
             t = v1;
             v1 = u1 - q * v1;
             u1 = t;

@@ -558,7 +558,7 @@ namespace Givaro {
              * at the creation of the generator.
              * @return random field Element
              */
-	Element& random(Element& elt) const
+	Element& random(Element& elt)
             {
                     // Create new random Elements
 		elt.resize( (uint64_t)(_field.order()));
@@ -575,7 +575,7 @@ namespace Givaro {
              * at the creation of the generator.
              * @return random field Element
              */
-	Element& operator()(Element& elt) const
+	Element& operator()(Element& elt)
             {
 		return this->random(elt);
             }

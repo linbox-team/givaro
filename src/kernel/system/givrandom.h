@@ -18,6 +18,7 @@
 
 #ifndef __GIVARO_random_H
 #define __GIVARO_random_H
+#include <random>
 #include <givaro/givconfig.h>
 #include <givaro/udl.h>
 #include <givaro/givtimer.h>
@@ -32,67 +33,39 @@ extern "C" {
 
 namespace Givaro {
 
-        //! GivRandom
-    class GivRandom {
-        mutable uint64_t _seed;
+	template <class EngineType>
+    class GivRandomGeneric :public EngineType {
     public:
-        typedef GivRandom random_generator;
+		typedef EngineType Engine;
+        typedef GivRandomGeneric<Engine> random_generator;
 
-        GivRandom(const uint64_t s = 0)
-                : _seed(s)
-            {
-                while (! _seed) {
-                    _seed = (uint64_t)BaseTimer::seed();
-                }
-            }
+		/** Initializes the PRNG with the given seed.
+		 * A seed of zero means to get a true-random seed value.
+		 */
+        GivRandomGeneric(const uint64_t s = 0) :
+			Engine(s)
+		{
+			if (!s) {
+				std::random_device rd;
+				Engine::seed(rd());
+			}
+		}
 
-        GivRandom(const GivRandom& R) :
-                _seed(R._seed)
-            {}
+		uint64_t operator() ()
+		{
+			return Engine::operator()();
+		}
 
-        GivRandom& operator= (const GivRandom& R)
-            {
-                _seed = R._seed;
-                return *this;
-            }
-
-        uint64_t seed() const
-            {
-                return _seed;
-            }
-
-
-        uint64_t max_rand() const
-            {   
-                return _GIVRAN_MODULO_;
-            }
-    
-
-// #if defined(__GIVARO_INT64)
-#if 1
-        uint64_t operator() () const
-            {
-                return _seed = (uint64_t)(
-                    (int64_t)_GIVRAN_MULTIPLYER_
-                    * (int64_t)_seed
-                    % (int64_t)_GIVRAN_MODULO_ );
-            }
-#else
-        uint64_t operator() () const
-            {
-                return _seed = (uint64_t)(
-                    (uint64_t)_GIVRAN_MULTIPLYER_
-                    * _seed
-                    % (uint64_t)_GIVRAN_MODULO_ );
-            }
-#endif
-
-        template<class XXX> XXX& operator() (XXX& x) const
-            {
-                return x = (XXX)this->operator() ();
-            }
+        template<class XXX> XXX& operator() (XXX& x)
+		{
+			return x = (XXX)this->operator() ();
+		}
 
     };
+
+	using GivRandom = GivRandomGeneric<
+		std::linear_congruential_engine
+		<uint64_t, _GIVRAN_MULTIPLYER_, 0, _GIVRAN_MODULO_>>;
 
 } // namespace Givaro
 

@@ -39,8 +39,8 @@ typedef Montgomery<int32_t>     Field10;
 //typedef Modular<uint8_t>        Field12; Too small for the test
 
 template <typename Field>
-Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer UpperBoundChard, bool isFieldModular=true) {
-    
+Integer tmain(int argc, char ** argv, uint64_t seed, const Integer UpperBoundChard, bool isFieldModular=true) {
+    GivRandom generator(seed);
 
     typedef RNSsystem<Integer, Field>      CRTSystem;
     typedef typename CRTSystem::domains      Domains;
@@ -181,8 +181,8 @@ int main(int argc, char ** argv)
     // argv[2] : 2^{32-j} is size of primes
     // argv[3] : seed for generator
 
-    GivRandom seedor( argc>3 ? (unsigned)atoi(argv[3]): (unsigned)BaseTimer::seed() );
-    uint64_t seed = seedor.seed();
+    GivRandom seedor = (argc>3 ? GivRandom(strtoull(argv[3],nullptr,10)) : GivRandom());
+    uint64_t seed = seedor();
     GivRandom generator(seed);
     
     Integer ubc( generator() >>(argc>2?atoi(argv[2]):17) );
@@ -191,26 +191,26 @@ int main(int argc, char ** argv)
         ubc = Field4::maxCardinality();
     }
     if (ubc<59) ubc = 59; // at least 15 primes
-    Integer a4 = tmain<Field4>(argc, argv, GivRandom(seed), ubc);
-    Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed), ubc); 
-    Integer a9 = tmain<Field9>(argc, argv, GivRandom(seed), ubc);
+    Integer a4 = tmain<Field4>(argc, argv, seed, ubc);
+    Integer a7 = tmain<Field7>(argc, argv, seed, ubc); 
+    Integer a9 = tmain<Field9>(argc, argv, seed, ubc);
 
     if ( ubc > Field3::maxCardinality() )  {
         ubc = Field3::maxCardinality();
     }
     if (ubc<59) ubc = 59; // at least 15 primes
 
-    Integer a1 = tmain<Field1>(argc, argv, GivRandom(seed), ubc, false);
-    Integer a3 = tmain<Field3>(argc, argv, GivRandom(seed), ubc);
-    Integer a6 = tmain<Field6>(argc, argv, GivRandom(seed), ubc);
+    Integer a1 = tmain<Field1>(argc, argv, seed, ubc, false);
+    Integer a3 = tmain<Field3>(argc, argv, seed, ubc);
+    Integer a6 = tmain<Field6>(argc, argv, seed, ubc);
 
     if ( ubc > Field8::maxCardinality() )  {
         ubc = Field8::maxCardinality();
     }
     if (ubc<59) ubc = 59; // at least 15 primes
 
-    Integer a8 = tmain<Field8>(argc, argv, GivRandom(seed), ubc);
-    Integer a10 = tmain<Field10>(argc, argv, GivRandom(seed), ubc, false);
+    Integer a8 = tmain<Field8>(argc, argv, seed, ubc);
+    Integer a10 = tmain<Field10>(argc, argv, seed, ubc, false);
 
 
     if ( ubc > Field2::maxCardinality() )  {
@@ -218,8 +218,8 @@ int main(int argc, char ** argv)
     }
     if (ubc<59) ubc = 59; // at least 15 primes
 
-    Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed), ubc);
-    Integer a5 = tmain<Field5>(argc, argv, GivRandom(seed), ubc);
+    Integer a2 = tmain<Field2>(argc, argv, seed, ubc);
+    Integer a5 = tmain<Field5>(argc, argv, seed, ubc);
 
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;

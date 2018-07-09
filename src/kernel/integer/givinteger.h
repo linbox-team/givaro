@@ -368,31 +368,25 @@ namespace Givaro {
 		}
 
 
-#ifdef __GMP_PLUSPLUS__
-		void seeding(unsigned long s = 0) const
-		{ Integer::seeding(s) ;
-		}
-#endif
-
         typedef RandomIntegerIterator<false,false> RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
 
 
-		template< class MyRandIter > Rep& random(MyRandIter&, Rep& r, long s = 1) const
+		template< class MyRandIter > Rep& random(MyRandIter& gr, Rep& r, long s = 1) const
 		{
-			return Integer::random(r,s);
+			return Integer::random(r,s, gr);
 		}
-		template< class MyRandIter > Rep& random(MyRandIter&, Rep& r, const Rep& b) const
+		template< class MyRandIter > Rep& random(MyRandIter& gr, Rep& r, const Rep& b) const
 		{
-			return Integer::random(r,b);
+			return Integer::random(r,b, gr);
 		}
-		template< class MyRandIter > Rep& nonzerorandom(MyRandIter&, Rep& r, long s = 1) const
+		template< class MyRandIter > Rep& nonzerorandom(MyRandIter& gr, Rep& r, long s = 1) const
 		{
-			return Integer::nonzerorandom(r,s);
+			return Integer::nonzerorandom(r,s, gr);
 		}
-		template< class MyRandIter > Rep& nonzerorandom (MyRandIter&,Rep& r, const Rep& b) const
+		template< class MyRandIter > Rep& nonzerorandom (MyRandIter& gr,Rep& r, const Rep& b) const
 		{
-			return Integer::nonzerorandom(r,b);
+			return Integer::nonzerorandom(r,b, gr);
 		}
 
 		// -- IO

@@ -27,41 +27,10 @@ namespace Givaro {
 	//----------------------- Random integers -------------
 	//-----------------------------------------------------
 
-	/* ********************** */
-	/* seeding, initialising  */
-	/* ********************** */
-#ifdef __GMP_PLUSPLUS__
-	gmp_randclass& Integer::randstate()
+	template <class RNG>
+	bool Integer::RandBool(RNG& rs)
 	{
-		static gmp_randclass randstate(gmp_randinit_default);
-		return static_cast<gmp_randclass&>(randstate);
-	}
-#else
-#error "not implemented"
-#error "please include gmp++/gmp++.h very high in your include list"
-#endif
-
-	inline void Integer::seeding(uint64_t s)
-	{
-            Integer::randstate().seed( (unsigned long)s) ;
-	}
-
-	void Integer::seeding(const Integer& s)
-	{
-		Integer::randstate().seed((mpz_class) (mpz_srcptr) &(s.gmp_rep) ) ;
-	}
-
-	void Integer::seeding()
-	{
-		Integer::seeding( (uint64_t) BaseTimer::seed() );
-	}
-
-
-	// BB : good seeding but not so efficient...
-	bool Integer::RandBool()
-	{
-		if (Integer::random(1U)) return true;
-		else return false ;
+		return (rs() & 1u);
 	}
 
 
@@ -73,27 +42,22 @@ namespace Givaro {
 	//! where x = 0 or -(m-1) according to \p ALWAYSPOSITIVE
 	//! @bug m \b has to be an integer here.
 	//@{
-#ifdef __GMP_PLUSPLUS__
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan (Integer& r, const Integer & m)
+	template<bool ALWAYSPOSITIVE, class RNG>
+	Integer& Integer::random_lessthan (Integer& r, const Integer & m, RNG& rs)
 	{
+		/*
 		mpz_set( (mpz_ptr) &(r.gmp_rep) ,
-			 ( (mpz_class)Integer::randstate().get_z_range((mpz_class) (mpz_srcptr) &(m.gmp_rep)) ).get_mpz_t() );
-		if(!ALWAYSPOSITIVE) if (Integer::RandBool()) Integer::negin(r);
+			 ( (mpz_class)rs.getIntRand().get_z_range((mpz_class) (mpz_srcptr) &(m.gmp_rep)) ).get_mpz_t() );
+		*/
+		rs.getIntRand().get_z_range(r, m);
+		if(!ALWAYSPOSITIVE) if (Integer::RandBool(rs)) Integer::negin(r);
 		return r;
 	}
-#else
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan (Integer& r, const Integer & m)
+
+	template <class RNG>
+	Integer& Integer::random_lessthan (Integer& r, const Integer & m, RNG& rs)
 	{
-		mpz_urandomm((mpz_ptr) &(r.gmp_rep),Integer::randstate(),(mpz_srcptr)&(m.gmp_rep));
-		if(!ALWAYSPOSITIVE) if (Integer::RandBool()) Integer::negin(r);
-		return r;
-	}
-#endif
-	Integer& Integer::random_lessthan (Integer& r, const Integer & m)
-	{
-		return random_lessthan<true>(r,m);
+		return random_lessthan<true>(r,m,rs);
 	}
 	//@}
 
@@ -105,67 +69,60 @@ namespace Givaro {
 	//! returns a random integer \p r of at most \p m bits
 	//@{
 
-#ifdef __GMP_PLUSPLUS__
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan_2exp (Integer& r, const uint64_t & m)
+	template<bool ALWAYSPOSITIVE, class RNG>
+	Integer& Integer::random_lessthan_2exp (Integer& r, const uint64_t & m, RNG& rs)
 	{
-		mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)Integer::randstate().get_z_bits(m)).get_mpz_t() );
+		//mpz_set( (mpz_ptr) &(r.gmp_rep) , ((mpz_class)rs.getIntRand().get_z_bits(m)).get_mpz_t() );
+		rs.getIntRand().get_z_bits(r, m);
 		if(!ALWAYSPOSITIVE) {
-			if (Integer::RandBool()) Integer::negin(r);
+			if (Integer::RandBool(rs)) Integer::negin(r);
 		}
 		return r;
 	}
-#else
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan_2exp (Integer& r, const uint64_t & m)
-	{
-		mpz_urandomb((mpz_ptr) &(r.gmp_rep),Integer::randstate(),m) ;
-		if(!ALWAYSPOSITIVE) if (Integer::RandBool()) Integer::negin(r);
-		return r;
-	}
-#endif
 
-	template<bool ALWAYSPOSITIVE>
-	Integer Integer::random_lessthan_2exp (const uint64_t & m)
+	template<bool ALWAYSPOSITIVE, class RNG>
+	Integer Integer::random_lessthan_2exp (const uint64_t & m, RNG& rs)
 	{
 		Integer r ;
-		random_lessthan_2exp<ALWAYSPOSITIVE>(r,m);
+		random_lessthan_2exp<ALWAYSPOSITIVE>(r,m,rs);
 		return r;
 	}
 
 	/* synonyms CAREFULL: when m is integer, meaning is different*/
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_lessthan (Integer& r, const uint64_t & m)
+	template<bool ALWAYSPOSITIVE, class RNG>
+	Integer& Integer::random_lessthan (Integer& r, const uint64_t & m, RNG& rs)
 	{
-		return Integer::random_lessthan_2exp<ALWAYSPOSITIVE>(r,m);
+		return Integer::random_lessthan_2exp<ALWAYSPOSITIVE>(r,m,rs);
+	}
+	template <class RNG>
+	Integer& Integer::random_lessthan (Integer& r, const uint64_t & m, RNG& rs)
+	{
+		return random_lessthan<true>(r,m,rs);
 	}
 
-	template<bool ALWAYSPOSITIVE,class T>
-	Integer Integer::random_lessthan (const T & m)
+	template<bool ALWAYSPOSITIVE,class T, class RNG>
+	Integer Integer::random_lessthan (const T & m, RNG& rs)
 	{
 		Integer res ;
-		return Integer::random_lessthan<ALWAYSPOSITIVE>(res,(typename Signed_Trait<T>::unsigned_type)m);
+		return Integer::random_lessthan<ALWAYSPOSITIVE>(res,(typename Signed_Trait<T>::unsigned_type)m,rs);
 	}
 
-	Integer& Integer::random_lessthan_2exp (Integer& r, const uint64_t & m)
+	template <class RNG>
+	Integer& Integer::random_lessthan_2exp (Integer& r, const uint64_t & m, RNG& rs)
 	{
-		return random_lessthan_2exp<true>(r,m);
+		return random_lessthan_2exp<true>(r,m,rs);
 	}
 
-	Integer Integer::random_lessthan_2exp (const uint64_t & m)
+	template <class RNG>
+	Integer Integer::random_lessthan_2exp (const uint64_t & m, RNG& rs)
 	{
-		return random_lessthan_2exp<true>(m);
+		return random_lessthan_2exp<true>(m,rs);
 	}
 
-	Integer& Integer::random_lessthan (Integer& r, const uint64_t & m)
+	template<class T, class RNG>
+	Integer Integer::random_lessthan (const T & m, RNG& rs)
 	{
-		return random_lessthan<true>(r,m);
-	}
-
-	template<class T>
-	Integer Integer::random_lessthan (const T & m)
-	{
-		return random_lessthan<true>(m);
+		return random_lessthan<true>(m,rs);
 	}
 	//@}
 
@@ -175,36 +132,29 @@ namespace Givaro {
 	/* ********************************* */
 
 	//! returns a reference to a random number \p r of the size of \p s, exactly.
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_exact (Integer& r, const Integer & s)
+	template<bool ALWAYSPOSITIVE, class RNG>
+	Integer& Integer::random_exact (Integer& r, const Integer & s, RNG& rs)
 	{
 		size_t t = s.bitsize() ;
-		Integer::random_exact_2exp<ALWAYSPOSITIVE>(r,t);
+		Integer::random_exact_2exp<ALWAYSPOSITIVE>(r,t,rs);
 		return r;
 	}
-	Integer& Integer::random_exact (Integer& r, const uint64_t & m)
+	template <class RNG>
+	Integer& Integer::random_exact (Integer& r, const uint64_t & m, RNG& rs)
 	{
-		return Integer::random_exact<true>(r,m);
+		return Integer::random_exact<true>(r,m,rs);
 	}
-	Integer& Integer::random_exact (Integer& r, const Integer & s)
+	template <class RNG>
+	Integer& Integer::random_exact (Integer& r, const Integer & s, RNG& rs)
 	{
-		return Integer::random_exact<true>(r,s);
-	}
-	template<bool ALWAYSPOSITIVE,class T>
-	Integer& Integer::random_exact (Integer& r, const T & m)
-	{
-		return Integer::random_exact<ALWAYSPOSITIVE>(r,static_cast<uint64_t>(m));
-	}
-	template<class T>
-	Integer& Integer::random_exact (Integer& r, const T & m)
-	{
-		return Integer::random_exact(r,static_cast<uint64_t>(m));
+		return Integer::random_exact<true>(r,s,rs);
 	}
 
-	template<class T>
-	Integer Integer::random_exact (const T & s)
+	template<class T, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::random_exact (const T & s, RNG& rs)
 	{
-		return Integer::random_exact<true>(s) ;
+		return Integer::random_exact<true>(s,rs) ;
 	}
 
 
@@ -214,177 +164,225 @@ namespace Givaro {
 	/* ************************* */
 
 	//! returns a reference to a random number \p r of the size \p m bits, exactly.
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_exact_2exp (Integer& r, const uint64_t & m)
+	template<bool ALWAYSPOSITIVE, class RNG>
+	Integer& Integer::random_exact_2exp (Integer& r, const uint64_t & m, RNG& rs)
 	{
-		if (m) random_lessthan_2exp<true>(r,m-1_ui64);
+		if (m) random_lessthan_2exp<true>(r,m-1_ui64,rs);
 		mpz_setbit( (mpz_ptr) &(r.gmp_rep) , m-1_ui64);
-		if(!ALWAYSPOSITIVE) if (Integer::RandBool()) Integer::negin(r);
+		if(!ALWAYSPOSITIVE) if (Integer::RandBool(rs)) Integer::negin(r);
 		return r;
 	}
 
-	Integer& Integer::random_exact_2exp (Integer& r, const uint64_t & m)
+	template <class RNG>
+	Integer& Integer::random_exact_2exp (Integer& r, const uint64_t & m, RNG& rs)
 	{
-		return Integer::random_exact_2exp<true>(r,m);
+		return Integer::random_exact_2exp<true>(r,m,rs);
 	}
 	// synonym
-	template<bool ALWAYSPOSITIVE>
-	Integer& Integer::random_exact (Integer& r, const uint64_t & m)
+	template<bool ALWAYSPOSITIVE, class RNG>
+	Integer& Integer::random_exact (Integer& r, const uint64_t & m, RNG& rs)
 	{
-		return Integer::random_exact_2exp<ALWAYSPOSITIVE>(r,m) ;
+		return Integer::random_exact_2exp<ALWAYSPOSITIVE>(r,m,rs) ;
 	}
 
-	template<bool ALWAYSPOSITIVE,class T>
-	Integer Integer::random_exact (const T & s)
+	template<bool ALWAYSPOSITIVE,class T, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::random_exact (const T & s, RNG& rs)
 	{
 		Integer res ;
-		return random_exact<ALWAYSPOSITIVE>(res,s);
+		return random_exact<ALWAYSPOSITIVE>(res,s,rs);
 	}
 
 	/* **************************** */
 	/*  random number in [[m,M-1]]  */
 	/* **************************** */
 
-	Integer& Integer::random_between (Integer& r, const Integer& m, const Integer&M)
+	template <class RNG>
+	Integer& Integer::random_between (Integer& r, const Integer& m, const Integer&M, RNG& rs)
 	{
 		assert(M > m);
-		random_lessthan(r,Integer(M-m));
+		random_lessthan(r,Integer(M-m),rs);
 		r += m ;
 		return (r);
 	}
 
-	Integer Integer::random_between (const Integer& m, const Integer &M)
+	template <class RNG>
+	Integer Integer::random_between (const Integer& m, const Integer &M, RNG& rs)
 	{
 		Integer r ;
-		return random_between(r,m,M);
+		return random_between(r,m,M,rs);
 	}
 
 
-	template<class R>
-	Integer Integer::random_between (const R & m, const R & M)
+	template<class R, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::random_between (const R & m, const R & M, RNG& rs)
 	{
 		return Integer::random_between(static_cast<uint64_t>(m),
-					       static_cast<uint64_t>(M));
+					       static_cast<uint64_t>(M),
+					       rs);
 	}
-	template<class R>
-	Integer & Integer::random_between (Integer &r, const R & m, const R & M)
+	template<class R, class RNG>
+	typename std::enable_if<!IsGivRand<R>::value,Integer>::type&
+	Integer::random_between (Integer &r, const R & m, const R & M, RNG& rs)
 	{
 		return Integer::random_between(r,static_cast<uint64_t>(m),
-					       static_cast<uint64_t>(M));
+					       static_cast<uint64_t>(M),
+					       rs);
 	}
 
 
 	/* ******************************** */
 	/*  random number in [[2^m,2^M-1]]  */
 	/* ******************************** */
-	// todo : template<bool ALWAYSPOSITIVE, bool V>
-	Integer& Integer::random_between_2exp (Integer& r, const uint64_t& m, const uint64_t &M)
+	// todo : template<bool ALWAYSPOSITIVE, bool V, class RNG>
+	template <class RNG>
+	Integer& Integer::random_between_2exp (Integer& r, const uint64_t& m, const uint64_t &M, RNG& rs)
 	{
 		assert(M > m);
-		r = nonzerorandom((uint64_t)M-m);
-		Integer r1 = random_lessthan_2exp(m);
+		r = nonzerorandom((uint64_t)M-m,rs);
+		Integer r1 = random_lessthan_2exp(m,rs);
 		r <<= m ;
 		r+= r1 ;
 		return (r);
 	}
 
-	Integer Integer::random_between_2exp (const uint64_t & m, const uint64_t &M)
+	template <class RNG>
+	Integer Integer::random_between_2exp (const uint64_t & m, const uint64_t &M, RNG& rs)
 	{
 		Integer r ;
-		return random_between_2exp(r,m,M);
+		return random_between_2exp(r,m,M,rs);
 	}
 
 	// synonym.
-	Integer Integer::random_between (const uint64_t & m, const uint64_t &M)
+	template <class RNG>
+	Integer Integer::random_between (const uint64_t & m, const uint64_t &M, RNG& rs)
 	{
-		return random_between_2exp(m,M) ;
+		return random_between_2exp(m,M,rs) ;
 	}
 
 
-	Integer& Integer::random_between (Integer& r, const uint64_t& m, const uint64_t &M)
+	template <class RNG>
+	Integer& Integer::random_between (Integer& r, const uint64_t& m, const uint64_t &M, RNG& rs)
 	{
-		return random_between_2exp(r,m,M);
+		return random_between_2exp(r,m,M,rs);
 	}
 	/* **************/
 	/*  short hand  */
 	/* **************/
 
 	//! returns a random integer less than...
-	template<bool ALWAYSPOSITIVE,class T>
-	Integer& Integer::random (Integer& r, const T & m)
+	template<bool ALWAYSPOSITIVE,class T, class RNG>
+	typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+	Integer::random (Integer& r, const T & m, RNG& rs)
 	{
-		return Integer::random_lessthan<ALWAYSPOSITIVE>(r, (typename Signed_Trait<T>::unsigned_type) m) ;
+		return Integer::random_lessthan<ALWAYSPOSITIVE>(r, (typename Signed_Trait<T>::unsigned_type) m, rs) ;
 	}
 
 	//! returns a random integer less than...
-	template<bool ALWAYSPOSITIVE,class T>
-	Integer Integer::random(const T & sz)
+	template<bool ALWAYSPOSITIVE,class T, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::random(const T & sz, RNG& rs)
 	{
-		return Integer::random_lessthan<ALWAYSPOSITIVE,T>(sz);
+		return Integer::random_lessthan<ALWAYSPOSITIVE,T>(sz,rs);
 	}
 
-	Integer Integer::random()
+	template <class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::random(RNG& rs)
 	{
-		return Integer::random(sizeof(mp_limb_t)*8) ;
+		return Integer::random(sizeof(mp_limb_t)*8,rs) ;
 	}
-	template<bool ALWAYSPOSITIVE>
-	Integer Integer::random()
+	template<bool ALWAYSPOSITIVE, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::random(RNG& rs)
 	{
-		Integer rez = Integer::random(sizeof(mp_limb_t)*8) ;
-		if (!ALWAYSPOSITIVE) if (Integer::RandBool()) negin(rez);
+		Integer rez = Integer::random(sizeof(mp_limb_t)*8,rs) ;
+		if (!ALWAYSPOSITIVE) if (Integer::RandBool(rs)) negin(rez);
 		return rez;
 	}
 
-	template<class T>
-	Integer& Integer::random (Integer& r, const T & m)
+	template<class T, class RNG>
+	typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+	Integer::random (Integer& r, const T & m, RNG& rs)
 	{
-		return Integer::random<true,T>(r,m);
+		return Integer::random<true,T>(r,m,rs);
 	}
 
-	template<class T>
-	Integer Integer::random(const T & sz)
+	template<class T, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::random(const T & sz, RNG& rs)
 	{
-		return Integer::random<true>(sz);
+		return Integer::random<true>(sz,rs);
 	}
 
 	/* *******************/
 	/*  Non Zero random  */
 	/* *******************/
 
-	template<bool ALWAYSPOSITIVE, class T>
-	Integer Integer::nonzerorandom(const T & sz)
+	template<bool ALWAYSPOSITIVE, class T, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::nonzerorandom(const T & sz, RNG& rs)
 	{
 		Integer r;
-		while(isZero(Integer::random<ALWAYSPOSITIVE,T>(r, sz) )) {} ;
+		while(isZero(Integer::random<ALWAYSPOSITIVE,T>(r, sz, rs) )) {} ;
 		return r;
 	}
 
 	// BB: It's also 1+random(sz-1)...
 
-	template<bool ALWAYSPOSITIVE, class T>
-	Integer& Integer::nonzerorandom (Integer& r, const T& size)
+	template<bool ALWAYSPOSITIVE, class T, class RNG>
+	typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+	Integer::nonzerorandom (Integer& r, const T& size, RNG& rs)
 	{
-		while (isZero(Integer::random<ALWAYSPOSITIVE,T>(r,size))) {} ;
+		while (isZero(Integer::random<ALWAYSPOSITIVE,T>(r,size,rs))) {} ;
 		return r;
 	}
 
-	template<class T>
-	Integer  Integer::nonzerorandom(const T & sz)
+	template<class T, class RNG>
+	typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+	Integer::nonzerorandom(const T & sz, RNG& rs)
 	{
-		return  Integer::nonzerorandom<true>(sz);
+		return  Integer::nonzerorandom<true>(sz,rs);
 	}
-	template<class T>
-	Integer&  Integer::nonzerorandom (Integer& r, const T& size)
+	template<class T, class RNG>
+	typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+	Integer::nonzerorandom (Integer& r, const T& size, RNG& rs)
 	{
-		return  Integer::nonzerorandom<true>(r,size);
+		return  Integer::nonzerorandom<true>(r,size,rs);
 	}
-	Integer  Integer::nonzerorandom()
+	template <class RNG>
+	Integer  Integer::nonzerorandom(RNG& rs)
 	{
-		Integer rez = Integer::nonzerorandom(sizeof(mp_limb_t)*8) ;
+		Integer rez = Integer::nonzerorandom(sizeof(mp_limb_t)*8,rs) ;
 		// if (!ALWAYSPOSITIVE) if (Integer::RandBool()) negin(rez);
 		return rez;
 	}
 
+	// complete definitions of some functions in givrandom.h
+	inline void GivIntRand::seed(const Integer& s)
+	{
+		gmp_randseed(_state, s.get_rep());
+	}
+
+	inline void GivIntRand::get_z_range(Integer& result, const Integer& m)
+	{
+		mpz_urandomm(result.get_rep(), _state, m.get_rep());
+	}
+
+	// result <$- {0,...,2^bits-1}
+	inline void GivIntRand::get_z_bits(Integer& result, uint64_t bits)
+	{
+		mpz_urandomb(result.get_rep(), _state, bits);
+	}
+
+	template <class EngineType, class IntRNGType>
+	void GivRandomGeneric<EngineType,IntRNGType>::seed(const Integer& s)
+	{
+		if (!s) seed(0);
+		_engine.seed(s[0]);
+		_intrng.seed(s);
+	}
 
 }
 

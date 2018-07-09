@@ -52,7 +52,7 @@ namespace Givaro
             if (! bits) bits = 30;
 			GIVARO_ASSERT( bits>0, "[RandomIntegerIterator] bad bit size");
 			if (! seed)
-				setSeed( static_cast<uint64_t>(BaseTimer::seed()) );
+				setSeed();
 			else
 				setSeed( seed );
 
@@ -62,7 +62,7 @@ namespace Givaro
 		/// copy constructor.
 		/// @param R random iterator to be copied.
 		RandomIntegerIterator (const RandomIntegerIterator &R) :
-                _bits(R._bits), _integer(R._integer), _ring(R._ring)
+                _bits(R._bits), _integer(R._integer), _ring(R._ring), _rs(R._rs)
 		{}
 
 		/// copy.
@@ -73,6 +73,7 @@ namespace Givaro
 				_bits = R._bits;
 				_integer = R._integer;
                 const_cast<Integer_Domain&>(_ring)=R._ring;
+				_rs = R._rs;
 			}
 			return *this;
 		}
@@ -104,19 +105,19 @@ namespace Givaro
 			return _integer;
 		}
 
-		Integer_Type & random (Integer_Type & a) const
+		Integer_Type & random (Integer_Type & a)
 		{
 			return this->nextRandom(_Exact_Size_t(), a);
 		}
 
-        Element& operator() (Element& a) const {
+        Element& operator() (Element& a) {
             return this->random(a);
         }
 
-        Element operator() () const{
+        Element operator() () {
             Element a; this->random(a); return a;
         }
-        Element random () const {
+        Element random () {
             return this->operator()();
         }
 
@@ -124,10 +125,18 @@ namespace Givaro
 		 *  Set the random seed to be \p ul.
 		 *  @param ul the new seed.
 		 */
-		void static setSeed(uint64_t ul)
+		void setSeed(uint64_t ul)
 		{
-			Givaro::Integer::seeding(ul);
+			_rs.seed(ul);
 		}
+
+		/** @brief Sets the seed to a random value.
+		 */
+                void setSeed()
+		{
+			_rs.seed();
+		}
+
 
 		void setBits (size_t  bits)
 		{
@@ -147,16 +156,17 @@ namespace Givaro
                 
 
     protected:
-        inline Integer_Type& nextRandom(std::true_type,  Integer_Type & a) const {
-			return Givaro::Integer::random_exact<_Unsigned>(a,_bits);
+        inline Integer_Type& nextRandom(std::true_type,  Integer_Type & a) {
+			return Givaro::Integer::random_exact<_Unsigned>(a,_bits,_rs);
         }
-        inline Integer_Type& nextRandom(std::false_type, Integer_Type & a) const {
-			return Givaro::Integer::random_lessthan<_Unsigned>(a,_bits);
+        inline Integer_Type& nextRandom(std::false_type, Integer_Type & a) {
+			return Givaro::Integer::random_lessthan<_Unsigned>(a,_bits,_rs);
         }
 
 		size_t    				_bits;  	//!< common length of all integers
 		Integer_Type   			_integer;	//!< the generated integer.
         const Integer_Domain& 	_ring;
+        GivRandom _rs; //!< state for the RNG
         
 	};
 

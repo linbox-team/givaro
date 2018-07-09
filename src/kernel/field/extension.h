@@ -509,7 +509,7 @@ namespace Givaro {
 	GIV_ExtensionrandIter(const  ExtensionField& F,
 			      const Type& size = 0,
 			      const Type& seed = 0) :
-	       	_size(size), _givrand( GivRandom(seed) ), _field(F)
+	       	_size(size), _givrand(seed), _field(F)
             {
 		Type charact    = Type( F.characteristic() );
 		if ((_size > charact) || (_size == 0) )
@@ -525,7 +525,7 @@ namespace Givaro {
              * generator to which R._randIter_ptr points.
              * @param  R ALP_randIter object.
              */
-	GIV_ExtensionrandIter(const GIV_ExtensionrandIter& R) :
+	GIV_ExtensionrandIter(GIV_ExtensionrandIter& R) :
 	       	_size(R._size), _givrand(R._givrand) , _field(R._field)
             {}
 

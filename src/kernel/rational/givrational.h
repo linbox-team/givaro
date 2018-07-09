@@ -285,10 +285,10 @@ public:
     typedef GeneralRingRandIter<Self_t> RandIter;
     typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
     
-    template< class MyRandIter > Rep& random(MyRandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::random(s), Integer::nonzerorandom(s)); }
-    template< class MyRandIter > Rep& random(MyRandIter& g, Rep& r, const Rep& b) const { Integer rnum,rden; Integer::random(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
-    template< class MyRandIter > Rep& nonzerorandom(MyRandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::nonzerorandom(s), Integer::nonzerorandom(s)); }
-    template< class MyRandIter > Rep& nonzerorandom (MyRandIter& g,Rep& r, const Rep& b) const { Integer rnum,rden; Integer::nonzerorandom(rnum,b.nume()); Integer::nonzerorandom(rden,b.deno()); return r=Rational(rnum,rden); }
+    template< class MyRandIter > Rep& random(MyRandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::random(s,g.getIntegerRandState()), Integer::nonzerorandom(s,g.getIntegerRandState())); }
+    template< class MyRandIter > Rep& random(MyRandIter& g, Rep& r, const Rep& b) const { Integer rnum,rden; Integer::random(rnum,b.nume(),g.getIntegerRandState()); Integer::nonzerorandom(rden,b.deno(),g.getIntegerRandState()); return r=Rational(rnum,rden); }
+    template< class MyRandIter > Rep& nonzerorandom(MyRandIter& g, Rep& r, int64_t s = 1) const { return r=Rational(Integer::nonzerorandom(s,g.getIntegerRandState()), Integer::nonzerorandom(s,g.getIntegerRandState())); }
+    template< class MyRandIter > Rep& nonzerorandom (MyRandIter& g,Rep& r, const Rep& b) const { Integer rnum,rden; Integer::nonzerorandom(rnum,b.nume(),g.getIntegerRandState()); Integer::nonzerorandom(rden,b.deno(),g.getIntegerRandState()); return r=Rational(rnum,rden); }
 
 
         // -- IO

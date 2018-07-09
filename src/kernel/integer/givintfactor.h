@@ -47,16 +47,16 @@ namespace Givaro {
 		// 29*31*37*41*43*47*53*59*61*67*71*73*79*83*89*97
 		const Rep PROD_second_primes;
 	protected:
-		MyRandIter _g;
+		mutable MyRandIter _g;
 
 	public:
 		typedef MyRandIter random_generator;
 
-		IntFactorDom(MyRandIter g = MyRandIter()) :
+		IntFactorDom(MyRandIter&& g = MyRandIter()) :
 			IntPrimeDom(),
 			PROD_first_primes(223092870),
 			PROD_second_primes("10334565887047481278774629361"),
-			_g(g)
+			_g(std::move(g))
 		{
 		}
 
@@ -67,9 +67,9 @@ namespace Givaro {
 			if (isOne(gcd(r,n,PROD_first_primes)))
 				if (isOne(gcd(r,n,PROD_second_primes))) {
 #ifdef GIVARO_LENSTRA
-					return Lenstra((const MyRandIter&)_g, r, n);
+					return Lenstra(_g, r, n);
 #else
-					return Pollard((const MyRandIter&)_g, r, n, loops);
+					return Pollard(_g, r, n, loops);
 #endif
 				} else
 					return factor_second_primes(r,n);
@@ -88,7 +88,7 @@ namespace Givaro {
 					Rep nn = r;
 					if (isOne(gcd(r,nn,PROD_first_primes))) {
 						if (isOne(gcd(r,nn,PROD_second_primes))) {
-							Pollard((const MyRandIter&)_g, r, nn, loops);
+							Pollard(_g, r, nn, loops);
 						} else {
 							factor_second_primes(r,nn);
 						}
@@ -96,7 +96,7 @@ namespace Givaro {
 						factor_first_primes(r,nn);
 					}
 					if (r == nn) {
-						Lenstra((const MyRandIter&)_g, r, nn) ;
+						Lenstra(_g, r, nn) ;
 						break; // In case Lenstra fails also
 					}
 				}
@@ -129,9 +129,9 @@ namespace Givaro {
 
 		// Pollard with a bound on the number of loops
 		// Bound 0 is without bound
-		Rep& Pollard(const MyRandIter&, Rep&, const Rep& n, unsigned long threshold = 0) const ;
+		Rep& Pollard(MyRandIter&, Rep&, const Rep& n, unsigned long threshold = 0) const ;
 		// returns a factor by Lenstra's elliptic curves method
-		Rep& Lenstra(const MyRandIter&, Rep&, const Rep& n, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
+		Rep& Lenstra(MyRandIter&, Rep&, const Rep& n, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
 
 		std::ostream& write(std::ostream& o, const Rep& n) const;
 		template<class Array> std::ostream& write(std::ostream& o, Array&, const Rep& n) const;

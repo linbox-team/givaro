@@ -35,7 +35,7 @@ public:
     typedef IntFactorDom < MyRandIter > Father_t;
     typedef typename IntFactorDom < MyRandIter >::Rep Rep;
 
-    IntSqrtModDom (MyRandIter g = MyRandIter ()) : IntFactorDom < MyRandIter > (g) {}
+    IntSqrtModDom (MyRandIter&& g = MyRandIter ()) : IntFactorDom < MyRandIter > (std::move(g)) {}
 
         // ======================================================== //
         // Modular Square root functions

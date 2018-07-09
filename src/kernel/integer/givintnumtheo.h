@@ -34,8 +34,8 @@ namespace Givaro {
 			public:
 				typedef IntFactorDom<MyRandIter> Father_t;
 				typedef typename IntFactorDom<MyRandIter>::Rep Rep;
-				IntNumTheoDom(MyRandIter g = MyRandIter())
-					:  IntFactorDom<MyRandIter>(g) {}
+				IntNumTheoDom(MyRandIter&& g = MyRandIter())
+					:  IntFactorDom<MyRandIter>(std::move(g)) {}
 
 				// =================================================================== //
 				//! Euler's phi function

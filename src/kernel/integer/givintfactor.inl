@@ -248,7 +248,7 @@ namespace Givaro {
 	}
 
 	template<class MyRandIter>
-	typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Pollard(const MyRandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
+	typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Pollard(MyRandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
 	{
 		// average number of iterations < 13/8*sqrt( Pi*n/2)
 		// Sometimes the factor isn't prime -- TO EXPLICIT
@@ -460,7 +460,7 @@ namespace Givaro {
 	// TODO : make it generic in regards to DOMAINLIKENESS
 	// ======================================================================== //
 	template<class MyRandIter>
-	typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Lenstra(const MyRandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const
+	typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Lenstra(MyRandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const
 	{
 		if (n<3) return g=n;
 		if ( isprime(n,5) ) return g=n;

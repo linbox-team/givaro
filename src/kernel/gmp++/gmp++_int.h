@@ -20,6 +20,7 @@
 #include <vector>
 #include <list>
 #include <string>
+#include <type_traits>
 #include <assert.h>
 // #include <iostream>
 
@@ -39,6 +40,7 @@
 #endif
 
 #include <givaro/givcaster.h>
+#include <givaro/givrandom.h>
 
 namespace Givaro {
 
@@ -1584,98 +1586,143 @@ namespace Givaro {
 		*/
 		//! Random numbers (no doc)
 		///@{
-		static inline void seeding(uint64_t  s);
-		static inline void seeding(const Integer& s);
-		static inline void seeding();
 
-#ifdef __GMP_PLUSPLUS__
-		static inline gmp_randclass& randstate();
-#else
-		// static __gmp_randstate_struct initializerandstate();
-		// static __gmp_randstate_struct* randstate();
+#ifdef _GIVARO_RAND_LEGACY
+		// XXX deprecated
+		static inline GivRandom& randstate() { return default_givrand(); }
+		static inline void seeding(uint64_t s) { default_givrand().seed(s); }
+		static inline void seeding(const Integer& s) { default_givrand().seed(s[0]); }
+		static inline void seeding() { default_givrand().seed(); }
 #endif
-		static inline bool RandBool()  ;
+
+		template <class RNG=GivRandom>
+		static inline bool RandBool(RNG& rs _GIVRAN_DEFARG)  ;
 		/*  random <= */
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer& random_lessthan (Integer& r, const Integer & m);
-		static inline Integer& random_lessthan (Integer& r, const Integer & m) ;
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer& random_lessthan_2exp (Integer& r, const uint64_t & m);
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline Integer& random_lessthan (Integer& r, const Integer & m, RNG& rs _GIVRAN_DEFARG);
+		template <class RNG=GivRandom>
+		static inline Integer& random_lessthan (Integer& r, const Integer & m, RNG& rs _GIVRAN_DEFARG) ;
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline Integer& random_lessthan_2exp (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG);
 
-		static inline Integer& random_lessthan_2exp (Integer& r, const uint64_t & m) ;
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer random_lessthan_2exp (const uint64_t & m);
-		static inline Integer random_lessthan_2exp (const uint64_t & m) ;
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer& random_lessthan (Integer& r, const uint64_t & m) ;
-
-		static inline Integer& random_lessthan (Integer& r, const uint64_t & m) ;
-		template<bool ALWAYSPOSITIVE,class T>
-		static inline Integer random_lessthan (const T & m);
-		template<class T>
-		static inline Integer random_lessthan (const T & m) ;
+		template <class RNG=GivRandom>
+		static inline Integer& random_lessthan_2exp (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG) ;
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline Integer random_lessthan_2exp (const uint64_t & m, RNG& rs _GIVRAN_DEFARG);
+		template <class RNG=GivRandom>
+		static inline Integer random_lessthan_2exp (const uint64_t & m, RNG& rs _GIVRAN_DEFARG) ;
+		/* XXX synonym for random_lessthan_2exp */
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline Integer& random_lessthan (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
+		static inline Integer& random_lessthan (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG) ;
+		template<bool ALWAYSPOSITIVE,class T, class RNG=GivRandom>
+		static inline Integer random_lessthan (const T & m, RNG& rs _GIVRAN_DEFARG);
+		template<class T, class RNG=GivRandom>
+		static inline Integer random_lessthan (const T & m, RNG& rs _GIVRAN_DEFARG) ;
 
 
 		/*  random = */
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer& random_exact_2exp (Integer& r, const uint64_t & m) ;
-		static inline Integer& random_exact_2exp (Integer& r, const uint64_t & m);
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline Integer& random_exact_2exp (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
+		static inline Integer& random_exact_2exp (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG);
 
 
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer& random_exact (Integer& r, const Integer & s) ;
-		static inline Integer& random_exact (Integer& r, const Integer & s) ;
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline Integer& random_exact (Integer& r, const Integer & s, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
+		static inline Integer& random_exact (Integer& r, const Integer & s, RNG& rs _GIVRAN_DEFARG) ;
 
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer& random_exact (Integer& r, const uint64_t & m)  ;
-		static inline Integer& random_exact (Integer& r, const uint64_t & m) ;
-		template<bool ALWAYSPOSITIVE,class T>
-		static inline Integer& random_exact (Integer& r, const T & m) ;
-		template<class T>
-		static inline Integer& random_exact (Integer& r, const T & m) ;
-		template<bool ALWAYSPOSITIVE,class T>
-		static inline Integer random_exact (const T & s) ;
-		template<class T>
-		static inline Integer random_exact (const T & s) ;
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline Integer& random_exact (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG)  ;
+		template <class RNG=GivRandom>
+		static inline Integer& random_exact (Integer& r, const uint64_t & m, RNG& rs _GIVRAN_DEFARG) ;
+		template<bool ALWAYSPOSITIVE,class T, class RNG=GivRandom>
+		static inline typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+		random_exact (Integer& r, const T & m, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<class T, class RNG=GivRandom>
+		static inline typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+		random_exact (Integer& r, const T & m, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<bool ALWAYSPOSITIVE,class T, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		random_exact (const T & s, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<class T, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		random_exact (const T & s, RNG& rs _GIVRAN_DEFARG) ;
 
 		/*  random <.< */
-		static inline Integer& random_between (Integer& r, const Integer& m, const Integer&M) ;
-		static inline Integer random_between (const Integer& m, const Integer &M) ;
+		template <class RNG=GivRandom>
+		static inline Integer& random_between (Integer& r, const Integer& m, const Integer&M, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
+		static inline Integer random_between (const Integer& m, const Integer &M, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
 		static inline Integer& random_between_2exp (Integer& r, const uint64_t& m,
-							    const uint64_t &M) ;
+							    const uint64_t &M, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
 		static inline Integer& random_between (Integer& r, const uint64_t& m,
-						       const uint64_t &M) ;
+						       const uint64_t &M, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
 		static inline Integer random_between_2exp (const uint64_t & m,
-							   const uint64_t &M) ;
+							   const uint64_t &M, RNG& rs _GIVRAN_DEFARG) ;
+		template <class RNG=GivRandom>
 		static inline Integer random_between (const uint64_t & m,
-						      const uint64_t &M) ;
-		template<class R>
-		static inline Integer random_between (const R & m, const R & M) ;
-		template<class R>
-		static inline Integer & random_between (Integer &r, const R & m, const R & M);
+						      const uint64_t &M, RNG& rs _GIVRAN_DEFARG) ;
+		template<class R, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		random_between (const R & m, const R & M, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<class R, class RNG=GivRandom>
+		static inline typename std::enable_if<!IsGivRand<R>::value,Integer>::type&
+		random_between (Integer &r, const R & m, const R & M, RNG& rs _GIVRAN_DEFARG);
 
 
 		// useful functions :
-		template<bool ALWAYSPOSITIVE,class T>
-		static inline Integer& random (Integer& r, const T & m) ;
-		template<class T>
-		static inline Integer& random (Integer& r, const T & m) ;
-		template<bool ALWAYSPOSITIVE,class T>
-		static inline Integer random(const T & sz) ;
-		template<class T>
-		static inline Integer random(const T & sz) ;
-		template<bool ALWAYSPOSITIVE>
-		static inline Integer random();
-		static inline Integer random();
-		template<bool ALWAYSPOSITIVE,class T>
-		static inline Integer nonzerorandom(const T & sz) ;
-		template<bool ALWAYSPOSITIVE,class T>
-		static inline Integer& nonzerorandom (Integer& r, const T& size) ;
-		template<class T>
-		static inline Integer nonzerorandom(const T & sz) ;
-		template<class T>
-		static inline Integer& nonzerorandom (Integer& r, const T& size) ;
-		static inline Integer nonzerorandom() ;
+		template<bool ALWAYSPOSITIVE,class T, class RNG=GivRandom>
+		static inline typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+		random (Integer& r, const T & m, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<class T, class RNG=GivRandom>
+		static inline typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+		random (Integer& r, const T & m, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<bool ALWAYSPOSITIVE,class T, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		random(const T & sz, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<class T, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		random(const T & sz, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<bool ALWAYSPOSITIVE, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		random(RNG& rs _GIVRAN_DEFARG);
+
+		template <class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		random(RNG& rs _GIVRAN_DEFARG);
+
+		template<bool ALWAYSPOSITIVE,class T, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		nonzerorandom(const T & sz, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<bool ALWAYSPOSITIVE,class T, class RNG=GivRandom>
+		static inline typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+		nonzerorandom (Integer& r, const T& size, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<class T, class RNG=GivRandom>
+		static inline typename std::enable_if<IsGivRand<RNG>::value,Integer>::type
+		nonzerorandom(const T & sz, RNG& rs _GIVRAN_DEFARG) ;
+
+		template<class T, class RNG=GivRandom>
+		static inline typename std::enable_if<!IsGivRand<T>::value,Integer>::type&
+		nonzerorandom (Integer& r, const T& size, RNG& rs _GIVRAN_DEFARG) ;
+
+		template <class RNG=GivRandom>
+		static inline Integer nonzerorandom(RNG& rs _GIVRAN_DEFARG) ;
 		///@}
 
 		//----------------------------------------------I/O
@@ -1733,6 +1780,12 @@ namespace Givaro {
 		{
 			return &gmp_rep;
 		}
+		Rep* get_rep()
+		{
+			return &gmp_rep;
+		}
+
+		friend GivIntRand;
 
 
 	}; //----------------------------------------------- End of Class Integer

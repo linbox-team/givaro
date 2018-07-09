@@ -69,7 +69,7 @@ namespace Givaro {
   GIV_randIter(const  Ring& F,
 	       const size_t size = 0,
 	       const uint64_t seed = 0)
-    : _givrand( GivRandom(seed) ), _ring(F)
+    : _givrand(seed), _ring(F)
     {}
 
     /** Copy constructor.
@@ -81,15 +81,10 @@ namespace Givaro {
      * generator to which R._randIter_ptr points.
      * @param  R ALP_randIter object.
      */
-  GIV_randIter(const GIV_randIter& R)
-    :  _givrand(R._givrand) , _ring(R._ring) {}
-
-    /** Destructor.
-     * This destructs the random ring Element generator object.
-     * In this implementation, this destroys the generator by deleting
-     * the random generator object to which _randIter_ptr points.
-     */
-    ~GIV_randIter(void) {}
+#ifdef _GIVARO_RAND_LEGACY
+  GIV_randIter(GIV_randIter&) = default;
+#endif
+  GIV_randIter(GIV_randIter&&) noexcept = default;
 
     /** Assignment operator.
      * Assigns ALP_randIter object R to generator.
@@ -97,16 +92,8 @@ namespace Givaro {
      * which R._randIter_ptr points.
      * @param  R ALP_randIter object.
      */
-    GIV_randIter<Ring,Type>& operator=(const GIV_randIter<Ring,Type>& R)
-      {
-	if (this != &R) // guard against self-assignment
-	  {
-	    _givrand = R._givrand;
-	    const_cast<Ring&>(_ring) = R._ring;
-	  }
-
-	return *this;
-      }
+    GIV_randIter& operator=(GIV_randIter&&) noexcept = default;
+    GIV_randIter& operator=(const GIV_randIter&) = delete;
 
     /** Random ring Element creator with assignement.
      * This returns a random ring Element from the information supplied
@@ -199,15 +186,10 @@ namespace Givaro {
        * generator to which R._randIter_ptr points.
        * @param  R ALP_randIter object.
        */
-    ModularRandIter(const ModularRandIter& R)
-      : _givrand(R._givrand) , _ring(R._ring) {}
-
-      /** Destructor.
-       * This destructs the random ring Element generator object.
-       * In this implementation, this destroys the generator by deleting
-       * the random generator object to which _randIter_ptr points.
-       */
-      ~ModularRandIter(void) {}
+    ModularRandIter(ModularRandIter&&) noexcept = default;
+#ifdef _GIVARO_RAND_LEGACY
+    ModularRandIter(ModularRandIter&) = default;
+#endif
 
       /** Assignment operator.
        * Assigns ALP_randIter object R to generator.
@@ -215,16 +197,8 @@ namespace Givaro {
        * which R._randIter_ptr points.
        * @param  R ALP_randIter object.
        */
-      ModularRandIter<Ring>& operator=(const ModularRandIter<Ring>& R)
-	{
-	  // guard against self-assignment
-	  if (this != &R)
-	    {
-	      _givrand = R._givrand;
-	      const_cast<Ring&>(_ring) = R._ring;
-	    }
-	  return *this;
-	}
+      ModularRandIter& operator= (ModularRandIter&&) noexcept = default;
+      ModularRandIter& operator= (const ModularRandIter&) = delete;
 
       /** Random ring Element creator with assignement.
        * This returns a random ring Element from the information supplied
@@ -287,10 +261,14 @@ namespace Givaro {
   public:
     typedef typename Ring::Element Element;
 
-      GeneralRingRandIter(const Ring &F, const size_t& size = 0, uint64_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
+      GeneralRingRandIter(const Ring &F, const size_t& size = 0, uint64_t seed = 0) : _F(F), _size(size), _givrand(seed)
     {}
-      GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
-      ~GeneralRingRandIter() {}
+      GeneralRingRandIter(GeneralRingRandIter&&) noexcept = default;
+      GeneralRingRandIter& operator=(GeneralRingRandIter&&) noexcept = default;
+#ifdef _GIVARO_RAND_LEGACY
+      GeneralRingRandIter(GeneralRingRandIter&) = default;
+      GeneralRingRandIter& operator=(GeneralRingRandIter&) = default;
+#endif
 
       Element& operator() (Element& a)
       {
@@ -333,8 +311,6 @@ namespace Givaro {
     typedef typename Ring::Element Element;
 
     GeneralRingNonZeroRandIter(RandIter& r) : _r(r) {}
-    GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _r(R._r) {}
-    ~GeneralRingNonZeroRandIter() {}
 
     Element& operator()(Element &a)
     {

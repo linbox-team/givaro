@@ -22,25 +22,26 @@ using std::cout ; using std::endl;
 int test1()
 {
 	Integer toto  ;
-	toto.seeding((long unsigned int)0);
+	GivRandom gr;
+	gr.seed();
 #ifdef GIVARO_DEBUG
-	cout << "this is a random() number : " << toto.random() << endl;
+	cout << "this is a random() number : " << toto.random(gr) << endl;
 #else
-        toto.random();
+        toto.random(gr);
 #endif
 
-	toto.seeding();
+	gr.seed();
 #ifdef GIVARO_DEBUG
-	cout << "this is a random() number : " << toto.random() << endl;
+	cout << "this is a random() number : " << toto.random(gr) << endl;
 #else
-        toto.random();
+        toto.random(gr);
 #endif
 
-    Integer::seeding();
+	gr.seed();
 #ifdef GIVARO_DEBUG
-	cout << "this is a random() number : " << toto.random() << endl;
+	cout << "this is a random() number : " << toto.random(gr) << endl;
 #else
-        toto.random();
+        toto.random(gr);
 #endif
 
 	Integer un(26);
@@ -50,7 +51,7 @@ int test1()
 	cout << "random...............OK" << endl;
 #endif
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.random_between(un,autre);
+		Integer tata = toto.random_between(un,autre,gr);
 		//cout << tata << endl;
 		if (tata < un || tata >= autre) {
 			cout << "random_between  failed" << endl;
@@ -67,7 +68,7 @@ int test1()
 	//std::vector<int> T(1<<petits) ;
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.random_between(trois,petits);
+		Integer tata = toto.random_between(trois,petits,gr);
 		//cout << tata << endl;
 		//T[tata] += 1 ;
 		if (tata < (1<<trois) || tata >= (1<<petits) ) {
@@ -81,7 +82,7 @@ int test1()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.random_exact(petits);
+		Integer tata = toto.random_exact(petits,gr);
 		if ( tata.bitsize() != petits ) {
 			//        cout << tata << endl;
 			cout << "random_exact_exp  failed" << endl;
@@ -93,7 +94,7 @@ int test1()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.random_exact(autre);
+		Integer tata = toto.random_exact(autre,gr);
 		//        cout << tata << endl;
 		if ( tata.bitsize() != autre.bitsize() ){
 			cout << "random_exact  failed" << endl;
@@ -105,7 +106,7 @@ int test1()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.random_lessthan_2exp(grands);
+		Integer tata = toto.random_lessthan_2exp(grands,gr);
 		if ( tata.bitsize() > grands ) {
 			//        cout << tata << endl;
 			cout << "random_lessthan_2exp  failed" << endl;
@@ -117,7 +118,7 @@ int test1()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.random_lessthan(large);
+		Integer tata = toto.random_lessthan(large,gr);
 		//        cout << tata << endl;
 		if ( tata.bitsize() > large.bitsize() ){
 			cout << "random_lessthan  failed" << endl;
@@ -129,7 +130,7 @@ int test1()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.nonzerorandom(petits);
+		Integer tata = toto.nonzerorandom(petits,gr);
 		if (tata == 0 || tata >= 1<<petits) {
 			//        cout << tata << endl;
 			cout << "nonzerorandom  failed" << endl;
@@ -141,7 +142,7 @@ int test1()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = toto.nonzerorandom(autre);
+		Integer tata = toto.nonzerorandom(autre,gr);
 		if (tata == 0 || tata >= autre) {
 			       cout << tata << endl;
 			cout << tata << "nonzerorandom  failed" << endl;
@@ -159,10 +160,11 @@ int test1()
 //! tests \verbatim ret= ::func(arg,arg); \endverbatim
 int test2()
 {
+	GivRandom gr;
 	Integer un(26);
 	Integer autre(511);
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = Integer::random_between(un,autre);
+		Integer tata = Integer::random_between(un,autre,gr);
 		//cout << tata << endl;
 		if (tata < un || tata >= autre) {
 			cout << "random_between  failed" << endl;
@@ -178,7 +180,7 @@ int test2()
 	//std::vector<int> T(1<<petits) ;
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = Integer::random_between(trois,petits);
+		Integer tata = Integer::random_between(trois,petits,gr);
 		//cout << tata << endl;
 		//T[tata] += 1 ;
 		if (tata < (1<<trois) || tata >= (1<<petits) ) {
@@ -192,7 +194,7 @@ int test2()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = Integer::random_exact(petits);
+		Integer tata = Integer::random_exact(petits,gr);
 		if ( tata.bitsize() != petits ) {
 			//        cout << tata << endl;
 			cout << "random_exact_exp  failed" << endl;
@@ -204,7 +206,7 @@ int test2()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = Integer::random_exact(autre);
+		Integer tata = Integer::random_exact(autre,gr);
 		//        cout << tata << endl;
 		if ( tata.bitsize() != autre.bitsize() ){
 			cout << "random_exact  failed" << endl;
@@ -216,7 +218,7 @@ int test2()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = Integer::nonzerorandom(petits);
+		Integer tata = Integer::nonzerorandom(petits,gr);
 		if (tata == 0 || tata >= 1<<petits) {
 			//        cout << tata << endl;
 			cout << "nonzerorandom  failed" << endl;
@@ -228,7 +230,7 @@ int test2()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer tata = Integer::nonzerorandom(autre);
+		Integer tata = Integer::nonzerorandom(autre,gr);
 		if (tata == 0 || tata >= autre) {
 			//        cout << tata << endl;
 			cout << "nonzerorandom  failed" << endl;
@@ -246,11 +248,12 @@ int test2()
 //! tests \verbatim ::func(ret,arg,arg); \endverbatim
 int test3()
 {
+	GivRandom gr;
 	Integer un(26);
 	Integer autre(511);
 	Integer tata ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::random_between(tata,un,autre);
+		Integer::random_between(tata,un,autre,gr);
 		//cout << tata << endl;
 		if (tata < un || tata >= autre) {
 			cout << "random_between  failed" << endl;
@@ -266,7 +269,7 @@ int test3()
 	//std::vector<int> T(1<<petits) ;
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::random_between(tata,trois,petits);
+		Integer::random_between(tata,trois,petits,gr);
 		//cout << tata << endl;
 		//T[tata] += 1 ;
 		if (tata < (1<<trois) || tata >= (1<<petits) ) {
@@ -280,7 +283,7 @@ int test3()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::random_exact(tata,petits);
+		Integer::random_exact(tata,petits,gr);
 		if ( tata.bitsize() != petits ) {
 			//        cout << tata << endl;
 			cout << "random_exact_exp  failed" << endl;
@@ -292,7 +295,7 @@ int test3()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::random_exact(tata,autre);
+		Integer::random_exact(tata,autre,gr);
 		//        cout << tata << endl;
 		if ( tata.bitsize() != autre.bitsize() ){
 			cout << "random_exact  failed" << endl;
@@ -304,7 +307,7 @@ int test3()
 #endif
 	const Integer tutu(autre);
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::random_exact(tata,tutu);
+		Integer::random_exact(tata,tutu,gr);
 		//        cout << tata << endl;
 		if ( tata.bitsize() != tutu.bitsize() ){
 			cout << "random_exact  failed" << endl;
@@ -316,7 +319,7 @@ int test3()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::nonzerorandom(tata,petits);
+		Integer::nonzerorandom(tata,petits,gr);
 		if (tata == 0 || tata >= 1<<petits) {
 			//        cout << tata << endl;
 			cout << "nonzerorandom  failed" << endl;
@@ -328,7 +331,7 @@ int test3()
 #endif
 
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::nonzerorandom(tata,autre);
+		Integer::nonzerorandom(tata,autre,gr);
 		if (tata == 0 || tata >= autre) {
 			//        cout << tata << endl;
 			cout << "nonzerorandom  failed" << endl;
@@ -346,15 +349,16 @@ int test3()
 //! test possibly <0 random numbers
 int test4()
 {
+	GivRandom gr;
 	Integer un(26);
 	Integer autre(511);
 	Integer tata ;
 	int count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		if (Integer::RandBool()) Integer::negin(un) ;
-		if (Integer::RandBool()) Integer::negin(autre) ;
+		if (Integer::RandBool(gr)) Integer::negin(un) ;
+		if (Integer::RandBool(gr)) Integer::negin(autre) ;
 		if (un>autre) std::swap(un,autre); // un < autre
-		Integer::random_between(tata,un,autre);
+		Integer::random_between(tata,un,autre,gr);
 		//cout << tata << endl;
 		if (tata < un || tata >= autre) {
 			cout << "random_between  failed" << endl;
@@ -376,7 +380,7 @@ int test4()
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::random_exact<false>(tata,petits);
+		Integer::random_exact<false>(tata,petits,gr);
 		if (tata<0) ++count ;
 		if ( tata.bitsize() != petits) {
 			//cout << tata << endl;
@@ -395,7 +399,7 @@ int test4()
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::random_exact<false>(tata,autre);
+		Integer::random_exact<false>(tata,autre,gr);
 		//        cout << tata << endl;
 		if (tata<0) ++count ;
 		if ( tata.bitsize() != autre.bitsize() ){
@@ -414,7 +418,7 @@ int test4()
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::nonzerorandom<false>(tata,petits);
+		Integer::nonzerorandom<false>(tata,petits,gr);
 		if (tata<0) count ++ ;
 		if (tata == 0 || tata >= 1<<petits) {
 //             cout << tata << endl;
@@ -435,7 +439,7 @@ int test4()
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		Integer::nonzerorandom<false>(tata,autre);
+		Integer::nonzerorandom<false>(tata,autre,gr);
 		if (tata<0) ++ count ;
 		if (tata == 0 || tata >= autre || (-tata) >= autre) {
 			cout << "nonzerorandom  failed" << endl;
@@ -458,6 +462,7 @@ int test4()
 //! tests standard interface
 int test5()
 {
+	GivRandom gr;
 	Integer tata = 0 ;
 	size_t count = 0 ;
 #if (__GIVARO_SIZEOF_LONG==8) // BB : todo init to int64_t (either 'long' (64) or 'long long' (32))
@@ -467,7 +472,7 @@ int test5()
 #endif
 	unsigned long l = 5 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		tata = Integer::random<false>() ;
+		tata = Integer::random<false>(gr) ;
 		if (tata<0) ++ count ;
 		if (tata.bitsize() > 8*sizeof(mp_limb_t)) {
 			//cout << tata << endl;
@@ -481,7 +486,7 @@ int test5()
 		return -1  ;
 	}
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		tata = Integer::random() ;
+		tata = Integer::random(gr) ;
 		if (tata<0 || tata.bitsize() > 8*sizeof(mp_limb_t)) {
 			//cout << tata << endl;
 			cout << "random()  failed" << endl;
@@ -499,7 +504,7 @@ int test5()
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		tata = Integer::random<false>(l) ;
+		tata = Integer::random<false>(l,gr) ;
 		if (tata<0) ++ count ;
 		if (tata.bitsize() > l) {
 			// cout << tata << endl;
@@ -513,7 +518,7 @@ int test5()
 		return -1  ;
 	}
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		tata = Integer::random(l) ;
+		tata = Integer::random(l,gr) ;
 		if (tata<0 || tata.bitsize() > l) {
 			// cout << tata << endl;
 			cout << "random  failed" << endl;
@@ -531,7 +536,7 @@ int test5()
 
 	count = 0 ;
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		tata = Integer::random<false>(toto) ;
+		tata = Integer::random<false>(toto,gr) ;
 		if (tata<0) ++ count ;
 		if (tata>toto || tata < -toto) {
 			//cout << tata << endl;
@@ -545,7 +550,7 @@ int test5()
 		return -1  ;
 	}
 	for (size_t i = 0 ; i < 5000 ; ++i) {
-		tata = Integer::random(toto) ;
+		tata = Integer::random(toto,gr) ;
 		if (tata<0 || tata>toto) {
 			//cout << tata << endl;
 			cout << "random  failed" << endl;
@@ -610,11 +615,12 @@ int main()
 #endif
 
 	/* check seeding */
+	GivRandom gr;
 	Integer toto, tata ;
-	Integer::seeding(3);
-	toto = Integer::random();
-	Integer::seeding(3);
-	tata = Integer::random();
+	gr.seed(3);
+	toto = Integer::random(gr);
+	gr.seed(3);
+	tata = Integer::random(gr);
 	if (toto != tata) return -1 ;
 
 	// long unsigned int rangerand = (1<<20);

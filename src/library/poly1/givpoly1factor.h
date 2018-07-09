@@ -49,13 +49,12 @@ namespace Givaro {
 
 		Poly1FactorDom () {}
 
-		//! @warning  there is a copy of the random Iterator ...
-		Poly1FactorDom (const Domain& d, const Indeter& X = Indeter(), const RandomIterator& g = RandomIterator() ) :
-		       	Poly1Dom<Domain,Tag> (d,X), _g(g)
+		Poly1FactorDom (const Domain& d, const Indeter& X = Indeter(), RandomIterator&& g = RandomIterator() ) :
+		       	Poly1Dom<Domain,Tag> (d,X), _g(std::move(g))
 	       	{}
 
-		Poly1FactorDom (const Poly1Dom<Domain,Tag>& P, const RandomIterator& g = RandomIterator()) :
-			Poly1Dom<Domain,Tag> (P), _g(g)
+		Poly1FactorDom (const Poly1Dom<Domain,Tag>& P, RandomIterator&& g = RandomIterator()) :
+			Poly1Dom<Domain,Tag> (P), _g(std::move(g))
 	       	{}
 
 		// ---------------------------------------------------------------

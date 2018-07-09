@@ -1,6 +1,7 @@
 ARCHIVES
 *Makefile
 Makefile.in
+.deps/
 config.h.in
 *.o
 *.lo

@@ -75,16 +75,16 @@ namespace Givaro {
     TMPL
     inline typename MOD::Element&  MOD::reduce (Element& x) const
     {
-        x = std::fmod(x, _pc);
-        if (x < 0) x += _pc;
+        x = std::fmod(x, Caster<Element>(_pc));
+        if (x < 0) x += Caster<Element>(_pc);
         return x;
     }
 
     TMPL
     inline typename MOD::Element&  MOD::reduce (Element& x, const Element& y) const
     {
-        x = std::fmod(y, _pc);
-        if (x < 0.f) x += _pc;
+        x = std::fmod(y, Caster<Element>(_pc));
+        if (x < 0.f) x += Caster<Element>(_pc);
         return x;
     }
 
@@ -95,22 +95,22 @@ namespace Givaro {
     inline typename MOD::Element & MOD::add
     (Element &x, const Element &y, const Element &z) const
     {
-        x = y + z;
-        return x = (x<_pc?x:x-_pc);
+        Compute_t tmp = Caster<Compute_t>(y) + Caster<Compute_t>(z);
+        return x = Caster<Element>(tmp<_pc?tmp:tmp-_pc);
     }
 
     TMPL
     inline typename MOD::Element & MOD::sub
     (Element &x, const Element &y, const Element &z) const
     {
-        return x = (y>=z)? y-z:(_pc-z)+y;
+        return x = (y>=z)? y-z:(Caster<Element>(_pc)-z)+y;
     }
 
     TMPL
     inline typename MOD::Element & MOD::mul
     (Element &x, const Element &y, const Element &z) const
     {
-        return x = std::fmod(y*z, _pc);
+        return x = Caster<Element>(std::fmod(Caster<Compute_t>(y)*Caster<Compute_t>(z), _pc));
     }
 
     TMPL
@@ -124,31 +124,30 @@ namespace Givaro {
     inline typename MOD::Element & MOD::neg
     (Element &x, const Element &y) const
     {
-        return x = (y==0?0:_pc-y);
+        return x = (y==Caster<Element>(0)?Caster<Element>(0):Caster<Element>(_pc)-y);
     }
 
     TMPL
     inline typename MOD::Element & MOD::inv
     (Element &x, const Element &y) const
     {
-        invext(x,y,Caster<Element>(_p));
-        return (x<0 ? x+=Caster<Element>(_p) : x);
-        return x;
-        }
+        invext(x,y,Caster<Element>(_pc));
+        return (x<Caster<Element>(0) ? x+=Caster<Element>(_pc) : x);
+    }
 
     TMPL
     inline typename MOD::Element & MOD::addin
     (Element &x, const Element &y) const
     {
-        x += y;
-        return x = (x<_pc?x:x-_pc);
+	Compute_t tmp = Caster<Compute_t>(x) + Caster<Compute_t>(y);
+        return x = Caster<Element>(tmp < _pc? tmp : tmp - _pc);
     }
 
     TMPL
     inline typename MOD::Element & MOD::subin
     (Element &x, const Element &y) const
     {
-        if (x<y) x += (_pc-y);
+        if (x<y) x += (Caster<Element>(_pc)-y);
         else     x -= y;
         return x;
     }
@@ -157,7 +156,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::mulin
     (Element &x, const Element &y) const
     {
-        return x = std::fmod(x*y, _pc);
+        return x = Caster<Element>(std::fmod(Caster<Compute_t>(x)*Caster<Compute_t>(y), _pc));
     }
 
     TMPL
@@ -172,7 +171,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::negin
     (Element &x) const
     {
-        return x = (x==0?0:_pc-x);
+        return x = (x==Caster<Element>(0)?Caster<Element>(0):Caster<Element>(_pc)-x);
     }
 
     TMPL
@@ -187,14 +186,14 @@ namespace Givaro {
     inline typename MOD::Element & MOD::axpy
     (Element &r, const Element &a, const Element &x, const Element &y) const
     {
-        return r = std::fmod(a*x+y, _pc);
+        return r = Caster<Element>(std::fmod(Caster<Compute_t>(a)*Caster<Compute_t>(x)+Caster<Compute_t>(y), _pc));
     }
 
     TMPL
     inline typename MOD::Element & MOD::axpyin
     (Element &r, const Element &a, const Element &x) const
     {
-        return r = std::fmod(a*x + r, _pc);
+        return r = Caster<Element>(std::fmod(Caster<Compute_t>(a)*Caster<Compute_t>(x)+Caster<Compute_t>(r), _pc));
     }
 
     // -- axmy: r <- a * x - y
@@ -202,7 +201,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::axmy
     (Element& r, const Element &a, const Element &x, const Element &y) const
     {
-        return r = std::fmod(a*x + (_pc-y), _pc);
+        return r = Caster<Element>(std::fmod(Caster<Compute_t>(a)*Caster<Compute_t>(x) + (_pc-Caster<Compute_t>(y)), _pc));
     }
 
     TMPL
@@ -218,8 +217,8 @@ namespace Givaro {
     inline typename MOD::Element&  MOD::maxpy
     (Element& r, const Element& a, const Element& x, const Element& y) const
     {
-        r = a*x + (_pc-y);
-        r = (r<_pc ? r : std::fmod(r,_pc));
+	r = Caster<Element>(std::fmod(Caster<Compute_t>(a) * Caster<Compute_t>(x)
+			+ (_pc - Caster<Compute_t>(y)), _pc));
         return negin(r);
     }
 
@@ -227,8 +226,8 @@ namespace Givaro {
     inline typename MOD::Element&  MOD::maxpyin
     (Element& r, const Element& a, const Element& x) const
     {
-        r = a*x + (_pc-r);
-        r = (r<_pc ? r : std::fmod(r,_pc));
+	Compute_t tmp = Caster<Compute_t>(a) * Caster<Compute_t>(x) + (_pc - Caster<Compute_t>(r));
+	r = (tmp < _pc) ? Caster<Element>(tmp) : Caster<Element>(std::fmod(tmp, _pc));
         return negin(r);
     }
 

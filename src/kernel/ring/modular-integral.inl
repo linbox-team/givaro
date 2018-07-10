@@ -162,8 +162,8 @@ namespace Givaro {
         inline typename MOD::Element& MOD::add
         (Element& r, const Element& a, const Element& b) const
         {
-            Compute_t tmp = Caster<Compute_t>(a) + Caster<Compute_t>(b);
-            return r = Caster<Element>((tmp < _pc) ? tmp : tmp - _pc);
+			r = a + b;
+			return (r >= Caster<Element>(_p) || r < a) ? r -= Caster<Element>(_p) : r;
         }
 
         TMPL

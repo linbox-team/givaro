@@ -15,17 +15,6 @@
 #include <cmath>
 #include <type_traits>
 
-template<typename T, typename Enable = void>
-struct make_signed_int {
-    typedef T type;
-};
-
-template<typename T>
-struct make_signed_int<T,
-    typename  std::enable_if<std::is_integral<T>::value>::type> {
-    typedef typename std::make_signed<T>::type type;
-};
-
 // int64_t for double and int32_t for float
 template<bool IsFloat=false> struct IntType {
     typedef int64_t type;
@@ -34,12 +23,6 @@ template<bool IsFloat=false> struct IntType {
 template<> struct IntType<true> {
     typedef int32_t type;
     typedef uint32_t utype;
-};
-
-template<typename T>
-struct make_signed_int<T,
-    typename std::enable_if<std::is_floating_point<T>::value>::type> {
-    typedef typename IntType<std::is_same<T,float>::value>::type type;
 };
 
 template<typename T, typename Enable = void>
@@ -65,12 +48,6 @@ template<size_t K> struct is_smaller_ruint<RecInt::ruint<K>,RecInt::ruint<K+1>> 
 template<typename T> struct RecInt_K;
 template<size_t K> struct RecInt_K<RecInt::ruint<K>> { static const size_t value = K;};
 
-template<typename T>
-struct make_signed_int<T,
-    typename std::enable_if<is_ruint<T>::value>::type> {
-    typedef typename RecInt::rint<RecInt_K<T>::value> type;
-};
-
 namespace Givaro
 {
 
@@ -78,26 +55,35 @@ namespace Givaro
     inline typename std::enable_if<!std::is_floating_point<Storage_t>::value, Storage_t&>::type
     invext(Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b)
     {
-        using Signed_t = typename make_signed_int<Storage_t>::type;
 
-        Signed_t u0(0), r0 = Caster<Signed_t>(b);
-        Signed_t u1(1), r1 = Caster<Signed_t>(a);
-        while (r1 != (Signed_t)0)
+        Storage_t u0(0), u1(1), r1(a), q, t;
+        d = b;
+
+        bool neg = true;
+
+        while (r1 != (Storage_t)0)
         {
-            Signed_t q(r0 / r1);
-            Signed_t t(u1);
-            u1 = u0 - q * u1;
+            // Invariants:
+            // - if !neg:
+            //     u0 * a = d (mod b)
+            //     u1 * a = -r1 (mod b)
+            // - if neg:
+            //     u0 * a = -d (mod b)
+            //     u1 * a = r1 (mod b)
+
+            q = d / r1;
+            t = u1;
+            u1 = q * u1 + u0;
             u0 = t;
 
             t = r1;
-            r1 = r0 - q * r1;
-            r0 = t;
-//         std::cerr << u0 << '*' << a << "+ .*" << b << '=' << r0 << std::endl;
-//         std::cerr << u1 << '*' << a << "+ .*" << b << '=' << r1 << std::endl;
+            r1 = d - q * r1;
+            d = t;
+
+            neg = !neg;
         }
-        Caster<Storage_t>(d, r0);
-//         std::cerr << u0 << '*' << a << "+ .*" << b << '=' << r0 << std::endl;
-        return x = ( u0<0 ? Caster<Storage_t>(u0+Caster<Signed_t>(b)) : Caster<Storage_t>(u0) );
+
+        return x = (neg && u0 > 0) ? b - u0 : u0;
     }
 
     template<typename Storage_t>

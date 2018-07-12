@@ -115,7 +115,7 @@ namespace Givaro
             }
 
 	// ----- Initialisation
-        Element& init (Element& x) const
+        Element& init (Element& x) const override
         { return x = 0; }
         template<typename T> Element& init(Element& r, const T& a) const
         {
@@ -130,7 +130,7 @@ namespace Givaro
             return to_mg(r);
         }
 
-        Element& assign (Element& x, const Element& y) const
+        Element& assign (Element& x, const Element& y) const override
         { return x = y; }
     
         // ----- Convert and reduce
@@ -182,9 +182,9 @@ namespace Givaro
 
 	// --- IO methods
 	std::istream& read (std::istream& s);
-	std::ostream& write(std::ostream& s) const;
-	std::istream& read (std::istream& s, Element& a) const;
-	std::ostream& write(std::ostream& s, const Element& a) const;
+	std::ostream& write(std::ostream& s) const override;
+	std::istream& read (std::istream& s, Element& a) const override;
+	std::ostream& write(std::ostream& s, const Element& a) const override;
 
     protected:
 

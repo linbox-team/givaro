@@ -94,7 +94,7 @@ namespace Givaro
             }
 
             // ----- Initialisation
-        Element& init(Element& a) const;
+        Element& init(Element& a) const override;
         Element& init(Element& r, const float a) const;
         Element& init(Element& r, const double a) const;
         Element& init(Element& r, const int64_t a) const;
@@ -103,7 +103,7 @@ namespace Givaro
         template<typename T> Element& init(Element& r, const T& a) const
             { r = Caster<Element>(a); return reduce(r); }
 
-        Element& assign(Element& r, const Element& a) const;
+        Element& assign(Element& r, const Element& a) const override;
 
             // ----- Convert
         template<typename T> T& convert(T& r, const Element& a) const
@@ -153,9 +153,9 @@ namespace Givaro
             return a; }
 
             // --- IO methods
-        std::ostream& write(std::ostream& s) const;
-        std::istream& read (std::istream& s, Element& a) const;
-        std::ostream& write(std::ostream& s, const Element& a) const;
+        std::ostream& write(std::ostream& s) const override;
+        std::istream& read (std::istream& s, Element& a) const override;
+        std::ostream& write(std::ostream& s, const Element& a) const override;
 	
     protected:
 

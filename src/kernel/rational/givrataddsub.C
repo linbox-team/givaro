@@ -100,9 +100,9 @@ Rational Rational::operator - (const Rational& r)  const
 Rational& Rational::operator -= (const Rational& r)
 {
     if (isZero(r)) return *this ;
-    if (isZero(*this)) {
-        num = -r.num;
-        den = -r.den;
+    if (isZero(*this)) { 
+        num = -r.num; 
+        den = r.den; 
         return *this;
     }
     if (isInteger(*this) && isInteger(r)) {

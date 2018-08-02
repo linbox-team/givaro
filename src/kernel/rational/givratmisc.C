@@ -48,20 +48,16 @@ const Integer ceil(const Rational &x)
   return q;
 }
 
-const Integer round(const Rational& x)
+const Integer round(const Rational& x)  // GV Jeu  2 aoû 2018 16:38:58 CEST
 {
   Integer q;
   Integer r;
-  Integer::divmod(q, r, x.num, x.den);
-  r <<= 1;
-  if (absCompare(r,x.den) < 1)
-  {
-    if (sign(x.num) >= 0)
+  Integer::divmod(q, r, abs(x.num), abs(x.den));
+  r <<= 1; 
+  if (absCompare(r,x.den) > 0) // GV was < 0, and changed with abs
       q += 1;
-    else
-      q -= 1;
-  }
-  return q;
+  return sign(x)*q;
+
 }
 
 const Rational pow (const Rational& x, const int64_t y)

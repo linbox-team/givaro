@@ -102,7 +102,7 @@ Rational& Rational::operator -= (const Rational& r)
     if (isZero(r)) return *this ;
     if (isZero(*this)) { 
         num = -r.num; 
-        den = r.den; 
+        den = r.den; // GV Jeu  2 aoû 2018 17:30:53 CEST, a "-" was also there 
         return *this;
     }
     if (isInteger(*this) && isInteger(r)) {

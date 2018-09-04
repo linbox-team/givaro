@@ -97,12 +97,12 @@ public:
   {
     return !areEqual(P,Q);
   }
-  int iszero(const Rep& P) const
+  int isZero(const Rep& P) const
   {
     size_t sP =P.size();
     if (sP ==0) return 1;
     for (int i=0; i<sP; ++i)
-      if (!_domain.iszero(P[i])) return 0;
+      if (!_domain.isZero(P[i])) return 0;
     return 1;
   }
 

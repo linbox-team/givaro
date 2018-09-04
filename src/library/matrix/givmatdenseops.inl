@@ -29,9 +29,9 @@ int MatrixDom<Domain,Dense>::areNEqual ( const Rep& A, const Rep& B ) const
 }
 
 template<class Domain>
-int MatrixDom<Domain,Dense>::iszero ( const Rep& A ) const
+int MatrixDom<Domain,Dense>::isZero ( const Rep& A ) const
 {
-	return _supportdoamin.iszero(A);
+	return _supportdoamin.isZero(A);
 }
 
 // res <- A + B; aliases of operands are allowed

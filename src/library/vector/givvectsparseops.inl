@@ -56,12 +56,12 @@ int VectorDom<Domain,Sparse>::areNEqual( const Rep& P, const Rep& Q) const
 }
 
 template<class Domain>
-int VectorDom<Domain,Sparse>::iszero  ( const Rep& P ) const
+int VectorDom<Domain,Sparse>::isZero  ( const Rep& P ) const
 {
   size_t d;
   if ((d =dim(P)) == 0) return 1;
   for (size_t i=0; i<d; ++i)
-    if (!_domain.iszero(P._data[i])) return 0;
+    if (!_domain.isZero(P._data[i])) return 0;
   return 1;
 }
 
@@ -80,7 +80,7 @@ void VectorDom<Domain,Sparse>::compact (
   Indice_t pos_next =0;
   for (size_t i=0; i< dim; ++i)
   {
-    if ( !_domain.iszero(v[i]) ) {
+    if ( !_domain.isZero(v[i]) ) {
       u.resize( dim, pos_next + 1 );
       u._index[pos_next] = i;
       _domain.assign(u._data[pos_next], v[i]);
@@ -131,19 +131,19 @@ inline void VectorDom<Domain,Sparse>::add
       res._index[curr] = op1._index[i];
       _domain.assign(res._data[curr],op1._data[i]);
       ++i;
-      if (!_domain.iszero(res._data[curr])) ++curr;
+      if (!_domain.isZero(res._data[curr])) ++curr;
     }
     else if (diff >0) {
       res._index[curr] = op2._index[j];
       _domain.assign(res._data[curr],op2._data[j]);
       ++j;
-      if (!_domain.iszero(res._data[curr])) ++curr;
+      if (!_domain.isZero(res._data[curr])) ++curr;
     }
     else {
       res._index[curr] = op1._index[i];
       _domain.add(res._data[curr], op1._data[i], op2._data[j]);
       ++i; ++j;
-      if (!_domain.iszero(res._data[curr])) ++curr;
+      if (!_domain.isZero(res._data[curr])) ++curr;
     }
   }
   // -- Test if i != op1size or j != op2size, then complete the res
@@ -178,19 +178,19 @@ inline void VectorDom<Domain,Sparse>::sub
       res._index[curr] = op1._index[i];
       _domain.assign(res._data[curr],op1._data[i]);
       ++i;
-      if (!_domain.iszero(res._data[curr])) ++curr;
+      if (!_domain.isZero(res._data[curr])) ++curr;
     }
     else if (diff >0) {
       res._index[curr] = op2._index[j];
       _domain.neg(res._data[curr],op2._data[j]);
       ++j;
-      if (!_domain.iszero(res._data[curr])) ++curr;
+      if (!_domain.isZero(res._data[curr])) ++curr;
     }
     else {
       res._index[curr] = op1._index[i];
       _domain.sub(res._data[curr], op1._data[i], op2._data[j]);
       ++i; ++j;
-      if (!_domain.iszero(res._data[curr])) ++curr;
+      if (!_domain.isZero(res._data[curr])) ++curr;
     }
   }
   // -- Test if i != op1size or j != op2size, then complete the res

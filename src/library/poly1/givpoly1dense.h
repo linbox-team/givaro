@@ -49,7 +49,7 @@ namespace Givaro {
             // -- Self_t
         typedef          Poly1Dom<Domain,Dense>    Self_t;
 
-	
+
 
             // -- The representation of a dense polynomial.
             // assuming that we have correct operator, especially size, allocate
@@ -76,8 +76,8 @@ namespace Givaro {
                 return _domain.characteristic(p);
             }
 
-			inline Integer& cardinality (Integer& c) const { 
-				return c = -1; 
+			inline Integer& cardinality (Integer& c) const {
+				return c = -1;
 			}
 
         int operator==( const Poly1Dom<Domain,Dense>& BC) const
@@ -178,12 +178,6 @@ namespace Givaro {
 
             // -- Comparaison operator
         int isZero  ( const Rep& P ) const;
-#if 0
-        int isZero  ( const Rep& P ) const
-            {
-                return iszero(P);
-            }
-#endif
         int isOne   ( const Rep& P ) const;
         int isMOne   ( const Rep& P ) const;
         bool isUnit   ( const Rep& P ) const;

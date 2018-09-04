@@ -76,7 +76,7 @@ public:
   // -- Comparaizon
   int areEqual ( const Rep& P, const Rep& Q) const;
   int areNEqual( const Rep& P, const Rep& Q) const;
-  int iszero  ( const Rep& P ) const;
+  int isZero  ( const Rep& P ) const;
 
   //-- Dimension of the matrix space
   Indice_t nrow(const Rep& r) const { return r.nrow(); }

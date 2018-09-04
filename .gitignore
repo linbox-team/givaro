@@ -12,6 +12,8 @@ config.h.in
 *status
 *cache
 *aux
+.deps/
+.vscode/
 docs/Doxyfile
 docs/DoxyfileDev
 aclocal.m4
@@ -68,6 +70,7 @@ examples/Polynomial/pol_factor
 examples/Polynomial/trunc_arith
 examples/Rational/iratrecon
 examples/Rational/polydouble
+examples/RecInt/extended-int-types
 examples/RecInt/recint-iterator
 examples/RecInt/rsa
 givaro-config

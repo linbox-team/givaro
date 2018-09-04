@@ -71,7 +71,7 @@ public :
   // -- Comparaizon
   int areEqual ( const Rep& P, const Rep& Q) const;
   int areNEqual( const Rep& P, const Rep& Q) const;
-  int iszero  ( const Rep& P ) const;
+  int isZero  ( const Rep& P ) const;
 
   // -- return the dimension of a vector
   size_t dim( const Rep& u ) const { return u.size(); }

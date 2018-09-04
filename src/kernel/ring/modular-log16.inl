@@ -365,22 +365,6 @@ namespace Givaro
 
     // ------------------------- Miscellaneous functions
 
-    inline bool Modular<Log16>::iszero(const Rep a) const
-    {
-        return a >= _p;
-    }
-
-    inline bool Modular<Log16>::isone(const Rep a) const
-    {
-        return a == Modular<Log16>::one;
-    }
-
-    inline bool Modular<Log16>::ismone(const Rep a) const
-    {
-        return a == Modular<Log16>::mOne;
-    }
-
-
     inline size_t Modular<Log16>::length(const Rep ) const
     {
         return Modular<Log16>::size_rep;
@@ -388,15 +372,15 @@ namespace Givaro
 
     inline bool Modular<Log16>::isZero( const Rep a ) const
     {
-        return iszero(a);
+        return a >= _p;
     }
     inline bool Modular<Log16>::isOne ( const Rep a ) const
     {
-        return isone(a);
+        return a == Modular<Log16>::one;
     }
     inline bool Modular<Log16>::isMOne ( const Rep a ) const
     {
-        return ismone(a);
+        return a == Modular<Log16>::mOne;
     }
 
     inline bool Modular<Log16>::isUnit ( const Rep a ) const

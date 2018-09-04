@@ -126,9 +126,6 @@ namespace Givaro
         Rep& assign (Rep& r, const Rep& a) const;
 
         // ----- Misc methods
-        bool iszero( const Rep a ) const;
-        bool isone ( const Rep a ) const;
-        bool ismone ( const Rep a ) const;
         bool isZero( const Rep a ) const;
         bool isOne ( const Rep a ) const;
         bool isUnit ( const Rep a ) const;

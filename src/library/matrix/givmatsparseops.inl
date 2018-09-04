@@ -65,7 +65,7 @@ inline int MatrixDom<Domain,Sparse>::areNEqual
 }
 
 template<class Domain>
-inline int MatrixDom<Domain,Sparse>::iszero ( const Rep& P ) const
+inline int MatrixDom<Domain,Sparse>::isZero ( const Rep& P ) const
 {
   if (nrow(P) == 0) return 1; // -- col souhld be 0
   if (ncol(P) == 0) { cerr << " Error: inconsistent data structure";
@@ -73,7 +73,7 @@ inline int MatrixDom<Domain,Sparse>::iszero ( const Rep& P ) const
   size_t sz = P._data.size();
   if (sz == 0) return 1;
   for(size_t i=0; i<sz; ++i)
-    if (!_domain.iszero(P._data[i])) return 0;
+    if (!_domain.isZero(P._data[i])) return 0;
   return 1;
 }
 
@@ -182,7 +182,7 @@ void MatrixDom<Domain, Sparse>::compact
     for (j=0; j<ncols; ++j)
     {
       _domain.assign(val, Md(i,j));
-      if ( !_domain.iszero(val) )
+      if ( !_domain.isZero(val) )
       {
         Ms._data.resize(size+1);
         Ms._index.resize(size+1);

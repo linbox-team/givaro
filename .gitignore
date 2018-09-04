@@ -107,6 +107,7 @@ tests/test-mod
 tests/test-modsqroot
 tests/test-poly
 tests/test-random
+tests/test-rational-class
 tests/test-ratrecon
 tests/test-recint_cast
 tests/test-recint_convert

@@ -1,81 +1,86 @@
-// Copyright(c)'2011 by The Givaro group
+// Copyright(c)'2018 by The Givaro group
 // This file is part of Givaro.
-// written by BB
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
-
-#include <gmp++/gmp++.h>
-#include <gmp++/gmp++_rat.h>
-#include <iostream>
-#include <sstream>
+#include "./rational/givrational.h"
 
 using namespace Givaro ;
 
-#if 0
-int test_int_cstor()
+#define TEST_ASSERT(cond) \
+    if(!(cond)) { \
+        std::cout << #cond << " failed!" << std::endl; \
+        return -1; \
+    }
+
+#define TEST_EQUAL(a, b) \
+    if(!((a) == (b))) { \
+        std::cout << #a << " == " << #b << " failed! " << std::endl; \
+        std::cout << (a) << " == " << (b) << std::endl; \
+        return -1; \
+    }
+
+int main(void)
 {
+    Rational zero(0);
+    Rational one(1);
+    Rational half(1, 2);
+    Rational third(1, 3);
+    Rational twoThird(2, 3);
+    Rational fourSixth(4, 6);
 
-	int a      = 7;
-	Rationel A(a);
-	if (A != a)
-		return false ;
-}
-#endif
+    // ----- Basic arithmetics and auto-reduce
 
-int main()
-{
-	int a      = 7;
-	long int b = -6 ;
-	unsigned long int c = 100 ;
-	Rationel A(a);
-	Rationel B(3);
-	Rationel C(A);
-	Rationel D(b);
-	Rationel E(-5);
-	Rationel F(c);
-	Rationel G(10);
-	Rationel H(0.3);
-	Rationel I(1,2);
-	Rationel J(7,-2);
-	std::cout << "xxx" << std::endl;
-	Rationel K(a,b);
-	std::cout << "xxx" << std::endl;
-	Rationel L(a,1);
-	std::istringstream s ;
-	s.str("4/5");
-	Rationel M ;
-	s >> M ;
-	Rationel N(b,-15);
-	std::cout << "---------------------------" << std::endl;
-	std::cout << a       << '=' << A          << std::endl;
-	std::cout << "3 = "  << B   << std::endl;
-	std::cout << a       << "=" << C          << std::endl;
-	std::cout << b       << "=" << D          << std::endl;
-	std::cout << "-5 = " << E   << std::endl;
-	std::cout << "---------------------------" << std::endl;
-	std::cout << c       << "=" << F          << std::endl;
-	std::cout << "10="   << G   << std::endl;
-	std::cout << "0.3="  << H   << "="        << H.reduce() << std::endl;
-	std::cout << "1/2="  << I   << std::endl;
-	std::cout << "-7/2=" << J   << std::endl;
-	std::cout << "---------------------------" << std::endl;
-	std::cout << a       << "/" << b          << "="        << K          << std::endl;
-	K.reduce();
-	std::cout << a       << "/" << b          << "="        << K          << std::endl;
-	std::cout << a       << "=" << L          << std::endl;
-	std::cout << "4/5="  << M   << std::endl;
-	std::cout << J       << "+" << A          << "=" ;
-	Rationel::addin(J,A);
-	std::cout << J << std::endl;
-	std::cout << b       << "/-15="        << N          << std::endl;
-	N.reduce();
-	std::cout << b       << "/-15="        << N          << std::endl;
-	s.str("4/-5");
-	s >> M ;
-	std::cout << "4/-5="  << M   << std::endl;
+    TEST_ASSERT(zero != half);
+    TEST_EQUAL(zero - half, -half);
+    TEST_EQUAL(third + third, twoThird);
+    TEST_EQUAL(2 * third, twoThird);
+    TEST_EQUAL(fourSixth, twoThird);
 
+    TEST_EQUAL(-third, Rational(-1, 3));
+    TEST_EQUAL(-third, Rational(1, -3));
 
-	return 0 ;
+    // ----- round/floor/ceil
+
+    // @fixme TEST_EQUAL(round(one), 1);
+    TEST_EQUAL(floor(one), 1);
+    TEST_EQUAL(ceil(one), 1);
+
+    // @fixme TEST_EQUAL(round(-one), -1);
+    TEST_EQUAL(floor(-one), -1);
+    TEST_EQUAL(ceil(-one), -1);
+
+    // @fixme TEST_EQUAL(round(third), 0);
+    TEST_EQUAL(floor(third), 0);
+    TEST_EQUAL(ceil(third), 1);
+
+    // @fixme TEST_EQUAL(round(-third), 0);
+    // @fixme TEST_EQUAL(floor(-third), -1);
+    // @fixme TEST_EQUAL(ceil(-third), 0);
+
+    // @fixme TEST_EQUAL(round(twoThird), 1);
+    TEST_EQUAL(floor(twoThird), 0);
+    TEST_EQUAL(ceil(twoThird), 1);
+
+    TEST_EQUAL(round(-twoThird), -1);
+    // @fixme TEST_EQUAL(floor(-twoThird), -1);
+    // @fixme TEST_EQUAL(ceil(-twoThird), 0);
+
+    TEST_EQUAL(round(half), 1);
+    TEST_EQUAL(floor(half), 0);
+    TEST_EQUAL(ceil(half), 1);
+
+    TEST_EQUAL(round(-half), -1);
+    // @fixme TEST_EQUAL(floor(-half), -1);
+    // @fixme TEST_EQUAL(ceil(-half), 0);
+
+    // ----- Issue #74
+
+    Rational tmp(0);
+    tmp -= third;
+    // @fixme TEST_ASSERT(tmp.deno() >= 0);
+    TEST_EQUAL(tmp, -third);
+
+    return 0;
 }

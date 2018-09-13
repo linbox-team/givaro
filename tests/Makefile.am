@@ -19,20 +19,21 @@ AM_LDFLAGS=-static $(LDFLAGS)
 
 PERFPUBLISHERFILE = tests-report.xml
 
-BASIC_TESTS =          \
-		test-random    \
-		test-ifactor   \
-		test-ffarith   \
-		test-ringarith \
-		test-mod       \
-		test-modsqroot \
-		test-trunc     \
-		test-poly       \
-		test-crt       \
-		test-geom      \
-		test-integer   \
-		test-conversion \
-		test-ratrecon   \
+BASIC_TESTS =               \
+		test-random         \
+		test-ifactor        \
+		test-ffarith        \
+		test-ringarith      \
+		test-mod            \
+		test-modsqroot      \
+		test-trunc          \
+		test-poly           \
+		test-crt            \
+		test-geom           \
+		test-integer        \
+		test-conversion     \
+		test-rational-class \
+		test-ratrecon       \
 		test-modularmulprecomp
 
 # *_mg tests accept -DMG_DEFAULT=MG_ACTIVE to enable Montgomery representation
@@ -105,6 +106,7 @@ test_poly_SOURCES    = test-poly.C
 test_crt_SOURCES      = test-crt.C
 test_geom_SOURCES     = test-geom.C
 test_integer_SOURCES  = test-integer.C
+test_rational_class_SOURCES = test-rational-class.C
 test_ratrecon_SOURCES = test-ratrecon.C
 test_conversion_SOURCES = test-conversion.C
 

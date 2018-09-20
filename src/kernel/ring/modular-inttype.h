@@ -57,9 +57,9 @@ namespace Givaro
         using Parent_t::mOne;
 
         // ----- Initialisation
-        Element& init (Element& x) const
+        Element& init (Element& x) const override
 	{ return x = 0; }
-        Element& init (Element& x, const Integer& y) const
+        Element& init (Element& x, const Integer& y) const override
 	{ x = y % _p; return reduce(x); }
         template<typename T> Element& init(Element& r, const T& a) const
         { r = Caster<Element>(a); return reduce(r); }

@@ -123,7 +123,7 @@ namespace Givaro
         bool operator!=(const Self_t& F) const { return _p != F._p; }
 
         // ----- Initialisation
-        Element& init (Element& x) const
+        Element& init (Element& x) const override
         { return x = 0; }
         Element& init (Element& x, const double a) const;
         Element& init (Element& x, const int64_t a) const;
@@ -137,7 +137,7 @@ namespace Givaro
             return redc(r, r * _B2p);
         }
 
-        Element& assign(Element& x, const Element& y) const
+        Element& assign(Element& x, const Element& y) const override
         { return x = y; }
     
         // ----- Convert and reduce
@@ -188,9 +188,9 @@ namespace Givaro
         { while (isZero(init(a, g()))) {} return a; }
 
         // --- IO methods
-        std::ostream& write(std::ostream& s) const;
-        std::istream& read (std::istream& s, Element& a) const;
-        std::ostream& write(std::ostream& s, const Element& a) const;
+        std::ostream& write(std::ostream& s) const override;
+        std::istream& read (std::istream& s, Element& a) const override;
+        std::ostream& write(std::ostream& s, const Element& a) const override;
 
     protected:
 

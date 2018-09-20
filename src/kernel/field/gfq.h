@@ -183,7 +183,7 @@ public:
     Rep& indeterminate(Rep&) const;
     
  	// Initialization of Elements
-    Rep& init(Rep& r) const { return r=zero;}
+    Rep& init(Rep& r) const override { return r=zero;}
     Rep& init( Rep&, const int32_t) const ;
     Rep& init( Rep&, const uint32_t) const ;
     Rep& init( Rep&, const int64_t) const ;
@@ -206,16 +206,16 @@ public:
     
 	// -- Misc: r <- a mod p
     Rep& assign (Rep&, const Integer) const;
-    Rep& assign (Rep&, const Rep&) const;
+    Rep& assign (Rep&, const Rep&) const override;
     void assign ( const size_t sz, Array r, constArray a ) const;
     
 	// --- IO methods for the Domain
     std::istream& read ( std::istream& s );
-    std::ostream& write( std::ostream& s ) const;
+    std::ostream& write( std::ostream& s ) const override;
     std::ostream& write( std::ostream& s , const std::string& ) const;
 	// --- IO methods for the Elements
-    std::istream& read ( std::istream& s, Rep& a ) const;
-    std::ostream& write( std::ostream& s, const Rep& a ) const;
+    std::istream& read ( std::istream& s, Rep& a ) const override;
+    std::ostream& write( std::ostream& s, const Rep& a ) const override;
     
 	// Conversions of the elements
     std::ostream& convert(std::ostream& s, const Rep a ) const { return write(s,a); }
@@ -233,30 +233,30 @@ public:
 	inline int operator!= (const GFqDom<TT>& a) const;
 
 	// Miscellaneous functions
-	bool areEqual(const Rep& a, const Rep& b) const;
+	bool areEqual(const Rep& a, const Rep& b) const override;
 	bool areNEqual(const Rep, const Rep) const;
-	bool isZero(const Rep& a) const;
+	bool isZero(const Rep& a) const override;
 	bool isnzero(const Rep) const;
-	bool isOne(const Rep& a) const;
-	bool isMOne(const Rep& a) const;
-	bool isUnit(const Rep& a) const; // Element belongs to prime subfield
+	bool isOne(const Rep& a) const override;
+	bool isMOne(const Rep& a) const override;
+	bool isUnit(const Rep& a) const override; // Element belongs to prime subfield
 	size_t length( const Rep ) const;
 
 
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-	Rep& mul (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& mul (Rep& r, const Rep& a, const Rep& b) const override;
 	Rep& div (Rep& r, const Rep a, const Rep b) const;
-	Rep& add (Rep& r, const Rep& a, const Rep& b) const;
-	Rep& sub (Rep& r, const Rep& a, const Rep& b) const;
-	Rep& neg (Rep& r, const Rep& a) const;
+	Rep& add (Rep& r, const Rep& a, const Rep& b) const override;
+	Rep& sub (Rep& r, const Rep& a, const Rep& b) const override;
+	Rep& neg (Rep& r, const Rep& a) const override;
 	Rep& inv (Rep& r, const Rep a) const;
 
-	Rep& mulin (Rep& r, const Rep& a) const;
+	Rep& mulin (Rep& r, const Rep& a) const override;
 	Rep& divin (Rep& r, const Rep a) const;
-	Rep& addin (Rep& r, const Rep& a) const;
-	Rep& subin (Rep& r, const Rep& a) const;
-	Rep& negin (Rep& r) const;
+	Rep& addin (Rep& r, const Rep& a) const override;
+	Rep& subin (Rep& r, const Rep& a) const override;
+	Rep& negin (Rep& r) const override;
 	Rep& invin (Rep& r) const;
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
@@ -274,24 +274,24 @@ public:
 	void neg (const size_t sz, Array r, constArray a) const;
 	void inv (const size_t sz, Array r, constArray a) const;
 
-	Rep& axpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
+	Rep& axpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const override;
 	void axpy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
 	void axpy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
 
 	// -- axpyin: r <- r + a * x mod p
-	Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const override;
 	void axpyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	// -- axmy: r <- a * b - c mod p
-	Rep& axmy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
+	Rep& axmy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const override;
 	void axmy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
 	void axmy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
 
 	// -- maxpy: r <- c - a * b mod p
-	Rep& maxpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
+	Rep& maxpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const override;
 
 	// -- axmyin: r <-  a * b - r mod p
-	Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const override;
 	// void axmyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	//   // -- sqpyin: r <- r + a * a mod p
@@ -299,7 +299,7 @@ public:
 
 
 	// -- maxpyin: r <- r - a * b mod p
-	Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const override;
 	void maxpyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	// <- \sum_i a[i], return 1 if a.size() ==0,

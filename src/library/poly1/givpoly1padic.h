@@ -39,14 +39,7 @@ public:
     Poly1PadicDom (const Poly_t& P) : Poly_t (P), IntegerDom() {}
     Poly1PadicDom (const Poly_t& P, const IntegerDom& D) : Poly_t (P), IntegerDom(D) {}
 
-
-
-    std::ostream& write( std::ostream& o, const pol_Element& p) {
-        return Poly_t::write(o, p);
-    }
-
-
-
+    using Poly_t::write;
 
         // Horner like evaluation of the polynomial for p = _domain.size()
     template<class vect>

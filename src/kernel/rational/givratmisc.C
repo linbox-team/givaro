@@ -31,32 +31,18 @@ const Integer trunc(const Rational &r)
   return r.num / r.den;
 }
 
-const Integer floor(const Rational &x)
-{
-  Integer q, r;
-  Integer::divmod(q, r, x.num, x.den);
-  if (sign(x.num) < 0 && sign(r) != 0) q -= 1;
-  return q;
-}
+const Integer floor(const Rational &x){return Integer::floor (x.num, x.den);}
 
-const Integer ceil(const Rational &x)
-{
-  Integer r, q;
-
-  Integer::divmod(q, r, x.num, x.den);
-  if (sign(x.num) >= 0 && sign(r) != 0) q += 1;
-  return q;
-}
+const Integer ceil(const Rational &x) {return Integer::ceil (x.num, x.den);}
 
 const Integer round(const Rational& x)  // GV Jeu  2 aoû 2018 16:38:58 CEST
 {
   Integer q;
   Integer r;
-  Integer::divmod(q, r, abs(x.num), abs(x.den));
-  r <<= 1; 
-  if (absCompare(r,x.den) > 0) // GV was < 0, and changed with abs
+  Integer::divmod(q, r, abs(x.num), x.den);
+  if (r!=0 && absCompare(r<<1, x.den) >= 0) // GV was < 0, and changed with abs
       q += 1;
-  return sign(x)*q;
+  return (x.num<0) ? -q : q;
 
 }
 

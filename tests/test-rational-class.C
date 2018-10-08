@@ -43,43 +43,43 @@ int main(void)
 
     // ----- round/floor/ceil
 
-    // @fixme TEST_EQUAL(round(one), 1);
+    TEST_EQUAL(round(one), 1);
     TEST_EQUAL(floor(one), 1);
     TEST_EQUAL(ceil(one), 1);
 
-    // @fixme TEST_EQUAL(round(-one), -1);
+    TEST_EQUAL(round(-one), -1);
     TEST_EQUAL(floor(-one), -1);
     TEST_EQUAL(ceil(-one), -1);
 
-    // @fixme TEST_EQUAL(round(third), 0);
+    TEST_EQUAL(round(third), 0);
     TEST_EQUAL(floor(third), 0);
     TEST_EQUAL(ceil(third), 1);
 
-    // @fixme TEST_EQUAL(round(-third), 0);
-    // @fixme TEST_EQUAL(floor(-third), -1);
-    // @fixme TEST_EQUAL(ceil(-third), 0);
+    TEST_EQUAL(round(-third), 0);
+    TEST_EQUAL(floor(-third), -1);
+    TEST_EQUAL(ceil(-third), 0);
 
-    // @fixme TEST_EQUAL(round(twoThird), 1);
+    TEST_EQUAL(round(twoThird), 1);
     TEST_EQUAL(floor(twoThird), 0);
     TEST_EQUAL(ceil(twoThird), 1);
 
     TEST_EQUAL(round(-twoThird), -1);
-    // @fixme TEST_EQUAL(floor(-twoThird), -1);
-    // @fixme TEST_EQUAL(ceil(-twoThird), 0);
+    TEST_EQUAL(floor(-twoThird), -1);
+    TEST_EQUAL(ceil(-twoThird), 0);
 
     TEST_EQUAL(round(half), 1);
     TEST_EQUAL(floor(half), 0);
     TEST_EQUAL(ceil(half), 1);
 
     TEST_EQUAL(round(-half), -1);
-    // @fixme TEST_EQUAL(floor(-half), -1);
-    // @fixme TEST_EQUAL(ceil(-half), 0);
+    TEST_EQUAL(floor(-half), -1);
+    TEST_EQUAL(ceil(-half), 0);
 
     // ----- Issue #74
 
     Rational tmp(0);
     tmp -= third;
-    // @fixme TEST_ASSERT(tmp.deno() >= 0);
+    TEST_ASSERT(tmp.deno() >= 0);
     TEST_EQUAL(tmp, -third);
 
     return 0;

@@ -265,7 +265,7 @@ namespace Givaro {
 
 		if (a<0 && r) {
 			subin(q,(int64_t)1) ;
-			r = b - r;
+			r = b + r;
 		}
 
 
@@ -289,7 +289,7 @@ namespace Givaro {
 		// (mpz_ptr)&(a.gmp_rep), b);
 		if (a<0 && r) {
 			subin(q,(int64_t)1) ;
-			r = b - r ;
+			r = b + r ;
 		}
 
 
@@ -307,7 +307,7 @@ namespace Givaro {
 
 		if (a<0 && r) {
 			subin(q,(int64_t)1) ;
-			r = b - r;
+			r = b + r;
 		}
 
 		return q;

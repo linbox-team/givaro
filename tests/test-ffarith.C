@@ -22,25 +22,34 @@
 
 using namespace Givaro;
 
-#define TESTE_EG( a, b )						\
+#define TEST_EQUALITY( a, b )						\
     if (!F.areEqual((a),(b))) {						\
 	F.write(F.write(std::cout,a) << "!=",b)				\
 	    << " failed (at line " <<  __LINE__ << ")" << std::endl;	\
 	return -1 ;							\
     }
 
-#define JETESTE( a, seed )				\
+#define TEST_FIELD_SEVERAL_TIMES_SEEDED( a, seed )				\
     if (TestField( (a), int(seed)) ) {			\
 	std::cout << #a << " failed !" << std::endl;	\
 	return -1 ;					\
     }
 
-#define JEONETESTE( F, a )				\
+#define TEST_ONE_FIELD_SEEDED( F, a )				\
     if (TestOneField(F, (a))) {				\
 	std::cout << #a << " failed !" << std::endl;	\
 	return -1 ;					\
     }
     
+#define TEST_LAST_PRIME(Field, Name)			\
+    Field Name(previousprime(Field::maxCardinality()));	\
+    TEST_FIELD_SEVERAL_TIMES_SEEDED(Name, seed);
+
+#define TEST_SPECIFIC(Field, Name, Modulus...)		\
+    Field Name(Modulus);				\
+    TEST_FIELD_SEVERAL_TIMES_SEEDED(Name, seed);
+
+
 template<class Field>
 bool invertible(const Field& F, const typename Field::Element& a)
 {
@@ -63,22 +72,22 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     typename Field::Element e,e_;
 
     F.init(a, 0);
-    TESTE_EG(a, F.zero);
+    TEST_EQUALITY(a, F.zero);
 
     F.init(a, 0u);
-    TESTE_EG(a, F.zero);
+    TEST_EQUALITY(a, F.zero);
     
     F.init(a, 1);
 //         F.write(std::cerr) << std::endl;
 //         F.write(std::cerr << "a: ", a) << std::endl;
 //         F.write(std::cerr << "1: ", F.one) << std::endl;
-    TESTE_EG(a, F.one);
+    TEST_EQUALITY(a, F.one);
     
     F.init(a, 1u);
-    TESTE_EG(a, F.one);
+    TEST_EQUALITY(a, F.one);
 
     F.inv(a_, a);
-    TESTE_EG(a_, F.one);
+    TEST_EQUALITY(a_, F.one);
 
     F.init(ma,1); F.negin(ma);
 //         F.write(std::cerr) << std::endl;
@@ -86,16 +95,36 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 //         F.write(std::cerr << "ma: ", ma) << std::endl;
 //         F.write(std::cerr << "1: ", F.one) << std::endl;
 //         F.write(std::cerr << "-1: ", F.mOne) << std::endl;
-    TESTE_EG(ma, F.mOne);
+    TEST_EQUALITY(ma, F.mOne);
     
     F.init(ma,1_i64); F.negin(ma);
-    TESTE_EG(ma, F.mOne);
+    TEST_EQUALITY(ma, F.mOne);
 
     F.inv(a_, ma);
 
-    TESTE_EG(a_, F.mOne);
+    TEST_EQUALITY(a_, F.mOne);
+
+#ifdef GIVARO_DEBUG
+F.write(std::cerr) << std::endl;
+F.write(std::cerr << "0: ", F.zero) << std::endl;
+
+    try {
+        F.inv(a, F.zero);
+    } catch(const GivMathDivZero& e) {
+        std::cerr << "Correctly catched division by zero: " << e << std::endl;
+    } catch (...) {
+        F.mulin(a, F.zero);
+        TEST_EQUALITY(a, F.one);
+        std::cerr << "Error division by zero allowed even in DEBUG MODE" << std::endl;
+    }
+
+
+F.write(std::cerr << "1/0: ", a) << std::endl;
+#endif
+
 
     F.assign(a, first);
+
 
     typename Field::RandIter g(F);
     while (!invertible(F, g.random(b))) {}
@@ -107,7 +136,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.assign(c_,c);       // c_ <- c
 
 
-    TESTE_EG(c,c_);
+    TEST_EQUALITY(c,c_);
     F.subin(c_,a);
 //         F.write(std::cerr) << std::endl;
 //         F.write(std::cerr << "a:=", a) << ';' << std::endl;
@@ -115,7 +144,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 //         F.write(std::cerr << "c:=", c) << ';' << std::endl;
 //         F.write(std::cerr << "c_:=", c_) << ';' << std::endl;
 
-    TESTE_EG(b,c_);
+    TEST_EQUALITY(b,c_);
 
     F.mul(c, a, b);     // c = a*b
     F.assign(c_,c);       // c_ <- c
@@ -126,7 +155,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 //        F.write(std::cerr << "b: ", b) << std::endl;
 //        F.write(std::cerr << "c: ", c) << std::endl;
 //        F.write(std::cerr << "c_: ", c_) << std::endl;
-    TESTE_EG(a,c_);
+    TEST_EQUALITY(a,c_);
 
     F.assign(c, a);
     F.mulin(c, b);     // c = a*b
@@ -136,7 +165,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "a: ", a) << std::endl;
     //         F.write(std::cerr << "b: ", b) << std::endl;
     //         F.write(std::cerr << "c: ", c) << std::endl;
-    TESTE_EG(a,c);
+    TEST_EQUALITY(a,c);
 
     F.axpy(d, a, b, c); // d = a*b + c;
     F.init(d_);
@@ -150,7 +179,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "c:=", c) << ';' << std::endl;
     //         F.write(std::cerr << "d:=", d) << ';' << std::endl;
     //         F.write(std::cerr << "d_:=", d_) << ';' << std::endl;
-    TESTE_EG(d_,d);
+    TEST_EQUALITY(d_,d);
 
     F.sub(d,a,b); // d = a -b
     F.add(c,a,b); // c = a+b
@@ -170,7 +199,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "e_:=", e_) << ';' << std::endl;
     //         F.write(std::cerr << "a_:=", a_) << ';' << std::endl;
     //         F.write(std::cerr << "b_:=", b_) << ';' << std::endl;
-    TESTE_EG(e,e_); // a^2 - b^2 = (a-b)(a+b) ;)
+    TEST_EQUALITY(e,e_); // a^2 - b^2 = (a-b)(a+b) ;)
 
     // Four operations
     F.init(a_);
@@ -180,7 +209,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.mulin(a, b) ;
     F.divin(a, b) ;
 
-    TESTE_EG(a_,a);
+    TEST_EQUALITY(a_,a);
 
     F.maxpy(e, a, b, d); // e = d-a*b
     F.assign(e_,d);
@@ -191,14 +220,14 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "d:=", d) << ';' << std::endl;
     //         F.write(std::cerr << "e:=", e) << ';' << std::endl;
     //         F.write(std::cerr << "e_:=", e_) << ';' << std::endl;
-    TESTE_EG(e,e_);
+    TEST_EQUALITY(e,e_);
 
     F.axmy(e, a, b, d); // e = a*b -d;
     F.assign(e_,d);
     F.maxpyin(e_, a, b); // e = d - a*b;
     F.negin(e_);
 
-    TESTE_EG(e,e_);
+    TEST_EQUALITY(e,e_);
 
 #ifdef GIVARO_DEBUG
     F.write(std::cerr );
@@ -219,11 +248,11 @@ int TestField(const Field& F, const uint64_t seed)
     typename Field::RandIter g(F, 0, seed);
     
     F.init(x, 1);
-    JEONETESTE(F,x);
+    TEST_ONE_FIELD_SEEDED(F,x);
     
     for (size_t i = 0; i< NBITER; ++i) {
         while (F.isZero(g.random(x))) {}
-        JEONETESTE(F,x);
+        TEST_ONE_FIELD_SEEDED(F,x);
     }
     
     return 0;
@@ -253,10 +282,6 @@ int main(int argc, char ** argv)
     using ModularUSUZ = Modular<uint16_t, uint32_t>;
     using ModularUZULL = Modular<uint32_t, uint64_t>;
     // using ModularFD = Modular<float, double>;
-
-#define TEST_SPECIFIC(Field, Name, Modulus...)		\
-    Field Name(Modulus);				\
-    JETESTE(Name, seed);
 
     //--------------------//
     //----- Modulo 2 -----//
@@ -333,10 +358,6 @@ int main(int argc, char ** argv)
     //--------------------------------//
     //----- Modulo maximal prime -----//
 
-#define TEST_LAST_PRIME(Field, Name)			\
-    Field Name(previousprime(Field::maxCardinality()));	\
-    JETESTE(Name, seed);
-    
     TEST_LAST_PRIME(Modular<int8_t>, Cpmax);
     TEST_LAST_PRIME(Modular<int16_t>, Spmax);
     TEST_LAST_PRIME(Modular<int32_t>, Zpmax);

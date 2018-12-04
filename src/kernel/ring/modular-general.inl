@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <27 Sep 16 18:53:18 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <04 Dec 18 15:38:14 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions
@@ -82,7 +82,11 @@ namespace Givaro
 
             neg = !neg;
         }
-
+#ifdef GIVARO_DEBUG
+        if ( d == (Storage_t)0 ) {
+            throw GivMathDivZero("*** Error: division by zero, in operator invext modular-general") ;
+        }
+#endif
         return x = (neg && u0 > 0) ? b - u0 : u0;
     }
 
@@ -107,7 +111,12 @@ namespace Givaro
             u3 = t;
         }
 
-        d = u3;
+ #ifdef GIVARO_DEBUG
+        if ( u3 == (Storage_t)0 ) {
+            throw GivMathDivZero("*** Error: division by zero, in operator invext modular-float") ;
+        }
+#endif
+       d = u3;
         return x = u1;
     }
 

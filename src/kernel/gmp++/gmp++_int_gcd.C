@@ -55,15 +55,22 @@ namespace Givaro {
 		return g ;
 	}
 
-	Integer& invin(Integer& u, const Integer& b) {
-		mpz_invert( (mpz_ptr)&(u.gmp_rep), (mpz_ptr)&(u.gmp_rep), (mpz_srcptr)&(b.gmp_rep) ) ;
+	Integer& inv(Integer& u, const Integer& a, const Integer& b) {
+#ifdef GIVARO_DEBUG
+		const int res =
+#endif
+        mpz_invert( (mpz_ptr)&(u.gmp_rep), (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep) ) ;
+#ifdef GIVARO_DEBUG
+        if(! res) {
+            throw GivMathDivZero("*** Error: division by zero, in operator inv Integer") ;
+        }
+#endif
 		return u ;
 	}
 
-	Integer& inv(Integer& u, const Integer& a, const Integer& b) {
-		mpz_invert( (mpz_ptr)&(u.gmp_rep), (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep) ) ;
-		return u ;
-	}
+	Integer& invin(Integer& u, const Integer& b) {
+        return inv(u,u,b);
+    }
 
 	// ==========================================================================
 	// Computes and returns the gcd g of the two integers a and b such that

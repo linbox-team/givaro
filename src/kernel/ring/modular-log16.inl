@@ -268,6 +268,11 @@ namespace Givaro
 
     inline Modular<Log16>::Rep& Modular<Log16>::inv (Rep& r, const Rep& a) const
     {
+#ifdef GIVARO_DEBUG
+        if ( a == (Storage_t)0 ) {
+            throw GivMathDivZero("*** Error: division by zero, in operator inv modular-log") ;
+        }
+#endif
         __GIVARO_ZPZ16_LOG_INV(r,_p,a);
         return r;
     }
@@ -306,6 +311,11 @@ namespace Givaro
 
     inline Modular<Log16>::Rep&  Modular<Log16>::invin (Rep& r) const
     {
+#ifdef GIVARO_DEBUG
+        if ( r == (Storage_t)0 ) {
+            throw GivMathDivZero("*** Error: division by zero, in operator invin modular-log") ;
+        }
+#endif
         __GIVARO_ZPZ16_LOG_INV(r,_p,r);
         return r;
     }

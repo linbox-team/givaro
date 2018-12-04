@@ -269,7 +269,7 @@ namespace Givaro
     inline Modular<Log16>::Rep& Modular<Log16>::inv (Rep& r, const Rep& a) const
     {
 #ifdef GIVARO_DEBUG
-        if ( a == (Storage_t)0 ) {
+        if ( this->isZero(a) ) {
             throw GivMathDivZero("*** Error: division by zero, in operator inv modular-log") ;
         }
 #endif
@@ -312,7 +312,7 @@ namespace Givaro
     inline Modular<Log16>::Rep&  Modular<Log16>::invin (Rep& r) const
     {
 #ifdef GIVARO_DEBUG
-        if ( r == (Storage_t)0 ) {
+        if ( this->isZero(r) ) {
             throw GivMathDivZero("*** Error: division by zero, in operator invin modular-log") ;
         }
 #endif

@@ -105,13 +105,13 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     TEST_EQUALITY(a_, F.mOne);
 
 #ifdef GIVARO_DEBUG
-F.write(std::cerr) << std::endl;
-F.write(std::cerr << "0: ", F.zero) << std::endl;
+// F.write(std::cerr) << std::endl;
+// F.write(std::cerr << "0: ", F.zero) << std::endl;
 
     try {
         F.inv(a, F.zero);
     } catch(const GivMathDivZero& e) {
-        std::cerr << "Correctly catched division by zero: " << e << std::endl;
+// std::cerr << "Correctly catched division by zero: " << e << std::endl;
     } catch (...) {
         F.mulin(a, F.zero);
         TEST_EQUALITY(a, F.one);
@@ -119,7 +119,7 @@ F.write(std::cerr << "0: ", F.zero) << std::endl;
     }
 
 
-F.write(std::cerr << "1/0: ", a) << std::endl;
+// F.write(std::cerr << "1/0: ", a) << std::endl;
 #endif
 
 

@@ -22,22 +22,22 @@ SOURCE_DIRECTORY=$( cd "$( dirname "$0" )" && pwd )
 #=============================#
 # Change only these variables #
 #=============================#
-ARCH=`pwd | awk -F/ '{print $(NF-4)}'`
-CXX=`pwd | awk -F/ '{print $(NF-2)}'`
-SSE=`pwd | awk -F/ '{print $NF}'`
+ARCH=`pwd | awk -F/ '{print $(NF-2)}'`
+CXX=`pwd | awk -F/ '{print $(NF)}'`
+#SSE=`pwd | awk -F/ '{print $NF}'`
 
 # Job givaro with SSE option flag
 # by default sse is enabled
-if [ "$SSE" == "withoutSSE" ]; then
-  GIVARO_SSEFLAG="--disable-sse --disable-sse2 --disable-sse3 --disable-ssse3 --disable-sse4.1 --disable-sse4.2 --disable-avx --disable-avx2 --disable-fma --disable-fma4"
-fi
+#if [ "$SSE" == "withoutSSE" ]; then
+#  GIVARO_SSEFLAG="--disable-sse --disable-sse2 --disable-sse3 --disable-ssse3 --disable-sse4.1 --disable-sse4.2 --disable-avx --disable-avx2 --disable-fma --disable-fma4"
+#fi
 
 JENKINS_DIR=${SOURCE_DIRECTORY%%/workspace/*}
 LOCAL_DIR="$JENKINS_DIR"/local
 
 # Where to install givaro binaries
 # Keep default for local installation.
-PREFIX_INSTALL="$LOCAL_DIR/$CXX/$SSE"
+PREFIX_INSTALL="$LOCAL_DIR/$CXX"
 
 # Add path to compilers (if needed)
 export PATH="$PATH":"/usr/local/bin":"$LOCAL_DIR/$CXX/bin"
@@ -77,8 +77,8 @@ CC=`echo $CXX | sed  's/icpc/icc/;s/clang++/clang/;s/++/cc/'`
 # Automated installation and tests #
 #==================================#
 
-echo "|=== JENKINS AUTOMATED SCRIPT ===| ./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix=$PREFIX_INSTALL --with-gmp=$GMP_PATH $GIVARO_SSEFLAG"
-./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH" $GIVARO_SSEFLAG
+echo "|=== JENKINS AUTOMATED SCRIPT ===| ./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix=$PREFIX_INSTALL --with-gmp=$GMP_PATH"
+./autogen.sh CXX=$CXX CC=$CC CXXFLAGS=$CXXFLAGS --prefix="$PREFIX_INSTALL" --with-gmp="$GMP_PATH"
 V="$?"; if test "x$V" != "x0"; then exit "$V"; fi
 
 echo "|=== JENKINS AUTOMATED SCRIPT ===| make install"

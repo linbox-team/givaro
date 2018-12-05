@@ -77,14 +77,14 @@ namespace Givaro
 
     inline GF2::Element& GF2::div (Element& x, const Element& y, const Element& z ) const
     {
-        assert(z);
-	    return x = y;
+        GIVARO_ASSERT_MATHDIV0(z, "Error: division by zero in GF2::div");
+        return x = y;
     }
 
     inline GF2::BitReference GF2::div (BitReference x, const Element& y, const Element& z ) const
     {
-        assert(z);
-	    return x = y;
+        GIVARO_ASSERT_MATHDIV0(z, "Error: division by zero in GF2::div");
+        return x = y;
     }
 
     inline GF2::Element& GF2::neg (Element& x, const Element& y) const
@@ -99,14 +99,13 @@ namespace Givaro
 
     inline GF2::Element& GF2::inv (Element& x, const Element& y) const
     {
-        assert(y);
-	    return x = y;
+        GIVARO_ASSERT_MATHDIV0(y, "Error: division by zero in GF2::inv");
+        return x = y;
     }
-
     inline GF2::BitReference GF2::inv (BitReference x, const Element& y) const
     {
-        assert(y);
-	    return x = y;
+        GIVARO_ASSERT_MATHDIV0(y, "Error: division by zero in GF2::inv");
+        return x = y;
     }
 
     inline GF2::BitReference GF2::axpy (BitReference r, const Element& a, const Element& x, const Element& y) const
@@ -171,14 +170,14 @@ namespace Givaro
 
     inline GF2::Element& GF2::divin (Element& x, const Element& y ) const
     {
-        assert(y);
-	    return x;
+        GIVARO_ASSERT_MATHDIV0(y, "Error: division by zero in GF2::divin");
+        return x;
     }
 
     inline GF2::BitReference GF2::divin (BitReference x, const Element& y ) const
     {
-        assert(y);
-	    return x;
+        GIVARO_ASSERT_MATHDIV0(y, "Error: division by zero in GF2::divin");
+        return x;
     }
 
     inline GF2::Element& GF2::negin (Element& x) const
@@ -193,14 +192,14 @@ namespace Givaro
 
     inline GF2::Element& GF2::invin (Element& x) const
     {
-        assert(x);
-	    return x;
+        GIVARO_ASSERT_MATHDIV0(x, "Error: division by zero in GF2::invin");
+        return x;
     }
 
     inline GF2::BitReference GF2::invin (BitReference x) const
     {
-        assert(x);
-	    return x;
+        GIVARO_ASSERT_MATHDIV0(x, "Error: division by zero in GF2::invin");
+        return x;
     }
 
     inline GF2::Element& GF2::axpyin (Element& r, const Element& a, const Element& x) const

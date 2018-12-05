@@ -77,7 +77,7 @@ namespace RecInt
         reset(lasty);
       
         while (b != 0) {
-            // Classical Euclide algorithm
+            // Classical Euclidean algorithm
             div(q, r, a, b);
             copy(a, b);
             copy(b, r);
@@ -144,7 +144,11 @@ namespace RecInt
             copy(a, x);
             copy(x, temp);
         }
-        
+#ifdef GIVARO_DEBUG
+        if ( a2 != 1) {
+            throw Givaro::GivMathDivZero("*** Error: division by zero, in operator RecInt::inv_mod in ruinvmod.h") ;
+        }
+#endif
         return a;
     }
 }

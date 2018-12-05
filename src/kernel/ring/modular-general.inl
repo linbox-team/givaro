@@ -84,7 +84,7 @@ namespace Givaro
         }
 #ifdef GIVARO_DEBUG
         if ( d > (Storage_t)1 ) {
-            throw GivMathDivZero("*** Error: division by zero, in operator invext modular-general") ;
+            throw GivMathDivZero("*** Error: division by zero, in operator invext in modular-general.inl") ;
         }
 #endif
         return x = (neg && u0 > 0) ? b - u0 : u0;
@@ -115,7 +115,7 @@ namespace Givaro
 
 #ifdef GIVARO_DEBUG
         if ( u3 > (Storage_t)1 ) {
-            throw GivMathDivZero("*** Error: division by zero, in operator invext modular-float") ;
+            throw GivMathDivZero("*** Error: division by zero, in operator invext<floating_point> in modular-general") ;
         }
 #endif
         return x = u1;

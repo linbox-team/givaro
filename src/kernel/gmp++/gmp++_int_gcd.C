@@ -62,7 +62,7 @@ namespace Givaro {
         mpz_invert( (mpz_ptr)&(u.gmp_rep), (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep) ) ;
 #ifdef GIVARO_DEBUG
         if(! res) {
-            throw GivMathDivZero("*** Error: division by zero, in operator inv Integer") ;
+            throw GivMathDivZero("*** Error: division by zero, in operator Integer::inv in gmp++_int_gcd.C") ;
         }
 #endif
 		return u ;

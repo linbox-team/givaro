@@ -270,7 +270,7 @@ namespace Givaro
     {
 #ifdef GIVARO_DEBUG
         if ( this->isZero(a) ) {
-            throw GivMathDivZero("*** Error: division by zero, in operator inv modular-log") ;
+            throw GivMathDivZero("*** Error: division by zero, in operator inv modular-log16.inl") ;
         }
 #endif
         __GIVARO_ZPZ16_LOG_INV(r,_p,a);
@@ -313,7 +313,7 @@ namespace Givaro
     {
 #ifdef GIVARO_DEBUG
         if ( this->isZero(r) ) {
-            throw GivMathDivZero("*** Error: division by zero, in operator invin modular-log") ;
+            throw GivMathDivZero("*** Error: division by zero, in operator invin in modular-log16.inl") ;
         }
 #endif
         __GIVARO_ZPZ16_LOG_INV(r,_p,r);

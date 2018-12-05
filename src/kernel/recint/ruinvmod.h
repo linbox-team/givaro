@@ -146,7 +146,7 @@ namespace RecInt
         }
 #ifdef GIVARO_DEBUG
         if ( a2 != 1) {
-            throw Givaro::GivMathDivZero("*** Error: division by zero, in operator inv_mod ruint") ;
+            throw Givaro::GivMathDivZero("*** Error: division by zero, in operator RecInt::inv_mod in ruinvmod.h") ;
         }
 #endif
         return a;

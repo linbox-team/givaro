@@ -49,7 +49,7 @@ namespace Givaro {
 	// (FILE gmp++_int_gcd.C)
 
         /*! @brief Modular inverse.
-         * @param a 
+         * @param a
          * @param b
          * @param[out] u is set to \f$a^{-1}\f$ modulo b
          */
@@ -149,7 +149,7 @@ namespace Givaro {
 	Integer& 	nextprime(Integer&, const Integer& p);
 	int32_t 		probab_prime(const Integer& p, int32_t r=_GIVARO_ISPRIMETESTS_);
     }
-    
+
 
 	//------------------------------------------------------ Class Integer
 	/*! @ingroup integers
@@ -614,13 +614,13 @@ namespace Givaro {
 		/** @overload Integer::addin(Integer,Integer) */
 		static giv_all_inlined  Integer& addin (Integer& res, const int32_t n) {
             return addin(res, (int64_t)n);
-        }       
+        }
 		/** @overload Integer::addin(Integer,Integer) */
 		static giv_all_inlined  Integer& addin (Integer& res, const uint32_t n) {
             return addin(res,(uint64_t)n);
         }
-        
-                
+
+
 
 		/*!  Addition
 		 * <code>res=n1+n2</code>.
@@ -1120,11 +1120,11 @@ namespace Givaro {
 							const Integer& n, const uint64_t d);
 		//! @overload Integer::mod(Integer,Integer,Integer)
 		static giv_all_inlined  Integer& mod   (Integer& r,
-                                                const Integer& n, const int32_t d) 
+                                                const Integer& n, const int32_t d)
             {
                 return Integer::mod(r,n,(int64_t)d);
             }
-        
+
 		//! @overload Integer::mod(Integer,Integer,Integer)
 		static giv_all_inlined  Integer& mod   (Integer& r,
 							const Integer& n, const uint32_t d)
@@ -1205,7 +1205,7 @@ namespace Givaro {
 		giv_all_inlined int32_t     operator % (const uint32_t n) const { return (int32_t)this->operator%((uint64_t)n); }
 		//! @overload Integer::operator%(Integer);
 		giv_all_inlined int32_t     operator % (const int32_t n) const { return (int32_t)this->operator%((int64_t)n); }
-                
+
 		//! @overload Integer::operator%(Integer);
 		giv_all_inlined double   operator % (const double n) const;
 		//! @overload Integer::operator%(Integer);
@@ -1230,7 +1230,7 @@ namespace Givaro {
 		friend giv_all_inlined  Integer operator % (const uint64_t l, const Integer& n);
 		//! @overload Integer::operator%(int,Integer);
 		friend giv_all_inlined  Integer operator % (const int32_t l, const Integer& n);
-                
+
 		//! @overload Integer::operator%(int,Integer);
 		friend giv_all_inlined  Integer operator % (const uint32_t l, const Integer& n);
 		//! @overload Integer::operator%(int,Integer);
@@ -1451,7 +1451,7 @@ namespace Givaro {
 		}
 
 		//! get representation (constant)
-		mpz_srcptr get_mpz() const 
+		mpz_srcptr get_mpz() const
 		{
 			return (mpz_srcptr)&gmp_rep;
 		}
@@ -1752,25 +1752,43 @@ namespace Givaro {
         RecInt::ruint_to_mpz_t(t.get_mpz(), n);
         return t;
     }
-    
+
     template <size_t K>
     Integer& Caster(Integer& t, const RecInt::rint<K>& n) {
-        RecInt::rint_to_mpz_t(t.get_mpz(), n); 
+        RecInt::rint_to_mpz_t(t.get_mpz(), n);
         return t;
     }
-    
+
     template <size_t K>
     RecInt::ruint<K>& Caster(RecInt::ruint<K>& t, const Integer&  n) {
         return RecInt::mpz_t_to_ruint(t, n.get_mpz_const());
     }
-    
+
     template <size_t K>
     RecInt::rint<K>& Caster(RecInt::rint<K>& t, const Integer& n) {
         return RecInt::mpz_t_to_rint(t, n.get_mpz_const());
     }
-    
+
 
 } // Givaro
+
+namespace std {
+    // Hashing function for Integer, so that std::set<Integer> can be compiled
+    template<>
+    class hash<Givaro::Integer> {
+    public:
+        size_t operator()(const Givaro::Integer& n) const
+        {
+            size_t hashValue = 0u;
+            auto mpz = n.get_mpz();
+            auto size = std::abs(mpz->_mp_size);
+            for (auto i = 0; i < size; ++i) {
+                hashValue ^= mpz->_mp_d[i];
+            }
+            return hashValue;
+        }
+    };
+}
 
 // only template code is inlined
 #ifdef __GIVARO_INLINE_ALL

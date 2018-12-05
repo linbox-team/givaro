@@ -111,8 +111,9 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     try {
         F.inv(a, F.zero);
     } catch(const GivMathDivZero& e) {
-// std::cerr << "Correctly catched division by zero: " << e << std::endl;
-    } catch (...) {
+//        std::cerr << "Correctly catched division by zero: " << e << std::endl;
+    }
+    catch (...) {
         F.mulin(a, F.zero);
         TEST_EQUALITY(a, F.one);
         std::cerr << "Error division by zero allowed even in DEBUG MODE" << std::endl;

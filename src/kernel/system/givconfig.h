@@ -234,6 +234,13 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
         ostr << msg1 << msg2 << "\nFile:"##__FILE__##", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
       }}
+#    define GIVARO_ASSERT_MATHDIV0(cond, msg) { \
+      if (!(cond)) {\
+        std::ostringstream ostr;\
+        ostr << msg << "\nFile:"##__FILE__##", Line:" << __LINE__;\
+        throw  GivMathDivZero(ostr.str().c_str()) ;\
+      }}
+
 #  else
 #    include <sstream>
 #    define GIVARO_ASSERT(cond, msg) { \
@@ -248,6 +255,12 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
         ostr << msg1 << msg2 << "\nFile:" << __FILE__ << ", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
       }}
+#    define GIVARO_ASSERT_MATHDIV0(cond, msg) { \
+      if (!(cond)) {\
+        std::ostringstream ostr;\
+        ostr << msg << "\nFile:"<<__FILE__<<", Line:" << __LINE__;    \
+        throw GivMathDivZero(ostr.str().c_str());\
+      }}
 #  endif
 
 #define GIVARO_REQUIRE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro required: ", msg)
@@ -258,6 +271,7 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #define GIVARO_ASSERT2(cond, msg1, msg2)
 #define GIVARO_REQUIRE(ignore, msg) ((void) 0)
 #define GIVARO_ENSURE(ignore, msg) ((void) 0)
+#define GIVARO_ASSERT_MATHDIV0(cond, msg)
 // #define GIVARO_STATE(expression) do { (expression) } while (0)
 #define GIVARO_STATE(ignore)  ((void) 0)
 

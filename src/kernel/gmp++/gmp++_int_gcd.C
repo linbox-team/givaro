@@ -20,7 +20,7 @@
 #ifndef __GIVARO_INLINE_ALL
 #include "gmp++/gmp++.h"
 #endif
-
+#include "givaro/giverror.h"
 namespace Givaro {
 	// ==========================================================================
 	// Computes and returns the lcm of the two integers a and b.

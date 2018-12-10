@@ -49,14 +49,13 @@ namespace Givaro
 		RandomIntegerIterator(const Integer_Domain& D, size_t bits = 30, uint64_t seed = 0) :
                 _bits(bits), _integer(), _ring(D)
 		{
-            if (! bits) bits = 30;
-			GIVARO_ASSERT( bits>0, "[RandomIntegerIterator] bad bit size");
-			if (! seed)
-				setSeed( static_cast<uint64_t>(BaseTimer::seed()) );
-			else
-				setSeed( seed );
-
-			this->operator++();
+                    if (! bits) bits = 30;
+                    GIVARO_ASSERT( bits>0, "[RandomIntegerIterator] bad bit size");
+                    int64_t s=seed;
+                    while (!s)
+                        s = static_cast<uint64_t>(BaseTimer::seed());
+                    setSeed (s);
+                    this->operator++();
 		}
 
 		/// copy constructor.

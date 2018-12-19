@@ -1,4 +1,11 @@
-2017-11-17 v4.0.4
+2018-12-19 v4.1.0
+	Improvements:
+	* rewrite of the Modular fields (code factorization, cleanup, bug
+	fixing, etc)
+	* fix many bugs
+	* improve testsuite for rationals
+
+2017-11-23 v4.0.4
 	Improvements:
 	* minor build system fix with simd disabling option
 2017-11-17 v4.0.3

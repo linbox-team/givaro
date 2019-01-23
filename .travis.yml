@@ -7,7 +7,7 @@ matrix:
       sudo: required
       dist: trusty
       compiler: gcc
-      env: COMPILER=g++-4.9
+      env: GCC_VERSION=4.9
       addons:
         apt:
           sources:
@@ -21,7 +21,7 @@ matrix:
       sudo: required
       dist: trusty
       compiler: gcc
-      env: COMPILER=g++-5
+      env: GCC_VERSION=5
       addons:
         apt:
           sources:
@@ -35,7 +35,7 @@ matrix:
       sudo: required
       dist: trusty
       compiler: gcc
-      env: COMPILER=g++-6
+      env: GCC_VERSION=6
       addons:
         apt:
           sources:
@@ -65,14 +65,16 @@ matrix:
 
     - os: osx
       compiler: clang
-      env: COMPILER=clang++
       before_install:
       - brew update
       - brew uninstall automake && brew install automake
       - brew install autoconf libtool
 
 install:
-  - export CXX="$COMPILER"
+  - export CC=${CC}${GCC_VERSION:+-${GCC_VERSION}}
+  - echo "CC=${CC}"
+  - export CXX=${CXX}${GCC_VERSION:+-${GCC_VERSION}}
+  - echo "CXX=${CXX}"
 
 before_script:
   - ./autogen.sh

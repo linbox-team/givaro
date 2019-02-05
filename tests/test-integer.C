@@ -253,7 +253,7 @@ int test_subin() {
 
 	a = 0;
 	a--;
-	if (a + 1 != 0) { 
+	if (a + 1 != 0) {
 #ifdef GIVARO_DEBUG
         std::cerr << "ERROR1 a: " << a << ", l: " << 1 << std::endl;
 #endif
@@ -287,8 +287,7 @@ int test_subin() {
         return -4;
     }
     
-
-	return 0;
+    return 0;
 }
 
 

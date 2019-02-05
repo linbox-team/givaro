@@ -249,19 +249,45 @@ int test_cast() {
 
 /* See PR#86 */
 int test_subin() {
-	Integer a;
+	Integer a,b;
 
 	a = 0;
 	a--;
-	if (a + 1 != 0)
-		return -1;
+	if (a + 1 != 0) {
+#ifdef GIVARO_DEBUG
+        std::cerr << "ERROR1 a: " << a << ", l: " << 1 << std::endl;
+#endif
+        return -1;
+    }
 
 	a = 0;
 	a-= INT64_MIN;
-	if (a + INT64_MIN != 0)
-		return -2;
+	if (a + INT64_MIN != 0) {
+#ifdef GIVARO_DEBUG
+        std::cerr << "ERROR2 a: " << a << ", l: " << INT64_MIN << std::endl;
+#endif
+        return -2;
+    }
 
-	return 0;
+    a = 0;
+    Integer::subin(a,INT64_MIN);
+    if (a + INT64_MIN != 0) {
+#ifdef GIVARO_DEBUG
+        std::cerr << "ERROR3 a: " << a << ", l: " << INT64_MIN << std::endl;
+#endif
+        return -3;
+    }
+    
+    a = 0;
+    b = a - INT64_MIN;
+    if (b + INT64_MIN != 0) {
+#ifdef GIVARO_DEBUG
+        std::cerr << "ERROR4 b: " << b << ", l: " << INT64_MIN << std::endl;
+#endif
+        return -4;
+    }
+    
+    return 0;
 }
 
 

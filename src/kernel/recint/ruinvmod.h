@@ -40,6 +40,9 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 #include "rutools.h" /* mod_n() */
 
+#ifdef GIVARO_DEBUG
+#include "givaro/giverror.h"
+#endif
 // --------------------------------------------------------------
 // ----------------------- DEFINITIONS --------------------------
 

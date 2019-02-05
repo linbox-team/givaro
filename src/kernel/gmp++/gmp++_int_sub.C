@@ -33,7 +33,7 @@ namespace Givaro {
 	Integer& Integer::subin(Integer& res, const int64_t n)
 	{
 		if (isZero(n)) return res;
-		if (isZero(res)) return res = - n;
+		if (isZero(res)) return negin(res = n);
 		int32_t sgn = Givaro::sign(n);
 		if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
 		else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n);
@@ -42,7 +42,7 @@ namespace Givaro {
 	Integer& Integer::subin(Integer& res, const uint64_t n)
 	{
 		if (isZero(n)) return res;
-		if (isZero(res)) return res = - n;
+		if (isZero(res)) return negin(res = n);
 		mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
 		return res;
 	}
@@ -56,7 +56,7 @@ namespace Givaro {
 	}
 	Integer& Integer::sub(Integer& res, const Integer& n1, const int64_t n2)
 	{
-		if (isZero(n1)) return res = - n2;
+		if (isZero(n1)) return negin(res = n2);
 		if (isZero(n2)) return res = n1;
 		int32_t sgn = Givaro::sign(n2);
 		if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
@@ -65,7 +65,7 @@ namespace Givaro {
 	}
 	Integer& Integer::sub(Integer& res, const Integer& n1, const uint64_t n2)
 	{
-		if (isZero(n1)) return res = - n2;
+		if (isZero(n1)) return negin(res = n2);
 		if (isZero(n2)) return res = n1;
 		mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
 		return res;
@@ -127,7 +127,7 @@ namespace Givaro {
 	Integer Integer::operator - (const uint64_t l) const
 	{
 		if (l==0) return *this;
-		if (isZero(*this)) return Integer(-l);
+		if (isZero(*this)) return -Integer(l);
 		//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
 		Integer res;
 		mpz_sub_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
@@ -137,7 +137,7 @@ namespace Givaro {
 	Integer Integer::operator - (const int64_t l) const
 	{
 		if (l==0) return *this;
-		if (isZero(*this)) return Integer(-l);
+		if (isZero(*this)) return -Integer(l);
 		//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
 		Integer res;
 		int32_t sgn = Givaro::sign(l);

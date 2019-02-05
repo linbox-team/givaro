@@ -247,6 +247,22 @@ int test_cast() {
 	return res ;
 }
 
+/* See PR#86 */
+int test_subin() {
+	Integer a;
+
+	a = 0;
+	a--;
+	if (a + 1 != 0)
+		return -1;
+
+	a = 0;
+	a-= INT64_MIN;
+	if (a + INT64_MIN != 0)
+		return -2;
+
+	return 0;
+}
 
 
 //! @todo test gcd...
@@ -272,6 +288,9 @@ int main (int argc, char ** argv)
 	if (res)
 		return res ;
 
+	res = test_subin();
+	if (res)
+		return res ;
 
 	return res ;
 }

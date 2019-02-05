@@ -96,7 +96,7 @@ namespace Givaro {
 	Integer& Integer::operator -= (const uint64_t l)
 	{
 		if (l==0) return *this;
-		if (isZero(*this)) return logcpy(Integer(-l));
+		if (isZero(*this)) return logcpy(-Integer(l));
 		//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
 		mpz_sub_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
 		return *this;
@@ -105,7 +105,7 @@ namespace Givaro {
 	Integer& Integer::operator -= (const int64_t l)
 	{
 		if (l==0) return *this;
-		if (isZero(*this)) return logcpy(Integer(-l));
+		if (isZero(*this)) return logcpy(-Integer(l));
 		//   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
 		int32_t sgn = Givaro::sign(l);
 		if (sgn >0) mpz_sub_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);

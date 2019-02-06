@@ -506,6 +506,7 @@ int main(int argc, char ** argv)
     }
 
     //TEST_INV(Modular<int8_t>, C17, 17); => GF(17) does not fit in Modular<int8_t>
+    TEST_INV(Modular<int8_t>, C13, 13);
     TEST_INV(Modular<int16_t>, S17, 17);
     TEST_INV(Modular<int32_t>, Z17, 17);
     TEST_INV(Modular<int64_t>, LL17, 17);

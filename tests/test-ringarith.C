@@ -290,6 +290,11 @@ int TestInv(const Ring& F, const uint64_t seed)
     F.inv(inva, a);
     F.inv(invinva, inva);
 
+    // F.write(std::cerr);
+    // F.write(std::cerr << " => a: ", a);
+    // F.write(std::cerr << "; inva: ", inva);
+    // F.write(std::cerr << "; invinva: ", invinva) << std::endl;
+
     TESTE_EG(a, invinva);
   }
 
@@ -500,7 +505,7 @@ int main(int argc, char ** argv)
 	return -1;					\
     }
 
-    TEST_INV(Modular<int8_t>, C17, 17);
+    //TEST_INV(Modular<int8_t>, C17, 17); => GF(17) does not fit in Modular<int8_t>
     TEST_INV(Modular<int16_t>, S17, 17);
     TEST_INV(Modular<int32_t>, Z17, 17);
     TEST_INV(Modular<int64_t>, LL17, 17);

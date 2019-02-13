@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// Time-stamp: <27 Sep 16 17:21:35 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <13 Feb 19 17:24:47 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)

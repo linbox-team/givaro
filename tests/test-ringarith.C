@@ -499,7 +499,7 @@ int main(int argc, char ** argv)
 #define TEST_INV(Field, Name, Prime) \
     std::cout << "TEST_INV: " << #Name; \
     Field Name(Prime); \
-    Name.write(std::cout << " (", Name.cardinality()) << ")"<< std::endl; \
+    std::cout << " (" << (Integer)Name.cardinality() << ',' << (Integer)Name.maxCardinality() << ')'<< std::endl; \
     if (TestInv( (Name), (seed))) { \
 	std::cout << #Name << " failed !" << std::endl;	\
 	return -1;					\
@@ -510,7 +510,7 @@ int main(int argc, char ** argv)
     TEST_INV(Modular<int16_t>, S17, 17);
     TEST_INV(Modular<int32_t>, Z17, 17);
     TEST_INV(Modular<int64_t>, LL17, 17);
-    TEST_INV(Modular<uint8_t>, UC17, 17);
+    TEST_INV(Modular<uint8_t>, UC13, 13);
     TEST_INV(Modular<uint16_t>, US17, 17);
     TEST_INV(Modular<uint32_t>, UZ17, 17);
     TEST_INV(Modular<uint64_t>, ULL17, 17);

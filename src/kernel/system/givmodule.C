@@ -50,7 +50,7 @@ InitAfter InitAfter::First (GivModule::MaxPriority -1 ) ;
 InitAfter InitAfter::Last (GivModule::MinPriority ) ;
 
 // -- GivModule static object:
-static GivModule* (All[1024]) ;
+static GivModule* All[1024] ;
 static int SortedAll[1024] ;
 static int counter = 0 ;
 

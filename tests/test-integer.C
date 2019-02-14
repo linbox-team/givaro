@@ -205,6 +205,36 @@ int test_cast_unit(const UnsignedBaseType& t, const Integer& a, const Integer& b
     return 0;
 }
 
+template<>
+int test_cast_unit(const bool& t, const Integer& a, const Integer& b) {
+#ifdef GIVARO_DEBUG
+    std::cerr << "TYPE: " << typeid(t).name() << std::endl;
+#endif
+
+    Integer it(t), iu=t, iv=Integer(t);
+
+    if ( (bool)it != t) return -1;
+    if ( (bool)iu != t) return -2;
+    if ( (bool)iv != t) return -3;
+
+    bool at( (bool)a ), bt( (bool) b );
+
+    if ( (at & bt) != (bool)(a*b) ) {
+#ifdef GIVARO_DEBUG
+        std::cerr << "a: " << a << std::endl;
+        std::cerr << "b: " << b << std::endl;
+        std::cerr << "a*b: " << (a*b) << std::endl;
+        std::cerr << "(a*b)t: " << ( (bool)(a*b) ) << std::endl;
+        std::cerr << "at: " << at << std::endl;
+        std::cerr << "bt: " << bt << std::endl;
+        std::cerr << "at&bt: " << ( at & bt ) << std::endl;
+#endif
+        return -10;
+    }
+
+    return 0;
+}
+
 int test_cast_unit(const Integer& a, const Integer& b) {
     int res = 0;
     res = test_cast_unit( (bool) Integer::random<false>(), a, b);

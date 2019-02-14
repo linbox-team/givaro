@@ -91,7 +91,7 @@ int GivaroAppli::run( int argc, char** argv)
     res = main(argc,argv);
     GivaroMain::End();
   }
-  catch (GivError E) { std::cout << E << std::endl; }
+  catch (const GivError& E) { std::cout << E << std::endl; }
   catch (...) { std::cout << "[GivaroAppli::run]: an error has occurred." << std::endl; }
 
 #if (GIVAROSYS == MacOS)

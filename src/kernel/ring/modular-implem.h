@@ -46,9 +46,9 @@ namespace Givaro {
 	public:
 
 		using Element = _Storage_t;
-	using Element_ptr = Element*;
-	using ConstElement = const Element;
-	using ConstElement_ptr = const Element*;
+		using Element_ptr = Element*;
+		using ConstElement = const Element;
+		using ConstElement_ptr = const Element*;
 		using Self_t = Modular_implem<_Storage_t, _Compute_t, _Residu_t>;
 		using Storage_t = _Storage_t;
 		using Compute_t = _Compute_t;

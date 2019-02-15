@@ -24,7 +24,7 @@ namespace Givaro
 
     //! @brief The recint-based Montgomery ring.
     //! Only odd moduli allowed
-    //! An integer (a mod p) is stored as 
+    //! An integer (a mod p) is stored as
     //! (a * r mod 2^{2^K}) with (r = 2^{2^K} mod p).
 
     template<size_t K>
@@ -57,19 +57,19 @@ namespace Givaro
 	    : zero(0)
 	    , _p(p)
 	{
-            RecInt::arazi_qi(_p1, -_p); // p1 = -inv(p) mod 2^(2^K)
-            RecInt::mod_n(_r, -_p, _p); // r = 2^(2^K) mod p
+        RecInt::arazi_qi(_p1, -_p); // p1 = -inv(p) mod 2^(2^K)
+        RecInt::mod_n(_r, -_p, _p); // r = 2^(2^K) mod p
 
-            LargeElement ltmp;
-            RecInt::lmul(ltmp, _r, _r);
-            RecInt::mod_n(_r2, ltmp, _p);   // r2 = r^2 mod p
-            RecInt::lmul(ltmp, _r2, _r);
-            RecInt::mod_n(_r3, ltmp, _p);   // r2 = r^2 mod p
+        LargeElement ltmp;
+        RecInt::lmul(ltmp, _r, _r);
+        RecInt::mod_n(_r2, ltmp, _p);   // r2 = r^2 mod p
+        RecInt::lmul(ltmp, _r2, _r);
+        RecInt::mod_n(_r3, ltmp, _p);   // r2 = r^2 mod p
 
-            RecInt::copy(const_cast<Element&>(one), _r);
-            to_mg(const_cast<Element&>(mOne), _p - 1u);
+        RecInt::copy(const_cast<Element&>(one), _r);
+        to_mg(const_cast<Element&>(mOne), _p - 1u);
 
-            assert( (_p & 1u) != 0u);
+        assert( (_p & 1u) != 0u);
 	    assert(_p >= minCardinality());
 	    assert(_p <= maxCardinality());
 	}
@@ -120,19 +120,19 @@ namespace Givaro
         template<typename T> Element& init(Element& r, const T& a) const
         {
             reduce(r, Caster<Element>((a < 0)? -a : a));
-	    if (a < 0) negin(r);
+            if (a < 0) negin(r);
             return to_mg(r);
         }
         Element& init(Element& r, const Integer& a) const
         {
             reduce(r, Caster<Element>((a < 0)? -a : a));
-	    if (a < 0) negin(r);
+            if (a < 0) negin(r);
             return to_mg(r);
         }
 
         Element& assign (Element& x, const Element& y) const
         { return x = y; }
-    
+
         // ----- Convert and reduce
         template<typename T> T& convert(T& r, const Element& a) const
         { Element tmp; return r = Caster<T>(mg_reduc(tmp, a)); }

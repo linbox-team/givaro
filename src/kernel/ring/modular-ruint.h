@@ -55,14 +55,14 @@ namespace Givaro
         template<typename T> Element& init(Element& r, const T& a) const
         {
             reduce(r, Caster<Element>((a < 0)? -a : a));
-	    if (a < 0) negin(r);
+            if (a < 0) negin(r);
             return r;
         }
 
-        Element& init(Element& r, const Integer& a) const
+        Element& init(Element& r, const Integer& a) const final
         {
             reduce(r, Caster<Element>((a < 0)? -a : a));
-	    if (a < 0) negin(r);
+            if (a < 0) negin(r);
             return r;
         }
 

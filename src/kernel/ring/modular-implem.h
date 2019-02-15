@@ -256,7 +256,7 @@ namespace Givaro {
 
 
 // 		using FiniteFieldInterface<_Storage_t>::init;
-// 		virtual Element& init (Element&, const Integer&) const = 0;
+		virtual Element& init (Element&, const Integer&) const = 0;
 
 		inline std::ostream& write (std::ostream& s, const Element& a) const
 		{

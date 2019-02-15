@@ -71,7 +71,7 @@ namespace Givaro
 			sizeof(Source) >= sizeof(Storage_t))
 		inline Element& init (Element&, const Source) const;
         
-		inline Element& init (Element&, const Integer&) const;
+		inline Element& init (Element&, const Integer&) const final;
 
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, 
 			!(std::is_integral<Source>::value && sizeof(Source) >= sizeof(Storage_t)) &&

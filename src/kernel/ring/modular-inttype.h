@@ -37,7 +37,7 @@ namespace Givaro
     {
     public:
 
-        // ----- Exported Types and constantes
+            // ----- Exported Types and constantes
         using Storage_t = IntType;
         using Residu_t = IntType;
         using Compute_t = _Compute_t;
@@ -47,30 +47,30 @@ namespace Givaro
 
         using Element = Storage_t;
 
-        // ----- Constructors
+            // ----- Constructors
 
-        using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem; 
+        using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
         using Parent_t::_p;
         using Parent_t::_pc;
         using Parent_t::zero;
         using Parent_t::one;
         using Parent_t::mOne;
 
-        // ----- Initialisation
+            // ----- Initialisation
         Element& init (Element& x) const
-	{ return x = 0; }
-        Element& init (Element& x, const Integer& y) const
-	{ x = y % _p; return reduce(x); }
+            { return x = 0; }
+        Element& init (Element& x, const Integer& y) const final
+            { x = y % _p; return reduce(x); }
         template<typename T> Element& init(Element& r, const T& a) const
-        { r = Caster<Element>(a); return reduce(r); }
+            { r = Caster<Element>(a); return reduce(r); }
 
 
         Element& reduce (Element& x, const Element& y) const
-	{ x = y % _p; if (x < 0) x += _p; return x; }
+            { x = y % _p; if (x < 0) x += _p; return x; }
         Element& reduce (Element& x) const
-	{ x %= _p; if (x < 0) x += _p; return x; }
-        
-        // ----- Classic arithmetic
+            { x %= _p; if (x < 0) x += _p; return x; }
+
+            // ----- Classic arithmetic
         Element& mul(Element& r, const Element& a, const Element& b) const;
         Element& div(Element& r, const Element& a, const Element& b) const;
         Element& add(Element& r, const Element& a, const Element& b) const;
@@ -84,7 +84,7 @@ namespace Givaro
         Element& subin(Element& r, const Element& a) const;
         Element& negin(Element& r) const;
         Element& invin(Element& r) const;
-        
+
         // -- axpy:   r <- a * x + y
         // -- axpyin: r <- a * x + r
         Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
@@ -106,15 +106,14 @@ namespace Givaro
         template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { 
+        {
           while (Self_t::isZero(init(a, g())));
-          return a; 
+          return a;
         }
-        
+
     };
 }
 
 #include "givaro/modular-inttype.inl"
 
 #endif
-

@@ -34,17 +34,25 @@ namespace Givaro {
 	{
 		if (isZero(n)) return res;
 		if (isZero(res)) return res = n;
+#if GMP_LIMB_BITS != 64
+                return addin(res,Integer(n));
+#else
 		int32_t sgn = Givaro::sign(n);
 		if (sgn >0) mpz_add_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
-		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n);
+		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n); // @fixme: check n=INT64_MIN
 		return res;
+#endif
 	}
 	Integer& Integer::addin(Integer& res, const uint64_t n)
 	{
 		if (isZero(n)) return res;
 		if (isZero(res)) return res = n;
+#if GMP_LIMB_BITS != 64
+                return addin(res,Integer(n));
+#else
 		mpz_add_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
 		return res;
+#endif
 	}
 
 	Integer& Integer::add(Integer& res, const Integer& n1, const Integer& n2)
@@ -58,17 +66,25 @@ namespace Givaro {
 	{
 		if (isZero(n1)) return res = n2;
 		if (isZero(n2)) return res = n1;
+#if GMP_LIMB_BITS != 64
+                return add(res,n1,Integer(n2));
+#else
 		int32_t sgn = Givaro::sign(n2);
 		if (sgn >0) mpz_add_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
-		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, -n2);
+		else mpz_sub_ui((mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, -n2); // @fixme: check n=INT64_MIN
 		return res;
+#endif
 	}
 	Integer& Integer::add(Integer& res, const Integer& n1, const uint64_t n2)
 	{
 		if (isZero(n1)) return res = n2;
 		if (isZero(n2)) return res = n1;
+#if GMP_LIMB_BITS != 64
+                return add(res,n1,Integer(n2));
+#else
 		mpz_add_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
 		return res;
+#endif
 	}
 
 	// -- operator +
@@ -85,18 +101,26 @@ namespace Givaro {
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return logcpy(Integer(l));
+#if GMP_LIMB_BITS != 64
+                return (*this) += Integer(l);
+#else
 		mpz_add_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
 		return *this;
+#endif
 	}
 
 	Integer& Integer::operator += (const int64_t l)
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return logcpy(Integer(l));
+#if GMP_LIMB_BITS != 64
+                return (*this) += Integer(l);
+#else
 		int32_t sgn = Givaro::sign(l);
 		if (sgn >0) mpz_add_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
-		else mpz_sub_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, -l);
+		else mpz_sub_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, -l); // @fixme: check n=INT64_MIN
 		return *this;
+#endif
 	}
 
 
@@ -113,20 +137,28 @@ namespace Givaro {
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return Integer(l);
+#if GMP_LIMB_BITS != 64
+                return (*this) + Integer(l);
+#else
 		Integer res;
 		mpz_add_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
 		return res;
+#endif
 	}
 
 	Integer Integer::operator + (const int64_t l) const
 	{
 		if (l==0) return *this;
 		if (isZero(*this)) return Integer(l);
-		Integer res;
-		int32_t sgn = Givaro::sign(l);
+#if GMP_LIMB_BITS != 64
+                return (*this) + Integer(l);
+#else
+                Integer res;
+                int32_t sgn = Givaro::sign(l);
 		if (sgn >0) mpz_add_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
 		else mpz_sub_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, -l);
 		return res;
+#endif
 	}
 
 	Integer Integer::operator - () const

@@ -76,7 +76,7 @@ namespace Givaro
 
 	Montgomery(const Self_t& F)
 	    : zero(F.zero), one(F.one), mOne(F.mOne)
-	    , _p(F._p), _p1(F._p1), _r(F._r)
+	    , _p(F._p), _p1(F._p1), _r(F._r), _r2(F._r2), _r3(F._r3)
             {}
 
 	// ----- Accessors

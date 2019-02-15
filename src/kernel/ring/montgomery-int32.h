@@ -47,6 +47,9 @@ namespace Givaro
         // ----- Exported Types and constantes
         using Self_t = Montgomery<int32_t>;
         using Element = uint32_t;
+        using Element_ptr = Element*;
+        using ConstElement = const Element;
+        using ConstElement_ptr = const Element*;
         using Residu_t = uint32_t;
         enum { size_rep = sizeof(Residu_t) };
 

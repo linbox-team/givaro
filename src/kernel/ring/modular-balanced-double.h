@@ -33,6 +33,9 @@ namespace Givaro
 	// ----- Exported types
 	using Self_t = ModularBalanced<double>;
 	using Element = double;
+	using Element_ptr = Element*;
+	using ConstElement = const Element;
+	using ConstElement_ptr = const Element*;
 	using Residu_t = double;
 	enum { size_rep = sizeof(Element) };
 

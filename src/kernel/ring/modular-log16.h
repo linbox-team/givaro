@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// Time-stamp: <15 Feb 19 13:25:51 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Feb 19 13:40:54 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -48,6 +48,9 @@ namespace Givaro
 	using Residu_t = uint16_t;
 
 	using Element = Storage_t;
+	using Element_ptr = Element*;
+	using ConstElement = const Element;
+	using ConstElement_ptr = const Element*;
 	using Self_t = Modular<Log16>;
 	using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 

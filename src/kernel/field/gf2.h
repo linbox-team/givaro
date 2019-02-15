@@ -18,7 +18,6 @@
 #include <cmath>
 #include <vector>
 
-#include "givaro/ring-interface.h"
 #include "givaro/givranditer.h"
 #include "givaro/udl.h"
 #include "givaro/givinteger.h"
@@ -35,7 +34,7 @@ namespace Givaro
 	 \ingroup field
 	 */
 
-	class GF2 /* : public FiniteFieldInterface<bool> */
+	class GF2
 	{
 	public:
 		const bool zero = false;
@@ -46,7 +45,7 @@ namespace Givaro
 		*/
 		using Self_t = GF2;
 		using Residu_t = uint8_t;
-		using Element = FiniteFieldInterface<bool>::Element;
+		using Element = bool;
 		using BitVector = std::vector<bool>;
 		using BitReference = BitVector::reference;
 		

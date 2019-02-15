@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <02 May 18 14:53:22 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Feb 19 12:24:29 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -22,7 +22,6 @@
 #include "givaro/givinteger.h"
 #include "givaro/givranditer.h"
 #include "givaro/givpoly1factor.h"
-#include "givaro/ring-interface.h"
 
 #include <string>
 #include <vector>
@@ -34,7 +33,7 @@
 namespace Givaro {
 
 //! class GFqDom
-template<class TT> class GFqDom : public FiniteRingInterface<TT> {
+template<class TT> class GFqDom {
 protected:
 	typedef typename Signed_Trait<TT>::unsigned_type UTT;
 	typedef TT Rep;
@@ -148,8 +147,8 @@ public:
     }
 
 	// ----- Accessors
-	inline Element minElement() const override { return zero; }
-	inline Element maxElement() const override { return _qm1; }
+	inline Element minElement() const { return zero; }
+	inline Element maxElement() const { return _qm1; }
 
 	// Access to the modulus, characteristic, size, exponent
     UTT residu() const;
@@ -183,7 +182,7 @@ public:
     Rep& indeterminate(Rep&) const;
     
  	// Initialization of Elements
-    Rep& init(Rep& r) const override { return r=zero;}
+    Rep& init(Rep& r) const { return r=zero;}
     Rep& init( Rep&, const int32_t) const ;
     Rep& init( Rep&, const uint32_t) const ;
     Rep& init( Rep&, const int64_t) const ;
@@ -206,16 +205,16 @@ public:
     
 	// -- Misc: r <- a mod p
     Rep& assign (Rep&, const Integer) const;
-    Rep& assign (Rep&, const Rep&) const override;
+    Rep& assign (Rep&, const Rep&) const;
     void assign ( const size_t sz, Array r, constArray a ) const;
     
 	// --- IO methods for the Domain
     std::istream& read ( std::istream& s );
-    std::ostream& write( std::ostream& s ) const override;
+    std::ostream& write( std::ostream& s ) const;
     std::ostream& write( std::ostream& s , const std::string& ) const;
 	// --- IO methods for the Elements
-    std::istream& read ( std::istream& s, Rep& a ) const override;
-    std::ostream& write( std::ostream& s, const Rep& a ) const override;
+    std::istream& read ( std::istream& s, Rep& a ) const;
+    std::ostream& write( std::ostream& s, const Rep& a ) const;
     
 	// Conversions of the elements
     std::ostream& convert(std::ostream& s, const Rep a ) const { return write(s,a); }
@@ -233,30 +232,30 @@ public:
 	inline int operator!= (const GFqDom<TT>& a) const;
 
 	// Miscellaneous functions
-	bool areEqual(const Rep& a, const Rep& b) const override;
+	bool areEqual(const Rep& a, const Rep& b) const;
 	bool areNEqual(const Rep, const Rep) const;
-	bool isZero(const Rep& a) const override;
+	bool isZero(const Rep& a) const;
 	bool isnzero(const Rep) const;
-	bool isOne(const Rep& a) const override;
-	bool isMOne(const Rep& a) const override;
-	bool isUnit(const Rep& a) const override; // Element belongs to prime subfield
+	bool isOne(const Rep& a) const;
+	bool isMOne(const Rep& a) const;
+	bool isUnit(const Rep& a) const; // Element belongs to prime subfield
 	size_t length( const Rep ) const;
 
 
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-	Rep& mul (Rep& r, const Rep& a, const Rep& b) const override;
+	Rep& mul (Rep& r, const Rep& a, const Rep& b) const;
 	Rep& div (Rep& r, const Rep a, const Rep b) const;
-	Rep& add (Rep& r, const Rep& a, const Rep& b) const override;
-	Rep& sub (Rep& r, const Rep& a, const Rep& b) const override;
-	Rep& neg (Rep& r, const Rep& a) const override;
+	Rep& add (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& sub (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& neg (Rep& r, const Rep& a) const;
 	Rep& inv (Rep& r, const Rep a) const;
 
-	Rep& mulin (Rep& r, const Rep& a) const override;
+	Rep& mulin (Rep& r, const Rep& a) const;
 	Rep& divin (Rep& r, const Rep a) const;
-	Rep& addin (Rep& r, const Rep& a) const override;
-	Rep& subin (Rep& r, const Rep& a) const override;
-	Rep& negin (Rep& r) const override;
+	Rep& addin (Rep& r, const Rep& a) const;
+	Rep& subin (Rep& r, const Rep& a) const;
+	Rep& negin (Rep& r) const;
 	Rep& invin (Rep& r) const;
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
@@ -274,24 +273,24 @@ public:
 	void neg (const size_t sz, Array r, constArray a) const;
 	void inv (const size_t sz, Array r, constArray a) const;
 
-	Rep& axpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const override;
+	Rep& axpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
 	void axpy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
 	void axpy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
 
 	// -- axpyin: r <- r + a * x mod p
-	Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const override;
+	Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const;
 	void axpyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	// -- axmy: r <- a * b - c mod p
-	Rep& axmy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const override;
+	Rep& axmy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
 	void axmy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
 	void axmy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
 
 	// -- maxpy: r <- c - a * b mod p
-	Rep& maxpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const override;
+	Rep& maxpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
 
 	// -- axmyin: r <-  a * b - r mod p
-	Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const override;
+	Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const;
 	// void axmyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	//   // -- sqpyin: r <- r + a * a mod p
@@ -299,7 +298,7 @@ public:
 
 
 	// -- maxpyin: r <- r - a * b mod p
-	Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const override;
+	Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const;
 	void maxpyin (const size_t sz, Array r, Rep a, constArray x) const;
 
 	// <- \sum_i a[i], return 1 if a.size() ==0,

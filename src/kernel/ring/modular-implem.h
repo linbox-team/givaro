@@ -41,11 +41,14 @@ namespace Givaro {
 	 * .
 	 */
 	template<typename _Storage_t, typename _Compute_t, typename _Residu_t>
-	class Modular_implem: public FiniteFieldInterface<_Storage_t>
+	class Modular_implem
 	{
 	public:
 
 		using Element = _Storage_t;
+		using Element_ptr = Element*;
+		using ConstElement = const Element;
+		using ConstElement_ptr = const Element*;
 		using Self_t = Modular_implem<_Storage_t, _Compute_t, _Residu_t>;
 		using Storage_t = _Storage_t;
 		using Compute_t = _Compute_t;
@@ -95,8 +98,8 @@ namespace Givaro {
 			: zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _pc(F._pc) {}
 
 		// ----- Accessors
-		inline Element minElement() const override { return zero; }
-		inline Element maxElement() const override { return mOne; }
+		inline Element minElement() const { return zero; }
+		inline Element maxElement() const { return mOne; }
 
 		// ----- Access to the modulus
 		inline Residu_t residu() const { return _p; }
@@ -177,11 +180,11 @@ namespace Givaro {
 		}
 
 		// ----- Checkers
-		inline bool isZero(const Element& a) const override { return a == zero; }
-		inline bool isOne (const Element& a) const override { return a == one; }
-		inline bool isMOne(const Element& a) const override { return a == mOne; }
-		inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
-		inline bool isUnit(const Element& a) const override
+		inline bool isZero(const Element& a) const { return a == zero; }
+		inline bool isOne (const Element& a) const { return a == one; }
+		inline bool isMOne(const Element& a) const { return a == mOne; }
+		inline bool areEqual(const Element& a, const Element& b) const { return a == b; }
+		inline bool isUnit(const Element& a) const
 		{
 			Element u,d;
 			invext(u,d,a,Caster<Element>(_p));
@@ -202,7 +205,7 @@ namespace Givaro {
 			return *this;
 		}
 
-		Element& assign (Element& x, const Element& y) const override
+		Element& assign (Element& x, const Element& y) const
 		{
 			return x = y;
 		}
@@ -255,10 +258,10 @@ namespace Givaro {
     	// ----- IO
 
 
-		using FiniteFieldInterface<_Storage_t>::init;
+// 		using FiniteFieldInterface<_Storage_t>::init;
 		virtual Element& init (Element&, const Integer&) const = 0;
 
-		inline std::ostream& write (std::ostream& s, const Element& a) const override
+		inline std::ostream& write (std::ostream& s, const Element& a) const
 		{
 			return this->write<Element>(s, a);
 		}
@@ -281,7 +284,7 @@ namespace Givaro {
 			return s << Caster<Residu_t>(a);
 		}
 
-		std::ostream& write (std::ostream& s) const override
+		std::ostream& write (std::ostream& s) const
 		{
 			return this->write<Element>(s);
 		}
@@ -323,7 +326,7 @@ namespace Givaro {
 	    return s;
 		}
 
-		inline std::istream& read (std::istream&, Element&) const override;
+		inline std::istream& read (std::istream&, Element&) const;
 
 	protected:
 		// -- data representation of the domain:

@@ -60,7 +60,7 @@ namespace Givaro {
 
 		// ----- Initialisation
 
-		Element& init (Element&) const override;
+		Element& init (Element&) const;
 
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
 		inline Element& init (Element&, const Source) const;
@@ -74,7 +74,7 @@ namespace Givaro {
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && sizeof(Source) >= sizeof(Storage_t) && IS_UINT(Storage_t))
 		inline Element& init (Element&, const Source) const;
 
-		inline Element& init (Element&, const Integer&) const override;
+		inline Element& init (Element&, const Integer&) const final;
 
 		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Storage_t)
 						&&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))
@@ -96,19 +96,19 @@ namespace Givaro {
 		// ------------------------
 		// ----- Classic arithmetic
 
-		Element& mul (Element&, const Element&, const Element&) const override;
-		Element& sub (Element&, const Element&, const Element&) const override;
-		Element& add (Element&, const Element&, const Element&) const override;
-		Element& neg (Element&, const Element&) const override;
-		Element& inv (Element&, const Element&) const override;
-		Element& div (Element&, const Element&, const Element&) const override;
+		Element& mul (Element&, const Element&, const Element&) const;
+		Element& sub (Element&, const Element&, const Element&) const;
+		Element& add (Element&, const Element&, const Element&) const;
+		Element& neg (Element&, const Element&) const;
+		Element& inv (Element&, const Element&) const;
+		Element& div (Element&, const Element&, const Element&) const;
 
-		Element& mulin (Element&, const Element&) const override;
-		Element& divin (Element&, const Element&) const override;
-		Element& addin (Element&, const Element&) const override;
-		Element& subin (Element&, const Element&) const override;
-		Element& negin (Element&) const override;
-		Element& invin (Element&) const override;
+		Element& mulin (Element&, const Element&) const;
+		Element& divin (Element&, const Element&) const;
+		Element& addin (Element&, const Element&) const;
+		Element& subin (Element&, const Element&) const;
+		Element& negin (Element&) const;
+		Element& invin (Element&) const;
 
 		// Functions defined in modular-mulprecomp
 		//
@@ -127,12 +127,12 @@ namespace Givaro {
 		// -- maxpy:   r <- y - a * x
 		// -- maxpyin: r <- r - a * x
 
-		Element& axpy (Element&, const Element&, const Element&, const Element&) const override;
-		Element& axpyin (Element&, const Element&, const Element&) const override;
-		Element& maxpy (Element&, const Element&, const Element&, const Element&) const override;
-		Element& axmy (Element&, const Element&, const Element&, const Element&) const override;
-		Element& maxpyin (Element&, const Element&, const Element&) const override;
-		Element& axmyin (Element&, const Element&, const Element&) const override;
+		Element& axpy (Element&, const Element&, const Element&, const Element&) const;
+		Element& axpyin (Element&, const Element&, const Element&) const;
+		Element& maxpy (Element&, const Element&, const Element&, const Element&) const;
+		Element& axmy (Element&, const Element&, const Element&, const Element&) const;
+		Element& maxpyin (Element&, const Element&, const Element&) const;
+		Element& axmyin (Element&, const Element&, const Element&) const;
 
 		// ----- Random generators
 		typedef ModularRandIter<Self_t> RandIter;

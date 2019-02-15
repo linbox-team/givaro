@@ -41,11 +41,15 @@ namespace Givaro
      *   - p max is 40499
      */
     template<>
-    class Montgomery<int32_t> : public FiniteFieldInterface<uint32_t>
+    class Montgomery<int32_t>
     {
     public:
         // ----- Exported Types and constantes
         using Self_t = Montgomery<int32_t>;
+        using Element = uint32_t;
+        using Element_ptr = Element*;
+        using ConstElement = const Element;
+        using ConstElement_ptr = const Element*;
         using Residu_t = uint32_t;
         enum { size_rep = sizeof(Residu_t) };
 
@@ -97,8 +101,8 @@ namespace Givaro
         }
             
         // ----- Accessors
-        inline Element minElement() const override { return zero; }
-        inline Element maxElement() const override { return mOne; }
+        inline Element minElement() const { return zero; }
+        inline Element maxElement() const { return mOne; }
 
         // ----- Access to the modulus
         inline Residu_t residu() const { return _p; }
@@ -111,11 +115,11 @@ namespace Givaro
         static inline Residu_t minCardinality() { return 2; }
 
         // ----- Checkers
-        inline bool isZero(const Element& a) const override { return a == zero; }
-        inline bool isOne (const Element& a) const override { return a == one; }
-        inline bool isMOne(const Element& a) const override { return a == mOne; }
-        inline bool isUnit(const Element& a) const override;
-        inline bool areEqual(const Element& a, const Element& b) const override { return a == b; }
+        inline bool isZero(const Element& a) const { return a == zero; }
+        inline bool isOne (const Element& a) const { return a == one; }
+        inline bool isMOne(const Element& a) const { return a == mOne; }
+        inline bool isUnit(const Element& a) const;
+        inline bool areEqual(const Element& a, const Element& b) const { return a == b; }
         inline size_t length(const Element a) const { return size_rep; }
 
         // ----- Ring-wise operators
@@ -123,7 +127,7 @@ namespace Givaro
         bool operator!=(const Self_t& F) const { return _p != F._p; }
 
         // ----- Initialisation
-        Element& init (Element& x) const override
+        Element& init (Element& x) const
         { return x = 0; }
         Element& init (Element& x, const double a) const;
         Element& init (Element& x, const int64_t a) const;
@@ -137,7 +141,7 @@ namespace Givaro
             return redc(r, r * _B2p);
         }
 
-        Element& assign(Element& x, const Element& y) const override
+        Element& assign(Element& x, const Element& y) const
         { return x = y; }
     
         // ----- Convert and reduce
@@ -150,34 +154,34 @@ namespace Givaro
         { x %= _p; return x; }
 
         // ----- Classic arithmetic
-        Element& mul(Element& r, const Element& a, const Element& b) const override;
-        Element& div(Element& r, const Element& a, const Element& b) const override;
-        Element& add(Element& r, const Element& a, const Element& b) const override;
-        Element& sub(Element& r, const Element& a, const Element& b) const override;
-        Element& neg(Element& r, const Element& a) const override;
-        Element& inv(Element& r, const Element& a) const override;
+        Element& mul(Element& r, const Element& a, const Element& b) const;
+        Element& div(Element& r, const Element& a, const Element& b) const;
+        Element& add(Element& r, const Element& a, const Element& b) const;
+        Element& sub(Element& r, const Element& a, const Element& b) const;
+        Element& neg(Element& r, const Element& a) const;
+        Element& inv(Element& r, const Element& a) const;
 
-        Element& mulin(Element& r, const Element& a) const override;
-        Element& divin(Element& r, const Element& a) const override;
-        Element& addin(Element& r, const Element& a) const override;
-        Element& subin(Element& r, const Element& a) const override;
-        Element& negin(Element& r) const override;
-        Element& invin(Element& r) const override;
+        Element& mulin(Element& r, const Element& a) const;
+        Element& divin(Element& r, const Element& a) const;
+        Element& addin(Element& r, const Element& a) const;
+        Element& subin(Element& r, const Element& a) const;
+        Element& negin(Element& r) const;
+        Element& invin(Element& r) const;
 
         // -- axpy:   r <- a * x + y
         // -- axpyin: r <- a * x + r
-        Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
-        Element& axpyin(Element& r, const Element& a, const Element& x) const override;
+        Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
+        Element& axpyin(Element& r, const Element& a, const Element& x) const;
 
         // -- axmy:   r <- a * x - y
         // -- axmyin: r <- a * x - r
-        Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
-        Element& axmyin(Element& r, const Element& a, const Element& x) const override;
+        Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const;
+        Element& axmyin(Element& r, const Element& a, const Element& x) const;
 
         // -- maxpy:   r <- y - a * x
         // -- maxpyin: r <- r - a * x
-        Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const override;
-        Element& maxpyin(Element& r, const Element& a, const Element& x) const override;
+        Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
+        Element& maxpyin(Element& r, const Element& a, const Element& x) const;
 
         // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;
@@ -188,9 +192,9 @@ namespace Givaro
         { while (isZero(init(a, g()))) {} return a; }
 
         // --- IO methods
-        std::ostream& write(std::ostream& s) const override;
-        std::istream& read (std::istream& s, Element& a) const override;
-        std::ostream& write(std::ostream& s, const Element& a) const override;
+        std::ostream& write(std::ostream& s) const;
+        std::istream& read (std::istream& s, Element& a) const;
+        std::ostream& write(std::ostream& s, const Element& a) const;
 
     protected:
 

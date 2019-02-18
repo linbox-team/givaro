@@ -42,3 +42,5 @@ template<class Domain> class Poly1Dom<Domain,Sparse>;
 // #include "givaro/givvectsparseops.inl"
 
 #endif // __GIVARO_poly1_H
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

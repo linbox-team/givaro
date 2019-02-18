@@ -25,22 +25,24 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-//  Givaro::Init(&argc, &argv);
+    //  Givaro::Init(&argc, &argv);
 
 
-  IntegerDom IP;
-  IntegerDom::Element g,a,b,u,v;
-  if (argc > 1) a = Integer(argv[1]); else cin >> a;
-  if (argc > 2) b = Integer(argv[2]); else cin >> b;
+    IntegerDom IP;
+    IntegerDom::Element g,a,b,u,v;
+    if (argc > 1) a = Integer(argv[1]); else cin >> a;
+    if (argc > 2) b = Integer(argv[2]); else cin >> b;
 
-        Timer tim; tim.clear(); tim.start();
-        IP.gcd(g,u,v,a,b);
-        tim.stop();
-        cout << g << " = " << u << " * " << a << " + " << v << " * " << b << endl;
-        cerr << tim << endl;
+    Timer tim; tim.clear(); tim.start();
+    IP.gcd(g,u,v,a,b);
+    tim.stop();
+    cout << g << " = " << u << " * " << a << " + " << v << " * " << b << endl;
+    cerr << tim << endl;
 
-//  Givaro::End();
+    //  Givaro::End();
 
-  return 0;
+    return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

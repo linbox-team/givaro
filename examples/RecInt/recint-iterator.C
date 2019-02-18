@@ -1,6 +1,6 @@
 /* Copyright Université Grenoble Alpes
 Contributors :
-    Jean-Guillaume DUMAS (Jean-Guillaume.Dumas@imag.fr)
+Jean-Guillaume DUMAS (Jean-Guillaume.Dumas@imag.fr)
 
 Time-stamp: <27 Jul 16 12:06:56 Jean-Guillaume.Dumas@imag.fr>
 
@@ -48,7 +48,7 @@ int main(void)
 {
     ruint<STD_RECINT_SIZE> n;
     ruint<STD_RECINT_SIZE>::cr_iterator itr;
-    
+
     RecInt::srand(time(NULL));
     rand(n);
 
@@ -62,3 +62,5 @@ int main(void)
     return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

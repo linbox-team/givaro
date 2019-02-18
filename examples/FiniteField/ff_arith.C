@@ -36,7 +36,7 @@ void TestField(const Field& F) {
 
     F.add(c, a, b);       // c = a+b
 
-     // Separate output writing
+    // Separate output writing
     F.write( std::cout, a) << " + " << std::flush;
     F.write( std::cout, b) << " = " << std::flush;
     F.write( std::cerr, c) << std::endl;
@@ -48,17 +48,17 @@ void TestField(const Field& F) {
     // Writing all outputs in a single command line
     F.write( std::cerr << "Within " ) << " : " << std::flush;
     F.write( F.write( F.write( F.write(
-        std::cout, c) << " + ", a) << " * ", b) << " = ", d) << std::endl;
+                                       std::cout, c) << " + ", a) << " * ", b) << " = ", d) << std::endl;
 
     {
         typename Field::Element e;
         F.init(e); F.assign(e,d);
         F.maxpy(e, a, b, d); // e = d-a*b
 
-            // Writing all outputs in a single command line
+        // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
-            std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
+                                           std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
     }
 
     {
@@ -66,10 +66,10 @@ void TestField(const Field& F) {
         F.init(e); F.assign(e,d);
         F.maxpyin(e, a, b); // e = d - a*b;
 
-            // Writing all outputs in a single command line
+        // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
-            std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
+                                           std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
     }
 
     {
@@ -77,10 +77,10 @@ void TestField(const Field& F) {
         F.init(e); F.assign(e,d);
         F.axmy(e, a, b, d); // e = a*b -d;
 
-            // Writing all outputs in a single command line
+        // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
-            std::cout, a) << " * ", b) << " - ", d) << " = ", e) << std::endl;
+                                           std::cout, a) << " * ", b) << " - ", d) << " = ", e) << std::endl;
     }
 
     {
@@ -88,15 +88,15 @@ void TestField(const Field& F) {
         F.init(e); F.assign(e,d);
         F.maxpyin(e, a, b); // e = d - a*b;
 
-            // Writing all outputs in a single command line
+        // Writing all outputs in a single command line
         F.write( std::cerr << "Within " ) << " : " << std::flush;
         F.write( F.write( F.write( F.write(
-            std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
+                                           std::cout, d) << " - ", a) << " * ", b) << " = ", e) << std::endl;
     }
 
 
 
-        // Four operations
+    // Four operations
     F.write( F.write( std::cout, a) << " += ",  b) << " is " ;
     F.write( std::cout, F.addin(a, b) ) << "   ;   ";
     F.write( F.write( std::cout, a) << " -= ",  b) << " is ";
@@ -143,69 +143,71 @@ extern "C" {
 
 int main(int argc, char ** argv) {
 
-        // modulo 13 over 16 bits
+    // modulo 13 over 16 bits
     Modular<int16_t> C13(13); TestField( C13 );
 
-        // modulo 13 over 32 bits
+    // modulo 13 over 32 bits
     Modular<int32_t> Z13(13); TestField( Z13 );
 
-        // modulo 13 over unsigned 32 bits
+    // modulo 13 over unsigned 32 bits
     Modular<uint32_t> U13(13); TestField( U13 );
 
 #ifdef __USE_Givaro_SIXTYFOUR__
-        // modulo 13 over 64 bits
+    // modulo 13 over 64 bits
     Modular<int64_t> LL13(13U); TestField( LL13 );
 #endif
 
-        // modulo 13 fully tabulated
+    // modulo 13 fully tabulated
     Modular<Log16> L13(13); TestField( L13 );
 
-        // modulo 13 over 32 bits with Montgomery reduction
+    // modulo 13 over 32 bits with Montgomery reduction
     Montgomery<int32_t> M13(13); TestField( M13 );
     Montgomery<int32_t> M3(39989); TestField( M3 );
 
-        // modulo 13 with primitive root representation
+    // modulo 13 with primitive root representation
     GFqDom<int> GF13( 13 ); TestField( GF13 );
 
-        // modulo 13 over arbitrary size
+    // modulo 13 over arbitrary size
     Modular<Integer> IntZ13(13); TestField( IntZ13 );
 
-        // Zech log finite field with 5^4 elements
+    // Zech log finite field with 5^4 elements
     GFqDom<int> GF625( 5, 4 ); TestField( GF625 );
 
-        // Zech log finite field with 256 elements
-        // and prescribed irreducible polynomial
+    // Zech log finite field with 256 elements
+    // and prescribed irreducible polynomial
     std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
     Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
     Irred[8] = 1;
     GFqDom<int64_t> F256(2,8, Irred); TestField( F256 );
 
-        // Zech log finite field with 3^4 elements
-        // Using the Q-adic Transform
+    // Zech log finite field with 3^4 elements
+    // Using the Q-adic Transform
     GFqExt<int32_t> GF81( 3, 4 ); TestField( GF81 );
 
-    	// Zech log finite field with 2Mb tables
+    // Zech log finite field with 2Mb tables
     struct rusage  tmp1 ;
     getrusage (RUSAGE_SELF, &tmp1) ;
-          // user time
+    // user time
     double tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ ( 1000000.0 ) ;
-		    ;
+    ;
     getrusage (RUSAGE_SELF, &tmp1) ;
     tim = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ (1000000.0) - tim;
 
     std::cerr << "Initialization took " << tim << " cpu seconds and : " << std::endl;
     std::cerr
-        << tmp1.ru_maxrss << " maximum resident set size"<< std::endl
-        << tmp1.ru_ixrss << " integral shared memory size"<< std::endl
-        << tmp1.ru_idrss << " integral unshared data size"<< std::endl
-        << tmp1.ru_isrss << " integral unshared stack size"<< std::endl
-        << tmp1.ru_minflt << " page reclaims"<< std::endl
-        << tmp1.ru_majflt << " page faults"<< std::endl
-        << tmp1.ru_nswap << " swaps"<< std::endl
-        << tmp1.ru_inblock << " block input operations"<< std::endl
-        << tmp1.ru_oublock << " block output operations"<< std::endl;
+    << tmp1.ru_maxrss << " maximum resident set size"<< std::endl
+    << tmp1.ru_ixrss << " integral shared memory size"<< std::endl
+    << tmp1.ru_idrss << " integral unshared data size"<< std::endl
+    << tmp1.ru_isrss << " integral unshared stack size"<< std::endl
+    << tmp1.ru_minflt << " page reclaims"<< std::endl
+    << tmp1.ru_majflt << " page faults"<< std::endl
+    << tmp1.ru_nswap << " swaps"<< std::endl
+    << tmp1.ru_inblock << " block input operations"<< std::endl
+    << tmp1.ru_oublock << " block output operations"<< std::endl;
 
     return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

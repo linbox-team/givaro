@@ -39,52 +39,54 @@ int main(int argc, char** argv)
     F2.init(P[1],1);
     GF128.init(f, P);
     GF128.write(std::cout << "2-adic representation of 1+X is: ", f)
-                          << std::endl
-                          << " ... while its internal representation is: "
-                          << f << std::endl;
+    << std::endl
+    << " ... while its internal representation is: "
+    << f << std::endl;
 
     GF128.write(std::cout << "Indeed, we are in ") <<std::endl;
 
     GF128.generator(gen);
     GF128.write(std::cout <<
                 "In this field, the generator used is (in 2-adic): ", gen)
-                          << std::endl
-                          << " whose internal representation is "
-                          << gen << std::endl;
+    << std::endl
+    << " whose internal representation is "
+    << gen << std::endl;
 
 
     Poly1PadicDom< GFqDom<int64_t>, Dense > Padic2(Pol2);
-        //
+    //
 
     std::cout << "Irreducible (in 2-adic): "
-              << GF128.irreducible() << std::endl;
+    << GF128.irreducible() << std::endl;
 
     GF128.init(g, Padic2.radix( Q, Integer(5) ));
     GF128.write(std::cout
                 << "2-adic representation of 1+X^2 is: ", g)
-                << std::endl;
+    << std::endl;
 
     GF128.init(h);
     GF128.add(h, g, f);
     GF128.write(std::cout
                 << "2-adic representation of X+X^2 is: ", h)
-                << std::endl;
+    << std::endl;
 
     GF128.mul(h, g, f);
     GF128.write(std::cout
                 << "2-adic representation of 1+X+X^2+X^3 is: ", h)
-                << std::endl;
+    << std::endl;
 
     GF128.div(h, g, f);
     GF128.write(std::cout
                 << "2-adic representation of 1+X is: ", h)
-                << std::endl;
+    << std::endl;
 
     GF128.init(j, Padic2.radix( Q, Integer(213) ));
     GF128.write(std::cout
                 << "2-adic representation of the moding out of X^7+X^6+X^4+X^2+1 by the irreducible is: ", j)
-                << std::endl;
+    << std::endl;
 
     return 0;
 
 }
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

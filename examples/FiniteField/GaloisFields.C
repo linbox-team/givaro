@@ -17,8 +17,8 @@ int main (int argc, char * * argv) {
     uint64_t expo = (argc>2?(uint64_t)atoi(argv[2]):8);
 
     {
-            // This is the field with 11^2=121 elements
-            // Using a generator representation and tables
+        // This is the field with 11^2=121 elements
+        // Using a generator representation and tables
         GFqDom<int64_t> F1(11,2);
         F1.write(std::cout << "This is the field with 121 elements: ") << std::endl;
         std::cout << " using: " << F1.irreducible() << " as irreducible polynomial" << std::endl;
@@ -29,16 +29,16 @@ int main (int argc, char * * argv) {
     }
 
     {
-            // This is the field with q^expo elements using the best
-            // possible base field
+        // This is the field with q^expo elements using the best
+        // possible base field
 
         std::cerr << "Exponent max for zech logs with characteristic " << q << " : " << FF_EXPONENT_MAX(q,expo) << std::endl;
         std::cerr << "Sub-Exponent max for zech logs " << q << "^" << expo << " : " << FF_SUBEXPONENT_MAX(q,expo) << std::endl;
         std::cout << "NEED polynomial representation : " << NEED_POLYNOMIAL_REPRESENTATION(q,expo) << std::endl;
 
         if ( NEED_POLYNOMIAL_REPRESENTATION(q,expo) ) {
-                // The template parameter if the type of the base field
-                // By default GFqDom<int64_t> is used.
+            // The template parameter if the type of the base field
+            // By default GFqDom<int64_t> is used.
             Extension<> Fqe(q, expo);
             Fqe.write(std::cout << "This is the field with " << q << '^' << expo << " elements: ") << std::endl;
         } else {
@@ -48,17 +48,17 @@ int main (int argc, char * * argv) {
     }
 
 
-        // This is the field with 11^2=121 elements
-        // Using a polynomial representation
+    // This is the field with 11^2=121 elements
+    // Using a polynomial representation
     {
-	    GFqDom<int64_t> F11(11);
-	    Extension< GFqDom<int64_t> > F121(F11, 2);
-	    F121.write(std::cout << "This is the field with 121 elements: ") << std::endl;
+        GFqDom<int64_t> F11(11);
+        Extension< GFqDom<int64_t> > F121(F11, 2);
+        F121.write(std::cout << "This is the field with 121 elements: ") << std::endl;
     }
 
-        // This is the field with 11^2=121 elements
-        // Using a polynomial representation
-        // And an alternative field, works only with Givaro >= 3.4.1
+    // This is the field with 11^2=121 elements
+    // Using a polynomial representation
+    // And an alternative field, works only with Givaro >= 3.4.1
     {
 
         Modular<int64_t> F11(11);
@@ -68,9 +68,9 @@ int main (int argc, char * * argv) {
 
     }
 
-        // This is the field with 11^2=121 elements
-        // Using a polynomial representation
-        // And an alternative field, works only with Givaro >= 3.4.1
+    // This is the field with 11^2=121 elements
+    // Using a polynomial representation
+    // And an alternative field, works only with Givaro >= 3.4.1
     {
 
         Modular<int64_t> F11(11);
@@ -86,14 +86,14 @@ int main (int argc, char * * argv) {
     }
 
 
-        // This is the field with 2^8 elements
+    // This is the field with 2^8 elements
     {
         GFqDom<int64_t> F256(2,8);
         F256.write(std::cout << "This is the field with 256 elements: ") << ", using: " << F256.irreducible() << " as irreducible polynomial" << std::endl;
     }
 
-        // This is the field with 2^8 elements
-        // Using 1 + x +x^3 +x^4 +x^8 as irreducible polynomial
+    // This is the field with 2^8 elements
+    // Using 1 + x +x^3 +x^4 +x^8 as irreducible polynomial
     {
         std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
         Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
@@ -119,7 +119,7 @@ int main (int argc, char * * argv) {
         Padic2.radix(polIrred, F256.irreducible() );
 
         Pol2.write(Pol2.write(
-            std::cout << " that is with this representation, (", polGen)
+                              std::cout << " that is with this representation, (", polGen)
                    << ")^" << F256.indeterminate()
                    << " == Z mod (", polIrred) << ')' << std::endl;
 
@@ -142,7 +142,7 @@ int main (int argc, char * * argv) {
 
             F256.add(c,a,b);
             F256.write( F256.write( F256.write(
-                std::cout, a) << '+', b) << '=' , c ) << std::endl;
+                                               std::cout, a) << '+', b) << '=' , c ) << std::endl;
         }
 
         {
@@ -177,7 +177,7 @@ int main (int argc, char * * argv) {
 
             F256.add(c,a,b);
             F256.write( F256.write( F256.write(
-                std::cout, a) << '+', b) << '=' , c ) << std::endl;
+                                               std::cout, a) << '+', b) << '=' , c ) << std::endl;
         }
 
         {
@@ -202,7 +202,7 @@ int main (int argc, char * * argv) {
 
             F256_.add(c,a,b);
             F256_.write( F256_.write( F256_.write(
-                std::cout, a) << '+', b) << '=' , c ) << std::endl;
+                                                  std::cout, a) << '+', b) << '=' , c ) << std::endl;
 
         }
 
@@ -211,3 +211,5 @@ int main (int argc, char * * argv) {
 
     return 0;
 }
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

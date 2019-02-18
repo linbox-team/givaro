@@ -37,137 +37,139 @@ typedef Domain::Element Modulo;
 int main(int argc, char ** argv)
 {
 
-    GivRandom generator;
-    long P (32749);     // argv[1] : Modulus
-    // int TAILLE (256);   // argv[2] : Vector size
-    // long NB (500000);    // argv[3] : Number of iterations
-    int offset = 0;
-    if (argc > ++offset) P = atoi( argv[ offset ] );
-    // if (argc > ++offset) TAILLE = atoi( argv[ offset ] );
-    // if (argc > ++offset) NB = atoi( argv[ offset ] );
+	GivRandom generator;
+	long P (32749);     // argv[1] : Modulus
+	// int TAILLE (256);   // argv[2] : Vector size
+	// long NB (500000);    // argv[3] : Number of iterations
+	int offset = 0;
+	if (argc > ++offset) P = atoi( argv[ offset ] );
+	// if (argc > ++offset) TAILLE = atoi( argv[ offset ] );
+	// if (argc > ++offset) NB = atoi( argv[ offset ] );
 
-    Timer inver;
-    inver.clear();
-    inver.start();
-    Domain GFq((Domain::Residu_t)P);
+	Timer inver;
+	inver.clear();
+	inver.start();
+	Domain GFq((Domain::Residu_t)P);
 
-    std::cout << "."<< std::flush;
+	std::cout << "."<< std::flush;
 
-    Modulo * z1 = new Modulo[TAILLE], * z2 = new Modulo[TAILLE], * z23 = new Modulo[TAILLE], * z3 = new Modulo[TAILLE];
+	Modulo * z1 = new Modulo[TAILLE], * z2 = new Modulo[TAILLE], * z23 = new Modulo[TAILLE], * z3 = new Modulo[TAILLE];
 
-//    long seuil = GIVMIN(P*2,TAILLE);
+	//    long seuil = GIVMIN(P*2,TAILLE);
 
-    std::cout << "."<< std::flush;
+	std::cout << "."<< std::flush;
 
-    for(int i=0; i<TAILLE; ++i){
-        GFq.random(generator,z1[i]) ;
-        GFq.nonzerorandom(generator,z2[i]) ;
-        GFq.random(generator,z23[i]) ;
-    }
-    
+	for(int i=0; i<TAILLE; ++i){
+		GFq.random(generator,z1[i]) ;
+		GFq.nonzerorandom(generator,z2[i]) ;
+		GFq.random(generator,z23[i]) ;
+	}
 
-    std::cout << "."<< std::flush;
-    inver.stop();
 
-    std::cout << "Init et Tableaux des  modulo " << P << " :\n" << inver << std::endl << std::flush;
+	std::cout << "."<< std::flush;
+	inver.stop();
 
-    double coef = (double)NB*TAILLE / 1e6;
+	std::cout << "Init et Tableaux des  modulo " << P << " :\n" << inver << std::endl << std::flush;
 
-    Timer tim;tim.clear();tim.start();
-    for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
-        GFq.mul(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Mul: " << coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	double coef = (double)NB*TAILLE / 1e6;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
-        GFq.add(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Add: " << coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	Timer tim;tim.clear();tim.start();
+	for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
+		GFq.mul(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Mul: " << coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
-        GFq.axpyin(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " MulAdd IN place: " << 2*coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
+		GFq.add(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Add: " << coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
-        GFq.axpy(z3[i], z1[i], z2[i], z23[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " MulAdd: " << 2*coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
+		GFq.axpyin(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " MulAdd IN place: " << 2*coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
-        GFq.sub(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Sub: " << coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
+		GFq.axpy(z3[i], z1[i], z2[i], z23[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " MulAdd: " << 2*coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
+		GFq.sub(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Sub: " << coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 #if 0
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
-        GFq.div(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Div: " << coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k)  for(int i=0; i<TAILLE; ++i)
+		GFq.div(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Div: " << coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 #endif
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
-        GFq.neg(z3[i], z1[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Neg: " << (coef / tim.usertime())
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
+		GFq.neg(z3[i], z1[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Neg: " << (coef / tim.usertime())
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    for(int i=0; i<TAILLE; ++i){
-            GFq.random(generator,z1[i]) ;
-            GFq.nonzerorandom(generator,z2[i]) ;
-            GFq.random(generator,z23[i]) ;
-    }
-    
+	for(int i=0; i<TAILLE; ++i){
+		GFq.random(generator,z1[i]) ;
+		GFq.nonzerorandom(generator,z2[i]) ;
+		GFq.random(generator,z23[i]) ;
+	}
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
-        GFq.add(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Add: " << coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
-        GFq.sub(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Sub: " << coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
+		GFq.add(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Add: " << coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
-        GFq.axpyin(z3[i], z1[i], z2[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " MulAdd IN place: " << 2*coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
+		GFq.sub(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Sub: " << coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
-        GFq.axpy(z3[i], z1[i], z2[i], z23[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " MulAdd: " << 2*coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
+		GFq.axpyin(z3[i], z1[i], z2[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " MulAdd IN place: " << 2*coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    tim.clear();tim.start();
-    for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
-        GFq.neg(z3[i], z1[i]);
-    tim.stop();
-    std::cout << NB << " * " << TAILLE << " Neg: " << coef / tim.usertime()
-         << "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
+		GFq.axpy(z3[i], z1[i], z2[i], z23[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " MulAdd: " << 2*coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
 
-    return 0;
+	tim.clear();tim.start();
+	for (int k=0; k<NB; ++k) for(int i=0; i<TAILLE; ++i)
+		GFq.neg(z3[i], z1[i]);
+	tim.stop();
+	std::cout << NB << " * " << TAILLE << " Neg: " << coef / tim.usertime()
+	<< "Mop/s\n" << tim << ", ex: " << z3[0] << std::endl << std::flush;
+
+	return 0;
 }
 
 // vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen:foldmethod=syntax
 /* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

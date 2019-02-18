@@ -25,28 +25,30 @@ using namespace Givaro;
 // res ---> a^e % p
 int main(int argc, char ** argv) {
 
- {
-     Integer p(argv[3]);
-     Modular<Integer> Zp( p );
-     Modular<Integer>::Element a, b;
-     unsigned long e = (unsigned long)atoi(argv[2]) ;
-     Zp.init(a, Integer(argv[1]));
-     Zp.init(b);
+    {
+        Integer p(argv[3]);
+        Modular<Integer> Zp( p );
+        Modular<Integer>::Element a, b;
+        unsigned long e = (unsigned long)atoi(argv[2]) ;
+        Zp.init(a, Integer(argv[1]));
+        Zp.init(b);
 
-     Timer tim;tim.clear();tim.start();
-     dom_power(b, a, (long)e, Zp);
-     tim.stop();
-     
-     Zp.write( std::cout << '(', a) << '^' << e << ") % " << p << '=' << std::flush;
-     Zp.write( std::cerr, b) << std::endl;
-     
-     std::cerr << tim << std::endl;
-     
- }
- 
- 
- 
- 
- return 0;
+        Timer tim;tim.clear();tim.start();
+        dom_power(b, a, (long)e, Zp);
+        tim.stop();
+
+        Zp.write( std::cout << '(', a) << '^' << e << ") % " << p << '=' << std::flush;
+        Zp.write( std::cerr, b) << std::endl;
+
+        std::cerr << tim << std::endl;
+
+    }
+
+
+
+
+    return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

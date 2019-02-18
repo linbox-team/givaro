@@ -40,26 +40,26 @@ int main(int argc, char** argv)
 
     Timer tim; tim.clear();
     tim.start();
-        //======================================================================
-        // Default is partial factorization up to factors of at least 12 digits.
-        // with probability of error much less than 2^{-40}
-        // IP.probable_prim_root(pr, error, a );
+    //======================================================================
+    // Default is partial factorization up to factors of at least 12 digits.
+    // with probability of error much less than 2^{-40}
+    // IP.probable_prim_root(pr, error, a );
 
 
-        //======================================================================
-        // Choosing L to be O(log^2(p))
-        // gives the best probability with O(log^4(p)) complexity
-        // Probability of error is approximately O(1/log^4(p))
-        // IP.probable_prim_root(pr, error, a, (unsigned long)power(logtwo(a),2));
+    //======================================================================
+    // Choosing L to be O(log^2(p))
+    // gives the best probability with O(log^4(p)) complexity
+    // Probability of error is approximately O(1/log^4(p))
+    // IP.probable_prim_root(pr, error, a, (unsigned long)power(logtwo(a),2));
 
-        //======================================================================
-        // Choosing L to be O( \sqrt(epsilon) )
-        // gives probability of error at most epsilon
-        // Newton-Raphson iteration is used for
-        // 1-epsilon = (1+2/(p-1))*(1-1/B)^(ln( (p-1)/2 )/ln(B))
-        // So that no factor less than B can be avoided
-        // With Pollard's rho factorization, L is chosen to be sqrt(B)
-        // Might not be polynomial if epsilon is too big
+    //======================================================================
+    // Choosing L to be O( \sqrt(epsilon) )
+    // gives probability of error at most epsilon
+    // Newton-Raphson iteration is used for
+    // 1-epsilon = (1+2/(p-1))*(1-1/B)^(ln( (p-1)/2 )/ln(B))
+    // So that no factor less than B can be avoided
+    // With Pollard's rho factorization, L is chosen to be sqrt(B)
+    // Might not be polynomial if epsilon is too big
 #define GIVARO_POLLARD
     IP.probable_prim_root(pr, error, a, epsilon );
     tim.stop();
@@ -93,3 +93,5 @@ int main(int argc, char** argv)
     return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

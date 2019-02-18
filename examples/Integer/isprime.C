@@ -25,22 +25,24 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-//  Givaro::Init(&argc, &argv);
+    //  Givaro::Init(&argc, &argv);
 
 
-  IntPrimeDom IP;
-  IntPrimeDom::Element m;
-  if (argc > 1) m = Integer(argv[1]);
-  unsigned int r = argc > 2 ? (unsigned int)atoi(argv[2]) : 5;
+    IntPrimeDom IP;
+    IntPrimeDom::Element m;
+    if (argc > 1) m = Integer(argv[1]);
+    unsigned int r = argc > 2 ? (unsigned int)atoi(argv[2]) : 5;
 
-        Timer tim; tim.clear(); tim.start();
-        bool a = IP.isprime(m,(int)r);
-        tim.stop();
-        cout << (a?"true":"false") << endl;
-        cerr << tim << endl;
+    Timer tim; tim.clear(); tim.start();
+    bool a = IP.isprime(m,(int)r);
+    tim.stop();
+    cout << (a?"true":"false") << endl;
+    cerr << tim << endl;
 
-//  Givaro::End();
+    //  Givaro::End();
 
-  return 0;
+    return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

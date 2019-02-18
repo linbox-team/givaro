@@ -22,16 +22,18 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-  IntNumTheoDom<> IP;
-  IntNumTheoDom<>::Element a,pr;
-  if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
+    IntNumTheoDom<> IP;
+    IntNumTheoDom<>::Element a,pr;
+    if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
 
-        Timer tim; tim.clear(); tim.start();
-	IP.prim_elem(pr, a);
-        tim.stop();
-	IntegerDom().write( std::cout, pr ) << std::endl;
-	std::cerr << tim << std::endl;
+    Timer tim; tim.clear(); tim.start();
+    IP.prim_elem(pr, a);
+    tim.stop();
+    IntegerDom().write( std::cout, pr ) << std::endl;
+    std::cerr << tim << std::endl;
 
-  return 0;
+    return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

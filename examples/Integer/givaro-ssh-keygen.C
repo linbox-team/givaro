@@ -51,9 +51,9 @@ using namespace Givaro;
 template<class RandIter=GivRandom>
 struct Givaro_keygen {
     void operator()(Integer& n, Integer& e, Integer& d,
-                   Integer& p, Integer& q,
-                   Integer& dmp1, Integer& dmq1,
-                   Integer& iqmp, long size, unsigned long seed) {
+                    Integer& p, Integer& q,
+                    Integer& dmp1, Integer& dmq1,
+                    Integer& iqmp, long size, unsigned long seed) {
 
         typename IntRSADom<RandIter>::random_generator gen(seed);
         Integer::seeding(gen.seed());
@@ -94,16 +94,16 @@ int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
     Givaro_keygen<>()(in,ie,id,ip,iq,idmp1,idmq1,iiqmp, s, seed);
     tim.stop();
 
-/*
-    std::cerr << "n: " << in << std::endl;
-    std::cerr << "e: " << ie << std::endl;
-    std::cerr << "d: " << id << std::endl;
-    std::cerr << "p: " << ip << std::endl;
-    std::cerr << "q: " << iq << std::endl;
-    std::cerr << "dmp1: " << idmp1 << std::endl;
-    std::cerr << "dmq1: " << idmq1 << std::endl;
-    std::cerr << "iqmp: " << iiqmp << std::endl;
-*/
+    /*
+       std::cerr << "n: " << in << std::endl;
+       std::cerr << "e: " << ie << std::endl;
+       std::cerr << "d: " << id << std::endl;
+       std::cerr << "p: " << ip << std::endl;
+       std::cerr << "q: " << iq << std::endl;
+       std::cerr << "dmp1: " << idmp1 << std::endl;
+       std::cerr << "dmq1: " << idmq1 << std::endl;
+       std::cerr << "iqmp: " << iiqmp << std::endl;
+       */
 
     std::cerr << tim << std::endl;
 
@@ -137,20 +137,20 @@ int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
     rsakey.type=KEY_RSA;
     rsakey.rsa = rsa;
 
-/*
-    std::cerr << "print: " << std::endl;
-    RSA_print_fp(stdout, rsa, 0);
+    /*
+       std::cerr << "print: " << std::endl;
+       RSA_print_fp(stdout, rsa, 0);
 
-    std::cerr << "PEM Write: " << std::endl;
-    PEM_write_RSAPublicKey(stdout,rsa);
-*/
+       std::cerr << "PEM Write: " << std::endl;
+       PEM_write_RSAPublicKey(stdout,rsa);
+       */
 
     std::cerr << "key's randomart: \n" << sshkey_fingerprint(&rsakey, SSH_FP_HASH_DEFAULT, SSH_FP_RANDOMART) << std::endl;
 
-        // Write Private Key in ssl PEM format
+    // Write Private Key in ssl PEM format
     PEM_write_RSAPrivateKey(fileout,rsa,NULL,NULL,0,NULL,NULL);
 
-        // Write Public key in ssh b64 format
+    // Write Public key in ssh b64 format
     key_write(&rsakey, filepub);
     fprintf(filepub," givaro\n");
 
@@ -159,15 +159,15 @@ int mymain(FILE* fileout, FILE* filepub, long s, unsigned long seed) {
 }
 
 unsigned long seedfromfile(char * filename) {
-     std::ifstream filrand(filename);
-     unsigned long seed=0;
-     for(unsigned int i=0; i<sizeof(unsigned long); ++i) {
-         unsigned char t; filrand >> t;
-         seed <<= 8;
-         seed |= t;
-     }
-std::cerr << "Generated seed: " << seed << ", using " << filename << std::endl;
-     return seed;
+    std::ifstream filrand(filename);
+    unsigned long seed=0;
+    for(unsigned int i=0; i<sizeof(unsigned long); ++i) {
+        unsigned char t; filrand >> t;
+        seed <<= 8;
+        seed |= t;
+    }
+    std::cerr << "Generated seed: " << seed << ", using " << filename << std::endl;
+    return seed;
 }
 
 void usage() {
@@ -190,37 +190,37 @@ int main(int argc, char** argv)
 
         if (argv[i][0] == '-') {
             switch(argv[i][1]) {
-                case 'h':; case 'H': {
-                    usage(); return 0;
-                }
-                case 'b':; case 'B': {
-                    s = atoi(argv[++i]);
-                    break;
-                }
-                case 'f':; case 'F': {
-                    filprivname = std::string(argv[++i]);
-                    ++files;
-                    break;
-                }
-                case 'p':; case 'P': {
-                    filpubname = std::string(argv[++i]);
-                    ++files;
-                    break;
-                }
-                case 'r':; case 'R': {
-                    seed = seedfromfile(argv[++i]);
-                    break;
-                }
+            case 'h':; case 'H': {
+                         usage(); return 0;
+                     }
+            case 'b':; case 'B': {
+                         s = atoi(argv[++i]);
+                         break;
+                     }
+            case 'f':; case 'F': {
+                         filprivname = std::string(argv[++i]);
+                         ++files;
+                         break;
+                     }
+            case 'p':; case 'P': {
+                         filpubname = std::string(argv[++i]);
+                         ++files;
+                         break;
+                     }
+            case 'r':; case 'R': {
+                         seed = seedfromfile(argv[++i]);
+                         break;
+                     }
             }
         }
     }
 
 
     if (files > 1) {
-	    FILE * filpriv;
+        FILE * filpriv;
         filpriv = fopen(filprivname.c_str(),"w");
         if (argc>3) {
-		FILE * filpub ;
+            FILE * filpub ;
             filpub = fopen(filpubname.c_str(),"w");
             mymain(filpriv,filpub,s,seed);
             fclose(filpub);
@@ -232,3 +232,6 @@ int main(int argc, char** argv)
         mymain(stdout,stdout,s,seed);
     return 0;
 }
+
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -20,9 +20,9 @@ bool TestAdd(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
     DP.add ( R, P, Q, (long)d1, (long)d2); // R = P+Q;
-//     DP.write( DP.write(
-//         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
-//     DP.write(std::cout << " = " , R) << std::endl;
+    //     DP.write( DP.write(
+    //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
+    //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.add (T, P, Q);
     V=T;
@@ -54,9 +54,9 @@ bool TestSub(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
     DP.sub ( R, P, Q, (long)d1, (long)d2); // R = P-Q;
-//     DP.write( DP.write(
-//         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
-//     DP.write(std::cout << " = " , R) << std::endl;
+    //     DP.write( DP.write(
+    //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
+    //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.sub (T, P, Q);
     V=T;
@@ -88,9 +88,9 @@ bool TestMul(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::E
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
     DP.mul ( R, P, Q, (long)d1, (long)d2); // R = P*Q;
-//     DP.write( DP.write(
-//         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
-//     DP.write(std::cout << " = " , R) << std::endl;
+    //     DP.write( DP.write(
+    //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
+    //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.mul (T, P, Q);
     V=T;
@@ -122,9 +122,9 @@ bool TestAxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
     DP.axpy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q+G;
-//     DP.write( DP.write(
-//         std::cout << "[(" , P ) << ") * (", Q) << ")]_" << d1 << '^' << d2 ;
-//     DP.write(std::cout << " = " , R) << std::endl;
+    //     DP.write( DP.write(
+    //         std::cout << "[(" , P ) << ") * (", Q) << ")]_" << d1 << '^' << d2 ;
+    //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.axpy (T, P, Q, G);
     V=T;
@@ -166,9 +166,9 @@ bool TestAxmy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >::
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
     DP.axmy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q-G;
-//     DP.write( DP.write(
-//         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
-//     DP.write(std::cout << " = " , R) << std::endl;
+    //     DP.write( DP.write(
+    //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
+    //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.axmy (T, P, Q, G);
     V=T;
@@ -208,9 +208,9 @@ bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >:
     ++TTcount;
     TruncDom< GFqDom<int> >::Element R, T, V, S, U, W;
     DP.maxpy ( R, P, Q, G, (long)d1, (long)d2); // R = P*Q;
-//     DP.write( DP.write(
-//         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
-//     DP.write(std::cout << " = " , R) << std::endl;
+    //     DP.write( DP.write(
+    //         std::cout << "[(" , P ) << ") + (", Q) << ")]_" << d1 << '^' << d2 ;
+    //     DP.write(std::cout << " = " , R) << std::endl;
 
     DP.maxpy (T, P, Q, G);
     V=T;
@@ -261,8 +261,8 @@ int main(int argc, char ** argv) {
     DP101.init( monomial, Degree(2), 12U) ; // 12 X^2
     DP101.addin( P, monomial ); // P is now 5-33*X+12*X^2
 
-//     // DP101.read( std::cin, P); // would read P as a succession of integers :
-//                                 // deg leadcoeff (lead-1)coeff ... unitcoeff
+    //     // DP101.read( std::cin, P); // would read P as a succession of integers :
+    //                                 // deg leadcoeff (lead-1)coeff ... unitcoeff
     Q = P;
 
     DP101.init( Q, Degree(0), 6U );

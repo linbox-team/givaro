@@ -23,38 +23,38 @@
 using namespace Givaro;
 
 #define TEST_EQUALITY( a, b )						\
-    if (!F.areEqual((a),(b))) {						\
-	F.write(F.write(std::cout,a) << "!=",b)				\
-	    << " failed (at line " <<  __LINE__ << ")" << std::endl;	\
-	return -1 ;							\
-    }
+if (!F.areEqual((a),(b))) {						\
+    F.write(F.write(std::cout,a) << "!=",b)				\
+    << " failed (at line " <<  __LINE__ << ")" << std::endl;	\
+    return -1 ;							\
+}
 
 #define TEST_FIELD_SEVERAL_TIMES_SEEDED( a, seed )				\
-    if (TestField( (a), int(seed)) ) {			\
-	std::cout << #a << " failed !" << std::endl;	\
-	return -1 ;					\
-    }
+if (TestField( (a), int(seed)) ) {			\
+    std::cout << #a << " failed !" << std::endl;	\
+    return -1 ;					\
+}
 
 #define TEST_ONE_FIELD_SEEDED( F, a )				\
-    if (TestOneField(F, (a))) {				\
-	std::cout << #a << " failed !" << std::endl;	\
-	return -1 ;					\
-    }
-    
+if (TestOneField(F, (a))) {				\
+    std::cout << #a << " failed !" << std::endl;	\
+    return -1 ;					\
+}
+
 #define TEST_LAST_PRIME(Field, Name)			\
-    Field Name(previousprime(Field::maxCardinality()));	\
-    TEST_FIELD_SEVERAL_TIMES_SEEDED(Name, seed);
+Field Name(previousprime(Field::maxCardinality()));	\
+TEST_FIELD_SEVERAL_TIMES_SEEDED(Name, seed);
 
 #define TEST_SPECIFIC(Field, Name, Modulus...)		\
-    Field Name(Modulus);				\
-    TEST_FIELD_SEVERAL_TIMES_SEEDED(Name, seed);
+Field Name(Modulus);				\
+TEST_FIELD_SEVERAL_TIMES_SEEDED(Name, seed);
 
 
 template<class Field>
 bool invertible(const Field& F, const typename Field::Element& a)
 {
-//     auto ai(a);
-//     return F.mulin(F.inv(ai, a), a) == F.one;
+    //     auto ai(a);
+    //     return F.mulin(F.inv(ai, a), a) == F.one;
     Integer ai;
     F.convert(ai,a);
     return (gcd(ai,Integer(F.characteristic()))==1);
@@ -76,13 +76,13 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 
     F.init(a, 0u);
     TEST_EQUALITY(a, F.zero);
-    
+
     F.init(a, 1);
-//         F.write(std::cerr) << std::endl;
-//         F.write(std::cerr << "a: ", a) << std::endl;
-//         F.write(std::cerr << "1: ", F.one) << std::endl;
+    //         F.write(std::cerr) << std::endl;
+    //         F.write(std::cerr << "a: ", a) << std::endl;
+    //         F.write(std::cerr << "1: ", F.one) << std::endl;
     TEST_EQUALITY(a, F.one);
-    
+
     F.init(a, 1u);
     TEST_EQUALITY(a, F.one);
 
@@ -90,13 +90,13 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     TEST_EQUALITY(a_, F.one);
 
     F.init(ma,1); F.negin(ma);
-//         F.write(std::cerr) << std::endl;
-//         F.write(std::cerr << "a: ", a) << std::endl;
-//         F.write(std::cerr << "ma: ", ma) << std::endl;
-//         F.write(std::cerr << "1: ", F.one) << std::endl;
-//         F.write(std::cerr << "-1: ", F.mOne) << std::endl;
+    //         F.write(std::cerr) << std::endl;
+    //         F.write(std::cerr << "a: ", a) << std::endl;
+    //         F.write(std::cerr << "ma: ", ma) << std::endl;
+    //         F.write(std::cerr << "1: ", F.one) << std::endl;
+    //         F.write(std::cerr << "-1: ", F.mOne) << std::endl;
     TEST_EQUALITY(ma, F.mOne);
-    
+
     F.init(ma,1_i64); F.negin(ma);
     TEST_EQUALITY(ma, F.mOne);
 
@@ -105,13 +105,13 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     TEST_EQUALITY(a_, F.mOne);
 
 #ifdef GIVARO_DEBUG
-// F.write(std::cerr) << std::endl;
-// F.write(std::cerr << "0: ", F.zero) << std::endl;
+    // F.write(std::cerr) << std::endl;
+    // F.write(std::cerr << "0: ", F.zero) << std::endl;
 
     try {
         F.inv(a, F.zero);
     } catch(const GivMathDivZero& e) {
-//        std::cerr << "Correctly catched division by zero: " << e << std::endl;
+        //        std::cerr << "Correctly catched division by zero: " << e << std::endl;
     }
     catch (...) {
         F.mulin(a, F.zero);
@@ -120,7 +120,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     }
 
 
-// F.write(std::cerr << "1/0: ", a) << std::endl;
+    // F.write(std::cerr << "1/0: ", a) << std::endl;
 #endif
 
 
@@ -139,11 +139,11 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 
     TEST_EQUALITY(c,c_);
     F.subin(c_,a);
-//         F.write(std::cerr) << std::endl;
-//         F.write(std::cerr << "a:=", a) << ';' << std::endl;
-//         F.write(std::cerr << "b:=", b) << ';' << std::endl;
-//         F.write(std::cerr << "c:=", c) << ';' << std::endl;
-//         F.write(std::cerr << "c_:=", c_) << ';' << std::endl;
+    //         F.write(std::cerr) << std::endl;
+    //         F.write(std::cerr << "a:=", a) << ';' << std::endl;
+    //         F.write(std::cerr << "b:=", b) << ';' << std::endl;
+    //         F.write(std::cerr << "c:=", c) << ';' << std::endl;
+    //         F.write(std::cerr << "c_:=", c_) << ';' << std::endl;
 
     TEST_EQUALITY(b,c_);
 
@@ -151,11 +151,11 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     F.assign(c_,c);       // c_ <- c
     F.divin(c_,b);      // c_ == a ?
 
-//        F.write(std::cerr) << std::endl;
-//        F.write(std::cerr << "a: ", a) << std::endl;
-//        F.write(std::cerr << "b: ", b) << std::endl;
-//        F.write(std::cerr << "c: ", c) << std::endl;
-//        F.write(std::cerr << "c_: ", c_) << std::endl;
+    //        F.write(std::cerr) << std::endl;
+    //        F.write(std::cerr << "a: ", a) << std::endl;
+    //        F.write(std::cerr << "b: ", b) << std::endl;
+    //        F.write(std::cerr << "c: ", c) << std::endl;
+    //        F.write(std::cerr << "c_: ", c_) << std::endl;
     TEST_EQUALITY(a,c_);
 
     F.assign(c, a);
@@ -247,15 +247,15 @@ int TestField(const Field& F, const uint64_t seed)
 {
     typename Field::Element x;
     typename Field::RandIter g(F, 0, seed);
-    
+
     F.init(x, 1);
     TEST_ONE_FIELD_SEEDED(F,x);
-    
+
     for (size_t i = 0; i< NBITER; ++i) {
         while (F.isZero(g.random(x))) {}
         TEST_ONE_FIELD_SEEDED(F,x);
     }
-    
+
     return 0;
 }
 
@@ -275,7 +275,7 @@ int main(int argc, char ** argv)
 #endif
     Integer::seeding((uint64_t)seed);
     RecInt::srand(seed);
-    
+
     using ModularCUS = Modular<int8_t, uint16_t>;
     using ModularSUZ = Modular<int16_t, uint32_t>;
     using ModularZULL = Modular<int32_t, uint64_t>;
@@ -286,7 +286,7 @@ int main(int argc, char ** argv)
 
     //--------------------//
     //----- Modulo 2 -----//
-    
+
     TEST_SPECIFIC(Modular<int8_t>, C2, 2);
     TEST_SPECIFIC(Modular<int16_t>, S2, 2);
     TEST_SPECIFIC(Modular<int32_t>, Z2, 2);
@@ -312,18 +312,18 @@ int main(int argc, char ** argv)
 
     //--------------------//
     //----- Modulo 3 -----//
-    
+
     TEST_SPECIFIC(ModularBalanced<int32_t>, BZ3, 3);
     TEST_SPECIFIC(ModularBalanced<int64_t>, BLL3, 3);
     TEST_SPECIFIC(ModularBalanced<float>, BF3, 3);
     TEST_SPECIFIC(ModularBalanced<double>, BD3, 3);
-    
+
     TEST_SPECIFIC(Montgomery<int32_t>, MZ3, 3);
     TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU3, 3);
 
     //---------------------//
     //----- Modulo 13 -----//
-    
+
     TEST_SPECIFIC(Modular<int8_t>, C13, 13);
     TEST_SPECIFIC(Modular<int16_t>, S13, 13);
     TEST_SPECIFIC(Modular<int32_t>, Z13, 13);
@@ -347,12 +347,12 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU13, 13);
     typedef Modular<RecInt::ruint128,RecInt::ruint256> MUU;
     TEST_SPECIFIC(MUU, RUU13, 13);
-    
+
     TEST_SPECIFIC(ModularBalanced<int32_t>, BZ13, 13);
     TEST_SPECIFIC(ModularBalanced<int64_t>, BLL13, 13);
     TEST_SPECIFIC(ModularBalanced<float>, BF13, 13);
     TEST_SPECIFIC(ModularBalanced<double>, BD13, 13);
-    
+
     TEST_SPECIFIC(Montgomery<int32_t>, MZ13, 13);
     TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU13, 13);
 
@@ -379,34 +379,34 @@ int main(int argc, char ** argv)
     //TEST_LAST_PRIME(ModularFD, FDpmax);
     TEST_LAST_PRIME(Modular<RecInt::rint128>, Rpmax);
     TEST_LAST_PRIME(Modular<RecInt::ruint128>, RUpmax);
-    
+
     TEST_LAST_PRIME(ModularBalanced<int32_t>, BZpmax);
     TEST_LAST_PRIME(ModularBalanced<int64_t>, BLLpmax);
     TEST_LAST_PRIME(ModularBalanced<float>, BFpmax);
     TEST_LAST_PRIME(ModularBalanced<double>, BDpmax);
-    
+
     TEST_LAST_PRIME(Montgomery<int32_t>, MZpmax);
     TEST_LAST_PRIME(Montgomery<RecInt::ruint128>, MRUpmax);
 
     //-------------------------//
     //----- Galois fields -----//
-    
+
     TEST_SPECIFIC(GFqDom<int32_t>, GF13, 13);
     TEST_SPECIFIC(GFqDom<int32_t>, GFpmax, 65521U);
     TEST_SPECIFIC(GFqDom<int64_t>, GFLLpmax, 4194301);
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial
-//     std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
-//     Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
-//     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
-//     Irred[8] = 1;
+    //     std::vector< GFqDom<int64_t>::Residu_t > Irred(9);
+    //     Irred[0] = 1; Irred[1] = 1; Irred[2] = 0; Irred[3] = 1;
+    //     Irred[4] = 1; Irred[5] = 0; Irred[6] = 0; Irred[7] = 0;
+    //     Irred[8] = 1;
     std::vector< int64_t > Irred {1,1,0,1,1,0,0,0,1};
     TEST_SPECIFIC(GFqDom<int64_t>, GF256, 2, 8, Irred);
 
-   // Zech log finite field with 343 elements
-   // and prescribed 3 +x^3  irreducible polynomial
-   // and prescribed 5 +3x +4x^2 generator polynomial
+    // Zech log finite field with 343 elements
+    // and prescribed 3 +x^3  irreducible polynomial
+    // and prescribed 5 +3x +4x^2 generator polynomial
     std::vector< int64_t > Irred3 {3,0,0,1}, Gene3 {5,3,4};
     TEST_SPECIFIC(GFqDom<int64_t>, GF343, 7, 3, Irred3, Gene3);
 

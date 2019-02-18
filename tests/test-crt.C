@@ -40,7 +40,7 @@ typedef Montgomery<int32_t>     Field10;
 
 template <typename Field>
 Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer UpperBoundChard, bool isFieldModular=true) {
-    
+
 
     typedef RNSsystem<Integer, Field>      CRTSystem;
     typedef typename CRTSystem::domains      Domains;
@@ -61,20 +61,20 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
     Integer b, M(1), a(UpperBoundChard);
 
     {
-        
+
         for(; i != PrimeDoms.end(); ++i, ++e, ++p, ++m) {
             *i = Field( ID.prevprimein( a ) );
             *p = a;
-            
+
             assert(i->characteristic() == *p);
 
-        	uint64_t tmp = generator();
+            uint64_t tmp = generator();
             i->init(*e,  tmp );
             i->convert(*m,*e);
             M *= a;
         }
     }
-    
+
     CRTSystem CRT( PrimeDoms );
     assert(CRT.size() == Primes.size());
 
@@ -105,32 +105,32 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
 #ifdef GIVARO_DEBUG
         std::cerr << "CRTFixed init : " << timf << std::endl;
 #endif
-        
+
         timf.clear(); timf.start();
         CRTFixed.RnsToRing( b, ModuliInts );
         timf.stop();
 #ifdef GIVARO_DEBUG
         std::cerr << "CRTFixed : " << timf << std::endl;
 #endif
-        
+
         if (TestRes != b) {
             std::cerr << "Error Field: ";
             PrimeDoms[0].write(std::cerr) << std::endl;
             std::cerr << "incoherency between normal : " << TestRes
-                      << " and fixed : " << b << std::endl;
+            << " and fixed : " << b << std::endl;
             exit(1); // très peu probable que res=0 pour de vrai.
         }
-        
+
     }
-    
-        
+
+
     Elements Verifs( Primes.size() );
     CRT.RingToRns( Verifs, TestRes );
 
-// #ifdef GIVARO_DEBUG
-//     for (const auto v : Verifs)
-// 	std::cerr << v << std::endl;
-// #endif
+    // #ifdef GIVARO_DEBUG
+    //     for (const auto v : Verifs)
+    // 	std::cerr << v << std::endl;
+    // #endif
 
     typename Elements::const_iterator v = Verifs.begin();
     i = PrimeDoms.begin();
@@ -158,7 +158,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
     if (! ID.areEqual(tmp,TestRes)) {
         std::cerr << "Error CRA: " << res << " mod " << M << " != " << TestRes << ";"  << std::endl;
     }
-    
+
 
 #ifdef GIVARO_DEBUG
     std::cout << res << " mod " << M << " = " << TestRes << ";"  << std::endl;
@@ -184,15 +184,15 @@ int main(int argc, char ** argv)
     GivRandom seedor( argc>3 ? (unsigned)atoi(argv[3]): (unsigned)BaseTimer::seed() );
     uint64_t seed = seedor.seed();
     GivRandom generator(seed);
-    
+
     Integer ubc( generator() >>(argc>2?atoi(argv[2]):17) );
-    if ( (Field4::maxCardinality() > 0) 
+    if ( (Field4::maxCardinality() > 0)
          && ( ubc > Field4::maxCardinality() ) ) {
         ubc = Field4::maxCardinality();
     }
     if (ubc<59) ubc = 59; // at least 15 primes
     Integer a4 = tmain<Field4>(argc, argv, GivRandom(seed), ubc);
-    Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed), ubc); 
+    Integer a7 = tmain<Field7>(argc, argv, GivRandom(seed), ubc);
     Integer a9 = tmain<Field9>(argc, argv, GivRandom(seed), ubc);
 
     if ( ubc > Field3::maxCardinality() )  {
@@ -234,7 +234,7 @@ int main(int argc, char ** argv)
     std::cerr << "a2: " << a2 << std::endl;
     std::cerr << "a5: " << a5 << std::endl;
 #endif
-    
+
     bool success = true;
     bool suctest = true;
     success = (a4 == a7); suctest &= success;
@@ -257,7 +257,7 @@ int main(int argc, char ** argv)
     if (! suctest)
         std::cerr << "Error: " << seed << std::endl;
     MemoryInfo.print(std::cerr) << std::endl;
-#endif    
+#endif
 
     ::Givaro::GivaroMain::End();
     return (! suctest);

@@ -1,13 +1,13 @@
 /* recint_extra.cpp - Extra arithmetics function of RecInt library test file
 
-Return value.
-    0    No error
-    != 0 Bad result for an operation
+   Return value.
+   0    No error
+   != 0 Bad result for an operation
 
-The following constants have to be defined.
-    STD_RECINT_SIZE     size of recint (> 5)
-    LOOPS           number of loops of randomized tests
-*/
+   The following constants have to be defined.
+   STD_RECINT_SIZE     size of recint (> 5)
+   LOOPS           number of loops of randomized tests
+   */
 
 #include <cstddef> // required by gmp versions <= 5.1.3
 #include <gmpxx.h>
@@ -24,21 +24,21 @@ int main(void)
     ruint<STD_RECINT_SIZE> a, b, z, p;
     rmint<STD_RECINT_SIZE> ma, mb, mz;
     mpz_class ga, gb, gz, gcmp;
-      
+
     // Init.
     RecInt::srand(limb(time(NULL)));
-    
+
     // Loop
     for (UDItype l = 1; l < LOOPS; l++) {
         rand(a); rand(b);
         ruint_to_mpz(ga, a); ruint_to_mpz(gb, b);
-        
+
         // GCD in ruint
         gcd(z, a, b);
         mpz_gcd(gz.get_mpz_t(), ga.get_mpz_t(), gb.get_mpz_t());
         ruint_to_mpz(gcmp, z);
         if (gcmp != gz) return 1;
-        
+
         // rmint Modular square root (if quadratic residue)
         do { rand(p); } while(p % 2 == 0);
         ma.init_module(p);
@@ -49,7 +49,7 @@ int main(void)
         else if (mz != 0 && (mz * mz) != ma) return 4;
     }
 
-    return 0; 
+    return 0;
 }
 
 

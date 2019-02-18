@@ -18,104 +18,104 @@ using namespace Givaro;
 int test(const IntFactorDom<> & IP, const Integer & m)
 {
 
-	Integer f = 1 ;
-	Integer r = 1 ;
+    Integer f = 1 ;
+    Integer r = 1 ;
 
-	//IP.factor(f,m,LOOPS);
-	IP.factor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
+    //IP.factor(f,m,LOOPS);
+    IP.factor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
 
-	Integer::mod(r,m,f);
-	if (r || ((f==1 || f==m) && !IP.local_prime(f)))
-	{
+    Integer::mod(r,m,f);
+    if (r || ((f==1 || f==m) && !IP.local_prime(f)))
+    {
 #ifdef GIVARO_DEBUG
-		if (r)
-			std::cout << "error : factor does not divide integer" << std::endl;
-		else
-			std::cout << "error : " << f << " is no good..." << std::endl;
+        if (r)
+            std::cout << "error : factor does not divide integer" << std::endl;
+        else
+            std::cout << "error : " << f << " is no good..." << std::endl;
 #endif
-		return -1 ;
-	}
+        return -1 ;
+    }
 
 
-	IP.primefactor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
-	if (r || !IP.local_prime(f))
-	{
+    IP.primefactor(f,m) ; // ne teste que Lenstra ou Pollard selon que que GIVARO_LENSTRA est définie ou non
+    if (r || !IP.local_prime(f))
+    {
 #ifdef GIVARO_DEBUG
-		if (r)
-			std::cout << "error : factor does not divide integer" << std::endl;
-		else
-			std::cout << "error : " << f << " is no good..." << std::endl;
+        if (r)
+            std::cout << "error : factor does not divide integer" << std::endl;
+        else
+            std::cout << "error : " << f << " is no good..." << std::endl;
 #endif
-		return -1 ;
-	}
+        return -1 ;
+    }
 
-	return 0 ;
+    return 0 ;
 }
 
 int main()
 {
-	IntFactorDom<> IP;
-	Integer m;
-	m.seeding();
-	int err = 0 ;
+    IntFactorDom<> IP;
+    Integer m;
+    m.seeding();
+    int err = 0 ;
 
-	long int a = 3;
-	long int b = 50 ;
-	for (size_t i = 0 ; i < NB_ITERS ; ++i)
-	{
-		//if (!(i%25)) std::cout << i << "..." ;
-		m = Integer::random_between(a,b);
-		err = test(IP,m);
-		if (err) break ;
-	}
-	if (err) return err ;
+    long int a = 3;
+    long int b = 50 ;
+    for (size_t i = 0 ; i < NB_ITERS ; ++i)
+    {
+        //if (!(i%25)) std::cout << i << "..." ;
+        m = Integer::random_between(a,b);
+        err = test(IP,m);
+        if (err) break ;
+    }
+    if (err) return err ;
 
-	a = 1;
-	b = 30 ;
-	for (size_t i = 0 ; i < NB_ITERS ; ++i)
-	{
-		m = Integer::random_between(a,b);
-		err = test(IP,m);
-		if (err) break ;
-	}
-	if (err) return err ;
+    a = 1;
+    b = 30 ;
+    for (size_t i = 0 ; i < NB_ITERS ; ++i)
+    {
+        m = Integer::random_between(a,b);
+        err = test(IP,m);
+        if (err) break ;
+    }
+    if (err) return err ;
 
-	// harder :
-	Integer p,q ;
-	a = 19 ;
-	b = 20 ;
-	for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
-	{
-		p = Integer::random_between(a,b);
-		IP.nextprimein(p);
-		q = Integer::random_between(a,b);
-		IP.nextprimein(q);
+    // harder :
+    Integer p,q ;
+    a = 19 ;
+    b = 20 ;
+    for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
+    {
+        p = Integer::random_between(a,b);
+        IP.nextprimein(p);
+        q = Integer::random_between(a,b);
+        IP.nextprimein(q);
 
-		m = p*q ;
-		err = test(IP,m);
-		if (err) break ;
-	}
-	if (err) return err ;
+        m = p*q ;
+        err = test(IP,m);
+        if (err) break ;
+    }
+    if (err) return err ;
 
-	a = 25 ;
-	b = 26 ;
-	for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
-	{
-		p = Integer::random_between(a,b);
-		IP.nextprimein(p);
-		q = Integer::random_between(a,b);
-		IP.nextprimein(q);
+    a = 25 ;
+    b = 26 ;
+    for (size_t i = 0 ; i < NB_ITERS/2 ; ++i)
+    {
+        p = Integer::random_between(a,b);
+        IP.nextprimein(p);
+        q = Integer::random_between(a,b);
+        IP.nextprimein(q);
 
-		m = p*q ;
-		err = test(IP,m);
-		if (err) break ;
-	}
-	if (err) return err ;
+        m = p*q ;
+        err = test(IP,m);
+        if (err) break ;
+    }
+    if (err) return err ;
 
 #ifdef GIVARO_DEBUG
-	std::cout << "success" <<std::endl;
+    std::cout << "success" <<std::endl;
 #endif
-	return 0;
+    return 0;
 }
 
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

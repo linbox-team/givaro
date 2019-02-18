@@ -1,5 +1,3 @@
-/* -*- mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
 // ==========================================================================
 // $Source: /var/lib/cvs/Givaro/src/kernel/system/givtimer.C,v $
 // Copyright(c)'1994-2009 by The Givaro group
@@ -266,3 +264,5 @@ const Timer Timer::operator / (const double nbiter)  const
 }
 
 } // namespace Givaro
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -1,6 +1,6 @@
 
 namespace Givaro {
-//#pragma message "#warning this file will probably not compile"
+    //#pragma message "#warning this file will probably not compile"
 
 } // Givaro
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

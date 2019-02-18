@@ -23,15 +23,15 @@
 
 namespace Givaro {
 
-// ==========================================================================
-// --
-// -- Poly1Dom<Domain,StorageTag>:
-// --
-// ==========================================================================
-template<class Domain, class StorageTag=Dense> class Poly1Dom;
+    // ==========================================================================
+    // --
+    // -- Poly1Dom<Domain,StorageTag>:
+    // --
+    // ==========================================================================
+    template<class Domain, class StorageTag=Dense> class Poly1Dom;
 
-template<class Domain> class Poly1Dom<Domain,Dense>;
-template<class Domain> class Poly1Dom<Domain,Sparse>;
+    template<class Domain> class Poly1Dom<Domain,Dense>;
+    template<class Domain> class Poly1Dom<Domain,Sparse>;
 
 } // Givaro
 

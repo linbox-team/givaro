@@ -27,17 +27,17 @@ namespace Givaro {
 
 
 
-// ==========================================================================
-// --
-// -- VectorDom<Domain,StorageTag>:
-// --
-/** VectorDom<Domain,StorageTag>
-*/
-// ==========================================================================
-template<class Domain, class StorageTag> class VectorDom {};
+    // ==========================================================================
+    // --
+    // -- VectorDom<Domain,StorageTag>:
+    // --
+    /** VectorDom<Domain,StorageTag>
+    */
+    // ==========================================================================
+    template<class Domain, class StorageTag> class VectorDom {};
 
-template<class Domain> class VectorDom<Domain,Dense>;
-template<class Domain> class VectorDom<Domain,Sparse>;
+    template<class Domain> class VectorDom<Domain,Dense>;
+    template<class Domain> class VectorDom<Domain,Sparse>;
 
 } // Givaro
 

@@ -16,27 +16,27 @@
 
 namespace Givaro {
 
-Indeter& Indeter::operator=( const Indeter& s )
-{
-  name = s.name;
-  return *this;
-}
+    Indeter& Indeter::operator=( const Indeter& s )
+    {
+        name = s.name;
+        return *this;
+    }
 
-int Indeter::compare(const Indeter& b)  const
-{
-  return name.compare(b.name);
-}
+    int Indeter::compare(const Indeter& b)  const
+    {
+        return name.compare(b.name);
+    }
 
-std::ostream& operator<< (std::ostream& o, const Indeter& X)
-{
-//   return o << '[' << X.name.baseptr() << ']';
-  return o << X.name ;
-}
+    std::ostream& operator<< (std::ostream& o, const Indeter& X)
+    {
+        //   return o << '[' << X.name.baseptr() << ']';
+        return o << X.name ;
+    }
 
- std::istream& operator>> (std::istream& s_in, Indeter& X)
- {
-   return s_in>>X.name;
- }
+    std::istream& operator>> (std::istream& s_in, Indeter& X)
+    {
+        return s_in>>X.name;
+    }
 
 } // Givaro
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

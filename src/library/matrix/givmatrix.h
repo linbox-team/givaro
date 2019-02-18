@@ -22,16 +22,16 @@ namespace Givaro {
 #pragma message "#warning this file will probably not compile"
 
 
-// ==========================================================================
-// --
-// -- MatrixDom<T, StorageTag>:
-// -- current available tags are:
-// --  * Dense: dynamic n x m matrix
-// --  * Sparse: dynamic n x m matrix with few non null entries
-// --  * FixedBlock<n,m>: static n x m dimensional matrix
-// ==========================================================================
+    // ==========================================================================
+    // --
+    // -- MatrixDom<T, StorageTag>:
+    // -- current available tags are:
+    // --  * Dense: dynamic n x m matrix
+    // --  * Sparse: dynamic n x m matrix with few non null entries
+    // --  * FixedBlock<n,m>: static n x m dimensional matrix
+    // ==========================================================================
 
-template <class T, class StorageTag> class MatrixDom { };
+    template <class T, class StorageTag> class MatrixDom { };
 
 } // Givaro
 

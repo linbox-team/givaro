@@ -26,22 +26,22 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-  void dcopy( const int*, const double*, const int*, double*, const int*);
-  void daxpy( const int*, const double*, const double*, const int*, double*, const int*);
+    void dcopy( const int*, const double*, const int*, double*, const int*);
+    void daxpy( const int*, const double*, const double*, const int*, double*, const int*);
 
 
-  void dgemv( const char*, const int*, const int*,
-              const double*, const double*, const int*,
-              const double*, const int*, const double*,
-              double*, const int*);
-  void dtrmv(const char*, const char*, const char*, const int*, const double*, const int*, double*, const int*);
-  void dtrsv(const char*, const char*, const char*, const int*, const double*, const int*, double*, const int*);
+    void dgemv( const char*, const int*, const int*,
+                const double*, const double*, const int*,
+                const double*, const int*, const double*,
+                double*, const int*);
+    void dtrmv(const char*, const char*, const char*, const int*, const double*, const int*, double*, const int*);
+    void dtrsv(const char*, const char*, const char*, const int*, const double*, const int*, double*, const int*);
 
 
-  void dtrsm( const char*, const char*, const char*, const char*, const int*, const int*, const double*, const double*, const int*, double*, const int*);
-  void dgemm(const char*, const char*, const int*, const int*, const int*, const double*, const double*, const int*, const double*, const int*, const double*, const double*, const int*) ;void dsyrk( const char*, const char*, const int*, const int*, const double*, const double*, const int*, double*, double*, const int*);
+    void dtrsm( const char*, const char*, const char*, const char*, const int*, const int*, const double*, const double*, const int*, double*, const int*);
+    void dgemm(const char*, const char*, const int*, const int*, const int*, const double*, const double*, const int*, const double*, const int*, const double*, const double*, const int*) ;void dsyrk( const char*, const char*, const int*, const int*, const double*, const double*, const int*, double*, double*, const int*);
 
-  void dpotrf( const char*, const int*, const double*, const int*, const int*) ;
+    void dpotrf( const char*, const int*, const double*, const int*, const int*) ;
 
 #ifdef __cplusplus
 }

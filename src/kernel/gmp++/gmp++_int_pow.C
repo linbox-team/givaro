@@ -23,84 +23,84 @@
 
 namespace Givaro {
 
-	int32_t isperfectpower(const Integer& n)
-	{
-		return mpz_perfect_power_p((mpz_srcptr)&(n.gmp_rep));
-	}
+    int32_t isperfectpower(const Integer& n)
+    {
+        return mpz_perfect_power_p((mpz_srcptr)&(n.gmp_rep));
+    }
 
-	Integer& pow(Integer& Res, const uint64_t n, const uint64_t p)
-	{
-		mpz_ui_pow_ui( (mpz_ptr)&(Res.gmp_rep), n, p);
-		return Res;
-	}
-	Integer& pow(Integer& Res, const Integer& n, const uint64_t p)
-	{
-		__gmpz_pow_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p);
-		return Res;
-	}
+    Integer& pow(Integer& Res, const uint64_t n, const uint64_t p)
+    {
+        mpz_ui_pow_ui( (mpz_ptr)&(Res.gmp_rep), n, p);
+        return Res;
+    }
+    Integer& pow(Integer& Res, const Integer& n, const uint64_t p)
+    {
+        __gmpz_pow_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p);
+        return Res;
+    }
 
-	Integer pow(const Integer& n, const uint64_t p)
-	{
-		if (p == 0) return Integer::one;
+    Integer pow(const Integer& n, const uint64_t p)
+    {
+        if (p == 0) return Integer::one;
 
-		Integer Res;
-		return pow(Res,n,p);
-	}
+        Integer Res;
+        return pow(Res,n,p);
+    }
 
-	Integer& pow(Integer& Res, const Integer& n, const int64_t l)
-	{
-		// Beware of negative values
-		return pow(Res, n, (uint64_t) std::abs(l) );
-	}
-	Integer pow(const Integer& n, const int64_t l)
-	{
-		if (l < 0)
-			return Integer::zero;
-		return pow(n, (uint64_t) std::abs(l) );
-	}
+    Integer& pow(Integer& Res, const Integer& n, const int64_t l)
+    {
+        // Beware of negative values
+        return pow(Res, n, (uint64_t) std::abs(l) );
+    }
+    Integer pow(const Integer& n, const int64_t l)
+    {
+        if (l < 0)
+            return Integer::zero;
+        return pow(n, (uint64_t) std::abs(l) );
+    }
 
-	Integer& powmod(Integer& Res, const Integer& n, const uint64_t p, const Integer& m)
-	{
-		mpz_powm_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p, (mpz_srcptr)&m.gmp_rep);
-		return Res;
-	}
+    Integer& powmod(Integer& Res, const Integer& n, const uint64_t p, const Integer& m)
+    {
+        mpz_powm_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p, (mpz_srcptr)&m.gmp_rep);
+        return Res;
+    }
 
-	Integer powmod(const Integer& n, const uint64_t p, const Integer& m)
-	{
-		if (p == 0) return Integer::one;
-		Integer Res;
-		return powmod(Res,n,p,m);
-	}
+    Integer powmod(const Integer& n, const uint64_t p, const Integer& m)
+    {
+        if (p == 0) return Integer::one;
+        Integer Res;
+        return powmod(Res,n,p,m);
+    }
 
-	Integer& powmod(Integer& Res, const Integer& n, const int64_t e, const Integer& m)
-	{
-		if (e < 0) {
-			inv(Res, n, m);
-			return powmod(Res, Res, (uint64_t)std::abs(e), m);
-		}
-		else {
-			return powmod (Res, n, (uint64_t)(e), m);
-		}
-	}
-	Integer powmod(const Integer& n, const int64_t e, const Integer& m)
-	{
-		Integer Res;
-		return powmod(Res, n, e, m);
-	}
+    Integer& powmod(Integer& Res, const Integer& n, const int64_t e, const Integer& m)
+    {
+        if (e < 0) {
+            inv(Res, n, m);
+            return powmod(Res, Res, (uint64_t)std::abs(e), m);
+        }
+        else {
+            return powmod (Res, n, (uint64_t)(e), m);
+        }
+    }
+    Integer powmod(const Integer& n, const int64_t e, const Integer& m)
+    {
+        Integer Res;
+        return powmod(Res, n, e, m);
+    }
 
 
-	Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m)
-	{
-		mpz_powm( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, (mpz_srcptr)&e.gmp_rep, (mpz_srcptr)&m.gmp_rep);
-		return Res;
-	}
-	Integer powmod(const Integer& n, const Integer& e, const Integer& m)
-	{
-		if (e == 0) return Integer::one;
-		if (e < 0)  return Integer::zero;
-		Integer Res;
-		return powmod(Res, n, e, m);
-	}
+    Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m)
+    {
+        mpz_powm( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, (mpz_srcptr)&e.gmp_rep, (mpz_srcptr)&m.gmp_rep);
+        return Res;
+    }
+    Integer powmod(const Integer& n, const Integer& e, const Integer& m)
+    {
+        if (e == 0) return Integer::one;
+        if (e < 0)  return Integer::zero;
+        Integer Res;
+        return powmod(Res, n, e, m);
+    }
 
 }
 #endif // __GIVARO_gmpxx_gmpxx_int_pow_C

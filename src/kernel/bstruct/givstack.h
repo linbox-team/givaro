@@ -17,26 +17,26 @@
 
 namespace Givaro {
 
-	//! Stack
-template <class THING>
-class Stack {
-public :
-inline Stack() ;
-inline ~Stack() ;
+    //! Stack
+    template <class THING>
+    class Stack {
+    public :
+        inline Stack() ;
+        inline ~Stack() ;
 
-inline void push(const THING&) ;
-inline void pop() ;
+        inline void push(const THING&) ;
+        inline void pop() ;
 
-inline int isEmpty() const { return (ThePointer == NULL) ; }
-inline THING top() const ;
+        inline int isEmpty() const { return (ThePointer == NULL) ; }
+        inline THING top() const ;
 
-private :
-struct inner_stack
-  {
-    THING thething ;
-    inner_stack * next ;
-   } *ThePointer ;
-} ;
+    private :
+        struct inner_stack
+        {
+            THING thething ;
+            inner_stack * next ;
+        } *ThePointer ;
+    } ;
 
 } // Givaro
 
@@ -45,3 +45,5 @@ struct inner_stack
 #endif // __GIVARO_stack_H
 
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

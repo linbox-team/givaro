@@ -100,7 +100,7 @@ namespace Givaro
         for(j=0; j<_pmone; j++)
             _tab_mul[j] = (Rep)j;
         for(j=_pmone; j< (int32_t)zero; j++)
-                   _tab_mul[j] = Rep(j-_pmone);
+            _tab_mul[j] = Rep(j-_pmone);
         for(j=zero; j<= fourpmone; j++)
             _tab_mul[j] = zero;
 
@@ -176,9 +176,9 @@ namespace Givaro
         numRefs ( F.numRefs),
 
         zero(F.zero), one(F.one),mOne(F.mOne)
-    {
-      (*numRefs)++;
-    }
+        {
+            (*numRefs)++;
+        }
 
     inline Modular<Log16>& Modular<Log16>::operator=( const Modular<Log16>& F)
     {
@@ -188,46 +188,46 @@ namespace Givaro
         F.assign(const_cast<Element&>(mOne),F.mOne);
 
 
-      if (this->numRefs) {
-        (*(this->numRefs))--;
-        if ((*(this->numRefs))==0) {
-          delete [] _tab_value2rep;
-          delete [] _tab_rep2value;
-          delete [] _tab_mul;
-          delete [] _tab_mone;
-          delete [] _tab_pone;
-          delete numRefs;
+        if (this->numRefs) {
+            (*(this->numRefs))--;
+            if ((*(this->numRefs))==0) {
+                delete [] _tab_value2rep;
+                delete [] _tab_rep2value;
+                delete [] _tab_mul;
+                delete [] _tab_mone;
+                delete [] _tab_pone;
+                delete numRefs;
+            }
         }
-      }
 
-      this->_p = F.residu();
-      this->_pmone = F._pmone;
-      this->_tab_value2rep = F._tab_value2rep;
-      this->_tab_rep2value = F._tab_rep2value;
-      this->_tab_mul = F._tab_mul;
-      this->_tab_div = F._tab_div;
-      this->_tab_neg = F._tab_neg;
-      this->_tab_mone = F._tab_mone;
-      this->_tab_pone = F._tab_pone;
-      this->_tab_addone = F._tab_addone;
-      this->_tab_subone = F._tab_subone;
-      this->numRefs = F.numRefs;
-      (*(this->numRefs))++;
+        this->_p = F.residu();
+        this->_pmone = F._pmone;
+        this->_tab_value2rep = F._tab_value2rep;
+        this->_tab_rep2value = F._tab_rep2value;
+        this->_tab_mul = F._tab_mul;
+        this->_tab_div = F._tab_div;
+        this->_tab_neg = F._tab_neg;
+        this->_tab_mone = F._tab_mone;
+        this->_tab_pone = F._tab_pone;
+        this->_tab_addone = F._tab_addone;
+        this->_tab_subone = F._tab_subone;
+        this->numRefs = F.numRefs;
+        (*(this->numRefs))++;
 
-      return *this;
+        return *this;
     }
 
     inline Modular<Log16>::~Modular()
     {
-      (*numRefs)--;
-      if (*numRefs == 0) {
-        delete [] _tab_value2rep;
-        delete [] _tab_rep2value;
-        delete [] _tab_mul;
-        delete [] _tab_mone;
-        delete [] _tab_pone;
-        delete numRefs;
-      }
+        (*numRefs)--;
+        if (*numRefs == 0) {
+            delete [] _tab_value2rep;
+            delete [] _tab_rep2value;
+            delete [] _tab_mul;
+            delete [] _tab_mone;
+            delete [] _tab_pone;
+            delete numRefs;
+        }
     }
 
     inline Modular<Log16>::Residu_t Modular<Log16>::residu( ) const
@@ -323,21 +323,21 @@ namespace Givaro
     inline Modular<Log16>::Rep& Modular<Log16>::axpy
     (Rep& r, const Rep& a, const Rep& b, const Rep& c) const
     {
-	(r)=  _tab_mul[(a) + (b)];
-	Rep tmp = _tab_addone[(c) - (r)];
-	(r)=  _tab_mul[(r) + tmp ];
+        (r)=  _tab_mul[(a) + (b)];
+        Rep tmp = _tab_addone[(c) - (r)];
+        (r)=  _tab_mul[(r) + tmp ];
         return r;
     }
 
     inline Modular<Log16>::Rep& Modular<Log16>::axpyin
     (Rep& r, const Rep& a, const Rep& b) const
     {
-	Rep tmp;
-	mul(tmp, a, b);
-	tmp -= r;
-	tmp = _tab_addone[tmp];
-	mulin(r, tmp);
-	return r;
+        Rep tmp;
+        mul(tmp, a, b);
+        tmp -= r;
+        tmp = _tab_addone[tmp];
+        mulin(r, tmp);
+        return r;
     }
 
     // r <- a*b-c
@@ -367,7 +367,7 @@ namespace Givaro
 
     // r <- a*b-r
     inline Modular<Log16>::Rep& Modular<Log16>::axmyin (Rep& r,
-                              const Rep& a, const Rep& b) const
+                                                        const Rep& a, const Rep& b) const
     {
         Rep t; __GIVARO_ZPZ16_LOG_MUL(t,_p,a,b);
         return sub(r,t,r);
@@ -395,7 +395,7 @@ namespace Givaro
 
     inline bool Modular<Log16>::isUnit ( const Rep a ) const
     {
-            // p has to be prime
+        // p has to be prime
         return isOne(a) || isMOne(a);
     }
 

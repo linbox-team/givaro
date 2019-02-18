@@ -21,55 +21,55 @@
 namespace std
 {
 
-	/*! Prints a vector on output.
-	 * @param o output stream
-	 * @param v vector
-	 * @warning <<(ostream&,T&) exists !
-	 */
+    /*! Prints a vector on output.
+     * @param o output stream
+     * @param v vector
+     * @warning <<(ostream&,T&) exists !
+     */
     template <class T, typename A=std::allocator<T> >
-    std::ostream& operator<<(std::ostream& out, const std::vector<T, A>& V) 
+    std::ostream& operator<<(std::ostream& out, const std::vector<T, A>& V)
     {
         std::copy(V.begin(), V.end(), std::ostream_iterator<T>(out << '['," "));
         return out << ']';
     }
-    
-	/*! Prints a pair.
-	 * @param o output stream
-	 * @param C a pair
-	 * @warning <<(ostream&,T&) exists !
-	 */
-	template<class S, class T>
-	std::ostream& operator<<(std::ostream& out, const std::pair<S, T> & C)
-	{
-		return out << '<' << C.first << ", " << C.second << '>';
-	}
+
+    /*! Prints a pair.
+     * @param o output stream
+     * @param C a pair
+     * @warning <<(ostream&,T&) exists !
+     */
+    template<class S, class T>
+    std::ostream& operator<<(std::ostream& out, const std::pair<S, T> & C)
+    {
+        return out << '<' << C.first << ", " << C.second << '>';
+    }
 
 
-	/*! Prints a list.
-	 * @param o output stream
-	 * @param C a pair
-	 * @warning <<(ostream&,T&) exists !
-	 */
-	template<class T, typename A=std::allocator<T> >
-	std::ostream& operator<< (std::ostream& out, const std::list<T, A> & L)
-	{
-		std::copy(L.begin(), L.end(), std::ostream_iterator<T>(out << '('," "));
-		return out << ')' ;
-	}
+    /*! Prints a list.
+     * @param o output stream
+     * @param C a pair
+     * @warning <<(ostream&,T&) exists !
+     */
+    template<class T, typename A=std::allocator<T> >
+    std::ostream& operator<< (std::ostream& out, const std::list<T, A> & L)
+    {
+        std::copy(L.begin(), L.end(), std::ostream_iterator<T>(out << '('," "));
+        return out << ')' ;
+    }
 
 
-	/*! Prints a set.
-	 * @param o output stream
-	 * @param C a pair
-	 * @warning <<(ostream&,T&) exists !
-	 */
-	template<class T, typename A=std::allocator<T> >
-	std::ostream& operator<< (std::ostream& out, const std::set<T, A> & S)
-	{
-		std::copy(S.begin(), S.end(), std::ostream_iterator<T>(out << '{'," "));
-		return out << '}' ;
-	}
-    
+    /*! Prints a set.
+     * @param o output stream
+     * @param C a pair
+     * @warning <<(ostream&,T&) exists !
+     */
+    template<class T, typename A=std::allocator<T> >
+    std::ostream& operator<< (std::ostream& out, const std::set<T, A> & S)
+    {
+        std::copy(S.begin(), S.end(), std::ostream_iterator<T>(out << '{'," "));
+        return out << '}' ;
+    }
+
 }
 #endif
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

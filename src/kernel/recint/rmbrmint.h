@@ -1,10 +1,10 @@
 /* rmint/rmint.h - Class definition of rmint<K,MG_INACTIVE> from RecInt library
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume Dumas
 
 Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
 
@@ -54,7 +54,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 namespace RecInt
 {
-     /* For modular calculus in non-Montgomery mode */
+    /* For modular calculus in non-Montgomery mode */
     template <size_t K> class rmint<K, MGI> {
     public:
         // p is the module (must be > 1)
@@ -65,17 +65,17 @@ namespace RecInt
         // Constructors
         rmint() : Value(0) {}
         rmint(const ruint<K>& c) : Value(c) { reduction(*this); }
-        rmint(const rint<K>& c) : Value( c.isNegative() ? (-c).Value : c.Value) { 
+        rmint(const rint<K>& c) : Value( c.isNegative() ? (-c).Value : c.Value) {
             reduction(*this); if (c.isNegative()) neg(*this); }
         rmint(const rmint<K, MGI>& c) : Value(c.Value) { reduction(*this); }
         rmint(const rmint<K, MGA>& c) : Value(c.Value) { reduction(*this); }
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> rmint(const T b) : Value(b) { mod_n(Value, p); }
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   rmint(const T b) : Value((b < 0)? -b : b)
-            { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
+        { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
         rmint(const double& b) : Value((b < 0)? -b : b)
-            { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
-            
-        rmint<K, MGI>& random();        
+        { mod_n(Value, p); if (b < 0) sub(Value, p, Value); }
+
+        rmint<K, MGI>& random();
 
         // Cast
         template <typename T, __RECINT_IS_ARITH(T, int) = 0> operator T() const { return T(Value); }

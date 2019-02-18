@@ -25,92 +25,92 @@ namespace Givaro
 
     template<typename _Storage_t, typename _Compute_t>
     class Modular<_Storage_t, _Compute_t,
-      typename std::enable_if<is_same_ruint<_Storage_t, _Compute_t>::value
-                           || is_smaller_ruint<_Storage_t, _Compute_t>::value>::type>:
-      public Modular_implem<_Storage_t, _Compute_t, _Storage_t>
-    {
-    public:
+          typename std::enable_if<is_same_ruint<_Storage_t, _Compute_t>::value
+          || is_smaller_ruint<_Storage_t, _Compute_t>::value>::type>:
+          public Modular_implem<_Storage_t, _Compute_t, _Storage_t>
+          {
+          public:
 
-        // ----- Exported Types and constantes
-        using Storage_t = _Storage_t;
-        using Residu_t = _Storage_t;
-        using Compute_t = _Compute_t;
+              // ----- Exported Types and constantes
+              using Storage_t = _Storage_t;
+              using Residu_t = _Storage_t;
+              using Compute_t = _Compute_t;
 
-        using Element = Storage_t;
-        using Self_t = Modular<Storage_t, Compute_t>;
-        using Parent_t = Modular_implem<Storage_t, Compute_t, Storage_t>;
-
-
-        // ----- Constructors
-        using Modular_implem<Storage_t, Compute_t, Storage_t>::Modular_implem;
-
-        using Parent_t::_p;
-        using Parent_t::_pc;
+              using Element = Storage_t;
+              using Self_t = Modular<Storage_t, Compute_t>;
+              using Parent_t = Modular_implem<Storage_t, Compute_t, Storage_t>;
 
 
-        // ----- Initialisation
-        Element& init (Element& x) const
-        { return x = this->zero; }
+              // ----- Constructors
+              using Modular_implem<Storage_t, Compute_t, Storage_t>::Modular_implem;
 
-        template<typename T> Element& init(Element& r, const T& a) const
-        {
-            reduce(r, Caster<Element>((a < 0)? -a : a));
-            if (a < 0) negin(r);
-            return r;
-        }
+              using Parent_t::_p;
+              using Parent_t::_pc;
 
-        Element& init(Element& r, const Integer& a) const
-        {
-            reduce(r, Caster<Element>((a < 0)? -a : a));
-            if (a < 0) negin(r);
-            return r;
-        }
 
-        // ----- Convert and reduce
-        Element& reduce (Element& x, const Element& y) const
-        { x = y % _p; return x; }
-        Element& reduce (Element& x) const
-        { x %= _p; return x; }
+              // ----- Initialisation
+              Element& init (Element& x) const
+              { return x = this->zero; }
 
-        // ----- Classic arithmetic
-        Element& mul(Element& r, const Element& a, const Element& b) const;
-        Element& div(Element& r, const Element& a, const Element& b) const;
-        Element& add(Element& r, const Element& a, const Element& b) const;
-        Element& sub(Element& r, const Element& a, const Element& b) const;
-        Element& neg(Element& r, const Element& a) const;
-        Element& inv(Element& r, const Element& a) const;
+              template<typename T> Element& init(Element& r, const T& a) const
+              {
+                  reduce(r, Caster<Element>((a < 0)? -a : a));
+                  if (a < 0) negin(r);
+                  return r;
+              }
 
-        Element& mulin(Element& r, const Element& a) const;
-        Element& divin(Element& r, const Element& a) const;
-        Element& addin(Element& r, const Element& a) const;
-        Element& subin(Element& r, const Element& a) const;
-        Element& negin(Element& r) const;
-        Element& invin(Element& r) const;
+              Element& init(Element& r, const Integer& a) const
+              {
+                  reduce(r, Caster<Element>((a < 0)? -a : a));
+                  if (a < 0) negin(r);
+                  return r;
+              }
 
-        // -- axpy:   r <- a * x + y
-        // -- axpyin: r <- a * x + r
-        Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
-        Element& axpyin(Element& r, const Element& a, const Element& x) const;
+              // ----- Convert and reduce
+              Element& reduce (Element& x, const Element& y) const
+              { x = y % _p; return x; }
+              Element& reduce (Element& x) const
+              { x %= _p; return x; }
 
-        // -- axmy:   r <- a * x - y
-        // -- axmyin: r <- a * x - r
-        Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const;
-        Element& axmyin(Element& r, const Element& a, const Element& x) const;
+              // ----- Classic arithmetic
+              Element& mul(Element& r, const Element& a, const Element& b) const;
+              Element& div(Element& r, const Element& a, const Element& b) const;
+              Element& add(Element& r, const Element& a, const Element& b) const;
+              Element& sub(Element& r, const Element& a, const Element& b) const;
+              Element& neg(Element& r, const Element& a) const;
+              Element& inv(Element& r, const Element& a) const;
 
-        // -- maxpy:   r <- y - a * x
-        // -- maxpyin: r <- r - a * x
-        Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
-        Element& maxpyin(Element& r, const Element& a, const Element& x) const;
+              Element& mulin(Element& r, const Element& a) const;
+              Element& divin(Element& r, const Element& a) const;
+              Element& addin(Element& r, const Element& a) const;
+              Element& subin(Element& r, const Element& a) const;
+              Element& negin(Element& r) const;
+              Element& invin(Element& r) const;
 
-        // ----- Random generators
-        typedef ModularRandIter<Self_t> RandIter;
-        typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-        template< class Random > Element& random(Random& g, Element& r) const
-        { RecInt::rand(r); mod_n(r, _p); return r; }
-        template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { while (this->isZero(random(g, a))) { } return a; }
+              // -- axpy:   r <- a * x + y
+              // -- axpyin: r <- a * x + r
+              Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
+              Element& axpyin(Element& r, const Element& a, const Element& x) const;
 
-    };
+              // -- axmy:   r <- a * x - y
+              // -- axmyin: r <- a * x - r
+              Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const;
+              Element& axmyin(Element& r, const Element& a, const Element& x) const;
+
+              // -- maxpy:   r <- y - a * x
+              // -- maxpyin: r <- r - a * x
+              Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
+              Element& maxpyin(Element& r, const Element& a, const Element& x) const;
+
+              // ----- Random generators
+              typedef ModularRandIter<Self_t> RandIter;
+              typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+              template< class Random > Element& random(Random& g, Element& r) const
+              { RecInt::rand(r); mod_n(r, _p); return r; }
+              template< class Random > Element& nonzerorandom(Random& g, Element& a) const
+              { while (this->isZero(random(g, a))) { } return a; }
+
+          };
 
 }
 

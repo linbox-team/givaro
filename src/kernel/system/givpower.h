@@ -18,90 +18,90 @@
 
 namespace Givaro {
 
-// -------------------------------------------------------------
-//! Integer log
-// -------------------------------------------------------------
-template<typename T>
-	inline unsigned GIVINTLOG(const T& a)
-{
-    unsigned l(0);
-    for(T v(a); v >>= 1; ++l) {}
-    return l;
-}
+    // -------------------------------------------------------------
+    //! Integer log
+    // -------------------------------------------------------------
+    template<typename T>
+    inline unsigned GIVINTLOG(const T& a)
+    {
+        unsigned l(0);
+        for(T v(a); v >>= 1; ++l) {}
+        return l;
+    }
 
 
 
-// -------------------------------------------------------------
-//! Powering
-// -------------------------------------------------------------
-template<class TT, class UU>
-TT power(const TT n, const UU l)
-{
-  if (l == 0) return 1 ;
+    // -------------------------------------------------------------
+    //! Powering
+    // -------------------------------------------------------------
+    template<class TT, class UU>
+    TT power(const TT n, const UU l)
+    {
+        if (l == 0) return 1 ;
 
-  unsigned long p = (unsigned long) l ;
-  short is_assg = 0 ;
+        unsigned long p = (unsigned long) l ;
+        short is_assg = 0 ;
 
-  TT res = TT(1) ;
-  TT puiss  = n ;
+        TT res = TT(1) ;
+        TT puiss  = n ;
 
-  while (p != 0) {
-      if (p & 0x1) {
-          if (is_assg)
-              res *= puiss ;
-          else {
-          is_assg = 1 ;
-          res = puiss ;
-          }
-      }
-//       if ((p >>= 1) != 0) puiss = puiss * puiss ;
-      if ((p >>= 1) != 0) puiss *= puiss ;
+        while (p != 0) {
+            if (p & 0x1) {
+                if (is_assg)
+                    res *= puiss ;
+                else {
+                    is_assg = 1 ;
+                    res = puiss ;
+                }
+            }
+            //       if ((p >>= 1) != 0) puiss = puiss * puiss ;
+            if ((p >>= 1) != 0) puiss *= puiss ;
 
-  }
-  return res ;
-}
+        }
+        return res ;
+    }
 
 #if 0
 #include <givaro/givinteger.h>
-template<> Integer power(const Integer n, const long l) { return pow(n,l); }
-template<> Integer power(const Integer n, const unsigned long l) { return pow(n,l); }
-template<> Integer power(const Integer n, const int l) { return pow(n,l); }
-template<> Integer power(const Integer n, const unsigned int l) { return pow(n,l); }
+    template<> Integer power(const Integer n, const long l) { return pow(n,l); }
+    template<> Integer power(const Integer n, const unsigned long l) { return pow(n,l); }
+    template<> Integer power(const Integer n, const int l) { return pow(n,l); }
+    template<> Integer power(const Integer n, const unsigned int l) { return pow(n,l); }
 #endif
 
-//! dom_power
-template<class D, class TT>
-TT& dom_power(TT& res, const TT& n, long l, const D& F)
-{
-  if (l == 0) return F.assign(res,F.one) ;
+    //! dom_power
+    template<class D, class TT>
+    TT& dom_power(TT& res, const TT& n, long l, const D& F)
+    {
+        if (l == 0) return F.assign(res,F.one) ;
 
-  unsigned long p = (unsigned long) l ;
-  bool is_assg = false ;
+        unsigned long p = (unsigned long) l ;
+        bool is_assg = false ;
 
-  TT puiss; F.init(puiss); F.assign(puiss,n) ;
-  F.assign(res,F.one) ;
+        TT puiss; F.init(puiss); F.assign(puiss,n) ;
+        F.assign(res,F.one) ;
 
-  while (p != 0) {
-      if (p & 0x1) {
-          if (is_assg)
-              F.mulin(res,puiss) ;
-          else {
-          is_assg = true ;
-          F.assign(res,puiss) ;
-          }
-      }
-      if ((p >>= 1) != 0) { F.mulin(puiss,puiss) ; }
-  }
-  return res ;
-}
+        while (p != 0) {
+            if (p & 0x1) {
+                if (is_assg)
+                    F.mulin(res,puiss) ;
+                else {
+                    is_assg = true ;
+                    F.assign(res,puiss) ;
+                }
+            }
+            if ((p >>= 1) != 0) { F.mulin(puiss,puiss) ; }
+        }
+        return res ;
+    }
 
 
 #if 0
 #include <cmath>
 
-template<> double power<double>(const double a, const double e) {
-   return pow(a,e);
-}
+    template<> double power<double>(const double a, const double e) {
+        return pow(a,e);
+    }
 #endif
 
 } // namespace Givaro

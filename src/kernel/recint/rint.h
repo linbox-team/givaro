@@ -1,10 +1,10 @@
 /* recint.h - RecInt library for fixed precision arithmetic
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume Dumas
 
 Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
 

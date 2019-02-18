@@ -22,8 +22,8 @@
 // ==========================================================================
 
 namespace Givaro {
-	template<class TAG>
-	class Montgomery;
+    template<class TAG>
+    class Montgomery;
 }
 
 #include "givaro/montgomery-int32.h"

@@ -1,10 +1,10 @@
 /* rint/display.h - Display functions for rint
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume DUMAS
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume DUMAS
 
 Time-stamp: <19 Jun 12 18:22:16 Jean-Guillaume.Dumas@imag.fr>
 
@@ -86,10 +86,10 @@ namespace RecInt
 
     // Reads a rint
     template <size_t K> inline std::istream& operator>>(std::istream& is, rint<K>& a) {
-    	mpz_class g;
-    	is >> g;
-    	mpz_to_rint(a, g);
-    	return is;
+        mpz_class g;
+        is >> g;
+        mpz_to_rint(a, g);
+        return is;
     }
 }
 

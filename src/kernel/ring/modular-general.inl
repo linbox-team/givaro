@@ -32,7 +32,7 @@ struct make_unsigned_int {
 
 template<typename T>
 struct make_unsigned_int<T,
-    typename std::enable_if<std::is_floating_point<T>::value>::type> {
+typename std::enable_if<std::is_floating_point<T>::value>::type> {
     typedef typename IntType<std::is_same<T,float>::value>::utype type;
 };
 

@@ -175,17 +175,17 @@ namespace Givaro {
     inline typename Modular<Integer>::Element&
     Modular<Integer>::reduce(Element& r, const Element& a) const
     {
-	r = a % _p;
-	if (r < 0) r = r + _p;
-	return r;
+        r = a % _p;
+        if (r < 0) r = r + _p;
+        return r;
     }
 
     inline typename Modular<Integer>::Element&
     Modular<Integer>::reduce(Element& r) const
     {
-	r %= _p;
-	if (r < 0) r = r + _p;
-	return r;
+        r %= _p;
+        if (r < 0) r = r + _p;
+        return r;
     }
 
 

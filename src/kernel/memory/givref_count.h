@@ -8,9 +8,9 @@
 // version : 2.7
 // date: 1995
 // ==================================================================== //
- /** @file givref_count.h
-  * @ingroup memory
-  * @brief Definition of the Counter class, Counter.
+/** @file givref_count.h
+ * @ingroup memory
+ * @brief Definition of the Counter class, Counter.
  * This class definition objects to handle reference
  * counter for memory allocation (eg array0).
  */
@@ -21,27 +21,27 @@
 
 namespace Givaro {
 
-	//! Ref counter.
-class RefCounter {
-public:
-   // Cstor and Dstor
-inline RefCounter( long l = 0) : counter(l) {}
-//inline RefCounter( const RefCounter& ) : counter(C.counter) {}
-inline ~RefCounter() {}
+    //! Ref counter.
+    class RefCounter {
+    public:
+        // Cstor and Dstor
+        inline RefCounter( long l = 0) : counter(l) {}
+        //inline RefCounter( const RefCounter& ) : counter(C.counter) {}
+        inline ~RefCounter() {}
 
-  //  Return the value
-inline long  getvalue() const { return counter ; }
-inline long  val() const { return counter ; }
-  // Return a ref to the counter
-inline long& refvalue() { return counter ; }
-  // Increments the counter and returns the new value
-inline long  incr() { return ++counter ; }
-  // Decrements the value and returns the new value
-inline long  decr() { return --counter ; }
+        //  Return the value
+        inline long  getvalue() const { return counter ; }
+        inline long  val() const { return counter ; }
+        // Return a ref to the counter
+        inline long& refvalue() { return counter ; }
+        // Increments the counter and returns the new value
+        inline long  incr() { return ++counter ; }
+        // Decrements the value and returns the new value
+        inline long  decr() { return --counter ; }
 
-protected:
-  long counter ;
-} ;
+    protected:
+        long counter ;
+    } ;
 
 } // namespace Givaro
 #endif // __GIVARO_ref_counter_H

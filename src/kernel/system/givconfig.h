@@ -82,7 +82,7 @@
 #ifdef __GIVARO_HAVE_STDINT_H
 #ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS
-#endif 
+#endif
 #include <stdint.h>
 #if !defined(INT64_MAX)
 #if !defined(__CYGWIN__) && !defined(__PATHCC__)
@@ -223,44 +223,44 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #  ifdef GIVARO_HAVE_ANSI_LIBRARY  // here is ANSI C++ header definition !!!
 #    include <sstream>
 #    define GIVARO_ASSERT(cond, msg) { \
-      if (!(cond)) {\
+    if (!(cond)) {\
         std::ostringstream ostr;\
         ostr << msg << "\nFile:"##__FILE__##", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
-      }}
+    }}
 #    define GIVARO_ASSERT2(cond, msg1, msg2) { \
-      if (!(cond)) {\
+    if (!(cond)) {\
         std::ostringstream ostr;\
         ostr << msg1 << msg2 << "\nFile:"##__FILE__##", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
-      }}
+    }}
 #    define GIVARO_ASSERT_MATHDIV0(cond, msg) { \
-      if (!(cond)) {\
+    if (!(cond)) {\
         std::ostringstream ostr;\
         ostr << msg << "\nFile:"##__FILE__##", Line:" << __LINE__;\
         throw  GivMathDivZero(ostr.str().c_str()) ;\
-      }}
+    }}
 
 #  else
 #    include <sstream>
 #    define GIVARO_ASSERT(cond, msg) { \
-      if (!(cond)) {\
+    if (!(cond)) {\
         std::ostringstream ostr;\
         ostr << msg << "\nFile:" << __FILE__ << ", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
-      }}
+    }}
 #    define GIVARO_ASSERT2(cond, msg1, msg2) { \
-      if (!(cond)) {\
+    if (!(cond)) {\
         std::ostringstream ostr;\
         ostr << msg1 << msg2 << "\nFile:" << __FILE__ << ", Line:" << __LINE__;\
         GivError::throw_error( GivError(ostr.str().c_str()) );\
-      }}
+    }}
 #    define GIVARO_ASSERT_MATHDIV0(cond, msg) { \
-      if (!(cond)) {\
+    if (!(cond)) {\
         std::ostringstream ostr;\
         ostr << msg << "\nFile:"<<__FILE__<<", Line:" << __LINE__;    \
         throw GivMathDivZero(ostr.str().c_str());\
-      }}
+    }}
 #  endif
 
 #define GIVARO_REQUIRE(bool_expression, msg) GIVARO_ASSERT2(bool_expression, "Givaro required: ", msg)
@@ -312,15 +312,15 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #include <limits>
 template<class XXX>
 struct GIVARO_numeric_limits {
-    	typedef XXX self_type;
-	static XXX max() { return  std::numeric_limits<XXX>::max(); }
+    typedef XXX self_type;
+    static XXX max() { return  std::numeric_limits<XXX>::max(); }
 };
 #else
 #include <limits.h>
 template<class XXX>
 struct GIVARO_numeric_limits {
-    	typedef XXX self_type;
-	static XXX max() { return (XXX)(pow(2,8*sizeof(XXX))-1); }
+    typedef XXX self_type;
+    static XXX max() { return (XXX)(pow(2,8*sizeof(XXX))-1); }
 };
 
 /* Declared in <float.h> on ANSI C systems.  */
@@ -362,10 +362,10 @@ template<> inline int GIVARO_numeric_limits<int>::max() { return INT_MAX; }
 template<> inline unsigned int GIVARO_numeric_limits<unsigned int>::max() { return UINT_MAX; }
 template<> inline long GIVARO_numeric_limits<long>::max() { return LONG_MAX; }
 template<> inline unsigned long GIVARO_numeric_limits<unsigned long>::max() { return ULONG_MAX; }
-  #ifndef __GIVARO__DONOTUSE_longlong__
+#ifndef __GIVARO__DONOTUSE_longlong__
 template<> inline long long GIVARO_numeric_limits<long long>::max() { return LLONG_MAX; }
 template<> inline unsigned long long GIVARO_numeric_limits<unsigned long long>::max() { return ULLONG_MAX; }
-  #endif
+#endif
 
 #endif
 
@@ -382,7 +382,7 @@ template<> struct Signed_Trait<float>  : public GIVARO_numeric_limits<float> {
 template<> struct Signed_Trait<double>  : public GIVARO_numeric_limits<double> {
     typedef double signed_type;
     typedef double unsigned_type;
-  //    typedef unsigned long unsigned_type;
+    //    typedef unsigned long unsigned_type;
 };
 
 
@@ -427,18 +427,18 @@ template<> struct Signed_Trait<unsigned long>  : public GIVARO_numeric_limits<un
 };
 
 
-  #ifndef __GIVARO__DONOTUSE_longlong__
-  template<> struct Signed_Trait<long long>  : public GIVARO_numeric_limits<long long> {
+#ifndef __GIVARO__DONOTUSE_longlong__
+template<> struct Signed_Trait<long long>  : public GIVARO_numeric_limits<long long> {
     typedef long long signed_type;
     typedef unsigned long long unsigned_type;
-  };
+};
 
 
-  template<> struct Signed_Trait<unsigned long long>  : public GIVARO_numeric_limits<unsigned long long> {
+template<> struct Signed_Trait<unsigned long long>  : public GIVARO_numeric_limits<unsigned long long> {
     typedef long long signed_type;
     typedef unsigned long long unsigned_type;
-  };
-  #endif
+};
+#endif
 
 
 #if defined(_OPENMP) || defined(OMP_H) || defined(__OMP_H) || defined(__pmp_omp_h)

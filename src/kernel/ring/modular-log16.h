@@ -38,21 +38,21 @@ namespace Givaro
 
     template<>
     class Modular<Log16> //:
-        //public Modular_implem<int16_t, int16_t, uint16_t>
+    //public Modular_implem<int16_t, int16_t, uint16_t>
     {
     public:
         // ----- Exported Types and constantes
 
-	using Storage_t = int16_t;
-	using Compute_t = int16_t;
-	using Residu_t = uint16_t;
+        using Storage_t = int16_t;
+        using Compute_t = int16_t;
+        using Residu_t = uint16_t;
 
-	using Element = Storage_t;
-	using Element_ptr = Element*;
-	using ConstElement = const Element;
-	using ConstElement_ptr = const Element*;
-	using Self_t = Modular<Log16>;
-	using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
+        using Element = Storage_t;
+        using Element_ptr = Element*;
+        using ConstElement = const Element;
+        using ConstElement_ptr = const Element*;
+        using Self_t = Modular<Log16>;
+        using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
 
         enum { size_rep = sizeof(Residu_t) };      // - size of the storage type
@@ -75,8 +75,8 @@ namespace Givaro
         Residu_t residu() const;
         Residu_t size() const { return _p;}
 
-	inline Element minElement() const { return zero; }
-	inline Element maxElement() const { return mOne; }
+        inline Element minElement() const { return zero; }
+        inline Element maxElement() const { return mOne; }
 
         inline Residu_t characteristic() const { return _p; }
         inline Residu_t cardinality() const { return _p; }
@@ -179,7 +179,7 @@ namespace Givaro
         { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
         { while (this->isZero(init(a, g())))
-                ;
+            ;
             return a; }
 
 

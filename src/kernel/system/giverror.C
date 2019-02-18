@@ -16,27 +16,27 @@
 
 namespace Givaro {
 
-std::ostream& GivError::print( std::ostream& o ) const
-{ return o << strg ; }
+    std::ostream& GivError::print( std::ostream& o ) const
+    { return o << strg ; }
 
 
-GivError::~GivError(){}
+    GivError::~GivError(){}
 
-GivMathError::~GivMathError(){}
+    GivMathError::~GivMathError(){}
 
-GivBadFormat::~GivBadFormat(){}
+    GivBadFormat::~GivBadFormat(){}
 
-GivMathDivZero::~GivMathDivZero(){}
+    GivMathDivZero::~GivMathDivZero(){}
 
-void GivError::throw_error( const GivError& err )
-{
-  throw err;
-}
+    void GivError::throw_error( const GivError& err )
+    {
+        throw err;
+    }
 
-std::ostream& operator<< (std::ostream& o, const GivError& E)
-{
-   return E.print(o) ;
-}
+    std::ostream& operator<< (std::ostream& o, const GivError& E)
+    {
+        return E.print(o) ;
+    }
 } // namespace Givaro
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 // vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

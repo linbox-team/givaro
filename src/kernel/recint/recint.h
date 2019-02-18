@@ -1,10 +1,10 @@
 /* recint.h - RecInt library for fixed precision arithmetic
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume Dumas
 
 Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
 
@@ -48,8 +48,8 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #include "rint.h"
 
 /* Modular calculus
-   Note: This will set MG_DEFAULT to MG_INACTIVE
-   if not previously defined. */
+Note: This will set MG_DEFAULT to MG_INACTIVE
+if not previously defined. */
 #include "rmint.h"
 
 /* Modular in Montgomery

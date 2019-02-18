@@ -80,7 +80,7 @@ namespace Givaro
             RecInt::add(r, a);
         } else {
             RecInt::sub(r, a, b);
-        }				
+        }
         return r;
     }
 
@@ -112,11 +112,11 @@ namespace Givaro
     }
 
     template<size_t K>
-    inline bool Montgomery<RecInt::ruint<K>>::isUnit(const Element& a) const 
-    { 
-        RecInt::ruint<K> d; 
-        gcd(d,a,_p); 
-        return (d==1) || (d==-1); 
+    inline bool Montgomery<RecInt::ruint<K>>::isUnit(const Element& a) const
+    {
+        RecInt::ruint<K> d;
+        gcd(d,a,_p);
+        return (d==1) || (d==-1);
     }
 
     template<size_t K>
@@ -233,7 +233,7 @@ namespace Givaro
     }
 
     //----- IO
-    
+
     template<size_t K>
     inline std::ostream& Montgomery<RecInt::ruint<K>>::write (std::ostream& s) const
     {

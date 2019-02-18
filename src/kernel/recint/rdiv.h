@@ -1,10 +1,10 @@
 /* rint/arith.h - Arithmetic functions for rint
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume DUMAS
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume DUMAS
 
 Time-stamp: <20 Jun 12 10:28:29 Jean-Guillaume.Dumas@imag.fr>
 
@@ -69,7 +69,7 @@ namespace RecInt
     // q = floor(a/b)
     template <size_t K> rint<K>& div_q(rint<K>& q, const rint<K>& a, const rint<K>& b);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>&) div_q(rint<K>& q, const rint<K>& a, const T& b);
-    
+
     // r = a mod b
     template <size_t K> rint<K>& div_r(rint<K>& r, const rint<K>& a, const rint<K>& b);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, T&) div_r(T& r, const rint<K>& a, const T& b);
@@ -130,38 +130,38 @@ namespace RecInt
     template <size_t K>
     inline rint<K>& div_q(rint<K>& q, const rint<K>& a, const rint<K>& b) {
         if (a.isNegative()) {
-	    if (b.isNegative()) {
-		div_q(q.Value, (-a).Value, (-b).Value);
-	    }
-	    else {
-		div_q(q.Value, (-a).Value, b.Value);
-		q = -q;
-	    }
+            if (b.isNegative()) {
+                div_q(q.Value, (-a).Value, (-b).Value);
+            }
+            else {
+                div_q(q.Value, (-a).Value, b.Value);
+                q = -q;
+            }
         }
         else {
-	    if (b.isNegative()) {
-		div_q(q.Value, a.Value, (-b).Value);
-		q = -q;
-	    }
-	    else {
-		div_q(q.Value, a.Value, b.Value);
-	    }
+            if (b.isNegative()) {
+                div_q(q.Value, a.Value, (-b).Value);
+                q = -q;
+            }
+            else {
+                div_q(q.Value, a.Value, b.Value);
+            }
         }
-	
-    	return q;
+
+        return q;
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, rint<K>&) div_q(rint<K>& q, const rint<K>& a, const T& b) {
         // TODO
-	std::cerr << "DIV with rint not implemented yet." << std::endl;
-	return q;
+        std::cerr << "DIV with rint not implemented yet." << std::endl;
+        return q;
     }
-    
+
     // r = a mod b
     template <size_t K>
     inline rint<K>& div_r(rint<K>& r, const rint<K>& a, const rint<K>& b) {
-	assert(b > 1);
-	
+        assert(b > 1);
+
         if (a.isNegative()) {
             div_r(r.Value, (-a).Value, b.Value);
             r = -r;
@@ -170,20 +170,20 @@ namespace RecInt
             div_r(r.Value, a.Value, b.Value);
         }
 
-    	return r;
+        return r;
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, T&) div_r(T& r, const rint<K>& a, const T& b) {
-	assert(b > 1);
-	
+        assert(b > 1);
+
         if (a.isNegative()) {
             rint<K> aa(-a);
             div_r(r, aa.Value, b);
-    	    return -r;
+            return -r;
         }
         else {
             div_r(r, a.Value, b);
-    	    return r;
+            return r;
         }
     }
 }

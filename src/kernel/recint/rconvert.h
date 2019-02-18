@@ -1,9 +1,9 @@
 /* misc/convert_gmp.h - Conversion functions between r(u/m)int and mpz_class from GMP
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-    Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
 
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
@@ -83,12 +83,12 @@ namespace RecInt
     inline mpz_class& rint_to_mpz(mpz_class& a, const rint<K>& b) {
         // If negative, get positive one and reinverse
         if (b.isNegative()) {
-	        ruint_to_mpz(a, -b.Value);
+            ruint_to_mpz(a, -b.Value);
             a = -a;
         }
         // If positive, no problem
         else {
-	        ruint_to_mpz(a, b.Value);
+            ruint_to_mpz(a, b.Value);
         }
 
         return a;
@@ -97,19 +97,19 @@ namespace RecInt
     // Convert a rint into a GMP integer
     template <size_t K>
     inline mpz_ptr rint_to_mpz_t(mpz_ptr a, const rint<K>& b) {
-	// TODO Optimize...
-	mpz_class r;
-	RecInt::rint_to_mpz(r, b);
-	mpz_init_set(a, r.get_mpz_t()) ;
+        // TODO Optimize...
+        mpz_class r;
+        RecInt::rint_to_mpz(r, b);
+        mpz_init_set(a, r.get_mpz_t()) ;
         return a;
     }
 
     // Convert a rint into a GMP integer
     template <size_t K>
     inline rint<K>& mpz_t_to_rint(rint<K>& a, mpz_srcptr b) {
-	// TODO Optimize...
-	mpz_class r(b);
-	return RecInt::mpz_to_rint(a, r);
+        // TODO Optimize...
+        mpz_class r(b);
+        return RecInt::mpz_to_rint(a, r);
     }
 }
 

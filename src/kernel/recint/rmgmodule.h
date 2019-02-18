@@ -1,35 +1,35 @@
 /* rmint/mg/module.h - Module functions for rmint<K,MGA>
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-    Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
 
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
 This software is governed by the CeCILL-B license under French law and
-abiding by the rules of distribution of free software.  You can  use, 
+abiding by the rules of distribution of free software.  You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL-B
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
-As a counterpart to the access to the source code and  rights to copy, 
+As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
-software by the user in light of its specific status of free software, 
+software by the user in light of its specific status of free software,
 that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-B license and that you accept its terms.
@@ -53,7 +53,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     //--------- Arazi & Qi ----------
-    
+
     // If a is odd, u = inv(a) mod 2^(2^K)
     template <size_t K> ruint<K>& arazi_qi(ruint<K>& u, const ruint<K>& a);
 }
@@ -71,26 +71,26 @@ namespace RecInt
     template <size_t K>
     inline ruint<K>& arazi_qi(ruint<K>& u, const ruint<K>& a) {
         ruint<K-1> t1, t2;
-        
+
         // Get previous u - we're doing step i = m/2
         arazi_qi(u.Low, a.Low);
-        
+
         // b = a & (2^i - 1)
         // t1 = u * b
         // t1 >>= i (NOTE: t2 is junk)
         lmul(t1, t2, u.Low, a.Low);
-        
+
         // c = (a >> i) & (2^i - 1)
         // t2 = (u * c) & (2^i - 1)
         mul(t2, u.Low, a.High);
-        
+
         // t1 += t2
         add(t1, t2);
 
         // t1 *= u
         // t1 &= (2^i - 1)
         mul(t1, u.Low);
-        
+
         // t1 = 2^i - t1
         // t1 <<= i
         // u |= t1
@@ -109,7 +109,7 @@ namespace RecInt
 
         UDItype amone(a.Value-1);
         u.Value = 1;
-        
+
         for (size_t i = 2; i < __RECINT_LIMB_BITS; i <<= 1) {
             amone *= amone;
             u.Value *= ++amone;
@@ -139,7 +139,7 @@ namespace RecInt
         // r = 2^(2^K) mod p
         div_r(rmint<K, MGA>::r, -_p, _p);
     }
-    
+
     // Get the module of rmint to p
     template <size_t K>
     inline void rmint<K, MGA>::get_module(ruint<K>& _p) {

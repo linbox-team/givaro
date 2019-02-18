@@ -16,8 +16,8 @@ namespace Givaro {
 #define MOD Modular<Storage_t, Compute_t, typename std::enable_if<std::is_floating_point<Storage_t>::value>::type>
 #define TMPL template<typename Storage_t, typename Compute_t>
 #define COND_TMPL(T, ...) \
-        template<typename T, \
-                typename std::enable_if<(__VA_ARGS__), int>::type*>
+    template<typename T, \
+    typename std::enable_if<(__VA_ARGS__), int>::type*>
 
     // --------------------
     // ----- Initialisation
@@ -31,7 +31,7 @@ namespace Givaro {
 
     TMPL
     COND_TMPL(Source,
-        std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value)
+              std::is_same<Source, double>::value && std::is_same<Storage_t, float>::value)
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
     {
@@ -42,7 +42,7 @@ namespace Givaro {
 
     TMPL
     COND_TMPL(Source,
-        std::is_integral<Source>::value && std::is_signed<Source>::value && sizeof(Source) >= sizeof(Storage_t))
+              std::is_integral<Source>::value && std::is_signed<Source>::value && sizeof(Source) >= sizeof(Storage_t))
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
     {
@@ -53,7 +53,7 @@ namespace Givaro {
 
     TMPL
     COND_TMPL(Source,
-        std::is_integral<Source>::value && std::is_unsigned<Source>::value && sizeof(Source) >= sizeof(Storage_t))
+              std::is_integral<Source>::value && std::is_unsigned<Source>::value && sizeof(Source) >= sizeof(Storage_t))
     inline typename MOD::Element&
     MOD::init(Element& r, const Source a) const
     {
@@ -139,7 +139,7 @@ namespace Givaro {
     inline typename MOD::Element & MOD::addin
     (Element &x, const Element &y) const
     {
-	Compute_t tmp = Caster<Compute_t>(x) + Caster<Compute_t>(y);
+        Compute_t tmp = Caster<Compute_t>(x) + Caster<Compute_t>(y);
         return x = Caster<Element>(tmp < _pc? tmp : tmp - _pc);
     }
 
@@ -217,8 +217,8 @@ namespace Givaro {
     inline typename MOD::Element&  MOD::maxpy
     (Element& r, const Element& a, const Element& x, const Element& y) const
     {
-	r = Caster<Element>(std::fmod(Caster<Compute_t>(a) * Caster<Compute_t>(x)
-			+ (_pc - Caster<Compute_t>(y)), _pc));
+        r = Caster<Element>(std::fmod(Caster<Compute_t>(a) * Caster<Compute_t>(x)
+                                      + (_pc - Caster<Compute_t>(y)), _pc));
         return negin(r);
     }
 
@@ -226,8 +226,8 @@ namespace Givaro {
     inline typename MOD::Element&  MOD::maxpyin
     (Element& r, const Element& a, const Element& x) const
     {
-	Compute_t tmp = Caster<Compute_t>(a) * Caster<Compute_t>(x) + (_pc - Caster<Compute_t>(r));
-	r = (tmp < _pc) ? Caster<Element>(tmp) : Caster<Element>(std::fmod(tmp, _pc));
+        Compute_t tmp = Caster<Compute_t>(a) * Caster<Compute_t>(x) + (_pc - Caster<Compute_t>(r));
+        r = (tmp < _pc) ? Caster<Element>(tmp) : Caster<Element>(std::fmod(tmp, _pc));
         return negin(r);
     }
 
@@ -239,4 +239,5 @@ namespace Givaro {
 
 #endif // __GIVARO_modular_float_INL
 
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

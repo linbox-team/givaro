@@ -16,10 +16,10 @@ namespace Givaro {
     {
         Element c0 = (Element)(c & MASK32);	/* c mod B */
         c0 = (Element)((c0 * _nim) & MASK32); 	/* -c/p mod B */
-	// c0 *= _p;
-	// c0 += c;			/* c = 0 mod B */
-	c0 = c + c0*_p;
-	c0 >>= HALF_BITS32;
+        // c0 *= _p;
+        // c0 += c;			/* c = 0 mod B */
+        c0 = c + c0*_p;
+        c0 >>= HALF_BITS32;
         return (c0>=_p?c0-=_p:c0);
     }
     inline Montgomery<int32_t>::Element Montgomery<int32_t>::redcsal(const Element c) const
@@ -27,7 +27,7 @@ namespace Givaro {
         Element c0 = (Element)((c * _nim) & MASK32); 	/* -c/p mod B */
         c0 = c + c0 * _p; 		/* c = 0 mod B */
         c0 >>= HALF_BITS32;
-	return (c0>=_p?c0-=_p:c0);
+        return (c0>=_p?c0-=_p:c0);
     }
 
     inline Montgomery<int32_t>::Element& Montgomery<int32_t>::redc(Element& r, const Element c) const
@@ -46,7 +46,7 @@ namespace Givaro {
         r = (Element)((c * _nim) & MASK32); 	/* -c/p mod B */
         r = c + r * _p; 		/* c = 0 mod B */
         r >>= HALF_BITS32;
-	return (r>=_p?r-=_p:r);
+        return (r>=_p?r-=_p:r);
     }
 
     inline Montgomery<int32_t>::Element& Montgomery<int32_t>::redcin(Element& r) const
@@ -55,14 +55,14 @@ namespace Givaro {
         c0 = (Element)((c0 * _nim) & MASK32); 	/* -c/p mod B */
         r += c0 * _p; 			/* c = 0 mod B */
         r >>= HALF_BITS32;
-	return (r>=_p?r-=_p:r);
+        return (r>=_p?r-=_p:r);
     }
     inline Montgomery<int32_t>::Element& Montgomery<int32_t>::redcsin(Element& r) const
     {
         Element c0 = (Element)((r * _nim) & MASK32); 	/* -c/p mod B */
         r += c0 * _p; 				/* c = 0 mod B */
         r >>= HALF_BITS32;
-	return (r>=_p?r-=_p:r);
+        return (r>=_p?r-=_p:r);
     }
 
 } // namespace Givaro
@@ -123,26 +123,26 @@ namespace Givaro {
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::inv (Element& r, const Element& a) const
     {
-	// invext(aB) --> 1/a*1/B
-	// % * B^3    --> B²/a
-	// redc       --> B/a
+        // invext(aB) --> 1/a*1/B
+        // % * B^3    --> B²/a
+        // redc       --> B/a
         int32_t t;
         invext(t, int32_t(a), int32_t(_p));
         if (t < 0) t += _p;
         return redc(r, uint32_t(t) * _B3p) ;
     }
 
-    inline bool Montgomery<int32_t>::isUnit(const Element& a) const 
-    { 
-        int32_t u,d; 
-        invext(u,d,int32_t(a),int32_t(_p)); 
-        return (d==1)||(d==-1); 
+    inline bool Montgomery<int32_t>::isUnit(const Element& a) const
+    {
+        int32_t u,d;
+        invext(u,d,int32_t(a),int32_t(_p));
+        return (d==1)||(d==-1);
     }
 
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::div (Element& r, const Element& a, const Element& b) const
     {
-	return mulin( inv(r,b), a );
+        return mulin( inv(r,b), a );
     }
 
     inline Montgomery<int32_t>::Element&
@@ -183,8 +183,8 @@ namespace Givaro {
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::invin (Element& r) const
     {
-	Element t;
-	return r = inv(t,r);
+        Element t;
+        return r = inv(t,r);
     }
 
     inline Montgomery<int32_t>::Element&
@@ -231,32 +231,32 @@ namespace Givaro {
         maxpyin(r,a,b);
         return negin(r);
     }
-    
+
     // --------------------
     // ----- Initialisation
 
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::init (Element& r, const double a) const
     {
-	r = static_cast<Element>(std::fmod((a < 0.0)? -a : a, double(_p)));
+        r = static_cast<Element>(std::fmod((a < 0.0)? -a : a, double(_p)));
         if (a < 0.0) negin(r);
-	return redc(r, r * _B2p);
+        return redc(r, r * _B2p);
     }
 
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::init (Element& r, const int64_t a) const
     {
-        
-	r = static_cast<Element>(std::abs(a) % int64_t(_p));
+
+        r = static_cast<Element>(std::abs(a) % int64_t(_p));
         if (a < 0) negin(r);
-	return redc(r, r * _B2p);
+        return redc(r, r * _B2p);
     }
 
     inline Montgomery<int32_t>::Element&
     Montgomery<int32_t>::init (Element& r, const uint64_t a) const
     {
-	r = static_cast<Element>(a % uint64_t(_p));
-	return redc(r, r * _B2p);
+        r = static_cast<Element>(a % uint64_t(_p));
+        return redc(r, r * _B2p);
     }
 
     inline Montgomery<int32_t>::Element&
@@ -287,8 +287,8 @@ namespace Givaro {
     inline std::ostream&
     Montgomery<int32_t>::write (std::ostream& s, const Element& a) const
     {
-//         Element tmp;
-//         return s << redcs(tmp,a);
+        //         Element tmp;
+        //         return s << redcs(tmp,a);
         Element tmp;
         redcs(tmp,a);
         return s << tmp;
@@ -297,3 +297,5 @@ namespace Givaro {
 } // namespace Givaro
 
 #endif // __GIVARO_mong32_INL
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

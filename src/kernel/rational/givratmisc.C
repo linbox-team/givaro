@@ -14,57 +14,59 @@
 
 namespace Givaro {
 
-//
-Rational& Rational::reduce()
-{
-  Integer t = gcd(num, den);
-  if (!isOne(t) )
-  {
-	  num /= t;
-	  den /= t;
-  }
-  return *this;
-}
-
-const Integer trunc(const Rational &r)
-{
-  return r.num / r.den;
-}
-
-const Integer floor(const Rational &x){return Integer::floor (x.num, x.den);}
-
-const Integer ceil(const Rational &x) {return Integer::ceil (x.num, x.den);}
-
-const Integer round(const Rational& x)  // GV Jeu  2 aoû 2018 16:38:58 CEST
-{
-  Integer q;
-  Integer r;
-  Integer::divmod(q, r, abs(x.num), x.den);
-  if (r!=0 && absCompare(r<<1, x.den) >= 0) // GV was < 0, and changed with abs
-      q += 1;
-  return (x.num<0) ? -q : q;
-
-}
-
-const Rational pow (const Rational& x, const int64_t y)
-{
-  Rational r;
-  if (y >= 0)
-  {
-    r.num = pow(x.num, (int64_t) y);
-    r.den = pow(x.den, (int64_t) y);
-  }
-  else
-  {
-    r.den = pow(x.num, (int64_t) -y);
-    r.num = pow(x.den, (int64_t) -y);
-    if (sign(r.den) < 0)
+    //
+    Rational& Rational::reduce()
     {
-      r.num = -r.num ;
-      r.den = -r.den ;
+        Integer t = gcd(num, den);
+        if (!isOne(t) )
+        {
+            num /= t;
+            den /= t;
+        }
+        return *this;
     }
-  }
-  return r;
-}
+
+    const Integer trunc(const Rational &r)
+    {
+        return r.num / r.den;
+    }
+
+    const Integer floor(const Rational &x){return Integer::floor (x.num, x.den);}
+
+    const Integer ceil(const Rational &x) {return Integer::ceil (x.num, x.den);}
+
+    const Integer round(const Rational& x)  // GV Jeu  2 aoû 2018 16:38:58 CEST
+    {
+        Integer q;
+        Integer r;
+        Integer::divmod(q, r, abs(x.num), x.den);
+        if (r!=0 && absCompare(r<<1, x.den) >= 0) // GV was < 0, and changed with abs
+            q += 1;
+        return (x.num<0) ? -q : q;
+
+    }
+
+    const Rational pow (const Rational& x, const int64_t y)
+    {
+        Rational r;
+        if (y >= 0)
+        {
+            r.num = pow(x.num, (int64_t) y);
+            r.den = pow(x.den, (int64_t) y);
+        }
+        else
+        {
+            r.den = pow(x.num, (int64_t) -y);
+            r.num = pow(x.den, (int64_t) -y);
+            if (sign(r.den) < 0)
+            {
+                r.num = -r.num ;
+                r.den = -r.den ;
+            }
+        }
+        return r;
+    }
 
 } // namespace Givaro
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

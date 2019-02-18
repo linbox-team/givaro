@@ -66,11 +66,11 @@ int main(int argc, char ** argv) {
     }
 
     --shift;
-/// Test arithmetic
-        Modular<Integer> Zm( 1<<shift );
-        Zm.write(std::cerr << "with shift: ") << std::endl;
-        Poly1PadicDom<Modular<Integer> > PmAD(Zm ,"B");
-        Poly1PadicDom<Modular<Integer> >::Element Ipol;
+    /// Test arithmetic
+    Modular<Integer> Zm( 1<<shift );
+    Zm.write(std::cerr << "with shift: ") << std::endl;
+    Poly1PadicDom<Modular<Integer> > PmAD(Zm ,"B");
+    Poly1PadicDom<Modular<Integer> >::Element Ipol;
 
 
     GFqKronecker<long,Integer>::Element c,d,e,f;
@@ -108,8 +108,8 @@ int main(int argc, char ** argv) {
 
     Integer Idot = Ic*Id+Ie*If;
 
-        PmAD.radixdirect(Ipol, Idot, 2*(expo));
-        PmAD.write(std::cerr<< "Idot:=", Ipol) << ';' << std::endl;
+    PmAD.radixdirect(Ipol, Idot, 2*(expo));
+    PmAD.write(std::cerr<< "Idot:=", Ipol) << ';' << std::endl;
 
     std::cerr << "Idot: " << Idot << std::endl;
 
@@ -129,3 +129,5 @@ int main(int argc, char ** argv) {
     return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

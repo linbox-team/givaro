@@ -9,17 +9,17 @@
 using namespace Givaro ;
 
 #define TEST_ASSERT(cond) \
-    if(!(cond)) { \
-        std::cout << #cond << " failed!" << std::endl; \
-        return -1; \
-    }
+if(!(cond)) { \
+    std::cout << #cond << " failed!" << std::endl; \
+    return -1; \
+}
 
 #define TEST_EQUAL(a, b) \
-    if(!((a) == (b))) { \
-        std::cout << #a << " == " << #b << " failed! " << std::endl; \
-        std::cout << (a) << " == " << (b) << std::endl; \
-        return -1; \
-    }
+if(!((a) == (b))) { \
+    std::cout << #a << " == " << #b << " failed! " << std::endl; \
+    std::cout << (a) << " == " << (b) << std::endl; \
+    return -1; \
+}
 
 int main(void)
 {
@@ -84,3 +84,6 @@ int main(void)
 
     return 0;
 }
+
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

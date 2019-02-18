@@ -20,48 +20,49 @@
 //! Namespace in which the whole Givaro library resides.
 namespace Givaro {
 
-// ==========================================================================
-	/**  Initialisation of GIVARO .
-	 * - handler to manage signal
-	 * - init the memory manager
-	 * - init all other modules
-	 * .
-	 */
-class GivaroMain {
-public:
-  //- Init of Givaro kernel :
-static void Init(int* argc, char*** argv) ;
-static void Init() ;
+    // ==========================================================================
+    /**  Initialisation of GIVARO .
+     * - handler to manage signal
+     * - init the memory manager
+     * - init all other modules
+     * .
+     */
+    class GivaroMain {
+    public:
+        //- Init of Givaro kernel :
+        static void Init(int* argc, char*** argv) ;
+        static void Init() ;
 
-  //- End of Givaro kernel :
-static void End() ;
+        //- End of Givaro kernel :
+        static void End() ;
 
-  //- Return the version of the library
-static const char* Version()  ;
+        //- Return the version of the library
+        static const char* Version()  ;
 
-  // Display the prompt of Givaro
-static void DisplayVersion( std::ostream& ) ;
-static void DisplayVersion();
-} ;
+        // Display the prompt of Givaro
+        static void DisplayVersion( std::ostream& ) ;
+        static void DisplayVersion();
+    } ;
 
 
-// ==========================================================================
-// --
-//! Main application class
-//! Could be not used
-class GivaroAppli : public GivaroMain {
-public:
-  //- Cstor, destor
-  GivaroAppli() {};
-  virtual ~GivaroAppli(){};
+    // ==========================================================================
+    // --
+    //! Main application class
+    //! Could be not used
+    class GivaroAppli : public GivaroMain {
+    public:
+        //- Cstor, destor
+        GivaroAppli() {};
+        virtual ~GivaroAppli(){};
 
-  //- main: must redefined by derived class
-  virtual int main(int argc=0, char**argv=0) = 0;
+        //- main: must redefined by derived class
+        virtual int main(int argc=0, char**argv=0) = 0;
 
-  //- run: must be call by the user on its application object
-  int run( int argc=0, char** argv=0);
-};
+        //- run: must be call by the user on its application object
+        int run( int argc=0, char** argv=0);
+    };
 
 } // namespace Givaro
 #endif // __GIVARO_init_H
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

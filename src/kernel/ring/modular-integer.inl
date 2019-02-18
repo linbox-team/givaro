@@ -175,17 +175,17 @@ namespace Givaro {
     inline typename Modular<Integer>::Element&
     Modular<Integer>::reduce(Element& r, const Element& a) const
     {
-	r = a % _p;
-	if (r < 0) r = r + _p;
-	return r;
+        r = a % _p;
+        if (r < 0) r = r + _p;
+        return r;
     }
 
     inline typename Modular<Integer>::Element&
     Modular<Integer>::reduce(Element& r) const
     {
-	r %= _p;
-	if (r < 0) r = r + _p;
-	return r;
+        r %= _p;
+        if (r < 0) r = r + _p;
+        return r;
     }
 
 
@@ -193,3 +193,5 @@ namespace Givaro {
 
 #endif // __GIVARO_modular_integer_INL
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

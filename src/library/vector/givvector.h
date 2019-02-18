@@ -27,17 +27,17 @@ namespace Givaro {
 
 
 
-// ==========================================================================
-// --
-// -- VectorDom<Domain,StorageTag>:
-// --
-/** VectorDom<Domain,StorageTag>
-*/
-// ==========================================================================
-template<class Domain, class StorageTag> class VectorDom {};
+    // ==========================================================================
+    // --
+    // -- VectorDom<Domain,StorageTag>:
+    // --
+    /** VectorDom<Domain,StorageTag>
+    */
+    // ==========================================================================
+    template<class Domain, class StorageTag> class VectorDom {};
 
-template<class Domain> class VectorDom<Domain,Dense>;
-template<class Domain> class VectorDom<Domain,Sparse>;
+    template<class Domain> class VectorDom<Domain,Dense>;
+    template<class Domain> class VectorDom<Domain,Sparse>;
 
 } // Givaro
 
@@ -48,3 +48,5 @@ template<class Domain> class VectorDom<Domain,Sparse>;
 #include "givaro/givvectdenseops.inl"
 
 #endif
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

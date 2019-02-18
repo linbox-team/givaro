@@ -25,28 +25,30 @@ using namespace Givaro;
 
 int main(int argc, char** argv)
 {
-//  Givaro::Init(&argc, &argv);
+    //  Givaro::Init(&argc, &argv);
 
 
-  IntegerDom IP;
-  IntegerDom::Element GG, g,a,b;
-  int offset = 0;
-  if (argc > ++offset) a = Integer(argv[offset]); else cin >> a;
-  if (argc > ++offset) b = Integer(argv[offset]); else cin >> b;
+    IntegerDom IP;
+    IntegerDom::Element GG, g,a,b;
+    int offset = 0;
+    if (argc > ++offset) a = Integer(argv[offset]); else cin >> a;
+    if (argc > ++offset) b = Integer(argv[offset]); else cin >> b;
 
-        Timer tim; tim.clear(); tim.start();
-        IP.gcd(GG,a,b);
-	for ( ; argc > ++offset; ) {
-		a = Integer(argv[offset]);
-		IP.gcd(g, GG, a);
-		GG = g;
-	}
-        tim.stop();
-        cout << GG << endl;
-        cerr << tim << endl;
+    Timer tim; tim.clear(); tim.start();
+    IP.gcd(GG,a,b);
+    for ( ; argc > ++offset; ) {
+        a = Integer(argv[offset]);
+        IP.gcd(g, GG, a);
+        GG = g;
+    }
+    tim.stop();
+    cout << GG << endl;
+    cerr << tim << endl;
 
-//  Givaro::End();
+    //  Givaro::End();
 
-  return 0;
+    return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -32,7 +32,7 @@ struct make_unsigned_int {
 
 template<typename T>
 struct make_unsigned_int<T,
-    typename std::enable_if<std::is_floating_point<T>::value>::type> {
+typename std::enable_if<std::is_floating_point<T>::value>::type> {
     typedef typename IntType<std::is_same<T,float>::value>::utype type;
 };
 
@@ -144,3 +144,5 @@ namespace Givaro
 
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

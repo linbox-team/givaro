@@ -70,20 +70,20 @@ namespace Givaro
             _nim((Residu_t)  B32-invext(_p, B32)),
             _dp( (double)    p)
         {
-//             std::cerr << "i:" << invext(_p, B32) << std::endl;         
-//             std::cerr << "_p: " << _p << std::endl;
-//             std::cerr << "_Bp: " << _Bp << std::endl;
-//             std::cerr << "_B2p: " << _B2p << std::endl;
-//             std::cerr << "_B3p: " << _B3p << std::endl;
-//             std::cerr << "_nim: " << _nim << std::endl;
+            //             std::cerr << "i:" << invext(_p, B32) << std::endl;
+            //             std::cerr << "_p: " << _p << std::endl;
+            //             std::cerr << "_Bp: " << _Bp << std::endl;
+            //             std::cerr << "_B2p: " << _B2p << std::endl;
+            //             std::cerr << "_B3p: " << _B3p << std::endl;
+            //             std::cerr << "_nim: " << _nim << std::endl;
             const_cast<Element&>(one) = _Bp;
             const_cast<Element&>(mOne) = _p - one;
         }
 
         Montgomery( const Self_t& F)
-            : one(F.one), mOne(F.mOne)
-            , _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p)
-            , _nim(F._nim), _dp(F._dp)
+        : one(F.one), mOne(F.mOne)
+          , _p(F._p), _Bp(F._Bp), _B2p( F._B2p), _B3p( F._B3p)
+          , _nim(F._nim), _dp(F._dp)
         {}
 
         Self_t& operator=(const Self_t& F)
@@ -99,7 +99,7 @@ namespace Givaro
             F.assign(const_cast<Element&>(mOne), F.mOne);
             return *this;
         }
-            
+
         // ----- Accessors
         inline Element minElement() const { return zero; }
         inline Element maxElement() const { return mOne; }
@@ -135,7 +135,7 @@ namespace Givaro
         Element& init (Element& x, const Integer& a) const;
         template<typename T> Element& init(Element& r, const T& a) const
         {
-	    // T is supposed to be fit into an Element
+            // T is supposed to be fit into an Element
             Caster<Element>(r, a < 0? -a : a) %= _p;
             if (a < 0) negin(r);
             return redc(r, r * _B2p);
@@ -143,7 +143,7 @@ namespace Givaro
 
         Element& assign(Element& x, const Element& y) const
         { return x = y; }
-    
+
         // ----- Convert and reduce
         template<typename T> T& convert(T& r, const Element& a) const
         { Element c; return r = Caster<T>(redc(c, a)); }
@@ -219,3 +219,5 @@ namespace Givaro
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

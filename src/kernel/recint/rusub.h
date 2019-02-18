@@ -1,37 +1,37 @@
 /* ruint/arith.h - Arithmetic functions for ruint
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume DUMAS
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume DUMAS
 
 Time-stamp: <20 Jun 12 10:28:29 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
 This software is governed by the CeCILL-B license under French law and
-abiding by the rules of distribution of free software.  You can  use, 
+abiding by the rules of distribution of free software.  You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL-B
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
-As a counterpart to the access to the source code and  rights to copy, 
+As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
-software by the user in light of its specific status of free software, 
+software by the user in light of its specific status of free software,
 that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-B license and that you accept its terms.
@@ -145,7 +145,7 @@ namespace RecInt
     inline __RECINT_IS_UNSIGNED(T, ruint<K>) operator-(const T& c, const ruint<K>& b) {
         ruint<K> a;
         sub(a, b, c);
-        return -a;  
+        return -a;
     }
     template <size_t K, typename T>
     inline __RECINT_IS_SIGNED(T, ruint<K>) operator-(const ruint<K>& b, const T& c) {
@@ -159,7 +159,7 @@ namespace RecInt
         ruint<K> a;
         if (c < 0) add(a, b, -c);
         else sub(a, b, c);
-        return -a;  
+        return -a;
     }
 }
 
@@ -212,7 +212,7 @@ namespace RecInt
 #else
     template<>
     inline void sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
-        r = (a < b);  
+        r = (a < b);
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
     }
 #endif
@@ -268,7 +268,7 @@ namespace RecInt
     inline ruint<__RECINT_LIMB_SIZE+1>& sub(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
         return a;
-      
+
     }
 #endif
     template<>
@@ -282,7 +282,7 @@ namespace RecInt
     // a = b - c    (r stores the borrow)
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<K>& a, const ruint<K>& b, const T& c) {
-        bool rl;  
+        bool rl;
         sub(rl, a.Low, b.Low, c);
         sub(r, a.High, b.High, rl);
     }
@@ -319,7 +319,7 @@ namespace RecInt
     // a = b - c    (the borrow is lost)
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, void) sub(ruint<K>& a, const ruint<K>& b, const T& c) {
-        bool rl;  
+        bool rl;
         sub(rl, a.Low, b.Low, c);
         sub(a.High, b.High, rl);
     }
@@ -359,13 +359,13 @@ namespace RecInt
     }
 #if defined(__RECINT_USE_FAST_128)
     template<>
-    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {  
+    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         r = (b.Value == 0);
         a.Value = b.Value - 1;
     }
 #else
     template<>
-    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {  
+    inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         r = (b == 0);
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
     }
@@ -411,12 +411,12 @@ namespace RecInt
     }
 #if defined(__RECINT_USE_FAST_128)
     template<>
-    inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) { 
+    inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         a.Value = b.Value - 1;
     }
 #else
     template<>
-    inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) { 
+    inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
     }
 #endif
@@ -561,3 +561,5 @@ namespace RecInt
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

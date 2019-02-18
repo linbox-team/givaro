@@ -38,8 +38,8 @@ struct BlackBoxPolynomial {
 
 
     BlackBoxPolynomial(const PolDom_t& pold, Polynomial& P)
-            : _PD(pold), _func(P)
-        {}
+    : _PD(pold), _func(P)
+    {}
 
     Type_t& operator()(Type_t& vi, const Type_t& xi) const {
         return _PD.eval(vi, _func, xi);
@@ -60,8 +60,8 @@ struct BlackBoxVectorOfPolynomial {
 
 
     BlackBoxVectorOfPolynomial(const PolDom_t& pold, VectPoly_t& P)
-            : _PD(pold), _func(P)
-        {}
+    : _PD(pold), _func(P)
+    {}
 
     Vect_t& operator()(Vect_t& vi, const Type_t& xi) const {
         vi.resize(_func.size());
@@ -154,10 +154,10 @@ bool TestOneFieldVect(Interp& FD, RandIter& generator, size_t degmax, size_t num
 
 
 int main(int argc, char ** argv) {
-        // argv[1] : modulo
-        // argv[2] : deg max
-        // argv[3] : num poly max
-        // argv[4] : seed
+    // argv[1] : modulo
+    // argv[2] : deg max
+    // argv[3] : num poly max
+    // argv[4] : seed
 
     GFqDom<int64_t>::Residu_t MOD = (argc>1 ? (GFqDom<int64_t>::Residu_t) atoi(argv[1]) : 101);
     size_t degmax = (argc>2 ? (size_t)atoi(argv[2]) : 20);
@@ -194,3 +194,6 @@ int main(int argc, char ** argv) {
 
     return (! success);
 }
+
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

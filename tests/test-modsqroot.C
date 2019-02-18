@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     int sizes = (argc>2?atoi(argv[2]):10);
     unsigned long seed = (unsigned long)(argc>3?(unsigned long)atoi(argv[3]):(unsigned long)BaseTimer::seed ());
     int failures = 0;
-//     std::cerr << "Seed: " << seed << std::endl;
+    //     std::cerr << "Seed: " << seed << std::endl;
     Integer::seeding (seed);
     Integer a,n;
     Integer ThreeToHundred;
@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
         n <<= (129);
         n *= ThreeToHundred;
 
-//         ISM.write(std::cerr, n) << std::endl;
+        //         ISM.write(std::cerr, n) << std::endl;
 
         if (! TestSrqtMod(a,n)) ++failures;
 
@@ -73,3 +73,6 @@ int main(int argc, char** argv) {
 
     return failures;
 }
+
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

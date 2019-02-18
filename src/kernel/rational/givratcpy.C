@@ -14,27 +14,29 @@
 
 namespace Givaro {
 
-Rational& Rational::logcpy (const Rational &r)
-{
-  if (this == &r) return *this ;
-  num.logcpy(r.num) ; den.logcpy(r.den) ;
-  return *this ;
-}
+    Rational& Rational::logcpy (const Rational &r)
+    {
+        if (this == &r) return *this ;
+        num.logcpy(r.num) ; den.logcpy(r.den) ;
+        return *this ;
+    }
 
-// same that Rational::logcpy function
-Rational& Rational::operator= (const Rational &r)
-{
-  if (this == &r) return *this ;
-  num.logcpy(r.num) ; den.logcpy(r.den) ;
-  return *this ;
-}
+    // same that Rational::logcpy function
+    Rational& Rational::operator= (const Rational &r)
+    {
+        if (this == &r) return *this ;
+        num.logcpy(r.num) ; den.logcpy(r.den) ;
+        return *this ;
+    }
 
-Rational& Rational::copy (const Rational &r)
-{
-  if (this == &r) return *this ;
-  num.copy(r.num) ; den.copy(r.den) ;
-  return *this ;
-}
+    Rational& Rational::copy (const Rational &r)
+    {
+        if (this == &r) return *this ;
+        num.copy(r.num) ; den.copy(r.den) ;
+        return *this ;
+    }
 
 } // namespace Givaro
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

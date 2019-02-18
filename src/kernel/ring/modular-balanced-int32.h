@@ -9,7 +9,7 @@
 // ==========================================================================
 
 /*! @file field/modular-balanced-int32.h
- */
+*/
 
 #ifndef __GIVARO_modular_balanced_int32_H
 #define __GIVARO_modular_balanced_int32_H
@@ -27,8 +27,8 @@ namespace Givaro
     class ModularBalanced<int32_t>
     {
     public:
-	
-            // ----- Exported types
+
+        // ----- Exported types
         using Self_t = ModularBalanced<int32_t>;
         using Element = int32_t;
         using Element_ptr = Element*;
@@ -38,66 +38,66 @@ namespace Givaro
 
         enum { size_rep = sizeof(Element) };
 
-            // ----- Constantes
+        // ----- Constantes
         const Element zero = 0;
         const Element one  = 1;
         const Element mOne = -1;
 
-            // ----- Constructors
+        // ----- Constructors
         ModularBalanced()
-                : _p(0), _halfp(0), _mhalfp(0), _dinvp(0.0)
-            {}
+        : _p(0), _halfp(0), _mhalfp(0), _dinvp(0.0)
+        {}
 
         ModularBalanced(Element p)
-                : _p(p), _halfp(p >> 1), _mhalfp(_halfp - p + 1), _dinvp(1. / static_cast<double>(p))
-            {
-                assert(_p >= minCardinality());
-                assert(_p <= maxCardinality());
-            }
+        : _p(p), _halfp(p >> 1), _mhalfp(_halfp - p + 1), _dinvp(1. / static_cast<double>(p))
+        {
+            assert(_p >= minCardinality());
+            assert(_p <= maxCardinality());
+        }
 
         ModularBalanced(const Self_t& F)
-                : _p(F._p), _halfp(F._halfp), _mhalfp(F._mhalfp), _dinvp(F._dinvp)
-            {}
+        : _p(F._p), _halfp(F._halfp), _mhalfp(F._mhalfp), _dinvp(F._dinvp)
+        {}
 
-            // ----- Accessors
+        // ----- Accessors
         inline Element minElement() const { return _mhalfp; }
         inline Element maxElement() const { return _halfp; }
 
-            // ----- Access to the modulus
+        // ----- Access to the modulus
         inline Residu_t residu() const { return _p; }
         inline Residu_t size() const { return _p; }
         inline Residu_t characteristic() const { return _p; }
         inline Residu_t cardinality() const { return _p; }
         template<class T> inline T& characteristic(T& p) const { return p = _p; }
         template<class T> inline T& cardinality(T& p) const { return p = _p; }
-	
+
         static inline Residu_t maxCardinality() { return 92681; } // 2^16.5
         static inline Residu_t minCardinality() { return 3; }
 
-            // ----- Checkers
+        // ----- Checkers
         inline bool isZero(const Element& a) const { return a == zero; }
         inline bool isOne (const Element& a) const { return a == one; }
         inline bool isMOne(const Element& a) const { return a == mOne; }
         inline bool isUnit(const Element& a) const;
         inline bool areEqual(const Element& a, const Element& b) const { return a == b; }
         inline size_t length(const Element a) const { return size_rep; }
-	
-            // ----- Ring-wise operators
+
+        // ----- Ring-wise operators
         inline bool operator==(const Self_t& F) const { return _p == F._p; }
         inline bool operator!=(const Self_t& F) const { return _p != F._p; }
         inline Self_t& operator=(const Self_t& F)
-            {
-                F.assign(const_cast<Element&>(one),  F.one);
-                F.assign(const_cast<Element&>(zero), F.zero);
-                F.assign(const_cast<Element&>(mOne), F.mOne);
-                _p = F._p;
-                _halfp = F._halfp;
-                _mhalfp = F._mhalfp;
-                _dinvp = F._dinvp;
-                return *this;
-            }
+        {
+            F.assign(const_cast<Element&>(one),  F.one);
+            F.assign(const_cast<Element&>(zero), F.zero);
+            F.assign(const_cast<Element&>(mOne), F.mOne);
+            _p = F._p;
+            _halfp = F._halfp;
+            _mhalfp = F._mhalfp;
+            _dinvp = F._dinvp;
+            return *this;
+        }
 
-            // ----- Initialisation
+        // ----- Initialisation
         Element& init(Element& a) const;
         Element& init(Element& r, const float a) const;
         Element& init(Element& r, const double a) const;
@@ -105,18 +105,18 @@ namespace Givaro
         Element& init(Element& r, const uint64_t a) const;
         Element& init(Element& r, const Integer& a) const;
         template<typename T> Element& init(Element& r, const T& a) const
-            { r = Caster<Element>(a); return reduce(r); }
+        { r = Caster<Element>(a); return reduce(r); }
 
         Element& assign(Element& r, const Element& a) const;
 
-            // ----- Convert
+        // ----- Convert
         template<typename T> T& convert(T& r, const Element& a) const
-            { return r = static_cast<T>(a); }
-	
+        { return r = static_cast<T>(a); }
+
         Element& reduce(Element& r, const Element& a) const;
         Element& reduce(Element& r) const;
-	
-            // ----- Classic arithmetic
+
+        // ----- Classic arithmetic
         Element& mul(Element& r, const Element& a, const Element& b) const;
         Element& div(Element& r, const Element& a, const Element& b) const;
         Element& add(Element& r, const Element& a, const Element& b) const;
@@ -130,37 +130,37 @@ namespace Givaro
         Element& subin(Element& r, const Element& a) const;
         Element& negin(Element& r) const;
         Element& invin(Element& r) const;
-	
-            // -- axpy:   r <- a * x + y
-            // -- axpyin: r <- a * x + r
+
+        // -- axpy:   r <- a * x + y
+        // -- axpyin: r <- a * x + r
         Element& axpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
         Element& axpyin(Element& r, const Element& a, const Element& x) const;
 
-            // -- axmy:   r <- a * x - y
-            // -- axmyin: r <- a * x - r
+        // -- axmy:   r <- a * x - y
+        // -- axmyin: r <- a * x - r
         Element& axmy  (Element& r, const Element& a, const Element& x, const Element& y) const;
         Element& axmyin(Element& r, const Element& a, const Element& x) const;
 
-            // -- maxpy:   r <- y - a * x
-            // -- maxpyin: r <- r - a * x
+        // -- maxpy:   r <- y - a * x
+        // -- maxpyin: r <- r - a * x
         Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
         Element& maxpyin(Element& r, const Element& a, const Element& x) const;
 
-            // ----- Random generators
+        // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
         template< class Random > Element& random(Random& g, Element& r) const
-            { return init(r, g()); }
+        { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-            { while (isZero(init(a, g())))
-                ;
+        { while (isZero(init(a, g())))
+            ;
             return a; }
 
-            // --- IO methods
+        // --- IO methods
         std::ostream& write(std::ostream& s) const;
         std::istream& read (std::istream& s, Element& a) const;
         std::ostream& write(std::ostream& s, const Element& a) const;
-	
+
     protected:
 
         Residu_t _p;
@@ -174,3 +174,5 @@ namespace Givaro
 
 #endif // __GIVARO_modular_balanced_int32_H
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

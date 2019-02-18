@@ -1,10 +1,10 @@
 /* misc/display.h - Display functions for r(u/m)int
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume DUMAS
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume DUMAS
 
 Time-stamp: <19 Jun 12 18:22:16 Jean-Guillaume.Dumas@imag.fr>
 
@@ -48,7 +48,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #include "rudisplay.h"
 
 /** NOTE : For this common file, either basic/reduc.h or mg/reduc.h
-    has to be pre-included. **/
+  has to be pre-included. **/
 
 // --------------------------------------------------------------
 // ----------------------- DEFINTIONS ---------------------------
@@ -77,9 +77,9 @@ namespace RecInt
     // Reads a rmint
     template <size_t K, size_t MG>
     inline std::istream& operator>>(std::istream& is, rmint<K, MG>& a) {
-    	operator>>(is, a.Value);
-    	get_ready(a);
-    	return is;
+        operator>>(is, a.Value);
+        get_ready(a);
+        return is;
     }
 
     // Raw rmint (not demontgomerized!)
@@ -96,3 +96,5 @@ namespace RecInt
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

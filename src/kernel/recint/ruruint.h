@@ -1,10 +1,10 @@
 /* ruint/ruint.h - Class definition of ruint<K> from RecInt library
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume Dumas
 
 Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
 
@@ -51,26 +51,26 @@ namespace RecInt
     template <size_t K> class ruint {
     public:
         // this = High|Low
-      //ruint<K-1> High, Low;
-      ruint<K-1> Low, High;
-      
+        //ruint<K-1> High, Low;
+        ruint<K-1> Low, High;
+
         // Constructors
         ruint() {}
-    ruint(const ruint<K>& r) : Low(r.Low), High(r.High)  {}
+        ruint(const ruint<K>& r) : Low(r.Low), High(r.High)  {}
         ruint(const ruint<K-1>& rl) : Low(rl) {}
         ruint(const double b) : Low((b < 0)? -b : b) { if (b < 0) *this = -*this; }
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Low(b) {}
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0>   ruint(const T b) : Low((b < 0)? -b : b)
-            { if (b < 0) *this = -*this; }
+        { if (b < 0) *this = -*this; }
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
-            { *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
-        
+        { *this = b.operator ruint<K>(); } // Fix for Givaro::Integer
+
         ruint(const char* s);
 
         // Cast
         // Note: Templated operators and specialization make compilers clang + icpc
-		// completely bug (they do not use the template operator somehow)
-		// This fix is brutal, but, it works - AB 2015/02/11
+        // completely bug (they do not use the template operator somehow)
+        // This fix is brutal, but, it works - AB 2015/02/11
         operator bool() const { return (High != 0) || (Low != 0); }
         operator char() const { return char(Low); }
         operator short() const { return short(Low); }
@@ -130,11 +130,11 @@ namespace RecInt
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0> ruint(const T b) : Value(limb(b)) {}
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
-            { *this = b.operator ruint<__RECINT_LIMB_SIZE>(); } // Fix for Givaro::Integer
+        { *this = b.operator ruint<__RECINT_LIMB_SIZE>(); } // Fix for Givaro::Integer
         ruint(const char* s);
 
         // Cast
-		// Brutal too, but icc is kind of peaky - AB 2015/02/11
+        // Brutal too, but icc is kind of peaky - AB 2015/02/11
         operator bool() const { return bool(Value); }
         operator char() const { return char(Value); }
         operator short() const { return short(Value); }
@@ -194,7 +194,7 @@ namespace RecInt
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> ruint(const T b) : Value(__uint128_t(b)) {}
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0> ruint(const T b) : Value(__uint128_t(b)) {}
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
-            { *this = b.operator ruint<__RECINT_LIMB_SIZE+1>(); } // Fix for Givaro::Integer
+        { *this = b.operator ruint<__RECINT_LIMB_SIZE+1>(); } // Fix for Givaro::Integer
         ruint(const char* s);
 
         // Cast
@@ -202,7 +202,7 @@ namespace RecInt
         operator double() const { return (double)(Value); }
         template <typename T, __RECINT_IS_UNSIGNED(T, int) = 0> operator T() const { return T(Value); }
         template <typename T, __RECINT_IS_SIGNED(T, int) = 0> operator T() const
-            { T ret = T(Value); if (ret < 0) return T(ret & __RECINT_TYPENOTMAXPOWTWO(T)); else return ret; }
+        { T ret = T(Value); if (ret < 0) return T(ret & __RECINT_TYPENOTMAXPOWTWO(T)); else return ret; }
 
         // Const reverse iterator
         class cr_iterator {
@@ -237,3 +237,5 @@ namespace RecInt
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

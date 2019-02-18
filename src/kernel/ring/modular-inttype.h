@@ -37,7 +37,7 @@ namespace Givaro
     {
     public:
 
-            // ----- Exported Types and constantes
+        // ----- Exported Types and constantes
         using Storage_t = IntType;
         using Residu_t = IntType;
         using Compute_t = _Compute_t;
@@ -47,7 +47,7 @@ namespace Givaro
 
         using Element = Storage_t;
 
-            // ----- Constructors
+        // ----- Constructors
 
         using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
         using Parent_t::_p;
@@ -56,21 +56,21 @@ namespace Givaro
         using Parent_t::one;
         using Parent_t::mOne;
 
-            // ----- Initialisation
+        // ----- Initialisation
         Element& init (Element& x) const
-            { return x = 0; }
+        { return x = 0; }
         Element& init (Element& x, const Integer& y) const final
-            { x = y % _p; return reduce(x); }
+        { x = y % _p; return reduce(x); }
         template<typename T> Element& init(Element& r, const T& a) const
-            { r = Caster<Element>(a); return reduce(r); }
+        { r = Caster<Element>(a); return reduce(r); }
 
 
         Element& reduce (Element& x, const Element& y) const
-            { x = y % _p; if (x < 0) x += _p; return x; }
+        { x = y % _p; if (x < 0) x += _p; return x; }
         Element& reduce (Element& x) const
-            { x %= _p; if (x < 0) x += _p; return x; }
+        { x %= _p; if (x < 0) x += _p; return x; }
 
-            // ----- Classic arithmetic
+        // ----- Classic arithmetic
         Element& mul(Element& r, const Element& a, const Element& b) const;
         Element& div(Element& r, const Element& a, const Element& b) const;
         Element& add(Element& r, const Element& a, const Element& b) const;
@@ -107,8 +107,8 @@ namespace Givaro
         { return init(r, g()); }
         template< class Random > Element& nonzerorandom(Random& g, Element& a) const
         {
-          while (Self_t::isZero(init(a, g())));
-          return a;
+            while (Self_t::isZero(init(a, g())));
+            return a;
         }
 
     };
@@ -117,3 +117,5 @@ namespace Givaro
 #include "givaro/modular-inttype.inl"
 
 #endif
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

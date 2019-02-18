@@ -15,44 +15,46 @@
 
 namespace Givaro {
 
-std::ostream& Rational::print(std::ostream& s) const
-{
-  if (den > 1) {
-    s << num << "/" << den ;
-  }
-  else
-    s << num;
-  return s;
-}
+    std::ostream& Rational::print(std::ostream& s) const
+    {
+        if (den > 1) {
+            s << num << "/" << den ;
+        }
+        else
+            s << num;
+        return s;
+    }
 
 
-std::istream& operator>> (std::istream& in, Rational& r)
-{
-   Integer num ;
-   Integer den = 1;
-   char ch ;
+    std::istream& operator>> (std::istream& in, Rational& r)
+    {
+        Integer num ;
+        Integer den = 1;
+        char ch ;
 
-   in >> num ;
-   if (!in.good() || in.eof()) {
-          r = Rational(num) ;
-          return in ;
-   }
+        in >> num ;
+        if (!in.good() || in.eof()) {
+            r = Rational(num) ;
+            return in ;
+        }
 
-   if (in) {
-         in.get(ch) ;
-         if (in.eof()) {
-             r = Rational(num) ;
-             return in ;
-         }
-         while ((ch==' ') && (in)) in.get(ch) ;
-         if (ch == '/') {
-             // We get denominator
-             in >> den ;
-         }
-         else in.putback(ch) ;
-   } ;
-   r = Rational(num,den) ;
-   return in ;
-}
+        if (in) {
+            in.get(ch) ;
+            if (in.eof()) {
+                r = Rational(num) ;
+                return in ;
+            }
+            while ((ch==' ') && (in)) in.get(ch) ;
+            if (ch == '/') {
+                // We get denominator
+                in >> den ;
+            }
+            else in.putback(ch) ;
+        } ;
+        r = Rational(num,den) ;
+        return in ;
+    }
 
 } // namespace Givaro
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

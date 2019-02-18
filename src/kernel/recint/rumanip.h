@@ -1,34 +1,34 @@
 /* ruint/misc.h - Miscellaneous functions for ruint
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-    Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
 This software is governed by the CeCILL-B license under French law and
-abiding by the rules of distribution of free software.  You can  use, 
+abiding by the rules of distribution of free software.  You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL-B
 license as circulated by CEA, CNRS and INRIA at the following URL
-"http://www.cecill.info". 
+"http://www.cecill.info".
 
-As a counterpart to the access to the source code and  rights to copy, 
+As a counterpart to the access to the source code and  rights to copy,
 modify and redistribute granted by the license, users are provided only
 with a limited warranty  and the software's author,  the holder of the
 economic rights,  and the successive licensors  have only  limited
-liability. 
+liability.
 
 In this respect, the user's attention is drawn to the risks associated
 with loading,  using,  modifying and/or developing or reproducing the
-software by the user in light of its specific status of free software, 
+software by the user in light of its specific status of free software,
 that may mean  that it is complicated to manipulate,  and  that  also
 therefore means  that it is reserved for developers  and  experienced
 professionals having in-depth computer knowledge. Users are therefore
 encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or 
-data to be ensured and,  more generally, to use and operate it in the 
-same conditions as regards security. 
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-B license and that you accept its terms.
@@ -64,7 +64,7 @@ namespace RecInt
 
     // Set the index-th limb of a to b
     template <size_t K> void set_limb(ruint<K>& a, const limb& b, unsigned int index);
-    
+
     // Get the index-th limb of a
     template <size_t K> limb ms_limb(const ruint<K>& a); // Most significant limb
     template <size_t K> limb get_limb(const ruint<K>& a, unsigned int index);
@@ -104,7 +104,7 @@ namespace RecInt
     template <size_t K> inline void copy(ruint<K>& a, const ruint<K>& b) {
         if (&a == &b) return;
         copy(a.High, b.High);
-        copy(a.Low, b.Low);  
+        copy(a.Low, b.Low);
     }
     template <> inline void copy(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
         a.Value = b.Value;
@@ -131,7 +131,7 @@ namespace RecInt
     // Set the index-th limb of a to b
     template <size_t K> inline void set_limb(ruint<K>& a, const limb& b, unsigned int index) {
         if (index < NBLIMB<K-1>::value) set_limb(a.Low, b, index);
-        else set_limb(a.High, b, index-NBLIMB<K-1>::value);    
+        else set_limb(a.High, b, index-NBLIMB<K-1>::value);
     }
     template <> inline void set_limb(ruint<__RECINT_LIMB_SIZE>& a, const limb& b, unsigned int index) {
         if (index == 0) a.Value = b;
@@ -140,23 +140,23 @@ namespace RecInt
 
     // Get the index-th limb of a
     template <size_t K> inline limb ms_limb(const ruint<K>& a) {
-        return ms_limb(a.High);  
+        return ms_limb(a.High);
     }
     template <> inline limb ms_limb(const ruint<__RECINT_LIMB_SIZE>& a) {
         return a.Value;
     }
-    
+
     template <size_t K> inline limb get_limb(const ruint<K>& a, unsigned int index) {
         if (index < NBLIMB<K-1>::value) return get_limb(a.Low, index);
-        else return get_limb(a.High, index - NBLIMB<K-1>::value);    
+        else return get_limb(a.High, index - NBLIMB<K-1>::value);
     }
     template <> inline limb get_limb(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int) {
         return a.Value;
     }
-    
+
     template <size_t K> inline const limb* get_limb_p(const ruint<K>& a, unsigned int index) {
         if (index < NBLIMB<K-1>::value) return get_limb_p(a.Low, index);
-        else return get_limb_p(a.High, index - NBLIMB<K-1>::value);    
+        else return get_limb_p(a.High, index - NBLIMB<K-1>::value);
     }
     template <> inline const limb* get_limb_p(const ruint<__RECINT_LIMB_SIZE>& a, unsigned int) {
         return &(a.Value);
@@ -168,11 +168,11 @@ namespace RecInt
     {
         return begin(a.Low);
     }
-    
+
     template <> inline const limb* begin(const ruint<__RECINT_LIMB_SIZE>& a) {
         return &(a.Value);
     }
-    
+
 }
 
 
@@ -208,7 +208,7 @@ namespace RecInt {
     inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxCardinality() {
         ruint<__RECINT_LIMB_SIZE+1> max; return fill_with_1(max);
     }
-    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxModulus() {        
+    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxModulus() {
         ruint<__RECINT_LIMB_SIZE+1> max(1); return max <<= (__RECINT_LIMB_SIZE);
     }
 #  endif
@@ -217,3 +217,5 @@ namespace RecInt {
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

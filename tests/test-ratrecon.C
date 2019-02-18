@@ -18,14 +18,14 @@ using namespace Givaro;
 
 #define TEST_EQ( F, a, b ) \
 if (!F.areEqual((a),(b))) {\
-        F.write( F.write(std::cout,a) << "!=",b) << " failed (at line " <<  __LINE__ << ')' << std::endl; \
-      return(-1); \
+    F.write( F.write(std::cout,a) << "!=",b) << " failed (at line " <<  __LINE__ << ')' << std::endl; \
+    return(-1); \
 }
 
 template<class PDomain>
 int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
 
-//     std::cout << "Start: " << d << std::endl;
+    //     std::cout << "Start: " << d << std::endl;
 
 
     typename PDomain::Element P,Q,R,S,M,A,B, G;
@@ -46,11 +46,11 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
 
 
     PolDom.invmod(R,Q,M);
-// PolDom.write(std::cout << "R1:= ", R) << ';' << std::endl;
+    // PolDom.write(std::cout << "R1:= ", R) << ';' << std::endl;
     PolDom.mulin(R, P);
-// PolDom.write(std::cout << "R2:= ", R) << ';' << std::endl;
+    // PolDom.write(std::cout << "R2:= ", R) << ';' << std::endl;
     PolDom.modin(R, M);
-// PolDom.write(std::cout << "R3:= ", R) << ';' << std::endl;
+    // PolDom.write(std::cout << "R3:= ", R) << ';' << std::endl;
     PolDom.ratrecon(A,B,R,M,d);
 
     typename PDomain::Type_t lc;
@@ -59,25 +59,25 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
     PolDom.divin(B, lc);
 
     PolDom.invmod(S,B,M);
-// PolDom.write(std::cout << "S1:= ", S) << ';' << std::endl;
+    // PolDom.write(std::cout << "S1:= ", S) << ';' << std::endl;
     PolDom.mulin(S, A);
-// PolDom.write(std::cout << "S2:= ", S) << ';' << std::endl;
+    // PolDom.write(std::cout << "S2:= ", S) << ';' << std::endl;
     PolDom.modin(S, M);
-// PolDom.write(std::cout << "S3:= ", S) << ';' << std::endl;
+    // PolDom.write(std::cout << "S3:= ", S) << ';' << std::endl;
 
 
-//     PolDom.write(std::cout << "M:= ", M) << ';' << std::endl;
-//     PolDom.write(std::cout << "P:= ", P) << ';' << std::endl;
-//     PolDom.write(std::cout << "Q:= ", Q) << ';' << std::endl;
-//     PolDom.write(std::cout << "R:= ", R) << ';' << std::endl;
-//     PolDom.write(std::cout << "A:= ", A) << ';' << std::endl;
-//     PolDom.write(std::cout << "B:= ", B) << ';' << std::endl;
-//     PolDom.write( PolDom.write(std::cout << "P/Q: ", P) << "/", Q) << std::endl;
-//     PolDom.write( PolDom.write(std::cout << "A/B: ", A) << "/", B) << std::endl;
+    //     PolDom.write(std::cout << "M:= ", M) << ';' << std::endl;
+    //     PolDom.write(std::cout << "P:= ", P) << ';' << std::endl;
+    //     PolDom.write(std::cout << "Q:= ", Q) << ';' << std::endl;
+    //     PolDom.write(std::cout << "R:= ", R) << ';' << std::endl;
+    //     PolDom.write(std::cout << "A:= ", A) << ';' << std::endl;
+    //     PolDom.write(std::cout << "B:= ", B) << ';' << std::endl;
+    //     PolDom.write( PolDom.write(std::cout << "P/Q: ", P) << "/", Q) << std::endl;
+    //     PolDom.write( PolDom.write(std::cout << "A/B: ", A) << "/", B) << std::endl;
 
 
-//     TEST_EQ(PolDom, A, P);
-//     TEST_EQ(PolDom, B, Q);
+    //     TEST_EQ(PolDom, A, P);
+    //     TEST_EQ(PolDom, B, Q);
     TEST_EQ(PolDom, S, R);
 
 #ifdef GIVARO_DEBUG
@@ -162,3 +162,6 @@ int main(int argc, char ** argv)
 
     return (! success);
 }
+
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

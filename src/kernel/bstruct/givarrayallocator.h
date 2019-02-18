@@ -19,25 +19,27 @@
 namespace Givaro {
 
 
-/*! @brief ArrayAllocator: class for allocation of arrays.
- * Should have
- * - allocate(size_n)
- * - resize(size_n)
- * - destroy
- * .
- */
-template<class T, class Tag>
-class ArrayAllocatort { };
+    /*! @brief ArrayAllocator: class for allocation of arrays.
+     * Should have
+     * - allocate(size_n)
+     * - resize(size_n)
+     * - destroy
+     * .
+     */
+    template<class T, class Tag>
+    class ArrayAllocatort { };
 
 
-//! Array0Tag
-class Array0Tag {};
+    //! Array0Tag
+    class Array0Tag {};
 
-//! Specialization: for Array0Tag
-template<class T, Array0Tag>
-class ArrayAllocatort : public Array0<T> {};
+    //! Specialization: for Array0Tag
+    template<class T, Array0Tag>
+    class ArrayAllocatort : public Array0<T> {};
 
 } // namespace Givaro
 
 
 #endif // __GIVARO_array_allocator_H
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

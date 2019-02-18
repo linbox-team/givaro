@@ -1,10 +1,10 @@
 /* ruint/ruint.h - Class definition of ruint<K> from RecInt library
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume Dumas
 
 Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
 
@@ -81,15 +81,17 @@ namespace RecInt
 
 }
 
-namespace std 
+namespace std
 {
-    template <size_t K> struct make_signed<RecInt::rint<K>> { 
+    template <size_t K> struct make_signed<RecInt::rint<K>> {
         typedef RecInt::rint<K> type;
     };
-    template <size_t K> struct make_signed<RecInt::ruint<K>> { 
+    template <size_t K> struct make_signed<RecInt::ruint<K>> {
         typedef RecInt::rint<K> type;
     };
 }
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

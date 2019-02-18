@@ -19,155 +19,155 @@ using namespace Givaro;
 
 int test_axpy_unit(const Integer & a, const Integer & b, const Integer & x)
 {
-	Integer y,z ;
-	/*  axpy */
-	z = a*x + b ;
-	Integer::axpy(y,a,x,b);
-	if (y != z)
-		return -1 ;
+    Integer y,z ;
+    /*  axpy */
+    z = a*x + b ;
+    Integer::axpy(y,a,x,b);
+    if (y != z)
+        return -1 ;
 
-	y = b ;
-	Integer::axpyin(y,a,x);
-	if (y != z)
-		return -2 ;
+    y = b ;
+    Integer::axpyin(y,a,x);
+    if (y != z)
+        return -2 ;
 
-	y = b ;
-	Integer::axpy(y,a,x,y);
-	if (y != z)
-		return -3 ;
+    y = b ;
+    Integer::axpy(y,a,x,y);
+    if (y != z)
+        return -3 ;
 
-	/* axmy */
-	z = a*x - b ;
-	Integer::axmy(y,a,x,b);
-	if (y != z)
-		return -4 ;
+    /* axmy */
+    z = a*x - b ;
+    Integer::axmy(y,a,x,b);
+    if (y != z)
+        return -4 ;
 
-	y = b ;
-	Integer::axmyin(y,a,x);
-	if (y != z)
-		return -5 ;
+    y = b ;
+    Integer::axmyin(y,a,x);
+    if (y != z)
+        return -5 ;
 
-	y = b ;
-	Integer::axmy(y,a,x,y);
-	if (y != z)
-		return -6 ;
+    y = b ;
+    Integer::axmy(y,a,x,y);
+    if (y != z)
+        return -6 ;
 
-	/* maxpy */
-	z =  b - a * x ;
-	Integer::maxpy(y,a,x,b);
-	if (y != z)
-		return -7 ;
+    /* maxpy */
+    z =  b - a * x ;
+    Integer::maxpy(y,a,x,b);
+    if (y != z)
+        return -7 ;
 
-	y = b ;
-	Integer::maxpyin(y,a,x);
-	if (y != z)
-		return -8 ;
+    y = b ;
+    Integer::maxpyin(y,a,x);
+    if (y != z)
+        return -8 ;
 
-	y = b ;
-	Integer::maxpy(y,a,x,y);
-	if (y != z)
-		return -9 ;
+    y = b ;
+    Integer::maxpy(y,a,x,y);
+    if (y != z)
+        return -9 ;
 
-	return 0 ;
+    return 0 ;
 
 }
 
 int test_axpy()
 {
-	Integer a,x,b ;
-	int res = 0 ;
-	int repet = _GIV_REPET ;
-	while (--repet) {
-		/* axpy */
-		a = Integer::random<false>();
-		b = Integer::random<false>();
-		x = Integer::random<false>();
-		res = test_axpy_unit(a,b,x);
-		if (res)
-			return res ;
+    Integer a,x,b ;
+    int res = 0 ;
+    int repet = _GIV_REPET ;
+    while (--repet) {
+        /* axpy */
+        a = Integer::random<false>();
+        b = Integer::random<false>();
+        x = Integer::random<false>();
+        res = test_axpy_unit(a,b,x);
+        if (res)
+            return res ;
 
-		a = 0 ;
-		res = test_axpy_unit(a,b,x);
-		if (res)
-			return res ;
+        a = 0 ;
+        res = test_axpy_unit(a,b,x);
+        if (res)
+            return res ;
 
-		a = Integer::random<false>();
-		b = 0 ;
-		res = test_axpy_unit(a,b,x);
-		if (res)
-			return res ;
+        a = Integer::random<false>();
+        b = 0 ;
+        res = test_axpy_unit(a,b,x);
+        if (res)
+            return res ;
 
-		b = Integer::random<false>();
-		x = 0 ;
-		res = test_axpy_unit(a,b,x);
-		if (res)
-			return res ;
-	}
+        b = Integer::random<false>();
+        x = 0 ;
+        res = test_axpy_unit(a,b,x);
+        if (res)
+            return res ;
+    }
 
-	return res ;
+    return res ;
 }
 
 int test_mul_unit(const Integer & a, const Integer & b)
 {
-	Integer y,z ;
-	/*  axpy */
-	z = a*b ;
-	Integer::mul(y,a,b);
-	if (y != z)
-		return -1 ;
+    Integer y,z ;
+    /*  axpy */
+    z = a*b ;
+    Integer::mul(y,a,b);
+    if (y != z)
+        return -1 ;
 
-	y = b ;
-	Integer::mulin(y,a);
-	if (y != z)
-		return -2 ;
+    y = b ;
+    Integer::mulin(y,a);
+    if (y != z)
+        return -2 ;
 
-	y = a ;
-	Integer::mul(y,y,b);
-	if (y != z)
-		return -3 ;
+    y = a ;
+    Integer::mul(y,y,b);
+    if (y != z)
+        return -3 ;
 
-	y = b ;
-	Integer::mul(y,a,y);
-	if (y != z)
-		return -3 ;
+    y = b ;
+    Integer::mul(y,a,y);
+    if (y != z)
+        return -3 ;
 
-	z = b * b ;
-	y = b ;
-	Integer::mulin(y,y);
-	if (y != z)
-		return -5 ;
+    z = b * b ;
+    y = b ;
+    Integer::mulin(y,y);
+    if (y != z)
+        return -5 ;
 
-	return 0 ;
+    return 0 ;
 
 }
 
 int test_mul()
 {
-	Integer a,b ;
-	int res = 0 ;
-	int repet = _GIV_REPET ;
-	while (--repet) {
-		/* axpy */
-		a = Integer::random<false>();
-		b = Integer::random<false>();
-		res = test_mul_unit(a,b);
-		if (res)
-			return res ;
+    Integer a,b ;
+    int res = 0 ;
+    int repet = _GIV_REPET ;
+    while (--repet) {
+        /* axpy */
+        a = Integer::random<false>();
+        b = Integer::random<false>();
+        res = test_mul_unit(a,b);
+        if (res)
+            return res ;
 
-		a = 0 ;
-		res = test_mul_unit(a,b);
-		if (res)
-			return res ;
+        a = 0 ;
+        res = test_mul_unit(a,b);
+        if (res)
+            return res ;
 
-		a = Integer::random<false>();
-		b = 0 ;
-		res = test_mul_unit(a,b);
-		if (res)
-			return res ;
+        a = Integer::random<false>();
+        b = 0 ;
+        res = test_mul_unit(a,b);
+        if (res)
+            return res ;
 
-	}
+    }
 
-	return res ;
+    return res ;
 }
 
 #include <typeinfo>
@@ -238,61 +238,61 @@ int test_cast_unit(const bool& t, const Integer& a, const Integer& b) {
 int test_cast_unit(const Integer& a, const Integer& b) {
     int res = 0;
     res = test_cast_unit( (bool) Integer::random<false>(), a, b);
-		if (res) return res ;
+    if (res) return res ;
     res = test_cast_unit( (uint16_t) Integer::random<false>(), a, b);
-		if (res) return res ;
+    if (res) return res ;
     res = test_cast_unit( (unsigned char) Integer::random<false>(), a, b);
-		if (res) return res ;
+    if (res) return res ;
     res = test_cast_unit( (uint32_t) Integer::random<false>(), a, b);
-		if (res) return res ;
+    if (res) return res ;
     res = test_cast_unit( (uint64_t) Integer::random<false>(), a, b);
-		if (res) return res ;
+    if (res) return res ;
 
     return 0;
 }
 
 
 int test_cast() {
-	Integer a,b ;
-	int res = 0 ;
-	int repet = _GIV_REPET ;
-	while (--repet) {
-		/* axpy */
-		a = Integer::random<false>();
-		b = Integer::random<false>();
-		res = test_cast_unit(a,b);
-		if (res) return res ;
+    Integer a,b ;
+    int res = 0 ;
+    int repet = _GIV_REPET ;
+    while (--repet) {
+        /* axpy */
+        a = Integer::random<false>();
+        b = Integer::random<false>();
+        res = test_cast_unit(a,b);
+        if (res) return res ;
 
-		a = 0 ;
-		res = test_cast_unit(a,b);
-		if (res) return res ;
+        a = 0 ;
+        res = test_cast_unit(a,b);
+        if (res) return res ;
 
-		a = Integer::random<false>();
-		b = 0 ;
-		res = test_cast_unit(a,b);
-		if (res) return res ;
+        a = Integer::random<false>();
+        b = 0 ;
+        res = test_cast_unit(a,b);
+        if (res) return res ;
 
-	}
+    }
 
-	return res ;
+    return res ;
 }
 
 /* See PR#86 */
 int test_subin() {
-	Integer a,b;
+    Integer a,b;
 
-	a = 0;
-	a--;
-	if (a + 1 != 0) {
+    a = 0;
+    a--;
+    if (a + 1 != 0) {
 #ifdef GIVARO_DEBUG
         std::cerr << "ERROR1 a: " << a << ", l: " << 1 << std::endl;
 #endif
         return -1;
     }
 
-	a = 0;
-	a-= INT64_MIN;
-	if (a + INT64_MIN != 0) {
+    a = 0;
+    a-= INT64_MIN;
+    if (a + INT64_MIN != 0) {
 #ifdef GIVARO_DEBUG
         std::cerr << "ERROR2 a: " << a << ", l: " << INT64_MIN << std::endl;
 #endif
@@ -307,7 +307,7 @@ int test_subin() {
 #endif
         return -3;
     }
-    
+
     a = 0;
     b = a - INT64_MIN;
     if (b + INT64_MIN != 0) {
@@ -316,7 +316,7 @@ int test_subin() {
 #endif
         return -4;
     }
-    
+
     return 0;
 }
 
@@ -331,22 +331,25 @@ int main (int argc, char ** argv)
 #endif
     Integer::seeding (seed);
 
-	int res = 0 ;
-	res = test_axpy();
-	if (res)
-		return res ;
+    int res = 0 ;
+    res = test_axpy();
+    if (res)
+        return res ;
 
-	res = test_mul();
-	if (res)
-		return res ;
+    res = test_mul();
+    if (res)
+        return res ;
 
-	res = test_cast();
-	if (res)
-		return res ;
+    res = test_cast();
+    if (res)
+        return res ;
 
-	res = test_subin();
-	if (res)
-		return res ;
+    res = test_subin();
+    if (res)
+        return res ;
 
-	return res ;
+    return res ;
 }
+
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

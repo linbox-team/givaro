@@ -12,19 +12,21 @@
 #ifndef __GIVARO_bits_INL
 #define __GIVARO_bits_INL
 namespace Givaro {
-  // -- Copy operators
-inline
-Bits& Bits::copy( const Bits& src )
-{ rep.copy( src.rep ); return *this; }
+    // -- Copy operators
+    inline
+    Bits& Bits::copy( const Bits& src )
+    { rep.copy( src.rep ); return *this; }
 
-inline
-Bits& Bits::logcopy( const Bits& src )
-{ rep.copy( src.rep ); return *this; }
+    inline
+    Bits& Bits::logcopy( const Bits& src )
+    { rep.copy( src.rep ); return *this; }
 
-inline Bits& Bits::operator= (const Bits& B) { return copy(B); }
+    inline Bits& Bits::operator= (const Bits& B) { return copy(B); }
 
-//-------------------------------------------------inline << operators
-inline std::ostream& operator<< (std::ostream& o, const Bits& a)
-{ return a.print(o); }
+    //-------------------------------------------------inline << operators
+    inline std::ostream& operator<< (std::ostream& o, const Bits& a)
+    { return a.print(o); }
 } // namespace Givaro
 #endif // __GIVARO_bits_INL
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

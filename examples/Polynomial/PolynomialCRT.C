@@ -47,8 +47,8 @@ bool tmain(int argc, char ** argv, GivRandom& generator) {
     bool pass = true;
     typedef Poly1CRT< Field >  CRTSystem;
     typedef typename CRTSystem::Element	Poly;
-//     typedef typename CRTSystem::Type_t	Scal;
-//     typedef typename CRTSystem::array_E	VPoly;
+    //     typedef typename CRTSystem::Type_t	Scal;
+    //     typedef typename CRTSystem::array_E	VPoly;
     typedef typename CRTSystem::array_T	VScal;
 
     IntPrimeDom ID;
@@ -67,10 +67,10 @@ bool tmain(int argc, char ** argv, GivRandom& generator) {
 
         F.init(*e, generator());
     }
-//    for(typename VScal::const_iterator it=Primes.begin(); it!=Primes.end();++it)
-//        F.write(std::cout, *it) << std::endl;
-//    for(typename VScal::const_iterator it=Moduli.begin(); it!=Moduli.end();++it)
-//        F.write(std::cout, *it) << std::endl;
+    //    for(typename VScal::const_iterator it=Primes.begin(); it!=Primes.end();++it)
+    //        F.write(std::cout, *it) << std::endl;
+    //    for(typename VScal::const_iterator it=Moduli.begin(); it!=Moduli.end();++it)
+    //        F.write(std::cout, *it) << std::endl;
 
 
     CRTSystem CRT( F, Primes, "X" );
@@ -99,8 +99,8 @@ bool tmain(int argc, char ** argv, GivRandom& generator) {
     for( ; e != Moduli.end(); ++e, ++v)
         if (! F.areEqual(*e, *v) ) {
             F.write(std::cerr << "incoherency within ") << std::endl;
-	    F.write(std::cerr << "e: ", *e ) << std::endl;
-	    F.write(std::cerr << "v: ", *v ) << std::endl;
+            F.write(std::cerr << "e: ", *e ) << std::endl;
+            F.write(std::cerr << "v: ", *v ) << std::endl;
             pass = false;
             break;
         }
@@ -114,8 +114,8 @@ bool tmain(int argc, char ** argv, GivRandom& generator) {
     tim.stop();
     if (! CRT.getpolydom().areEqual(res,nres) ) {
         CRT.getpolydom().write(std::cerr << "incoherency within ") << std::endl;
-	    CRT.getpolydom().write(std::cerr << "r: ", res ) << std::endl;
-	    CRT.getpolydom().write(std::cerr << "n: ", nres ) << std::endl;
+        CRT.getpolydom().write(std::cerr << "r: ", res ) << std::endl;
+        CRT.getpolydom().write(std::cerr << "n: ", nres ) << std::endl;
         pass = false;
     }
     F.write( std::cerr << tim << " using ") << std::endl;
@@ -128,8 +128,8 @@ bool tmainext(int argc, char ** argv, GivRandom& generator) {
     bool pass = true;
     typedef Poly1CRT< Field >  CRTSystem;
     typedef typename CRTSystem::Element	Poly;
-//     typedef typename CRTSystem::Type_t	Scal;
-//     typedef typename CRTSystem::array_E	VPoly;
+    //     typedef typename CRTSystem::Type_t	Scal;
+    //     typedef typename CRTSystem::array_E	VPoly;
     typedef typename CRTSystem::array_T	VScal;
 
     IntPrimeDom ID;
@@ -149,10 +149,10 @@ bool tmainext(int argc, char ** argv, GivRandom& generator) {
 
         F.random(generator,*e);
     }
-for(typename VScal::const_iterator it=Primes.begin(); it!=Primes.end();++it)
-F.write(std::cout, *it) << std::endl;
-for(typename VScal::const_iterator it=Moduli.begin(); it!=Moduli.end();++it)
-F.write(std::cout, *it) << std::endl;
+    for(typename VScal::const_iterator it=Primes.begin(); it!=Primes.end();++it)
+        F.write(std::cout, *it) << std::endl;
+    for(typename VScal::const_iterator it=Moduli.begin(); it!=Moduli.end();++it)
+        F.write(std::cout, *it) << std::endl;
 
 
     CRTSystem CRT( F, Primes, "X" );
@@ -181,8 +181,8 @@ F.write(std::cout, *it) << std::endl;
     for( ; e != Moduli.end(); ++e, ++v)
         if (! F.areEqual(*e, *v) ) {
             F.write(std::cerr << "incoherency within ") << std::endl;
-	    F.write(std::cerr << "e: ", *e ) << std::endl;
-	    F.write(std::cerr << "v: ", *v ) << std::endl;
+            F.write(std::cerr << "e: ", *e ) << std::endl;
+            F.write(std::cerr << "v: ", *v ) << std::endl;
             pass = false;
             break;
         }
@@ -196,8 +196,8 @@ F.write(std::cout, *it) << std::endl;
     tim.stop();
     if (! CRT.getpolydom().areEqual(res,nres) ) {
         CRT.getpolydom().write(std::cerr << "incoherency within ") << std::endl;
-	    CRT.getpolydom().write(std::cerr << "r: ", res ) << std::endl;
-	    CRT.getpolydom().write(std::cerr << "n: ", nres ) << std::endl;
+        CRT.getpolydom().write(std::cerr << "r: ", res ) << std::endl;
+        CRT.getpolydom().write(std::cerr << "n: ", nres ) << std::endl;
         pass = false;
     }
     F.write( std::cerr << tim << " using ") << std::endl;
@@ -209,9 +209,9 @@ F.write(std::cout, *it) << std::endl;
 
 
 int main(int argc, char ** argv) {
-        // argv[1] : number of primes
-        // argv[2] : 2^{32-j} is size of primes
-        // argv[3] : seed for generator
+    // argv[1] : number of primes
+    // argv[2] : 2^{32-j} is size of primes
+    // argv[3] : seed for generator
 
     GivRandom seedor( argc>3 ? (uint64_t)atoi(argv[3]): (uint64_t)BaseTimer::seed() );
     uint64_t seed = seedor.seed();
@@ -220,16 +220,18 @@ int main(int argc, char ** argv) {
     Integer::seeding(seed);
 
     return
-        tmain<Field1>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field2>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field3>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field4>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field5>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field6>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field7>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field8>(argc, argv, *( new GivRandom(seed)))
-        && tmain<Field9>(argc, argv, *( new GivRandom(seed)))
-        && tmainext<Field10>(argc, argv, *( new GivRandom(seed)))
-        ;
+    tmain<Field1>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field2>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field3>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field4>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field5>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field6>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field7>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field8>(argc, argv, *( new GivRandom(seed)))
+    && tmain<Field9>(argc, argv, *( new GivRandom(seed)))
+    && tmainext<Field10>(argc, argv, *( new GivRandom(seed)))
+    ;
 
 }
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

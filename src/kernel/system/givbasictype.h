@@ -24,29 +24,30 @@
 
 namespace Givaro {
 
-	/** Neutral type.
-	 * definition of zero and one
-	 */
-	class Neutral {
-		public:
-			static Neutral zero;
-			static Neutral one;
-			inline operator int() const { return _val; }
-			inline int operator==( const Neutral& n) const { return _val==n._val; }
-			inline int operator!=( const Neutral& n) const { return _val!=n._val; }
-		private:
-			Neutral( int val ) : _val(val) {};
-			int _val;
-	};
+    /** Neutral type.
+     * definition of zero and one
+     */
+    class Neutral {
+    public:
+        static Neutral zero;
+        static Neutral one;
+        inline operator int() const { return _val; }
+        inline int operator==( const Neutral& n) const { return _val==n._val; }
+        inline int operator!=( const Neutral& n) const { return _val!=n._val; }
+    private:
+        Neutral( int val ) : _val(val) {};
+        int _val;
+    };
 
-	//! Used to build no initialized object as static object
-	class givNoInit {};
-	//! Used to call cstor without copy
-	class givNoCopy {};
-	//! Used to call cstor with copy
-	class givWithCopy {};
+    //! Used to build no initialized object as static object
+    class givNoInit {};
+    //! Used to call cstor without copy
+    class givNoCopy {};
+    //! Used to call cstor with copy
+    class givWithCopy {};
 
 } // namespace Givaro
 
 #endif // __GIVARO_basictype_H
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

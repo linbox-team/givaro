@@ -22,7 +22,7 @@
 #include <iostream>
 
 namespace Givaro {
-//! Degree type for polynomials
+    //! Degree type for polynomials
     class Degree {
     public:
         typedef int64_t value_type;
@@ -30,13 +30,13 @@ namespace Givaro {
         enum { DEGPOLYZERO =-1};
         Degree(int64_t a = DEGPOLYZERO): _deg(a<0?int64_t(DEGPOLYZERO):a) {}
 
-            // -- Degree of zero polynomial
+        // -- Degree of zero polynomial
         static const int64_t deginfty;
 
-            // -- cvrt
+        // -- cvrt
         int64_t value() const { return _deg; }
 
-            // -- Basic arithmetic:
+        // -- Basic arithmetic:
         Degree operator+( const Degree& d) const { return Degree(_deg+d._deg); }
         Degree operator-( const Degree& d) const { return Degree(_deg-d._deg); }
         Degree operator*( const uint64_t& e) const { return Degree(_deg*e); }
@@ -54,7 +54,7 @@ namespace Givaro {
         int64_t operator++(int) { return _deg++; }
         int64_t operator--(int) { return _deg--; }
 
-            // -- Comparizon:
+        // -- Comparizon:
         int operator==( const Degree& d) const { return _deg == d._deg; }
         int operator!=( const Degree& d) const { return _deg != d._deg; }
         int operator<=( const Degree& d) const { return _deg <= d._deg; }
@@ -68,7 +68,7 @@ namespace Givaro {
         int operator>=( const int64_t& d) const { return _deg >= d; }
         int operator> ( const int64_t& d) const { return _deg >  d; }
 
-            // -- methods
+        // -- methods
         friend std::ostream& operator<< (std::ostream& o, const Degree& d) { return o << d._deg; }
         friend std::istream& operator>> (std::istream& i, Degree& d) { return i >> d._deg; }
 
@@ -77,8 +77,10 @@ namespace Givaro {
         int64_t _deg;
     };
 
-//! value
+    //! value
     inline int64_t value(const Degree& d) { return d.value(); }
 } // Givaro
 
 #endif // __GIVARO_poly1degree_H
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

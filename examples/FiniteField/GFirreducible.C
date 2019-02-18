@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 
     int64_t p = (argc>1?atoi(argv[1]):5);
     int64_t e = (argc>2?atoi(argv[2]):3);
-	typedef GFqDom<int64_t>::Residu_t TT ;
+    typedef GFqDom<int64_t>::Residu_t TT ;
     GFqDom<int64_t> GFq((TT)p, (TT)e);
     GFqDom<int64_t> PrimeField((TT)p,1);
     std::cout << "Working in GF(" << p << '^' << e << ')' << std::endl;
@@ -35,9 +35,9 @@ int main(int argc, char** argv)
 
     Poly1Dom< GFqDom<int64_t>, Dense > Pdom( PrimeField, Indeter("X") );
 
-        // First get the irreducible polynomial irred
-        // via irred = X^e - mQ
-        // and X^e = X^(e-1) * X
+    // First get the irreducible polynomial irred
+    // via irred = X^e - mQ
+    // and X^e = X^(e-1) * X
     GFqDom<int64_t>::Element temo, t, tmp;
     Poly1Dom< GFqDom<int64_t>, Dense >::Element G, H, J, mQ, irred, modP;
 
@@ -53,7 +53,7 @@ int main(int argc, char** argv)
     GFq.negin(tmp); 	   // internal representation of -X^e, i.e. of the irreducible polynomial without the largest monomial, X^e
 
     int64_t lowerpart;
-        // p-adic value of the lower part of the irreducible polynomial
+    // p-adic value of the lower part of the irreducible polynomial
     GFq.convert(lowerpart, tmp);
     std::cout << ' ' << p << "-adic value of the lower part of the irreducible : " << lowerpart << std::endl;
 
@@ -75,11 +75,13 @@ int main(int argc, char** argv)
 
 
     PAD.write(std::cout << "The latter " << GFq.irreducible() << " represents: ", Polynomial)
-                        << " in " << p << "-adic"
-                        << std::endl;
+    << " in " << p << "-adic"
+    << std::endl;
 
 
 
     return 0;
 
 }
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

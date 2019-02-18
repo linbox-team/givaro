@@ -22,16 +22,16 @@ namespace Givaro {
 #pragma message "#warning this file will probably not compile"
 
 
-// ==========================================================================
-// --
-// -- MatrixDom<T, StorageTag>:
-// -- current available tags are:
-// --  * Dense: dynamic n x m matrix
-// --  * Sparse: dynamic n x m matrix with few non null entries
-// --  * FixedBlock<n,m>: static n x m dimensional matrix
-// ==========================================================================
+    // ==========================================================================
+    // --
+    // -- MatrixDom<T, StorageTag>:
+    // -- current available tags are:
+    // --  * Dense: dynamic n x m matrix
+    // --  * Sparse: dynamic n x m matrix with few non null entries
+    // --  * FixedBlock<n,m>: static n x m dimensional matrix
+    // ==========================================================================
 
-template <class T, class StorageTag> class MatrixDom { };
+    template <class T, class StorageTag> class MatrixDom { };
 
 } // Givaro
 
@@ -45,3 +45,5 @@ template <class T, class StorageTag> class MatrixDom { };
 #include "givaro/givmatsparseops.inl"
 
 #endif
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

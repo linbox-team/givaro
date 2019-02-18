@@ -32,69 +32,70 @@ extern "C" {
 
 namespace Givaro {
 
-        //! GivRandom
+    //! GivRandom
     class GivRandom {
         mutable uint64_t _seed;
     public:
         typedef GivRandom random_generator;
 
         GivRandom(const uint64_t s = 0)
-                : _seed(s)
-            {
-                while (! _seed) {
-                    _seed = (uint64_t)BaseTimer::seed();
-                }
+        : _seed(s)
+        {
+            while (! _seed) {
+                _seed = (uint64_t)BaseTimer::seed();
             }
+        }
 
         GivRandom(const GivRandom& R) :
-                _seed(R._seed)
-            {}
+            _seed(R._seed)
+        {}
 
         GivRandom& operator= (const GivRandom& R)
-            {
-                _seed = R._seed;
-                return *this;
-            }
+        {
+            _seed = R._seed;
+            return *this;
+        }
 
         uint64_t seed() const
-            {
-                return _seed;
-            }
+        {
+            return _seed;
+        }
 
 
         uint64_t max_rand() const
-            {   
-                return _GIVRAN_MODULO_;
-            }
-    
+        {
+            return _GIVRAN_MODULO_;
+        }
 
-// #if defined(__GIVARO_INT64)
+
+        // #if defined(__GIVARO_INT64)
 #if 1
         uint64_t operator() () const
-            {
-                return _seed = (uint64_t)(
-                    (int64_t)_GIVRAN_MULTIPLYER_
-                    * (int64_t)_seed
-                    % (int64_t)_GIVRAN_MODULO_ );
-            }
+        {
+            return _seed = (uint64_t)(
+                                      (int64_t)_GIVRAN_MULTIPLYER_
+                                      * (int64_t)_seed
+                                      % (int64_t)_GIVRAN_MODULO_ );
+        }
 #else
         uint64_t operator() () const
-            {
-                return _seed = (uint64_t)(
-                    (uint64_t)_GIVRAN_MULTIPLYER_
-                    * _seed
-                    % (uint64_t)_GIVRAN_MODULO_ );
-            }
+        {
+            return _seed = (uint64_t)(
+                                      (uint64_t)_GIVRAN_MULTIPLYER_
+                                      * _seed
+                                      % (uint64_t)_GIVRAN_MODULO_ );
+        }
 #endif
 
         template<class XXX> XXX& operator() (XXX& x) const
-            {
-                return x = (XXX)this->operator() ();
-            }
+        {
+            return x = (XXX)this->operator() ();
+        }
 
     };
 
 } // namespace Givaro
 
 #endif // __GIVARO_random_H
-// vim:sts=4:sw=4:ts=4:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

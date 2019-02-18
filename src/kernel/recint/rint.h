@@ -1,10 +1,10 @@
 /* recint.h - RecInt library for fixed precision arithmetic
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-	Christophe CHABOT (christophechabotcc@gmail.com 2011)
-    Jean-Guillaume Dumas
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume Dumas
 
 Time-stamp: <20 Jun 12 10:31:24 Jean-Guillaume.Dumas@imag.fr>
 
@@ -82,3 +82,5 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

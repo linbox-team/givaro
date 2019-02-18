@@ -26,444 +26,445 @@
 #endif
 
 namespace Givaro {
-	//-------------------------------------------fact (uint64_t l)
-	Integer fact ( uint64_t l)
-	{
-		Integer Res ;
-		mpz_fac_ui( (mpz_ptr)&(Res.gmp_rep), l ) ;
-		return Res ;
-	}
+    //-------------------------------------------fact (uint64_t l)
+    Integer fact ( uint64_t l)
+    {
+        Integer Res ;
+        mpz_fac_ui( (mpz_ptr)&(Res.gmp_rep), l ) ;
+        return Res ;
+    }
 
-	//-------------------------------------------square root
-	Integer& sqrt(Integer& q, const Integer &a)
-	{
-		mpz_sqrt( (mpz_ptr)&(q.gmp_rep),
-			  (mpz_srcptr)&(a.gmp_rep)) ;
-		return q;
-	}
+    //-------------------------------------------square root
+    Integer& sqrt(Integer& q, const Integer &a)
+    {
+        mpz_sqrt( (mpz_ptr)&(q.gmp_rep),
+                  (mpz_srcptr)&(a.gmp_rep)) ;
+        return q;
+    }
 
-	Integer& sqrtrem(Integer& q, const Integer &a, Integer& r)
-	{
-		mpz_sqrtrem( (mpz_ptr)&(q.gmp_rep),
-			     (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(a.gmp_rep)) ;
-		return q;
-	}
+    Integer& sqrtrem(Integer& q, const Integer &a, Integer& r)
+    {
+        mpz_sqrtrem( (mpz_ptr)&(q.gmp_rep),
+                     (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(a.gmp_rep)) ;
+        return q;
+    }
 
-	Integer sqrt(const Integer &a)
-	{
-		Integer q;
-		return sqrt(q,a);
-	}
+    Integer sqrt(const Integer &a)
+    {
+        Integer q;
+        return sqrt(q,a);
+    }
 
-	Integer sqrtrem(const Integer &a, Integer& r)
-	{
-		Integer q;
-		return sqrtrem(q,a,r);
-	}
+    Integer sqrtrem(const Integer &a, Integer& r)
+    {
+        Integer q;
+        return sqrtrem(q,a,r);
+    }
 
-	bool root(Integer& q, const Integer &a, uint32_t n)
-	{
-		return (bool)mpz_root ((mpz_ptr)&(q.gmp_rep),
-				       (mpz_srcptr)&(a.gmp_rep),
-				       n);
-	}
+    bool root(Integer& q, const Integer &a, uint32_t n)
+    {
+        return (bool)mpz_root ((mpz_ptr)&(q.gmp_rep),
+                               (mpz_srcptr)&(a.gmp_rep),
+                               n);
+    }
 
-	void swap(Integer& a, Integer& b)
-	{
-		return mpz_swap( (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep));
-	}
-
-
-	// Natural logarithm of a
-	// log(2) being close to 0.69314718055994531
-	double naturallog(const Integer& a)
-	{
-		long int exp_;
-		double d = mpz_get_d_2exp( &exp_, (mpz_srcptr)&(a.gmp_rep) );
-		return (double)exp_*0.69314718055994531+log(d);
-	}
+    void swap(Integer& a, Integer& b)
+    {
+        return mpz_swap( (mpz_ptr)&(a.gmp_rep), (mpz_ptr)&(b.gmp_rep));
+    }
 
 
-	/*! Tests parity of an integer
-	 * @param a integer
-	 * @return 1 if odd, 0 if even
-	 */
-	bool isOdd(const Integer &a)
-	{
-		int32_t o = mpz_tstbit( (mpz_srcptr) &(a.gmp_rep), 0);
-		return (o!=0); // or maybe should I write l==1 ^^
-	}
+    // Natural logarithm of a
+    // log(2) being close to 0.69314718055994531
+    double naturallog(const Integer& a)
+    {
+        long int exp_;
+        double d = mpz_get_d_2exp( &exp_, (mpz_srcptr)&(a.gmp_rep) );
+        return (double)exp_*0.69314718055994531+log(d);
+    }
 
-	// base p logarithm of a
-	int64_t logp(const Integer& a, const Integer& p)
-	{
-		std::list< Integer > pows;
-		Integer puiss = p, sq;
-		do {
-			pows.push_back( puiss );
-		} while ( (puiss *= puiss) <= a );
-		puiss = pows.back(); pows.pop_back();
-		int64_t res = (1 << pows.size());
-		while (! pows.empty() ) {
-			if ((sq = puiss * pows.back()) <= a) {
-				puiss = sq;
-				pows.pop_back();
-				res += (1 << pows.size());
-			} else
-				pows.pop_back();
-		}
-		return res;
-	}
 
-	// approximation of the base 2 logarithm of a
-	// 1/log(2) being close to 1.44269504088896341
-	double logtwo(const Integer& a)
-	{
-		long int exp;
-		double d = mpz_get_d_2exp( &exp, (mpz_srcptr)&(a.gmp_rep) );
-		return (double)exp+log(d)*1.44269504088896341;
-	}
+    /*! Tests parity of an integer
+     * @param a integer
+     * @return 1 if odd, 0 if even
+     */
+    bool isOdd(const Integer &a)
+    {
+        int32_t o = mpz_tstbit( (mpz_srcptr) &(a.gmp_rep), 0);
+        return (o!=0); // or maybe should I write l==1 ^^
+    }
+
+    // base p logarithm of a
+    int64_t logp(const Integer& a, const Integer& p)
+    {
+        std::list< Integer > pows;
+        Integer puiss = p, sq;
+        do {
+            pows.push_back( puiss );
+        } while ( (puiss *= puiss) <= a );
+        puiss = pows.back(); pows.pop_back();
+        int64_t res = (1 << pows.size());
+        while (! pows.empty() ) {
+            if ((sq = puiss * pows.back()) <= a) {
+                puiss = sq;
+                pows.pop_back();
+                res += (1 << pows.size());
+            } else
+                pows.pop_back();
+        }
+        return res;
+    }
+
+    // approximation of the base 2 logarithm of a
+    // 1/log(2) being close to 1.44269504088896341
+    double logtwo(const Integer& a)
+    {
+        long int exp;
+        double d = mpz_get_d_2exp( &exp, (mpz_srcptr)&(a.gmp_rep) );
+        return (double)exp+log(d)*1.44269504088896341;
+    }
 
     namespace Protected {
-	//------------------------------------------GMP isprime
-	//     If this function returns 0, OP is definitely not prime.  If it
-	//     returns 1, then OP is `probably' prime.  The probability of a
-	//     false positive is (1/4)^r.  A reasonable value of r is 25.
-	int32_t probab_prime(const Integer &p, int32_t r)
-	{
-		return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),r) ;
-	}
+        //------------------------------------------GMP isprime
+        //     If this function returns 0, OP is definitely not prime.  If it
+        //     returns 1, then OP is `probably' prime.  The probability of a
+        //     false positive is (1/4)^r.  A reasonable value of r is 25.
+        int32_t probab_prime(const Integer &p, int32_t r)
+        {
+            return mpz_probab_prime_p ((mpz_srcptr)&(p.gmp_rep),r) ;
+        }
 
-	Integer& nextprime(Integer& r, const Integer &p)
-	{
-		mpz_nextprime ((mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep)) ;
-		return r;
-	}
+        Integer& nextprime(Integer& r, const Integer &p)
+        {
+            mpz_nextprime ((mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep)) ;
+            return r;
+        }
 
-	// Copied and adapted from mpz/nextprime.c
-	Integer& prevprime(Integer& r, const Integer &p)
-	{
-		if (p < 3) return (r=2);
-		if (isOdd(p))
-			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2 );
-		else
-			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1 );
+        // Copied and adapted from mpz/nextprime.c
+        Integer& prevprime(Integer& r, const Integer &p)
+        {
+            if (p < 3) return (r=2);
+            if (isOdd(p))
+                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2 );
+            else
+                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1 );
 
-		while( !mpz_probab_prime_p ( (mpz_srcptr)&(r.gmp_rep), _GIVARO_ISPRIMETESTS_ ) )
-                {
-                    
-			mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(r.gmp_rep), 2 );
+            while( !mpz_probab_prime_p ( (mpz_srcptr)&(r.gmp_rep), _GIVARO_ISPRIMETESTS_ ) )
+            {
 
-                }
-                
-		return r;
-	}
+                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(r.gmp_rep), 2 );
+
+            }
+
+            return r;
+        }
     } // namespace Protected
-    
-
-	// ==========================================================================
-	// Computes and returns the Jacobi and Legendre symbols (u/v) of the integers u and v.
-	// The algorithm used is Gmp's.
-	int32_t jacobi(const Integer& u, const Integer& v)
-	{
-		return mpz_jacobi ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
-	}
-
-	int32_t legendre(const Integer& u, const Integer& v)
-	{
-		return mpz_legendre ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
-	}
 
 
+    // ==========================================================================
+    // Computes and returns the Jacobi and Legendre symbols (u/v) of the integers u and v.
+    // The algorithm used is Gmp's.
+    int32_t jacobi(const Integer& u, const Integer& v)
+    {
+        return mpz_jacobi ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
+    }
 
-	//--------------------------------------------Integer::operator <<   // shift left
-	Integer Integer::operator << (int32_t l) const
-	{
-		return this->operator<<( (uint64_t)l );
-	}
-	Integer Integer::operator << (uint32_t l) const
-	{
-		return this->operator<<( (uint64_t)l );
-	}
-	Integer Integer::operator << (int64_t l) const
-	{
-		return this->operator<<( (uint64_t)l );
-	}
-
-	Integer Integer::operator << (uint64_t l) const
-	{
-		Integer tmp;
-		mpz_mul_2exp((mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-		return tmp;
-	}
+    int32_t legendre(const Integer& u, const Integer& v)
+    {
+        return mpz_legendre ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
+    }
 
 
-	//--------------------------------------------Integer::operator >>   // shift right
-	Integer Integer::operator >> (int32_t l) const
-	{
-		return this->operator>>( (uint64_t)l );
-	}
 
-	Integer Integer::operator >> (int64_t l) const
-	{
-		return this->operator>>( (uint64_t)l );
-	}
+    //--------------------------------------------Integer::operator <<   // shift left
+    Integer Integer::operator << (int32_t l) const
+    {
+        return this->operator<<( (uint64_t)l );
+    }
+    Integer Integer::operator << (uint32_t l) const
+    {
+        return this->operator<<( (uint64_t)l );
+    }
+    Integer Integer::operator << (int64_t l) const
+    {
+        return this->operator<<( (uint64_t)l );
+    }
 
-	Integer Integer::operator >> (uint32_t l) const
-	{
-		return this->operator>>( (uint64_t)l );
-	}
-
-	Integer Integer::operator >> (uint64_t l) const
-	{
-		Integer tmp;
-		mpz_tdiv_q_2exp( (mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-		return tmp;
-	}
-
-	//--------------------------------------------Integer::operator <<=   // shift left
-	Integer& Integer::operator <<= (int32_t l)
-	{
-		return this->operator<<= ( (uint64_t)l );
-	}
-	Integer& Integer::operator <<=  (uint32_t l)
-	{
-		return this->operator<<= ( (uint64_t)l );
-	}
-	Integer& Integer::operator <<= (int64_t l)
-	{
-		return this->operator<<= ( (uint64_t)l );
-	}
-
-	Integer& Integer::operator <<= (uint64_t l)
-	{
-		mpz_mul_2exp((mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-		return *this;
-	}
+    Integer Integer::operator << (uint64_t l) const
+    {
+        Integer tmp;
+        mpz_mul_2exp((mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
+        return tmp;
+    }
 
 
-	//--------------------------------------------Integer::operator >>=   // shift right
-	Integer& Integer::operator >>= (int32_t l)
-	{
-		return this->operator>>= ( (uint64_t)l );
-	}
-	Integer& Integer::operator >>= (int64_t l)
-	{
-		return this->operator>>= ( (uint64_t)l );
-	}
-	Integer& Integer::operator >>= (uint32_t l)
-	{
-		return this->operator>>= ( (uint64_t)l );
-	}
+    //--------------------------------------------Integer::operator >>   // shift right
+    Integer Integer::operator >> (int32_t l) const
+    {
+        return this->operator>>( (uint64_t)l );
+    }
 
-	Integer& Integer::operator >>= (uint64_t l)
-	{
-		mpz_tdiv_q_2exp( (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
-		return *this;
-	}
+    Integer Integer::operator >> (int64_t l) const
+    {
+        return this->operator>>( (uint64_t)l );
+    }
 
-	//------------------------------------------- Bit logic
-	Integer Integer::operator^ (const Integer& a) const
-	{   // XOR
-		Integer res(*this);
-		return res ^= a;
-	}
-	Integer Integer::operator| (const Integer& a) const
-	{   // OR
-		Integer res(*this);
-		return res |= a;
-	}
-	Integer Integer::operator& (const Integer& a) const
-	{   // AND
-		Integer res(*this);
-		return res &= a;
-	}
-	Integer Integer::operator^ (const uint64_t & a) const
-	{   // XOR
-		Integer res(*this);
-		return res ^= a;
-	}
-	Integer Integer::operator| (const uint64_t & a) const
-	{   // OR
-		Integer res(*this);
-		return res |= a;
-	}
-	uint64_t Integer::operator& (const uint64_t & a) const
-	{   // AND
-		return mpz_get_ui((mpz_srcptr)&(gmp_rep)) & a;
-	}
-	Integer Integer::operator^ (const uint32_t& a) const
-	{   // XOR
-		Integer res(*this);
-		return res ^= a;
-	}
-	Integer Integer::operator| (const uint32_t& a) const
-	{   // OR
-		Integer res(*this);
-		return res |= a;
-	}
-	uint32_t Integer::operator& (const uint32_t& a) const
-	{   // AND
-		return (uint32_t) (mpz_get_ui((mpz_srcptr)&(gmp_rep)) & (uint64_t)a );
-	}
-	Integer Integer::operator~ () const
-	{   // 1 complement
-		Integer res;
-		mpz_com( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&(gmp_rep));
-		return res;
-	}
-	Integer& Integer::operator^= (const Integer& a)
-	{   // XOR
-		mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
-		return *this;
-	}
-	Integer& Integer::operator|= (const Integer& a)
-	{   // OR
-		mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
-		return *this;
-	}
-	Integer& Integer::operator&= (const Integer& a)
-	{   // AND
-		mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
-		return *this;
-	}
+    Integer Integer::operator >> (uint32_t l) const
+    {
+        return this->operator>>( (uint64_t)l );
+    }
 
-	Integer& Integer::operator^= (const uint64_t & a)
-	{   // XOR
+    Integer Integer::operator >> (uint64_t l) const
+    {
+        Integer tmp;
+        mpz_tdiv_q_2exp( (mpz_ptr)&(tmp.gmp_rep), (mpz_srcptr)&(gmp_rep), l );
+        return tmp;
+    }
+
+    //--------------------------------------------Integer::operator <<=   // shift left
+    Integer& Integer::operator <<= (int32_t l)
+    {
+        return this->operator<<= ( (uint64_t)l );
+    }
+    Integer& Integer::operator <<=  (uint32_t l)
+    {
+        return this->operator<<= ( (uint64_t)l );
+    }
+    Integer& Integer::operator <<= (int64_t l)
+    {
+        return this->operator<<= ( (uint64_t)l );
+    }
+
+    Integer& Integer::operator <<= (uint64_t l)
+    {
+        mpz_mul_2exp((mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
+        return *this;
+    }
+
+
+    //--------------------------------------------Integer::operator >>=   // shift right
+    Integer& Integer::operator >>= (int32_t l)
+    {
+        return this->operator>>= ( (uint64_t)l );
+    }
+    Integer& Integer::operator >>= (int64_t l)
+    {
+        return this->operator>>= ( (uint64_t)l );
+    }
+    Integer& Integer::operator >>= (uint32_t l)
+    {
+        return this->operator>>= ( (uint64_t)l );
+    }
+
+    Integer& Integer::operator >>= (uint64_t l)
+    {
+        mpz_tdiv_q_2exp( (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(gmp_rep), l );
+        return *this;
+    }
+
+    //------------------------------------------- Bit logic
+    Integer Integer::operator^ (const Integer& a) const
+    {   // XOR
+        Integer res(*this);
+        return res ^= a;
+    }
+    Integer Integer::operator| (const Integer& a) const
+    {   // OR
+        Integer res(*this);
+        return res |= a;
+    }
+    Integer Integer::operator& (const Integer& a) const
+    {   // AND
+        Integer res(*this);
+        return res &= a;
+    }
+    Integer Integer::operator^ (const uint64_t & a) const
+    {   // XOR
+        Integer res(*this);
+        return res ^= a;
+    }
+    Integer Integer::operator| (const uint64_t & a) const
+    {   // OR
+        Integer res(*this);
+        return res |= a;
+    }
+    uint64_t Integer::operator& (const uint64_t & a) const
+    {   // AND
+        return mpz_get_ui((mpz_srcptr)&(gmp_rep)) & a;
+    }
+    Integer Integer::operator^ (const uint32_t& a) const
+    {   // XOR
+        Integer res(*this);
+        return res ^= a;
+    }
+    Integer Integer::operator| (const uint32_t& a) const
+    {   // OR
+        Integer res(*this);
+        return res |= a;
+    }
+    uint32_t Integer::operator& (const uint32_t& a) const
+    {   // AND
+        return (uint32_t) (mpz_get_ui((mpz_srcptr)&(gmp_rep)) & (uint64_t)a );
+    }
+    Integer Integer::operator~ () const
+    {   // 1 complement
+        Integer res;
+        mpz_com( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&(gmp_rep));
+        return res;
+    }
+    Integer& Integer::operator^= (const Integer& a)
+    {   // XOR
+        mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator|= (const Integer& a)
+    {   // OR
+        mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator&= (const Integer& a)
+    {   // AND
+        mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(a.gmp_rep));
+        return *this;
+    }
+
+    Integer& Integer::operator^= (const uint64_t & a)
+    {   // XOR
         Integer au(a);
-		mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
-		return *this;
-	}
-	Integer& Integer::operator|= (const uint64_t & a)
-	{   // OR
+        mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator|= (const uint64_t & a)
+    {   // OR
         Integer au(a);
-		mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
-		return *this;
-	}
-	Integer& Integer::operator&= (const uint64_t & a)
-	{   // AND
+        mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator&= (const uint64_t & a)
+    {   // AND
         Integer au(a);
-		mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
-		return *this;
-	}
+        mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
+        return *this;
+    }
 
-	Integer& Integer::operator^= (const uint32_t& a)
-	{   // XOR
+    Integer& Integer::operator^= (const uint32_t& a)
+    {   // XOR
         Integer au(a);
-		mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
-		return *this;
-	}
-	Integer& Integer::operator|= (const uint32_t& a)
-	{   // OR
+        mpz_xor( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator|= (const uint32_t& a)
+    {   // OR
         Integer au(a);
-		mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
-		return *this;
-	}
-	Integer& Integer::operator&= (const uint32_t& a)
-	{   // AND
+        mpz_ior( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
+        return *this;
+    }
+    Integer& Integer::operator&= (const uint32_t& a)
+    {   // AND
         Integer au(a);
-		mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
-		return *this;
-	}
+        mpz_and( (mpz_ptr)&(gmp_rep), (mpz_ptr)&(gmp_rep), (mpz_srcptr)&(au.gmp_rep));
+        return *this;
+    }
 
 
-	//------------------------------------------- convert method
-	//------------------------------------------- casting method
-	Integer::operator int32_t() const
-	{
-		return int32_t (mpz_get_si ( (mpz_srcptr)&gmp_rep));
-	}
-	Integer::operator uint32_t() const
-	{
-		return (uint32_t) mpz_get_ui ( (mpz_srcptr)&gmp_rep);
-	}
-	Integer::operator int64_t() const
-	{
+    //------------------------------------------- convert method
+    //------------------------------------------- casting method
+    Integer::operator int32_t() const
+    {
+        return int32_t (mpz_get_si ( (mpz_srcptr)&gmp_rep));
+    }
+    Integer::operator uint32_t() const
+    {
+        return (uint32_t) mpz_get_ui ( (mpz_srcptr)&gmp_rep);
+    }
+    Integer::operator int64_t() const
+    {
 #if GMP_LIMB_BITS != 64
-		Integer absThis = abs(*this);
-		int64_t r = static_cast<int64_t>(absThis.operator uint32_t());
-		absThis >>= 32;
-		r |= static_cast<int64_t>(absThis.operator uint32_t()) << 32;
-		return (*this < 0)? -r : r;
+        Integer absThis = abs(*this);
+        int64_t r = static_cast<int64_t>(absThis.operator uint32_t());
+        absThis >>= 32;
+        r |= static_cast<int64_t>(absThis.operator uint32_t()) << 32;
+        return (*this < 0)? -r : r;
 #else
-		return mpz_get_si ( (mpz_srcptr)&gmp_rep);
+        return mpz_get_si ( (mpz_srcptr)&gmp_rep);
 #endif
-	}
-	Integer::operator uint64_t() const
-	{
+    }
+    Integer::operator uint64_t() const
+    {
 #if GMP_LIMB_BITS != 64
-		Integer absThis = abs(*this);
-		uint64_t r = static_cast<uint64_t>(absThis.operator uint32_t());
-		absThis >>= 32;
-		return r |= static_cast<uint64_t>(absThis.operator uint32_t()) << 32;
+        Integer absThis = abs(*this);
+        uint64_t r = static_cast<uint64_t>(absThis.operator uint32_t());
+        absThis >>= 32;
+        return r |= static_cast<uint64_t>(absThis.operator uint32_t()) << 32;
 #else
-		return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
+        return mpz_get_ui ( (mpz_srcptr)&gmp_rep);
 #endif
-	}
-	Integer::operator double() const
-	{
-		return mpz_get_d ( (mpz_srcptr)&gmp_rep);
-	}
-	Integer::operator float() const
-	{
-		return (float)mpz_get_d ( (mpz_srcptr)&gmp_rep);
-	}
+    }
+    Integer::operator double() const
+    {
+        return mpz_get_d ( (mpz_srcptr)&gmp_rep);
+    }
+    Integer::operator float() const
+    {
+        return (float)mpz_get_d ( (mpz_srcptr)&gmp_rep);
+    }
 
-	Integer::operator std::string () const
-	{
-		std::ostringstream o ;
-		print(o);
-		return o.str();
-	}
+    Integer::operator std::string () const
+    {
+        std::ostringstream o ;
+        print(o);
+        return o.str();
+    }
 
-	Integer::operator Integer::vect_t () const
-	{
-		size_t s = mpz_size( (mpz_srcptr)&(gmp_rep) );
-		std::vector<mp_limb_t> v(s);
-		std::vector<mp_limb_t>::iterator vi = v.begin();
-		for(mp_size_t i = 0;vi != v.end();++vi, ++i)
-			*vi = mpz_getlimbn( (mpz_srcptr)& (gmp_rep) ,i);
-		return v;
-	}
+    Integer::operator Integer::vect_t () const
+    {
+        size_t s = mpz_size( (mpz_srcptr)&(gmp_rep) );
+        std::vector<mp_limb_t> v(s);
+        std::vector<mp_limb_t>::iterator vi = v.begin();
+        for(mp_size_t i = 0;vi != v.end();++vi, ++i)
+            *vi = mpz_getlimbn( (mpz_srcptr)& (gmp_rep) ,i);
+        return v;
+    }
 
-	uint64_t length(const Integer& a)
-	{
-		//! @bug JGD 23.04.2012: shouldn't it be "mp_limb_t" instead of "uint64_t"?
-		return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(uint64_t);
-	}
+    uint64_t length(const Integer& a)
+    {
+        //! @bug JGD 23.04.2012: shouldn't it be "mp_limb_t" instead of "uint64_t"?
+        return mpz_size( (mpz_srcptr)&(a.gmp_rep) ) * sizeof(uint64_t);
+    }
 
-	Integer abs(const Integer &n)
-	{
-		if (sign(n) >= 0)
-			return n;
-		return -n;
-	}
+    Integer abs(const Integer &n)
+    {
+        if (sign(n) >= 0)
+            return n;
+        return -n;
+    }
 
-	size_t Integer::size() const
-	{
-		return  mpz_size( (mpz_srcptr)&gmp_rep ) ;
-	}
+    size_t Integer::size() const
+    {
+        return  mpz_size( (mpz_srcptr)&gmp_rep ) ;
+    }
 
-	size_t Integer::size_in_base(int32_t BASE) const
-	{
-		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, BASE);
-	}
+    size_t Integer::size_in_base(int32_t BASE) const
+    {
+        return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, BASE);
+    }
 
-	size_t Integer::bitsize() const
-	{
-		return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, 2);
-	}
+    size_t Integer::bitsize() const
+    {
+        return  mpz_sizeinbase ((mpz_srcptr)&gmp_rep, 2);
+    }
 
-	uint64_t Integer::operator[](size_t i) const
-	{
-		if ( mpz_size( (mpz_srcptr)&gmp_rep ) > i)
-			return mpz_getlimbn( (mpz_srcptr)&gmp_rep, i);
-		else
-			return 0;
-	}
+    uint64_t Integer::operator[](size_t i) const
+    {
+        if ( mpz_size( (mpz_srcptr)&gmp_rep ) > i)
+            return mpz_getlimbn( (mpz_srcptr)&gmp_rep, i);
+        else
+            return 0;
+    }
 
 }
 
 #endif // __GIVARO_gmpxx_gmpxx_int_misc_C
 
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s:syntax=cpp.doxygen
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -13,14 +13,16 @@ namespace Givaro {
 
 
 
-template<>
-inline void VectorDom<Modular<int16_t>,Dense>::dot
-  ( Type_t& res, const Rep& op1, const Rep& op2) const
-{
-  size_t sz = dim(op1);
-  const Modular<int16_t>& domain = subdomain();
-  domain.dotprod( res, sz, op1.baseptr(), op2.baseptr() );
-}
+    template<>
+    inline void VectorDom<Modular<int16_t>,Dense>::dot
+    ( Type_t& res, const Rep& op1, const Rep& op2) const
+    {
+        size_t sz = dim(op1);
+        const Modular<int16_t>& domain = subdomain();
+        domain.dotprod( res, sz, op1.baseptr(), op2.baseptr() );
+    }
 
 
 } // Givaro
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -19,50 +19,51 @@
 
 #include <iostream>
 namespace Givaro {
-// ------------------------------- GivError
-//! Base class for exeception handling in Givaro
-class GivError {
-public:
-  GivError(const char* msg =0 )
-  : strg(msg) {};
+    // ------------------------------- GivError
+    //! Base class for exeception handling in Givaro
+    class GivError {
+    public:
+        GivError(const char* msg =0 )
+        : strg(msg) {};
 
-  virtual ~GivError() ;
-  // -- virtual print of the error message
-  virtual std::ostream& print( std::ostream& o )  const;
+        virtual ~GivError() ;
+        // -- virtual print of the error message
+        virtual std::ostream& print( std::ostream& o )  const;
 
-  // -- non virtual output operator
-  friend std::ostream& operator<< (std::ostream& o, const GivError& E) ;
+        // -- non virtual output operator
+        friend std::ostream& operator<< (std::ostream& o, const GivError& E) ;
 
-  // - useful to setup a break point on it
-  static void throw_error( const GivError& err );
+        // - useful to setup a break point on it
+        static void throw_error( const GivError& err );
 
-protected:
-  const char* strg;
-};
+    protected:
+        const char* strg;
+    };
 
-//! Math error.
-class GivMathError : public GivError {
-public:
-  virtual ~GivMathError() ;
+    //! Math error.
+    class GivMathError : public GivError {
+    public:
+        virtual ~GivMathError() ;
 
-  GivMathError(const char* msg = 0) : GivError(msg) { }
-};
+        GivMathError(const char* msg = 0) : GivError(msg) { }
+    };
 
-//! Exception thrown in input of data structure
-class GivBadFormat : public GivError {
-public:
-  virtual ~GivBadFormat();
-  GivBadFormat(const char* msg = 0) : GivError(msg) { }
-};
+    //! Exception thrown in input of data structure
+    class GivBadFormat : public GivError {
+    public:
+        virtual ~GivBadFormat();
+        GivBadFormat(const char* msg = 0) : GivError(msg) { }
+    };
 
-//! Div by 0.
-class GivMathDivZero : public GivError {
-public:
-  virtual ~GivMathDivZero();
-  GivMathDivZero(const char* msg = 0) : GivError(msg) { }
-};
+    //! Div by 0.
+    class GivMathDivZero : public GivError {
+    public:
+        virtual ~GivMathDivZero();
+        GivMathDivZero(const char* msg = 0) : GivError(msg) { }
+    };
 
 } // namespace Givaro
 
 #endif // __GIVARO_error_H
-// vim:sts=8:sw=8:ts=8:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -1,9 +1,9 @@
 /* ruint/cmp.h - Comparison functions for ruint
 
-Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Joseph Fourier - Grenoble
 Contributors :
-    Alexis BREUST (alexis.breust@gmail.com 2014)
-    Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Alexis BREUST (alexis.breust@gmail.com 2014)
+Christophe CHABOT (christophechabotcc@gmail.com 2011)
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -200,3 +200,5 @@ namespace RecInt
 
 #endif
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

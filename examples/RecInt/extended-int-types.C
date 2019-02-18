@@ -1,6 +1,6 @@
 /* Copyright Université Grenoble Alpes
 Contributors :
-    Jean-Guillaume DUMAS (Jean-Guillaume.Dumas@imag.fr)
+Jean-Guillaume DUMAS (Jean-Guillaume.Dumas@imag.fr)
 
 Time-stamp: <27 Jul 16 15:23:32 Jean-Guillaume.Dumas@imag.fr>
 
@@ -60,3 +60,5 @@ int main(void)
     return 0;
 }
 
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

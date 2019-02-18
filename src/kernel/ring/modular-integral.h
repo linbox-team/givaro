@@ -1,5 +1,3 @@
-/* -*- mode: C++; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
-// vim:sts=4:sw=4:ts=4:noet:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
 // ==========================================================================
 // Copyright(c)'1994-2009 by The Givaro group
 // This file is part of Givaro.
@@ -32,119 +30,119 @@
 
 namespace Givaro {
 
-	// -- Enabled for (Storage_t, Compute_t) either ((u)intN_t, (u)intN_t) or ((u)intN_t, (u)int2N_t)
-	// -- Note that Compute_t is always converted to its unsigned version
+    // -- Enabled for (Storage_t, Compute_t) either ((u)intN_t, (u)intN_t) or ((u)intN_t, (u)int2N_t)
+    // -- Note that Compute_t is always converted to its unsigned version
 
 
-	template<typename _Storage_t, typename _Compute_t>
-	class Modular<_Storage_t, _Compute_t,
-		typename std::enable_if<std::is_integral<_Storage_t>::value && std::is_integral<_Compute_t>::value
-		&& (sizeof(_Storage_t) == sizeof(_Compute_t) || 2*sizeof(_Storage_t) == sizeof(_Compute_t))>::type>:
-		    public Modular_implem<_Storage_t, typename std::make_unsigned<_Compute_t>::type, typename std::make_unsigned<_Storage_t>::type>
-	{
-	public:
+    template<typename _Storage_t, typename _Compute_t>
+    class Modular<_Storage_t, _Compute_t,
+          typename std::enable_if<std::is_integral<_Storage_t>::value && std::is_integral<_Compute_t>::value
+          && (sizeof(_Storage_t) == sizeof(_Compute_t) || 2*sizeof(_Storage_t) == sizeof(_Compute_t))>::type>:
+          public Modular_implem<_Storage_t, typename std::make_unsigned<_Compute_t>::type, typename std::make_unsigned<_Storage_t>::type>
+          {
+          public:
 
-		using Storage_t = _Storage_t;
-		using Residu_t = typename std::make_unsigned<_Storage_t>::type;
-		using Compute_t = typename std::make_unsigned<_Compute_t>::type;
+              using Storage_t = _Storage_t;
+              using Residu_t = typename std::make_unsigned<_Storage_t>::type;
+              using Compute_t = typename std::make_unsigned<_Compute_t>::type;
 
-		using Element = Storage_t;
-		using Self_t = Modular<Storage_t, _Compute_t>;
-		using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
+              using Element = Storage_t;
+              using Self_t = Modular<Storage_t, _Compute_t>;
+              using Parent_t = Modular_implem<Storage_t, Compute_t, Residu_t>;
 
-        // ----- Constructors
-		using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
+              // ----- Constructors
+              using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
 
-		using Parent_t::_p;
-		using Parent_t::_pc;
+              using Parent_t::_p;
+              using Parent_t::_pc;
 
-		// ----- Initialisation
+              // ----- Initialisation
 
-		Element& init (Element&) const;
+              Element& init (Element&) const;
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
-		inline Element& init (Element&, const Source) const;
+              __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
+              inline Element& init (Element&, const Source) const;
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
-		inline Element& init (Element&, const Source) const;
+              __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Source) && (sizeof(Source) > sizeof(Storage_t)))
+              inline Element& init (Element&, const Source) const;
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t)) && IS_SINT(Storage_t))
-		inline Element& init (Element&, const Source) const;
+              __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t)) && IS_SINT(Storage_t))
+              inline Element& init (Element&, const Source) const;
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && sizeof(Source) >= sizeof(Storage_t) && IS_UINT(Storage_t))
-		inline Element& init (Element&, const Source) const;
+              __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && sizeof(Source) >= sizeof(Storage_t) && IS_UINT(Storage_t))
+              inline Element& init (Element&, const Source) const;
 
-		inline Element& init (Element&, const Integer&) const final;
+              inline Element& init (Element&, const Integer&) const final;
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Storage_t)
-						&&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))
-						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t))))
-		inline Element& init (Element&, const Source&) const;
+              __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Storage_t)
+                                            &&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))
+                                            &&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t))))
+              inline Element& init (Element&, const Source&) const;
 
-		__GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Storage_t)
-						&&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))
-						&&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t))))
-		inline Element& init (Element&, const Source&) const;
+              __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_SINT(Storage_t)
+                                            &&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))
+                                            &&!(IS_FLOAT(Source) && (sizeof(Source) >= sizeof(Storage_t))))
+              inline Element& init (Element&, const Source&) const;
 
 
-		// ----- Reduce
+              // ----- Reduce
 
-		Element& reduce (Element&, const Element&) const;
+              Element& reduce (Element&, const Element&) const;
 
-		Element& reduce (Element&) const;
+              Element& reduce (Element&) const;
 
-		// ------------------------
-		// ----- Classic arithmetic
+              // ------------------------
+              // ----- Classic arithmetic
 
-		Element& mul (Element&, const Element&, const Element&) const;
-		Element& sub (Element&, const Element&, const Element&) const;
-		Element& add (Element&, const Element&, const Element&) const;
-		Element& neg (Element&, const Element&) const;
-		Element& inv (Element&, const Element&) const;
-		Element& div (Element&, const Element&, const Element&) const;
+              Element& mul (Element&, const Element&, const Element&) const;
+              Element& sub (Element&, const Element&, const Element&) const;
+              Element& add (Element&, const Element&, const Element&) const;
+              Element& neg (Element&, const Element&) const;
+              Element& inv (Element&, const Element&) const;
+              Element& div (Element&, const Element&, const Element&) const;
 
-		Element& mulin (Element&, const Element&) const;
-		Element& divin (Element&, const Element&) const;
-		Element& addin (Element&, const Element&) const;
-		Element& subin (Element&, const Element&) const;
-		Element& negin (Element&) const;
-		Element& invin (Element&) const;
+              Element& mulin (Element&, const Element&) const;
+              Element& divin (Element&, const Element&) const;
+              Element& addin (Element&, const Element&) const;
+              Element& subin (Element&, const Element&) const;
+              Element& negin (Element&) const;
+              Element& invin (Element&) const;
 
-		// Functions defined in modular-mulprecomp
-		//
-		// void precomp_p (Compute_t& invp) const
-		// Element& mul_precomp_p (Element&, const Element&, const Element&, const Compute_t& invp) const
-		//
-		// void precomp_b (Compute_t& invb, const Element&) const
-		// void precomp_b (Compute_t& invb, const Element&, const Compute_t& invp) const
-		// Element& mul_precomp_b (Element&, const Element&, const Element&, const Compute_t& invb) const
+              // Functions defined in modular-mulprecomp
+              //
+              // void precomp_p (Compute_t& invp) const
+              // Element& mul_precomp_p (Element&, const Element&, const Element&, const Compute_t& invp) const
+              //
+              // void precomp_b (Compute_t& invb, const Element&) const
+              // void precomp_b (Compute_t& invb, const Element&, const Compute_t& invp) const
+              // Element& mul_precomp_b (Element&, const Element&, const Element&, const Compute_t& invb) const
 #include"modular-mulprecomp.inl"
 
-		// -- axpy:   r <- a * x + y
-		// -- axpyin: r <- a * x + r
-		// -- axmy:   r <- a * x - y
-		// -- axmyin: r <- a * x - r
-		// -- maxpy:   r <- y - a * x
-		// -- maxpyin: r <- r - a * x
+              // -- axpy:   r <- a * x + y
+              // -- axpyin: r <- a * x + r
+              // -- axmy:   r <- a * x - y
+              // -- axmyin: r <- a * x - r
+              // -- maxpy:   r <- y - a * x
+              // -- maxpyin: r <- r - a * x
 
-		Element& axpy (Element&, const Element&, const Element&, const Element&) const;
-		Element& axpyin (Element&, const Element&, const Element&) const;
-		Element& maxpy (Element&, const Element&, const Element&, const Element&) const;
-		Element& axmy (Element&, const Element&, const Element&, const Element&) const;
-		Element& maxpyin (Element&, const Element&, const Element&) const;
-		Element& axmyin (Element&, const Element&, const Element&) const;
+              Element& axpy (Element&, const Element&, const Element&, const Element&) const;
+              Element& axpyin (Element&, const Element&, const Element&) const;
+              Element& maxpy (Element&, const Element&, const Element&, const Element&) const;
+              Element& axmy (Element&, const Element&, const Element&, const Element&) const;
+              Element& maxpyin (Element&, const Element&, const Element&) const;
+              Element& axmyin (Element&, const Element&, const Element&) const;
 
-		// ----- Random generators
-		typedef ModularRandIter<Self_t> RandIter;
-		typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
-		template< class Random > Element& random(Random& g, Element& r) const
-		{ return init(r, g()); }
-		template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-		{ while (this->isZero(init(a, g())))
-				;
-			return a; }
+              // ----- Random generators
+              typedef ModularRandIter<Self_t> RandIter;
+              typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
+              template< class Random > Element& random(Random& g, Element& r) const
+              { return init(r, g()); }
+              template< class Random > Element& nonzerorandom(Random& g, Element& a) const
+              { while (this->isZero(init(a, g())))
+                  ;
+                  return a; }
 
-	};
+          };
 } // Givaro
 
 #include "modular-integral.inl"
@@ -155,3 +153,5 @@ namespace Givaro {
 #undef IS_FLOAT
 
 #endif // __GIVARO_modular_integral_H
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -40,7 +40,8 @@
    expected.
 */
 
-#ifndef __BITS4
+/* longlong.h may already be included from another library (e.g. flint) */
+#ifndef add_ssaaaa 
 
 #define __BITS4 (W_TYPE_SIZE / 4)
 #define __ll_B ((UWtype) 1 << (W_TYPE_SIZE / 2))

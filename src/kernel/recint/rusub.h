@@ -558,7 +558,6 @@ namespace RecInt
         a.Value = a.Value - b.Value - cy;
     }
 }
-
 #endif
 
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

@@ -39,7 +39,7 @@ namespace Givaro {
 #else
         int32_t sgn = Givaro::sign(n);
         if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
-        else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -n);  // @fixme: check n=INT64_MIN
+        else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, -static_cast<uint64_t>(n));
         return res;
 #endif
     }
@@ -71,7 +71,7 @@ namespace Givaro {
 #else
         int32_t sgn = Givaro::sign(n2);
         if (sgn >0) mpz_sub_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
-        else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, -n2);  // @fixme: check n=INT64_MIN
+        else mpz_add_ui((mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, -static_cast<uint64_t>(n2));
         return res;
 #endif
     }
@@ -132,7 +132,7 @@ namespace Givaro {
 #else
         int32_t sgn = Givaro::sign(l);
         if (sgn >0) mpz_sub_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
-        else mpz_add_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, -l);  // @fixme: check n=INT64_MIN
+        else mpz_add_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, -static_cast<uint64_t>(l));
         return *this;
 #endif
     }
@@ -173,7 +173,7 @@ namespace Givaro {
         Integer res;
         int32_t sgn = Givaro::sign(l);
         if (sgn >0) mpz_sub_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
-        else mpz_add_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, -l);  // @fixme: check n=INT64_MIN
+        else mpz_add_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, -static_cast<uint64_t>(l));
         return res;
 #endif
     }

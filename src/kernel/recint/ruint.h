@@ -88,7 +88,10 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #undef sub_ddmmss
 #undef umul_ppmm
 #undef udiv_qrnnd
-
+#undef __BITS4
+#undef __ll_B
+#undef __ll_lowpart
+#undef __ll_highpart
 #endif
 
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

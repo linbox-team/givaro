@@ -59,7 +59,7 @@ namespace Givaro
         // ----- Initialisation
         Element& init (Element& x) const
         { return x = 0; }
-        Element& init (Element& x, const Integer& y) const final
+        Element& init (Element& x, const Integer& y) const 
         { x = y % _p; return reduce(x); }
         template<typename T> Element& init(Element& r, const T& a) const
         { r = Caster<Element>(a); return reduce(r); }

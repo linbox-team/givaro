@@ -45,6 +45,7 @@ namespace Givaro
 
         // ----- Constructors
         using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
+        virtual ~Modular() {}
 
         using Parent_t::_p;
         using Parent_t::_pc;
@@ -69,7 +70,7 @@ namespace Givaro
                                       sizeof(Source) >= sizeof(Storage_t))
         inline Element& init (Element&, const Source) const;
 
-        inline Element& init (Element&, const Integer&) const final;
+        inline Element& init (Element&, const Integer&) const ;
 
         __GIVARO_CONDITIONAL_TEMPLATE(Source,
                                       !(std::is_integral<Source>::value && sizeof(Source) >= sizeof(Storage_t)) &&

@@ -255,6 +255,11 @@ namespace Givaro {
         // --------
         // ----- IO
 
+        // Needed for read (see below)
+        // Thus it is declared "final" in current derived classes
+        // 		using FiniteFieldInterface<_Storage_t>::init;
+        virtual Element& init (Element&, const Integer&) const = 0;
+
         inline std::ostream& write (std::ostream& s, const Element& a) const
         {
             return this->write<Element>(s, a);

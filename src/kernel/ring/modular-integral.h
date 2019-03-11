@@ -72,7 +72,7 @@ namespace Givaro {
               __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_FLOAT(Source) && sizeof(Source) >= sizeof(Storage_t) && IS_UINT(Storage_t))
               inline Element& init (Element&, const Source) const;
 
-              inline Element& init (Element&, const Integer&) const ;
+              inline Element& init (Element&, const Integer&) const final;
 
               __GIVARO_CONDITIONAL_TEMPLATE(Source, IS_UINT(Storage_t)
                                             &&!(IS_INT(Source) && (sizeof(Source) > sizeof(Storage_t)))

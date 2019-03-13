@@ -116,7 +116,7 @@ namespace Givaro
         Rep& init( Rep& r, const int64_t a) const;
         Rep& init( Rep& a, const int32_t i) const ;
         Rep& init( Rep& r, const uint64_t a) const;
-        Rep& init( Rep& a, const uint32_t i) const ;
+        Rep& init( Rep& a, const uint32_t i) const;
         Rep& init( Rep& a, const Integer& i) const /* final */;
         Rep& init( Rep& a, const double i) const;
         Rep& init( Rep& a, const float i) const;

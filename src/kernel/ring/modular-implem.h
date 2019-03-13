@@ -121,7 +121,7 @@ namespace Givaro {
         // --          intN_t  | uint2N_t  | 2^(N-1) - 1
         // --         uintN_t  | uint2N_t  | 2^N - 1
         // --         float    |  float    | 4096: 2^12
-        // --         double   |  double   | 94906266: floor(2^27 sqrt(2) + 1/2)
+        // --         double   |  double   | 94906266: floor(2^26 sqrt(2) + 1/2)
         // --         float    |  double   | 16777216: 2^24
         // --         Integer  |  Integer  | None
         // --         ruint<K> |  ruint<K> | ruint<K>::maxCardinality()

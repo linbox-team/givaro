@@ -116,7 +116,7 @@ namespace Givaro
 
         extended_euclid (x,d,a,b);
 #ifdef GIVARO_DEBUG
-        if ( x > (Storage_t)1 ) {
+        if ( d > (Storage_t)1 ) {
             throw GivMathDivZero("*** Error: division by zero, in operator invext<floating_point> in modular-general") ;
         }
 #endif

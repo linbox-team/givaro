@@ -33,6 +33,15 @@ namespace Givaro
     //! Generalized inversion used by specialized Modular.
     template<typename Storage_t>
     inline Storage_t invext(const Storage_t a, const Storage_t b);
+
+    //! Extended Euclidean algorithm computing only the  Bezout coefficient for a
+    template<typename Storage_t>
+    inline typename std::enable_if<std::is_floating_point<Storage_t>::value, Storage_t&>::type
+    extended_euclid (Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b);
+
+    template<typename Storage_t>
+    inline typename std::enable_if<!std::is_floating_point<Storage_t>::value, Storage_t&>::type
+    extended_euclid (Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b);
 }
 
 #include "givaro/modular-general.inl"

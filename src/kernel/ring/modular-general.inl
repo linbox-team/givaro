@@ -53,9 +53,8 @@ namespace Givaro
 
     template<typename Storage_t>
     inline typename std::enable_if<!std::is_floating_point<Storage_t>::value, Storage_t&>::type
-    invext(Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b)
+    extended_euclid (Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b)
     {
-
         Storage_t u0(0), u1(1), r1(a), q, t;
         d = b;
 
@@ -82,17 +81,13 @@ namespace Givaro
 
             neg = !neg;
         }
-#ifdef GIVARO_DEBUG
-        if ( d > (Storage_t)1 ) {
-            throw GivMathDivZero("*** Error: division by zero, in operator invext in modular-general.inl") ;
-        }
-#endif
+
         return x = (neg && u0 > 0) ? b - u0 : u0;
     }
 
     template<typename Storage_t>
     inline typename std::enable_if<std::is_floating_point<Storage_t>::value, Storage_t&>::type
-    invext(Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b)
+    extended_euclid(Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b)
     {
         Storage_t u1(1), v1(0);
         Storage_t u3(a), v3(b);
@@ -113,12 +108,19 @@ namespace Givaro
 
         d = u3;
 
+        return x = u1;
+    }
+
+    template<typename Storage_t>
+    inline Storage_t& invext (Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b){
+
+        extended_euclid (x,d,a,b);
 #ifdef GIVARO_DEBUG
-        if ( u3 > (Storage_t)1 ) {
+        if ( x > (Storage_t)1 ) {
             throw GivMathDivZero("*** Error: division by zero, in operator invext<floating_point> in modular-general") ;
         }
 #endif
-        return x = u1;
+        return x;
     }
 
     template<typename Storage_t>
@@ -136,7 +138,7 @@ namespace Givaro
     template<typename Storage_t>
     inline Storage_t& gcdext(Storage_t& d, Storage_t& u, Storage_t& v, const Storage_t a, const Storage_t b)
     {
-        invext(u,d,a,b);
+        extended_euclid (u,d,a,b);
         v = (d-u*a)/b;
         return d;
     }

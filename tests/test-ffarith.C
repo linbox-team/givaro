@@ -18,6 +18,8 @@
 #include <givaro/extension.h>
 #include <givaro/givintprime.h>
 
+#include <givaro/givrational.h>
+
 #include <recint/recint.h>
 
 using namespace Givaro;
@@ -58,6 +60,12 @@ bool invertible(const Field& F, const typename Field::Element& a)
     Integer ai;
     F.convert(ai,a);
     return (gcd(ai,Integer(F.characteristic()))==1);
+}
+
+template<>
+bool invertible(const QField<Rational>& Q, const Rational& a)
+{
+    return !Q.isZero(a);
 }
 
 template<class Field>
@@ -420,6 +428,9 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Extension<GFqDom<int64_t> >, GF11E9, GF11E3, 3);
     TEST_SPECIFIC(Extension<>, GF13E8, 13, 8);
 
+        // Rational numbers
+
+    TEST_SPECIFIC(QField<Rational>, QQ, 0);
     return 0;
 }
 

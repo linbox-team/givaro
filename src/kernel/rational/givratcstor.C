@@ -130,7 +130,7 @@ namespace Givaro {
         reduce();
     }
 
-    Rational::Rational(uint32_t n, uint32_t d ) : Rational( Integer(n), Integer(d) ) {}
+    Rational::Rational(uint32_t n, uint32_t d ) : Rational( uint64_t(n), uint64_t(d) ) {}
 
     //   ------------------------------ Rational(int64_t n, int64_t d )
     Rational::Rational(int64_t n, int64_t d )
@@ -157,7 +157,7 @@ namespace Givaro {
         }
         reduce();
     }
-    Rational::Rational(int32_t n, int32_t d ) : Rational( Integer(n), Integer(d) ) {}
+    Rational::Rational(int32_t n, int32_t d ) : Rational( int64_t(n), int64_t(d) ) {}
 
 
     //   ------------------------------ Rational(const char* s )

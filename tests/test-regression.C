@@ -20,28 +20,28 @@ bool testRationalDenom() {
     Rational a(-1,1), b(1,-1), c;
     std::clog << "-1: " << a << std::endl;
     std::clog << "-1: " << b << std::endl;
-    pass &= (a == QQ.mOne);
-    pass &= (b == QQ.mOne);
+    pass = pass && (a == QQ.mOne);
+    pass = pass && (b == QQ.mOne);
 
     QQ.invin(a);
     std::clog << "-1: " << a << std::endl;
-    pass &= (a == QQ.mOne);
+    pass = pass && (a == QQ.mOne);
 
     QQ.inv(a, b);
     std::clog << "-1: " << a << std::endl;
-    pass &= (a == QQ.mOne);
+    pass = pass && (a == QQ.mOne);
 
     QQ.negin(a);
     std::clog << "1: " << a << std::endl;
-    pass &= (a == QQ.one);
+    pass = pass && (a == QQ.one);
 
     QQ.neg(a,b);
     std::clog << "1: " << a << std::endl;
-    pass &= (a == QQ.one);
+    pass = pass && (a == QQ.one);
 
     QQ.add(c,a,b);
     std::clog << "0: " << c << std::endl;
-    pass &= isZero(c);
+    pass = pass && isZero(c);
     
 
     return pass;
@@ -63,7 +63,7 @@ int main(int argc, char ** argv)
     Integer::seeding((uint64_t)seed);
 
 
-    pass &= testRationalDenom  ();
+    pass = pass && testRationalDenom  ();
 
 
     return pass ? 0 : -1;

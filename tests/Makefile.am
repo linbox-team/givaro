@@ -20,7 +20,7 @@ AM_LDFLAGS=-static $(LDFLAGS)
 PERFPUBLISHERFILE = tests-report.xml
 
 EXTRA_DIST =            \
-		test-arith.h
+		test-fieldarith.h
 
 BASIC_TESTS =               \
 		test-regression     \

@@ -10,7 +10,9 @@
 // ==========================================================================
 /*! @file givrational.h
  * @ingroup rational
- * @brief Rationals (and domain)
+ * @brief Rationals (and domain),
+ *        composed of an integer (numerator),
+ *        and a positive integer (denominator)
  * NO DOC.
  */
 #ifndef __GIVARO_rational_H
@@ -254,10 +256,36 @@ namespace Givaro {
         { return r -= a * b; };
 
         // -- unary methods
-        Rep& neg( Rep& r, const Rep& a ) const { return r = -a; };
-        Rep& inv( Rep& r, const Rep& a ) const { r.num=a.den; r.den=a.num; return r; }
-        Rep& negin( Rep& r ) const { r.num=-r.num; return r; }
-        Rep& invin( Rep& r ) const { std::swap(r.num,r.den); return r; }
+        Rep& neg( Rep& r, const Rep& a ) const {
+            Integer::neg(r.num,a.num);
+            r.den=a.den; return r; }
+        Rep& inv( Rep& r, const Rep& a ) const {
+            const int snum( sign(a.num) );
+#ifdef GIVARO_DEBUG
+            if (snum == 0)
+                throw GivMathDivZero("*** Error: division by zero, in operator Rational::inv in givrational.h") ;
+#endif
+            r.num=a.den; r.den=a.num;
+            if (snum < 0) {
+                Integer::negin(r.num);
+                Integer::negin(r.den);
+            }
+            return r;
+        }
+        Rep& negin( Rep& r ) const { Integer::negin(r.num); return r; }
+        Rep& invin( Rep& r ) const {
+            const int snum( sign(r.num) );
+#ifdef GIVARO_DEBUG
+            if (snum == 0)
+                throw GivMathDivZero("*** Error: division by zero, in operator Rational::invin in givrational.h") ;
+#endif
+            std::swap(r.num,r.den);
+            if (snum < 0) {
+                Integer::negin(r.num);
+                Integer::negin(r.den);
+            }
+            return r;
+        }
 
         // - return n^l
         Rep& pow(Rep& r, const Rep& n, const uint64_t l) const { return r =  ::Givaro::pow(n, l); }

@@ -12,17 +12,22 @@ check: $(BASE_TESTS)
 OPTFLAGS= -DSTD_RECINT_SIZE=8
 OPTLINKS=
 
-AM_CXXFLAGS = @TESTS_CFLAGS@ $(OPTFLAGS) -I$(top_builddir) -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/library/tools -I$(top_builddir)/src/kernel/recint -I$(top_srcdir)/src/kernel $(GMP_CFLAGS)
+AM_CXXFLAGS = @TESTS_CFLAGS@ $(OPTFLAGS) -I$(top_builddir) -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel/rational -I$(top_builddir)/src/kernel -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/library/tools -I$(top_builddir)/src/kernel/recint -I$(top_srcdir)/src/kernel $(GMP_CFLAGS)
 
 LDADD = $(OPTLINKS) ../src/libgivaro.la $(GMP_LIBS)
 AM_LDFLAGS=-static $(LDFLAGS)
 
 PERFPUBLISHERFILE = tests-report.xml
 
+EXTRA_DIST =            \
+		test-fieldarith.h
+
 BASIC_TESTS =               \
+		test-regression     \
 		test-random         \
 		test-ifactor        \
 		test-ffarith        \
+		test-qfield         \
 		test-ringarith      \
 		test-mod            \
 		test-modsqroot      \
@@ -94,9 +99,11 @@ TESTS = $(EXTRA_PROGRAMS)
 #=====
 # Sources
 
+test_regression_SOURCES   = test-regression.C
 test_random_SOURCES   = test-random.C
 test_ifactor_SOURCES  = test-ifactor.C
-test_ffarith_SOURCES  = test-ffarith.C
+test_ffarith_SOURCES  = test-ffarith.C test-arith.h
+test_qfield_SOURCES  = test-qfield.C test-arith.h
 test_ringarith_SOURCES= test-ringarith.C
 test_modularmulprecomp_SOURCES= test-modularmulprecomp.C
 test_mod_SOURCES      = test-mod.C

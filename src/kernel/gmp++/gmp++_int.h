@@ -1775,7 +1775,7 @@ RecInt::rint<K>& Caster(RecInt::rint<K>& t, const Integer& n) {
 namespace std {
     // Hashing function for Integer, so that std::set<Integer> can be compiled
     template<>
-    class hash<Givaro::Integer> {
+    struct hash<Givaro::Integer> {
     public:
         size_t operator()(const Givaro::Integer& n) const
         {

@@ -19,11 +19,15 @@ AM_LDFLAGS=-static $(LDFLAGS)
 
 PERFPUBLISHERFILE = tests-report.xml
 
+EXTRA_DIST =            \
+		test-arith.h
+
 BASIC_TESTS =               \
 		test-regression     \
 		test-random         \
 		test-ifactor        \
 		test-ffarith        \
+		test-qfield         \
 		test-ringarith      \
 		test-mod            \
 		test-modsqroot      \
@@ -98,7 +102,8 @@ TESTS = $(EXTRA_PROGRAMS)
 test_regression_SOURCES   = test-regression.C
 test_random_SOURCES   = test-random.C
 test_ifactor_SOURCES  = test-ifactor.C
-test_ffarith_SOURCES  = test-ffarith.C
+test_ffarith_SOURCES  = test-ffarith.C test-arith.h
+test_qfield_SOURCES  = test-qfield.C test-arith.h
 test_ringarith_SOURCES= test-ringarith.C
 test_modularmulprecomp_SOURCES= test-modularmulprecomp.C
 test_mod_SOURCES      = test-mod.C

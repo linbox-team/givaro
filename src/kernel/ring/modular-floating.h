@@ -45,6 +45,7 @@ namespace Givaro
 
         // ----- Constructors
         using Modular_implem<Storage_t, Compute_t, Residu_t>::Modular_implem;
+        virtual ~Modular() {}
 
         using Parent_t::_p;
         using Parent_t::_pc;

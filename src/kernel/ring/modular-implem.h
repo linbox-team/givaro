@@ -185,7 +185,7 @@ namespace Givaro {
         inline bool isUnit(const Element& a) const
         {
             Element u,d;
-            invext(u,d,a,Caster<Element>(_p));
+            extended_euclid(u,d,a,Caster<Element>(_p));
             return isOne(d) || isMOne(d);
         }
         inline size_t length(const Element a) const { return size_rep; }

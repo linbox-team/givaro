@@ -135,7 +135,7 @@ namespace Givaro {
     inline bool Montgomery<int32_t>::isUnit(const Element& a) const
     {
         int32_t u,d;
-        invext(u,d,int32_t(a),int32_t(_p));
+        extended_euclid(u,d,int32_t(a),int32_t(_p));
         return (d==1)||(d==-1);
     }
 

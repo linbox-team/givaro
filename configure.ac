@@ -34,15 +34,12 @@ AC_INLINE # DON'T TOUCH
 
 echo "-----------------------------------------------"
 
-# CFLAGS=${CFLAGS:-$DEFAULT_CFLAGS}
-# CXXFLAGS=${CXXFLAGS:-$DEFAULT_CXXFLAGS}
-
 ######################################################
 # Try and pass different flags according to compiler #
 ######################################################
 
 
-# disable default -g -O2 CXXFLAGS
+# Set CXXFLAGS to an empty string if not defined
 : ${CXXFLAGS=""}
 
 #set CXX
@@ -61,88 +58,57 @@ REQUIRED_FLAGS="$CXX11FLAGS"
 # Add the c++11 flags for the configure compilations as clang needs it to work properly with a glibc++ compiled with gcc
 BACKUP_CXXFLAGS="${CXXFLAGS}"
 CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
-TESTS_CFLAGS="-O0"
-DEBUG_CFLAGS="-g"
-DEFAULT_CFLAGS=""
-WARN_CFLAGS="-Wall"
 
 #TODO use -fast for icc, -ipa for eko...
 if test "x$DBG" = "xyes" ; then
-	DEFAULT_CFLAGS="-O0 ${DEFAULT_CFLAGS} " #those are CXXFLAGS
-	DEBUG_CFLAGS="${DEBUG_CFLAGS} -UNDEBUG -DDEBUG -DGIVARO_DEBUG"
+    DEFAULT_CFLAGS="-O0 -Wall -g -UNDEBUG -DGIVARO_DEBUG -DDEBUG"
 else
-	DEFAULT_CFLAGS="-O2 ${DEFAULT_CFLAGS} "
-	DEBUG_CFLAGS="${DEBUG_CFLAGS} -DNDEBUG -UGIVARO_DEBUG -UDEBUG"
+    DEFAULT_CFLAGS="-O2 -Wall -g -DNDEBUG -UGIVARO_DEBUG -UDEBUG"
 fi
 
 if test "x$PROF" = "xyes" ; then
-	DEFAULT_CFLAGS="${DEFAULT_CFLAGS} -pg"
+    DEFAULT_CFLAGS+=" -pg"
 fi
+
+echo "##${CCNAM}"
 
 if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
-	case x${CCNAM} in
-		xicc)
-			WARN_CFLAGS="${WARN_CFLAGS} -Wcheck"
-		WARN_CFLAGS="${WARN_CFLAGS} -Wall -Wno-unused-parameter -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith  -Wwrite-strings -Wno-long-long"
-		WARN_CFLAGS="${WARN_CFLAGS} -Wextra -ansi"
-			;;
-		xeko)
-			WARN_CFLAGS="${WARN_CFLAGS} -Wno-unused-parameter"
-			;;
-		xgcc|xgcc44)
-			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
-			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -Wno-variadic-macros -Wno-vla"
-			fi
-			if test "x${HAVE_CXX11}" = "x0" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -ansi"
-			fi
-		;;
-		xgcc48)
-			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
-			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -Wno-variadic-macros -Wno-vla"
-				# WARN_CFLAGS="${WARN_CFLAGS} -fsanitize=address"
-			fi
-			if test "x${HAVE_CXX11}" = "x0" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -ansi"
-			fi
+    case x${CCNAM} in
+        xeko)
+            ;;
+        xgcc|xgcc44|xgcc48|xicc|xclang|xclang38)
+            DEFAULT_CFLAGS+=" -Wextra"
+            if test "x${WARN}" = "xfull" ; then
+                DEFAULT_CFLAGS+=" -Wuninitialized -Wconversion -Wcast-qual "
+                DEFAULT_CFLAGS+=" -pedantic -Wshadow -Wpointer-arith "
+                DEFAULT_CFLAGS+=" -Wwrite-strings -Wno-long-long"
+                if test "x${CCNAM}" != "xicc" ; then
+                    DEFAULT_CFLAGS+=" -Wcast-align -Wno-variadic-macros"
+                fi
+                case x${CCNAM} in
+                    xicc)
+                        DEFAULT_CFLAGS+=" -Wcheck -ansi"
+                        ;;
+                    xgcc|xgcc44|xgcc48)
+                        DEFAULT_CFLAGS+=" -Wno-vla"
+                        ;;
+                    xclang|xclang38)
+                        DEFAULT_CFLAGS+=" -Wno-vla-extension -D__STRICT_ANSI__"
+                        ;;
+                esac
+            fi
+            ;;
 
-			;;
-
-		xclang)
-			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
-			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long -Wno-vla-extension -Wno-variadic-macros"
-				WARN_CFLAGS="${WARN_CFLAGS} -D__STRICT_ANSI__"
-			fi
-			;;
-		xclang38)
-			WARN_CFLAGS="${WARN_CFLAGS} -Wextra -Wno-unused-parameter"
-			if test "x${WARN}" = "xfull" ; then
-				WARN_CFLAGS="${WARN_CFLAGS} -Wuninitialized -Wconversion -Wcast-qual -pedantic -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Wno-long-long  -g -Wno-vla-extension -Wno-variadic-macros"
-				WARN_CFLAGS="${WARN_CFLAGS} -D__STRICT_ANSI__"
-				# WARN_CFLAGS="${WARN_CFLAGS} -fsanitize=address"
-			fi
-			;;
-
-		*)
-			echo
-			echo "*******************************************************"
-			echo "unsupported compiler ($CCNAM). Please file a bug."
-			echo "*******************************************************"
-			echo
-			WARN_CFLAGS="${WARN_CFLAGS}"
-	esac
+        *)
+            echo
+            echo "*******************************************************"
+            echo "unsupported compiler ($CCNAM). Please file a bug."
+            echo "*******************************************************"
+            echo
+    esac
 fi
 
-
-DEFAULT_CFLAGS="${DEFAULT_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
-TESTS_CFLAGS="${TESTS_CFLAGS} ${WARN_CFLAGS} ${DEBUG_CFLAGS}"
-
 AC_SUBST([DEFAULT_CFLAGS])
-AC_SUBST([DEBUG_CFLAGS])
-AC_SUBST([TESTS_CFLAGS])
 
 AC_HEADER_STDC
 AC_PROG_LIBTOOL

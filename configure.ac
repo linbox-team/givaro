@@ -63,7 +63,7 @@ CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 if test "x$DBG" = "xyes" ; then
     DEFAULT_CFLAGS="-O0 -Wall -g -UNDEBUG -DGIVARO_DEBUG -DDEBUG"
 else
-    DEFAULT_CFLAGS="-O2 -Wall -g -DNDEBUG -UGIVARO_DEBUG -UDEBUG"
+    DEFAULT_CFLAGS="-O2 -Wall -DNDEBUG -UGIVARO_DEBUG -UDEBUG"
 fi
 
 if test "x$PROF" = "xyes" ; then

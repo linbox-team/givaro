@@ -77,7 +77,7 @@ install:
   - echo "CXX=${CXX}"
 
 before_script:
-  - ./autogen.sh --enable-debug
+  - ./autogen.sh
 
 script:
   - make

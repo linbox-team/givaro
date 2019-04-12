@@ -156,12 +156,43 @@ namespace Givaro {
         return r = (a < b) ? (Caster<Element>(_p) - b) + a : a - b;
     }
 
+        // Add using overflows
+    template<typename TElem, typename RElem,
+             typename std::enable_if<! (IS_SINT(TElem)), int>::type = 0>
+    inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p)
+    {
+        r = a + b;
+        return (r >= Caster<TElem>(_p) || r < a) ? r -= Caster<TElem>(_p) : r;
+    }
+
+        // Overflowing signed integrals is undefined
+        // Thus clang++ 6.0.0, even though overflowing as expected,
+        //   sometimes decides to not perform further operations...
+        // The fix is to switch to unsigned values
+        //   there overflowing is well defined.
+        // Note, could swith to Compute_t if it is unsigned,
+        //   but the unsigned type is probably sufficient.
+    template<typename TElem, typename RElem,
+             typename std::enable_if<IS_SINT(TElem), int>::type = 0>
+    inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p)
+    {
+        typename std::make_unsigned<TElem>::type rr(
+            Caster<typename std::make_unsigned<TElem>::type>(a)
+            +
+            Caster<typename std::make_unsigned<TElem>::type>(b)
+                                                    );
+        return r = Caster<TElem>(
+            rr >= Caster<typename std::make_unsigned<TElem>::type>(_p)
+            || rr < Caster<typename std::make_unsigned<TElem>::type>(a) ?
+            rr -= Caster<typename std::make_unsigned<TElem>::type>(_p)
+            : rr);
+    }
+
     TMPL
     inline typename MOD::Element& MOD::add
     (Element& r, const Element& a, const Element& b) const
     {
-        r = a + b;
-        return (r >= Caster<Element>(_p) || r < a) ? r -= Caster<Element>(_p) : r;
+        return GenericAdd(r,a,b,_p);
     }
 
     TMPL
@@ -201,12 +232,34 @@ namespace Givaro {
         return mulin(r, inv(ia, a));
     }
 
+        // Addin using overflows
+    template<typename TElem, typename RElem,
+             typename std::enable_if<! (IS_SINT(TElem)), int>::type = 0>
+    inline TElem& GenericAddIN(TElem& r, const TElem& a, const RElem& _p)
+    {
+        r += a;
+        return r = (r >= Caster<TElem>(_p) || r < a) ? r - Caster<TElem>(_p) : r;
+    }
+
+        // Addin using unsigned overflows, see comments for add
+    template<typename TElem, typename RElem,
+             typename std::enable_if<IS_SINT(TElem), int>::type = 0>
+    inline TElem& GenericAddIN(TElem& r, const TElem& a, const RElem& _p)
+    {
+		typename std::make_unsigned<TElem>::type rr(r);
+		rr += Caster<typename std::make_unsigned<TElem>::type>(a);
+		return r = Caster<TElem>(
+            rr >= Caster<typename std::make_unsigned<TElem>::type>(_p) ||
+            rr < Caster<typename std::make_unsigned<TElem>::type>(a) ?
+            rr -= Caster<typename std::make_unsigned<TElem>::type>(_p)
+            : rr);
+    }
+
     TMPL
     inline typename MOD::Element& MOD::addin
     (Element& r, const Element& a) const
     {
-        r += a;
-        return r = (r >= Caster<Element>(_p) || r < a) ? r - Caster<Element>(_p) : r;
+        return GenericAddIN(r,a,_p);
     }
 
     TMPL

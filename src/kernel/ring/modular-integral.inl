@@ -156,11 +156,21 @@ namespace Givaro {
         return r = (a < b) ? (Caster<Element>(_p) - b) + a : a - b;
     }
 
-    template<typename T, typename R>
-    inline T& GenericAdd(T& r, const T& a, const T& b, const R& _p) 
+    template<typename TElem, typename RElem,
+             typename std::enable_if<! (IS_SINT(TElem)), int>::type = 0>
+    inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p) 
     {
         r = a + b;
-        return (r >= Caster<T>(_p) || r < a) ? r -= Caster<T>(_p) : r;
+        return (r >= Caster<TElem>(_p) || r < a) ? r -= Caster<TElem>(_p) : r;
+    }
+
+    template<typename TElem, typename RElem,
+             typename std::enable_if<IS_SINT(TElem), int>::type = 0>
+    inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p) 
+    {
+        std::clog << "signe" << std::endl;
+        r = a + b;
+        return (r >= Caster<TElem>(_p) || r < a) ? r -= Caster<TElem>(_p) : r;
     }
 
     TMPL

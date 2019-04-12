@@ -181,8 +181,11 @@ namespace Givaro {
             +
             Caster<typename std::make_unsigned<TElem>::type>(b)
 			);
-		if (rr >= Caster<typename std::make_unsigned<TElem>::type>(_p)) rr -= Caster<typename std::make_unsigned<TElem>::type>(_p);
-		return r = Caster<TElem>(rr);
+		return r = Caster<TElem>(
+            rr >= Caster<typename std::make_unsigned<TElem>::type>(_p) 
+            || rr < Caster<typename std::make_unsigned<TElem>::type>(a) ?
+            rr -= Caster<typename std::make_unsigned<TElem>::type>(_p)
+            : rr);
     }
 
     TMPL
@@ -245,9 +248,11 @@ namespace Givaro {
     {
 		typename std::make_unsigned<TElem>::type rr(r);
 		rr += Caster<typename std::make_unsigned<TElem>::type>(a);
-		if (rr >= Caster<typename std::make_unsigned<TElem>::type>(_p))
-			rr -= Caster<typename std::make_unsigned<TElem>::type>(_p);
-		return r = Caster<TElem>(rr);
+		return r = Caster<TElem>(
+            rr >= Caster<typename std::make_unsigned<TElem>::type>(_p) ||
+            rr < Caster<typename std::make_unsigned<TElem>::type>(a) ?
+            rr -= Caster<typename std::make_unsigned<TElem>::type>(_p)
+            : rr);
     }
 
     TMPL

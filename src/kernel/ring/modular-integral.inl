@@ -176,12 +176,12 @@ namespace Givaro {
              typename std::enable_if<IS_SINT(TElem), int>::type = 0>
     inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p)
     {
-		typename std::make_unsigned<TElem>::type rr(
+        typename std::make_unsigned<TElem>::type rr(
             Caster<typename std::make_unsigned<TElem>::type>(a)
             +
             Caster<typename std::make_unsigned<TElem>::type>(b)
-			);
-		return r = Caster<TElem>(
+                                                    );
+        return r = Caster<TElem>(
             rr >= Caster<typename std::make_unsigned<TElem>::type>(_p)
             || rr < Caster<typename std::make_unsigned<TElem>::type>(a) ?
             rr -= Caster<typename std::make_unsigned<TElem>::type>(_p)

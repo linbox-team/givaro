@@ -177,12 +177,12 @@ namespace Givaro {
     inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p) 
     {
 		typename std::make_unsigned<TElem>::type rr(
-            static_cast<typename std::make_unsigned<TElem>::type>(a)
+            Caster<typename std::make_unsigned<TElem>::type>(a)
             +
-            static_cast<typename std::make_unsigned<TElem>::type>(b)
+            Caster<typename std::make_unsigned<TElem>::type>(b)
 			);
-		if (rr >= static_cast<typename std::make_unsigned<TElem>::type>(_p)) rr -= static_cast<typename std::make_unsigned<TElem>::type>(_p);
-		return r = static_cast<TElem>(rr);
+		if (rr >= Caster<typename std::make_unsigned<TElem>::type>(_p)) rr -= Caster<typename std::make_unsigned<TElem>::type>(_p);
+		return r = Caster<TElem>(rr);
     }
 
     TMPL
@@ -244,10 +244,10 @@ namespace Givaro {
     inline TElem& GenericAddIN(TElem& r, const TElem& a, const RElem& _p) 
     {
 		typename std::make_unsigned<TElem>::type rr(r);
-		rr += static_cast<typename std::make_unsigned<TElem>::type>(a);
-		if (rr >= static_cast<typename std::make_unsigned<TElem>::type>(_p))
-			rr -= static_cast<typename std::make_unsigned<TElem>::type>(_p);
-		return r = static_cast<TElem>(rr);
+		rr += Caster<typename std::make_unsigned<TElem>::type>(a);
+		if (rr >= Caster<typename std::make_unsigned<TElem>::type>(_p))
+			rr -= Caster<typename std::make_unsigned<TElem>::type>(_p);
+		return r = Caster<TElem>(rr);
     }
 
     TMPL

@@ -168,9 +168,14 @@ namespace Givaro {
              typename std::enable_if<IS_SINT(TElem), int>::type = 0>
     inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p) 
     {
-        std::clog << "signe" << std::endl;
-        r = a + b;
-        return (r >= Caster<TElem>(_p) || r < a) ? r -= Caster<TElem>(_p) : r;
+        std::clog << "signe cast" << std::endl;
+		typename std::make_unsigned<TElem>::type rr(
+            static_cast<typename std::make_unsigned<TElem>::type>(a)
+            +
+            static_cast<typename std::make_unsigned<TElem>::type>(b)
+			);
+		if (rr >= static_cast<typename std::make_unsigned<TElem>::type>(_p)) rr -= static_cast<typename std::make_unsigned<TElem>::type>(_p);
+		return r = static_cast<TElem>(rr);
     }
 
     TMPL
@@ -217,13 +222,31 @@ namespace Givaro {
         return mulin(r, inv(ia, a));
     }
 
+    template<typename TElem, typename RElem,
+             typename std::enable_if<! (IS_SINT(TElem)), int>::type = 0>
+    inline TElem& GenericAddIN(TElem& r, const TElem& a, const RElem& _p) 
+    {
+        r += a;
+        return r = (r >= Caster<TElem>(_p) || r < a) ? r - Caster<TElem>(_p) : r;
+    }
+
+    template<typename TElem, typename RElem,
+             typename std::enable_if<IS_SINT(TElem), int>::type = 0>
+    inline TElem& GenericAddIN(TElem& r, const TElem& a, const RElem& _p) 
+    {
+		typename std::make_unsigned<TElem>::type rr(r);
+		rr += static_cast<typename std::make_unsigned<TElem>::type>(a);
+		if (rr >= static_cast<typename std::make_unsigned<TElem>::type>(_p))
+			rr -= static_cast<typename std::make_unsigned<TElem>::type>(_p);
+		return r = static_cast<TElem>(rr);
+    }
+
     TMPL
     inline typename MOD::Element& MOD::addin
     (Element& r, const Element& a) const
     {
-        r += a;
-        return r = (r >= Caster<Element>(_p) || r < a) ? r - Caster<Element>(_p) : r;
-    }
+		return GenericAddIN(r,a,_p);
+	}
 
     TMPL
     inline typename MOD::Element& MOD::subin

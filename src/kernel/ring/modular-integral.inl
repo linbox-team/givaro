@@ -156,6 +156,7 @@ namespace Givaro {
         return r = (a < b) ? (Caster<Element>(_p) - b) + a : a - b;
     }
 
+        // Add using overflows
     template<typename TElem, typename RElem,
              typename std::enable_if<! (IS_SINT(TElem)), int>::type = 0>
     inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p) 
@@ -164,11 +165,17 @@ namespace Givaro {
         return (r >= Caster<TElem>(_p) || r < a) ? r -= Caster<TElem>(_p) : r;
     }
 
+        // Overflowing signed integrals is undefined
+        // Thus clang++ 6.0.0, even though overflowing as expected, 
+        //   sometimes decides to not perform further operations...
+        // The fix is to switch to unsigned values 
+        //   there overflowing is well defined.
+        // Note, could swith to Compute_t if it is unsigned,
+        //   but the unsigned type is probably sufficient.
     template<typename TElem, typename RElem,
              typename std::enable_if<IS_SINT(TElem), int>::type = 0>
     inline TElem& GenericAdd(TElem& r, const TElem& a, const TElem& b, const RElem& _p) 
     {
-        std::clog << "signe cast" << std::endl;
 		typename std::make_unsigned<TElem>::type rr(
             static_cast<typename std::make_unsigned<TElem>::type>(a)
             +
@@ -222,6 +229,7 @@ namespace Givaro {
         return mulin(r, inv(ia, a));
     }
 
+        // Addin using overflows
     template<typename TElem, typename RElem,
              typename std::enable_if<! (IS_SINT(TElem)), int>::type = 0>
     inline TElem& GenericAddIN(TElem& r, const TElem& a, const RElem& _p) 
@@ -230,6 +238,7 @@ namespace Givaro {
         return r = (r >= Caster<TElem>(_p) || r < a) ? r - Caster<TElem>(_p) : r;
     }
 
+        // Addin using unsigned overflows, see comments for add
     template<typename TElem, typename RElem,
              typename std::enable_if<IS_SINT(TElem), int>::type = 0>
     inline TElem& GenericAddIN(TElem& r, const TElem& a, const RElem& _p) 

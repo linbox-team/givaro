@@ -259,8 +259,8 @@ namespace Givaro {
     inline typename MOD::Element& MOD::addin
     (Element& r, const Element& a) const
     {
-		return GenericAddIN(r,a,_p);
-	}
+        return GenericAddIN(r,a,_p);
+    }
 
     TMPL
     inline typename MOD::Element& MOD::subin

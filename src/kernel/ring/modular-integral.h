@@ -96,11 +96,7 @@ namespace Givaro {
 
               Element& mul (Element&, const Element&, const Element&) const;
               Element& sub (Element&, const Element&, const Element&) const;
-
               Element& add (Element&, const Element&, const Element&) const;
-
-
-
               Element& neg (Element&, const Element&) const;
               Element& inv (Element&, const Element&) const;
               Element& div (Element&, const Element&, const Element&) const;

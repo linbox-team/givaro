@@ -156,12 +156,18 @@ namespace Givaro {
         return r = (a < b) ? (Caster<Element>(_p) - b) + a : a - b;
     }
 
+    template<typename T, typename R>
+    inline T& GenericAdd(T& r, const T& a, const T& b, const R& _p) 
+    {
+        r = a + b;
+        return (r >= Caster<T>(_p) || r < a) ? r -= Caster<T>(_p) : r;
+    }
+
     TMPL
     inline typename MOD::Element& MOD::add
     (Element& r, const Element& a, const Element& b) const
     {
-        r = a + b;
-        return (r >= Caster<Element>(_p) || r < a) ? r -= Caster<Element>(_p) : r;
+        return GenericAdd(r,a,b,_p);
     }
 
     TMPL

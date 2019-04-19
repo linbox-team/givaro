@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <15 Feb 19 12:24:29 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <17 Apr 19 18:15:47 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -217,15 +217,15 @@ public:
     std::ostream& write( std::ostream& s, const Rep& a ) const;
     
 	// Conversions of the elements
-    std::ostream& convert(std::ostream& s, const Rep a ) const { return write(s,a); }
-    TT		convert(const Rep) const ;
-    int64_t& 	convert(int64_t&, const Rep) const ;
-    uint64_t& 	convert(uint64_t&, const Rep) const ;
-    int32_t& 	convert(int32_t&, const Rep) const ;
-    float&	convert(float&, const Rep) const ;
-    double& 	convert(double&, const Rep) const ;
-    uint32_t& 	convert(uint32_t&, const Rep) const ;
-    Integer& 	convert(Integer&, const Rep) const ;
+    std::ostream& convert(std::ostream& s, const Rep& a ) const { return write(s,a); }
+    TT		convert(const Rep&) const ;
+    int64_t& 	convert(int64_t&, const Rep&) const ;
+    uint64_t& 	convert(uint64_t&, const Rep&) const ;
+    int32_t& 	convert(int32_t&, const Rep&) const ;
+    float&	convert(float&, const Rep&) const ;
+    double& 	convert(double&, const Rep&) const ;
+    uint32_t& 	convert(uint32_t&, const Rep&) const ;
+    Integer& 	convert(Integer&, const Rep&) const ;
 
 	// Test operators
 	inline int operator== (const GFqDom<TT>& a) const;
@@ -233,26 +233,26 @@ public:
 
 	// Miscellaneous functions
 	bool areEqual(const Rep& a, const Rep& b) const;
-	bool areNEqual(const Rep, const Rep) const;
+	bool areNEqual(const Rep&, const Rep&) const;
 	bool isZero(const Rep& a) const;
-	bool isnzero(const Rep) const;
+	bool isnzero(const Rep&) const;
 	bool isOne(const Rep& a) const;
 	bool isMOne(const Rep& a) const;
 	bool isUnit(const Rep& a) const; // Element belongs to prime subfield
-	size_t length( const Rep ) const;
+	size_t length(const Rep&) const;
 
 
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
 	Rep& mul (Rep& r, const Rep& a, const Rep& b) const;
-	Rep& div (Rep& r, const Rep a, const Rep b) const;
+	Rep& div (Rep& r, const Rep& a, const Rep& b) const;
 	Rep& add (Rep& r, const Rep& a, const Rep& b) const;
 	Rep& sub (Rep& r, const Rep& a, const Rep& b) const;
 	Rep& neg (Rep& r, const Rep& a) const;
-	Rep& inv (Rep& r, const Rep a) const;
+	Rep& inv (Rep& r, const Rep& a) const;
 
 	Rep& mulin (Rep& r, const Rep& a) const;
-	Rep& divin (Rep& r, const Rep a) const;
+	Rep& divin (Rep& r, const Rep& a) const;
 	Rep& addin (Rep& r, const Rep& a) const;
 	Rep& subin (Rep& r, const Rep& a) const;
 	Rep& negin (Rep& r) const;
@@ -260,46 +260,41 @@ public:
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
 	void mul (const size_t sz, Array r, constArray a, constArray b) const;
-	void mul (const size_t sz, Array r, constArray a, Rep b) const;
+	void mul (const size_t sz, Array r, constArray a, const Rep& b) const;
 
 	void div (const size_t sz, Array r, constArray a, constArray b) const;
-	void div (const size_t sz, Array r, constArray a, Rep b) const;
+	void div (const size_t sz, Array r, constArray a, const Rep& b) const;
 
 	void add (const size_t sz, Array r, constArray a, constArray b) const;
-	void add (const size_t sz, Array r, constArray a, Rep b) const;
+	void add (const size_t sz, Array r, constArray a, const Rep& b) const;
 
 	void sub (const size_t sz, Array r, constArray a, constArray b) const;
-	void sub (const size_t sz, Array r, constArray a, Rep b) const;
+	void sub (const size_t sz, Array r, constArray a, const Rep& b) const;
 	void neg (const size_t sz, Array r, constArray a) const;
 	void inv (const size_t sz, Array r, constArray a) const;
 
 	Rep& axpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
-	void axpy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
-	void axpy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
+	void axpy (const size_t sz, Array r, const Rep& a, constArray x, constArray y) const;
+	void axpy (const size_t sz, Array r, const Rep& a, constArray x, const Rep& c) const;
 
 	// -- axpyin: r <- r + a * x mod p
 	Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const;
-	void axpyin (const size_t sz, Array r, Rep a, constArray x) const;
+	void axpyin (const size_t sz, Array r, const Rep& a, constArray x) const;
 
 	// -- axmy: r <- a * b - c mod p
 	Rep& axmy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
-	void axmy (const size_t sz, Array r, Rep a, constArray x, constArray y) const;
-	void axmy (const size_t sz, Array r, Rep a, constArray x, Rep c) const;
+	void axmy (const size_t sz, Array r, const Rep& a, constArray x, constArray y) const;
+	void axmy (const size_t sz, Array r, const Rep& a, constArray x, const Rep& c) const;
 
 	// -- maxpy: r <- c - a * b mod p
 	Rep& maxpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
 
 	// -- axmyin: r <-  a * b - r mod p
 	Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const;
-	// void axmyin (const size_t sz, Array r, Rep a, constArray x) const;
-
-	//   // -- sqpyin: r <- r + a * a mod p
-	//     Rep& sqpyin (Rep& r, const Rep a) const;
-
 
 	// -- maxpyin: r <- r - a * b mod p
 	Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const;
-	void maxpyin (const size_t sz, Array r, Rep a, constArray x) const;
+	void maxpyin (const size_t sz, Array r, const Rep& a, constArray x) const;
 
 	// <- \sum_i a[i], return 1 if a.size() ==0,
 	void reduceadd ( Rep& r, const size_t sz, constArray a ) const;

@@ -273,7 +273,7 @@ namespace Givaro {
     { return a == b ; }
 
     template<typename TT>
-    inline bool GFqDom<TT>::areNEqual(const Rep a, const Rep b) const
+    inline bool GFqDom<TT>::areNEqual(const Rep& a, const Rep& b) const
     { return a != b ; }
 
     template<typename TT>
@@ -281,7 +281,7 @@ namespace Givaro {
     { return a == GFqDom<TT>::zero ; }
 
     template<typename TT>
-    inline bool GFqDom<TT>::isnzero(const Rep a) const
+    inline bool GFqDom<TT>::isnzero(const Rep& a) const
     { return a != GFqDom<TT>::zero ; }
 
     template<typename TT>
@@ -300,7 +300,7 @@ namespace Givaro {
     }
 
     template<typename TT>
-    inline size_t GFqDom<TT>::length(const Rep ) const
+    inline size_t GFqDom<TT>::length(const Rep& ) const
     { return sizeof(TT) ;}
 
 	// ----------- Usefull method :
@@ -316,7 +316,7 @@ namespace Givaro {
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::div
-    (Rep& r, const Rep a, const Rep b) const
+    (Rep& r, const Rep& a, const Rep& b) const
     {
 	   	_GIVARO_GFQ_DIV(r, a, b, GFqDom<TT>::_qm1) ;
 		return r;
@@ -324,7 +324,7 @@ namespace Givaro {
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::divin
-    (Rep& r, const Rep a) const
+    (Rep& r, const Rep& a) const
     { _GIVARO_GFQ_DIV(r, r, a, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
@@ -359,7 +359,7 @@ namespace Givaro {
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::inv
-    (Rep& r, const Rep a) const
+    (Rep& r, const Rep& a) const
     { _GIVARO_GFQ_INV(r, a, GFqDom<TT>::_qm1) ; return r; }
 
     template<typename TT>
@@ -436,7 +436,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::mul
-    (const size_t sz, Array r, constArray a, Rep b) const
+    (const size_t sz, Array r, constArray a, const Rep& b) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MUL(r[i],a[i],b, GFqDom<TT>::_qm1) ;
@@ -454,7 +454,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::div
-    (const size_t sz, Array r, constArray a, Rep b) const
+    (const size_t sz, Array r, constArray a, const Rep& b) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_DIV(r[i],a[i],b, GFqDom<TT>::_qm1) ;
@@ -472,7 +472,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::add
-    (const size_t sz, Array r, constArray a, Rep b) const
+    (const size_t sz, Array r, constArray a, const Rep& b) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_ADD(r[i], a[i], b, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
@@ -490,7 +490,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::sub
-    (const size_t sz, Array r, constArray a, Rep b) const
+    (const size_t sz, Array r, constArray a, const Rep& b) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_SUB(r[i], a[i], b, GFqDom<TT>::mOne, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
@@ -517,7 +517,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::axpy
-    (const size_t sz, Array r, Rep a, constArray x, constArray y) const
+    (const size_t sz, Array r, const Rep& a, constArray x, constArray y) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MULADD(r[i], a, x[i], y[i], GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
@@ -526,7 +526,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::axpyin
-    (const size_t sz, Array r, Rep a, constArray x) const
+    (const size_t sz, Array r, const Rep& a, constArray x) const
     {
         Rep tmp;
         for ( size_t i=sz ; --i ; ) {
@@ -537,7 +537,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::axpy
-    (const size_t sz, Array r, Rep a, constArray x, Rep y) const
+    (const size_t sz, Array r, const Rep& a, constArray x, const Rep& y) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MULADD(r[i], a, x[i], y, GFqDom<TT>::_qm1, GFqDom<TT>::_plus1) ;
@@ -546,7 +546,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::axmy
-    (const size_t sz, Array r, Rep a, constArray x, constArray y) const
+    (const size_t sz, Array r, const Rep& a, constArray x, constArray y) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MUL(r[i], a, x[i], GFqDom<TT>::_qm1) ;
@@ -556,7 +556,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::axmy
-    (const size_t sz, Array r, Rep a, constArray x, Rep y) const
+    (const size_t sz, Array r, const Rep& a, constArray x, const Rep& y) const
     {
         for ( size_t i=sz ; --i ; ) {
             _GIVARO_GFQ_MUL(r[i], a, x[i], GFqDom<TT>::_qm1) ;
@@ -566,7 +566,7 @@ namespace Givaro {
 
     template<typename TT>
     inline void GFqDom<TT>::maxpyin (const size_t sz, Array r,
-                                     Rep a, constArray x) const
+                                     const Rep& a, constArray x) const
     {
         Rep tmp;
         for ( size_t i=sz ; --i ; ) {
@@ -766,13 +766,13 @@ namespace Givaro {
 
 
     template<typename TT>
-    inline double& GFqDom<TT>::convert (double& r, const Rep a) const
+    inline double& GFqDom<TT>::convert (double& r, const Rep& a) const
     {
         return r = (double)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
-    inline float& GFqDom<TT>::convert (float& r, const Rep a) const
+    inline float& GFqDom<TT>::convert (float& r, const Rep& a) const
     {
         return r = (float)_log2pol[ (UT)a] ;
     }
@@ -786,37 +786,37 @@ namespace Givaro {
 
 
     template<typename TT>
-    inline int64_t& GFqDom<TT>::convert (int64_t& r, const Rep a) const
+    inline int64_t& GFqDom<TT>::convert (int64_t& r, const Rep& a) const
     {
         return r = (int64_t)_log2pol[ (uint64_t)a] ;
     }
 
     template<typename TT>
-    inline uint64_t& GFqDom<TT>::convert (uint64_t& r, const Rep a) const
+    inline uint64_t& GFqDom<TT>::convert (uint64_t& r, const Rep& a) const
     {
         return r = (uint64_t)_log2pol[ (uint64_t)a] ;
     }
 
     template<typename TT>
-    inline int32_t& GFqDom<TT>::convert (int32_t& r, const Rep a) const
+    inline int32_t& GFqDom<TT>::convert (int32_t& r, const Rep& a) const
     {
         return r = (int32_t)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
-    inline uint32_t& GFqDom<TT>::convert (uint32_t& r, const Rep a) const
+    inline uint32_t& GFqDom<TT>::convert (uint32_t& r, const Rep& a) const
     {
         return r = (uint32_t)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
-    inline TT GFqDom<TT>::convert (const Rep a) const
+    inline TT GFqDom<TT>::convert (const Rep& a) const
     {
         return (TT)_log2pol[ (UT)a] ;
     }
 
     template<typename TT>
-    inline Integer& GFqDom<TT>::convert (Integer& r, const Rep a) const
+    inline Integer& GFqDom<TT>::convert (Integer& r, const Rep& a) const
     {
         return r = (Integer)_log2pol[ (UT)a] ;
     }

@@ -95,6 +95,8 @@ namespace Givaro {
         Modular_implem(const Self_t& F)
         : zero(F.zero), one(F.one), mOne(F.mOne), _p(F._p), _pc(F._pc) {}
 
+        virtual ~Modular_implem() = default;
+
         // ----- Accessors
         inline Element minElement() const { return zero; }
         inline Element maxElement() const { return mOne; }

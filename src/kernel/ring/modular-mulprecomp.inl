@@ -109,15 +109,33 @@ precomp_b
     invb += (r >= (_p))?1:0;
 }
 
+/* Compute a*b mod p given invb = floor (b * 2^n/p) [ as computed by precomp_b ]
+ * The last reduction step is not done, the return value is in [0, 2p[.
+ * The result is written in r (as Element) and returned (as Residu_t)
+ */
+template<typename ELEMENT = Element, typename COMPUTE_T = Compute_t, int s = sizeof(COMPUTE_T)>
+inline
+typename std::enable_if<SUITABLE_INTEGRAL_TYPES (ELEMENT, COMPUTE_T, s), Residu_t>::type
+mul_precomp_b_without_reduction
+(Element& r, const Element& a, const Element& b, const Compute_t& invb) const {
+    Residu_t q = static_cast<Residu_t> ((static_cast<Compute_t>(a) * invb) >> (4*s));
+    Residu_t rr = static_cast<Residu_t>(a) * static_cast<Residu_t>(b) - q * _p;
+    r = static_cast<Element>(rr);
+    return rr;
+}
+
+/* Compute a*b mod p given invb = floor (b * 2^ /p)
+ * The return value is in [0, p[.
+ * The result is written in r (as Element) and returned (as Element)
+ */
 template<typename ELEMENT = Element, typename COMPUTE_T = Compute_t, int s = sizeof(COMPUTE_T)>
 inline
 typename std::enable_if<SUITABLE_INTEGRAL_TYPES (ELEMENT, COMPUTE_T, s), Element&>::type
 mul_precomp_b
 (Element& r, const Element& a, const Element& b, const Compute_t& invb) const {
-    Residu_t c = static_cast<Residu_t> ((static_cast<Compute_t>(a) * invb) >> (4*s));
-    Residu_t rr = static_cast<Residu_t>(a) * static_cast<Residu_t>(b) - c * _p;
-    rr -= (rr >= _p)?_p:0;
-    return r = static_cast<Residu_t>(rr);
+    Residu_t rr = mul_precomp_b_without_reduction (r, a, b, invb);
+    rr -= (rr >= _p) ? _p : 0;
+    return r = static_cast<Element>(rr);
 }
 
 #undef SUITABLE_INTEGRAL_TYPES

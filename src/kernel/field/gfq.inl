@@ -269,11 +269,11 @@ namespace Givaro {
 	// ------------------------- Miscellaneous functions
 
     template<typename TT>
-    inline bool GFqDom<TT>::areEqual(const Rep& a, const Rep& b) const
+    inline bool GFqDom<TT>::areEqual(const Rep a, const Rep b) const
     { return a == b ; }
 
     template<typename TT>
-    inline bool GFqDom<TT>::areNEqual(const Rep& a, const Rep& b) const
+    inline bool GFqDom<TT>::areNEqual(const Rep a, const Rep b) const
     { return a != b ; }
 
     template<typename TT>
@@ -922,7 +922,7 @@ namespace Givaro {
 
 
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, const Rep b) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, const Rep& b) const
     {
         return random(g,r);
     }
@@ -934,7 +934,7 @@ namespace Givaro {
     }
 
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, const Rep b) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, const Rep& b) const
     {
         return nonzerorandom(g,r);
     }

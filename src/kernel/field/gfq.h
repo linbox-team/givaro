@@ -310,10 +310,10 @@ public:
 
 	template<class RandIter> Rep& random(RandIter& g, Rep& r) const ;
 	template<class RandIter> Rep& random(RandIter& g, Rep& r, int64_t s) const ;
-	template<class RandIter> Rep& random(RandIter& g, Rep& r, const Rep b) const ;
+	template<class RandIter> Rep& random(RandIter& g, Rep& r, const Rep& b) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, int64_t s) const ;
-	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep b) const ;
+	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const ;
 
 	typedef GIV_randIter< GFqDom<TT>, Rep> RandIter;
     typedef GeneralRingNonZeroRandIter<Self_t,RandIter> NonZeroRandIter;

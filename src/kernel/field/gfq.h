@@ -195,7 +195,7 @@ public:
 
  	// Reduction of Elements
     Rep& reduce(Rep& r) const;
-    Rep& reduce(Rep& r, const Rep& e) const;
+    Rep& reduce(Rep& r, const Rep e) const;
     
     
 	// Initialization of a polynomial
@@ -205,7 +205,7 @@ public:
     
 	// -- Misc: r <- a mod p
     Rep& assign (Rep&, const Integer) const;
-    Rep& assign (Rep&, const Rep&) const;
+    Rep& assign (Rep&, const Rep) const;
     void assign ( const size_t sz, Array r, constArray a ) const;
     
 	// --- IO methods for the Domain
@@ -214,87 +214,87 @@ public:
     std::ostream& write( std::ostream& s , const std::string& ) const;
 	// --- IO methods for the Elements
     std::istream& read ( std::istream& s, Rep& a ) const;
-    std::ostream& write( std::ostream& s, const Rep& a ) const;
+    std::ostream& write( std::ostream& s, const Rep a ) const;
     
 	// Conversions of the elements
-    std::ostream& convert(std::ostream& s, const Rep& a ) const { return write(s,a); }
-    TT		convert(const Rep&) const ;
-    int64_t& 	convert(int64_t&, const Rep&) const ;
-    uint64_t& 	convert(uint64_t&, const Rep&) const ;
-    int32_t& 	convert(int32_t&, const Rep&) const ;
-    float&	convert(float&, const Rep&) const ;
-    double& 	convert(double&, const Rep&) const ;
-    uint32_t& 	convert(uint32_t&, const Rep&) const ;
-    Integer& 	convert(Integer&, const Rep&) const ;
+    std::ostream& convert(std::ostream& s, const Rep a ) const { return write(s,a); }
+    TT		convert(const Rep) const ;
+    int64_t& 	convert(int64_t&, const Rep) const ;
+    uint64_t& 	convert(uint64_t&, const Rep) const ;
+    int32_t& 	convert(int32_t&, const Rep) const ;
+    float&	convert(float&, const Rep) const ;
+    double& 	convert(double&, const Rep) const ;
+    uint32_t& 	convert(uint32_t&, const Rep) const ;
+    Integer& 	convert(Integer&, const Rep) const ;
 
 	// Test operators
 	inline int operator== (const GFqDom<TT>& a) const;
 	inline int operator!= (const GFqDom<TT>& a) const;
 
 	// Miscellaneous functions
-	bool areEqual(const Rep& a, const Rep& b) const;
-	bool areNEqual(const Rep&, const Rep&) const;
-	bool isZero(const Rep& a) const;
-	bool isnzero(const Rep&) const;
-	bool isOne(const Rep& a) const;
-	bool isMOne(const Rep& a) const;
-	bool isUnit(const Rep& a) const; // Element belongs to prime subfield
-	size_t length(const Rep&) const;
+	bool areEqual(const Rep a, const Rep b) const;
+	bool areNEqual(const Rep, const Rep) const;
+	bool isZero(const Rep a) const;
+	bool isnzero(const Rep) const;
+	bool isOne(const Rep a) const;
+	bool isMOne(const Rep a) const;
+	bool isUnit(const Rep a) const; // Element belongs to prime subfield
+	size_t length(const Rep) const;
 
 
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
-	Rep& mul (Rep& r, const Rep& a, const Rep& b) const;
-	Rep& div (Rep& r, const Rep& a, const Rep& b) const;
-	Rep& add (Rep& r, const Rep& a, const Rep& b) const;
-	Rep& sub (Rep& r, const Rep& a, const Rep& b) const;
-	Rep& neg (Rep& r, const Rep& a) const;
-	Rep& inv (Rep& r, const Rep& a) const;
+	Rep& mul (Rep& r, const Rep a, const Rep b) const;
+	Rep& div (Rep& r, const Rep a, const Rep b) const;
+	Rep& add (Rep& r, const Rep a, const Rep b) const;
+	Rep& sub (Rep& r, const Rep a, const Rep b) const;
+	Rep& neg (Rep& r, const Rep a) const;
+	Rep& inv (Rep& r, const Rep a) const;
 
-	Rep& mulin (Rep& r, const Rep& a) const;
-	Rep& divin (Rep& r, const Rep& a) const;
-	Rep& addin (Rep& r, const Rep& a) const;
-	Rep& subin (Rep& r, const Rep& a) const;
+	Rep& mulin (Rep& r, const Rep a) const;
+	Rep& divin (Rep& r, const Rep a) const;
+	Rep& addin (Rep& r, const Rep a) const;
+	Rep& subin (Rep& r, const Rep a) const;
 	Rep& negin (Rep& r) const;
 	Rep& invin (Rep& r) const;
 
 	// ----- Operations with reduction: r <- a op b mod p, r <- op a mod p
 	void mul (const size_t sz, Array r, constArray a, constArray b) const;
-	void mul (const size_t sz, Array r, constArray a, const Rep& b) const;
+	void mul (const size_t sz, Array r, constArray a, const Rep b) const;
 
 	void div (const size_t sz, Array r, constArray a, constArray b) const;
-	void div (const size_t sz, Array r, constArray a, const Rep& b) const;
+	void div (const size_t sz, Array r, constArray a, const Rep b) const;
 
 	void add (const size_t sz, Array r, constArray a, constArray b) const;
-	void add (const size_t sz, Array r, constArray a, const Rep& b) const;
+	void add (const size_t sz, Array r, constArray a, const Rep b) const;
 
 	void sub (const size_t sz, Array r, constArray a, constArray b) const;
-	void sub (const size_t sz, Array r, constArray a, const Rep& b) const;
+	void sub (const size_t sz, Array r, constArray a, const Rep b) const;
 	void neg (const size_t sz, Array r, constArray a) const;
 	void inv (const size_t sz, Array r, constArray a) const;
 
-	Rep& axpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
-	void axpy (const size_t sz, Array r, const Rep& a, constArray x, constArray y) const;
-	void axpy (const size_t sz, Array r, const Rep& a, constArray x, const Rep& c) const;
+	Rep& axpy (Rep& r, const Rep a, const Rep b, const Rep c) const;
+	void axpy (const size_t sz, Array r, const Rep a, constArray x, constArray y) const;
+	void axpy (const size_t sz, Array r, const Rep a, constArray x, const Rep c) const;
 
 	// -- axpyin: r <- r + a * x mod p
-	Rep& axpyin (Rep& r, const Rep& a, const Rep& b) const;
-	void axpyin (const size_t sz, Array r, const Rep& a, constArray x) const;
+	Rep& axpyin (Rep& r, const Rep a, const Rep b) const;
+	void axpyin (const size_t sz, Array r, const Rep a, constArray x) const;
 
 	// -- axmy: r <- a * b - c mod p
-	Rep& axmy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
-	void axmy (const size_t sz, Array r, const Rep& a, constArray x, constArray y) const;
-	void axmy (const size_t sz, Array r, const Rep& a, constArray x, const Rep& c) const;
+	Rep& axmy (Rep& r, const Rep a, const Rep b, const Rep c) const;
+	void axmy (const size_t sz, Array r, const Rep a, constArray x, constArray y) const;
+	void axmy (const size_t sz, Array r, const Rep a, constArray x, const Rep c) const;
 
 	// -- maxpy: r <- c - a * b mod p
-	Rep& maxpy (Rep& r, const Rep& a, const Rep& b, const Rep& c) const;
+	Rep& maxpy (Rep& r, const Rep a, const Rep b, const Rep c) const;
 
 	// -- axmyin: r <-  a * b - r mod p
-	Rep& axmyin (Rep& r, const Rep& a, const Rep& b) const;
+	Rep& axmyin (Rep& r, const Rep a, const Rep b) const;
 
 	// -- maxpyin: r <- r - a * b mod p
-	Rep& maxpyin (Rep& r, const Rep& a, const Rep& b) const;
-	void maxpyin (const size_t sz, Array r, const Rep& a, constArray x) const;
+	Rep& maxpyin (Rep& r, const Rep a, const Rep b) const;
+	void maxpyin (const size_t sz, Array r, const Rep a, constArray x) const;
 
 	// <- \sum_i a[i], return 1 if a.size() ==0,
 	void reduceadd ( Rep& r, const size_t sz, constArray a ) const;
@@ -310,10 +310,10 @@ public:
 
 	template<class RandIter> Rep& random(RandIter& g, Rep& r) const ;
 	template<class RandIter> Rep& random(RandIter& g, Rep& r, int64_t s) const ;
-	template<class RandIter> Rep& random(RandIter& g, Rep& r, const Rep& b) const ;
+	template<class RandIter> Rep& random(RandIter& g, Rep& r, const Rep b) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, int64_t s) const ;
-	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const ;
+	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep b) const ;
 
 	typedef GIV_randIter< GFqDom<TT>, Rep> RandIter;
     typedef GeneralRingNonZeroRandIter<Self_t,RandIter> NonZeroRandIter;

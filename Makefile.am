@@ -69,7 +69,7 @@ docs_dev:docs/givaro-dev-html/index.html
 docs/givaro-dev-html/index.html:
 	(cd docs; ${MAKE} docs_dev)
 
-VERSION=4.1.0rc0
+VERSION=4.1.0rc1
 
 git:
 	git commit -a; git pull; git push

@@ -141,7 +141,6 @@ namespace Givaro {
               { while (this->isZero(init(a, g())))
                   ;
                   return a; }
-
           };
 } // Givaro
 

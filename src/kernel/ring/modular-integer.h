@@ -110,9 +110,10 @@ namespace Givaro
     public:
         typedef Modular<Integer>  Ring;
         typedef Ring::Element Element;
+        typedef Ring::Residu_t Residu_t;
 
-        ModularRandIter(const Ring& R, const size_t& size = 0, const size_t& seed = 0)
-        : _ring(R)
+        ModularRandIter(const Ring& R, const size_t& seed = 0, const Residu_t& size = R.residu())
+        : _size(size), _ring(R)
         {
             // GivRandom will select a non-zero value, even if seed is 0
             GivRandom generator(seed);
@@ -121,7 +122,7 @@ namespace Givaro
         Element& operator()(Element& elt)
         {
             // Create new random Elements
-            Givaro::Integer::random_lessthan(elt,_ring.residu());
+            Givaro::Integer::random_lessthan(elt,_size);
 
             return elt;
         }
@@ -143,6 +144,7 @@ namespace Givaro
         const Ring& ring() const { return _ring; }
 
     private:
+        const Residu_t& size;
         const Ring& _ring;
 
     }; //  class ModularRandIter<Integer>

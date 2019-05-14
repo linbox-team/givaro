@@ -51,6 +51,7 @@ namespace Givaro {
          * a copy constructor, a destructor, and an assignment operator.
          */
         typedef typename Ring::Element Element;
+        typedef typename Ring::Residu_t Residu_t;
 
         /** Constructor from ring, sampling size, and seed.
          * The random ring Element iterator works in the ring F, is seeded
@@ -62,14 +63,14 @@ namespace Givaro {
          * cardinality of the ring.
          * @param F LinBox ring archetype object in which to do arithmetic
          * @param size constant integer reference of sample size from which to
-         *             sample (default = 0)
+         *             sample (default = F.cardinality())
          * @param seed constant integer reference from which to seed random number
          *             generator (default = 0)
          */
         GIV_randIter(const  Ring& F,
-                     const size_t size = 0,
-                     const uint64_t seed = 0)
-        : _givrand( GivRandom(seed) ), _ring(F)
+                     const uint64_t seed = 0,
+                     const size_t size = F.cardinality())
+        : _givrand(seed), _size(size), _ring(F)
         {}
 
         /** Copy constructor.
@@ -115,7 +116,7 @@ namespace Givaro {
          */
         Element& operator()(Element& elt) const
         {
-            return ring().random (_givrand, elt);
+            return ring().random (_givrand, elt % _size);
         }
         Element& random(Element& elt) const
         {
@@ -150,6 +151,7 @@ namespace Givaro {
 
         /// Random generator
         GivRandom _givrand;
+        const Residu_t& _size;
 
         /// Ring
         const Ring& _ring;
@@ -176,6 +178,7 @@ namespace Givaro {
          * a copy constructor, a destructor, and an assignment operator.
          */
         typedef typename Ring::Element Element;
+        typedef typename Ring::Residu_t Residu_t;
 
         /** Constructor from ring, sampling size, and seed.
          * The random ring Element iterator works in the ring F, is seeded
@@ -187,8 +190,8 @@ namespace Givaro {
          * @param seed constant integer reference from which to seed random number
          *             generator (default = 0)
          */
-        ModularRandIter(const  Ring& F, const size_t& size = 0, const uint64_t& seed = 0)
-        : _givrand( GivRandom(seed) ), _ring(F) {}
+        ModularRandIter(const Ring& F, const uint64_t seed = 0, const Residu_t& size = F.cardinality())
+        : _givrand(seed), _size(size), _ring(F) {}
 
         /** Copy constructor.
          * Constructs ALP_randIter object by copying the random ring
@@ -200,7 +203,7 @@ namespace Givaro {
          * @param  R ALP_randIter object.
          */
         ModularRandIter(const ModularRandIter& R)
-        : _givrand(R._givrand) , _ring(R._ring) {}
+        : _givrand(R._givrand) , _size(R._size), _ring(R._ring) {}
 
         /** Destructor.
          * This destructs the random ring Element generator object.
@@ -271,6 +274,7 @@ namespace Givaro {
 
         /// Random generator
         GivRandom _givrand;
+        const Residu_t& _size;
 
         /// Ring
         const Ring& _ring;
@@ -286,15 +290,16 @@ namespace Givaro {
     class GeneralRingRandIter {
     public:
         typedef typename Ring::Element Element;
+        typedef typename Ring::Residu_t Residu_t;
 
-        GeneralRingRandIter(const Ring &F, const size_t& size = 0, uint64_t seed = 0) : _F(F), _size(size), _givrand( seed==0? uint64_t(BaseTimer::seed()) : seed)
+        GeneralRingRandIter(const Ring &F, uint64_t seed = 0, const Residu_t& size = F.cardinality()) : _F(F), _size(size), _givrand(seed)
         {}
-        GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size) {}
+        GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size), _givrand(R._givrand) {}
         ~GeneralRingRandIter() {}
 
         Element& operator() (Element& a) const
         {
-            return ring().init(a, uint64_t( (_size == 0?_givrand():_givrand()% (1_ui64<<_size))));
+            return ring().init(a, _givrand() % _size);
         }
         Element& random (Element& a) const
         {

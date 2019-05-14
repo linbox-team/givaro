@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <14 May 19 13:35:36 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <14 May 19 16:35:35 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions
@@ -34,16 +34,6 @@ template<typename T>
 struct make_unsigned_int<T,
 typename std::enable_if<std::is_floating_point<T>::value>::type> {
     typedef typename IntType<std::is_same<T,float>::value>::utype type;
-};
-
-template<size_t K>
-struct make_unsigned_int<RecInt::rint<K>> {
-    typedef RecInt::ruint<K> type;
-};
-
-template<size_t K>
-struct make_unsigned_int<RecInt::ruint<K>> {
-    typedef RecInt::ruint<K> type;
 };
 
 template<typename> struct is_ruint : std::false_type {};

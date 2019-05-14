@@ -33,7 +33,7 @@ namespace Givaro
 
               // ----- Exported Types and constantes
               using Storage_t = _Storage_t;
-              using Residu_t = typename make_unsigned_int<_Storage_t>::type;
+              using Residu_t = _Storage_t;
               using Compute_t = _Compute_t;
 
               using Element = Storage_t;

@@ -5,7 +5,7 @@ Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS
 
-Time-stamp: <14 May 19 16:42:53 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <14 May 19 17:37:51 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -136,17 +136,17 @@ namespace RecInt
         b.Value <<= c;
         return b;
     }
-        
+
     template <size_t K, typename T> rint<K>& operator>>=(rint<K>& b, const T& c) {
         b.Value >>= c;
         return b;
-    }   
+    }
 
     template <size_t K, typename T> rint<K> operator<<(const rint<K>& b, const T& c) {
         rint<K> r(b);
         return r <<= c;
     }
- 
+
     template <size_t K, typename T> rint<K> operator>>(const rint<K>& b, const T& c) {
         rint<K> r(b);
         return r >>= c;

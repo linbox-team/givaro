@@ -144,7 +144,7 @@ namespace Givaro {
                   ;
                   return a; }
               template< class Random > Element& nonzerorandom(Random& g, Element& a, const Residu_t& size) const
-              { while (this->isZero(init(a, g() % size))) 
+              { while (this->isZero(init(a, g() % size)))
                   ;
                   return a; }
           };

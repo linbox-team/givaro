@@ -36,7 +36,7 @@ namespace Givaro
         using Element_ptr = Element*;
         using ConstElement = const Element;
         using ConstElement_ptr = const Element*;
-        using Residu_t = double;
+        using Residu_t = typename make_unsigned_int<double>::type;
         enum { size_rep = sizeof(Element) };
 
         // ----- Constantes
@@ -68,10 +68,10 @@ namespace Givaro
         inline Element maxElement() const { return _halfp; }
 
         // ----- Access to the modulus
-        inline Residu_t residu() const { return _p; }
-        inline Residu_t size() const { return _p; }
-        inline Residu_t characteristic() const { return _p; }
-        inline Residu_t cardinality() const { return _p; }
+        inline Element residu() const { return _p; }
+        inline Residu_t size() const { return Caster<Residu_t>(_p); }
+        inline Residu_t characteristic() const { return Caster<Residu_t>(_p); }
+        inline Residu_t cardinality() const { return Caster<Residu_t>(_p); }
         template<class T> inline T& characteristic(T& p) const { return Caster(p,_p); }
         template<class T> inline T& cardinality(T& p) const { return Caster(p,_p); }
 

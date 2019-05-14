@@ -53,7 +53,7 @@ namespace Givaro {
         using Residu_t = _Residu_t;
 
         // ----- Exported Types and constantes
-        enum { size_rep = sizeof(Residu_t) };
+        enum { size_rep = sizeof(Element) };
 
         // ----- Constantes
         const Element zero;

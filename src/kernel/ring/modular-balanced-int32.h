@@ -34,7 +34,7 @@ namespace Givaro
         using Element_ptr = Element*;
         using ConstElement = const Element;
         using ConstElement_ptr = const Element*;
-        using Residu_t = int32_t;
+        using Residu_t = uint32_t;
 
         enum { size_rep = sizeof(Element) };
 

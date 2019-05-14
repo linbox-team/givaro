@@ -52,10 +52,10 @@ namespace Givaro
         using Element = _Element;
         using Rep = _Element;
         using Self_t = ZRing<Element>;
-        using Residu_t = Element;
+        using Residu_t = int64_t;
         using Element_ptr = Element*;
         using ConstElement_ptr = const Element*;
-        enum { size_rep = sizeof(Residu_t) };
+        enum { size_rep = sizeof(Element) };
 
         const Element one  = 1;
         const Element zero = 0;

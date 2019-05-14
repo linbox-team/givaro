@@ -70,7 +70,7 @@ namespace Givaro
     inline ModularBalanced<int32_t>::Element&
     ModularBalanced<int32_t>::inv(Element& r, const Element& a) const
     {
-        r = invext(r, (a < 0)?  Caster<int32_t>(a + _p) : a, Caster<int32_t>(_p));
+        r = invext(r, (a < 0)? a + _p : a, _p);
         NORMALISE(r);
         return r;
     }
@@ -78,7 +78,7 @@ namespace Givaro
     inline bool ModularBalanced<int32_t>::isUnit(const Element& a) const
     {
         Element u,d;
-        extended_euclid(u,d,a,Caster<int32_t>(_p));
+        extended_euclid(u,d,a,_p);
         return isOne(d) || isMOne(d);
     }
 

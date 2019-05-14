@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <17 Apr 19 18:15:47 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <14 May 19 11:35:28 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -309,11 +309,9 @@ public:
 	// ----- random generators
 
 	template<class RandIter> Rep& random(RandIter& g, Rep& r) const ;
-	template<class RandIter> Rep& random(RandIter& g, Rep& r, int64_t s) const ;
-	template<class RandIter> Rep& random(RandIter& g, Rep& r, const Rep& b) const ;
+	template<class RandIter> Rep& random(RandIter& g, Rep& r, const Residu_t& s) const ;
 	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r) const ;
-	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, int64_t s) const ;
-	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Rep& b) const ;
+	template<class RandIter> Rep& nonzerorandom(RandIter& g, Rep& r, const Residu_t& s) const ;
 
 	typedef GIV_randIter< GFqDom<TT>, Rep> RandIter;
     typedef GeneralRingNonZeroRandIter<Self_t,RandIter> NonZeroRandIter;

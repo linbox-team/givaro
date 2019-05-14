@@ -52,7 +52,7 @@ namespace Givaro
 		/** Random
 		*/
 		using RandIter = GIV_randIter<Self_t, bool>;
-		Element& random(const GivRandom& g, Element& e) const 
+		Element& random(const GivRandom& g, Element& e, const Residu_t& size=0) const 
 		    { return e = static_cast<bool>(g() & 1u); } 
 
 		/** @name Object Management

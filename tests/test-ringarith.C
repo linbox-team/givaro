@@ -209,7 +209,7 @@ template<class Ring>
 int TestRing(const Ring& F, const uint64_t seed)
 {
     typename Ring::Element x, y;
-    typename Ring::RandIter g(F, 0_ui64, seed);
+    typename Ring::RandIter g(F, seed);
 
     F.init(x, 7U);
     F.init(y, -29.0);
@@ -277,7 +277,7 @@ template<class Ring>
 int TestInv(const Ring& F, const uint64_t seed)
 {
     typename Ring::Element a, inva, invinva;
-    typename Ring::RandIter g(F, 0_ui64, seed);
+    typename Ring::RandIter g(F, seed);
 
     F.init(a);
     F.init(inva);

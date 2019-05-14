@@ -572,7 +572,7 @@ int test5()
 template<typename Field>
 int modtest(Field& F, uint64_t seed) {
     typedef typename Field::RandIter RI;
-    RI gen(F);
+    RI gen(F,seed);
 
     typename Field::Element a,b,c,d;
     F.init(a);F.init(b);F.init(c); F.init(d);

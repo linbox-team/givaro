@@ -236,7 +236,7 @@ template<class Field>
 int TestField(const Field& F, const uint64_t seed)
 {
     typename Field::Element x;
-    typename Field::RandIter g(F, 0, seed);
+    typename Field::RandIter g(F, seed);
 
     F.init(x, 1);
     TEST_ONE_FIELD_SEEDED(F,x);

@@ -67,10 +67,10 @@ namespace Givaro {
          * @param seed constant integer reference from which to seed random number
          *             generator (default = 0)
          */
-        GIV_randIter(const  Ring& F,
+        GIV_randIter(const Ring& F,
                      const uint64_t seed = 0,
-                     const size_t size = F.cardinality())
-        : _givrand(seed), _size(size), _ring(F)
+                     const Residu_t size = 0)
+        : _ring(F), _size(size?size:F.cardinality()), _givrand(seed)
         {}
 
         /** Copy constructor.
@@ -83,7 +83,7 @@ namespace Givaro {
          * @param  R ALP_randIter object.
          */
         GIV_randIter(const GIV_randIter& R)
-        :  _givrand(R._givrand) , _ring(R._ring) {}
+        : _ring(R._ring), _size(R._size), _givrand(R._givrand) {}
 
         /** Destructor.
          * This destructs the random ring Element generator object.
@@ -116,7 +116,7 @@ namespace Givaro {
          */
         Element& operator()(Element& elt) const
         {
-            return ring().random (_givrand, elt % _size);
+            return ring().random (_givrand, elt, _size);
         }
         Element& random(Element& elt) const
         {
@@ -149,12 +149,13 @@ namespace Givaro {
 
     private:
 
-        /// Random generator
-        GivRandom _givrand;
-        const Residu_t& _size;
-
         /// Ring
         const Ring& _ring;
+
+        /// Random generator
+        const Residu_t _size;
+        GivRandom _givrand;
+
 
     }; //  class GIV_randIter
 
@@ -190,8 +191,8 @@ namespace Givaro {
          * @param seed constant integer reference from which to seed random number
          *             generator (default = 0)
          */
-        ModularRandIter(const Ring& F, const uint64_t seed = 0, const Residu_t& size = F.cardinality())
-        : _givrand(seed), _size(size), _ring(F) {}
+        ModularRandIter(const Ring& F, const uint64_t seed = 0, const Residu_t size = 0)
+        : _givrand(seed), _size(size?size:F.cardinality()), _ring(F) {}
 
         /** Copy constructor.
          * Constructs ALP_randIter object by copying the random ring
@@ -274,7 +275,7 @@ namespace Givaro {
 
         /// Random generator
         GivRandom _givrand;
-        const Residu_t& _size;
+        const Residu_t _size;
 
         /// Ring
         const Ring& _ring;
@@ -292,14 +293,15 @@ namespace Givaro {
         typedef typename Ring::Element Element;
         typedef typename Ring::Residu_t Residu_t;
 
-        GeneralRingRandIter(const Ring &F, uint64_t seed = 0, const Residu_t& size = F.cardinality()) : _F(F), _size(size), _givrand(seed)
+        GeneralRingRandIter(const Ring &F, uint64_t seed = 0, const Residu_t size = 0) : _F(F), _size(size?size:F.cardinality()), _givrand(seed)
         {}
         GeneralRingRandIter(const GeneralRingRandIter<Ring> &R) : _F(R._F), _size(R._size), _givrand(R._givrand) {}
         ~GeneralRingRandIter() {}
 
         Element& operator() (Element& a) const
         {
-            return ring().init(a, _givrand() % _size);
+                // If no size given and cardinality is 0
+            return ring().init(a, _size?_givrand() % _size:_givrand());
         }
         Element& random (Element& a) const
         {
@@ -318,7 +320,7 @@ namespace Givaro {
 
     private:
         const Ring& _F;
-        size_t _size;
+        const Residu_t _size;
         /// Random generator
         GivRandom _givrand;
 

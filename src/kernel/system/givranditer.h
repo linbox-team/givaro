@@ -70,7 +70,7 @@ namespace Givaro {
         GIV_randIter(const Ring& F,
                      const uint64_t seed = 0,
                      const Residu_t size = 0)
-        : _ring(F), _size(size?size:F.cardinality()), _givrand(seed)
+        : _ring(F), _size(size?size:std::max(F.cardinality(),Residu_t(1))), _givrand(seed)
         {}
 
         /** Copy constructor.

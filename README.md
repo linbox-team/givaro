@@ -15,14 +15,14 @@ license (see COPYING).
 Givaro main features are implementations of the basic arithmetic of
 many mathematical entities: Primes fields, Extensions Fields, Finite
 Fields, Finite Rings, Polynomials, Algebraic numbers, Arbitrary
-precision integers and rationals (C++ wrappers over gmp).
+precision integers and rationals (C++ wrappers over gmp), fixed
+precision integers.
 It also provides data-structures and templated classes for the
-manipulation of basic algebraic objects, such as vectors, matrices
-(dense, sparse, structured), univariate polynomials (and therefore
-recursive multivariate).
+manipulation of basic algebraic objects, such as vectors, matrices, 
+univariate polynomials (and therefore recursive multivariate).
 It contains different program modules and is fully compatible with the
-LinBox linear algebra library and the KAAPI kernel for Adaptative,
-Asynchronous Parallel and Interactive programming.
+[FFLAS-FFPACK](http://linbox-team.github.io/fflas-ffpack) and
+[LinBox](http://linalg.org) linear algebra libraries.
 
 
 ## Download and install

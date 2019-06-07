@@ -37,7 +37,8 @@ tests/perfpublisher:
 bin_SCRIPTS=givaro-config givaro-makefile
 
 EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt \
-		   givaro.doxy
+	   givaro.doxy \
+	README.md
 
 DIST_SUBDIRS=${SUBDIRS}
 
@@ -69,7 +70,7 @@ docs_dev:docs/givaro-dev-html/index.html
 docs/givaro-dev-html/index.html:
 	(cd docs; ${MAKE} docs_dev)
 
-VERSION=4.1.1alpha0
+VERSION=4.1.1
 
 git:
 	git commit -a; git pull; git push

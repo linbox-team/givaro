@@ -49,7 +49,6 @@ using namespace Givaro;
     }
 
 
-
 int main(int argc, char ** argv)
 {
 	size_t m(argc > 1? atoi(argv[1]) : 100);
@@ -61,22 +60,25 @@ int main(int argc, char ** argv)
     IntegerDom IP;
 
     Givaro::Timer ini,tim,ori,par;
-	Givaro::Integer * A = new Givaro::Integer[m*n];
-
-    // Main loop
     ini.clear(); ini.start();
-    for (size_t l = 0; l < (m*n); ++l) {
-        IP.random(generator, A[l], b);
-    }
-//     for (size_t l = 0; l < m; ++l) {
-//         IP.random(generator, A[n*l], b);
-//     }
-//     for (size_t l = 0; l < m*n; ++l) {
-//         IP.assign(A[l],++A[l/n]);
-//     }
+	Givaro::Integer * A = new Givaro::Integer[m*n];
+    const size_t mn(m*n);
+
     ini.stop();
     std::cout
-        << "Init: " << ini.usertime() << ' ' << m << 'x' << n << ':' << b 
+        << "Alloc : " << ini.usertime() << ' ' << m << 'x' << n << ':' << b 
+        << std::endl;
+    
+    // Main loop
+    ini.clear(); ini.start();
+    for (size_t l = 0; l < mn; ++l) {
+        IP.random(generator, A[l], b);
+        if (A[l] & 1U) IP.negin(A[l]);
+//         A[l] = Integer::random<false>(b); // signed
+    }
+    ini.stop();
+    std::cout
+        << "Random: " << ini.usertime() << ' ' << m << 'x' << n << ':' << b 
         << std::endl;
     
     // Main loop

@@ -21,6 +21,7 @@ LDADD = $(OPTLINKS) $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 BENCHMARKS=				\
+	benchmark-infnorm			\
 	benchmark-recint_exp			\
 	benchmark-recint_inv_arazi	\
 	benchmark-recint_inv_naive	\
@@ -30,6 +31,7 @@ CLEANFILES = $(EXTRA_PROGRAMS) $(PERFPUBLISHERFILE)
 
 EXTRA_PROGRAMS = $(BENCHMARKS)
 
+benchmark_infnorm_SOURCES = benchmark-infnorm.C
 benchmark_recint_exp_SOURCES = benchmark-recint_exp.C
 benchmark_recint_inv_arazi_SOURCES = benchmark-recint_inv_arazi.C
 benchmark_recint_inv_naive_SOURCES = benchmark-recint_inv_naive.C

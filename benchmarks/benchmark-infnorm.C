@@ -66,7 +66,7 @@ int main(int argc, char ** argv)
 
     ini.stop();
     std::cout
-        << "Alloc : " << ini.usertime() << ' ' << m << 'x' << n << ':' << b 
+        << "Alloc : " << ini << ' ' << m << 'x' << n << ':' << b 
         << std::endl;
     
     // Main loop
@@ -78,7 +78,7 @@ int main(int argc, char ** argv)
     }
     ini.stop();
     std::cout
-        << "Random: " << ini.usertime() << ' ' << m << 'x' << n << ':' << b 
+        << "Random: " << ini << ' ' << m << 'x' << n << ':' << b 
         << std::endl;
     
     // Main loop

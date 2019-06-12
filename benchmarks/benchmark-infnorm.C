@@ -23,11 +23,19 @@ using namespace Givaro;
     inline Givaro::Integer
     InfNorm2 (const size_t M, const size_t N, const Givaro::Integer* A, const size_t lda){
         Givaro::Integer max = 0;
-        auto end=&A[M*N]; 
-        for(auto * iter=A; iter != end; ++iter) 
+        auto end=&A[M*N];
+        for(auto * iter=A; iter != end; ++iter)
             if (absCompare(*iter,max)>0) {
                 max = *iter;
             }
+        return abs(max);
+    }
+
+    inline Givaro::Integer
+    InfNorm3 (const size_t M, const size_t N, const Givaro::Integer* A, const size_t lda){
+        Givaro::Integer max = 0;
+        const size_t mn(M*N);
+        for(size_t i=0; i<mn; ++i) if (absCompare(A[i],max)>0) max = A[i];
         return abs(max);
     }
 
@@ -66,9 +74,9 @@ int main(int argc, char ** argv)
 
     ini.stop();
     std::cout
-        << "Alloc : " << ini << ' ' << m << 'x' << n << ':' << b 
+        << "Alloc : " << ini << ' ' << m << 'x' << n << ':' << b
         << std::endl;
-    
+
     // Main loop
     ini.clear(); ini.start();
     for (size_t l = 0; l < mn; ++l) {
@@ -78,40 +86,50 @@ int main(int argc, char ** argv)
     }
     ini.stop();
     std::cout
-        << "Random: " << ini << ' ' << m << 'x' << n << ':' << b 
+        << "Random: " << ini << ' ' << m << 'x' << n << ':' << b
         << std::endl;
-    
+
     // Main loop
     ori.clear(); ori.start();
     Integer max=InfNorm(m,n,A,n);
     ori.stop();
 
-    std::cout 
+    std::cout
         << " InfNorm: " << ori
-        << " Mflops: " << 1./ori.usertime()/1000.0/1000.0 
-        << ' ' << max 
+        << " Mflops: " << 1./ori.usertime()/1000.0/1000.0
+        << ' ' << max
         << std::endl ;
 
     tim.clear(); tim.start();
     Integer m2=InfNorm2(m,n,A,n);
     tim.stop();
 
-    std::cout 
+    std::cout
         << " InfNor2: " << tim
-        << " Mflops: " << 1./tim.usertime()/1000.0/1000.0 
-        << ' ' << m2 
+        << " Mflops: " << 1./tim.usertime()/1000.0/1000.0
+        << ' ' << m2
+        << std::endl ;
+
+    tim.clear(); tim.start();
+    Integer m3=InfNorm3(m,n,A,n);
+    tim.stop();
+
+    std::cout
+        << " InfNor3: " << tim
+        << " Mflops: " << 1./tim.usertime()/1000.0/1000.0
+        << ' ' << m3
         << std::endl ;
 
     par.clear(); par.start();
     Integer mpa=InfNorp(m,n,A,n);
     par.stop();
 
-    if ( (mpa != m2) || (mpa != max) || (m2 != max) )
+    if (! ( (mpa == max) && (m2 == max) && (m3 == max) ) )
         std::cerr << "ERROR: inconsistency" << std::endl;
 
-    std::cout 
+    std::cout
         << " InfNorp: " << par
-        << " Mflops: " << 1./par.usertime()/1000.0/1000.0 
+        << " Mflops: " << 1./par.usertime()/1000.0/1000.0
         << ' ' << mpa
         << std::endl ;
     return 0;

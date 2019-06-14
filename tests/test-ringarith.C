@@ -277,7 +277,8 @@ template<class Ring>
 int TestInv(const Ring& F, const uint64_t seed)
 {
     typename Ring::Element a, inva, invinva;
-    typename Ring::RandIter g(F, 0_ui64, seed);
+    typename Ring::RandIter gg(F, 0_ui64, seed);
+    typename Ring::NonZeroRandIter g(gg);
 
     F.init(a);
     F.init(inva);
@@ -286,7 +287,6 @@ int TestInv(const Ring& F, const uint64_t seed)
     for (int i=0; i < 100; i++)
     {
         g.random(a);
-        while (F.isZero(a)) g.random(a);
         F.inv(inva, a);
         F.inv(invinva, inva);
 
@@ -364,7 +364,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Integer>, I4, 4);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU4, 4);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R4, 4);
-    //TEST_SPECIFIC(ZRing<Integer>, ZR4, 4);
+    TEST_SPECIFIC(ZRing<Integer>, ZR4, 4);
 
     TEST_SPECIFIC(Modular<Log16>, L5, 5);
     TEST_SPECIFIC(Modular<Log16>, L7, 7);
@@ -531,8 +531,6 @@ int main(int argc, char ** argv)
     TEST_INV(Modular<Integer>, I17, 17);
     TEST_INV(Modular<RecInt::ruint128>, RU17, 17);
     TEST_INV(Modular<RecInt::rint128>, R17, 17);
-    //TEST_INV(ZRing<Integer>, ZR17, 17);
-
     TEST_INV(Modular<Log16>, L17, 17);
 
     return 0;

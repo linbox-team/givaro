@@ -22,13 +22,14 @@
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
 #include "givaro/random-integer.h"
-#include "givaro/ring-interface.h"
+#include "givaro/unparametric-operations.h"
 #include <string>
 
 namespace Givaro {
     //------------------------------------ Class IntegerDom
     //! Integer Domain.
-    class IntegerDom : public RingInterface<Integer> {
+//     class IntegerDom : public RingInterface<Integer> {
+    class IntegerDom : public UnparametricOperations<Integer> {
     public:
         using Self_t = IntegerDom;
         typedef Integer Rep;
@@ -56,46 +57,7 @@ namespace Givaro {
         Integer characteristic() const { return zero; }
         Integer& characteristic(Integer& p) const { return p = zero; }
 
-        // -- assignement
-        Rep& init  ( Rep& a ) const
-        {
-            return a;
-        }
-        Rep& init  ( Rep& a, const Rep& b) const
-        {
-            return a = b ;
-        }
-        Rep& read( Rep& a, const int64_t i) const
-        {
-            return a = Integer(i) ;
-        }
-        Rep& read( Rep& a, const uint64_t i) const
-        {
-            return a = Integer(i) ;
-        }
-        Rep& read( Rep& a, const int32_t i) const
-        {
-            return a = Integer(i) ;
-        }
-        Rep& read( Rep& a, const uint32_t i) const
-        {
-            return a = Integer(i) ;
-        }
 
-        Rep& convert( Rep& a, const Rep& b) const
-        {
-            return a = b ;
-        }
-        Rep& assign( Rep& a, const Rep& b) const
-        {
-            return a = b ;
-        }
-
-        // -- access
-        const Rep& access(const Rep& a) const
-        {
-            return a;
-        }
 
         template<class XXX> XXX& convert(XXX& x, const Rep& a) const
         {

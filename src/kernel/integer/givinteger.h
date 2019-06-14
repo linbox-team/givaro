@@ -9,7 +9,7 @@
 
 /*! @file givinteger.h
  * @ingroup integers
- * @brief Integer Domain class definition.
+ * @brief Integer Domain class specialization.
  */
 
 #ifndef __GIVARO_integer_H
@@ -23,35 +23,39 @@
 #include "givaro/givranditer.h"
 #include "givaro/random-integer.h"
 #include "givaro/unparametric-operations.h"
+#include "givaro/zring.h"
 #include <string>
 
 namespace Givaro {
     //------------------------------------ Class IntegerDom
     //! Integer Domain.
-//     class IntegerDom : public RingInterface<Integer> {
-    class IntegerDom : public UnparametricOperations<Integer> {
+    template<>
+    class ZRing<Integer> : public UnparametricZRing<Integer> {
     public:
-        using Self_t = IntegerDom;
+        using Self_t = ZRing<Integer>;
+        using Parent_t = UnparametricZRing<Integer>;
         typedef Integer Rep;
         typedef Rep Element;
 
 
-        IntegerDom() : one(1), mOne(-1), zero(0U) {}
-        IntegerDom(const IntegerDom&) : one(1), mOne(-1), zero(0U) {}
+//         ZRing() : one(1), mOne(-1), zero(0U) {}
+//         ZRing(const Self_t&) : one(1), mOne(-1), zero(0U) {}
 
-        int operator==( const IntegerDom&) const
+        using Parent_t::Parent_t; // inherit constructors
+
+        int operator==( const Self_t&) const
         {
             return 1;
         }
-        int operator!=( const IntegerDom&) const
+        int operator!=( const Self_t&) const
         {
             return 0;
         }
 
         // -- Constants:
-        const Integer one;
-        const Integer mOne;
-        const Integer zero;
+//         const Integer one;
+//         const Integer mOne;
+//         const Integer zero;
         Integer cardinality() const { return zero; }
         Integer& cardinality(Integer& c) const { return c = zero; }
         Integer characteristic() const { return zero; }
@@ -92,27 +96,6 @@ namespace Givaro {
         Rep& divexact( Rep& q, const Rep& a, const Rep& b ) const
         {
             return Integer::divexact(q,a,b);
-        }
-
-        Rep& mulin( Rep& r, const Rep& a) const
-        {
-            return r *= a;
-        }
-        Rep& divin( Rep& r, const Rep& a) const
-        {
-            return r /= a;
-        }
-        Rep& modin( Rep& r, const Rep& a) const
-        {
-            return r %= a;
-        }
-        Rep& addin( Rep& r, const Rep& a) const
-        {
-            return r += a;
-        }
-        Rep& subin( Rep& r, const Rep& a) const
-        {
-            return r -= a;
         }
 
         Rep& axpy( Rep& r, const Rep& a, const Rep& b, const Rep& c ) const
@@ -364,22 +347,19 @@ namespace Givaro {
             i >> std::ws >> ch;
             // JGD 22.03.03
             //    if (ch != 'I')
-            //      GivError::throw_error(GivBadFormat("IntegerDom::read: bad signature domain"));
+            //      GivError::throw_error(GivBadFormat("Self_t::read: bad signature domain"));
             return i;
         }
         std::ostream& write( std::ostream& o ) const
         {
             return o << 'I';
         }
-        std::istream& read ( std::istream& i, Rep& n) const
-        {
-            return i >> n;
-        }
-        std::ostream& write( std::ostream& o, const Rep& n) const
-        {
-            return o << n;
-        }
+
+        using Parent_t::read;
+        using Parent_t::write;
     };
+
+    using IntegerDom = ZRing<Integer>;
 
 } // Givaro
 

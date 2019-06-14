@@ -25,33 +25,34 @@
 
 #include "givaro/unparametric-operations.h"
 #include "givaro/givranditer.h"
-#include "givaro/givinteger.h"
+// #include "givaro/givinteger.h"
 
 namespace Givaro
 {
-    template<class _Element> class ZRing;
+    template<class _Element> class UnparametricZRing;
 
     template<typename Domain> struct DomainRandIter {
         typedef GeneralRingRandIter<Domain> RandIter;
     };
 
-    template<> struct DomainRandIter<ZRing<Integer>> {
-        typedef IntegerDom::RandIter RandIter;
-    };
+//     template<> struct DomainRandIter<ZRing<Integer>> {
+//         typedef IntegerDom::RandIter RandIter;
+//     };
 
 
     /** Class ZRing.
      *  Ring of integers, using the _Element base type.
      */
     template<class _Element>
-    class ZRing : public UnparametricOperations<_Element>
+    class UnparametricZRing : public UnparametricOperations<_Element>
     {
     public:
 
         // ----- Exported Types and constantes
         using Element = _Element;
         using Rep = _Element;
-        using Self_t = ZRing<Element>;
+        using Self_t = UnparametricZRing<Element>;
+        using Parent_t = UnparametricOperations<Element>;
         using Residu_t = Element;
         using Element_ptr = Element*;
         using ConstElement_ptr = const Element*;
@@ -62,10 +63,10 @@ namespace Givaro
         const Element mOne = -1;
 
         //----- Constructors
-        ZRing() {}
-        ZRing(const ZRing& F) {}
+        UnparametricZRing() {}
+        UnparametricZRing(const UnparametricZRing& F) {}
         // Needed in FFLAS, when ZRing is used as delayed field.
-        template<class T> ZRing(const T&) {}
+        template<class T> UnparametricZRing(const T&) {}
 
         //----- Access
         Residu_t residu() const { return static_cast<Residu_t>(0); }
@@ -81,7 +82,7 @@ namespace Givaro
         //----- Ring-wise operations
         inline bool operator==(const Self_t& F) const { return true; }
         inline bool operator!=(const Self_t& F) const { return false; }
-        inline ZRing<Element>& operator=(const ZRing<Element>&) { return *this; }
+        inline UnparametricZRing<Element>& operator=(const UnparametricZRing<Element>&) { return *this; }
         // Ring tests
         bool isZero(const Element& a) const { return a == zero; }
         bool isOne (const Element& a) const { return a == one; }
@@ -362,9 +363,17 @@ namespace Givaro
         }
         };
 
-        typedef ZRing<float> FloatDomain;
-        typedef ZRing<double> DoubleDomain;
-        typedef ZRing<Integer> IntegerDomain;
+    template<typename Element>
+    class ZRing : public UnparametricZRing<Element> 
+    {
+        using Self_t = ZRing<Element>;
+        using Parent_t = UnparametricZRing<Element>;
+        using Parent_t::Parent_t;
+    };
+    
+    typedef UnparametricZRing<float> FloatDomain;
+    typedef UnparametricZRing<double> DoubleDomain;
+    typedef UnparametricZRing<Integer> IntegerDomain;
     }
 
 #endif

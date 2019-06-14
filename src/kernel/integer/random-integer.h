@@ -42,10 +42,10 @@ namespace Givaro
         typedef Givaro::ZRing<Integer> Integer_Domain ;
 
     private:
-        void initialize(uint64_t seed, size_t bits)
+        void initialize(uint64_t seed, const size_t bits)
         {
-            if (! bits) bits = 30;
-            GIVARO_ASSERT( bits>0, "[RandomIntegerIterator] bad bit size");
+            if (! bits) _bits = 30;
+            GIVARO_ASSERT( _bits>0, "[RandomIntegerIterator] bad bit size");
             int64_t s=seed;
             while (!s)
                 s = static_cast<uint64_t>(BaseTimer::seed());

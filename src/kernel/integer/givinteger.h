@@ -154,8 +154,8 @@ namespace Givaro {
         Element& remin (Element& a, const Element& b) const {return modin(a,b);}
         void quoRem (Element& q, Element& r, const Element& a, const Element& b) const{Integer::divmod(q,r,a,b);}
 
-        inline  Element logtwo(Element& z, const Element& x) const {
-            return z = x.bitsize() - 1;
+        Element& logtwo(Element& z, const Element& x) const {
+            return z = Element(uint64_t(x.bitsize() - 1));
         }
 
         // -- extended gcd  q = gcd(a,b) = u*a+v*b;

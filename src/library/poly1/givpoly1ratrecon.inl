@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Author: J-G. Dumas
-// Time-stamp: <01 Apr 11 17:18:03 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <17 Jun 19 14:48:01 Jean-Guillaume.Dumas@imag.fr>
 // Description: generic rational fraction reconstruction
 // ===============================================================
 #ifndef __GIVARO_poly1_ratrecon_INL
@@ -15,12 +15,12 @@
 namespace Givaro {
 
     template <class Domain>
-    void Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
+    bool Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
 
         Degree degU, degV;
         this->degree(degU,P); this->degree(degV,M);
-        if ((degU < dk) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return ; }
-        if ((degV < 0) || (degU == 0)) { this->assign(N,one); this->assign(D,one); return ; }
+        if ((degU < dk) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return true; }
+        if ((degV < 0) || (degU == 0)) { this->assign(N,one); this->assign(D,one); return false; }
 
         typename Poly1Dom<Domain,Dense>::Rep U;
         this->assign(N, M);
@@ -82,18 +82,14 @@ namespace Givaro {
         //       this->assign(U,N);
         //   } while (degN>=0);
 
+        return (degN <= dk);
+
     }
 
 
     template <class Domain>
     bool Poly1Dom<Domain,Dense>::ratreconcheck(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk) const {
-        Degree degU, degV;
-        this->degree(degU,P); this->degree(degV,M);
-        if ((degU < dk) || (degV == 0)) { this->assign(N,P); this->assign(D,one); return true; }
-        if ((degV < 0) || (degU == 0)) { this->assign(N,one); this->assign(D,one); return false; }
-
-
-        ratrecon(N,D,P,M,dk);
+        bool pass=ratrecon(N,D,P,M,dk);
 
 
         typename Poly1Dom<Domain,Dense>::Rep G;
@@ -107,9 +103,17 @@ namespace Givaro {
             this->divin(N, r);
         }
 
-        return true;
+        return pass;
     }
 
+    template <class Domain>
+    bool Poly1Dom<Domain,Dense>::ratrecon(typename Poly1Dom<Domain,Dense>::Rep& N, typename Poly1Dom<Domain,Dense>::Rep& D, const typename Poly1Dom<Domain,Dense>::Rep& P, const typename Poly1Dom<Domain,Dense>::Rep& M, const Degree& dk, const bool forcereduce) const {
+        if (forcereduce) 
+            return ratreconcheck(N,D,P,M,dk);
+        else
+            return ratrecon(N,D,P,M,dk);
+    }
+    
 } // Givaro
 
 #endif // __GIVARO_poly1_ratrecon_INL

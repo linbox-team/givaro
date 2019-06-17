@@ -22,13 +22,22 @@
 #include "givaro/giverror.h"
 #include "givaro/givranditer.h"
 #include "givaro/random-integer.h"
-#include "givaro/unparametric-operations.h"
 #include "givaro/zring.h"
 #include <string>
 
 namespace Givaro {
+
+    void RationalReconstruction(Integer& a, Integer& b,
+                                const Integer& f, const Integer& m,
+                                const Integer& k,
+                                bool forcereduce, bool recursive );
+    bool ratrecon(Integer& num, Integer& den, 
+                  const Integer& f, const Integer& m, 
+                  const Integer& k, 
+                  bool forcereduce = true, bool recurs = true );
+
     //------------------------------------ Class IntegerDom
-    //! Integer Domain.
+    //! Integer Domain, Specialization of ZRing
     template<>
     class ZRing<Integer> : public UnparametricZRing<Integer> {
     public:
@@ -36,10 +45,6 @@ namespace Givaro {
         using Parent_t = UnparametricZRing<Integer>;
         typedef Integer Rep;
         typedef Rep Element;
-
-
-//         ZRing() : one(1), mOne(-1), zero(0U) {}
-//         ZRing(const Self_t&) : one(1), mOne(-1), zero(0U) {}
 
         using Parent_t::Parent_t; // inherit constructors
 
@@ -52,42 +57,52 @@ namespace Givaro {
             return 0;
         }
 
-        // -- Constants:
-//         const Integer one;
-//         const Integer mOne;
-//         const Integer zero;
-        Integer cardinality() const { return zero; }
-        Integer& cardinality(Integer& c) const { return c = zero; }
-        Integer characteristic() const { return zero; }
-        Integer& characteristic(Integer& p) const { return p = zero; }
-
-
 
         template<class XXX> XXX& convert(XXX& x, const Rep& a) const
         {
             return Caster<XXX,Rep>(x,a);
         }
 
-        // -- arithmetic operators
+        // -- Specialize arithmetic operators
         Rep& mul( Rep& r, const Rep& a, const Rep& b ) const
         {
             return Integer::mul(r,a,b);
+        }
+        Rep& mulin( Rep& r, const Rep& b ) const
+        {
+            return Integer::mulin(r,b);
         }
         Rep& div( Rep& r, const Rep& a, const Rep& b ) const
         {
             return Integer::div(r,a,b);
         }
+        Rep& divin( Rep& r, const Rep& b ) const
+        {
+            return Integer::divin(r,b);
+        }
         Rep& mod( Rep& r, const Rep& a, const Rep& b ) const
         {
             return Integer::mod(r,a,b);
+        }
+        Rep& modin( Rep& r,const Rep& b ) const
+        {
+            return Integer::modin(r,b);
         }
         Rep& add( Rep& r, const Rep& a, const Rep& b ) const
         {
             return Integer::add(r,a,b);
         }
+        Rep& addin( Rep& r, const Rep& b ) const
+        {
+            return Integer::addin(r,b);
+        }
         Rep& sub( Rep& r, const Rep& a, const Rep& b ) const
         {
             return Integer::sub(r,a,b);
+        }
+        Rep& subin( Rep& r, const Rep& b) const
+        {
+            return Integer::subin(r,b);
         }
         Rep& divmod( Rep& q, Rep& r, const Rep& a, const Rep& b ) const
         {
@@ -133,6 +148,16 @@ namespace Givaro {
             return Integer::negin(r);
         }
 
+        Element& quo (Element& q, const Element& a, const Element& b) const {return Integer::floor(q, a, b);}
+        Element& rem (Element& r, const Element& a, const Element& b) const {return Integer::mod(r,a,b);}
+        Element& quoin (Element& a, const Element& b) const{return quo(a,a,b);}
+        Element& remin (Element& a, const Element& b) const {return modin(a,b);}
+        void quoRem (Element& q, Element& r, const Element& a, const Element& b) const{Integer::divmod(q,r,a,b);}
+
+        inline  Element logtwo(Element& z, const Element& x) const {
+            return z = x.bitsize() - 1;
+        }
+
         // -- extended gcd  q = gcd(a,b) = u*a+v*b;
         Rep& gcd( Rep& g, Rep& u, Rep& v, const Rep& a, const Rep& b ) const
         {
@@ -155,6 +180,14 @@ namespace Givaro {
         { Rep tmp(l); return lcm(l, tmp, a);
         }
 
+        Element &dxgcd(Element &g, Element &s, Element &t, Element &u, Element &v, const Element &a, const Element &b) const
+        {
+            gcd(g,s,t,a,b);
+            div(u,a,g);
+            div(v,b,g);
+            return g;
+        }
+
         Rep& inv(Rep& u, const Rep& a, const Rep& b) const
         {
             return ::Givaro::inv(u,a,b);
@@ -164,6 +197,33 @@ namespace Givaro {
             return ::Givaro::invin(u,b);
         }
 
+        Rep& invmod(Rep& u, const Rep& a, const Rep& b) const
+        {
+            return inv(u,a,b);
+        }
+        Rep& invmodin(Rep& u, const Rep& b) const
+        {
+            return invin(u,b);
+        }
+
+        void RationalReconstruction(Rep& a, Rep& b, const Rep& f, const Rep& m, const Rep& k, bool forcereduce = true, bool recurs = true) const {
+            Givaro::RationalReconstruction(a,b,f,m,k,forcereduce,recurs);
+        }
+
+        bool ratrecon(Rep& num, Rep& den, const Rep& f, const Rep& m, const Rep& k, bool forcereduce = true, bool recurs = true) const {
+            return Givaro::ratrecon(num,den,f,m,k,forcereduce,recurs);
+        }
+
+        void reconstructRational (Element& a, Element& b, const Element& x, const Element& m) const
+        {this->RationalReconstruction(a,b, x, m, Givaro::sqrt(m), true, true);}
+        void reconstructRational (Element& a, Element& b, const Element& x, const Element& m, const Element& bound) const
+        {this->RationalReconstruction(a,b, x, m, bound, true, true);}
+        bool reconstructRational (Element& a, Element& b, const Element& x, const Element& m, const Element& a_bound, const Element& b_bound) const
+        {
+            Element bound = x/b_bound;
+            this->RationalReconstruction(a,b,x,m, (bound>a_bound?bound:a_bound), true, false);
+            return b <= b_bound;
+        }
 
         // - return n^l
         Rep& pow(Rep& r, const Rep& n, const int64_t l) const
@@ -245,6 +305,10 @@ namespace Givaro {
 
         Element& abs(Element& x, const Element& a) const {
             return x=::Givaro::abs(a);
+        }
+
+        Element abs(const Element& a) const {
+            return ::Givaro::abs(a);
         }
 
         int32_t compare(const Rep& a, const Rep& b) const {
@@ -359,7 +423,13 @@ namespace Givaro {
         using Parent_t::write;
     };
 
-    using IntegerDom = ZRing<Integer>;
+    template<> struct DomainRandIter<ZRing<Integer>> {
+        typedef ZRing<Integer>::RandIter RandIter;
+    };
+
+    typedef ZRing<Integer> IntegerDom;
+    using IntegerDomain = ZRing<Integer>;
+
 
 } // Givaro
 

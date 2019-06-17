@@ -320,9 +320,10 @@ namespace Givaro {
 
         // -- rational reconstruction
         // -- Builds N and D such that P * D = N mod M and degree(N) <= dk
-        void ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk) const;
+        bool ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk) const;
         // -- checks wether the reconstruction succeeded
         bool ratreconcheck(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk) const;
+        bool ratrecon(Rep& N, Rep& D, const Rep& P, const Rep& M, const Degree& dk, bool forcereduce) const;
 
         // -- misc
         // -- W <-- P^n

@@ -31,6 +31,6 @@ noinst_LTLIBRARIES=libgivinteger.la
 
 EXTRA_DIST=integer.doxy
 
-libgivinteger_la_SOURCES=givintprime.C
+libgivinteger_la_SOURCES=givinteger.C givintprime.C
 
 #EXTRA_DIST= integer.doxy

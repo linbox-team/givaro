@@ -6,6 +6,7 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
+#include <givaro/givinteger.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givfractiondomain.h>
 #include <givaro/modular-integral.h>
@@ -22,13 +23,98 @@ if (!F.areEqual((a),(b))) {\
     return(-1); \
 }
 
+
+
+
+template<class RingDomain, class BoundingStathme>
+int TestRR(RingDomain& RDom, GivRandom& generator,
+           const typename RingDomain::Element& M,
+           const typename RingDomain::Element& P,
+           const typename RingDomain::Element& Q, 
+           const BoundingStathme& d) {
+//     RDom.write(std::clog << "M:= ", M) << ';' << std::endl;
+//     RDom.write(std::clog << "P:= ", P) << ';' << std::endl;
+//     RDom.write(std::clog << "Q:= ", Q) << ';' << std::endl;
+//     std::clog << "Bound:=" << d  << ';' << std::endl;
+
+    typename RingDomain::Element R,S,A,B;
+
+    RDom.invmod(R,Q,M);
+//     RDom.write(std::clog << "R1:= ", R) << ';' << std::endl;
+    RDom.mulin(R, P);
+//     RDom.write(std::clog << "R2:= ", R) << ';' << std::endl;
+    RDom.modin(R, M);
+//     RDom.write(std::clog << "R3:= ", R) << ';' << std::endl;
+    RDom.ratrecon(A,B,R,M,d,true);
+
+//     RDom.write(std::clog << "A:= ", A) << ';' << std::endl;
+//     RDom.write(std::clog << "B:= ", B) << ';' << std::endl;
+
+    RDom.mul(S, R, B);
+//     RDom.write(std::clog << "S1:= ", S) << ';' << std::endl;
+    RDom.modin(S, M);
+//     RDom.write(std::clog << "S2:= ", S) << ';' << std::endl;
+    RDom.subin(S, A);
+//     RDom.write(std::clog << "S3:= ", S) << ';' << std::endl;
+    RDom.modin(S, M);
+//     RDom.write(std::clog << "S4:= ", S) << ';' << std::endl;
+
+//     RDom.write(std::clog << "M:= ", M) << ';' << std::endl;
+//     RDom.write(std::clog << "P:= ", P) << ';' << std::endl;
+//     RDom.write(std::clog << "Q:= ", Q) << ';' << std::endl;
+//     RDom.write(std::clog << "R:= ", R) << ';' << std::endl;
+//     RDom.write(std::clog << "A:= ", A) << ';' << std::endl;
+//     RDom.write(std::clog << "B:= ", B) << ';' << std::endl;
+//     RDom.write(std::clog << "S:= ", S) << ';' << std::endl;
+//     RDom.write( RDom.write(std::clog << "P/Q: ", P) << "/", Q) << std::endl;
+//     RDom.write( RDom.write(std::clog << "A/B: ", A) << "/", B) << std::endl;
+
+    //     TEST_EQ(RDom, A, P);
+    //     TEST_EQ(RDom, B, Q);
+    TEST_EQ(RDom, S, RDom.zero);
+
+#ifdef GIVARO_DEBUG
+    ++TTcount;
+#endif
+    return 0;
+
+}
+
+
+
+
+
+int TestRatRR(GivRandom& generator, const size_t b) {
+
+//     std::clog << "Start: " << b << std::endl;
+
+
+    ZRing<Integer> IntDom;
+
+    Integer M, P, Q, G;
+    IntDom.random(generator, M, (b<<1) + 2 );
+
+    do {
+        IntDom.random(generator, Q, b);
+        IntDom.gcd(G, M, Q);
+    } while( G > 1);
+    do {
+        IntDom.random(generator, P, b-1);
+        IntDom.gcd(G, P, Q);
+    } while( G > 1);
+
+    return TestRR(IntDom, generator, M, P, Q, P+1);
+}
+ 
+
+
 template<class PDomain>
-int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
+int TestPolRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
 
-    //     std::cout << "Start: " << d << std::endl;
+//     std::clog << "Start: " << d << std::endl;
 
 
-    typename PDomain::Element P,Q,R,S,M,A,B, G;
+    typename PDomain::Element M, P, Q, G;
     PolDom.random(generator, M, (d << 1) + 2);
 
     Degree dG;
@@ -45,49 +131,9 @@ int TestRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
     } while( dG > 0);
 
 
-    PolDom.invmod(R,Q,M);
-    // PolDom.write(std::cout << "R1:= ", R) << ';' << std::endl;
-    PolDom.mulin(R, P);
-    // PolDom.write(std::cout << "R2:= ", R) << ';' << std::endl;
-    PolDom.modin(R, M);
-    // PolDom.write(std::cout << "R3:= ", R) << ';' << std::endl;
-    PolDom.ratrecon(A,B,R,M,d);
-
-    typename PDomain::Type_t lc;
-    PolDom.leadcoef(lc, B);
-    PolDom.divin(A, lc);
-    PolDom.divin(B, lc);
-
-    PolDom.invmod(S,B,M);
-    // PolDom.write(std::cout << "S1:= ", S) << ';' << std::endl;
-    PolDom.mulin(S, A);
-    // PolDom.write(std::cout << "S2:= ", S) << ';' << std::endl;
-    PolDom.modin(S, M);
-    // PolDom.write(std::cout << "S3:= ", S) << ';' << std::endl;
-
-
-    //     PolDom.write(std::cout << "M:= ", M) << ';' << std::endl;
-    //     PolDom.write(std::cout << "P:= ", P) << ';' << std::endl;
-    //     PolDom.write(std::cout << "Q:= ", Q) << ';' << std::endl;
-    //     PolDom.write(std::cout << "R:= ", R) << ';' << std::endl;
-    //     PolDom.write(std::cout << "A:= ", A) << ';' << std::endl;
-    //     PolDom.write(std::cout << "B:= ", B) << ';' << std::endl;
-    //     PolDom.write( PolDom.write(std::cout << "P/Q: ", P) << "/", Q) << std::endl;
-    //     PolDom.write( PolDom.write(std::cout << "A/B: ", A) << "/", B) << std::endl;
-
-
-    //     TEST_EQ(PolDom, A, P);
-    //     TEST_EQ(PolDom, B, Q);
-    TEST_EQ(PolDom, S, R);
-
-#ifdef GIVARO_DEBUG
-    ++TTcount;
-#endif
-    return 0;
-
+    return TestRR(PolDom, generator, M, P, Q, d);
 }
-
-
+ 
 
 
 int main(int argc, char ** argv)
@@ -109,17 +155,25 @@ int main(int argc, char ** argv)
     Field F2(2);
     Field F65521(65521);
     bool success = true;
+    
+    {
+        for(size_t loop=0; loop<100; ++loop)
+            for (size_t b=10; b<10000; b <<=1)
+                success &= (! TestRatRR(generator, b) );
+    }
+    
+
 
     {
         PolyZpz PZ(F101,"X");
         for(size_t j=0; j<4; ++j)
             for(Degree i=1; i<Degree(30); ++i)
-                success &= (! TestRR(PZ, generator, i) );
+                success &= (! TestPolRR(PZ, generator, i) );
 
         PolyFracZpz PFZ(PZ,"Y");
         for(size_t j=0; j<2; ++j)
             for(Degree i=2; i<Degree(5); ++i)
-                success &= (! TestRR(PFZ, generator, i) );
+                success &= (! TestPolRR(PFZ, generator, i) );
 
     }
 
@@ -127,12 +181,12 @@ int main(int argc, char ** argv)
         PolyZpz PZ(F2,"X");
         for(size_t j=0; j<4; ++j)
             for(Degree i=5; i<Degree(50); ++i)
-                success &= (! TestRR(PZ, generator, i) );
+                success &= (! TestPolRR(PZ, generator, i) );
 
         PolyFracZpz PFZ(PZ,"Y");
         for(size_t j=0; j<3; ++j)
             for(Degree i=7; i<Degree(15); ++i)
-                success &= (! TestRR(PFZ, generator, i) );
+                success &= (! TestPolRR(PFZ, generator, i) );
 
     }
 
@@ -140,15 +194,13 @@ int main(int argc, char ** argv)
         PolyZpz PZ(F65521,"X");
         for(size_t j=0; j<5; ++j)
             for(Degree i=1; i<Degree(30); ++i)
-                success &= (! TestRR(PZ, generator, i) );
+                success &= (! TestPolRR(PZ, generator, i) );
         PolyFracZpz PFZ(PZ,"Y");
         for(size_t j=0; j<2; ++j)
             for(Degree i=2; i<Degree(5); ++i)
-                success &= (! TestRR(PFZ, generator, i) );
+                success &= (! TestPolRR(PFZ, generator, i) );
 
     }
-
-
 
 
 

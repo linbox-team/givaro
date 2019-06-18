@@ -133,8 +133,10 @@ namespace Givaro
         {this->RationalReconstruction(a,b, x, m, bound, true, true);}
         bool reconstructRational (Element& a, Element& b, const Element& x, const Element& m, const Element& a_bound, const Element& b_bound) const
         {
-            Element bound = x/b_bound;
-            this->RationalReconstruction(a,b,x,m, (bound>a_bound?bound:a_bound), true, false);
+            this->RationalReconstruction(a,b,x,m, a_bound, b_bound, true);
+
+            // Element bound = x/b_bound;
+            // this->RationalReconstruction(a,b,x,m, (bound>a_bound?bound:a_bound), true, true);
             return b <= b_bound;
         }
         Element& quo (Element& q, const Element& a, const Element& b) const {return Integer::floor(q, a, b);}
@@ -258,6 +260,133 @@ namespace Givaro
             }
         }
 
+        inline void RationalReconstruction( Element& a, Element& b,
+                                            const Element& f, const Element& m,
+                                            const Element& a_bound, const Element& b_bound,
+                                            bool forcereduce ) const
+        {
+            Element x(f);
+            if (x<0) {
+                if ((-x)>m)
+                    x %= m;
+                if (x<0)
+                    x += m;
+            }
+            else {
+                if (x>m)
+                    x %= m;
+            }
+
+            if (x == 0) {
+                a = 0;
+                b = 1;
+            }
+            else {
+                bool res = ratrecon(a,b,x,m,a_bound, b_bound, forcereduce);
+            }
+        }
+
+        // Precondition f is suppposed strictly positive and strictly less than m
+        inline  bool ratrecon( Element& num, Element& den,
+                               const Element& f, const Element& m,
+                               const Element& a_bound, const Element& b_bound,
+                               bool forcereduce ) const
+        {
+
+            //std::cerr << "RatRecon : " << f << " " << m << " " << k << std::endl;
+            Element  r0, t0, q, u;
+            r0=m;
+            t0=0;
+            num=f;
+            den=1;
+            while(num>a_bound)
+            {
+                q = r0;
+                q /= num;   // r0/num
+                u = num;
+                num = r0;  	// num <-- r0
+                r0 = u;	// r0 <-- num
+                //maxpyin(num,u,q);
+                Integer::maxpyin(num,u,q);
+                if (num == 0) return false;
+
+                u = den;
+                den = t0;  	// num <-- r0
+                t0 = u;	// r0 <-- num
+                //maxpyin(den,u,q);
+                Integer::maxpyin(den,u,q);
+            }
+
+            if (forcereduce) {
+                // [GG, MCA, 1999] Theorem 5.26
+
+                // (ii)
+                Element gg;
+                if (gcd(gg,num,den) != 1) {
+
+                    Element ganum, gar2;
+                    for( q = 1, ganum = r0-num, gar2 = r0 ; (ganum < a_bound) && (gar2>=a_bound); ++q ) {
+                        ganum -= num;
+                        gar2 -= num;
+                    }
+
+                    //maxpyin(r0,q,num);
+                    Integer::maxpyin(r0,q,num);
+                    //maxpyin(t0,q,den);
+                    Integer::maxpyin(t0,q,den);
+
+                    if (t0 < 0) {
+                        num = -r0;
+                        den = -t0;
+                    }
+                    else {
+                        num = r0;
+                        den = t0;
+                    }
+
+                    // if (t0 > m/k)
+                    if (den > b_bound) {
+                            std::cerr
+                            << "*** Error *** No rational reconstruction of "
+                            << f
+                            << " modulo "
+                            << m
+                            << " with denominator <= "
+                            << b_bound
+                            << std::endl;
+                    }
+                    if (gcd(gg,num,den) != 1) {
+                            std::cerr
+                            << "*** Error *** There exists no rational reconstruction of "
+                            << f
+                            << " modulo "
+                            << m
+                            << " with |numerator| < "
+                            << a_bound
+                            << std::endl
+                            << "*** Error *** But "
+                            << num
+                            << " = "
+                            << den
+                            << " * "
+                            << f
+                            << " modulo "
+                            << m
+                            << std::endl;
+                        return false;
+                    }
+                }
+            }
+            // (i)
+            if (den < 0) {
+                Integer::negin(num);
+                Integer::negin(den);
+            }
+
+            // std::cerr << "RatRecon End " << num << "/" << den << std::endl;
+            return true;
+        }
+
         // Precondition f is suppposed strictly positive and strictly less than m
         inline  bool ratrecon( Element& num, Element& den,
                                const Element& f, const Element& m,
@@ -273,6 +402,8 @@ namespace Givaro
             den=1;
             while(num>=k)
             {
+                std::cout << "ND " << Givaro::logtwo(Givaro::abs(num)) << " " << Givaro::logtwo(Givaro::abs(den)) << std::endl;
+
                 q = r0;
                 q /= num;   // r0/num
                 u = num;

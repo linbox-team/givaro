@@ -42,15 +42,22 @@ bool testRationalDenom() {
     QQ.add(c,a,b);
     std::clog << "0: " << c << std::endl;
     pass = pass && isZero(c);
-    
+
+    std::clog << "[TRD] " << (pass?"PASSED.":"FAILED.") << std::endl;
 
     return pass;
-    
 }
 
-    
+#include "givaro/modular.h"
+bool testFieldInit() {
+    size_t p = 19;
+    Givaro::Modular<int64_t> F1(p);
 
-
+        // This is a compilation test,
+        // if it compiles, everything's fine
+    F1.write(std::clog << "[TFI] PASSED: ") << std::endl;
+    return true;
+}
 
 int main(int argc, char ** argv)
 {
@@ -64,7 +71,7 @@ int main(int argc, char ** argv)
 
 
     pass = pass && testRationalDenom  ();
-
+    pass = pass && testFieldInit  ();
 
     return pass ? 0 : -1;
 }

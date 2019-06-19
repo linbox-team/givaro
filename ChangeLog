@@ -1,3 +1,6 @@
+2019-06-07 v4.1.1
+	Minor updates:
+	* add README.md in distribution
 2019-05-10 v4.1.0
 	Improvements:
 	* rewrite of the Modular fields (code factorization, cleanup, bug

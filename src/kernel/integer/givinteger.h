@@ -23,7 +23,6 @@
 #include "givaro/givranditer.h"
 #include "givaro/random-integer.h"
 #include "givaro/zring.h"
-#include "givaro/givrational.h"
 #include <string>
 
 namespace Givaro {

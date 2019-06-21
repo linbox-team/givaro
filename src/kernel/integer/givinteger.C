@@ -11,6 +11,7 @@
 // Description:
 
 #include "givaro/givinteger.h"
+#include "givaro/givrational.h"
 
 namespace Givaro {
     bool ZRing<Integer>::ratrecon(Rep& num, Rep& den, const Rep& f, const Rep& m, const Rep& k, bool forcereduce, bool recurs) const {

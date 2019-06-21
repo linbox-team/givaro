@@ -198,14 +198,15 @@ namespace Givaro {
             return invin(u,b);
         }
 
-        void RationalReconstruction(Rep&, Rep&, 
-                                    const Rep&, const Rep&, const Rep& k, 
+        bool ratrecon(Rep& num, Rep& den, const Rep& f, const Rep& m, 
+                      const Rep& numbound, 
+                      bool forcereduce = true, bool recurs = true) const ;
+        bool RationalReconstruction(Rep&, Rep&, const Rep&, const Rep&) const;
+        bool RationalReconstruction(Rep&, Rep&, 
+                                    const Rep&, const Rep&, const Rep&, 
                                     bool = true, bool = true) const ;
-        bool ratrecon(Rep& num, Rep& den, const Rep& f, const Rep& m, const Rep& k, bool forcereduce = true, bool recurs = true) const ;
-        void reconstructRational (Element& a, Element& b, const Element& x, const Element& m) const;
-        void reconstructRational (Element& a, Element& b, const Element& x, const Element& m, const Element& bound) const;
-        bool reconstructRational (Element& a, Element& b, const Element& x, const Element& m, const Element& a_bound, const Element& b_bound) const;
-
+        bool RationalReconstruction(Rep&, Rep&, const Rep&, const Rep&, 
+                                    const Rep&, const Rep&) const;
         // - return n^l
         Rep& pow(Rep& r, const Rep& n, const int64_t l) const
         {

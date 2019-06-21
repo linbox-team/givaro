@@ -183,15 +183,23 @@ namespace Givaro {
                       bool forcereduce = true, bool recurs = false ) ;
     public:
 
-        static void RationalReconstruction(
-            Integer& num, Integer& den, const Integer& f, const Integer& m,
-            const Integer& k, bool forcereduce = true, bool recursive = true );
-
         static bool ratrecon(
             Integer& num, Integer& den, const Integer& f, const Integer& m,
             const Integer& k, bool forcereduce = true, bool recurs = true );
 
+        static bool RationalReconstruction(
+            Integer& num, Integer& den, const Integer& f, const Integer& m);
+
+        static bool RationalReconstruction(
+            Integer& num, Integer& den, const Integer& f, const Integer& m,
+            const Integer& numbound, 
+            bool forcereduce = true, bool recursive = true );
+
         // - exportation of the module
+        static bool RationalReconstruction(
+            Integer& num, Integer& den, const Integer& f, const Integer& m,
+            const Integer& numbound, const Integer& denbound );
+
         static GivModule Module;
         // -- Cstor for Zero and One to delay initialization after the main
         Rational( givNoInit );

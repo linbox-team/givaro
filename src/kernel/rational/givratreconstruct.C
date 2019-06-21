@@ -144,12 +144,27 @@ namespace Givaro {
         return true;
     }
     
-    void Rational::RationalReconstruction( 
-        Integer& a, Integer& b,
-        const Integer& f, const Integer& m,
-        const Integer& k,
-        bool forcereduce, bool recursive )
+    bool Rational::ratrecon
+    (const Integer& f, const Integer& m, const Integer& k, 
+     bool forcereduce, bool recurs) {
+        return Rational::ratrecon(this->num, this->den,
+                                  f,m,k,forcereduce,recurs);
+    }        
+
+    Rational::Rational
+    (const Integer& f, const Integer& m, const Integer& k, 
+     bool recurs ) {
+        bool res = this->ratrecon(f,m,k,Rational::flags,recurs);
+        if (recurs)
+            for( Integer newk = k + 1; (!res) && (newk<f) ; ++newk)
+                res = this->ratrecon(f,m,newk,Rational::flags,true);
+    }
+
+    bool Rational::RationalReconstruction
+    (Integer& a, Integer& b, const Integer& f, const Integer& m,
+     const Integer& k, bool forcereduce, bool recursive)
     {
+        bool res(true);
         Integer x(f);
         if (x<0) {
             if ((-x)>m)
@@ -167,27 +182,26 @@ namespace Givaro {
             b = 1;
         }
         else {
-            bool res = ratrecon(a,b,x,m,k, forcereduce, recursive);
+            res = ratrecon(a,b,x,m,k, forcereduce, recursive);
             if (recursive)
                 for( Integer newk = k + 1; (!res) && (newk<f) ; ++newk)
                     res = ratrecon(a,b,x,m,newk,forcereduce, true);
         }
+        return res;
     }
     
-
-    Rational::Rational(const Integer& f, const Integer& m, const Integer& k, bool recurs )
-    {
-        bool res = this->ratrecon(f,m,k,recurs);
-        if (recurs)
-            for( Integer newk = k + 1; (!res) && (newk<f) ; ++newk)
-                res = this->ratrecon(f,m,newk,true);
+    bool Rational::RationalReconstruction
+    (Integer& a, Integer& b, const Integer& x, const Integer& m) {
+        return ratrecon(a, b, x, m, Givaro::sqrt(m), true, true);
     }
-
-
-
-    bool Rational::ratrecon(const Integer& f, const Integer& m, const Integer& k, bool forcereduce, bool recurs )
-    {
-        return Rational::ratrecon(this->num,this->den,f,m,k,forcereduce,recurs);
+    bool Rational::RationalReconstruction
+    (Integer& a, Integer& b, const Integer& x, const Integer& m, 
+     const Integer& a_bound, const Integer& b_bound) {
+        Integer bound = x/b_bound;
+        ratrecon(a,b,x,m, 
+                 (bound>a_bound?bound:a_bound), 
+                 true, false);
+        return b <= b_bound;
     }
 
 

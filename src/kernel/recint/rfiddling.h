@@ -5,7 +5,7 @@ Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS
 
-Time-stamp: <20 Jun 12 10:28:30 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <14 May 19 17:37:51 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -66,6 +66,12 @@ namespace RecInt
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>) operator|(const rint<K>& b, const T& c);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>) operator^(const rint<K>& b, const T& c);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, T) operator&(const rint<K>& b, const T& c);
+
+    template <size_t K, typename T> rint<K> operator<<(const rint<K>&, const T&);
+    template <size_t K, typename T> rint<K> operator>>(const rint<K>&, const T&);
+    template <size_t K, typename T> rint<K>& operator<<=(rint<K>&, const T&);
+    template <size_t K, typename T> rint<K>& operator>>=(rint<K>&, const T&);
+
 }
 
 
@@ -124,6 +130,28 @@ namespace RecInt
     template <size_t K> inline rint<K> operator^(const rint<K>& b, const rint<K>& c) {
         return rint<K>(b.Value ^ c.Value);
     }
+
+        // Shifts
+    template <size_t K, typename T> rint<K>& operator<<=(rint<K>& b, const T& c) {
+        b.Value <<= c;
+        return b;
+    }
+
+    template <size_t K, typename T> rint<K>& operator>>=(rint<K>& b, const T& c) {
+        b.Value >>= c;
+        return b;
+    }
+
+    template <size_t K, typename T> rint<K> operator<<(const rint<K>& b, const T& c) {
+        rint<K> r(b);
+        return r <<= c;
+    }
+
+    template <size_t K, typename T> rint<K> operator>>(const rint<K>& b, const T& c) {
+        rint<K> r(b);
+        return r >>= c;
+    }
+
 }
 
 #endif

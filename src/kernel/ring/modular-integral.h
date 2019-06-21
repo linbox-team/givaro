@@ -137,11 +137,16 @@ namespace Givaro {
               typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
               template< class Random > Element& random(Random& g, Element& r) const
               { return init(r, g()); }
+              template< class Random > Element& random(Random& g, Element& r, const Residu_t& size) const
+              { return init(r, g() % size); }
               template< class Random > Element& nonzerorandom(Random& g, Element& a) const
               { while (this->isZero(init(a, g())))
                   ;
                   return a; }
-
+              template< class Random > Element& nonzerorandom(Random& g, Element& a, const Residu_t& size) const
+              { while (this->isZero(init(a, g() % size)))
+                  ;
+                  return a; }
           };
 } // Givaro
 

@@ -60,7 +60,7 @@ namespace Givaro {
         static constexpr bool is_elt_floating_point_v = is_elt_floating_point::value;
 
         // ----- Exported Types and constantes
-        enum { size_rep = sizeof(Residu_t) };
+        enum { size_rep = sizeof(Element) };
 
         // ----- Constantes
         const Element zero;

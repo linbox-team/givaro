@@ -70,7 +70,7 @@ namespace Givaro
     inline ModularBalanced<int32_t>::Element&
     ModularBalanced<int32_t>::inv(Element& r, const Element& a) const
     {
-        r = invext(r, (a < 0)? _p + a : a, _p);
+        r = invext(r, (a < 0)? a + _p : a, _p);
         NORMALISE(r);
         return r;
     }

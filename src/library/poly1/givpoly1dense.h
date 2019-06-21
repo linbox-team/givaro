@@ -43,8 +43,9 @@ namespace Givaro {
     public :
 
         // -- Exported types
-        typedef          Domain		       Domain_t;
-        typedef typename Domain::Element           Type_t;
+        typedef          Domain				Domain_t;
+        typedef typename Domain::Element	Type_t;
+        typedef typename Domain::Residu_t	Residu_t;
 
         // -- Self_t
         typedef          Poly1Dom<Domain,Dense>    Self_t;
@@ -63,21 +64,22 @@ namespace Givaro {
         typedef          Storage_t                 Element;
         typedef GIV_randIter< Self_t, Element> RandIter;
 
-        Poly1Dom ()
-        {}
+        Poly1Dom () {}
         Poly1Dom (const Domain& d, const Indeter& X = Indeter() );
         Poly1Dom (const Self_t&);
-        Type_t characteristic() const
+        inline Residu_t characteristic() const
         {
-            return (Type_t)_domain.characteristic();
+            return (Residu_t)_domain.characteristic();
         }
-        Integer& characteristic( Integer& p) const
+        inline Integer& characteristic( Integer& p) const
         {
             return _domain.characteristic(p);
         }
 
+        inline Residu_t cardinality () const { return 0; }
+
         inline Integer& cardinality (Integer& c) const {
-            return c = -1;
+            return c = cardinality();
         }
 
         int operator==( const Poly1Dom<Domain,Dense>& BC) const

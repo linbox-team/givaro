@@ -41,21 +41,32 @@ namespace Givaro
         typedef Givaro::Integer Element ;
         typedef Givaro::ZRing<Integer> Integer_Domain ;
 
-        /*! Constructor.
-         * @param bits size of integers (in bits)
-         * @param seed if \c 0 a seed will be generated, otherwise, the
-         * provided seed will be use.
-         */
-        RandomIntegerIterator(const Integer_Domain& D, size_t bits = 30, uint64_t seed = 0) :
-            _bits(bits), _integer(), _ring(D)
+    private:
+        void initialize(uint64_t seed, const size_t bits)
         {
-            if (! _bits) _bits = 30;
+            if (! bits) _bits = 30;
             GIVARO_ASSERT( _bits>0, "[RandomIntegerIterator] bad bit size");
             int64_t s=seed;
             while (!s)
                 s = static_cast<uint64_t>(BaseTimer::seed());
             setSeed (s);
             this->operator++();
+        }
+
+    public:
+        /*! Constructor.
+         * @param bits size of integers (in bits)
+         * @param seed if \c 0 a seed will be generated, otherwise, the
+         * provided seed will be use.
+         */
+        RandomIntegerIterator(const Integer_Domain& D, uint64_t seed = 0, size_t bits = 30) :
+            _bits(bits), _integer(), _ring(D)
+        {
+            initialize(seed,_bits);
+        }
+        RandomIntegerIterator(const Integer_Domain& D, uint64_t seed, const Integer& samplesize) : _bits(samplesize.bitsize()), _integer(), _ring(D)
+        {
+            initialize(seed,_bits);
         }
 
         /// copy constructor.
@@ -153,9 +164,9 @@ namespace Givaro
             return Givaro::Integer::random_lessthan<_Unsigned>(a,_bits);
         }
 
-        size_t    				_bits;  	//!< common length of all integers
-        Integer_Type   			_integer;	//!< the generated integer.
-        const Integer_Domain& 	_ring;
+        size_t				_bits;	//!< common length of all integers
+        Integer_Type			_integer;	//!< the generated integer.
+        const Integer_Domain&	_ring;
 
     };
 

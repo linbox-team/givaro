@@ -901,46 +901,30 @@ namespace Givaro {
 
         // ----- random generators
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& a) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& a, const Residu_t& s) const
     {
-        a = Rep( ((UTT)(g()) % (_q-1)) + 1);
-        return a = (a<0?a+(Rep)_q:a);
+        a = Rep( ((UTT)(g()) % (s-1)) + 1);
+        return a = (a<0?a+(Rep)_q:a); //@fixme can it really be <0?
     }
 
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& a) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& a, const Residu_t& s) const
     {
-        a = Rep( (UTT)(g()) % _q);
-        return a = (a<0?a+(Rep)_q:a);
+        a = Rep( (UTT)(g()) % s);
+        return a = (a<0?a+(Rep)_q:a); //@fixme can it really be <0?
     }
 
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, int64_t s) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r) const
     {
-        return random(g,r);
-    }
-
-
-    template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::random(randIter& g, Rep& r, const Rep& b) const
-    {
-        return random(g,r);
+        return random(g,r,_q);
     }
 
     template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, int64_t s) const
+    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r) const
     {
-        return nonzerorandom(g,r);
+        return nonzerorandom(g,r,_q);
     }
-
-    template<typename TT> template<typename randIter>
-    inline typename GFqDom<TT>::Rep& GFqDom<TT>::nonzerorandom(randIter& g, Rep& r, const Rep& b) const
-    {
-        return nonzerorandom(g,r);
-    }
-
-
-
 
     template<typename TT>
     inline GFqDom<TT>::GFqDom(const UTT P, const UTT e)

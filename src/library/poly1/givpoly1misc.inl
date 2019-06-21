@@ -328,7 +328,7 @@ namespace Givaro {
     template <class Domain> template<class RandomIterator>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::random(RandomIterator& g, Rep& r, const Rep& b) const
     {
-        return random(g, r,b.size());
+        return random(g, r, b.size());
     }
 
 
@@ -342,19 +342,19 @@ namespace Givaro {
     template <class Domain> template<class RandomIterator>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandomIterator& g, Rep& r, uint64_t s) const
     {
-        return random(g, r,s);
+        return random(g, r, s);
     }
 
     template <class Domain> template<class RandomIterator>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandomIterator& g, Rep& r, Degree d) const
     {
-        return random(g, r,d);
+        return random(g, r, d);
     }
 
     template <class Domain> template<class RandomIterator>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::nonzerorandom(RandomIterator& g, Rep& r, const Rep& b) const
     {
-        return random(g, r,b);
+        return random(g, r, b);
     }
 
 

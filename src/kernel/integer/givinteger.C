@@ -14,160 +14,21 @@
 
 namespace Givaro {
 
-
-    void RationalReconstruction( Integer& a, Integer& b,
-                                 const Integer& f, const Integer& m,
-                                 const Integer& k,
-                                 bool forcereduce, bool recursive )
-    {
-        Integer x(f);
-        if (x<0) {
-            if ((-x)>m)
-                x %= m;
-            if (x<0)
-                x += m;
-        }
-        else {
-            if (x>m)
-                x %= m;
-        }
-        
-        if (x == 0) {
-            a = 0;
-            b = 1;
-        }
-        else {
-            bool res = ratrecon(a,b,x,m,k, forcereduce, recursive);
-            if (recursive)
-                for( Integer newk = k + 1; (!res) && (newk<f) ; ++newk)
-                    res = ratrecon(a,b,x,m,newk,forcereduce, true);
-        }
+    void ZRing<Integer>::RationalReconstruction(Rep& a, Rep& b, const Rep& f, const Rep& m, const Rep& k, bool forcereduce, bool recurs) const {
+        Rational::RationalReconstruction(a,b,f,m,k,forcereduce,recurs);
     }
-    
-    bool ratrecon(Integer& num, Integer& den, const Integer& f, const Integer& m, const Integer& k, bool forcereduce, bool recurs)
-    {
-
-// #ifdef GIVARO_DEBUG
-//         std::clog << "RatRecon : " << f << " " << m << " " << k << std::endl;
-// #endif
-
-
-        Integer r0, t0, r1, t1, q, u;
-        r0=m;
-        t0=0;
-        r1=f;
-        if (f<0) r1+= m;
-        t1=1;
-        while(r1>=k)
-        {
-// #ifdef GIVARO_DEBUG
-// 			std::clog << "r0:=" << r0 << ';' << std::endl
-//                       << "r1:=" << r1 << ';' << std::endl
-//                       << "q:=" << q << ';' << std::endl
-//                       << "t0:=" << t0 << ';' << std::endl
-//                       << "t1:=" << t1 << ';' << std::endl;
-// #endif
-            q = r0;
-            q /= r1;    // r0/r1
-
-            u = r1;
-            r1 = r0;  	// r1 <-- r0
-            r0 = u;	    // r0 <-- r1
-//             u *= q;
-//             r1 -= u;	// r1 <-- r0-q*r1
-            Integer::maxpyin(r1,u,q);
-            if (r1 == 0) break;
-
-            u = t1;
-            t1 = t0;  	// r1 <-- r0
-            t0 = u;	        // r0 <-- r1
-//             u *= q;
-//             t1 -= u;	// r1 <-- r0-q*r1
-            Integer::maxpyin(t1,u,q);
-        }
-
-        // [GG, MCA, 1999] Theorem 5.26
-        // (i)
-        if (t1 < 0) {
-            num = -r1;
-            den = -t1;
-        } else {
-            num = r1;
-            den = t1;
-        }
-
-        if (forcereduce) {
-
-                // (ii)
-            if (gcd(num,den) != 1) {
-// #ifdef GIVARO_DEBUG
-//             std::clog << "num:=" << num << ';' << std::endl
-//                       << "den:=" << den << ';' << std::endl
-//                       << "g:=" << gcd(num,den) << ';'
-//                       << std::endl;
-//             std::clog << "r0:=" << r0 << ';' << std::endl
-//                       << "t0:=" << t0 << ';' << std::endl
-//                       << "k:=" << k << ';'
-//                       << std::endl;
-// #endif
-                q = r0;
-                q += r1;
-                q -= k;
-                q /= r1;
-                
-// #ifdef GIVARO_DEBUG
-//             std::clog << "q:=" << q  << ';' << std::endl;
-// #endif
-                
-                r0 -= q * r1;
-                t0 -= q * t1;
-                
-                if (t0 < 0) {
-                    num = -r0;
-                    den = -t0;
-                } else {
-                    num = r0;
-                    den = t0;
-                }
-                
-                if (t0 > m/k) {
-                    if (!recurs)
-                        std::cerr
-                            << "*** Error *** No rational reconstruction of "
-                            << f
-                            << " modulo "
-                            << m
-                            << " with denominator <= "
-                            << (m/k)
-                            << std::endl;
-                }
-                if (gcd(num,den) != 1) {
-                    if (!recurs)
-                        std::cerr
-                            << "*** Error *** There exists no rational reconstruction of "
-                            << f
-                            << " modulo "
-                            << m
-                            << " with |numerator| < "
-                            << k
-                            << std::endl
-                            << "*** Error *** But "
-                            << num
-                            << " = "
-                            << den
-                            << " * "
-                            << f
-                            << " modulo "
-                            << m
-                            << std::endl;
-                    return false;
-                }
-            }
-        }
-// #ifdef GIVARO_DEBUG
-//         std::clog << "RatRecon End " << std::endl;
-// #endif
-        return true;
+    bool ZRing<Integer>::ratrecon(Rep& num, Rep& den, const Rep& f, const Rep& m, const Rep& k, bool forcereduce, bool recurs) const {
+        return Rational::ratrecon(num,den,f,m,k,forcereduce,recurs);
     }
-    
+    void ZRing<Integer>::reconstructRational (Element& a, Element& b, const Element& x, const Element& m) const
+    {this->RationalReconstruction(a,b, x, m, Givaro::sqrt(m), true, true);}
+    void ZRing<Integer>::reconstructRational (Element& a, Element& b, const Element& x, const Element& m, const Element& bound) const
+    {this->RationalReconstruction(a,b, x, m, bound, true, true);}
+    bool ZRing<Integer>::reconstructRational (Element& a, Element& b, const Element& x, const Element& m, const Element& a_bound, const Element& b_bound) const
+    {
+        Element bound = x/b_bound;
+        this->RationalReconstruction(a,b,x,m, (bound>a_bound?bound:a_bound), true, false);
+        return b <= b_bound;
+    }
+
 }

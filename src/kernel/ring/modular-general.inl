@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <04 Dec 18 16:10:29 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <14 May 19 16:35:35 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions

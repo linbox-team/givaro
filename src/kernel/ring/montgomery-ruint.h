@@ -41,6 +41,8 @@ namespace Givaro
 
         // ----- Representation of vector of the Element
         typedef Element* Array;
+        using Element_ptr = Element*;
+        using ConstElement_ptr = const Element*;
 
         // ----- Constantes
         const Element zero;

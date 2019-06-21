@@ -198,6 +198,7 @@ namespace Givaro {
         using Self_t = QField<Element>;
         typedef Rational Element;
         typedef Rational Rep;
+        typedef int64_t Residu_t; // type for cardinality()
 
         // -- Cstor
         QField() : one(1), mOne(-one), zero(0) {}

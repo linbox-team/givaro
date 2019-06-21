@@ -15,6 +15,8 @@
 #ifndef __GIVARO_modular_implem_H
 #define __GIVARO_modular_implem_H
 
+#include <type_traits>
+
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
@@ -52,8 +54,13 @@ namespace Givaro {
         using Compute_t = _Compute_t;
         using Residu_t = _Residu_t;
 
+        using is_elt_integral = std::is_integral<Element>;
+        static constexpr bool is_elt_integral_v = is_elt_integral::value;
+        using is_elt_floating_point = std::is_floating_point<Element>;
+        static constexpr bool is_elt_floating_point_v = is_elt_floating_point::value;
+
         // ----- Exported Types and constantes
-        enum { size_rep = sizeof(Residu_t) };
+        enum { size_rep = sizeof(Element) };
 
         // ----- Constantes
         const Element zero;

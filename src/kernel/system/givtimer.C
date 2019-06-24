@@ -37,9 +37,9 @@ namespace Givaro {
 #if (GIVARO_SYS == _SYS_MACOS)
         return clock() ;
 #else
-        struct timeval tp;
-        gettimeofday(&tp, 0) ;
-        return static_cast<int64_t>(tp.tv_usec);
+        struct timespec ts;
+        timespec_get(&ts, TIME_UTC);
+        return static_cast<int64_t>(ts.tv_nsec);
 #endif
     }
 

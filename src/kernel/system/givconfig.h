@@ -282,14 +282,15 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #define _SYS_UNDEF 0
 #define _SYS_MACOS 1
 
-
-
 // ==========================================================================
 // -- System variable
 #ifndef GIVARO_SYS
-#define GIVARO_SYS _SYS_UNDEF
+#  ifdef __APPLE__
+#    define GIVARO_SYS _SYS_MACOS
+#  else
+#    define GIVARO_SYS _SYS_UNDEF
+#  endif
 #endif
-
 
 // ==========================================================================
 // -- Misc features. Should be deleted

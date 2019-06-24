@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <14 May 19 11:35:28 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <24 Jun 19 11:50:58 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -160,7 +160,13 @@ public:
         return p=(uint64_t)_characteristic;
     }
     
-    static inline Residu_t maxCardinality() { return 65536u; }
+    __GIVARO_CONDITIONAL_TEMPLATE(S = TT, (sizeof(S) == sizeof(int32_t)))
+    static inline Residu_t maxCardinality() { return 65521u; }
+    __GIVARO_CONDITIONAL_TEMPLATE(S = TT, (sizeof(S) == sizeof(int64_t)))
+    static inline Residu_t maxCardinality() { return UINT64_C(4294967291); }
+
+
+
     static inline Residu_t minCardinality() { return 2; }
 
     UTT cardinality() const;

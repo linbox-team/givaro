@@ -150,10 +150,10 @@ int main(int argc, char ** argv)
 
     TEST_SPECIFIC(GFqDom<int32_t>, GF13, 13);
     TEST_SPECIFIC(GFqDom<int32_t>, GFpmax, 65521U);
-    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpmax, 4194301);
+    TEST_SPECIFIC(GFqDom<int64_t>, GFLLplarge, 4194301);
 
     TEST_LAST_PRIME(GFqDom<int32_t>, GFpmmax);
-    TEST_LAST_PRIME(GFqDom<int64_t>, GFLLpmmax);
+    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpXXL, 67108859); // already 1.5 GB
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial

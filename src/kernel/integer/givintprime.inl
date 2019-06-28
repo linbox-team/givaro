@@ -25,9 +25,9 @@ namespace Givaro {
 
     template<class MyRandIter> unsigned int IntPrimeDom::Miller(MyRandIter& g, const Integer& n) const
     {
-        // Monte Carlo algorithm
-        // returns 1    : n prime with probability 3/4
-        // returns 0    : n composite
+            // Monte Carlo algorithm
+            // returns 1    : n prime with probability 3/4
+            // returns 0    : n composite
         if (n < 2) return 0;
         if (n <= 3) return 1;
         IntPrimeDom::Rep t=n-1,a,q;
@@ -36,7 +36,7 @@ namespace Givaro {
         for( ; !( (int)t & 0x1) ; t>>=1, ++s) { }
         powmod(q,a,t,n);
         if ( (q==1) || (q == (n-1))) return 1;
-        // for(;s>1;--s) {
+            // for(;s>1;--s) {
         for(;--s>0;) {
             q = (q*q) % n;
             if (q == (n-1)) return 1;
@@ -47,10 +47,10 @@ namespace Givaro {
 
     template<class MyRandIter>
     IntPrimeDom::Rep& IntPrimeDom::test_Lehmann(MyRandIter& g, Rep& r, const Rep& n) const {
-        // Monte Carlo algorithm
-        // returns n-1  : n prime with probability 1/2
-        // returns 1    : n composite with probability 1/2
-        // else         : n composite
+            // Monte Carlo algorithm
+            // returns n-1  : n prime with probability 1/2
+            // returns 1    : n composite with probability 1/2
+            // else         : n composite
         IntPrimeDom::Rep A;
         random(g,A,n);
         return powmod(r,A,(n-1)/2,n);
@@ -68,7 +68,8 @@ namespace Givaro {
         return 0;
     }
 
-    } // Givaro
+
+} // Givaro
 #endif // __GIVARO_primality_INL
-    /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
-    // vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s
+/* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+// vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 //
-// Time-stamp: <16 Jun 15 16:05:31 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Jun 19 16:49:39 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givintnumtheo.h

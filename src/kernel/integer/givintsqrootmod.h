@@ -4,8 +4,8 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <16 Jun 15 16:05:06 Jean-Guillaume.Dumas@imag.fr>
-// Author : Yanis Linge
+// Time-stamp: <28 Jun 19 18:19:52 Jean-Guillaume.Dumas@imag.fr>
+// Author : Yanis Linge adn Jean-Guillaume Dumas
 // ============================================================= //
 
 
@@ -40,46 +40,20 @@ namespace Givaro {
         // ======================================================== //
         // Modular Square root functions
         // ======================================================== //
-        Rep & sqrootmod (Rep & x, const Rep & a, const Rep & n) const {
-            std::vector < Rep > Lf;
-            std::vector < uint64_t > Le;
-            Father_t::set (Lf, Le, n);
+        Rep & sqrootmod (Rep & x, const Rep & a, const Rep & n) const ;
 
-            typename std::vector < Rep >::const_iterator Lf_iter = Lf.begin ();
-            typename std::vector < uint64_t >::const_iterator Le_iter = Le.begin ();
+        // ======================================================== //
+        // Brillhart decomposition of a prime
+        // into a sum of squares
+        // See [Note on representing a prime as a sum of two squares,
+        //      J. Brillhart. Math. Comp. 26 (1972), 1011-1013 ]
+        // ======================================================== //
+        void Brillhart(Rep&, Rep&, const Rep&) const;
 
-            std::vector < Rep > roots;
-            Rep tmp;
-
-            // Build prime powers
-            std::vector < Rep > Pe (Lf.size ());
-            typename std::vector < Rep >::iterator Pe_iter = Pe.begin ();
-            for (; Pe_iter != Pe.end (); ++Pe_iter, ++Lf_iter, ++Le_iter)
-                dom_power (*Pe_iter, *Lf_iter, (long)*Le_iter, *this);
-
-            Lf_iter = Lf.begin ();
-            Le_iter = Le.begin ();
-            Pe_iter = Pe.begin ();
-
-            // roots mod powers of primes
-            for (; Lf_iter != Lf.end (); ++Lf_iter, ++Le_iter, ++Pe_iter){
-                // root mod a power of 2
-                if (*Lf_iter == 2U){
-                    roots.push_back (
-                                     this->sqrootmodpoweroftwo (tmp, a, *Le_iter, *Pe_iter));
-                } else {
-                    roots.push_back (
-                                     this->sqrootmodprimepower (tmp, a, *Lf_iter, *Le_iter, *Pe_iter));
-                }
-            }
-
-            // Chinese Remaindering
-            IntRNSsystem < std::vector, std::allocator > RNs (Pe);
-
-            RNs.RnsToRing (x, roots);
-            x = (x<0?-x:x);
-            return x;
-        }
+        // ======================================================== //
+        // Element as a modular sum of squares
+        // ======================================================== //
+        void sumofsquaresmodprime(Rep&, Rep&, const Rep&, const Rep&) const;
 
         // ======================================================== //
         // Modular Square root sub-functions

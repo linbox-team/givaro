@@ -307,7 +307,13 @@ namespace Givaro {
 
         if (a<0 && r) {
             subin(q,(int64_t)1) ;
-            r = b + r;
+                // @fixme
+                // GMP, as of 6.2.1, does not respect n=qd+r
+                // indeed r is uint but if n<0, r cannot be of the same sign
+                // instead if n<0, tdiv_q_ui computes q1,r1 
+                // as in (-n)=d q1+r1 and returns -q1,r1
+                // Thus we have to correct this with (-q1-1),d-r1
+            r = b - r;
         }
 
         return q;

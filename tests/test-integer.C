@@ -72,6 +72,47 @@ int test_axpy_unit(const Integer & a, const Integer & b, const Integer & x)
 
 }
 
+int test_divmod()
+{
+    Integer n, d, q, r;
+    uint64_t ud, ur;
+    int64_t sd, sr;
+
+    int repet = _GIV_REPET ;
+    while (--repet) {
+        n = Integer::random<false>();
+        d = Givaro::abs(Integer::random<false>());
+
+        // Integer
+        q = 0;
+        r = 0;
+        Integer::divmod(q, r, n, d);
+        if (n != q * d + r || r < 0 || r >= d) {
+            return -1;
+        }
+
+        // uint64_t
+        q = 0;
+        ur = 0;
+        ud = d;
+        Integer::divmod(q, ur, n, ud);
+        if (n != q * ud + ur || ur >= ud) {
+            return -2;
+        }
+
+        // int64_t
+        q = 0;
+        sr = 0;
+        sd = d;
+        Integer::divmod(q, sr, n, sd);
+        if (n != q * sd + sr || sr < 0 || sr >= sd) {
+            return -3;
+        }
+    }
+
+    return 0;
+}
+
 int test_axpy()
 {
     Integer a,x,b ;
@@ -337,6 +378,10 @@ int main (int argc, char ** argv)
         return res ;
 
     res = test_mul();
+    if (res)
+        return res ;
+
+    res = test_divmod();
     if (res)
         return res ;
 

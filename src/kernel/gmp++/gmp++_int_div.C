@@ -250,64 +250,43 @@ namespace Givaro {
     // Euclidian division
     Integer& Integer::divmod(Integer& q, Integer& r, const Integer &a, const Integer &b)
     {
-        //  if (isZero(b)) {
-        //    GivMathDivZero("[Integer::divide]: division by zero");
-        //  }
-
         mpz_tdiv_qr( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
                      (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
-        // if (a>0)
-        // mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-        // (mpz_ptr)&(a.gmp_rep), b);
-        // else
-        // mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-        // (mpz_ptr)&(a.gmp_rep), b);
 
         if (a<0 && r) {
             subin(q,(int64_t)1) ;
-            r = b + r;
+            r += b;
         }
-
 
         return q;
     }
 
     Integer& Integer::divmod(Integer& q, int64_t & r, const Integer& a, const int64_t b)
     {
-        //  if (isZero(b)) {
-        //    GivMathDivZero("[Integer::divide]: division by zero");
-        //  }
-        // int32_t sgn = sign(b);
         r = (int64_t)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
                                     (mpz_srcptr)&(a.gmp_rep), std::abs(b));
-        // if (sgn <0) return negin(q);
-        // if (a>0)
-        // mpz_fdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-        // (mpz_ptr)&(a.gmp_rep), b);
-        // else
-        // mpz_cdiv_qr_ui( (mpz_ptr)&(q.gmp_rep),r
-        // (mpz_ptr)&(a.gmp_rep), b);
+
         if (a<0 && r) {
+            // :GMPUintTDiv
             subin(q,(int64_t)1) ;
-            r = b + r ;
+            r = b - r ;
         }
-
-
 
         return q;
     }
 
     Integer& Integer::divmod(Integer& q, uint64_t & r, const Integer& a, const uint64_t b)
     {
-        //  if (isZero(b)) {
-        //    GivMathDivZero("[Integer::divide]: division by zero");
-        //  }
         r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
                            (mpz_srcptr)&(a.gmp_rep), b);
 
         if (a<0 && r) {
             subin(q,(int64_t)1) ;
-            r = b + r;
+            // :GMPUintTDiv The GMP documentation specifies that:
+            // 'For the ui variants (...) tdiv and cdiv the remainder can be negative,
+            // so for those the return value is the absolute value of the remainder.'
+            // Thus we have to correct this with (-q1-1),d-r1
+            r = b - r;
         }
 
         return q;

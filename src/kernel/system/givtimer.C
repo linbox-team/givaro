@@ -38,7 +38,11 @@ namespace Givaro {
         return clock() ;
 #else
         struct timespec ts;
+#ifdef TIME_UTC
         timespec_get(&ts, TIME_UTC);
+#else
+        clock_gettime(CLOCK_REALTIME, &ts);
+#endif
         return static_cast<int64_t>(ts.tv_nsec);
 #endif
     }

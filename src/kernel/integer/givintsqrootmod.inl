@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 Jun 19 18:17:27 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <29 Jun 19 08:41:45 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -438,38 +438,25 @@ namespace Givaro {
         GIVARO_STATE(Rep t);
         GIVARO_REQUIRE(this->isOne(this->mod(t,p,4U)),"prime = 1 mod 4");
 
-//         std::cerr << "p:" << p << std::endl;
         Integer x,s,q,r(p+this->mOne);
         sqrootmodprime(x,r,p);
 
-//         std::cerr << "x:" << x << std::endl;
         Givaro::sqrt(s,p);
         r=p;
         b=x>(p>>1)?p-x:x;
-//         std::cerr << "r:" << r << std::endl;
-//         std::cerr << "b:" << b << std::endl;
 
-        Integer::divmod(x,a,r,b);
-//         std::cerr << "x:" << x << std::endl;
-//         std::cerr << "a:" << a << std::endl;
+        Integer::mod(a,r,b);
         if (! this->isOne(a)) {
             while(a>s) {
                 r=b;
                 b=a;
-                Integer::divmod(x,a,r,b);
-//                 std::cerr << "Lr:" << r << std::endl;
-//                 std::cerr << "Lb:" << b << std::endl;
-//                 std::cerr << "Lx:" << x << std::endl;
-//                 std::cerr << "La:" << a << std::endl;
+                Integer::mod(a,r,b);
             }
 
             r=b;
             b=a;
-            Integer::divmod(x,a,r,b);
-
-//             std::cerr << "a:" << a << std::endl;
-//             std::cerr << "b:" << b << std::endl;
-        }
+            Integer::mod(a,r,b);
+        } // otherwise x^2+1 = p is already correct in a and b
 
         GIVARO_ENSURE(this->isZero(a*a+b*b-p),"prime as sum of squares");
     }
@@ -484,9 +471,6 @@ namespace Givaro {
     (Rep& a, Rep& b, const Rep& k, const Rep& p) const {
         GIVARO_REQUIRE(this->isprime(p),"isprime");
 
-//         std::cerr << "k: " << k << std::endl;
-//         std::cerr << "p: " << p << std::endl;
-
         Integer r(k);
         Integer::modin(r,p);
         if (this->isZero(r)) {
@@ -494,7 +478,7 @@ namespace Givaro {
             b=this->zero;
         } else {
             Integer t(1),h(p);
-            h <<= 2U;// h is 4p
+            h <<= 2U;	// h is 4p
 
             this->mod(r,p,4U);
             if (r == 1U)
@@ -503,19 +487,20 @@ namespace Givaro {
                 r += (k%4);
             r *= p;
             r += k;
-
                 // now r is k mod p and 1 mod 4
+
             while(! this->isprime(r)) {
                 r += h;
-            }
-//             std::cerr << "r: " << r << std::endl;
-                // r is prime and still k mod p and 1 mod 4
+            }   // r is prime and still k mod p and 1 mod 4
 
             Brillhart(a,b,r);
-
-//             std::cerr << "a: " << a << std::endl;
-//             std::cerr << "b: " << b << std::endl;
         }
+
+        this->modin(a,p);
+        this->modin(b,p);
+        Integer half(p>>1);
+        if (a>half) this->sub(a,p,a);
+        if (b>half) this->sub(b,p,b);
 
         GIVARO_ENSURE(this->isZero( (a*a+b*b-k)%p ),"modular sum of squares");
     }

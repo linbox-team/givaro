@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 Jun 19 18:16:51 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <29 Jun 19 08:40:29 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // =================================================================== //
 
@@ -34,7 +34,7 @@ bool TestSoSmP(const Integer& k, const Integer& p) {
     return ISM.isZero( (a*a+b*b-k) % p );
 }
 
-    
+
 
 int main(int argc, char** argv) {
     int nbtests = (argc>1?atoi(argv[1]):1000);
@@ -45,12 +45,11 @@ int main(int argc, char** argv) {
 #endif
     int failures = 0;
 
-        
-    //     std::cerr << "Seed: " << seed << std::endl;
+
     Integer::seeding (seed);
     Integer a,n;
 
-    if (! TestBrillart(Integer(10006721))) ++failures;    
+    if (! TestBrillart(Integer(10006721))) ++failures;
 
     for(int i=0; i<nbtests; ++i) {
 
@@ -58,11 +57,17 @@ int main(int argc, char** argv) {
         do {
             ISM.nextprimein(n);
         } while( ISM.mod(a,n,4U) != 1);
-        
+
         if (! TestBrillart(n)) ++failures;
     }
-    
+
     if (failures > 0) std::cerr << "Brillhart: " << failures << " failures." << std::endl;
+
+    Integer k(ISM.mOne),b; n=23;
+    ISM.sumofsquaresmodprime(a,b,k,n);
+    if (!ISM.isZero( (a*a+b*b-k) % n )) ++failures;
+    else
+        std::clog << a << '*' << a << '+' << b << '*' << b << '=' << k << '%' << n << std::endl;
 
     for(int i=0; i<nbtests; ++i) {
 
@@ -72,7 +77,7 @@ int main(int argc, char** argv) {
         ISM.modin(a,n);
         if (! TestSoSmP(a,n)) ++failures;
     }
-    
+
     if (failures > 0) std::cerr << "Modular SoS: " << failures << " failures." << std::endl;
 
     return failures;

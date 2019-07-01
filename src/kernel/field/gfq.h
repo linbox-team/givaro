@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <24 Jun 19 12:13:01 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <01 Jul 19 09:20:08 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -22,6 +22,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givranditer.h"
 #include "givaro/givpoly1factor.h"
+#include "givaro/modular-implem.h"
 
 #include <string>
 #include <vector>

@@ -45,10 +45,10 @@ namespace Givaro {
         const Element mOne;
         const Element zero;
 
-        uint64_t characteristic() const { return 0U; }
-        Integer& characteristic(Integer& p) const { return p=characteristic();}
-        uint64_t cardinality() const { return 0U; }
-        Integer& cardinality(Integer& p) const { return p=cardinality();}
+        Residu_t characteristic() const { return 0; }
+        Residu_t cardinality() const { return 0; }
+        template<typename T> T& cardinality(T& c) const { return c = static_cast<T>(0); }
+        template<typename T> T& characteristic(T& c) const { return c = static_cast<T>(0); }
 
         // -- assignement
         Rep& init( Rep& a ) const{ return a; }

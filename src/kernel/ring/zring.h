@@ -64,10 +64,10 @@ namespace Givaro
         template<class T> UnparametricZRing(const T&) {}
 
         //----- Access
-        Residu_t residu() const { return zero; }
-        Residu_t size() const { return zero; }
-        Residu_t cardinality() const { return zero; }
-        Residu_t characteristic() const { return zero; }
+        Residu_t residu() const { return 0; }
+        Residu_t size() const { return 0; }
+        Residu_t cardinality() const { return 0; }
+        Residu_t characteristic() const { return 0; }
         template<typename T> T& cardinality(T& c) const { return c = static_cast<T>(0); }
         template<typename T> T& characteristic(T& c) const { return c = static_cast<T>(0); }
 

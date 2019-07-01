@@ -144,12 +144,18 @@ int main(int argc, char ** argv)
     TEST_LAST_PRIME(Montgomery<int32_t>, MZpmax);
     TEST_LAST_PRIME(Montgomery<RecInt::ruint128>, MRUpmax);
 
+
     //-------------------------//
     //----- Galois fields -----//
 
     TEST_SPECIFIC(GFqDom<int32_t>, GF13, 13);
     TEST_SPECIFIC(GFqDom<int32_t>, GFpmax, 65521U);
-    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpmax, 4194301);
+    TEST_SPECIFIC(GFqDom<int64_t>, GFLLplarge, 4194301);
+
+    TEST_LAST_PRIME(GFqDom<int32_t>, GFpmmax);
+        // int64_t maxCardinality would require 96GB 
+        // and about 960 CPU seconds ...
+    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpXXL, 67108859); // already 1.5 GB
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial

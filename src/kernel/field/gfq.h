@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <14 May 19 11:35:28 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <01 Jul 19 09:20:08 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -22,6 +22,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givranditer.h"
 #include "givaro/givpoly1factor.h"
+#include "givaro/modular-implem.h"
 
 #include <string>
 #include <vector>
@@ -159,8 +160,17 @@ public:
     uint64_t& characteristic(uint64_t& p) const {
         return p=(uint64_t)_characteristic;
     }
-    
+
+        // -- maxCardinality
+        // -- mostly the limit is store 3 p-large tables
+        // -- with int64_t it means 96 GB of RAM 
+        // -- and about 960 CPU seconds to populate them
+    __GIVARO_CONDITIONAL_TEMPLATE(S = TT, (sizeof(S) == sizeof(int32_t)))
     static inline Residu_t maxCardinality() { return 65536u; }
+    __GIVARO_CONDITIONAL_TEMPLATE(S = TT, (sizeof(S) == sizeof(int64_t)))
+    static inline Residu_t maxCardinality() { return UINT64_C(4294967296); }
+
+
     static inline Residu_t minCardinality() { return 2; }
 
     UTT cardinality() const;

@@ -153,7 +153,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(GFqDom<int64_t>, GFLLplarge, 4194301);
 
     TEST_LAST_PRIME(GFqDom<int32_t>, GFpmmax);
-        // int64_t maxCardinality would require 96GB 
+        // int64_t maxCardinality would require 96GB
         // and about 960 CPU seconds ...
     TEST_SPECIFIC(GFqDom<int64_t>, GFLLpXXL, 67108859); // already 1.5 GB
 

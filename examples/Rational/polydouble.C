@@ -12,8 +12,8 @@
  */
 #include <iostream>
 #include <stdlib.h>
+#include <givaro/qfield.h>
 #include <givaro/givpoly1.h>
-#include <givaro/givrational.h>
 #include <givaro/givtimer.h>
 #include <givaro/givinit.h>         // Givaro initialization
 #include <givaro/givprint.h>        // Givaro print utils

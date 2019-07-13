@@ -7,7 +7,11 @@
 
 #include <iostream>
 #include "test-fieldarith.h"
-#include <givaro/givrational.h>
+#ifdef GIVARO_DEBUG
+#define GIVARO_RATRECON_DEBUG
+#endif
+
+#include <givaro/qfield.h>
 
 template<>
 bool invertible(const QField<Rational>& Q, const Rational& a)

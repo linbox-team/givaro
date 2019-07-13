@@ -7,7 +7,7 @@
 AM_CPPFLAGS=-I$(top_builddir)  ${GMP_VERSION}
 
 AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/memory  -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel -I$(top_builddir)/src/kernel/ring -I$(top_srcdir)/src/kernel
+AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/memory  -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/rational -I$(top_srcdir)/src/kernel
 
 pkginclude_HEADERS=         \
 	givinteger.h		    \
@@ -31,6 +31,6 @@ noinst_LTLIBRARIES=libgivinteger.la
 
 EXTRA_DIST=integer.doxy
 
-libgivinteger_la_SOURCES=givintprime.C
+libgivinteger_la_SOURCES=givinteger.C givintprime.C
 
 #EXTRA_DIST= integer.doxy

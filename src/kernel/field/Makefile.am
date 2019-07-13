@@ -11,6 +11,7 @@ AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel 
 
 pkginclude_HEADERS=     \
 	StaticElement.h		\
+	qfield.h               \
 	gf2.h               \
 	gfq.h		    	\
 	gfqext.h		    \

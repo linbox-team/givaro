@@ -41,7 +41,11 @@ namespace Givaro {
 #ifdef TIME_UTC
         timespec_get(&ts, TIME_UTC);
 #else
+# ifdef CLOCK_MONOTONIC
+        clock_gettime(CLOCK_MONOTONIC, &ts);
+# else
         clock_gettime(CLOCK_REALTIME, &ts);
+# endif
 #endif
         return static_cast<int64_t>(ts.tv_nsec);
 #endif

@@ -34,9 +34,6 @@ namespace Givaro {
     // Return a value to initialize random generator
     int64_t BaseTimer::seed()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        return clock() ;
-#else
         struct timespec ts;
 #ifdef TIME_UTC
         timespec_get(&ts, TIME_UTC);
@@ -48,7 +45,6 @@ namespace Givaro {
 # endif
 #endif
         return static_cast<int64_t>(ts.tv_nsec);
-#endif
     }
 
     // Output the value of the timer :

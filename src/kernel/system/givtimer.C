@@ -15,16 +15,11 @@
 #include <cmath>
 #include "givaro/givconfig.h"
 
-#if (GIVARO_SYS == _SYS_MACOS)
-#include <time.h> // for use of clock()
-#define USER_TIME ((double) ( (double)clock()/ (double)CLOCKS_PER_SEC))
-#else
 extern "C" {
 # include <sys/time.h>
 # include <sys/resource.h>
     //  int getrusage (int, struct rusage*) ;
 }
-#endif
 
 #include <iostream>
 #include "givaro/givtimer.h"
@@ -34,13 +29,17 @@ namespace Givaro {
     // Return a value to initialize random generator
     int64_t BaseTimer::seed()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        return clock() ;
-#else
         struct timespec ts;
+#ifdef TIME_UTC
         timespec_get(&ts, TIME_UTC);
-        return static_cast<int64_t>(ts.tv_nsec);
+#else
+# ifdef CLOCK_MONOTONIC
+        clock_gettime(CLOCK_MONOTONIC, &ts);
+# else
+        clock_gettime(CLOCK_REALTIME, &ts);
+# endif
 #endif
+        return static_cast<int64_t>(ts.tv_nsec);
     }
 
     // Output the value of the timer :
@@ -91,88 +90,63 @@ namespace Givaro {
     // Start timer
     void RealTimer::start()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        _t = _start_t = USER_TIME ;
-#else
         struct timeval tmp2 ;
         gettimeofday (&tmp2, 0) ;
 
         // real time
         _t = _start_t = (double) tmp2.tv_sec +
         ((double) tmp2.tv_usec)/ (double)BaseTimer::MSPSEC ;
-#endif
     }
 
 
     // Stop timer
     void RealTimer::stop()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        _t = USER_TIME - _start_t ;
-#else
         struct timeval tmp2 ;
         gettimeofday (&tmp2, 0) ;
 
         // real time
         _t = (double) tmp2.tv_sec +
         ((double) tmp2.tv_usec)/ (double)BaseTimer::MSPSEC - _start_t ;
-#endif
     }
 
     // Start timer
     void UserTimer::start()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        _t = _start_t = USER_TIME ;
-#else
         struct rusage  tmp1 ;  // to getrusage (sys+user times)
         getrusage (RUSAGE_SELF, &tmp1) ;
         // user time
         _t = _start_t = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec)/ (double)MSPSEC ;
-
-#endif
     }
 
     // Stop timer
     void UserTimer::stop()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        _t = USER_TIME - _start_t;
-#else
         struct rusage  tmp1 ;  // to getrusage (sys+user times)
         getrusage (RUSAGE_SELF, &tmp1) ;
         // user time
         _t = (double) tmp1.ru_utime.tv_sec + ((double) tmp1.ru_utime.tv_usec) / (double) MSPSEC - _start_t;
-#endif
     }
 
 
     // Start timer
     void SysTimer::start()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        _t = _start_t = USER_TIME ; //! @bug here.
-#else
         struct rusage  tmp1 ;  // to getrusage (sys+user times)
         getrusage (RUSAGE_SELF, &tmp1) ;
         // user time
         _t = _start_t = (double) tmp1.ru_stime.tv_sec + ((double) tmp1.ru_stime.tv_usec)/ (double)MSPSEC ;
-#endif
     }
 
 
     // Stop timer
     void SysTimer::stop()
     {
-#if (GIVARO_SYS == _SYS_MACOS)
-        _t = USER_TIME - _start_t ;
-#else
         struct rusage  tmp1 ;  // to getrusage (sys+user times)
         getrusage (RUSAGE_SELF, &tmp1) ;
         // user time
         _t = (double) tmp1.ru_stime.tv_sec +
         ((double) tmp1.ru_stime.tv_usec)/ (double)MSPSEC - _start_t ;
-#endif
     }
 
 

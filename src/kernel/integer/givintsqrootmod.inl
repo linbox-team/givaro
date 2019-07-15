@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <29 Jun 19 08:41:45 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Jul 19 10:33:25 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -466,6 +466,8 @@ namespace Givaro {
 // =================================================================== //
 // Modular decomposition as a sum of squares
 // =================================================================== //
+
+        // Fast under ERH
     template <class MyRandIter> inline void
     IntSqrtModDom<MyRandIter>::sumofsquaresmodprime
     (Rep& a, Rep& b, const Rep& k, const Rep& p) const {
@@ -477,6 +479,50 @@ namespace Givaro {
             a=this->zero;
             b=this->zero;
         } else {
+            if (this->isOne(legendre(r,p))) {
+                b=this->zero;
+                this->sqrootmodprime(a,r,p);
+            } else {
+                Integer lsnqr(2);
+                    // Under ERH, least quad. non-residue  should be lower than 3/2log^2(p)
+                    // [Th. 6.25, Primality Tests on Commutator Curves,
+                    //  U. Tubingen PhD 2001, Sebastian Wedeniwski]
+                for( ; legendre(lsnqr,p) != -1; ++lsnqr);
+
+                this->sqrootmodprime(b,lsnqr-1,p); // lsnqr = 1+b^2
+
+                Integer il; Givaro::inv(il, lsnqr, p);
+                r *= il;
+                r %= p; // r/lsnqr mod p
+
+                this->sqrootmodprime(a,r,p); // k/lsnqr = a^2
+
+                    // Now k = a^2(1+b^2)
+                b *= a;
+
+            }
+        }
+
+        GIVARO_ENSURE(this->isZero( (a*a+b*b-k)%p ),"modular sum of squares");
+    }
+
+        // Unconditonal
+    template <class MyRandIter> inline void
+    IntSqrtModDom<MyRandIter>::sumofsquaresmodprimeNoERH
+    (Rep& a, Rep& b, const Rep& k, const Rep& p) const {
+        GIVARO_REQUIRE(this->isprime(p),"isprime");
+
+        Integer r(k);
+        Integer::modin(r,p);
+        if (this->isZero(r)) {
+            a=this->zero;
+            b=this->zero;
+        } else {
+            if (this->isOne(legendre(r,p))) {
+                b=this->zero;
+                sqrootmodprime(a,r,p);
+            } else {
+
             Integer t(1),h(p);
             h <<= 2U;	// h is 4p
 
@@ -501,6 +547,7 @@ namespace Givaro {
         Integer half(p>>1);
         if (a>half) this->sub(a,p,a);
         if (b>half) this->sub(b,p,b);
+        }
 
         GIVARO_ENSURE(this->isZero( (a*a+b*b-k)%p ),"modular sum of squares");
     }

@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <29 Jun 19 08:40:29 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Jul 19 10:30:33 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // =================================================================== //
 
@@ -28,30 +28,45 @@ bool TestBrillart(const Integer& p) {
     return ISM.areEqual(a*a+b*b,p);
 }
 
+Givaro::Timer sosb, sosl;
+
 bool TestSoSmP(const Integer& k, const Integer& p) {
+    bool pass(true);
+
     Integer a,b;
+    Givaro::Timer chrono; chrono.start();
+    ISM.sumofsquaresmodprimeNoERH(a,b,k,p);
+    chrono.stop();
+    sosb += chrono;
+    pass &= ISM.isZero( (a*a+b*b-k) % p );
+
+    chrono.start();
     ISM.sumofsquaresmodprime(a,b,k,p);
-    return ISM.isZero( (a*a+b*b-k) % p );
+    chrono.stop();
+    sosl += chrono;
+    pass &= ISM.isZero( (a*a+b*b-k) % p );
+
+    return pass;
 }
 
-
-
 int main(int argc, char** argv) {
-    int nbtests = (argc>1?atoi(argv[1]):1000);
-    int sizes = (argc>2?atoi(argv[2]):100);
-    unsigned long seed = (unsigned long)(argc>3?(unsigned long)atoi(argv[3]):(unsigned long)BaseTimer::seed ());
+    uint64_t nbtests = (argc>1?atoi(argv[1]):1000);
+    uint64_t sizes = (argc>2?atoi(argv[2]):100);
+    uint64_t seed = (uint64_t)(argc>3?(uint64_t)atoi(argv[3]):(uint64_t)BaseTimer::seed ());
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
-    int failures = 0;
+    uint64_t failures = 0;
 
+    sosb.clear();
+    sosl.clear();
 
     Integer::seeding (seed);
     Integer a,n;
 
     if (! TestBrillart(Integer(10006721))) ++failures;
 
-    for(int i=0; i<nbtests; ++i) {
+    for(uint64_t i=0; i<nbtests; ++i) {
 
         Integer::random(n,sizes);
         do {
@@ -64,12 +79,9 @@ int main(int argc, char** argv) {
     if (failures > 0) std::cerr << "Brillhart: " << failures << " failures." << std::endl;
 
     Integer k(ISM.mOne),b; n=23;
-    ISM.sumofsquaresmodprime(a,b,k,n);
-    if (!ISM.isZero( (a*a+b*b-k) % n )) ++failures;
-    else
-        std::clog << a << '*' << a << '+' << b << '*' << b << '=' << k << '%' << n << std::endl;
+    if (! TestSoSmP(k,n) ) ++failures;
 
-    for(int i=0; i<nbtests; ++i) {
+    for(uint64_t i=0; i<nbtests; ++i) {
 
         Integer::random(a,sizes);
         Integer::random(n,sizes);
@@ -79,6 +91,11 @@ int main(int argc, char** argv) {
     }
 
     if (failures > 0) std::cerr << "Modular SoS: " << failures << " failures." << std::endl;
+
+
+    std::clog << "SOSB: " << sosb << std::endl;
+    std::clog << "SOSL: " << sosl << std::endl;
+
 
     return failures;
 }

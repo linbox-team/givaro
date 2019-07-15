@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 Jun 19 18:19:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <15 Jul 19 10:27:08 Jean-Guillaume.Dumas@imag.fr>
 // Author : Yanis Linge adn Jean-Guillaume Dumas
 // ============================================================= //
 
@@ -53,7 +53,10 @@ namespace Givaro {
         // ======================================================== //
         // Element as a modular sum of squares
         // ======================================================== //
+			// Fast under ERH
         void sumofsquaresmodprime(Rep&, Rep&, const Rep&, const Rep&) const;
+            // Unconditonal
+        void sumofsquaresmodprimeNoERH(Rep&, Rep&, const Rep&, const Rep&) const;
 
         // ======================================================== //
         // Modular Square root sub-functions

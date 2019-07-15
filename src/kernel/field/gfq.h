@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <14 May 19 11:35:28 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <03 Jul 19 16:20:59 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -22,6 +22,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givranditer.h"
 #include "givaro/givpoly1factor.h"
+#include "givaro/modular-implem.h"
 
 #include <string>
 #include <vector>
@@ -120,7 +121,7 @@ public:
               _plus1(F._plus1),
               _dcharacteristic(F._dcharacteristic)
         {}
-    
+
 	// Allows to choose the randomization
 	// and therefore the field generator
 	//     template<class RandIter >
@@ -159,8 +160,17 @@ public:
     uint64_t& characteristic(uint64_t& p) const {
         return p=(uint64_t)_characteristic;
     }
-    
+
+        // -- maxCardinality
+        // -- mostly the limit is store 3 p-large tables
+        // -- with int64_t it means 96 GB of RAM
+        // -- and about 960 CPU seconds to populate them
+    __GIVARO_CONDITIONAL_TEMPLATE(S = TT, (sizeof(S) == sizeof(int32_t)))
     static inline Residu_t maxCardinality() { return 65536u; }
+    __GIVARO_CONDITIONAL_TEMPLATE(S = TT, (sizeof(S) == sizeof(int64_t)))
+    static inline Residu_t maxCardinality() { return UINT64_C(4294967296); }
+
+
     static inline Residu_t minCardinality() { return 2; }
 
     UTT cardinality() const;
@@ -173,15 +183,15 @@ public:
     UTT generator() const;
 	// p-adic representation of the used irreducible polynomial
     UTT irreducible() const;
-    
+
 	// the internal representation of the polynomial X
 	// where the indeterminate is replaced by the characteristic
 	// This has no meaning if exponent is 1
     Rep sage_generator() const;
     Rep indeterminate() const;
     Rep& indeterminate(Rep&) const;
-    
- 	// Initialization of Elements
+
+	// Initialization of Elements
     Rep& init(Rep& r) const { return r=zero;}
     Rep& init( Rep&, const int32_t) const ;
     Rep& init( Rep&, const uint32_t) const ;
@@ -191,23 +201,23 @@ public:
     Rep& init( Rep&, const float) const ;
     Rep& init( Rep&, const double) const ;
     Rep& init( Rep& a, std::istream& s ) const { return read(a,s); }
-    
 
- 	// Reduction of Elements
+
+	// Reduction of Elements
     Rep& reduce(Rep& r) const;
     Rep& reduce(Rep& r, const Rep e) const;
-    
-    
+
+
 	// Initialization of a polynomial
     template<typename val_t, template<class,class> class Vector,template <class> class Alloc>
     Rep& init( Rep&, const Vector<val_t,Alloc<val_t> >&) const;
-    
-    
+
+
 	// -- Misc: r <- a mod p
     Rep& assign (Rep&, const Integer) const;
     Rep& assign (Rep&, const Rep) const;
     void assign ( const size_t sz, Array r, constArray a ) const;
-    
+
 	// --- IO methods for the Domain
     std::istream& read ( std::istream& s );
     std::ostream& write( std::ostream& s ) const;
@@ -215,17 +225,17 @@ public:
 	// --- IO methods for the Elements
     std::istream& read ( std::istream& s, Rep& a ) const;
     std::ostream& write( std::ostream& s, const Rep a ) const;
-    
+
 	// Conversions of the elements
     std::ostream& convert(std::ostream& s, const Rep a ) const { return write(s,a); }
     TT		convert(const Rep) const ;
-    int64_t& 	convert(int64_t&, const Rep) const ;
-    uint64_t& 	convert(uint64_t&, const Rep) const ;
-    int32_t& 	convert(int32_t&, const Rep) const ;
+    int64_t&	convert(int64_t&, const Rep) const ;
+    uint64_t&	convert(uint64_t&, const Rep) const ;
+    int32_t&	convert(int32_t&, const Rep) const ;
     float&	convert(float&, const Rep) const ;
-    double& 	convert(double&, const Rep) const ;
-    uint32_t& 	convert(uint32_t&, const Rep) const ;
-    Integer& 	convert(Integer&, const Rep) const ;
+    double&	convert(double&, const Rep) const ;
+    uint32_t&	convert(uint32_t&, const Rep) const ;
+    Integer&	convert(Integer&, const Rep) const ;
 
 	// Test operators
 	inline int operator== (const GFqDom<TT>& a) const;

@@ -7,7 +7,11 @@
 
 #include <iostream>
 
-#include <givaro/givrational.h>
+#ifdef GIVARO_DEBUG
+#define GIVARO_RATRECON_DEBUG
+#endif
+
+#include <givaro/qfield.h>
 using namespace Givaro;
 
 

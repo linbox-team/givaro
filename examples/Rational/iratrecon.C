@@ -12,9 +12,8 @@
  */
 #include <iostream>
 #include <stdlib.h>
-#include <givaro/givrational.h>
+#include <givaro/qfield.h>
 #include <givaro/givtimer.h>
-#include <givaro/givinit.h>         // Givaro initialization
 
 using namespace Givaro;
 

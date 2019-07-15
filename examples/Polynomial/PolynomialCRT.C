@@ -22,8 +22,7 @@
 #include <givaro/chineseremainder.h>    // Chinese Remainder of two elements
 #include <givaro/givrns.h>    // Chinese Remainder of an array of elements
 #include <givaro/givrandom.h>
-
-#include <givaro/givrational.h>
+#include <givaro/qfield.h>
 
 
 using namespace Givaro;

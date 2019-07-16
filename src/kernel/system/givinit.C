@@ -12,6 +12,8 @@
 //  - Initialisation method
 
 #include <iostream>
+#include <string>
+#include "givaro/givconfig.h"
 #include "givaro/givinit.h"
 #include "givaro/givmodule.h"
 #include "givaro/givaromm.h"
@@ -32,7 +34,7 @@ namespace Givaro {
         GivaroMain::DisplayVersion( std::cout ) ;
     }
 
-    void GivaroMain::DisplayVersion(std::ostream& o)
+    std::ostream& GivaroMain::DisplayVersion(std::ostream& o)
     {
 
         o<<'\n' ;
@@ -42,16 +44,18 @@ namespace Givaro {
         o<<"     /      \\/\\__/\\    All rights reserved, see copyright file.\n" ;
         o<<"    /                \\ " ;
         o<<"   /     Givaro-1.0   \\  Authors:\n" ;
-        o<<"  /    (c) 1987-1998   \\    Th. Gautier, J.L. Roch, M.Samama, G.Villard\n" ;
-        o<<" /       Givaro-3.0     \\  co-Authors:\n" ;
-        o<<"/      (c) 1998-2002     \\    J-G. Dumas, P. Giorgi\n" ;
+        o<<"  /    (c) 1987-1998   \\    Th. Gautier, J.L. Roch, G.Villard\n" ;
+        o<<" /       Givaro-4.0     \\  main co-Authors:\n" ;
+        o<<"/      (c) 1998-2019     \\   J-G. Dumas, P. Giorgi, C. Pernet\n" ;
         o<<"--   -   -  -  -  --\n" ;
-        o<< "version: " << GivaroMain::Version() << std::endl;
+        return o<< "version: " << GivaroMain::Version() << std::endl;
     }
 
-    const char* GivaroMain::Version()
+    const std::string GivaroMain::Version()
     {
-        static const char* Givaro_version ="$Revision: 1.2 $ for ""GIVAROSYS";
+        std::string Givaro_version("$Revision: ");
+        Givaro_version += std::to_string(GIVARO_VERSION);
+        Givaro_version.append(" GIVAROSYS",10);
         return Givaro_version;
     }
 

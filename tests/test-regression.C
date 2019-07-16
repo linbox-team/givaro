@@ -11,6 +11,7 @@
 #define GIVARO_RATRECON_DEBUG
 #endif
 
+#include <givaro/givinit.h>
 #include <givaro/qfield.h>
 using namespace Givaro;
 
@@ -69,7 +70,8 @@ int main(int argc, char ** argv)
 
     const int seed = int (argc>1?atoi(argv[1]):BaseTimer::seed());
 #ifdef GIVARO_DEBUG
-    std::cerr << "seed: " << seed << std::endl;
+    GivaroMain::DisplayVersion(std::clog);
+    std::clog << "seed: " << seed << std::endl;
 #endif
     Integer::seeding((uint64_t)seed);
 

@@ -16,6 +16,7 @@
 #define __GIVARO_init_H
 #include "givaro/givconfig.h"
 #include <iostream>
+#include <string>
 
 //! Namespace in which the whole Givaro library resides.
 namespace Givaro {
@@ -37,10 +38,10 @@ namespace Givaro {
         static void End() ;
 
         //- Return the version of the library
-        static const char* Version()  ;
+        static const std::string Version()  ;
 
         // Display the prompt of Givaro
-        static void DisplayVersion( std::ostream& ) ;
+        static std::ostream& DisplayVersion( std::ostream& ) ;
         static void DisplayVersion();
     } ;
 

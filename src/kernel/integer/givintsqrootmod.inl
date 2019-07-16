@@ -499,7 +499,7 @@ namespace Givaro {
 
                     // Now k = a^2(1+b^2)
                 b *= a;
-
+                b %= p;
             }
         }
 

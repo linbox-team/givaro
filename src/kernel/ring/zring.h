@@ -1,5 +1,5 @@
 // ==========================================================================
-// Copyright(c)'1994-2015 by The Givaro group
+// Copyright(c)'1994-2019 by The Givaro group
 // This file is part of Givaro.
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
@@ -8,6 +8,7 @@
 //          Bradford Hovinen <hovinen@cis.udel.edu>
 //          Clement Pernet <clement.pernet@gmail.com> (inserted into FFLAS-FFPACK)
 //          A. Breust (taken from FFLAS-FFPACK)
+//          J-G. Dumas (merged with InetegerDom)
 // ==========================================================================
 
 

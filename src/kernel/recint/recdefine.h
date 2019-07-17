@@ -1,6 +1,6 @@
 /* consig/define.h - Debug and useful defines
 
-   Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Grenoble Alpes
 Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 

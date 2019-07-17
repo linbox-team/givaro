@@ -1,6 +1,6 @@
 /* rmint/arith.h - Arithmetic functions for rmint
 
-   Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Grenoble Alpes
 Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Christophe CHABOT (christophechabotcc@gmail.com 2011)

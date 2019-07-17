@@ -485,7 +485,7 @@ namespace Givaro {
             } else {
                 Integer lsnqr(2);
                     // Under ERH, least quad. non-residue  should be lower than 3/2log^2(p)
-                    // [Th. 6.25, Primality Tests on Commutator Curves,
+                    // [Th. 6.35, Primality Tests on Commutator Curves,
                     //  U. Tubingen PhD 2001, Sebastian Wedeniwski]
                 for( ; legendre(lsnqr,p) != -1; ++lsnqr);
 

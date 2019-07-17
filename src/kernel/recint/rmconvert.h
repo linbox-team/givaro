@@ -1,6 +1,6 @@
 /* misc/convert_gmp.h - Conversion functions between r(u/m)int and mpz_class from GMP
 
-   Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Grenoble Alpes
 Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Christophe CHABOT (christophechabotcc@gmail.com 2011)

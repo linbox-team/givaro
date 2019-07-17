@@ -1,6 +1,6 @@
 /* rmint/rmint.h - Class definition of rmint<K,MG_INACTIVE> from RecInt library
 
-   Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Grenoble Alpes
 Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Christophe CHABOT (christophechabotcc@gmail.com 2011)

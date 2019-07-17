@@ -1,6 +1,6 @@
 /* ruint/fiddling.h - Bits manipulation for ruint
 
-   Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Grenoble Alpes
 Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS

@@ -1,6 +1,6 @@
 /* rint/fiddling.h - Bits manipulation for rint
 
-   Copyright Université Joseph Fourier - Grenoble
+   Copyright Université Grenoble Alpes
 Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS

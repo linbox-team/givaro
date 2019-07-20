@@ -137,7 +137,7 @@ namespace Givaro
 
         // ----- Convert and reduce
         template<typename T> T& convert(T& r, const Element& a) const
-        { Element tmp; return r = Caster<T>(mg_reduc(tmp, a)); }
+        { Element tmp; return Caster<T>(r, mg_reduc(tmp, a)); }
 
         Element& reduce (Element& x, const Element& y) const
         { x = y % _p; return x; }

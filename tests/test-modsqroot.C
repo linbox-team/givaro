@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <12 Jun 15 16:37:25 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Jun 19 18:15:50 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // =================================================================== //
 
@@ -44,7 +44,12 @@ int main(int argc, char** argv) {
     int nbtests = (argc>1?atoi(argv[1]):100);
     int sizes = (argc>2?atoi(argv[2]):10);
     unsigned long seed = (unsigned long)(argc>3?(unsigned long)atoi(argv[3]):(unsigned long)BaseTimer::seed ());
+#ifdef GIVARO_DEBUG
+    std::cerr << "seed: " << seed << std::endl;
+#endif
     int failures = 0;
+
+
     //     std::cerr << "Seed: " << seed << std::endl;
     Integer::seeding (seed);
     Integer a,n;
@@ -69,7 +74,7 @@ int main(int argc, char** argv) {
 
     }
 
-    if (failures > 0) std::cerr << "test-modsqroot: " << failures << " failures." << std::endl;
+    if (failures > 0) std::cerr << "modsqroot: " << failures << " failures." << std::endl;
 
     return failures;
 }

@@ -31,6 +31,7 @@ BASIC_TESTS =               \
 		test-ringarith      \
 		test-mod            \
 		test-modsqroot      \
+		test-brillhart      \
 		test-trunc          \
 		test-poly           \
 		test-crt            \
@@ -108,6 +109,7 @@ test_ringarith_SOURCES= test-ringarith.C
 test_modularmulprecomp_SOURCES= test-modularmulprecomp.C
 test_mod_SOURCES      = test-mod.C
 test_modsqroot_SOURCES= test-modsqroot.C
+test_brillhart_SOURCES= test-brillhart.C
 test_trunc_SOURCES    = test-trunc.C
 test_poly_SOURCES    = test-poly.C
 test_crt_SOURCES      = test-crt.C

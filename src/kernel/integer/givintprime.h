@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <03 Aug 15 11:40:49 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 Jun 19 16:50:14 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 
@@ -107,6 +107,7 @@ namespace Givaro {
         {
             return Protected::probab_prime(n,r);
         }
+
 
     private:
         static int IP[LOGMAX+5];  // -- table for Tabule

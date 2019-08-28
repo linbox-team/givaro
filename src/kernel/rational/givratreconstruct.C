@@ -9,7 +9,6 @@
 // $Id: givratreconstruct.C,v 1.4 2010-04-12 15:54:39 jgdumas Exp $
 // ==========================================================================
 // Description:
-
 #include "givaro/givrational.h"
 #include <iostream>
 
@@ -52,7 +51,6 @@ namespace Givaro {
             r1 = r0;  	// r1 <-- r0
             r0 = u;	    // r0 <-- r1
             Integer::maxpyin(r1,u,q);
-            if (r1 == 0) break;
 
             u = t1;
             t1 = t0;  	// r1 <-- r0
@@ -68,6 +66,28 @@ namespace Givaro {
         } else {
             num = r1;
             den = t1;
+        }
+
+        if (num == 0) {
+            if (!recurs)
+                std::cerr
+                    << "*** Error *** There exists no rational reconstruction of "
+                    << f
+                    << " modulo "
+                    << m
+                    << " with |numerator| < "
+                    << k
+                    << std::endl
+                    << "*** Error *** But "
+                    << num
+                    << " = "
+                    << den
+                    << " * "
+                    << f
+                    << " modulo "
+                    << m
+                    << std::endl;
+            return false;
         }
 
         if (forcereduce) {

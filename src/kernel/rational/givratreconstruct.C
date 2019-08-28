@@ -176,7 +176,7 @@ namespace Givaro {
      bool recurs ) {
         bool res = this->ratrecon(f,m,k,Rational::flags,recurs);
         if (recurs)
-            for( Integer newk = k + 1; (!res) && (newk<f) ; ++newk)
+            for( Integer newk = k + 1; (!res) && (newk<f) ; newk<<=1)
                 res = this->ratrecon(f,m,newk,Rational::flags,true);
     }
 
@@ -204,7 +204,7 @@ namespace Givaro {
         else {
             res = ratrecon(a,b,x,m,k, forcereduce, recursive);
             if (recursive)
-                for( Integer newk = k + 1; (!res) && (newk<f) ; ++newk)
+                for( Integer newk = k + 1; (!res) && (newk<f) ; newk<<=1)
                     res = ratrecon(a,b,x,m,newk,forcereduce, true);
         }
         return res;

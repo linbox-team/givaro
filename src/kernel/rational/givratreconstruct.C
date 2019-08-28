@@ -16,13 +16,13 @@ namespace Givaro {
 
 
     bool Rational::ratrecon(
-        Integer& num, Integer& den, const Integer& f, const Integer& m, 
+        Integer& num, Integer& den, const Integer& f, const Integer& m,
         const Integer& k, bool forcereduce, bool recurs)
     {
 
 #ifdef GIVARO_RATRECON_DEBUG
-        std::clog << "RatRecon : " << f << " mod " << m 
-                  << ", num bounded by: " << k 
+        std::clog << "RatRecon : " << f << " mod " << m
+                  << ", num bounded by: " << k
                   << ", reducedfraction: " << forcereduce
                   << ", expandboundwhenfailure: " << recurs
                   << std::endl;
@@ -48,12 +48,12 @@ namespace Givaro {
             q /= r1;    // r0/r1
 
             u = r1;
-            r1 = r0;  	// r1 <-- r0
+            r1 = r0;	// r1 <-- r0
             r0 = u;	    // r0 <-- r1
             Integer::maxpyin(r1,u,q);
 
             u = t1;
-            t1 = t0;  	// r1 <-- r0
+            t1 = t0;	// r1 <-- r0
             t0 = u;	    // r0 <-- r1
             Integer::maxpyin(t1,u,q);
         }
@@ -108,14 +108,14 @@ namespace Givaro {
                 q += r1;
                 q -= k;
                 q /= r1;
-                
+
 #ifdef GIVARO_RATRECON_DEBUG
             std::clog << "q:=" << q  << ';' << std::endl;
 #endif
-                
+
                 r0 -= q * r1;
                 t0 -= q * t1;
-                
+
                 if (t0 < 0) {
                     num = -r0;
                     den = -t0;
@@ -123,7 +123,7 @@ namespace Givaro {
                     num = r0;
                     den = t0;
                 }
-                
+
                 if (t0 > m/k) {
                     if (!recurs)
                         std::cerr
@@ -163,16 +163,16 @@ namespace Givaro {
 #endif
         return true;
     }
-    
+
     bool Rational::ratrecon
-    (const Integer& f, const Integer& m, const Integer& k, 
+    (const Integer& f, const Integer& m, const Integer& k,
      bool forcereduce, bool recurs) {
         return Rational::ratrecon(this->num, this->den,
                                   f,m,k,forcereduce,recurs);
-    }        
+    }
 
     Rational::Rational
-    (const Integer& f, const Integer& m, const Integer& k, 
+    (const Integer& f, const Integer& m, const Integer& k,
      bool recurs ) {
         bool res = this->ratrecon(f,m,k,Rational::flags,recurs);
         if (recurs)
@@ -196,7 +196,7 @@ namespace Givaro {
             if (x>m)
                 x %= m;
         }
-        
+
         if (x == 0) {
             a = 0;
             b = 1;
@@ -209,17 +209,17 @@ namespace Givaro {
         }
         return res;
     }
-    
+
     bool Rational::RationalReconstruction
     (Integer& a, Integer& b, const Integer& x, const Integer& m) {
         return ratrecon(a, b, x, m, Givaro::sqrt(m), true, true);
     }
     bool Rational::RationalReconstruction
-    (Integer& a, Integer& b, const Integer& x, const Integer& m, 
+    (Integer& a, Integer& b, const Integer& x, const Integer& m,
      const Integer& a_bound, const Integer& b_bound) {
         Integer bound = x/b_bound;
-        ratrecon(a,b,x,m, 
-                 (bound>a_bound?bound:a_bound), 
+        ratrecon(a,b,x,m,
+                 (bound>a_bound?bound:a_bound),
                  true, false);
         return b <= b_bound;
     }

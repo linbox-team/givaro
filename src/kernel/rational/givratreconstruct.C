@@ -69,25 +69,29 @@ namespace Givaro {
         }
 
         if (num == 0) {
-            if (!recurs)
-                std::cerr
-                    << "*** Error *** There exists no rational reconstruction of "
-                    << f
-                    << " modulo "
-                    << m
-                    << " with |numerator| < "
-                    << k
-                    << std::endl
-                    << "*** Error *** But "
-                    << num
-                    << " = "
-                    << den
-                    << " * "
-                    << f
-                    << " modulo "
-                    << m
-                    << std::endl;
-            return false;
+            if ((f % m) == 0) {
+                return true;
+            } else  {
+                if (!recurs)
+                    std::cerr
+                        << "*** Error *** There exists no rational reconstruction of "
+                        << f
+                        << " modulo "
+                        << m
+                        << " with |numerator| < "
+                        << k
+                        << std::endl
+                        << "*** Error *** But "
+                        << num
+                        << " = "
+                        << den
+                        << " * "
+                        << f
+                        << " modulo "
+                        << m
+                        << std::endl;
+                return false;
+            }
         }
 
         if (forcereduce) {

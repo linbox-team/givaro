@@ -71,7 +71,7 @@ namespace Givaro {
         if (num == 0) {
             if ((f % m) == 0) {
                 return true;
-            } else  {
+            } else {
                 if (!recurs)
                     std::cerr
                         << "*** Error *** There exists no rational reconstruction of "

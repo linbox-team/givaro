@@ -10,6 +10,8 @@
 #ifndef __GIVARO_MODULAR_EXTENDED_H
 #define __GIVARO_MODULAR_EXTENDED_H
 
+#include <type_traits>
+
 #include "givaro/givconfig.h"
 
 #include "givaro/givranditer.h"
@@ -37,6 +39,11 @@ namespace Givaro{
         using Compute_t = _Element;
         typedef uint64_t Residu_t;
         enum { size_rep = sizeof(Residu_t) };
+
+        using is_elt_integral = std::false_type;
+        static constexpr bool is_elt_integral_v = false;
+        using is_elt_floating_point = std::true_type;
+        static constexpr bool is_elt_floating_point_v = true;
 
     private:
         // Verkampt Split

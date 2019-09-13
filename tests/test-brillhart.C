@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <15 Jul 19 10:30:33 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <13 Sep 19 11:44:09 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // =================================================================== //
 
@@ -22,13 +22,16 @@
 using namespace Givaro;
 IntSqrtModDom<> ISM;
 
+Givaro::Timer sosb, sosr, sosl, brill;
+
 bool TestBrillart(const Integer& p) {
     Integer a,b;
+    Givaro::Timer chrono; chrono.start();
     ISM.Brillhart(a,b,p);
+    chrono.stop();
+    brill += chrono;
     return ISM.areEqual(a*a+b*b,p);
 }
-
-Givaro::Timer sosb, sosl;
 
 bool TestSoSmP(const Integer& k, const Integer& p) {
     bool pass(true);
@@ -41,9 +44,15 @@ bool TestSoSmP(const Integer& k, const Integer& p) {
     pass &= ISM.isZero( (a*a+b*b-k) % p );
 
     chrono.start();
-    ISM.sumofsquaresmodprime(a,b,k,p);
+    ISM.sumofsquaresmodprimeDeterministic(a,b,k,p);
     chrono.stop();
     sosl += chrono;
+    pass &= ISM.isZero( (a*a+b*b-k) % p );
+
+    chrono.start();
+    ISM.sumofsquaresmodprimeMonteCarlo(a,b,k,p);
+    chrono.stop();
+    sosr += chrono;
     pass &= ISM.isZero( (a*a+b*b-k) % p );
 
     return pass;
@@ -59,6 +68,7 @@ int main(int argc, char** argv) {
     uint64_t failures = 0;
 
     sosb.clear();
+    sosr.clear();
     sosl.clear();
 
     Integer::seeding (seed);
@@ -77,17 +87,23 @@ int main(int argc, char** argv) {
     }
 
     if (failures > 0) std::cerr << "Brillhart: " << failures << " failures." << std::endl;
+    std::clog << "BRILL: " << brill << std::endl;
 
     Integer k(ISM.mOne),b; n=23;
     if (! TestSoSmP(k,n) ) ++failures;
 
-    for(uint64_t i=0; i<nbtests; ++i) {
+    uint64_t nbp( uint64_t( Givaro::sqrt(nbtests) ) );
+    if (nbp<0) nbp = 1;
+    uint64_t nba( ceil(nbtests/nbp) );
 
-        Integer::random(a,sizes);
+    for(uint64_t i=0; i<nbp; ++i) {
         Integer::random(n,sizes);
         ISM.nextprimein(n);
-        ISM.modin(a,n);
-        if (! TestSoSmP(a,n)) ++failures;
+        for(uint64_t j=0; j<nba; ++j) {
+            Integer::random(a,sizes);
+            ISM.modin(a,n);
+            if (! TestSoSmP(a,n)) ++failures;
+        }
     }
 
     if (failures > 0) std::cerr << "Modular SoS: " << failures << " failures." << std::endl;
@@ -95,6 +111,7 @@ int main(int argc, char** argv) {
 
     std::clog << "SOSB: " << sosb << std::endl;
     std::clog << "SOSL: " << sosl << std::endl;
+    std::clog << "SOSR: " << sosr << std::endl;
 
 
     return failures;

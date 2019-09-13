@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <15 Jul 19 10:27:08 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <13 Sep 19 11:47:49 Jean-Guillaume.Dumas@imag.fr>
 // Author : Yanis Linge adn Jean-Guillaume Dumas
 // ============================================================= //
 
@@ -27,6 +27,15 @@
 #include <cmath>
 
 namespace Givaro {
+        /*! \brief Information about the type of method
+         */
+    namespace AlgorithmType {
+        struct DeterministicTag{};
+        struct RandomizedTag {};
+        struct MonteCarloTag : public RandomizedTag {};
+        struct LasVegasTag : public RandomizedTag {};
+        struct HeuristicTag{};
+    };
 
     //!  Modular square roots.
     template < class MyRandIter = GivRandom >
@@ -53,10 +62,21 @@ namespace Givaro {
         // ======================================================== //
         // Element as a modular sum of squares
         // ======================================================== //
-			// Fast under ERH
+			// Fast under ERH (deterministic --default-- or Monte Carlo)
+            // Deterministic seems faster than Monte Carlo anyway
         void sumofsquaresmodprime(Rep&, Rep&, const Rep&, const Rep&) const;
+        void sumofsquaresmodprimeDeterministic(
+            Rep&, Rep&, const Rep&, const Rep&) const;
+        void sumofsquaresmodprimeMonteCarlo(
+            Rep&, Rep&, const Rep&, const Rep&) const;
             // Unconditonal
-        void sumofsquaresmodprimeNoERH(Rep&, Rep&, const Rep&, const Rep&) const;
+        void sumofsquaresmodprimeNoERH(
+            Rep&, Rep&, const Rep&, const Rep&) const;
+
+            // Already knowing s s.t. s-1 is a residue and s is not
+        void sumofsquaresmodprimewithnonresidue(
+            Rep&, Rep&, const Rep&, const Rep&, const Rep&) const ;
+
 
         // ======================================================== //
         // Modular Square root sub-functions
@@ -72,7 +92,6 @@ namespace Givaro {
         Rep & sqrootmodpoweroftwo (Rep & x, const Rep & a,const uint64_t k, const Rep & pk) const;
 
     protected:
-
         // ======================================================== //
         // Linear update using only onemorelift
         // ======================================================== //

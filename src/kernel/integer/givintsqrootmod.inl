@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <15 Jul 19 10:33:25 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <13 Sep 19 11:47:33 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -467,9 +467,20 @@ namespace Givaro {
 // Modular decomposition as a sum of squares
 // =================================================================== //
 
+
         // Fast under ERH
     template <class MyRandIter> inline void
     IntSqrtModDom<MyRandIter>::sumofsquaresmodprime
+    (Rep& a, Rep& b, const Rep& k, const Rep& p) const {
+        sumofsquaresmodprimeMonteCarlo(a,b,k,p);
+    }
+
+	// Warning:
+    //  the least quadratic non-residue is deterministic,
+    //  but sub calls may not be deterministic.
+    //  for instance sqrootmodprime is Las Vegas
+    template <class MyRandIter> inline void
+    IntSqrtModDom<MyRandIter>::sumofsquaresmodprimeDeterministic
     (Rep& a, Rep& b, const Rep& k, const Rep& p) const {
         GIVARO_REQUIRE(this->isprime(p),"isprime");
 
@@ -484,24 +495,68 @@ namespace Givaro {
                 this->sqrootmodprime(a,r,p);
             } else {
                 Integer lsnqr(2);
-                    // Under ERH, least quad. non-residue  should be lower than 3/2log^2(p)
+                    // Under ERH, least quad. non-residue
+                    // should be lower than 3/2log^2(p)
                     // [Th. 6.35, Primality Tests on Commutator Curves,
                     //  U. Tubingen PhD 2001, Sebastian Wedeniwski]
                 for( ; legendre(lsnqr,p) != -1; ++lsnqr);
 
-                this->sqrootmodprime(b,lsnqr-1,p); // lsnqr = 1+b^2
-
-                Integer il; Givaro::inv(il, lsnqr, p);
-                r *= il;
-                r %= p; // r/lsnqr mod p
-
-                this->sqrootmodprime(a,r,p); // k/lsnqr = a^2
-
-                    // Now k = a^2(1+b^2)
-                b *= a;
-                b %= p;
+                sumofsquaresmodprimewithnonresidue(a,b,r,lsnqr,p);
             }
         }
+
+        GIVARO_ENSURE(this->isZero( (a*a+b*b-k)%p ),"modular sum of squares");
+    }
+
+    template <class MyRandIter> inline void
+    IntSqrtModDom<MyRandIter>::sumofsquaresmodprimeMonteCarlo
+    (Rep& a, Rep& b, const Rep& k, const Rep& p) const {
+        GIVARO_REQUIRE(this->isprime(p),"isprime");
+
+        Integer r(k);
+        Integer::modin(r,p);
+        if (this->isZero(r)) {
+            a=this->zero;
+            b=this->zero;
+        } else {
+            if (this->isOne(legendre(r,p))) {
+                b=this->zero;
+                this->sqrootmodprime(a,r,p);
+            } else {
+                Integer s,t;
+                while (
+                    legendre (Integer::nonzerorandom (s, p.bitsize()), p)
+                    != -1) {};
+                    // Now s is not a residue
+                t=s;
+                for(--t ; legendre(t,p) == -1; --t);
+                    // Now t is a quadratic residue and t+1 is not
+                sumofsquaresmodprimewithnonresidue(a,b,r,++t,p);
+            }
+        }
+
+        GIVARO_ENSURE(this->isZero( (a*a+b*b-k)%p ),"modular sum of squares");
+    }
+
+    template <class MyRandIter> inline void
+    IntSqrtModDom<MyRandIter>::sumofsquaresmodprimewithnonresidue
+    (Rep& a, Rep& b, const Rep& k, const Rep& s, const Rep& p) const {
+        GIVARO_REQUIRE(this->isprime(p),"isprime");
+        GIVARO_REQUIRE(legendre(s,p) == -1, "non-residue");
+        GIVARO_REQUIRE(legendre(s-1,p) == 1, "quadratic residue");
+
+
+        this->sqrootmodprime(b,s-1,p); // s = 1+b^2
+
+        Integer r(k), il; Givaro::inv(il, s, p);
+        r *= il;
+        r %= p; // r/s mod p
+
+        this->sqrootmodprime(a,r,p); // k/s = a^2
+
+            // Now k = a^2(1+b^2)
+        b *= a;
+        b %= p;
 
         GIVARO_ENSURE(this->isZero( (a*a+b*b-k)%p ),"modular sum of squares");
     }

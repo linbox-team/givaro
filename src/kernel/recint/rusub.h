@@ -187,7 +187,7 @@ namespace RecInt
     template<>
     inline void sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
         r = (b < c);
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
     }
 #endif
     template<>
@@ -213,7 +213,7 @@ namespace RecInt
     template<>
     inline void sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         r = (a < b);
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
     }
 #endif
     template<>
@@ -239,7 +239,7 @@ namespace RecInt
 #else
     template<>
     inline ruint<__RECINT_LIMB_SIZE+1>& sub(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c) {
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
         return a;
     }
 #endif
@@ -266,7 +266,7 @@ namespace RecInt
 #else
     template<>
     inline ruint<__RECINT_LIMB_SIZE+1>& sub(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
         return a;
 
     }
@@ -290,7 +290,7 @@ namespace RecInt
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const T& c) {
         r = (b < c);
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, limb(c));
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, limb(c));
     }
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
@@ -308,7 +308,7 @@ namespace RecInt
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const T& b) {
         r = (a < b);
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, limb(b));
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, limb(b));
     }
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(bool& r, ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
@@ -325,7 +325,7 @@ namespace RecInt
     }
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const T& c) {
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, limb(c));
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, limb(c));
     }
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
@@ -341,7 +341,7 @@ namespace RecInt
     }
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE+1>& a, const T& b) {
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, limb(b));
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, limb(b));
     }
     template <typename T>
     inline __RECINT_IS_ARITH(T, void) sub(ruint<__RECINT_LIMB_SIZE>& a, const T& b) {
@@ -367,7 +367,7 @@ namespace RecInt
     template<>
     inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
         r = (b == 0);
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
     }
 #endif
     template<>
@@ -393,7 +393,7 @@ namespace RecInt
     template<>
     inline void sub_1(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a) {
         r = (a == 0);
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
 #endif
     template<>
@@ -417,7 +417,7 @@ namespace RecInt
 #else
     template<>
     inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b) {
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, 0, 1);
     }
 #endif
     template<>
@@ -440,7 +440,7 @@ namespace RecInt
 #else
     template<>
     inline void sub_1(ruint<__RECINT_LIMB_SIZE+1>& a) {
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
 #endif
     template<>
@@ -469,8 +469,8 @@ namespace RecInt
     inline void sub_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
         if (cy) r = (b <= c);
         else r = (b < c);
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
-        if (cy) sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+        if (cy) recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
 #endif
     template<>
@@ -499,8 +499,8 @@ namespace RecInt
     inline void sub_wc(bool& r, ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
         if (cy) r = (a <= b);
         else r = (a < b);
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
-        if (cy) sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+        if (cy) recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, 1);
     }
 #endif
     template<>
@@ -525,8 +525,8 @@ namespace RecInt
 #else
     template<>
     inline void sub_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const ruint<__RECINT_LIMB_SIZE+1>& c, const bool& cy) {
-        sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, b.High.Value, b.Low.Value, c.High.Value, c.Low.Value);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);
     }
 #endif
     template<>
@@ -549,8 +549,8 @@ namespace RecInt
 #else
     template<>
     inline void sub_wc(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE+1>& b, const bool& cy) {
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);
-        sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, 0, cy);
+        recint_sub_ddmmss(a.High.Value, a.Low.Value, a.High.Value, a.Low.Value, b.High.Value, b.Low.Value);
     }
 #endif
     template<>

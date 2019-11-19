@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <13 Sep 19 11:44:09 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <19 Nov 19 13:07:56 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // =================================================================== //
 
@@ -107,12 +107,11 @@ int main(int argc, char** argv) {
     }
 
     if (failures > 0) std::cerr << "Modular SoS: " << failures << " failures." << std::endl;
-
-
-    std::clog << "SOSB: " << sosb << std::endl;
-    std::clog << "SOSL: " << sosl << std::endl;
-    std::clog << "SOSR: " << sosr << std::endl;
-
+    else {
+        std::clog << "[SOSB] PASSED: " << sosb << std::endl;
+        std::clog << "[SOSL] PASSED: " << sosl << std::endl;
+        std::clog << "[SOSR] PASSED: " << sosr << std::endl;
+    }
 
     return failures;
 }

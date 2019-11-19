@@ -1495,6 +1495,7 @@ friend giv_all_inlined  bool isOdd(const Integer&);
 friend giv_all_inlined  Integer& Protected::prevprime(Integer&, const Integer& p);
 friend giv_all_inlined  Integer& Protected::nextprime(Integer&, const Integer& p);
 friend giv_all_inlined  int32_t Protected::probab_prime(const Integer& p, int32_t r);
+friend giv_all_inlined  int32_t kronecker(const Integer& u, const Integer& v) ;
 friend giv_all_inlined  int32_t jacobi(const Integer& u, const Integer& v) ;
 friend giv_all_inlined  int32_t legendre(const Integer& u, const Integer& v) ;
 ///@}

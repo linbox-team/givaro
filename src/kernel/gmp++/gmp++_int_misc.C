@@ -162,8 +162,14 @@ namespace Givaro {
 
 
     // ==========================================================================
-    // Computes and returns the Jacobi and Legendre symbols (u/v) of the integers u and v.
+    // Computes and returns the Kronecker/Jacobi and Legendre symbols (u/v) 
+    // of the integers u and v.
     // The algorithm used is Gmp's.
+    int32_t kronecker(const Integer& u, const Integer& v)
+    {
+        return mpz_kronecker ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;
+    }
+
     int32_t jacobi(const Integer& u, const Integer& v)
     {
         return mpz_jacobi ((mpz_srcptr)&(u.gmp_rep),(mpz_srcptr)&(v.gmp_rep)) ;

@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <13 Sep 19 11:47:33 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <19 Nov 19 13:19:52 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -69,13 +69,13 @@ namespace Givaro {
     IntSqrtModDom<MyRandIter>::sqrootmodprime (Rep & x,
                                                const Rep & a,
                                                const Rep & p) const {
-            //         std::cerr << "p:= " << p << ';' << std::endl;
-            //         std::cerr << "a:= " << a << ';' << std::endl;
-        Rep amp (a); amp %=p;
+//         std::cerr << "p:= " << p << ';' << std::endl;
+//         std::cerr << "a:= " << a << ';' << std::endl;
+        Rep amp (a); Integer::modin(amp,p);
         if (amp == 0U || amp == 1) return x = amp;
 
         if (legendre (amp, p) == -1){
-            std::cerr << amp << " is not a quadratic residue mod " << p << std::endl;
+            std::cerr << amp << " is not a quadratic residue mod " << p << " (SQRMP)" << std::endl;
             return x = -1;
         }
 
@@ -152,7 +152,7 @@ namespace Givaro {
                 b2k *= b2k; b2k %= p;
             } // m smallest such that b^{2^m} is 1 mod p
             if (m == r){
-                std::cerr << amp << " is not a quadratic residu mod " << p << std::endl;
+                std::cerr << amp << " is not a quadratic residue mod " << p << " (NoExp)" << std::endl;
                 return x = -1;
             }
             int64_t lpuis = r; lpuis -= m; --lpuis;
@@ -173,7 +173,7 @@ namespace Givaro {
                                                     const uint64_t k,
                                                     const Rep & pk) const{
 
-        Rep tmpa(a); tmpa%=pk;
+        Rep tmpa(a); Integer::modin(tmpa,pk);
         if(tmpa==0) return x=0;
         if(tmpa==1) return x=1;
         if (k == 1) return sqrootmodprime (x, tmpa, p);
@@ -191,7 +191,7 @@ namespace Givaro {
                 return x%=pk;
             }
             else{
-                std::cerr <<tmpa << "is not a quadratic residu mod " << pk << std::endl;
+                std::cerr <<tmpa << "is not a quadratic residue mod " << pk << " (SQRMPP)" << std::endl;
                 return x=-1;
             }
         }
@@ -233,7 +233,7 @@ namespace Givaro {
                                                     const Rep & a,
                                                     const uint64_t k,
                                                     const Rep & pk) const {
-        Rep tmpa (a); tmpa %= pk;
+        Rep tmpa (a); Integer::modin(tmpa,pk);
         x = 0;
             //first cases k = 1,2,3
         if (k == 1) return x = tmpa;
@@ -241,7 +241,7 @@ namespace Givaro {
             if (tmpa == 0) return x = 0;
             if (tmpa == 1) return x = 1;
             else {
-                std::cerr << tmpa << "is not a quadratic residu mod " << pk << std::endl;
+                std::cerr << tmpa << "is not a quadratic residue mod " << pk << " (SQRM2k)" << std::endl;
                 return x = -1;
             }
         }
@@ -250,7 +250,7 @@ namespace Givaro {
             if (tmpa == 1) return x = 1;
             if (tmpa == 4) return x = 2;
             else{
-                std::cerr << tmpa << " is not a quadratic residu mod " << pk << " (case k = 3)" << std::endl;
+                std::cerr << tmpa << " is not a quadratic residue mod " << pk << " (SQRM2k, k=3)" << std::endl;
                 return x = -1;
             }
         }
@@ -269,7 +269,7 @@ namespace Givaro {
                 x <<= (t>>1); // x <-- x * 2^{t/2}
                 return x%=pk;
             } else {
-                std::cerr << tmpa  << "is not a quadratic residu mod " << pk << std::endl;
+                std::cerr << tmpa  << "is not a quadratic residue mod " << pk << " (SQRM2k, k>=4)" << std::endl;
                 return x=-1;
             }
         }
@@ -472,7 +472,7 @@ namespace Givaro {
     template <class MyRandIter> inline void
     IntSqrtModDom<MyRandIter>::sumofsquaresmodprime
     (Rep& a, Rep& b, const Rep& k, const Rep& p) const {
-        sumofsquaresmodprimeMonteCarlo(a,b,k,p);
+        sumofsquaresmodprimeDeterministic(a,b,k,p);
     }
 
 	// Warning:
@@ -550,7 +550,7 @@ namespace Givaro {
 
         Integer r(k), il; Givaro::inv(il, s, p);
         r *= il;
-        r %= p; // r/s mod p
+        Integer::modin(r,p); // r/s mod p
 
         this->sqrootmodprime(a,r,p); // k/s = a^2
 
@@ -583,9 +583,9 @@ namespace Givaro {
 
             this->mod(r,p,4U);
             if (r == 1U)
-                r -= (k%4);
+                r -= (k%4); // Warning k can be negative
             else
-                r += (k%4);
+                r += (k%4); // Warning k can be negative
             r *= p;
             r += k;
                 // now r is k mod p and 1 mod 4

@@ -80,19 +80,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 /* GMP conversion system */
 #include "ruconvert.h"
 
-// Cleaning up MACROS defined in reclonglong.h (to avoid collision with FLINT's longlong.h)
-#undef add_ssaaaa
-#undef count_leading_zeros
-#undef count_trailing_zeros
-#undef smul_ppmm
-#undef sub_ddmmss
-#undef umul_ppmm
-#undef udiv_qrnnd
-#undef __BITS4
-#undef __ll_B
-#undef __ll_lowpart
-#undef __ll_highpart
-#endif
+#endif // RUINT_H
 
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 // vim:sts=4:sw=4:ts=4:et:sr:cino=>s,f0,{0,g0,(0,\:0,t0,+0,=s

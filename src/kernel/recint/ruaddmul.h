@@ -115,8 +115,8 @@ namespace RecInt
     template <>
     inline void laddmul(bool& r, ruint<__RECINT_LIMB_SIZE>& ah, ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const ruint<__RECINT_LIMB_SIZE>& d) {
         auto dp(d.Value);
-        umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
-        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, dp);
+        recint_umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
+        recint_add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, dp);
         r = ((ah.Value == 0) && (al.Value < dp));
     }
 
@@ -156,8 +156,8 @@ namespace RecInt
     template <>
     inline void laddmul(ruint<__RECINT_LIMB_SIZE>& ah, ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c, const ruint<__RECINT_LIMB_SIZE>& d) {
         auto dp(d.Value);
-        umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
-        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, dp);
+        recint_umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
+        recint_add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, 0, dp);
     }
 
     // a = b*c + d (r stores the carry)
@@ -202,8 +202,8 @@ namespace RecInt
         auto dph(d.High.Value);
         auto dpl(d.Low.Value);
 
-        umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
-        add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, dph, dpl);
+        recint_umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
+        recint_add_ssaaaa(ah.Value, al.Value, ah.Value, al.Value, dph, dpl);
         r = ((ah.Value < dph) || ((ah.Value == dph) && (al.Value < dpl)));
     }
 

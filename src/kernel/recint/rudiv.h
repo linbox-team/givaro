@@ -211,7 +211,7 @@ namespace RecInt
         bool ret = false;
 
         if (a2.Value < b1.Value) {
-            udiv_qrnnd(q.Value, c, a2.Value, a1.Value, b1.Value);
+            recint_udiv_qrnnd(q.Value, c, a2.Value, a1.Value, b1.Value);
         } else {
             q.Value = __RECINT_MINUSONE;
             c = a1.Value + b1.Value;
@@ -219,8 +219,8 @@ namespace RecInt
                 ret = true;
         }
 
-        umul_ppmm(d1, d0, q.Value, b0.Value);
-        sub_ddmmss(r1.Value, r0.Value, c, a0.Value, d1, d0);
+        recint_umul_ppmm(d1, d0, q.Value, b0.Value);
+        recint_sub_ddmmss(r1.Value, r0.Value, c, a0.Value, d1, d0);
 
         if (!ret && ((d1 > c) || ((d1 == c) && (d0 > a0.Value)))) {
             q.Value--;
@@ -253,7 +253,7 @@ namespace RecInt
     inline void div_2_1(ruint<__RECINT_LIMB_SIZE>& q, ruint<__RECINT_LIMB_SIZE>& r,
                         const ruint<__RECINT_LIMB_SIZE>& ah, const ruint<__RECINT_LIMB_SIZE>& al,
                         const ruint<__RECINT_LIMB_SIZE>& b) {
-        udiv_qrnnd(q.Value, r.Value, ah.Value, al.Value, b.Value);
+        recint_udiv_qrnnd(q.Value, r.Value, ah.Value, al.Value, b.Value);
     }
 
     // computes (q, r) such that a = q*b + r (0 <= r < b)

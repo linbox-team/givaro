@@ -174,7 +174,7 @@ namespace RecInt
 
     template<>
     inline void lmul_naive(ruint<__RECINT_LIMB_SIZE>& ah, ruint<__RECINT_LIMB_SIZE>& al, const ruint<__RECINT_LIMB_SIZE>& b, const ruint<__RECINT_LIMB_SIZE>& c) {
-        umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
+        recint_umul_ppmm(ah.Value, al.Value, b.Value, c.Value);
     }
     template <size_t K>
     inline void lmul_naive(ruint<K+1>& a, const ruint<K>& b, const ruint<K>& c) {
@@ -243,7 +243,7 @@ namespace RecInt
     }
     template<typename T>
     inline __RECINT_IS_ARITH(T, void) lmul(limb& ret, ruint<__RECINT_LIMB_SIZE>& a, const ruint<__RECINT_LIMB_SIZE>& b, const T& c) {
-        umul_ppmm(ret, a.Value, b.Value, limb(c));
+        recint_umul_ppmm(ret, a.Value, b.Value, limb(c));
     }
 
     // a = b*c
@@ -352,7 +352,7 @@ namespace RecInt
     }
     template<>
     inline ruint<__RECINT_LIMB_SIZE+1>& lsquare(ruint<__RECINT_LIMB_SIZE+1>& a, const ruint<__RECINT_LIMB_SIZE>& b) {
-        umul_ppmm(a.High.Value, a.Low.Value, b.Value, b.Value);
+        recint_umul_ppmm(a.High.Value, a.Low.Value, b.Value, b.Value);
         return a;
     }
 

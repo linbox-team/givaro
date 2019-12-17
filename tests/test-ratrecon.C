@@ -160,6 +160,9 @@ int main(int argc, char ** argv)
     reconstructed = IntDom.ratrecon(A,B,R,M,d2);
     success &= (reconstructed && (IntDom.isZero((R*B-A)%M)));
 
+    reconstructed = IntDom.ratrecon(A,B,R,M,d1,false);
+    success &= (reconstructed && (IntDom.isZero((R*B-A)%M)));
+
 
     typedef Modular<int64_t> Field;
     typedef Poly1Dom< Field, Dense > PolyZpz;

@@ -47,7 +47,7 @@ namespace Givaro {
 
 #define NEED_POLYNOMIAL_REPRESENTATION(p,e) ((e) > FF_SUBEXPONENT_MAX((p),(e)))
 
-#define EXTENSION(q,expo) ( NEED_POLYNOMIAL_REPRESENTATION((q),(expo)) ? Extension<>((q), (expo)) : GFqDom<int64_t>((q), (expo)) )
+#define EXTENSION(q,expo) ( NEED_POLYNOMIAL_REPRESENTATION((q),(expo)) ? Extension<>((q), (expo)) : GFqDom<int32_t>((q), (expo)) )
 
 
 	//! XXX
@@ -60,7 +60,7 @@ namespace Givaro {
 
 	//! XXX
     template<>
-	inline int64_t Exponent_Trait(const GFqDom<int64_t>& F)
+	inline int64_t Exponent_Trait(const GFqDom<int32_t>& F)
 	{
         return F.exponent();
     }
@@ -75,7 +75,7 @@ namespace Givaro {
     }
 
 //! Extension
-    template<class BFT = GFqDom<int64_t>  >
+    template<class BFT = GFqDom<int32_t>  >
     class Extension {
     public:
 	typedef          Extension<BFT>                            Self_t;

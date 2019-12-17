@@ -22,7 +22,7 @@
 
 using namespace Givaro;
 
-typedef GFqDom<int64_t>            Field1;
+typedef GFqDom<int32_t>            Field1;
 
 typedef Modular<int16_t>        Field2;
 typedef Modular<int32_t>        Field3;

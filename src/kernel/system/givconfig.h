@@ -222,6 +222,7 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #ifdef GIVARO_DEBUG
 #  ifdef GIVARO_HAVE_ANSI_LIBRARY  // here is ANSI C++ header definition !!!
 #    include <sstream>
+#    include <givaro/giverror.h>
 #    define GIVARO_ASSERT(cond, msg) { \
     if (!(cond)) {\
         std::ostringstream ostr;\

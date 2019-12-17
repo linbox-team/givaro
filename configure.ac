@@ -133,7 +133,7 @@ AS_CASE([$CXXFLAGS],
         [AS_IF([test "x${with_archnative}" == "xno"],
             [], # do nothing if option is set to no
             [AS_IF([test "${host}" != "${build}" -o "${host}" != "${target}"],
-                [AC_MSG_ERROR("For cross-compilation we require a '-march=...' flag in CXXFLAGS")],
+                [AC_MSG_NOTICE("For efficiency, you may want to add a '-march=...' flag in CXXFLAGS")],
                 [AC_MSG_NOTICE("Adding '-march=native' to flags")
                  DEFAULT_CFLAGS+=" -march=native"])])])
 

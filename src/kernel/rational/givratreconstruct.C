@@ -68,32 +68,6 @@ namespace Givaro {
             den = t1;
         }
 
-        if (num == 0) {
-            if ((f % m) == 0) {
-                return true;
-            } else {
-                if (!recurs)
-                    std::cerr
-                        << "*** Error *** There exists no rational reconstruction of "
-                        << f
-                        << " modulo "
-                        << m
-                        << " with |numerator| < "
-                        << k
-                        << std::endl
-                        << "*** Error *** But "
-                        << num
-                        << " = "
-                        << den
-                        << " * "
-                        << f
-                        << " modulo "
-                        << m
-                        << std::endl;
-                return false;
-            }
-        }
-
         if (forcereduce) {
 
                 // (ii)
@@ -108,6 +82,33 @@ namespace Givaro {
                       << "k:=" << k << ';'
                       << std::endl;
 #endif
+
+                if (num == 0) {
+                    if ((f % m) == 0) {
+                        return true;
+                    } else {
+                        if (!recurs)
+                            std::cerr
+                                << "*** Error *** There exists no rational reconstruction of "
+                                << f
+                                << " modulo "
+                                << m
+                                << " with |numerator| < "
+                                << k
+                                << std::endl
+                                << "*** Error *** But "
+                                << num
+                                << " = "
+                                << den
+                                << " * "
+                                << f
+                                << " modulo "
+                                << m
+                                << std::endl;
+                        return false;
+                    }
+                }
+
                 q = r0;
                 q += r1;
                 q -= k;

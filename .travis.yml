@@ -14,6 +14,7 @@ matrix:
           - ubuntu-toolchain-r-test
           packages:
           - g++-4.9
+          - binutils
           - libgmp-dev
           - libgmpxx4ldbl
 
@@ -28,6 +29,7 @@ matrix:
           - ubuntu-toolchain-r-test
           packages:
           - g++-5
+          - binutils
           - libgmp-dev
           - libgmpxx4ldbl
 
@@ -42,6 +44,7 @@ matrix:
           - ubuntu-toolchain-r-test
           packages:
           - g++-6
+          - binutils
           - libgmp-dev
           - libgmpxx4ldbl
 

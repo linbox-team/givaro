@@ -244,6 +244,7 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 
 #  else
 #    include <sstream>
+#    include <givaro/giverror.h>
 #    define GIVARO_ASSERT(cond, msg) { \
     if (!(cond)) {\
         std::ostringstream ostr;\

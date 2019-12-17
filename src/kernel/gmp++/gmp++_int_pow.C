@@ -44,7 +44,7 @@ namespace Givaro {
     Integer& pow(Integer& Res, const uint64_t n, const uint64_t p)
     {
 #if GMP_LIMB_BITS != 64
-        return pow(res,n,Integer(p));
+        return pow(Res,n,Integer(p));
 #else
         mpz_ui_pow_ui( (mpz_ptr)&(Res.gmp_rep), n, p);
         return Res;
@@ -86,7 +86,7 @@ namespace Givaro {
     Integer& powmod(Integer& Res, const Integer& n, const uint64_t p, const Integer& m)
     {
 #if GMP_LIMB_BITS != 64
-        return powmod(res,n,Integer(p),m);
+        return powmod(Res,n,Integer(p),m);
 #else
         mpz_powm_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p, (mpz_srcptr)&m.gmp_rep);
         return Res;

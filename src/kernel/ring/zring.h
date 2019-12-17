@@ -26,6 +26,7 @@
 
 #include "givaro/unparametric-operations.h"
 #include "givaro/givranditer.h"
+#include "givaro/givcaster.h"
 
 namespace Givaro
 {

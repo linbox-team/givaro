@@ -3,8 +3,6 @@
 # Givaro is governed by the CeCILL-B license under French law
 # and abiding by the rules of distribution of free software.
 # see the COPYRIGHT file for more details.
-SUBDIRS=CodeChunk
-
 EXTRA_DIST=             \
 	aclocal-include.m4	\
 	gmp-check.m4		\

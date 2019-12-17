@@ -74,11 +74,11 @@ while test $# -gt 0; do
 	;;
 
     --cflags)
-       	echo -I${includedir} @GMP_CFLAGS@
+        echo -I${includedir} @REQUIRED_FLAGS@
 	;;
 
     --libs)
-       	echo -L${libdir} -lgivaro @GMP_LIBS@ 
+        echo -L${libdir} -lgivaro @LIBS@
        	;;
 
     *)

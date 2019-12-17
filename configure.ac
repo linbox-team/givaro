@@ -70,8 +70,6 @@ if test "x$PROF" = "xyes" ; then
     DEFAULT_CFLAGS+=" -pg"
 fi
 
-echo "##${CCNAM}"
-
 if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
     case x${CCNAM} in
         xeko)
@@ -110,6 +108,8 @@ fi
 
 AC_SUBST([DEFAULT_CFLAGS])
 
+
+#
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
@@ -122,18 +122,38 @@ echo "-----------------------------------------------"
 echo "        START  GIVARO CONFIG                   "
 echo "-----------------------------------------------"
 
-# Checks which SIMD optimization flags to use and set SIMD_CFLAGS accordingly
-INSTR_SET
-AC_SUBST(SIMD_FLAGS)
+# Add -march=native to DEFAULT_CFLAGS if not present in CXXFLAGS and
+# target==host and --no-marchnative is not set
+AC_ARG_WITH(archnative, [AC_HELP_STRING([--without-arch-native],
+    [do not use -march=native (default is to use it if -march is not present in
+     CXXFLAGS)])])
 
-# Veltkamp Split in modular-extended.inl requires to use the SSE floating point multiplier and not the fp87
-# This is by default on x86_64 but not on i386.
-arch=`echo $target | cut -d"-" -f1`
-AS_IF([ test \( "x$arch" = "xi386" -o "x$arch" = "xi686" \) -a "x$HAVE_SSE" = "xyes" ],
-   [
-        AS_ECHO("Compiling for an $arch architecture: appending -mfpmath=sse flags")
-        REQUIRED_FLAGS="${REQUIRED_FLAGS} -mfpmath=sse"
-   ])
+AS_CASE([$CXXFLAGS],
+        [*-march=*], [], # do nothing if already set in CXXFLAGS
+        [AS_IF([test "x${with_archnative}" == "xno"],
+            [], # do nothing if option is set to no
+            [AS_IF([test "${host}" != "${build}" -o "${host}" != "${target}"],
+                [AC_MSG_ERROR("For cross-compilation we require a '-march=...' flag in CXXFLAGS")],
+                [AC_MSG_NOTICE("Adding '-march=native' to flags")
+                 DEFAULT_CFLAGS+=" -march=native"])])])
+
+
+# On i386 and i686, add the -mfpmath=sse flags if SSE is enable
+AS_CASE([$target],
+        [*i386*|*i686*],
+            [AC_RUN_IFELSE([AC_LANG_PROGRAM([[]], [[#ifdef __SSE__
+                                                      return 0;
+                                                    #else
+                                                      return 1;
+                                                    #endif
+                                                    ]])],
+                [AC_MSG_NOTICE("Adding '-mfpmath=sse' to flags")
+                 DEFAULT_CFLAGS+=" -mfpmath=sse"],
+                [], # either the flag is not recognized by the compiler or SSE
+                    # is not avail => do nothing
+                [AC_MSG_NOTICE("If available you may want to add '-mfpmath=sse'
+                 to flags")])] # cross-compilation case
+            []) # not on i386 nor i686 => do nothing
 	
 echo "-----------------------------------------------"
 
@@ -209,7 +229,6 @@ REQUIRED_FLAGS="${REQUIRED_FLAGS} ${GMP_CFLAGS}"
 GIV_DOC
 CXXFLAGS=${BACKUP_CXXFLAGS}
 CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
-CXXFLAGS="${CXXFLAGS} ${SIMD_CFLAGS}"
 LIBS="${GMP_LIBS}"
 echo "CXXFLAGS=${CXXFLAGS}"
 
@@ -239,7 +258,6 @@ src/library/tools/Makefile
 src/library/poly1/Makefile
 src/library/matrix/Makefile
 macros/Makefile
-macros/CodeChunk/Makefile
 benchmarks/Makefile
 examples/Makefile
 examples/FiniteField/Makefile

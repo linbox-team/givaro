@@ -60,6 +60,10 @@ namespace Givaro{
         }
 
         // Dekker mult, a * b = s + t
+        /* Note: this function may not work correctly when compiled for the 387
+         * floating point coprocessor which may store temporary on 80-bit
+         * registry.
+         */
         inline void mult_dekker(const Element a, const Element b, Element &s, Element &t) const{
             s = a*b;
             Element ah, al, bh, bl;

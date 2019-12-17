@@ -131,7 +131,7 @@ namespace Givaro {
         // --         uintN_t  | uint2N_t  | 2^N - 1 ; because 2^N can not be stored on Residu_t
         // --         float    |  float    | 4096: 2^12
         // --         double   |  double   | 94906266: floor(2^26 sqrt(2) + 1/2)
-        // --         float    |  double   | 16777217: 2^24
+        // --         float    |  double   | 16777216: 2^24
         // --         Integer  |  Integer  | None
         // --         ruint<K> |  ruint<K> | ruint<K>::maxModulus (= 2^(2^K))
         // --         ruint<K> | ruint<K+1>| ruint<K>::maxCardinality/2
@@ -157,10 +157,10 @@ namespace Givaro {
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && IS_SAME(S, Compute_t))
-        static Residu_t maxCardinality() { return 4096; }
+        static Residu_t maxCardinality() { return 4096.f; }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && !IS_SAME(S, Compute_t))
-        static Residu_t maxCardinality() { return 16777216; }
+        static Residu_t maxCardinality() { return 16777216.f; }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, double))
         static Residu_t maxCardinality() { return 94906266; }

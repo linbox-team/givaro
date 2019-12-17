@@ -54,7 +54,6 @@ namespace Givaro {
     Integer pow(const Integer& n, const uint64_t p)
     {
         if (p == 0) return Integer::one;
-
         Integer Res;
         return pow(Res,n,p);
     }
@@ -64,17 +63,34 @@ namespace Givaro {
         // Beware of negative values
         return pow(Res, n, (uint64_t) std::abs(l) );
     }
+
     Integer pow(const Integer& n, const int64_t l)
     {
-        if (l < 0)
-            return Integer::zero;
-        return pow(n, (uint64_t) std::abs(l) );
+        Integer res; return pow(res,n,l);
+    }
+
+    Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m)
+    {
+        mpz_powm( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, (mpz_srcptr)&e.gmp_rep, (mpz_srcptr)&m.gmp_rep);
+        return Res;
+    }
+
+    Integer powmod(const Integer& n, const Integer& e, const Integer& m)
+    {
+        if (e == 0) return Integer::one;
+        if (e < 0)  return Integer::zero;
+        Integer Res;
+        return powmod(Res, n, e, m);
     }
 
     Integer& powmod(Integer& Res, const Integer& n, const uint64_t p, const Integer& m)
     {
+#if GMP_LIMB_BITS != 64
+        return powmod(res,n,Integer(p),m);
+#else
         mpz_powm_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p, (mpz_srcptr)&m.gmp_rep);
         return Res;
+#endif
     }
 
     Integer powmod(const Integer& n, const uint64_t p, const Integer& m)
@@ -94,25 +110,13 @@ namespace Givaro {
             return powmod (Res, n, (uint64_t)(e), m);
         }
     }
+
     Integer powmod(const Integer& n, const int64_t e, const Integer& m)
     {
         Integer Res;
         return powmod(Res, n, e, m);
     }
 
-
-    Integer& powmod(Integer& Res, const Integer& n, const Integer& e, const Integer& m)
-    {
-        mpz_powm( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, (mpz_srcptr)&e.gmp_rep, (mpz_srcptr)&m.gmp_rep);
-        return Res;
-    }
-    Integer powmod(const Integer& n, const Integer& e, const Integer& m)
-    {
-        if (e == 0) return Integer::one;
-        if (e < 0)  return Integer::zero;
-        Integer Res;
-        return powmod(Res, n, e, m);
-    }
 
 }
 #endif // __GIVARO_gmpxx_gmpxx_int_pow_C

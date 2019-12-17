@@ -19,20 +19,20 @@ namespace Givaro {
     // either num = den f mod m     (1)
     // or     num den^-1 = f mod m  (2)
     // verifying |num|<k and 0 <= den <= m/k
-    // 
+    //
     // List of remarks :
     // * it seems that forcereduce tells whether we solve (1) or (2)
     //   -> change variable name ?
-    // * Rename, refactor e.g. 
+    // * Rename, refactor e.g.
     //     ratrecon(7 args) ~= RationalReconstruction(7 args)
     //     rename ratrecon(5 args) or remove from interface ?
-    // * What does RationalReconstruction(7 args) do 
+    // * What does RationalReconstruction(7 args) do
     //   that ratrecon(7 args) do not do
     // * What do the following tests achieve ? Related to a bug ?
     //     if (num == 0)
     //     if ((f % m) == 0)
     // * Should the recursive aspect bool recurs be done by ratrecon ?
- 
+
     bool Rational::ratrecon(
         Integer& num, Integer& den, const Integer& f, const Integer& m,
         const Integer& k, bool forcereduce, bool recurs)

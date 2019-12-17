@@ -28,9 +28,6 @@ namespace Givaro {
     //     rename ratrecon(5 args) or remove from interface ?
     // * What does RationalReconstruction(7 args) do
     //   that ratrecon(7 args) do not do
-    // * What do the following tests achieve ? Related to a bug ?
-    //     if (num == 0)
-    //     if ((f % m) == 0)
     // * Should the recursive aspect bool recurs be done by ratrecon ?
 
     bool Rational::ratrecon(

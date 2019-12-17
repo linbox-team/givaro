@@ -104,7 +104,7 @@ namespace Givaro {
     {
         if (isZero(*this)) return *this;
 #if GMP_LIMB_BITS != 64
-        return res %= Integer(l);
+        return *this %= Integer(l);
 #else
 #  ifdef GIVARO_DEBUG
         int32_t sgn_this = (*this>0)?1:-1;
@@ -121,7 +121,7 @@ namespace Givaro {
     Integer& Integer::operator %= (const int64_t l)
     {
 #if GMP_LIMB_BITS != 64
-        return res %= Integer(l);
+        return *this %= Integer(l);
 #else
         if (isZero(*this)) return *this;
 #  ifdef GIVARO_DEBUG
@@ -153,7 +153,7 @@ namespace Givaro {
     {
         if (isZero(*this)) return 0U;
 #if GMP_LIMB_BITS != 64
-        return (int64_t) (res % Integer(l));
+        return (int64_t) ((*this) % Integer(l));
 #else
         bool isneg = (*this)<0 ;
         //CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep

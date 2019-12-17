@@ -28,15 +28,27 @@ namespace Givaro {
         return mpz_perfect_power_p((mpz_srcptr)&(n.gmp_rep));
     }
 
-    Integer& pow(Integer& Res, const uint64_t n, const uint64_t p)
-    {
-        mpz_ui_pow_ui( (mpz_ptr)&(Res.gmp_rep), n, p);
-        return Res;
-    }
     Integer& pow(Integer& Res, const Integer& n, const uint64_t p)
     {
+#if GMP_LIMB_BITS != 64
+        // exponent too large if p > 2^32 anyway
+        uint32_t i(p);
+        GIVARO_ASSERT( (uint64_t)i == p, "Exponent too large");
+        __gmpz_pow_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, i);
+#else
         __gmpz_pow_ui( (mpz_ptr)&(Res.gmp_rep), (mpz_srcptr)&n.gmp_rep, p);
+#endif
         return Res;
+    }
+
+    Integer& pow(Integer& Res, const uint64_t n, const uint64_t p)
+    {
+#if GMP_LIMB_BITS != 64
+        return pow(res,n,Integer(p));
+#else
+        mpz_ui_pow_ui( (mpz_ptr)&(Res.gmp_rep), n, p);
+        return Res;
+#endif
     }
 
     Integer pow(const Integer& n, const uint64_t p)

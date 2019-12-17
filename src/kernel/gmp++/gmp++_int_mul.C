@@ -33,20 +33,23 @@ namespace Givaro {
     {
         if (isZero(n)) return res = Integer::zero;
         if (isZero(res)) return res;
-        //   int32_t sgn = sign(n);
-        // int32_t sgn = sign(n);
-        // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, abs(n));
-        //   if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
-        // if (sgn <0) return res = -res;
+#if GMP_LIMB_BITS != 64
+        return mulin(res,Integer(n));
+#else
         mpz_mul_si( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
         return res;
+#endif
     }
     Integer& Integer::mulin(Integer& res, const uint64_t n)
     {
         if (isZero(n)) return res = Integer::zero;
         if (isZero(res)) return res;
+#if GMP_LIMB_BITS != 64
+        return mulin(res,Integer(n));
+#else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
         return res;
+#endif
     }
 
     Integer& Integer::mul(Integer& res, const Integer& n1, const Integer& n2)
@@ -60,19 +63,23 @@ namespace Givaro {
     {
         if (isZero(n1)) return res = Integer::zero;
         if (isZero(n2)) return res = Integer::zero;
-        // int32_t sgn = sign(n2);
-        // mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&n1.gmp_rep, abs(n2));
-        // if (sgn <0) res.gmp_rep.size = -res.gmp_rep.size;
-        // if (sgn <0) return res = -res;
+#if GMP_LIMB_BITS != 64
+        return mul(res,n1,Integer(n2));
+#else
         mpz_mul_si( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
         return res;
+#endif
     }
     Integer& Integer::mul(Integer& res, const Integer& n1, const uint64_t n2)
     {
         if (isZero(n1)) return res = Integer::zero;
         if (isZero(n2)) return res = Integer::zero;
+#if GMP_LIMB_BITS != 64
+        return mul(res,n1,Integer(n2));
+#else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
         return res;
+#endif
     }
 
     Integer& Integer::axpy(Integer& res, const Integer& a, const Integer& x, const Integer& b)
@@ -88,9 +95,13 @@ namespace Givaro {
     {
         if (&res == &b) return Integer::axpyin(res,a,x);
         if (isZero(a) || isZero(x)) return res = b;
+#if GMP_LIMB_BITS != 64
+        return axpy(res,a,Integer(x),b);
+#else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
         mpz_add( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&b.gmp_rep);
         return res;
+#endif
     }
 
 
@@ -104,8 +115,12 @@ namespace Givaro {
     Integer& Integer::axpyin(Integer& res, const Integer& a, const uint64_t x)
     {
         if (isZero(a) || isZero(x)) return res;
+#if GMP_LIMB_BITS != 64
+        return axpyin(res,a,Integer(x));
+#else
         mpz_addmul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
         return res;
+#endif
     }
 
 
@@ -121,9 +136,13 @@ namespace Givaro {
     {
         if (isZero(a) || isZero(x)) return res=b;
         if (&res == &b) return Integer::maxpyin(res,a,x);
+#if GMP_LIMB_BITS != 64
+        return maxpy(res,a,Integer(x),b);
+#else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
         mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&b.gmp_rep, (mpz_ptr)&res.gmp_rep);
         return res;
+#endif
     }
 
     Integer& Integer::axmy(Integer& res, const Integer& a, const Integer& x, const Integer& b)
@@ -139,9 +158,13 @@ namespace Givaro {
     {
         if (&res == &b) return Integer::axmyin(res,a,x);
         if (isZero(a) || isZero(x)) return Integer::neg(res,b);
+#if GMP_LIMB_BITS != 64
+        return axmy(res,a,Integer(x),b);
+#else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
         mpz_sub( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&b.gmp_rep);
         return res;
+#endif
     }
 
     Integer& Integer::axmyin(Integer& res, const Integer& a, const Integer& x)
@@ -168,8 +191,12 @@ namespace Givaro {
     Integer& Integer::maxpyin(Integer& res, const Integer& a, const uint64_t x)
     {
         if (isZero(a) || isZero(x)) return res;
+#if GMP_LIMB_BITS != 64
+        return maxpyin(res,a,Integer(x));
+#else
         mpz_submul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
         return res;
+#endif
     }
 
     Integer& Integer::operator *= (const Integer& n)
@@ -186,21 +213,24 @@ namespace Givaro {
     {
         if (l==0) return *this = Integer::zero;
         if (isZero(*this)) return *this;
-        //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
+#if GMP_LIMB_BITS != 64
+        return mulin(*this,Integer(l));
+#else
         mpz_mul_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
         return *this;
+#endif
     }
 
     Integer& Integer::operator *= (const int64_t l)
     {
         if (l==0) return *this =Integer::zero;
         if (isZero(*this)) return *this;
-        //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
-        // int32_t sgn = sign(l);
-        // mpz_mul_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, abs(l));
-        // if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
+#if GMP_LIMB_BITS != 64
+        return mulin(*this,Integer(l));
+#else
         mpz_mul_si( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
         return *this;
+#endif
     }
 
 
@@ -208,7 +238,6 @@ namespace Givaro {
     {
         if (isZero(n)) return Integer::zero;
         if (isZero(*this)) return Integer::zero;
-        //   Rep (res.gmp_rep)( MAX(SZ_REP(n.gmp_rep),SZ_REP(gmp_rep)) );
         Integer res;
         mpz_mul( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
         return res;
@@ -218,25 +247,26 @@ namespace Givaro {
     {
         if (l==0) return Integer::zero;
         if (isZero(*this)) return Integer::zero;
-        //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
+#if GMP_LIMB_BITS != 64
+        return (*this) * Integer(l);
+#else
         Integer res;
         mpz_mul_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
         return res;
+#endif
     }
 
     Integer Integer::operator * (const int64_t l) const
     {
         if (l==0) return Integer::zero;
         if (isZero(*this)) return Integer::zero;
-        //   Rep (res.gmp_rep)( MAX(SZ_REP(gmp_rep),1) );
+#if GMP_LIMB_BITS != 64
+        return (*this) * Integer(l);
+#else
         Integer res;
-        // int32_t sgn = sign(l);
-        // mpz_mul_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, abs(l));
-        //   if (sgn <0) (res.gmp_rep).size = -(res.gmp_rep).size;
-        //   return Integer((res.gmp_rep));
-        // if (sgn <0) mpz_neg( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&(res.gmp_rep) );
         mpz_mul_si( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
         return res;
+#endif
     }
 
     // -- operator *

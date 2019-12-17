@@ -126,9 +126,9 @@ namespace Givaro {
 
         // -- Rules: Storage_t | Compute_t | maxCardinality
         // --        ----------+-----------+---------------
-        // --        (u)intN_t |  uintN_t  | 2^(N/2) - 1: could be 2^(N/2) but provokes errors in fflas-ffpack
+        // --        (u)intN_t |  uintN_t  | 2^(N/2)
         // --          intN_t  | uint2N_t  | 2^(N-1) - 1
-        // --         uintN_t  | uint2N_t  | 2^N - 1
+        // --         uintN_t  | uint2N_t  | 2^N - 1 ; because 2^N can not be stored on Residu_t
         // --         float    |  float    | 4096: 2^12
         // --         double   |  double   | 94906266: floor(2^26 sqrt(2) + 1/2)
         // --         float    |  double   | 16777216: 2^24
@@ -139,9 +139,9 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxCardinality() {
             std::size_t k = sizeof(S);
-            Residu_t repunit = ~0;
-            return repunit >> (k << 2);
-            //return (Residu_t)1 << (k << 2); // 2^(N/2) with N = bitsize(Storage_t)
+            // Residu_t repunit = ~0;
+            // return repunit >> (k << 2);
+            return (Residu_t)1 << (k << 2); // 2^(N/2) with N = bitsize(Storage_t)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))

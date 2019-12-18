@@ -179,7 +179,7 @@ namespace Givaro {
             forcereduce : must return a reduced fraction num/den
             recurs : tries to augment the given bound k if failure
         */
-        bool ratrecon(const Integer& f, const Integer& m, const Integer& k, 
+        bool ratrecon(const Integer& f, const Integer& m, const Integer& k,
                       bool forcereduce = true, bool recurs = false ) ;
     public:
 
@@ -192,7 +192,7 @@ namespace Givaro {
 
         static bool RationalReconstruction(
             Integer& num, Integer& den, const Integer& f, const Integer& m,
-            const Integer& numbound, 
+            const Integer& numbound,
             bool forcereduce = true, bool recursive = true );
 
         // - exportation of the module

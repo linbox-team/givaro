@@ -30,7 +30,7 @@ template<class RingDomain, class BoundingStathme>
 int TestRR(RingDomain& RDom, GivRandom& generator,
            const typename RingDomain::Element& M,
            const typename RingDomain::Element& P,
-           const typename RingDomain::Element& Q, 
+           const typename RingDomain::Element& Q,
            const BoundingStathme& d) {
 //     RDom.write(std::clog << "M:= ", M) << ';' << std::endl;
 //     RDom.write(std::clog << "P:= ", P) << ';' << std::endl;
@@ -105,7 +105,7 @@ int TestRatRR(GivRandom& generator, const size_t b) {
 
     return TestRR(IntDom, generator, M, P, Q, P+1);
 }
- 
+
 
 
 template<class PDomain>
@@ -133,7 +133,6 @@ int TestPolRR(PDomain& PolDom, GivRandom& generator, const Degree d) {
 
     return TestRR(PolDom, generator, M, P, Q, d);
 }
- 
 
 
 int main(int argc, char ** argv)
@@ -146,6 +145,25 @@ int main(int argc, char ** argv)
     Integer::seeding((unsigned long)seed);
     GivRandom generator((unsigned long)seed);
 
+
+//     RDom.write(std::clog << "R3:= ", R) << ';' << std::endl;
+    ZRing<Integer> IntDom;
+    Integer R(75), M(250), A, B, d1(17), d2(26);
+
+    bool success = true;
+
+        // Should be impossible;
+    bool reconstructed = IntDom.ratrecon(A,B,R,M,d1);
+    success &= (!reconstructed);
+
+        // Now it should be ok
+    reconstructed = IntDom.ratrecon(A,B,R,M,d2);
+    success &= (reconstructed && (IntDom.isZero((R*B-A)%M)));
+
+    reconstructed = IntDom.ratrecon(A,B,R,M,d1,false);
+    success &= (reconstructed && (IntDom.isZero((R*B-A)%M)));
+
+
     typedef Modular<int64_t> Field;
     typedef Poly1Dom< Field, Dense > PolyZpz;
     typedef FracDom<PolyZpz> FracZpz;
@@ -154,14 +172,13 @@ int main(int argc, char ** argv)
     Field F101(101);
     Field F2(2);
     Field F65521(65521);
-    bool success = true;
-    
+
     {
         for(size_t loop=0; loop<100; ++loop)
             for (size_t b=10; b<10000; b <<=1)
                 success &= (! TestRatRR(generator, b) );
     }
-    
+
 
 
     {

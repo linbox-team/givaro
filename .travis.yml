@@ -22,13 +22,13 @@ matrix:
       sudo: required
       dist: bionic
       compiler: gcc
-      env: GCC_VERSION=5
+      env: GCC_VERSION=7
       addons:
         apt:
           sources:
           - ubuntu-toolchain-r-test
           packages:
-          - g++-5
+          - g++-7
           - binutils
           - libgmp-dev
           - libgmpxx4ldbl
@@ -37,13 +37,28 @@ matrix:
       sudo: required
       dist: bionic
       compiler: gcc
-      env: GCC_VERSION=6
+      env: GCC_VERSION=8
       addons:
         apt:
           sources:
           - ubuntu-toolchain-r-test
           packages:
-          - g++-6
+          - g++-8
+          - binutils
+          - libgmp-dev
+          - libgmpxx4ldbl
+
+    - os: linux
+      sudo: required
+      dist: bionic
+      compiler: gcc
+      env: GCC_VERSION=9
+      addons:
+        apt:
+          sources:
+          - ubuntu-toolchain-r-test
+          packages:
+          - g++-9
           - binutils
           - libgmp-dev
           - libgmpxx4ldbl

@@ -48,21 +48,6 @@ matrix:
           - libgmp-dev
           - libgmpxx4ldbl
 
-    - os: linux
-      sudo: required
-      dist: bionic
-      compiler: gcc
-      env: GCC_VERSION=9
-      addons:
-        apt:
-          sources:
-          - ubuntu-toolchain-r-test
-          packages:
-          - g++-9
-          - binutils
-          - libgmp-dev
-          - libgmpxx4ldbl
-
     # - os: linux
     #   sudo: required
     #   dist: trusty

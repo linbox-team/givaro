@@ -5,7 +5,7 @@ matrix:
   include:
     - os: linux
       sudo: required
-      dist: bionic
+      dist: xenial
       compiler: gcc
       env: GCC_VERSION=4.9
       addons:

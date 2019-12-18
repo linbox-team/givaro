@@ -397,7 +397,7 @@ namespace Givaro {
         }
         std::ostream& write( std::ostream& o ) const
         {
-            return o << 'I';
+            return o << "ZRing<Integer>";
         }
 
         using Parent_t::read;

@@ -126,22 +126,22 @@ namespace Givaro {
 
         // -- Rules: Storage_t | Compute_t | maxCardinality
         // --        ----------+-----------+---------------
-        // --        (u)intN_t |  uintN_t  | 2^(N/2) - 1: could be 2^(N/2) but provokes errors in fflas-ffpack
+        // --        (u)intN_t |  uintN_t  | 2^(N/2)
         // --          intN_t  | uint2N_t  | 2^(N-1) - 1
-        // --         uintN_t  | uint2N_t  | 2^N - 1
+        // --         uintN_t  | uint2N_t  | 2^N - 1 ; because 2^N can not be stored on Residu_t
         // --         float    |  float    | 4096: 2^12
         // --         double   |  double   | 94906266: floor(2^26 sqrt(2) + 1/2)
         // --         float    |  double   | 16777216: 2^24
         // --         Integer  |  Integer  | None
-        // --         ruint<K> |  ruint<K> | ruint<K>::maxCardinality()
-        // --         ruint<K> | ruint<K+1>| (ruint<K+1>::maxCardinality()-1).Low/2
+        // --         ruint<K> |  ruint<K> | ruint<K>::maxModulus (= 2^(2^K))
+        // --         ruint<K> | ruint<K+1>| ruint<K>::maxCardinality/2
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxCardinality() {
             std::size_t k = sizeof(S);
-            Residu_t repunit = ~0;
-            return repunit >> (k << 2);
-            //return (Residu_t)1 << (k << 2); // 2^(N/2) with N = bitsize(Storage_t)
+            // Residu_t repunit = ~0;
+            // return repunit >> (k << 2);
+            return (Residu_t)1 << (k << 2); // 2^(N/2) with N = bitsize(Storage_t)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
@@ -157,10 +157,10 @@ namespace Givaro {
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && IS_SAME(S, Compute_t))
-        static Residu_t maxCardinality() { return 4096; }
+        static Residu_t maxCardinality() { return 4096.f; }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && !IS_SAME(S, Compute_t))
-        static Residu_t maxCardinality() { return 16777216; }
+        static Residu_t maxCardinality() { return 16777216.f; }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, double))
         static Residu_t maxCardinality() { return 94906266; }
@@ -177,12 +177,76 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-            Residu_t max;
-            return RecInt::fill_with_1(max) >> 1;
+            return Residu_t::maxCardinality() >> 1;
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value)
         static Residu_t maxCardinality() {
+            return -1;
+        }
+
+        // -- maxFFLASCardinality
+        // -- Goal: being able to store in Compute_t the result of x*y + z*t
+        // --       when x, y, z and t belong to Storage_t
+        // -- => Storage_t must store integers up to maxCardinality-1
+        // -- => Compute_t must store integers up to 2(p-1)(p-1) where p = maxCardinality
+
+        // -- Rules: Storage_t | Compute_t | maxCardinality
+        // --        ----------+-----------+---------------
+        // --        (u)intN_t |  uintN_t  | 2^((N-1)/2)
+        // --          intN_t  | uint2N_t  | 2^(N-1) - 1
+        // --         uintN_t  | uint2N_t  | 2^(N-1)
+        // --         float    |  float    | 2897: floor(2^11 x sqrt(2)+1)
+        // --         double   |  double   | 67108865 : 2^26 + 1
+        // --         float    |  double   | 16777217: 2^24 +1
+        // --         Integer  |  Integer  | None
+        // --         ruint<K> |  ruint<K> | ruint<K>::maxModulus (= 2^(2^K))
+        // --         ruint<K> | ruint<K+1>| ruint<K>::maxCardinality()/2
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
+        static Residu_t maxFFLASCardinality() {
+            std::size_t k = sizeof(S);
+            return static_cast<Residu_t> ( (1ul << (k << 2)) * M_SQRT1_2) ; // 2^(N/2-1/2) with N = bitsize(Storage_t)
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
+        static Residu_t maxFFLASCardinality() {
+            Residu_t repunit = ~0;
+            return repunit >> 1; // 2^(N-1)-1 with N = bitsize(Storage_t)
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_UINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
+        static Residu_t maxFFLASCardinality() {
+            std::size_t k = sizeof(S);
+            return (Residu_t)1 << ((k << 3) -1); // 2^(N-1) with N = bitsize(Storage_t)
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && IS_SAME(S, Compute_t))
+        static Residu_t maxFFLASCardinality() { return 2897.f; }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && !IS_SAME(S, Compute_t))
+        static Residu_t maxFFLASCardinality() { return 16777217.f; }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, double))
+        static Residu_t maxFFLASCardinality() { return 67108865.; }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, Integer))
+        static Residu_t maxFFLASCardinality() { return -1; }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
+        static Residu_t maxFFLASCardinality()
+        {
+            return S::maxModulus();
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
+        static Residu_t maxFFLASCardinality()
+        {
+            return Residu_t::maxCardinality() >> 1;
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value)
+        static Residu_t maxFFLASCardinality() {
             return -1;
         }
 

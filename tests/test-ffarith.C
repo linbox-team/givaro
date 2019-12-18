@@ -6,6 +6,7 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
+#include <iomanip>
 
 #include "test-fieldarith.h"
 #include <givaro/modular.h>
@@ -29,6 +30,7 @@ int main(int argc, char ** argv)
 #ifdef GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
+    std::cerr<<std::setprecision(17);
     Integer::seeding((uint64_t)seed);
     RecInt::srand(seed);
 

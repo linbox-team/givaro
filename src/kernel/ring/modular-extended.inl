@@ -172,20 +172,20 @@ namespace Givaro {
     ModularExtended<float>::mul(typename ModularExtended<float>::Element& r,
                                 const typename ModularExtended<float>::Element& a,
                                 const typename ModularExtended<float>::Element& b) const {
-#ifdef FP_FAST_FMAF
+#ifdef FP_FAST_FMAF /* if available use fast fma */
         Element abh, abl, pql, q;
         abh = a * b;
         abl = fma(a, b, -abh);
         q = std::floor(abh*_invp);
         pql = fma (-q, _p, abh);
         r = abl + pql;
-#elif defined __SSE_MATH__ // fp arithmetic is done on SSE, not fpu87
+#elif defined __SSE_MATH__ /* use mult_dekker if fp arith is done with SSE */
         Element abh, abl, pql, pqh, q;
         mult_dekker(a, b, abh, abl);
         q = std::floor(abh*_invp);
         mult_dekker(-q, _p, pqh, pql);
         r = (abh + pqh) + (abl + pql);
-#else
+#else /* fallback */
         return r = static_cast<float>(fmod(static_cast<double>(a)* static_cast<int64_t>(b),static_cast<double>(_p)));
 #endif
         if(r >= _p)
@@ -204,7 +204,7 @@ namespace Givaro {
     ModularExtended<double>::mul(typename ModularExtended<double>::Element& r,
                                  const typename ModularExtended<double>::Element& a,
                                  const typename ModularExtended<double>::Element& b) const {
-#ifdef FP_FAST_FMA
+#ifdef FP_FAST_FMA /* if available use fast fma */
         Element abh, abl, pql, q;
         abh = a * b;
         abl = fma(a, b, -abh);
@@ -215,7 +215,7 @@ namespace Givaro {
             r-= _p;
         else if(r < 0)
             r += _p;
-#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
+#elif defined __SSE_MATH__ /* use mult_dekker if fp arith is done with SSE */
         Element abh, abl, pql, pqh, q;
         mult_dekker(a, b, abh, abl);
         q = std::floor(abh*_invp);
@@ -225,7 +225,7 @@ namespace Givaro {
             r-= _p;
         else if(r < 0)
             r += _p;
-#else
+#else /* fallback */
         RecInt::ruint<6> ari(a);
         RecInt::ruint<6> bri(b);
         RecInt::ruint<6> pri(_lp);
@@ -248,17 +248,17 @@ namespace Givaro {
     inline
     typename ModularExtended<float>::Element&
     ModularExtended<float>::reduce (typename ModularExtended<float>::Element& a) const{
-#ifdef FP_FAST_FMAF
+#ifdef FP_FAST_FMAF /* if available use fast fma */
         Element pql, q;
         q = std::floor(a*_invp);
         pql = fma (-q, _p, a);
         a = pql;
-#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
+#elif defined __SSE_MATH__ /* use mult_dekker if fp arith is done with SSE */
         Element pql, pqh, q;
         q = std::floor(a*_invp);
         mult_dekker(-q, _p, pqh, pql);
         a = (a + pqh) + pql;
-#else
+#else /* fallback */
         a = static_cast<float>(fmod(static_cast<double>(a),static_cast<double>(_p)));
 #endif
         if(a >= _p)
@@ -275,17 +275,17 @@ namespace Givaro {
     inline
     typename ModularExtended<double>::Element&
     ModularExtended<double>::reduce (typename ModularExtended<double>::Element& a) const{
-#ifdef FP_FAST_FMA
+#ifdef FP_FAST_FMA /* if available use fast fma */
         Element pql, q;
         q = std::floor(a*_invp);
         pql = fma (-q, _p, a);
         a = pql;
-#elif defined __GIVARO_HAVE_SSE_INSTRUCTIONS
+#elif defined __SSE_MATH__ /* use mult_dekker if fp arith is done with SSE */
         Element pql, pqh, q;
         q = std::floor(a*_invp);
         mult_dekker(-q, _p, pqh, pql);
         a = (a + pqh) + pql;
-#else
+#else /* fallback */
         a = fmod(a,_p);
 #endif
         if(a >= _p)

@@ -5,7 +5,7 @@ matrix:
   include:
     - os: linux
       sudo: required
-      dist: trusty
+      dist: xenial
       compiler: gcc
       env: GCC_VERSION=4.9
       addons:
@@ -14,12 +14,13 @@ matrix:
           - ubuntu-toolchain-r-test
           packages:
           - g++-4.9
+          - binutils
           - libgmp-dev
           - libgmpxx4ldbl
 
     - os: linux
       sudo: required
-      dist: trusty
+      dist: bionic
       compiler: gcc
       env: GCC_VERSION=5
       addons:
@@ -28,12 +29,13 @@ matrix:
           - ubuntu-toolchain-r-test
           packages:
           - g++-5
+          - binutils
           - libgmp-dev
           - libgmpxx4ldbl
 
     - os: linux
       sudo: required
-      dist: trusty
+      dist: bionic
       compiler: gcc
       env: GCC_VERSION=6
       addons:
@@ -42,6 +44,7 @@ matrix:
           - ubuntu-toolchain-r-test
           packages:
           - g++-6
+          - binutils
           - libgmp-dev
           - libgmpxx4ldbl
 

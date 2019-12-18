@@ -206,7 +206,7 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxFFLASCardinality() {
             std::size_t k = sizeof(S);
-            return static_cast<Residu_t> ( (1 << (k << 2)) * M_SQRT1_2) ; // 2^(N-1/2) with N = bitsize(Storage_t)
+            return static_cast<Residu_t> ( (1ul << (k << 2)) * M_SQRT1_2) ; // 2^(N/2-1/2) with N = bitsize(Storage_t)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
@@ -222,13 +222,13 @@ namespace Givaro {
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && IS_SAME(S, Compute_t))
-        static Residu_t maxFFLASCardinality() { return 2897; }
+        static Residu_t maxFFLASCardinality() { return 2897.f; }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float) && !IS_SAME(S, Compute_t))
-        static Residu_t maxFFLASCardinality() { return 16777217; }
+        static Residu_t maxFFLASCardinality() { return 16777217.f; }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, double))
-        static Residu_t maxFFLASCardinality() { return 67108865; }
+        static Residu_t maxFFLASCardinality() { return 67108865.; }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, Integer))
         static Residu_t maxFFLASCardinality() { return -1; }

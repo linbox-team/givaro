@@ -35,30 +35,27 @@ namespace Givaro {
 
     Integer& Integer::divin(Integer& res, const int64_t n)
     {
-        //  if (n ==0) {
-        //    GivMathDivZero("[Integer::/]: division by zero");
-        //  }
+
         if (isZero(res)) return res;
+#if GMP_LIMB_BITS != 64
+        return divin(res,Integer(n));
+#else
         int32_t sgn = Givaro::sign(n);
         mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, std::abs(n));
         if (sgn <0) return res = -res;
-        // if (n<0)
-        // mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
-        // else
-        // mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&res.gmp_rep, n);
-
-
         return res;
+#endif
     }
 
     Integer& Integer::divin(Integer& res, const uint64_t n)
     {
-        //  if (n ==0) {
-        //    GivMathDivZero("[Integer::/]: division by zero");
-        //  }
         if (isZero(res)) return res;
+#if GMP_LIMB_BITS != 64
+        return divin(res,Integer(n));
+#else
         mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
         return res;
+#endif
     }
 
     Integer& Integer::div(Integer& res, const Integer& n1, const Integer& n2)
@@ -74,20 +71,14 @@ namespace Givaro {
     Integer& Integer::div(Integer& res, const Integer& n1, const int64_t n2)
     {
         if (isZero(n1)) return res = Integer::zero;
-        //  if (isZero(n2)) {
-        //    GivMathDivZero("[Integer::/]: division by zero");
-        //  }
+#if GMP_LIMB_BITS != 64
+        return div(res,n1,Integer(n2));
+#else
         int32_t sgn = Givaro::sign(n2);
         mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, std::abs(n2));
         if (sgn <0) return res = -res;
-
-        // if (n2>0)
-        // mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
-        // else
-        // mpz_cdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&n1.gmp_rep, n2);
-
-
         return res;
+#endif
     }
 
     Integer& Integer::div(Integer& res, const Integer& n1, const int32_t n2)
@@ -98,11 +89,12 @@ namespace Givaro {
     Integer& Integer::div(Integer& res, const Integer& n1, const uint64_t n2)
     {
         if (isZero(n1)) return res = Integer::zero;
-        //  if (isZero(n2)) {
-        //    GivMathDivZero("[Integer::/]: division by zero");
-        //  }
+#if GMP_LIMB_BITS != 64
+        return div(res,n1,Integer(n2));
+#else
         mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
         return res;
+#endif
     }
 
     Integer& Integer::divexact  (Integer& q, const Integer& n1, const Integer& n2)
@@ -119,19 +111,27 @@ namespace Givaro {
     Integer& Integer::divexact  (Integer& q, const Integer& n1, const uint64_t & n2)
     {
         if (isZero(n1)) return q = Integer::zero;
+#if GMP_LIMB_BITS != 64
+        return divexact(q,n1,Integer(n2));
+#else
         mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
                          (mpz_srcptr)&(n1.gmp_rep), (n2)) ;
         return q;
+#endif
     }
 
     Integer& Integer::divexact  (Integer& q, const Integer& n1, const int64_t& n2)
     {
         if (isZero(n1)) return q = Integer::zero;
+#if GMP_LIMB_BITS != 64
+        return divexact(q,n1,Integer(n2));
+#else
         mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
                          (mpz_srcptr)&(n1.gmp_rep), std::abs(n2)) ;
         if (n2<0)
             negin(q);
         return q;
+#endif
     }
 
 
@@ -150,20 +150,28 @@ namespace Givaro {
     Integer  Integer::divexact  (const Integer& n1, const uint64_t& n2)
     {
         if (isZero(n1)) return Integer::zero;
+#if GMP_LIMB_BITS != 64
+        return divexact(n1,Integer(n2));
+#else
         Integer q;
         mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
                          (mpz_srcptr)&(n1.gmp_rep), (n2)) ;
         return q;
+#endif
     }
 
     Integer  Integer::divexact  (const Integer& n1, const int64_t& n2)
     {
         if (isZero(n1)) return Integer::zero;
+#if GMP_LIMB_BITS != 64
+        return divexact(n1,Integer(n2));
+#else
         Integer q;
         mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
                          (mpz_srcptr)&(n1.gmp_rep), std::abs(n2)) ;
         if (n2<0) negin(q);
         return q;
+#endif
     }
 
     Integer& Integer::operator /= (const Integer& n)
@@ -182,8 +190,12 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return *this;
+#if GMP_LIMB_BITS != 64
+        return *this /= Integer(l);
+#else
         mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
         return *this;
+#endif
     }
 
     Integer& Integer::operator /= (const int64_t l)
@@ -192,10 +204,14 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return *this;
+#if GMP_LIMB_BITS != 64
+        return *this /= Integer(l);
+#else
         int32_t sgn = Givaro::sign(l);
         mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
         if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep));
         return *this;
+#endif
     }
 
 
@@ -207,12 +223,6 @@ namespace Givaro {
         if (isZero(*this)) return Integer::zero;
         Integer res;
         mpz_tdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, (mpz_srcptr)&n.gmp_rep) ;
-
-        // if (n>0)
-        // mpz_fdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
-        // else
-        // mpz_cdiv_q( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, (mpz_ptr)&n.gmp_rep) ;
-
         return res;
     }
 
@@ -222,10 +232,14 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return Integer::zero;
+#if GMP_LIMB_BITS != 64
+        return *this / Integer(l);
+#else
         Integer res;
         mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, l);
 
         return res;
+#endif
     }
 
     Integer Integer::operator / (const int64_t l) const
@@ -234,17 +248,15 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return Integer::zero;
+#if GMP_LIMB_BITS != 64
+        return *this / Integer(l);
+#else
         Integer res;
         int32_t sgn = Givaro::sign(l);
         mpz_tdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_srcptr)&gmp_rep, std::abs(l));
         if (sgn <0) return negin(res);
-        // if (l>0)
-        // mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, l) ;
-        // else
-        // mpz_fdiv_q_ui( (mpz_ptr)&(res.gmp_rep), (mpz_ptr)&gmp_rep, -l ) ;
-
-
         return res;
+#endif
     }
 
     // Euclidian division
@@ -263,6 +275,12 @@ namespace Givaro {
 
     Integer& Integer::divmod(Integer& q, int64_t & r, const Integer& a, const int64_t b)
     {
+#if GMP_LIMB_BITS != 64
+        Integer res;
+        divmod(q,res,a,Integer(b));
+        r = (int64_t)res;
+        return q;
+#else
         r = (int64_t)mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
                                     (mpz_srcptr)&(a.gmp_rep), std::abs(b));
 
@@ -273,10 +291,17 @@ namespace Givaro {
         }
 
         return q;
+#endif
     }
 
     Integer& Integer::divmod(Integer& q, uint64_t & r, const Integer& a, const uint64_t b)
     {
+#if GMP_LIMB_BITS != 64
+        Integer res;
+        divmod(q,res,a,Integer(b));
+        r = (uint64_t)res; // divmod already corrects when a<0
+        return q;
+#else
         r = mpz_tdiv_q_ui( (mpz_ptr)&(q.gmp_rep),
                            (mpz_srcptr)&(a.gmp_rep), b);
 
@@ -290,6 +315,7 @@ namespace Givaro {
         }
 
         return q;
+#endif
     }
 
     Integer& Integer::ceil(Integer& q, const Integer & n, const Integer & d)
@@ -369,44 +395,68 @@ namespace Givaro {
 
     Integer& Integer::trem(Integer& r, const Integer &n , const uint64_t& d)
     {
+#if GMP_LIMB_BITS != 64
+        return trem(r,n,Integer(d));
+#else
         mpz_tdiv_r_ui((mpz_ptr)&(r.gmp_rep),
                       (mpz_srcptr)&(n.gmp_rep),
                       (d));
         return r;
+#endif
     }
 
     Integer& Integer::crem(Integer& r, const Integer &n , const uint64_t & d)
     {
+#if GMP_LIMB_BITS != 64
+        return crem(r,n,Integer(d));
+#else
         mpz_cdiv_r_ui((mpz_ptr)&(r.gmp_rep),
                       (mpz_srcptr)&(n.gmp_rep),
                       (d));
         return r;
+#endif
     }
 
     Integer& Integer::frem(Integer& r, const Integer &n , const uint64_t & d)
     {
+#if GMP_LIMB_BITS != 64
+        return frem(r,n,Integer(d));
+#else
         mpz_fdiv_r_ui((mpz_ptr)&(r.gmp_rep),
                       (mpz_srcptr)&(n.gmp_rep),
                       d);
         return r;
+#endif
     }
 
     uint64_t Integer::trem(const Integer &n , const uint64_t& d)
     {
+#if GMP_LIMB_BITS != 64
+        return (uint64_t)trem(n,Integer(d));
+#else
         return mpz_cdiv_ui( (mpz_srcptr)&(n.gmp_rep),
                             (d));
+#endif
     }
 
     uint64_t Integer::crem(const Integer &n , const uint64_t & d)
     {
+#if GMP_LIMB_BITS != 64
+        return (uint64_t)crem(n,Integer(d));
+#else
         return mpz_tdiv_ui( (mpz_srcptr)&(n.gmp_rep),
                             (d));
+#endif
     }
 
     uint64_t Integer::frem(const Integer &n , const uint64_t & d)
     {
+#if GMP_LIMB_BITS != 64
+        return (uint64_t)frem(n,Integer(d));
+#else
         return mpz_fdiv_ui( (mpz_srcptr)&(n.gmp_rep),
                             d);
+#endif
     }
 
     // -- operator /

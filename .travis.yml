@@ -5,7 +5,7 @@ matrix:
   include:
     - os: linux
       sudo: required
-      dist: trusty
+      dist: bionic
       compiler: gcc
       env: GCC_VERSION=4.9
       addons:
@@ -20,7 +20,7 @@ matrix:
 
     - os: linux
       sudo: required
-      dist: trusty
+      dist: bionic
       compiler: gcc
       env: GCC_VERSION=5
       addons:
@@ -35,7 +35,7 @@ matrix:
 
     - os: linux
       sudo: required
-      dist: trusty
+      dist: bionic
       compiler: gcc
       env: GCC_VERSION=6
       addons:

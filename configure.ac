@@ -61,13 +61,15 @@ CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
 
 #TODO use -fast for icc, -ipa for eko...
 if test "x$DBG" = "xyes" ; then
-    DEFAULT_CFLAGS="-O0 -Wall -g -UNDEBUG -DGIVARO_DEBUG -DDEBUG"
+    OPTIM_FLAGS="-O0"
+    DEBUG_FLAGS="-Wall -g -UNDEBUG -DGIVARO_DEBUG -DDEBUG"
 else
-    DEFAULT_CFLAGS="-O2 -Wall -DNDEBUG -UGIVARO_DEBUG -UDEBUG"
+    OMPTIM_FLAGS="-O2"
+    DEBUG_FLAGS="-Wall -DNDEBUG -UGIVARO_DEBUG -UDEBUG"
 fi
 
 if test "x$PROF" = "xyes" ; then
-    DEFAULT_CFLAGS+=" -pg"
+    DEBUG_FLAGS+=" -pg"
 fi
 
 if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
@@ -75,23 +77,23 @@ if test "x$WARN" = "xyes" -o "x$WARN" = "xfull" ; then
         xeko)
             ;;
         xgcc|xgcc44|xgcc48|xicc|xclang|xclang38)
-            DEFAULT_CFLAGS+=" -Wextra"
+            DEBUG_FLAGS+=" -Wextra"
             if test "x${WARN}" = "xfull" ; then
-                DEFAULT_CFLAGS+=" -Wuninitialized -Wconversion -Wcast-qual "
-                DEFAULT_CFLAGS+=" -pedantic -Wshadow -Wpointer-arith "
-                DEFAULT_CFLAGS+=" -Wwrite-strings -Wno-long-long"
+                DEBUG_FLAGS+=" -Wuninitialized -Wconversion -Wcast-qual "
+                DEBUG_FLAGS+=" -pedantic -Wshadow -Wpointer-arith "
+                DEBUG_FLAGS+=" -Wwrite-strings -Wno-long-long"
                 if test "x${CCNAM}" != "xicc" ; then
-                    DEFAULT_CFLAGS+=" -Wcast-align -Wno-variadic-macros"
+                    DEBUG_FLAGS+=" -Wcast-align -Wno-variadic-macros"
                 fi
                 case x${CCNAM} in
                     xicc)
-                        DEFAULT_CFLAGS+=" -Wcheck -ansi"
+                        DEBUG_FLAGS+=" -Wcheck -ansi"
                         ;;
                     xgcc|xgcc44|xgcc48)
-                        DEFAULT_CFLAGS+=" -Wno-vla"
+                        DEBUG_FLAGS+=" -Wno-vla"
                         ;;
                     xclang|xclang38)
-                        DEFAULT_CFLAGS+=" -Wno-vla-extension -D__STRICT_ANSI__"
+                        DEBUG_FLAGS+=" -Wno-vla-extension -D__STRICT_ANSI__"
                         ;;
                 esac
             fi
@@ -122,7 +124,7 @@ echo "-----------------------------------------------"
 echo "        START  GIVARO CONFIG                   "
 echo "-----------------------------------------------"
 
-# Add -march=native to DEFAULT_CFLAGS if not present in CXXFLAGS and
+# Add -march=native to OPTFLAGS if not present in CXXFLAGS and
 # target==host and --no-marchnative is not set
 AC_ARG_WITH(archnative, [AC_HELP_STRING([--without-arch-native],
     [do not use -march=native (default is to use it if -march is not present in
@@ -135,9 +137,10 @@ AS_CASE([$CXXFLAGS],
             [AS_IF([test "${host}" != "${build}" -o "${host}" != "${target}"],
                 [AC_MSG_NOTICE("For efficiency you may want to add a '-march=...' flag in CXXFLAGS")],
                 [AC_MSG_NOTICE("Adding '-march=native' to flags")
-                 DEFAULT_CFLAGS+=" -march=native"])])])
+                 OPTIM_FLAGS+=" -march=native"])])])
 
-
+OLDCXXFLAGS="$CXXFLAGS"
+CXXFLAGS+=" $OPTIM_FLAGS $DEBUG_FLAGS"
 # On i386 and i686, add the -mfpmath=sse flags if SSE is enable
 AS_CASE([$target],
         [*i386*|*i686*],
@@ -148,13 +151,13 @@ AS_CASE([$target],
                                                     #endif
                                                     ]])],
                 [AC_MSG_NOTICE("Adding '-mfpmath=sse' to flags")
-                 DEFAULT_CFLAGS+=" -mfpmath=sse"],
+                 OPTIM_FLAGS+=" -mfpmath=sse"],
                 [], # either the flag is not recognized by the compiler or SSE
                     # is not avail => do nothing
                 [AC_MSG_NOTICE("If available you may want to add '-mfpmath=sse'
                  to flags")])] # cross-compilation case
             []) # not on i386 nor i686 => do nothing
-	
+CXXFLAGS="$OLDCXXFLAGS"
 echo "-----------------------------------------------"
 
 dnl With GCC's default ABI version, a __m128 or __m256 are the same types and therefore we cannot
@@ -218,19 +221,16 @@ AC_DEFINE_UNQUOTED(INT32, $GIVARO_INT32, Canonical 32-bit data type)
 AC_DEFINE_UNQUOTED(INT64, $GIVARO_INT64, Canonical 64-bit data type)
 
 echo "-----------------------------------------------"
-# Feature checks
-
-
-echo "-----------------------------------------------"
+CXXFLAGS="${BACKUP_CXXFLAGS}"
 
 GIV_CHECK_GMP(40000)
 REQUIRED_FLAGS="${REQUIRED_FLAGS} ${GMP_CFLAGS}"
 
 GIV_DOC
-CXXFLAGS=${BACKUP_CXXFLAGS}
-CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS}"
+
+CXXFLAGS="${CXXFLAGS} ${REQUIRED_FLAGS} ${OPTIM_FLAGS} ${DEBUG_FLAGS}"
 LIBS="${GMP_LIBS}"
-echo "CXXFLAGS=${CXXFLAGS}"
+echo "CXXFLAGS = ${CXXFLAGS}"
 
 AC_SUBST(CXXFLAGS)
 

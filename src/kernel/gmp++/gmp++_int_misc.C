@@ -30,7 +30,14 @@ namespace Givaro {
     Integer fact ( uint64_t l)
     {
         Integer Res ;
+#if GMP_LIMB_BITS != 64
+        // factorial too large if l > 2^32 anyway
+        uint32_t i(l);
+        GIVARO_ASSERT( (uint64_t)i == l, "Factorial too large");
+        mpz_fac_ui( (mpz_ptr)&(Res.gmp_rep), i ) ;
+#else
         mpz_fac_ui( (mpz_ptr)&(Res.gmp_rep), l ) ;
+#endif
         return Res ;
     }
 
@@ -143,16 +150,16 @@ namespace Givaro {
         // Copied and adapted from mpz/nextprime.c
         Integer& prevprime(Integer& r, const Integer &p)
         {
-            if (p < 3) return (r=2);
+            if (p < 3) return (r=2u);
             if (isOdd(p))
-                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2 );
+                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 2u );
             else
-                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1 );
+                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(p.gmp_rep), 1u );
 
             while( !mpz_probab_prime_p ( (mpz_srcptr)&(r.gmp_rep), _GIVARO_ISPRIMETESTS_ ) )
             {
 
-                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(r.gmp_rep), 2 );
+                mpz_sub_ui ( (mpz_ptr)&(r.gmp_rep), (mpz_srcptr)&(r.gmp_rep), 2u );
 
             }
 
@@ -162,7 +169,7 @@ namespace Givaro {
 
 
     // ==========================================================================
-    // Computes and returns the Kronecker/Jacobi and Legendre symbols (u/v) 
+    // Computes and returns the Kronecker/Jacobi and Legendre symbols (u/v)
     // of the integers u and v.
     // The algorithm used is Gmp's.
     int32_t kronecker(const Integer& u, const Integer& v)

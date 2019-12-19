@@ -188,12 +188,12 @@ namespace Givaro {
         // -- maxFFLASCardinality
         // -- Goal: being able to store in Compute_t the result of x*y + z*t
         // --       when x, y, z and t belong to Storage_t
-        // -- => Storage_t must store integers up to maxCardinality-1
-        // -- => Compute_t must store integers up to 2(p-1)(p-1) where p = maxCardinality
+        // -- => Storage_t must store integers between 0 and maxFFLASCardinality-1
+        // -- => Signed(Compute_t) must store integers between -(p-1) and 2(p-1)(p-1) where p = maxFFLASCardinality
 
-        // -- Rules: Storage_t | Compute_t | maxCardinality
+        // -- Rules: Storage_t | Compute_t | maxFFLASCardinality
         // --        ----------+-----------+---------------
-        // --        (u)intN_t |  uintN_t  | 2^((N-1)/2)
+        // --        (u)intN_t |  uintN_t  | 2^((N-2)/2)
         // --          intN_t  | uint2N_t  | 2^(N-1) - 1
         // --         uintN_t  | uint2N_t  | 2^(N-1)
         // --         float    |  float    | 2897: floor(2^11 x sqrt(2)+1)
@@ -206,7 +206,7 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxFFLASCardinality() {
             std::size_t k = sizeof(S);
-            return static_cast<Residu_t> ( (1ul << (k << 2)) * M_SQRT1_2) ; // 2^(N/2-1/2) with N = bitsize(Storage_t)
+            return static_cast<Residu_t> (1ul << ((k << 2) - 1)) ; // 2^((N-2)/2) with N = bitsize(Storage_t)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))

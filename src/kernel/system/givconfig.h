@@ -187,6 +187,7 @@
 #ifdef __GIVARO_DEBUG
 #  ifdef GIVARO_HAVE_ANSI_LIBRARY  // here is ANSI C++ header definition !!!
 #    include <sstream>
+#    include <givaro/giverror.h>
 #    define GIVARO_ASSERT(cond, msg) { \
     if (!(cond)) {\
         std::ostringstream ostr;\
@@ -208,6 +209,7 @@
 
 #  else
 #    include <sstream>
+#    include <givaro/giverror.h>
 #    define GIVARO_ASSERT(cond, msg) { \
     if (!(cond)) {\
         std::ostringstream ostr;\

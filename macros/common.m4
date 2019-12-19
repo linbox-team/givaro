@@ -72,7 +72,7 @@ AC_DEFUN([SET_FLAGS],[
 dnl Append -march=native to OPTIM_FLAGS if not present in CXXFLAGS and
 dnl target==host and --no-marchnative is not set
 AC_DEFUN([ARCH_FLAGS],[
-    AC_ARG_WITH(archnative, [AC_HELP_STRING([--without-arch-native],
+    AC_ARG_WITH(archnative, [AC_HELP_STRING([--without-archnative],
         [do not use -march=native (default is to use it if -march is not present in CXXFLAGS)])])
 
     AS_CASE([$CXXFLAGS],

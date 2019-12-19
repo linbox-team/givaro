@@ -43,6 +43,8 @@ AS_BOX([       START GIVARO CONFIG       ])
 : ${CXXFLAGS=""}
 ORIGINAL_CXXFLAGS="${CXXFLAGS}"
 
+AC_COMPILER_NAME
+
 # We need a C++11 compiler now - AB 2014-12-12
 # clang-3.8 does not support __float128 without explicitly passing it -std=c++11
 AS_IF([test "x${CCNAM}" = "xclang38"],

@@ -84,6 +84,7 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 
     F.init(a, -1);
     TESTE_EG(a, F.mOne);
+    TESTE_T(F.isMOne(a));
 
     F.assign(a, x);
     F.assign(b, y);

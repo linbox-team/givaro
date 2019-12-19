@@ -55,7 +55,11 @@ namespace Givaro {
 
     int32_t absCompare(const Integer &a, const uint32_t b)
     {
+#if GMP_LIMB_BITS == 32
+        return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), b);
+#else
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t)b);
+#endif
     }
 
     int32_t absCompare(const Integer &a, const int64_t b)
@@ -69,7 +73,11 @@ namespace Givaro {
 
     int32_t absCompare(const Integer &a, const int32_t b)
     {
+#if GMP_LIMB_BITS == 32
+        return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), std::abs(b));
+#else
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t) std::abs(b));
+#endif
     }
 
     // Operator !=
@@ -95,7 +103,11 @@ namespace Givaro {
 
     int32_t Integer::operator != (const uint32_t l) const
     {
+#if GMP_LIMB_BITS == 32
+        return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) != 0;
+#else
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) != 0;
+#endif
     }
 
     int32_t Integer::operator != (const int64_t l) const
@@ -237,7 +249,11 @@ namespace Givaro {
 
     int32_t Integer::operator > (const uint32_t l) const
     {
+#if GMP_LIMB_BITS == 32
+        return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
+#else
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) > 0;
+#endif
     }
 
     int32_t Integer::operator > (const int64_t l) const
@@ -307,7 +323,11 @@ namespace Givaro {
 
     int32_t Integer::operator < (const uint32_t l) const
     {
+#if GMP_LIMB_BITS == 32
+        return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
+#else
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) < 0;
+#endif
     }
 
     int32_t Integer::operator < (const uint64_t l) const
@@ -506,7 +526,7 @@ namespace Givaro {
     }
     int32_t isMOne(const Integer& a)
     {
-        return ! mpz_cmp_si((mpz_srcptr)&(a.gmp_rep), 1);
+        return ! mpz_cmp_si((mpz_srcptr)&(a.gmp_rep), -1);
     }
 
     int32_t nonZero(const Integer& a)

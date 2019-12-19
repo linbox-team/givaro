@@ -39,19 +39,9 @@ AC_CHECK_HEADERS([float.h limits.h stddef.h stdlib.h string.h sys/time.h stdint.
 AS_BOX([       START GIVARO CONFIG       ])
 ###########################################
 
-AC_DEBUG
-AC_PROFILE
-AC_WARNINGS
-AC_INLINE # DON'T TOUCH
-
-AS_ECHO([---------------------------------------])
-
 # Set CXXFLAGS to an empty string if not defined, and save it
 : ${CXXFLAGS=""}
 ORIGINAL_CXXFLAGS="${CXXFLAGS}"
-
-# Look for compiler name to try and pass different flags according to compiler
-AC_COMPILER_NAME
 
 # We need a C++11 compiler now - AB 2014-12-12
 # clang-3.8 does not support __float128 without explicitly passing it -std=c++11
@@ -63,90 +53,19 @@ REQUIRED_FLAGS="${CXX11FLAGS}"
 # Add the c++11 flags for the configure compilations as clang needs it to work properly with a glibc++ compiled with gcc
 CXXFLAGS="${CXX11FLAGS} ${CXXFLAGS}"
 
-# --enable-debug ?
-# __GIVARO_DEBUG will be (un)set in givaro-config.h
-#TODO use -fast for icc, -ipa for eko...
-AS_IF([test "x$USE_DEBUG" = "xyes"],
-      [OPTIM_FLAGS="-O0"
-        DEBUG_FLAGS="-Wall -g -UNDEBUG -DDEBUG"],
-      [OPTIM_FLAGS="-O2"
-        DEBUG_FLAGS="-Wall -DNDEBUG -UDEBUG"]
-      )
+AS_ECHO([---------------------------------------])
 
-# --enable-profile ?
-AS_IF([test "x$PROF" = "xyes"], [ DEBUG_FLAGS+=" -pg" ])
+AC_INLINE # DON'T TOUCH
 
-# --enable-warnings ?
-AS_IF([test "x$WARN" = "xyes" -o "x$WARN" = "xfull"],
-      [AS_CASE([$CCNAM],
-               [eko], [],
-               [gcc*|icc*|clang*], [ DEBUG_FLAGS+=" -Wextra" ],
-               [AS_BOX([Unsupported compiler ($CCNAM). Please file a bug.],[*])]
-               )
-      ])
+# Set OPTIM_FLAGS, DEBUG_FLAGS depending on compiler and command line arguments
+SET_FLAGS
 
-AS_IF([test "x$WARN" = "xfull"],
-      [AS_CASE([$CCNAM],
-               [eko],
-                [],
-               [gcc*|icc*|clang*],
-                [
-                  DEBUG_FLAGS+=" -Wuninitialized -Wconversion -Wcast-qual "
-                  DEBUG_FLAGS+=" -pedantic -Wshadow -Wpointer-arith "
-                  DEBUG_FLAGS+=" -Wwrite-strings -Wno-long-long"
-                  AS_CASE([$CCNAM],
-                    [icc],
-                        [ DEBUG_FLAGS+=" -Wcheck -ansi" ],
-                    [gcc*],
-                        [
-                         DEBUG_FLAGS+=" -Wno-vla"
-                         DEBUG_FLAGS+=" -Wcast-align -Wno-variadic-macros"
-                        ],
-                    [clang*],
-                        [
-                         DEBUG_FLAGS+=" -Wno-vla-extension -D__STRICT_ANSI__"
-                         DEBUG_FLAGS+=" -Wcast-align -Wno-variadic-macros"
-                        ])
-                ],
-               [AS_BOX([Unsupported compiler ($CCNAM). Please file a bug.],[*])]
-               )
-      ])
+# Append -march=native to OPTIM_FLAGS if not present in CXXFLAGS and
+# not cross-compiling and --no-marchnative is not set
+ARCH_FLAGS
 
-
-# Add -march=native to OPTIM_FLAGS if not present in CXXFLAGS and
-# target==host and --no-marchnative is not set
-AC_ARG_WITH(archnative, [AC_HELP_STRING([--without-arch-native],
-    [do not use -march=native (default is to use it if -march is not present in
-     CXXFLAGS)])])
-
-AS_CASE([$CXXFLAGS],
-        [*-march=*], [], # do nothing if already set in CXXFLAGS
-        [AS_IF([test "x${with_archnative}" == "xno"],
-            [], # do nothing if option is set to no
-            [AS_IF([test "${host}" != "${build}" -o "${host}" != "${target}"],
-                [AC_MSG_NOTICE("For efficiency you may want to add a '-march=...' flag in CXXFLAGS")],
-                [AC_MSG_NOTICE("Adding '-march=native' to flags")
-                 OPTIM_FLAGS+=" -march=native"])])])
-
-BACKUP_CXXFLAGS="${CXXFLAGS}"
-CXXFLAGS="${OPTIM_FLAGS} ${CXXFLAGS}"
-# On i386 and i686, add the -mfpmath=sse flags if SSE is enable
-AS_CASE([$target],
-        [*i386*|*i686*],
-            [AC_RUN_IFELSE([AC_LANG_PROGRAM([[]], [[#ifdef __SSE__
-                                                      return 0;
-                                                    #else
-                                                      return 1;
-                                                    #endif
-                                                    ]])],
-                [AC_MSG_NOTICE("Adding '-mfpmath=sse' to flags")
-                 OPTIM_FLAGS+=" -mfpmath=sse"],
-                [], # either the flag is not recognized by the compiler or SSE
-                    # is not avail => do nothing
-                [AC_MSG_NOTICE("If available you may want to add '-mfpmath=sse'
-                 to flags")])] # cross-compilation case
-            []) # not on i386 nor i686 => do nothing
-CXXFLAGS="${BACKUP_CXXFLAGS}"
+# Append -mfpmath=sse to OPTIM_FLAGS on i386 and i686 architecture with SSE
+FPMATH_FLAGS
 
 # With GCC 4.x, the default ABI version is 2. With this version, __m128 and
 # __m256 are the same types and therefore we cannot have overloads for both

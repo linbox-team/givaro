@@ -22,4 +22,4 @@ libgivaro_la_LIBADD= \
 # soname of libgivaro
 libgivaro_la_LDFLAGS = -version-info 10:1:1
 libgivaro_la_LDFLAGS+= -no-undefined
-libgivaro_la_LDFLAGS+=$(LDFLAGS)
+libgivaro_la_LDFLAGS+=$(GMP_LIBS) $(LDFLAGS)

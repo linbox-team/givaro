@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "test-fieldarith.h"
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 #define GIVARO_RATRECON_DEBUG
 #endif
 
@@ -22,7 +22,7 @@ bool invertible(const QField<Rational>& Q, const Rational& a)
 int main(int argc, char ** argv)
 {
     int seed = int (argc>1?atoi(argv[1]):BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     Integer::seeding((uint64_t)seed);

@@ -156,7 +156,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& R, const Type_t& u) const
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::divin]"));
 #endif
         size_t sz =R.size();
@@ -169,7 +169,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::div(Rep& R, const Rep& P, const Type_t& u) const
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
         size_t sP =P.size();
@@ -183,7 +183,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::div(Rep& R, const Type_t& u, const Rep& P) const
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (isZero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
         if (_domain.isZero(u)) { return assign(R,zero);}
@@ -228,7 +228,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& R, const Type_t& u) const
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::modin]"));
 #endif
         R.resize(0);
@@ -239,7 +239,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R, const Rep& P, const Type_t& u) const
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (_domain.isZero(u)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::mod]"));
 #endif
         R.resize(0);
@@ -250,7 +250,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R, const Type_t& u, const Rep& P) const
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (isZero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::mod]"));
 #endif
         if (_domain.isZero(u)) { return assign(P,R); }
@@ -334,7 +334,7 @@ namespace Givaro {
         //     std::cerr << "BEG with _domain " << typeid(_domain).name() << std::endl;
         Degree degB;
         degree(degB, B);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (degB == Degree::deginfty)
             GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
@@ -399,7 +399,7 @@ namespace Givaro {
         //     std::cerr << "BEG divmod of " << typeid(*this).name() << std::endl;
         //     std::cerr << "BEG with _domain " << typeid(_domain).name() << std::endl;
         Degree degB; degree(degB, B);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (degB == Degree::deginfty)
             GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
@@ -462,7 +462,7 @@ namespace Givaro {
     // returns Q ...
     {
         Degree degB; degree(degB, B);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (degB == Degree::deginfty)
             GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
@@ -533,7 +533,7 @@ namespace Givaro {
     ( Rep& R, Type_t& m, const Rep& A, const Rep& B) const
     {
         Degree degB; degree(degB, B);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (degB == Degree::deginfty)
             GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif

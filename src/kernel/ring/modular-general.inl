@@ -115,7 +115,7 @@ namespace Givaro
     inline Storage_t& invext (Storage_t& x, Storage_t& d, const Storage_t a, const Storage_t b){
 
         extended_euclid (x,d,a,b);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if ( d > (Storage_t)1 ) {
             throw GivMathDivZero("*** Error: division by zero, in operator invext<floating_point> in modular-general") ;
         }

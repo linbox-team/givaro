@@ -45,12 +45,6 @@
 // * GIVARO_ASSERT_MACRO:
 //   value: defined/undefined
 //   purpose: expand additional code for assertion.
-// * GIVARO_DEBUG:
-//   value: defined/undefined
-//   purpose: expand additional code for verification and debuging.
-// * GIVARO_DEBUG_LEVEL:
-//   value: integer > 0
-//   purpose: <to be defined>
 
 
 // -- Currently my machine & compiler:
@@ -68,13 +62,6 @@
 #define GIVARO_MINOR_VERSION    1
 #define GIVARO_REVISION_VERSION 1
 #define GIVARO_VERSION          40101
-
-// -- Defines this value both to compile the library of user program
-// value: integer that defines debug level trace information (not well defined)
-#ifdef DEBUG
-#define GIVARO_DEBUG 1
-#endif
-
 
 // ==========================================================================
 // -- Defines the basic integer arithmetics available on this machine
@@ -197,7 +184,7 @@
 #define GIV_VALTOSTR(msg)   GIV_XVALTOSTR(msg)
 // #define GIV_ERROR(msg) GivError( ##msg " File:" __FILE__ ", line:" GIV_VALTOSTR(__LINE__))
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 #  ifdef GIVARO_HAVE_ANSI_LIBRARY  // here is ANSI C++ header definition !!!
 #    include <sstream>
 #    define GIVARO_ASSERT(cond, msg) { \

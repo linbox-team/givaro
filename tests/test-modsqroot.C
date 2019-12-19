@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
     int nbtests = (argc>1?atoi(argv[1]):100);
     int sizes = (argc>2?atoi(argv[2]):10);
     unsigned long seed = (unsigned long)(argc>3?(unsigned long)atoi(argv[3]):(unsigned long)BaseTimer::seed ());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     int failures = 0;

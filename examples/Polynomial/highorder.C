@@ -11,7 +11,9 @@
  */
 
 #include <iostream>
-#define GIVARO_DEBUG 1
+#ifndef __GIVARO_DEBUG
+#define __GIVARO_DEBUG 1
+#endif
 #include <givaro/givrandom.h>
 #include <givaro/givtimer.h>
 #include <givaro/gfq.h>

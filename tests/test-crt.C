@@ -83,12 +83,12 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
     tim.stop();
 
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "MAXC: " << Field::maxCardinality() << std::endl;
     Field(PrimeDoms.front()).write( std::cerr << tim << " using ") << std::endl;
 #endif
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     if (PrimeDoms.size() < 50) {
         i = PrimeDoms.begin();
         e = Moduli.begin();
@@ -102,14 +102,14 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
         timf.clear(); timf.start();
         CRTSystemFixed CRTFixed( Primes );
         timf.stop();
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "CRTFixed init : " << timf << std::endl;
 #endif
 
         timf.clear(); timf.start();
         CRTFixed.RnsToRing( b, ModuliInts );
         timf.stop();
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "CRTFixed : " << timf << std::endl;
 #endif
 
@@ -127,7 +127,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
     Elements Verifs( Primes.size() );
     CRT.RingToRns( Verifs, TestRes );
 
-    // #ifdef GIVARO_DEBUG
+    // #ifdef __GIVARO_DEBUG
     //     for (const auto v : Verifs)
     // 	std::cerr << v << std::endl;
     // #endif
@@ -160,7 +160,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
     }
 
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cout << res << " mod " << M << " = " << TestRes << ";"  << std::endl;
     std::cout << res << " mod " << F.characteristic() << " = " << F.convert(tmp, el) << ";"  << std::endl;
 #endif
@@ -173,7 +173,7 @@ Integer tmain(int argc, char ** argv, const GivRandom& generator, const Integer 
 int main(int argc, char ** argv)
 {
     ::Givaro::GivaroMain::Init();
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     Givaro::GivMMInfo MemoryInfo;
 #endif
 
@@ -221,7 +221,7 @@ int main(int argc, char ** argv)
     Integer a2 = tmain<Field2>(argc, argv, GivRandom(seed), ubc);
     Integer a5 = tmain<Field5>(argc, argv, GivRandom(seed), ubc);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
     std::cerr << "a1: " << a1 << std::endl;
     std::cerr << "a3: " << a3 << std::endl;
@@ -253,7 +253,7 @@ int main(int argc, char ** argv)
     success = (a2 == a5); suctest &= success;
     if (! success) std::cerr << "ERROR a2 != a5" << std::endl;
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     if (! suctest)
         std::cerr << "Error: " << seed << std::endl;
     MemoryInfo.print(std::cerr) << std::endl;

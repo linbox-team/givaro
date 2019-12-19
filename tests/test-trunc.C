@@ -241,7 +241,7 @@ bool TestMaxpy(const TruncDom< GFqDom<int> >& DP, const TruncDom< GFqDom<int> >:
 int main(int argc, char ** argv) {
 
     long seed = (argc>1?atoi(argv[1]):BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
 
@@ -406,7 +406,7 @@ int main(int argc, char ** argv) {
 
     success &= TestAxpy(DP101, P, Q, monomial, 11, 11);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     if (! success) {
         std::cerr << "Error: " << seed << std::endl;
     } else {

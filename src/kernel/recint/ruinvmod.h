@@ -40,7 +40,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 #include "rutools.h" /* mod_n() */
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 #include "givaro/giverror.h"
 #endif
 // --------------------------------------------------------------
@@ -147,7 +147,7 @@ namespace RecInt
             copy(a, x);
             copy(x, temp);
         }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if ( a2 != 1) {
             throw Givaro::GivMathDivZero("*** Error: division by zero, in operator RecInt::inv_mod in ruinvmod.h") ;
         }

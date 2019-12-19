@@ -27,7 +27,7 @@ using namespace Givaro;
 int main(int argc, char ** argv)
 {
     int seed = int (argc>1?atoi(argv[1]):BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     std::cerr<<std::setprecision(17);

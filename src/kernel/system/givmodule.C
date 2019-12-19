@@ -59,13 +59,13 @@ namespace Givaro {
 
     ObjectInit::ObjectInit( )
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cout << "[GivModule] ObjectInit::cstor " << (void*)head << std::endl ;
         std::cout << "[GivModule] ObjectInit::cstor curr:" << (void*)this << std::endl ;
 #endif
         // - link the new object:
         _next = head; head = this ;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cout << "[GivModule] ObjectInit::cstor " << (void*)head << std::endl ;
 #endif
     }
@@ -86,7 +86,7 @@ namespace Givaro {
 
     void GivModule::SortGivModule()
     {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         {
             for (int j=0; j<counter; j++)
                 std::cout << j << ':' << All[j]->which.priority << ' ' << All[j]->name << std::endl ;
@@ -135,7 +135,7 @@ namespace Givaro {
         for (curr=1; curr<counter; curr++)
         {
             GivModule* currM = All[curr] ;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             std::cout << " Search for : " << currM->name << std::endl ;
 #endif
 
@@ -144,7 +144,7 @@ namespace Givaro {
             for (k=0; k<curr; k++)
                 if ( currM->priority < All[SortedAll[k]]->priority) break ;
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             std::cout << currM->name << " inserted at : " << k << std::endl ;
 #endif
 
@@ -157,7 +157,7 @@ namespace Givaro {
                 // -- this is inserted :
                 SortedAll[k] = curr ;
             }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             {
                 for (int j=0; j<=curr; j++) std::cout << All[SortedAll[j]]->name << ',' ;
                 std::cout <<std::endl << std::endl ;
@@ -165,7 +165,7 @@ namespace Givaro {
 #endif
         }
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         {
             for (int j=0; j<counter; j++) std::cout << j << ':' << All[SortedAll[j]]->name << std::endl ;
             std::cout <<std::endl ;
@@ -186,24 +186,24 @@ namespace Givaro {
         for (int i=0; i<counter; i++)
         {
             GivModule* curr = All[SortedAll[i]] ;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (curr->name !=0) std::cout << curr->name << " initializing..."  ;
 #endif
             if (curr->f_init !=0) curr->f_init(argc, argv) ;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (curr->name !=0) std::cout << "done !" << std::endl ;
 #endif
         }
 
         // -- Init of object:
         ObjectInit* curr = head;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cout << "[GivModule] ObjectInit::Head: " << (void*)head << std::endl;
 #endif
         while (curr !=0) {
             curr->objinit();
             curr = curr->_next;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             std::cout << "[GivModule] ObjectInit::next one: " << (void*)curr << std::endl;
 #endif
             if (curr ==head) break ; // -- on MacOS I can make circular list !!! (shared lib)
@@ -215,11 +215,11 @@ namespace Givaro {
         for (int i=counter-1; i>=0; i--)
         {
             GivModule* curr = All[SortedAll[i]] ;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (curr->name !=0) std::cout << curr->name << " freeing..."  ;
 #endif
             if (curr->f_end !=0) curr->f_end() ;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (curr->name !=0) std::cout << "done !" << std::endl ;
 #endif
         }

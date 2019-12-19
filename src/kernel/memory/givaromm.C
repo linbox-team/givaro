@@ -151,7 +151,7 @@ namespace Givaro {
     BlocFreeList* GivMMFreeList::_allocate (const size_t s)
     {
         int index = BlocFreeList::search_binary( s );
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if ((index <0) || (index >= BlocFreeList::lenTables))
             throw GivError("[GivMMFreeList::_allocate]: index error, invalid bloc size.");
 #endif
@@ -183,7 +183,7 @@ namespace Givaro {
         if (src ==0) return _allocate(newsize) ;
         if (newsize <= oldsize) return src;
         BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)src)-sizeof(BlocFreeList)+sizeof(int64_t));
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
             throw GivError("[GivMMFreeList::resize]: bad pointer 'src'");
 #endif
@@ -202,7 +202,7 @@ namespace Givaro {
         BlocFreeList* tmp1 = reinterpret_cast<BlocFreeList*>(((char*)dest) - sizeof(BlocFreeList)+sizeof(int64_t));
         void * toto = const_cast<void*>( src );
         BlocFreeList* tmp2 = reinterpret_cast<BlocFreeList*>(((char*)toto) - sizeof(BlocFreeList)+sizeof(int64_t));
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if ((tmp1->u.index <0) || (tmp1->u.index >= BlocFreeList::lenTables))
             throw GivError("[GivMMFreeList::memcpy]: bad pointer 'dest'");
         if ((tmp2->u.index <0) || (tmp2->u.index >= BlocFreeList::lenTables))
@@ -232,7 +232,7 @@ namespace Givaro {
 
 
         BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)p)-sizeof(BlocFreeList));
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if ((tmp->u.index <0) || (tmp->u.index >= BlocFreeList::lenTables))
             throw GivError("[GivMMRefCount::resize]: bad pointer");
 #endif

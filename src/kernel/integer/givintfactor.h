@@ -145,6 +145,8 @@ namespace Givaro {
 #define Pollard_cst 1
 #endif
 
+        using IntPrimeDom::write; // to silence off clang warning about hiding overloaded function
+
         Rep& Pollard_fctin(Rep & x, const Rep& n) const
         {
             mulin(x,x);

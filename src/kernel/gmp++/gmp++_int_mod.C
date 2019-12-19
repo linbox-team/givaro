@@ -106,12 +106,12 @@ namespace Givaro {
 #if GMP_LIMB_BITS != 64
         return *this %= Integer(l);
 #else
-#  ifdef GIVARO_DEBUG
+#  ifdef __GIVARO_DEBUG
         int32_t sgn_this = (*this>0)?1:-1;
 #  endif
         mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
 
-#  ifdef GIVARO_DEBUG
+#  ifdef __GIVARO_DEBUG
         assert((*this<GIVABS(l)) && (*this> -GIVABS(l)) && (sgn_this*(*this).priv_sign()>=0)) ;
 #  endif
         return *this;
@@ -124,14 +124,14 @@ namespace Givaro {
         return *this %= Integer(l);
 #else
         if (isZero(*this)) return *this;
-#  ifdef GIVARO_DEBUG
+#  ifdef __GIVARO_DEBUG
         int32_t sgn_this = (*this>0)?1:-1;
 #  endif
         int32_t sgn = Givaro::sign(l);
         mpz_tdiv_r_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, std::abs(l));
         if (sgn <0) mpz_neg( (mpz_ptr)&gmp_rep, (mpz_ptr)&(gmp_rep) );
 
-#  ifdef GIVARO_DEBUG
+#  ifdef __GIVARO_DEBUG
         assert((*this<GIVABS(l)) && (*this> -GIVABS(l)) && (sgn_this*(*this).priv_sign()>=0)) ;
 #  endif
         return *this;
@@ -158,7 +158,7 @@ namespace Givaro {
         bool isneg = (*this)<0 ;
         //CONDITION: mpz_tdiv_ui does NOT consider the sign of gmp_rep
         uint64_t res = mpz_tdiv_ui( (mpz_srcptr)&gmp_rep, l);
-#  ifdef GIVARO_DEBUG
+#  ifdef __GIVARO_DEBUG
         Integer toto = res;
         if (isneg) toto = -(int64_t)res ;
 

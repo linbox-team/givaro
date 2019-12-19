@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 #define GIVARO_RATRECON_DEBUG
 #endif
 
@@ -69,7 +69,7 @@ int main(int argc, char ** argv)
     bool pass = true;
 
     const int seed = int (argc>1?atoi(argv[1]):BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     GivaroMain::DisplayVersion(std::clog);
     std::clog << "seed: " << seed << std::endl;
 #endif

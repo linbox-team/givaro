@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
     uint64_t nbtests = (argc>1?atoi(argv[1]):1000);
     uint64_t sizes = (argc>2?atoi(argv[2]):100);
     uint64_t seed = (uint64_t)(argc>3?(uint64_t)atoi(argv[3]):(uint64_t)BaseTimer::seed ());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     uint64_t failures = 0;

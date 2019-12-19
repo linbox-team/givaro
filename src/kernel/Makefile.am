@@ -6,7 +6,7 @@
 
 AM_CPPFLAGS=-I$(top_builddir)
 
-AM_CXXFLAGS = @DEFAULT_CFLAGS@
+AM_CXXFLAGS = $(GIVARO_CXXFLAGS)
 
 SUBDIRS=system memory gmp++ integer bstruct rational recint field ring
 

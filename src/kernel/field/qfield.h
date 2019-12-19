@@ -98,7 +98,7 @@ namespace Givaro {
 
         Rep& inv( Rep& r, const Rep& a ) const {
             const int snum( sign(a.num) );
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (snum == 0)
                 throw GivMathDivZero("*** Error: division by zero, in operator Rational::inv in givrational.h") ;
 #endif
@@ -111,7 +111,7 @@ namespace Givaro {
         }
         Rep& invin( Rep& r ) const {
             const int snum( sign(r.num) );
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (snum == 0)
                 throw GivMathDivZero("*** Error: division by zero, in operator Rational::invin in givrational.h") ;
 #endif

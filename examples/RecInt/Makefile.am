@@ -5,9 +5,8 @@
 # see the COPYRIGHT file for more details.
 examples: $(EXTRA_PROGRAMS)
 AM_CPPFLAGS=-I$(top_builddir)
-AM_CXXFLAGS = @DEFAULT_CFLAGS@
+AM_CXXFLAGS = $(GIVARO_CXXFLAGS)
 AM_CPPFLAGS += -I$(top_srcdir)/src/kernel -I$(top_builddir)/src/kernel/system
-AM_CPPFLAGS += $(GMP_CFLAGS)
 
 LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static

@@ -53,7 +53,7 @@ bool invertible(const Field& F, const typename Field::Element& a)
 template<class Field>
 int TestOneField(const Field& F, const typename Field::Element& first)
 {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     F.write(std::cerr << "Testing ");
     F.write(std::cerr<< "(", first) << ") :" << std::endl;
 #endif
@@ -94,7 +94,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 
     TEST_EQUALITY(a_, F.mOne);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     // F.write(std::cerr) << std::endl;
     // F.write(std::cerr << "0: ", F.zero) << std::endl;
 
@@ -219,7 +219,7 @@ int TestOneField(const Field& F, const typename Field::Element& first)
 
     TEST_EQUALITY(e,e_);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     F.write(std::cerr );
     std::cerr  << " done." << std::endl;
 #endif

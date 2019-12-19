@@ -62,7 +62,7 @@ if (TestOneRing(F,x,y)) {						\
 template<class Ring>
 int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename Ring::Element& y)
 {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "Testing " ;
     F.write(std::cerr) << " : " << std::endl;
 #endif
@@ -194,7 +194,7 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
 
     TESTE_EG(c, d);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     F.write(std::cerr );
     std::cerr  << " done." << std::endl;
 #endif
@@ -307,7 +307,7 @@ int TestInv(const Ring& F, const uint64_t seed)
 int main(int argc, char ** argv)
 {
     auto seed = static_cast<uint64_t>(argc>1?atoi(argv[1]):BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     Integer::seeding(seed);

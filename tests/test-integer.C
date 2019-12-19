@@ -217,7 +217,7 @@ int test_mul()
 
 template<typename UnsignedBaseType>
 int test_cast_unit(const UnsignedBaseType& t, const Integer& a, const Integer& b) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "TYPE: " << typeid(t).name() << std::endl;
 #endif
 
@@ -230,7 +230,7 @@ int test_cast_unit(const UnsignedBaseType& t, const Integer& a, const Integer& b
     UnsignedBaseType at( (UnsignedBaseType)a ), bt( (UnsignedBaseType) b );
 
     if ( (UnsignedBaseType) (at * bt) != (UnsignedBaseType)(a*b) ) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "a: " << a << std::endl;
         std::cerr << "b: " << b << std::endl;
         std::cerr << "a*b: " << (a*b) << std::endl;
@@ -248,7 +248,7 @@ int test_cast_unit(const UnsignedBaseType& t, const Integer& a, const Integer& b
 
 template<>
 int test_cast_unit(const bool& t, const Integer& a, const Integer& b) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "TYPE: " << typeid(t).name() << std::endl;
 #endif
 
@@ -261,7 +261,7 @@ int test_cast_unit(const bool& t, const Integer& a, const Integer& b) {
     bool at( (bool)a ), bt( (bool) b );
 
     if ( (at & bt) != (bool)(a*b) ) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "a: " << a << std::endl;
         std::cerr << "b: " << b << std::endl;
         std::cerr << "a*b: " << (a*b) << std::endl;
@@ -325,7 +325,7 @@ int test_subin() {
     a = 0;
     a--;
     if (a + 1 != 0) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "ERROR1 a: " << a << ", l: " << 1 << std::endl;
 #endif
         return -1;
@@ -334,7 +334,7 @@ int test_subin() {
     a = 0;
     a-= INT64_MIN;
     if (a + INT64_MIN != 0) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "ERROR2 a: " << a << ", l: " << INT64_MIN << std::endl;
 #endif
         return -2;
@@ -343,7 +343,7 @@ int test_subin() {
     a = 0;
     Integer::subin(a,INT64_MIN);
     if (a + INT64_MIN != 0) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "ERROR3 a: " << a << ", l: " << INT64_MIN << std::endl;
 #endif
         return -3;
@@ -352,7 +352,7 @@ int test_subin() {
     a = 0;
     b = a - INT64_MIN;
     if (b + INT64_MIN != 0) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cerr << "ERROR4 b: " << b << ", l: " << INT64_MIN << std::endl;
 #endif
         return -4;
@@ -367,7 +367,7 @@ int test_subin() {
 int main (int argc, char ** argv)
 {
     uint64_t seed = (uint64_t)(argc>1?(uint64_t)atoi(argv[1]):(uint64_t)BaseTimer::seed ());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "Seed: " << seed << std::endl;
 #endif
     Integer::seeding (seed);

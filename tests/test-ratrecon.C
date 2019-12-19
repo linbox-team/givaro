@@ -11,7 +11,7 @@
 #include <givaro/givfractiondomain.h>
 #include <givaro/modular-integral.h>
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 long long TTcount = 0;
 #endif
 
@@ -73,7 +73,7 @@ int TestRR(RingDomain& RDom, GivRandom& generator,
     //     TEST_EQ(RDom, B, Q);
     TEST_EQ(RDom, S, RDom.zero);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     ++TTcount;
 #endif
     return 0;
@@ -139,7 +139,7 @@ int main(int argc, char ** argv)
 {
 
     int seed = int(argc>1?atoi(argv[1]):BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     Integer::seeding((unsigned long)seed);
@@ -221,7 +221,7 @@ int main(int argc, char ** argv)
 
 
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     if (! success) {
         std::cerr << "Error: " << seed << std::endl;
     } else {

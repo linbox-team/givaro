@@ -24,7 +24,7 @@
 
 using namespace Givaro;
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 long long TTcount = 0;
 #endif
 
@@ -81,7 +81,7 @@ bool TestOneField(Interp& FD, RandIter& generator, size_t degmax) {
     typename Interp::Polynomial_t nouv, prec;
     FD.getpoldomain().random(generator, prec, Degree((int64_t)degmax) );
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     FD.getpoldomain().write(std::cout << "Precedent: ", prec) << std::endl;
 #endif
 
@@ -93,18 +93,18 @@ bool TestOneField(Interp& FD, RandIter& generator, size_t degmax) {
 
 
     FD.interpolator(nouv);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     FD.getpoldomain().write(std::cout << "Nouveau: ", nouv) << std::endl;
 #endif
 
     if (! FD.getpoldomain().areEqual(prec,nouv)) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         std::cout << "ERREUR: Precedent != Nouveau"  << std::endl;
 #endif
         return false;
     }
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     ++TTcount;
 #endif
     return true;
@@ -117,7 +117,7 @@ bool TestOneFieldVect(Interp& FD, RandIter& generator, size_t degmax, size_t num
     std::vector<typename Interp::Polynomial_t> nouv(numpol), prec(numpol);
     for(size_t i=0; i< numpol; ++i) {
         FD.getpoldomain().random(generator, prec[i], Degree((int64_t)degmax) );
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         FD.getpoldomain().write(std::cout << "Precedent[" << i << "]: ", prec[i]) << std::endl;
 #endif
     }
@@ -131,7 +131,7 @@ bool TestOneFieldVect(Interp& FD, RandIter& generator, size_t degmax, size_t num
 
     FD.interpolator(nouv);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     for(size_t i=0; i< numpol; ++i)
         FD.getpoldomain().write(std::cout << "Nouveau[" << i << "]: ", nouv[i]) << std::endl;
 #endif
@@ -140,13 +140,13 @@ bool TestOneFieldVect(Interp& FD, RandIter& generator, size_t degmax, size_t num
 
     for(size_t i=0; i< numpol; ++i)
         if (! FD.getpoldomain().areEqual(prec[i],nouv[i])) {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             std::cout << "ERREUR: Precedent[" << i << "] != Nouveau[" << i << ']'  << std::endl;
 #endif
             return false;
         }
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     ++TTcount;
 #endif
     return true;
@@ -164,7 +164,7 @@ int main(int argc, char ** argv) {
     size_t numpolmax = (argc>3 ? (size_t)atoi(argv[3]) : 15);
 
     size_t seed = (argc>4?(size_t)atoi(argv[4]):(size_t)BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     GivRandom generator(seed);
@@ -184,7 +184,7 @@ int main(int argc, char ** argv) {
             for(size_t i=0; i<5; ++i)
                 success &= TestOneFieldVect(FDM, generator, d, p);
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     if (! success) {
         std::cerr << "Error: " << seed << std::endl;
     } else {

@@ -15,7 +15,6 @@
 #include <givaro/givinteger.h>
 
 using namespace Givaro;
-//#define GIVARO_DEBUG
 using std::cout ; using std::endl;
 
 //! tests <code>ret= .func(arg,arg);</code> ...
@@ -23,21 +22,21 @@ int test1()
 {
     Integer toto  ;
     toto.seeding((long unsigned int)0);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "this is a random() number : " << toto.random() << endl;
 #else
     toto.random();
 #endif
 
     toto.seeding();
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "this is a random() number : " << toto.random() << endl;
 #else
     toto.random();
 #endif
 
     Integer::seeding();
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "this is a random() number : " << toto.random() << endl;
 #else
     toto.random();
@@ -46,7 +45,7 @@ int test1()
     Integer un(26);
     Integer autre(511);
     Integer large( Integer::one<<3000);
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random...............OK" << endl;
 #endif
     for (size_t i = 0 ; i < 5000 ; ++i) {
@@ -57,7 +56,7 @@ int test1()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_between.......OK" << endl;
 #endif
 
@@ -76,7 +75,7 @@ int test1()
         }
     }
     //    for (size_t i = 0 ; i < 1<<petits ; ++i) cout << T[i] << " " ;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_between_exp...OK" << endl;
 #endif
 
@@ -88,7 +87,7 @@ int test1()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact_exp.....OK" << endl;
 #endif
 
@@ -100,7 +99,7 @@ int test1()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact.........OK" << endl;
 #endif
 
@@ -112,7 +111,7 @@ int test1()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_lessthan_2exp.....OK" << endl;
 #endif
 
@@ -124,7 +123,7 @@ int test1()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_lessthan.........OK" << endl;
 #endif
 
@@ -136,7 +135,7 @@ int test1()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom_exp....OK" << endl;
 #endif
 
@@ -148,7 +147,7 @@ int test1()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom........OK" << endl;
 #endif
 
@@ -169,7 +168,7 @@ int test2()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_between.......OK" << endl;
 #endif
 
@@ -186,7 +185,7 @@ int test2()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     //    for (size_t i = 0 ; i < 1<<petits ; ++i) cout << T[i] << " " ;
     cout << "random_between_exp...OK" << endl;
 #endif
@@ -199,7 +198,7 @@ int test2()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact_exp.....OK" << endl;
 #endif
 
@@ -211,7 +210,7 @@ int test2()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact.........OK" << endl;
 #endif
 
@@ -223,7 +222,7 @@ int test2()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom_exp....OK" << endl;
 #endif
 
@@ -235,7 +234,7 @@ int test2()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom........OK" << endl;
 #endif
 
@@ -257,7 +256,7 @@ int test3()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_between.......OK" << endl;
 #endif
 
@@ -274,7 +273,7 @@ int test3()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     //    for (size_t i = 0 ; i < 1<<petits ; ++i) cout << T[i] << " " ;
     cout << "random_between_exp...OK" << endl;
 #endif
@@ -287,7 +286,7 @@ int test3()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact_exp.....OK" << endl;
 #endif
 
@@ -299,7 +298,7 @@ int test3()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact.........OK" << endl;
 #endif
     const Integer tutu(autre);
@@ -311,7 +310,7 @@ int test3()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact.........OK" << endl;
 #endif
 
@@ -323,7 +322,7 @@ int test3()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom_exp....OK" << endl;
 #endif
 
@@ -335,7 +334,7 @@ int test3()
             return -1  ;
         }
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom........OK" << endl;
 #endif
 
@@ -367,7 +366,7 @@ int test4()
         return -1  ;
     }
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_between.......OK" << endl;
 #endif
 
@@ -389,7 +388,7 @@ int test4()
         return -1  ;
     }
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact_exp.....OK" << endl;
 #endif
 
@@ -408,7 +407,7 @@ int test4()
         return -1  ;
     }
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random_exact.........OK" << endl;
 #endif
 
@@ -427,7 +426,7 @@ int test4()
         return -1  ;
     }
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom_exp....OK" << endl;
 #endif
     if (autre<0) Integer::negin(autre);
@@ -447,7 +446,7 @@ int test4()
         cout << "nonzerorandom  failed" << endl;
         return -1  ;
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "nonzerorandom........OK" << endl;
 #endif
 
@@ -493,7 +492,7 @@ int test5()
         cout << "random() failed" << endl;
         return -1  ;
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random().............OK" << endl;
 #endif
 
@@ -525,7 +524,7 @@ int test5()
         cout << "random failed" << endl;
         return -1  ;
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random...............OK" << endl;
 #endif
 
@@ -557,7 +556,7 @@ int test5()
         cout << "random failed" << endl;
         return -1  ;
     }
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     cout << "random...............OK" << endl;
 #endif
     return 0 ;
@@ -589,7 +588,7 @@ int modtest(Field& F, uint64_t seed) {
 
 int main()
 {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cout << "T1" << std::endl;
     if (test1()) return -1;
     std::cout << "T2" << std::endl;

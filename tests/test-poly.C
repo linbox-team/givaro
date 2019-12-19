@@ -19,7 +19,7 @@ int main(int argc, char ** argv) {
     size_t expomax = (argc>3 ? (size_t)atoi(argv[3]) : 15);
 
     size_t seed = (argc>4?(size_t)atoi(argv[4]):(size_t)BaseTimer::seed());
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
     std::cerr << "seed: " << seed << std::endl;
 #endif
     GivRandom generator(seed);

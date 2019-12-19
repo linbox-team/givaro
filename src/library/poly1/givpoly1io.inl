@@ -21,7 +21,7 @@ namespace Givaro {
     {
         char ch;
         sin >> std::ws >> ch;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (ch != '(')
             GivError::throw_error(
                                   GivBadFormat("Poly1Dom<Domain,Dense>::read: syntax error no '('"));
@@ -30,7 +30,7 @@ namespace Givaro {
         _domain.read(sin);
 
         sin >> std::ws >> ch;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (ch != ',')
             GivError::throw_error(
                                   GivBadFormat("Poly1Dom<Domain,Dense>::read: syntax error no ','"));
@@ -39,7 +39,7 @@ namespace Givaro {
         sin >> _x;
 
         sin >> std::ws >> ch;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
         if (ch != ')')
             GivError::throw_error(
                                   GivBadFormat("Poly1Dom<Domain,Dense>::read: syntax error no ')'"));

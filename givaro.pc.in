@@ -9,6 +9,6 @@ Description: C++ library for arithmetic and algebraic computations
 URL: https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro
 Version: @VERSION@
 Requires:
-Libs: -L@libdir@ -lgivaro @LIBS@
+Libs: -L@libdir@ -lgivaro @GMP_LIBS@
 Cflags: -I@includedir@ @REQUIRED_FLAGS@
 \-------------------------------------------------------

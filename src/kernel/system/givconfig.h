@@ -45,12 +45,6 @@
 // * GIVARO_ASSERT_MACRO:
 //   value: defined/undefined
 //   purpose: expand additional code for assertion.
-// * GIVARO_DEBUG:
-//   value: defined/undefined
-//   purpose: expand additional code for verification and debuging.
-// * GIVARO_DEBUG_LEVEL:
-//   value: integer > 0
-//   purpose: <to be defined>
 
 
 // -- Currently my machine & compiler:
@@ -68,13 +62,6 @@
 #define GIVARO_MINOR_VERSION    1
 #define GIVARO_REVISION_VERSION 1
 #define GIVARO_VERSION          40101
-
-// -- Defines this value both to compile the library of user program
-// value: integer that defines debug level trace information (not well defined)
-#ifdef DEBUG
-#define GIVARO_DEBUG 1
-#endif
-
 
 // ==========================================================================
 // -- Defines the basic integer arithmetics available on this machine
@@ -157,28 +144,6 @@
 # define GIVARO_BITS_PER_SHORTINT	SIZEOF_SHORT
 # define GIVARO_BITS_PER_CHAR		SIZEOF_CHAR
 
-#if 0 /*  standard types should be used */
-#ifndef __GIVARO_HAVE_STDINT_H
-typedef signed    __GIVARO_INT8      int8_t;
-typedef signed    __GIVARO_INT16     int16_t;
-typedef signed 	  __GIVARO_INT32     int32_t;
-typedef unsigned  __GIVARO_INT8      uint8_t;
-typedef unsigned  __GIVARO_INT16     uint16_t;
-typedef unsigned  __GIVARO_INT32     uint32_t;
-
-# if defined(__GIVARO_INT64)
-#   undef GIVARO_DONOTUSE_SIXTYFOUR
-typedef signed    __GIVARO_INT64     int64_t;
-typedef unsigned  __GIVARO_INT64     uint64_t;
-# else
-#   undef GIVARO_USE_SIXTYFOUR
-#   define GIVARO_DONOTUSE_SIXTYFOUR 1
-# endif
-#endif
-#endif
-
-
-
 #ifndef __GIVARO_HAVE_STDINT_H
 # define GIVARO_MAXUINT8		255U 		    // 2^8-1
 # define GIVARO_MAXUINT16		65535U 		    // 2^16-1
@@ -219,7 +184,7 @@ typedef unsigned  __GIVARO_INT64     uint64_t;
 #define GIV_VALTOSTR(msg)   GIV_XVALTOSTR(msg)
 // #define GIV_ERROR(msg) GivError( ##msg " File:" __FILE__ ", line:" GIV_VALTOSTR(__LINE__))
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 #  ifdef GIVARO_HAVE_ANSI_LIBRARY  // here is ANSI C++ header definition !!!
 #    include <sstream>
 #    include <givaro/giverror.h>

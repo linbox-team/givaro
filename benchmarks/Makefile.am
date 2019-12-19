@@ -14,10 +14,10 @@ PERFPUBLISHERFILE=benchmarks-report.xml
 OPTFLAGS=
 OPTLINKS=
 
-AM_CXXFLAGS = @DEFAULT_CFLAGS@
-AM_CXXFLAGS += $(OPTFLAGS)  -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/recint -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel/gmp++ -I$(top_builddir)/src/kernel/ring $(GMP_CFLAGS)
+AM_CXXFLAGS = $(GIVARO_CXXFLAGS) $(OPTFLAGS)
+AM_CPPFLAGS += -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/recint -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel/gmp++ -I$(top_builddir)/src/kernel/ring
 
-LDADD = $(OPTLINKS) $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
+LDADD = $(OPTLINKS) $(top_builddir)/src/libgivaro.la $(GMP_LIBS)
 AM_LDFLAGS=-static
 
 BENCHMARKS=				\

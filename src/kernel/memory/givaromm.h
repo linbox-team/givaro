@@ -27,7 +27,7 @@
 #include <new>
 #include "givaro/givmodule.h"
 #include "givaro/givbasictype.h"
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
 #include "givaro/giverror.h"
 #endif
 
@@ -93,7 +93,7 @@ namespace Givaro {
         static BlocFreeList* _allocate (const size_t sz);
         inline static void* allocate (const size_t sz)
         {
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (sz ==0) return 0 ;
 #endif
             size_t index;
@@ -123,7 +123,7 @@ namespace Givaro {
             BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>(((char*)p) -
                                                                 (sizeof(BlocFreeList)-sizeof(int64_t)));
             int index = tmp->u.index;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if ((index <0) || (index >= BlocFreeList::lenTables))
                 throw GivError("[GivMMFreeList::desallocate]: bad pointer.");
 #endif
@@ -169,7 +169,7 @@ namespace Givaro {
         inline static void* allocate (const size_t s)
         {
 
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if (s ==0) return 0 ;
 #endif
             int index;
@@ -202,7 +202,7 @@ namespace Givaro {
             BlocFreeList* tmp = reinterpret_cast<BlocFreeList*>((char *) p - sizeof(BlocFreeList) ) ;
             if ( --(tmp->data[0]) ==0) {
                 int index = tmp->u.index;
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
                 if ((index <0) || (index >= BlocFreeList::lenTables))
                     GivError::throw_error(GivError("[GivMMRefCount::desallocate]: bad pointer."));
 #endif
@@ -226,7 +226,7 @@ namespace Givaro {
             if (*dest !=0) GivMMRefCount::desallocate( *dest );
             if (src ==0) return *dest=src;
             BlocFreeList* s = reinterpret_cast<BlocFreeList*>(((char*)src) - sizeof(BlocFreeList));
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if ((s->u.index <0) || (s->u.index >= BlocFreeList::lenTables))
                 GivError::throw_error(GivError("[GivMMRefCount::assign]: bad pointer 'src'."));
 #endif
@@ -240,7 +240,7 @@ namespace Givaro {
         {
             if (p ==0) return 0;
             BlocFreeList* bp = reinterpret_cast<BlocFreeList*>(((char*)p) - sizeof(BlocFreeList));
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
                 throw GivError("[GivMMRefCount::incrc]: bad pointer.");
 #endif
@@ -250,7 +250,7 @@ namespace Givaro {
         {
             if (p ==0) return 0;
             BlocFreeList* bp = reinterpret_cast<BlocFreeList*>(((char*)p) - sizeof(BlocFreeList));
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
                 throw GivError("[GivMMRefCount::incrc]: bad pointer.");
 #endif
@@ -260,7 +260,7 @@ namespace Givaro {
         {
             if (p ==0) return 0;
             BlocFreeList* bp = reinterpret_cast<BlocFreeList*>(((char*)p) - sizeof(BlocFreeList));
-#ifdef GIVARO_DEBUG
+#ifdef __GIVARO_DEBUG
             if ((bp->u.index <0) || (bp->u.index >= BlocFreeList::lenTables))
                 throw GivError("[GivMMRefCount::incrc]: bad pointer.");
 #endif

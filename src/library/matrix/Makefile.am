@@ -6,7 +6,7 @@
 
 AM_CPPFLAGS=-I$(top_builddir)
 
-AM_CXXFLAGS = @DEFAULT_CFLAGS@
+AM_CXXFLAGS = $(GIVARO_CXXFLAGS)
 AM_CPPFLAGS+= -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/library/vector
 
 pkginclude_HEADERS=         \

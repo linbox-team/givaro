@@ -78,7 +78,7 @@ while test $# -gt 0; do
 	;;
 
     --libs)
-        echo -L${libdir} -lgivaro @LIBS@
+        echo -L${libdir} -lgivaro @GMP_LIBS@
        	;;
 
     *)

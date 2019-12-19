@@ -6,7 +6,7 @@
 
 AM_CPPFLAGS=-I$(top_builddir)
 
-AM_CXXFLAGS = @DEFAULT_CFLAGS@
+AM_CXXFLAGS = $(GIVARO_CXXFLAGS)
 AM_CPPFLAGS+= -I$(prefix)/include
 
 pkginclude_HEADERS=     \

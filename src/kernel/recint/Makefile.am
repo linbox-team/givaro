@@ -8,7 +8,7 @@ AM_CPPFLAGS=-I$(top_builddir)
 
 pkgincludesubdir=$(includedir)/recint
 
-AM_CXXFLAGS=@DEFAULT_CFLAGS@
+AM_CXXFLAGS=$(GIVARO_CXXFLAGS)
 
 pkgincludesub_HEADERS= \
     recint.h        \

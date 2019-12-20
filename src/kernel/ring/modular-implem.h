@@ -353,7 +353,7 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(E = Element, IS_FLOAT(E))
         inline std::ostream& write (std::ostream& s, const E& a) const
         {
-            return s << Caster<Residu_t>(a);
+            return s << Caster<typename make_signed_int<Storage_t>::type>(a);
         }
 
         std::ostream& write (std::ostream& s) const

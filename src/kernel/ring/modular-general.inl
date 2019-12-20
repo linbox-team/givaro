@@ -29,11 +29,21 @@ template<typename T, typename Enable = void>
 struct make_unsigned_int {
     typedef typename std::make_unsigned<T>::type type;
 };
+template<typename T, typename Enable = void>
+struct make_signed_int {
+    typedef typename std::make_signed<T>::type type;
+};
 
 template<typename T>
 struct make_unsigned_int<T,
 typename std::enable_if<std::is_floating_point<T>::value>::type> {
     typedef typename IntType<std::is_same<T,float>::value>::utype type;
+};
+
+template<typename T>
+struct make_signed_int<T,
+typename std::enable_if<std::is_floating_point<T>::value>::type> {
+    typedef typename IntType<std::is_same<T,float>::value>::type type;
 };
 
 template<typename> struct is_ruint : std::false_type {};

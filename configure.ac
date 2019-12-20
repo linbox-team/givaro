@@ -19,6 +19,11 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([1.10 -Wall -Wno-portability foreign])
 AX_PREFIX_CONFIG_H(givaro-config.h, __GIVARO)
 
+# Set CXXFLAGS to an empty string if not defined, and save it. We must do it
+# before calling AC_PROG_CXX that sets it to '-O2 -g' if not defined
+: ${CXXFLAGS=""}
+ORIGINAL_CXXFLAGS="${CXXFLAGS}"
+
 # We set the language to C++
 AC_LANG([C++])
 AC_PROG_CXX
@@ -38,10 +43,6 @@ AC_CHECK_HEADERS([float.h limits.h stddef.h stdlib.h string.h sys/time.h stdint.
 ###########################################
 AS_BOX([       START GIVARO CONFIG       ])
 ###########################################
-
-# Set CXXFLAGS to an empty string if not defined, and save it
-: ${CXXFLAGS=""}
-ORIGINAL_CXXFLAGS="${CXXFLAGS}"
 
 AC_COMPILER_NAME
 

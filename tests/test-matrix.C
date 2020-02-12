@@ -29,12 +29,12 @@ int main() {
 
         // [[0,1,X],[1+X,0,1],[X,1+X,0]]
     Matrix A; M4.init(A, n, n);
-    for(size_t i=0; i<n*n; ++i)
+    for(uint64_t i=0; i<n*n; ++i)
         F4.init(A(i/n,i%n), i);
 
         // [1,X,1+X]
     Vector x; V4.init(x, n);
-    for(size_t i=0; i<n; ++i)
+    for(uint64_t i=0; i<n; ++i)
         F4.init(x[i], i+1);
 
     Vector b; V4.init(b, n);

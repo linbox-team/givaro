@@ -28,13 +28,13 @@ int main() {
     const size_t n(3);
 
     Matrix A; M4.init(A, n, n);
-    for(size_t i=0; i<n*n; ++i)
+    for(uint64_t i=0; i<n*n; ++i)
         F4.init(A(i/n,i%n), i); 
     M4.write(std::cout << "A:=", A) << ';' << std::endl;
 
     Vector x; V4.init(x, n);
     V4.write(std::cout << "z:=", x) << ';' << std::endl;
-    for(size_t i=0; i<n; ++i)
+    for(uint64_t i=0; i<n; ++i)
         F4.init(x[i], i);
     V4.write(std::cout << "x:=", x) << ';' << std::endl;
 

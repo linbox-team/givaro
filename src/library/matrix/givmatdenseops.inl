@@ -199,18 +199,17 @@ namespace Givaro {
     {
         GIVARO_ASSERT( (nrow(M) == VD.dim(u)), "Bad size");
         GIVARO_ASSERT( (ncol(M) == VD.dim(res)), "Bad size");
-        Indice_t k, i, j;
         int startMi;
         Indice_t nrM = nrow(M);
         Indice_t ncM = ncol(M);
 
         // -- the algorithm used the fact that matrices are stored by row
-        for (j=0; j < ncM; ++j)
+        for (Indice_t j=0; j < ncM; ++j)
             _domain.assign(res[j], _domain.zero);
-        for (i=0; i < nrM; ++i)
+        for (Indice_t i=0; i < nrM; ++i)
         {
             startMi = i*ncM;
-            for (j=0; j < ncM; ++j, ++startMi)
+            for (Indice_t j=0; j < ncM; ++j, ++startMi)
                 _domain.axpyin(res[j], u[i], M[startMi]);
         }
     }
@@ -336,9 +335,8 @@ namespace Givaro {
     void MatrixDom<Domain,Dense>::map
     ( Element& R, OP& op ) const
     {
-        Indice_t i;
-        Indice_t max = _supportdomain.dim(R);
-        for (i=max; --i>=0; ) op(R[i]);
+        const Indice_t max = _supportdomain.dim(R);
+        for (Indice_t i(0); i<max; ++i) op(R[i]);
     }
 
     template<class Domain>
@@ -346,9 +344,8 @@ namespace Givaro {
     void MatrixDom<Domain,Dense>::map
     ( Element& R, OP& op, const Element& A ) const
     {
-        Indice_t i;
-        Indice_t max = _supportdomain.dim(R);
-        for (i=max; --i>=0; ) op(R[i], A[i]);
+        const Indice_t max = _supportdomain.dim(R);
+        for (Indice_t i(0); i<max; ++i) op(R[i], A[i]);
     }
 
     template<class Domain>
@@ -356,9 +353,8 @@ namespace Givaro {
     void MatrixDom<Domain,Dense>::map
     ( Element& R, OP& op, const Element& A, const Element& B ) const
     {
-        Indice_t i;
-        Indice_t max = _supportdomain.dim(R);
-        for (i=max; --i>=0; ) op(R[i], A[i], B[i]);
+        const Indice_t max = _supportdomain.dim(R);
+        for (Indice_t i(0); i<max; ++i) op(R[i], A[i], B[i]);
     }
 
 

@@ -120,9 +120,8 @@ namespace Givaro {
       const VectorDom<Domain,Dense>& VD,
       const typename VectorDom<Domain,Dense>::Element& U ) const
     {
-        Indice_t i,j;
         Indice_t irow, erow;
-        for (i = nrow(M); --i>=0;)
+        for (Indice_t i(0); i<nrow(M); ++i)
         {
             // -- update the i-th row of R
             _domain.assign(R[i], _domain.zero);
@@ -142,9 +141,9 @@ namespace Givaro {
     {
         Indice_t i,j;
         Indice_t irow, erow;
-        for (i = 0; i<ncol(M); ++i)
+        for (Indice_t i = 0; i<ncol(M); ++i)
             _domain.assign(R[i], _domain.zero);
-        for (i = nrow(M); --i>=0;)
+        for (Indice_t i(0); i<nrow(M); ++i)
         {
             // -- update the i-th row of R
             irow = M._rows[i];   // - first index of the ith row
@@ -165,8 +164,6 @@ namespace Givaro {
         // -- Should compare _domain and MD.subdomain(): to be equal!
 
         // -- Iterate by row M and store non nul entry
-        Indice_t next_rows =0; // next entry to write in _storage._rows
-        Indice_t next_val = 0; // next entry to write in _data & _index
         Indice_t nrows = MD.nrow(Md);
         Indice_t ncols = MD.ncol(Md);
         size_t size = 0;   // size of _data and _index

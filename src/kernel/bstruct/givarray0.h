@@ -48,7 +48,7 @@ namespace Givaro {
          */
         void build( size_t s, const T& t) ;
     public :
-        typedef int  		Indice_t;
+        typedef size_t		Indice_t;
         typedef T    		Type_t;
         typedef Array0<T> 	Self_t;
         typedef Type_t	*Iterator_t;

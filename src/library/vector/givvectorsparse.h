@@ -23,23 +23,20 @@
 #include "givaro/givstoragesparse.h"
 #include "givaro/givelem.h"
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-
 
     template<class Domain>
     class VectorDom<Domain, Sparse> {
         Domain _domain;	// domain of the entries
     public :
         // -- Exported types
-        typedef typename Domain::Rep   			 	Type_t;
-        typedef 	   Domain   				 	Domain_t;
-        typedef 	   int 					 	Indice_t;
+        typedef typename Domain::Element		Type_t;
+        typedef 	   Domain   				Domain_t;
+        typedef 	   size_t					Indice_t;
         typedef 	   Sparse	 			 	StorageTag_t;
         typedef typename RetVectorStorage<Type_t,Sparse>::Storage_t 	Storage_t;
 
         // -- Representation of Element of VectorDom<D, Sparse>
-        typedef 	   Storage_t 	 				Rep;
+        typedef 	   Storage_t				Element;
 
         // -- Self_t
         typedef 	   VectorDom<Domain, Sparse> 	 		Self_t;
@@ -59,62 +56,62 @@ namespace Givaro {
         { return _domain != BC._domain;}
 
         // -- assignment operator: from a vector
-        void init ( Rep& r, size_t dim =0) const
+        void init ( Element& r, size_t dim =0) const
         { r.allocate(dim,0); }
 
         // -- assignment operator: from a vector
-        void assign (Rep& r, const Rep& v)
+        void assign (Element& r, const Element& v)
         {
             r.copy(v);
         }
 
         // -- Comparaizon
-        int areEqual ( const Rep& P, const Rep& Q) const;
-        int areNEqual( const Rep& P, const Rep& Q) const;
-        int isZero  ( const Rep& P ) const;
+        int areEqual ( const Element& P, const Element& Q) const;
+        int areNEqual( const Element& P, const Element& Q) const;
+        int isZero  ( const Element& P ) const;
 
         // -- return the dimension of a vector
-        size_t dim( const Rep& u ) const { return u.size(); }
+        size_t dim( const Element& u ) const { return u.size(); }
         const Domain& subdomain() const { return _domain; }
 
         // -- Arithmetic operations: base
-        void add ( Rep& res, const Rep& op1, const Rep& op2) const;
-        void sub ( Rep& res, const Rep& op1, const Rep& op2) const;
+        void add ( Element& res, const Element& op1, const Element& op2) const;
+        void sub ( Element& res, const Element& op1, const Element& op2) const;
 
         // -- dot product: operands could be aliased
-        void dot ( Type_t& res, const Rep& u, const Rep& v ) const;
+        void dot ( Type_t& res, const Element& u, const Element& v ) const;
 
         // -- Syntaxic sugar: (Value) op (Vector): Element wise ops.
-        void addin( Rep& res, const Rep& u ) const;
-        void add  ( Rep& res, const Rep& u, const Type_t& val ) const;
-        void add  ( Rep& res, const Type_t& val, const Rep& v ) const;
-        void subin( Rep& res, const Rep& u ) const;
-        void sub  ( Rep& res, const Rep& u, const Type_t& val ) const;
-        void sub  ( Rep& res, const Type_t& val, const Rep& v ) const;
-        void negin( Rep& res ) const;
-        void neg  ( Rep& res, const Rep& u ) const;
+        void addin( Element& res, const Element& u ) const;
+        void add  ( Element& res, const Element& u, const Type_t& val ) const;
+        void add  ( Element& res, const Type_t& val, const Element& v ) const;
+        void subin( Element& res, const Element& u ) const;
+        void sub  ( Element& res, const Element& u, const Type_t& val ) const;
+        void sub  ( Element& res, const Type_t& val, const Element& v ) const;
+        void negin( Element& res ) const;
+        void neg  ( Element& res, const Element& u ) const;
 
         // -- Compression method to compact a dense vector
-        void compact( Rep& u, const VectorDom<Domain, Dense>& VDom,
-                      const typename VectorDom<Domain, Dense>::Rep& v ) const;
+        void compact( Element& u, const VectorDom<Domain, Dense>& VDom,
+                      const typename VectorDom<Domain, Dense>::Element& v ) const;
 
         // -- Compression method to compact a sparse vector
-        void compact( Rep& u, const VectorDom<Domain, Sparse>& VDom,
-                      const typename VectorDom<Domain, Sparse>::Rep& v ) const;
+        void compact( Element& u, const VectorDom<Domain, Sparse>& VDom,
+                      const typename VectorDom<Domain, Sparse>::Element& v ) const;
 
         template<class UNOP>
-        void map( Rep& r, const UNOP& op, const Rep& u) const;
+        void map( Element& r, const UNOP& op, const Element& u) const;
 
         template<class UNOP>
-        void map( Rep& r, UNOP& op, const Rep& u) const;
+        void map( Element& r, UNOP& op, const Element& u) const;
 
         // -- IO: domain
-        ostream& write( ostream& o ) const;
-        istream& read ( istream& i );
+        std::ostream& write( std::ostream& o ) const;
+        std::istream& read ( std::istream& i );
 
         // -- IO: domain Element
-        ostream& write( ostream& o, const Rep& r ) const;
-        istream& read ( istream& i, Rep& r ) const;
+        std::ostream& write( std::ostream& o, const Element& r ) const;
+        std::istream& read ( std::istream& i, Element& r ) const;
 
 
         // -- Iteration over a sparse vector:
@@ -122,12 +119,12 @@ namespace Givaro {
         typedef typename RetVectorStorage<Type_t,Sparse>::constIterator_t 	constIterator_t;
         typedef typename RetVectorStorage<Type_t,Sparse>::IndiceIterator_t 	IndiceIterator_t;
 
-        Iterator_t	  begin_data( Rep& U ) const { return U.begin_data(); }
-        Iterator_t	  end_data  ( Rep& U ) const { return U.end_data(); }
-        constIterator_t begin_data( const Rep& U ) const { return U.begin_data(); }
-        constIterator_t end_data  ( const Rep& U ) const { return U.end_data(); }
-        IndiceIterator_t begin_indice( const Rep& U ) const { return U.begin_indice(); }
-        IndiceIterator_t end_indice  ( const Rep& U ) const { return U.end_indice(); }
+        Iterator_t	  begin_data( Element& U ) const { return U.begin_data(); }
+        Iterator_t	  end_data  ( Element& U ) const { return U.end_data(); }
+        constIterator_t begin_data( const Element& U ) const { return U.begin_data(); }
+        constIterator_t end_data  ( const Element& U ) const { return U.end_data(); }
+        IndiceIterator_t begin_indice( const Element& U ) const { return U.begin_indice(); }
+        IndiceIterator_t end_indice  ( const Element& U ) const { return U.end_indice(); }
     };
 
 } //Givaro

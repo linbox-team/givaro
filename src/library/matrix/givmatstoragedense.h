@@ -9,8 +9,6 @@
 // $Id: givmatstoragedense.h,v 1.3 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 // Description:
-//
-#error "dead code"
 
 
 #ifndef _GIV_MATRIX_STORAGE_DENSE_H_
@@ -19,14 +17,11 @@
 #include "givaro/givmatstorage.h"
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-
-    // ==========================================================================
+    // =========================================================================
     // --
     // -- Specialization for dense representation, using Array0 of givaro
     // --
-    // ==========================================================================
+    // =========================================================================
     template<class T>
     struct RetMatrixStorage<T,Dense> {
         typedef 	   T			Type_t;

@@ -6,7 +6,7 @@
 
 #  all all-local: $(none)
 
-SUBDIRS=Rational Integer FiniteField Polynomial RecInt
+SUBDIRS=Rational Integer FiniteField Polynomial RecInt Matrix
 
 .PHONY:$(SUBDIRS)
 

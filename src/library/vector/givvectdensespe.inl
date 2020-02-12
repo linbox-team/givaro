@@ -8,17 +8,16 @@
 // Authors: T. Gautier
 // $Id
 // ==========================================================================
+#include <givaro/gfq.h>
+
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-
 
     template<>
-    inline void VectorDom<Modular<int16_t>,Dense>::dot
-    ( Type_t& res, const Rep& op1, const Rep& op2) const
+    inline void VectorDom<GFqDom<int64_t>,Dense>::dot
+    ( Type_t& res, const Element& op1, const Element& op2) const
     {
         size_t sz = dim(op1);
-        const Modular<int16_t>& domain = subdomain();
+        const GFqDom<int64_t>& domain = subdomain();
         domain.dotprod( res, sz, op1.baseptr(), op2.baseptr() );
     }
 

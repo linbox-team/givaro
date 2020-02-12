@@ -9,17 +9,15 @@
 // $Id: givmatsparseops.inl,v 1.3 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 
-#error "this looks very much like dead code"
-
+#include <givaro/zring.h>
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
 
     // -- map of a unary operator, with operator()( Type_t& res )
     // res and u could be aliases if OP permits it
     template<class Domain>
     template<class UNOP>
     inline void MatrixDom<Domain,Sparse>::
-    map ( Rep& res, UNOP& op ) const
+    map ( Element& res, UNOP& op ) const
     {
         size_t sz = res._data.size();
         for (size_t i=0; i<sz; ++i) op(res._data[i]);
@@ -29,7 +27,7 @@ namespace Givaro {
     template<class Domain>
     template<class UNOP>
     inline void MatrixDom<Domain,Sparse>::
-    map ( Rep& res, UNOP& op, const Rep& u ) const
+    map ( Element& res, UNOP& op, const Element& u ) const
     {
         res.resize(nrow(u), ncol(u));
         res._index.resize(u._index.size());
@@ -44,7 +42,7 @@ namespace Givaro {
     // -- Comparaizon
     template<class Domain>
     inline int MatrixDom<Domain,Sparse>::areEqual
-    ( const Rep& P, const Rep& Q) const
+    ( const Element& P, const Element& Q) const
     {
         if (nrow(P) != nrow(Q)) return 0;
         if (ncol(P) != ncol(Q)) return 0;
@@ -59,16 +57,16 @@ namespace Givaro {
 
     template<class Domain>
     inline int MatrixDom<Domain,Sparse>::areNEqual
-    ( const Rep& P, const Rep& Q) const
+    ( const Element& P, const Element& Q) const
     {
         return !areEqual(P,Q);
     }
 
     template<class Domain>
-    inline int MatrixDom<Domain,Sparse>::isZero ( const Rep& P ) const
+    inline int MatrixDom<Domain,Sparse>::isZero ( const Element& P ) const
     {
         if (nrow(P) == 0) return 1; // -- col souhld be 0
-        if (ncol(P) == 0) { cerr << " Error: inconsistent data structure";
+        if (ncol(P) == 0) { std::cerr << " Error: inconsistent data structure";
             return 1; } // -- row souhld be 0
         size_t sz = P._data.size();
         if (sz == 0) return 1;
@@ -79,7 +77,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void MatrixDom<Domain,Sparse>::mulin
-    ( Rep& res, const Type_t& u ) const
+    ( Element& res, const Type_t& u ) const
     {
         Curried2<MulOp<Domain> > op(_domain, u);
         map(res, op);
@@ -87,7 +85,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void MatrixDom<Domain,Sparse>::mul
-    ( Rep& res, const Type_t& u, const Rep& v ) const
+    ( Element& res, const Type_t& u, const Element& v ) const
     {
         Curried1<MulOp<Domain> > op(_domain, u);
         map(res, op, v);
@@ -95,7 +93,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void MatrixDom<Domain,Sparse>::mul
-    ( Rep& res, const Rep& u, const Type_t& v ) const
+    ( Element& res, const Element& u, const Type_t& v ) const
     {
         Curried2<MulOp<Domain> > op(_domain, v);
         map(res, op, u);
@@ -103,7 +101,7 @@ namespace Givaro {
 
 
     template<class Domain>
-    inline void MatrixDom<Domain,Sparse>::neg ( Rep& R, const Rep& P ) const
+    inline void MatrixDom<Domain,Sparse>::neg ( Element& R, const Element& P ) const
     {
         size_t sz = P._data.size();
         if (R._data.size() != sz) {
@@ -117,10 +115,10 @@ namespace Givaro {
     // VD is the vector domain for res and u
     template<class Domain>
     inline void MatrixDom<Domain,Sparse>::mul
-    ( VectorDom<Domain,Dense>::Rep& R,
-      const Rep& M,
+    ( typename VectorDom<Domain,Dense>::Element& R,
+      const Element& M,
       const VectorDom<Domain,Dense>& VD,
-      const VectorDom<Domain,Dense>::Rep& U ) const
+      const typename VectorDom<Domain,Dense>::Element& U ) const
     {
         Indice_t i,j;
         Indice_t irow, erow;
@@ -137,10 +135,10 @@ namespace Givaro {
 
     template<class Domain>
     inline void MatrixDom<Domain,Sparse>::multrans
-    ( typename VectorDom<Domain,Dense>::Rep& R,
-      const Rep& M,
+    ( typename VectorDom<Domain,Dense>::Element& R,
+      const Element& M,
       const VectorDom<Domain,Dense>& VS,
-      const typename VectorDom<Domain,Dense>::Rep& U ) const
+      const typename VectorDom<Domain,Dense>::Element& U ) const
     {
         Indice_t i,j;
         Indice_t irow, erow;
@@ -160,9 +158,9 @@ namespace Givaro {
 
     template<class Domain>
     void MatrixDom<Domain, Sparse>::compact
-    ( Rep& Ms,
+    ( Element& Ms,
       const MatrixDom<Domain, Dense>& MD,
-      const MatrixDom<Domain, Dense>::Rep& Md)
+      const typename MatrixDom<Domain, Dense>::Element& Md)
     {
         // -- Should compare _domain and MD.subdomain(): to be equal!
 
@@ -192,21 +190,21 @@ namespace Givaro {
                 }
             }
 
-            cout << "i:" << i << "----> ";
-            for (Indice_t k=0; k<=nrows; ++k)
-                cout << "," << Ms._rows[k];
-            cout << endl;
+//             cout << "i:" << i << "----> ";
+//             for (Indice_t k=0; k<=nrows; ++k)
+//                 cout << "," << Ms._rows[k];
+//             cout << endl;
         }
     }
 
     template <class Domain>
-    inline ostream& MatrixDom<Domain,Sparse>::write( ostream& sout ) const
+    inline std::ostream& MatrixDom<Domain,Sparse>::write( std::ostream& sout ) const
     {
         return _domain.write(sout << '(') << ",Sparse)";
     }
 
     template <class Domain>
-    inline istream& MatrixDom<Domain,Sparse>::read( istream& sin )
+    inline std::istream& MatrixDom<Domain,Sparse>::read( std::istream& sin )
     {
         char ch;
         sin >> std::ws >> ch;
@@ -239,15 +237,16 @@ namespace Givaro {
     }
 
     template <class Domain>
-    ostream& MatrixDom<Domain,Sparse>::write( ostream& sout, const Rep& A) const
+    std::ostream& MatrixDom<Domain,Sparse>::write( std::ostream& sout, const Element& A) const
     {
         sout << '[' << nrow(A) << ',' << ncol(A) << ',';
-        IntDom D;
         {
-            VectorDom<IntDom,Dense> VDi (D);
+            ZRing<int> D;
+            VectorDom<ZRing<int>,Dense> VDi (D);
             VDi.write(sout, A._rows)  << ',';
             VDi.write(sout, A._index) << ',';
-        }{
+        }
+        {
             const VectorDom<Domain,Dense> VD (_domain);
             VD.write(sout, A._data);
         }
@@ -255,7 +254,7 @@ namespace Givaro {
     }
 
     template <class Domain>
-    istream& MatrixDom<Domain,Sparse>::read( istream& sin, Rep& R) const
+    std::istream& MatrixDom<Domain,Sparse>::read( std::istream& sin, Element& R) const
     {
         long nr,nc;
         char ch;
@@ -278,7 +277,7 @@ namespace Givaro {
             GivError::throw_error(
                                   GivBadFormat("MatrixDom<Domain,Sparse>::read: syntax error no ','"));
 
-        VectorDom<IntDom,Dense> VDi = IntDom();
+        VectorDom<ZRing<int>,Dense> VDi;
         VectorDom<Domain,Dense> VD (_domain);
         VDi.read(sin, R._rows)  >> std::ws >> ch;
         if (ch != ',')

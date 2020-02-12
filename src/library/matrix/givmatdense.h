@@ -12,8 +12,6 @@
 // of matrix by blocks.
 //
 
-#error "dead code"
-
 #ifndef _GIV_MATRIX_DENSE_H_
 #define _GIV_MATRIX_DENSE_H_
 
@@ -22,8 +20,6 @@
 
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
     // --
     // -- Matrix class: dense matrix
     // --
@@ -33,16 +29,16 @@ namespace Givaro {
         VectorDom<Domain,Dense> _supportdomain;	// -- domain for some op.
     public:
         typedef 	   Domain 					Domain_t;
-        typedef typename Domain::Rep					Type_t;
-        typedef 	   int 						Indice_t;
+        typedef typename Domain::Element		Type_t;
+        typedef 	   size_t					Indice_t;
         typedef 	   Dense 					StorageTag_t;
         typedef typename RetMatrixStorage<Type_t,Dense>::Storage_t    Storage_t;
 
         // -- Representation of Element of the domain
-        typedef 	   Storage_t    				Rep;
+        typedef 	   Storage_t				Element;
 
         // -- Self_t
-        typedef          MatrixDom<Domain, Dense>                     Self_t;
+        typedef        MatrixDom<Domain, Dense>	Self_t;
 
         //-- Dstor:
         ~MatrixDom() {}
@@ -57,96 +53,96 @@ namespace Givaro {
         MatrixDom(const Domain_t& D) : _domain(D), _supportdomain(D) {}
 
         //-- init a new object, memory allocation
-        void init(Rep& r, Indice_t nr, Indice_t nc) const
+        void init(Element& r, Indice_t nr, Indice_t nc) const
         { r.allocate(nr, nc); }
 
-        void init(Rep& r)
+        void init(Element& r)
         { r.allocate(0); }
 
         //-- access operators:
-        Type_t& operator() (Rep& r, Indice_t i, Indice_t j) const
+        Type_t& operator() (Element& r, Indice_t i, Indice_t j) const
         { return r(i,j); }
-        const Type_t& operator() (const Rep& r, Indice_t i, Indice_t j) const
+        const Type_t& operator() (const Element& r, Indice_t i, Indice_t j) const
         { return r(i,j); }
 
         //-- Assignment operator: physical copy
-        void assign (Rep& r, const Rep& a)
+        void assign (Element& r, const Element& a)
         { r.copy(a); }
 
         // -- Comparaizon
-        int areEqual ( const Rep& P, const Rep& Q) const;
-        int areNEqual( const Rep& P, const Rep& Q) const;
-        int isZero  ( const Rep& P ) const;
+        int areEqual ( const Element& P, const Element& Q) const;
+        int areNEqual( const Element& P, const Element& Q) const;
+        int isZero  ( const Element& P ) const;
 
         //-- Dimension of the matrix space
-        Indice_t nrow(const Rep& r) const { return r.nrow(); }
-        Indice_t ncol(const Rep& r) const { return r.ncol(); }
+        Indice_t nrow(const Element& r) const { return r.nrow(); }
+        Indice_t ncol(const Element& r) const { return r.ncol(); }
         Domain_t subdomain() const { return _domain; }
 
         // -- arithmetic operators: operands could be aliased
-        void mulin ( Rep& res, const Rep& u ) const;
-        void mul   ( Rep& res, const Rep& u, const Rep& v ) const;
-        void addin ( Rep& res, const Rep& u ) const;
-        void add   ( Rep& res, const Rep& u, const Rep& v ) const;
-        void subin ( Rep& res, const Rep& u ) const;
-        void sub   ( Rep& res, const Rep& u, const Rep& v ) const;
-        void negin ( Rep& res ) const;
-        void neg   ( Rep& res, const Rep& u ) const;
+        void mulin ( Element& res, const Element& u ) const;
+        void mul   ( Element& res, const Element& u, const Element& v ) const;
+        void addin ( Element& res, const Element& u ) const;
+        void add   ( Element& res, const Element& u, const Element& v ) const;
+        void subin ( Element& res, const Element& u ) const;
+        void sub   ( Element& res, const Element& u, const Element& v ) const;
+        void negin ( Element& res ) const;
+        void neg   ( Element& res, const Element& u ) const;
 
         // --- Mul Vect:
-        void mul   ( typename VectorDom<Domain,Dense>::Rep& res, const Rep& M,
+        void mul   ( typename VectorDom<Domain,Dense>::Element& res, const Element& M,
                      const VectorDom<Domain,Dense>& VD,
-                     const typename VectorDom<Domain,Dense>::Rep& u ) const;
-        void multrans ( typename VectorDom<Domain,Dense>::Rep& res, const Rep& M,
+                     const typename VectorDom<Domain,Dense>::Element& u ) const;
+        void multrans ( typename VectorDom<Domain,Dense>::Element& res, const Element& M,
                         const VectorDom<Domain,Dense>& VS,
-                        const typename VectorDom<Domain,Dense>::Rep& u ) const;
+                        const typename VectorDom<Domain,Dense>::Element& u ) const;
 
         // -- axpy operations K-Space:
         // r <- a*x+y
-        void axpy  ( Rep& res, const Type_t& a, const Rep& x, const Rep& y )const;
+        void axpy  ( Element& res, const Type_t& a, const Element& x, const Element& y )const;
         // r <- r+a*x
-        void axpyin( Rep& res, const Type_t& a, const Rep& x ) const;
+        void axpyin( Element& res, const Type_t& a, const Element& x ) const;
         // r <- y-a*x
-        void axmy  ( Rep& res, const Type_t& a, const Rep& x, const Rep& y ) const;
+        void axmy  ( Element& res, const Type_t& a, const Element& x, const Element& y ) const;
         // r <- r-a*x
-        void axmyin( Rep& res, const Type_t& a, const Type_t& x ) const;
+        void axmyin( Element& res, const Type_t& a, const Type_t& x ) const;
 
         // a*A*X + bY
-        void axpy  ( Rep& res, const Type_t& a, const Rep& A, const Rep& X,
-                     const Type_t& b, const Rep& Y ) const;
+        void axpy  ( Element& res, const Type_t& a, const Element& A, const Element& X,
+                     const Type_t& b, const Element& Y ) const;
         // A*X + Y
-        void axpy  ( Rep& res, const Rep& A, const Rep& X, const Rep& Y ) const;
+        void axpy  ( Element& res, const Element& A, const Element& X, const Element& Y ) const;
 
         // -- Element wise operation:
-        void mulin ( Rep& res, const Type_t& u ) const;
-        void mul   ( Rep& res, const Type_t& u, const Rep& v ) const;
-        void mul   ( Rep& res, const Rep& u, const Type_t& v ) const;
+        void mulin ( Element& res, const Type_t& u ) const;
+        void mul   ( Element& res, const Type_t& u, const Element& v ) const;
+        void mul   ( Element& res, const Element& u, const Type_t& v ) const;
 
         // -- addition with a scalar: addition with I*val
-        void add   ( Rep& res, const Rep& u, const Type_t& val ) const;
-        void add   ( Rep& res, const Type_t& val, const Rep& v ) const;
+        void add   ( Element& res, const Element& u, const Type_t& val ) const;
+        void add   ( Element& res, const Type_t& val, const Element& v ) const;
 
         // -- substraction with a scalar: substraction with I*val
-        void sub   ( Rep& res, const Rep& u, const Type_t& val ) const;
-        void sub   ( Rep& res, const Type_t& val, const Rep& v ) const;
+        void sub   ( Element& res, const Element& u, const Type_t& val ) const;
+        void sub   ( Element& res, const Type_t& val, const Element& v ) const;
 
         // -- map of a inplace unary operator, with operator()( Type_t& res)
         template<class OP>
-        void map ( Rep& res, OP& op ) const;
+        void map ( Element& res, OP& op ) const;
 
         // -- map of a unary operator, with operator()( Type_t& res, const Type_t& val)
         template<class OP>
-        void map ( Rep& res, OP& op, const Rep& u ) const;
+        void map ( Element& res, OP& op, const Element& u ) const;
 
         // -- with operator()( Type_t& res, const Type_t& v1, const Type_t& v2)
         template<class OP>
-        void map ( Rep& res, OP& op, const Rep& u, const Rep& u ) const;
+        void map ( Element&, OP&, const Element&, const Element&) const;
 
         // -- IO
-        istream& read ( istream& s );
-        ostream& write( ostream& s ) const;
-        istream& read ( istream& s, Rep& r ) const;
-        ostream& write( ostream& s, const Rep& r ) const;
+        std::istream& read ( std::istream& s );
+        std::ostream& write( std::ostream& s ) const;
+        std::istream& read ( std::istream& s, Element& r ) const;
+        std::ostream& write( std::ostream& s, const Element& r ) const;
     };
 
 } // Givaro

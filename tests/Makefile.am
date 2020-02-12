@@ -13,7 +13,7 @@ OPTFLAGS= -DSTD_RECINT_SIZE=8
 OPTLINKS=
 
 AM_CXXFLAGS = $(GIVARO_CXXFLAGS) $(OPTFLAGS)
-AM_CPPFLAGS = -I$(top_builddir) -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel/rational -I$(top_builddir)/src/kernel -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/library/tools -I$(top_builddir)/src/kernel/recint -I$(top_srcdir)/src/kernel
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/memory -I$(top_builddir)/src/kernel/field -I$(top_builddir)/src/kernel/ring -I$(top_builddir)/src/kernel/integer -I$(top_builddir)/src/kernel/rational -I$(top_builddir)/src/kernel -I$(top_builddir)/src/library/poly1 -I$(top_builddir)/src/library/vector -I$(top_builddir)/src/library/matrix -I$(top_builddir)/src/kernel/bstruct -I$(top_builddir)/src/library/tools -I$(top_builddir)/src/kernel/recint -I$(top_srcdir)/src/kernel
 
 LDADD = $(OPTLINKS) ../src/libgivaro.la $(GMP_LIBS)
 AM_LDFLAGS=-static $(LDFLAGS)
@@ -34,6 +34,7 @@ BASIC_TESTS =               \
 		test-modsqroot      \
 		test-brillhart      \
 		test-trunc          \
+		test-matrix         \
 		test-poly           \
 		test-crt            \
 		test-geom           \
@@ -113,6 +114,7 @@ test_modsqroot_SOURCES= test-modsqroot.C
 test_brillhart_SOURCES= test-brillhart.C
 test_trunc_SOURCES    = test-trunc.C
 test_poly_SOURCES    = test-poly.C
+test_matrix_SOURCES    = test-matrix.C
 test_crt_SOURCES      = test-crt.C
 test_geom_SOURCES     = test-geom.C
 test_integer_SOURCES  = test-integer.C

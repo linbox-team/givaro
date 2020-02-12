@@ -10,14 +10,11 @@
 // ==========================================================================
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-
 
     template<class Domain>
     template<class UNOP>
     inline void VectorDom<Domain,Sparse>::
-    map( Rep& res, const UNOP& OP, const Rep& u ) const
+    map( Element& res, const UNOP& OP, const Element& u ) const
     {
         res.copy(u);
         size_t sz = res.size();
@@ -28,7 +25,7 @@ namespace Givaro {
     template<class Domain>
     template<class UNOP>
     inline void VectorDom<Domain,Sparse>::
-    map( Rep& res, UNOP& OP, const Rep& u ) const
+    map( Element& res, UNOP& OP, const Element& u ) const
     {
         res.copy(u);
         size_t sz = res.size();
@@ -37,7 +34,7 @@ namespace Givaro {
     }
 
     template<class Domain>
-    int VectorDom<Domain,Sparse>::areEqual ( const Rep& P, const Rep& Q) const
+    int VectorDom<Domain,Sparse>::areEqual ( const Element& P, const Element& Q) const
     {
         size_t d;
         if ((d =dim(P)) != dim(Q)) return 0;
@@ -50,13 +47,13 @@ namespace Givaro {
     }
 
     template<class Domain>
-    int VectorDom<Domain,Sparse>::areNEqual( const Rep& P, const Rep& Q) const
+    int VectorDom<Domain,Sparse>::areNEqual( const Element& P, const Element& Q) const
     {
         return !areEqual(P,Q);
     }
 
     template<class Domain>
-    int VectorDom<Domain,Sparse>::isZero  ( const Rep& P ) const
+    int VectorDom<Domain,Sparse>::isZero  ( const Element& P ) const
     {
         size_t d;
         if ((d =dim(P)) == 0) return 1;
@@ -71,9 +68,9 @@ namespace Givaro {
     // --
     template<class Domain>
     void VectorDom<Domain,Sparse>::compact (
-                                            Rep& u,
+                                            Element& u,
                                             const VectorDom<Domain, Dense>& VDom,
-                                            const typename VectorDom<Domain, Dense>::Rep& v ) const
+                                            const typename VectorDom<Domain, Dense>::Element& v ) const
     {
         size_t dim = VDom.dim(v);
         u.allocate(dim, 0);
@@ -94,9 +91,9 @@ namespace Givaro {
     // --
     template<class Domain>
     void VectorDom<Domain,Sparse>::compact (
-                                            Rep& u,
+                                            Element& u,
                                             const VectorDom<Domain, Sparse>& VDom,
-                                            const typename VectorDom<Domain, Sparse>::Rep& v ) const
+                                            const typename VectorDom<Domain, Sparse>::Element& v ) const
     {
         u.copy(v);
     }
@@ -104,7 +101,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Sparse>::dot
-    ( Type_t& res, const Rep& op1, const Rep& op2) const
+    ( Type_t& res, const Element& op1, const Element& op2) const
     {
         const Domain_t& domain = subdomain();
         domain.assign(res, domain.zero);
@@ -119,7 +116,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Sparse>::add
-    ( Rep& res, const Rep& op1, const Rep& op2) const
+    ( Element& res, const Element& op1, const Element& op2) const
     {
         long i,j;
         size_t curr =0;
@@ -166,7 +163,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Sparse>::sub
-    ( Rep& res, const Rep& op1, const Rep& op2) const
+    ( Element& res, const Element& op1, const Element& op2) const
     {
         long i,j;
         size_t curr =0;
@@ -213,19 +210,19 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Sparse>::addin
-    ( Rep& res, const Rep& u ) const
-    { Rep tmp; init( tmp ); add(tmp, res, u); assign(res, tmp); }
+    ( Element& res, const Element& u ) const
+    { Element tmp; init( tmp ); add(tmp, res, u); assign(res, tmp); }
 
     template<class Domain>
     inline void VectorDom<Domain,Sparse>::add
-    ( Rep& res, const Rep& u, const Type_t& val ) const
+    ( Element& res, const Element& u, const Type_t& val ) const
     {
         Curried2<AddOp<Domain> > opcode(_domain, val);
         map( res, opcode, u);
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Sparse>::add ( Rep& res, const Type_t& val, const Rep& v ) const
+    inline void VectorDom<Domain,Sparse>::add ( Element& res, const Type_t& val, const Element& u ) const
     {
         Curried1<AddOp<Domain> > opcode(_domain, val);
         map( res, opcode, u);
@@ -233,32 +230,32 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Sparse>::subin
-    ( Rep& res, const Rep& u ) const
-    { Rep tmp; init( tmp ); sub(tmp, res, u); assign(res, tmp); }
+    ( Element& res, const Element& u ) const
+    { Element tmp; init( tmp ); sub(tmp, res, u); assign(res, tmp); }
 
     template<class Domain>
-    inline void VectorDom<Domain,Sparse>::sub ( Rep& res, const Rep& u, const Type_t& val ) const
+    inline void VectorDom<Domain,Sparse>::sub ( Element& res, const Element& u, const Type_t& val ) const
     {
         Curried2<SubOp<Domain> > opcode(_domain, val);
         map( res, opcode, u);
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Sparse>::sub ( Rep& res, const Type_t& val, const Rep& v ) const
+    inline void VectorDom<Domain,Sparse>::sub ( Element& res, const Type_t& val, const Element& u ) const
     {
         Curried2<SubOp<Domain> > opcode(_domain, val);
         map( res, opcode, u);
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Sparse>::negin ( Rep& res ) const
+    inline void VectorDom<Domain,Sparse>::negin ( Element& res ) const
     {
         NegOp<Domain> opcode ( _domain );
         map( res, opcode, res );
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Sparse>::neg ( Rep& res, const Rep& u ) const
+    inline void VectorDom<Domain,Sparse>::neg ( Element& res, const Element& u ) const
     {
         NegOp<Domain> opcode ( _domain );
         map( res, opcode, u );
@@ -271,14 +268,14 @@ namespace Givaro {
     //
     // -- Write the domain
     template<class Domain>
-    ostream& VectorDom<Domain, Sparse>::write( ostream& o ) const
+    std::ostream& VectorDom<Domain, Sparse>::write( std::ostream& o ) const
     {
         return _domain.write(o << '(') << ",Sparse)";
     }
 
     // -- read the domain
     template<class Domain>
-    istream& VectorDom<Domain, Sparse>::read( istream& sin )
+    std::istream& VectorDom<Domain, Sparse>::read( std::istream& sin )
     {
         char ch;
         sin >> std::ws >> ch;
@@ -319,7 +316,7 @@ namespace Givaro {
     //   list_of_elt --->   (index, value)
     //                    | list_of_elt ',' (index, value)
     template<class Domain>
-    ostream& VectorDom<Domain,Sparse>::write (ostream& o, const Rep& V) const
+    std::ostream& VectorDom<Domain,Sparse>::write (std::ostream& o, const Element& V) const
     {
         if (dim(V) ==0) return o << "[0,[]]";
         size_t sz = V.size();
@@ -346,7 +343,7 @@ namespace Givaro {
     //   The separators a those of the C lexical-convention, i.e.
     //    ' ', '\n', '\t', '\f' .
     template<class Domain>
-    istream&  VectorDom<Domain,Sparse>::read (istream& fin, Rep& V) const
+    std::istream&  VectorDom<Domain,Sparse>::read (std::istream& fin, Element& V) const
     {
         char ch;
 

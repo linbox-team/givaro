@@ -15,13 +15,11 @@
 #include "givaro/givstorage.h"
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-    // ==========================================================================
+    // =========================================================================
     // --
     // -- Specialization for dense representation, using Array0 of givaro
     // --
-    // ==========================================================================
+    // =========================================================================
     template<class T>
     struct RetVectorStorage<T,Dense> {
         typedef T		Type_t;

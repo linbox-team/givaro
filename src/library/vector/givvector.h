@@ -23,17 +23,11 @@
 #include "givaro/givops.h"
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-
-
-    // ==========================================================================
+    // =========================================================================
     // --
     // -- VectorDom<Domain,StorageTag>:
     // --
-    /** VectorDom<Domain,StorageTag>
-    */
-    // ==========================================================================
+    // =========================================================================
     template<class Domain, class StorageTag> class VectorDom {};
 
     template<class Domain> class VectorDom<Domain,Dense>;

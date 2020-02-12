@@ -9,8 +9,6 @@
 // $Id: givmatstorage.h,v 1.3 2011-02-02 16:23:56 briceboyer Exp $
 // ==========================================================================
 // Description:
-//
-#error "dead code"
 
 
 #ifndef _GIV_MATRIX_STORAGE_H_
@@ -19,14 +17,12 @@
 #include "givaro/givcategory.h"
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-    // ==========================================================================
+    // =========================================================================
     // --
     // -- RetMatrixStorage<T, StorageTag>:
     // -- return the storage type Storage_t associated with the
     // -- StorageTag
-    // ==========================================================================
+    // =========================================================================
     template<class T, class StorageTag >
     struct RetMatrixStorage {
         typedef T		Type_t;
@@ -34,12 +30,12 @@ namespace Givaro {
     };
 
 
-    // ==========================================================================
+    // =========================================================================
     // --
     // -- RetMatrix2Storage<StorageTag,ViewTag>:
     // -- return the storage type associated with a view of the storage
     // -- associated with StorageTag.
-    // ==========================================================================
+    // =========================================================================
     template<class StorageTag, class ViewTag>
     struct RetMatrix2Storage {
         typedef Undefined Storage_t;

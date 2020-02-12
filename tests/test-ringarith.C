@@ -6,8 +6,8 @@
 // see the COPYRIGHT file for more details.
 
 #include <iostream>
-//#include <givaro/modular.h>
-//#include <givaro/modular-balanced.h>
+#include <givaro/modular.h>
+#include <givaro/modular-balanced.h>
 //#include <givaro/montgomery.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givinteger.h>
@@ -22,7 +22,6 @@
 //#include <givaro/modular-ruint.h>
 //#include <givaro/modular-log16.h>
 //#include <givaro/modular-inttype.h>
-#include <givaro/modular.h>
 
 using namespace Givaro;
 
@@ -402,10 +401,10 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU75, 75);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R75, 75);
 
-    //TEST_SPECIFIC(ModularBalanced<int32_t>, BZ75, 75);
-    //TEST_SPECIFIC(ModularBalanced<int64_t>, BLL75, 75);
-    //TEST_SPECIFIC(ModularBalanced<float>, BF75, 75);
-    //TEST_SPECIFIC(ModularBalanced<double>, BD75, 75);
+    TEST_SPECIFIC(ModularBalanced<int32_t>, BZ75, 75);
+    TEST_SPECIFIC(ModularBalanced<int64_t>, BLL75, 75);
+    TEST_SPECIFIC(ModularBalanced<float>, BF75, 75);
+    TEST_SPECIFIC(ModularBalanced<double>, BD75, 75);
     //TEST_SPECIFIC(Montgomery<int32_t>, MZ75, 75);
     //TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU75, 75);
     //TEST_SPECIFIC(ModularExtended<float>, MEF75, 75);
@@ -437,10 +436,10 @@ int main(int argc, char ** argv)
     TEST_POLYNOMIAL(Modular<RecInt::ruint128>, PRU75, RU75);
     TEST_POLYNOMIAL(Modular<RecInt::rint128>, PR75, R75);
 
-    //TEST_POLYNOMIAL(ModularBalanced<int32_t>, MBZ75, BZ75);
-    //TEST_POLYNOMIAL(ModularBalanced<int64_t>, MBLL75, BLL75);
-    //TEST_POLYNOMIAL(ModularBalanced<float>, MBF75, BF75);
-    //TEST_POLYNOMIAL(ModularBalanced<double>, MBD75, BD75);
+    TEST_POLYNOMIAL(ModularBalanced<int32_t>, MBZ75, BZ75);
+    TEST_POLYNOMIAL(ModularBalanced<int64_t>, MBLL75, BLL75);
+    TEST_POLYNOMIAL(ModularBalanced<float>, MBF75, BF75);
+    TEST_POLYNOMIAL(ModularBalanced<double>, MBD75, BD75);
     //TEST_POLYNOMIAL(Montgomery<int32_t>, PMZ75, MZ75);
     // @bug Convert to double inside? //TEST_POLYNOMIAL(Montgomery<RecInt::ruint128>, PMRU75, MRU75);
 
@@ -482,10 +481,10 @@ int main(int argc, char ** argv)
     TEST_LAST(Modular<RecInt::ruint128>, RUmax);
     typedef Modular<RecInt::ruint128,RecInt::ruint256> MyMod;
     TEST_LAST(MyMod, RUExtmax);
-    //TEST_LAST(ModularBalanced<int32_t>, BZmax);
-    //TEST_LAST(ModularBalanced<int64_t>, BLLmax);
-    //TEST_LAST(ModularBalanced<float>, BFmax);
-    //TEST_LAST(ModularBalanced<double>, BDmax);
+    TEST_LAST(ModularBalanced<int32_t>, BZmax);
+    TEST_LAST(ModularBalanced<int64_t>, BLLmax);
+    TEST_LAST(ModularBalanced<float>, BFmax);
+    TEST_LAST(ModularBalanced<double>, BDmax);
 
     //TEST_LAST(Montgomery<int32_t>, MZmax);
     //TEST_LAST(Montgomery<RecInt::ruint128>, MRUmax);

@@ -51,7 +51,7 @@ namespace Givaro
 
         ModularBalanced(double p)
         : _p(p)
-          , _halfp((_p - 1.f) / 2.f)
+          , _halfp(std::floor(_p  / 2.f))
           , _mhalfp(_halfp - _p + 1.f)
           , _up(static_cast<uint32_t>(_p))
         {

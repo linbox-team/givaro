@@ -72,7 +72,6 @@ namespace Givaro
         template<class T> inline T& cardinality(T& p) const { return p = _p; }
 
         static inline Residu_t maxCardinality() { return 131072; } // p=2^17 s.t. a*b+c fits in int32_t, with abs(a,b,c) <= (p-1)/2
-        static inline Residu_t maxFFLASCardinality() { return 92682; } // p\approx 2^16.5 s.t. a*b+c*d fits in int32_t, with abs(a,b,c,d) <= (p-1)/2
         static inline Residu_t minCardinality() { return 3; }
 
         // ----- Checkers

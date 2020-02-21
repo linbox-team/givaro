@@ -131,6 +131,17 @@ AC_DEFUN([AC_COMPILER_NAME], [
             [ CCNAM=gcc48 ])
         ])
 
+    dnl GCC <= 5 ?
+    AS_IF([ test -z "${CCNAM}"], [
+        AC_TRY_RUN( [
+            #ifdef __GNUC__
+                int main() { return !(__GNUC__ < 5))) ; }
+            #else
+               not gcc neither.
+            #endif],
+            [ CCNAM=gccl5 ])
+        ])
+
     dnl other ?
     AS_IF([ test -z "${CCNAM}"],
             [

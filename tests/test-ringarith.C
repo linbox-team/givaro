@@ -479,6 +479,7 @@ int main(int argc, char ** argv)
     TEST_LAST(Modular<double>, Dmax);
     TEST_LAST(ModularFD, FDmax);
     TEST_LAST(Modular<RecInt::ruint128>, RUmax);
+    //TEST_LAST(Modular<RecInt::rint128>,  Rmax);
     typedef Modular<RecInt::ruint128,RecInt::ruint256> MyMod;
     TEST_LAST(MyMod, RUExtmax);
     TEST_LAST(ModularBalanced<int32_t>, BZmax);

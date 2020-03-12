@@ -494,7 +494,7 @@ namespace Givaro {
                 b=this->zero;
                 this->sqrootmodprime(a,r,p);
             } else {
-                Integer s(r); --s; // r-1 is a square
+                Integer s(r); --s; // r-1 is a square ?
                 if (this->isOne(legendre(s,p))) {
                         // then 1+(sqrt(s))^2=r
                     a=this->one;
@@ -530,7 +530,7 @@ namespace Givaro {
                 b=this->zero;
                 this->sqrootmodprime(a,r,p);
             } else {
-                Integer s(r); --s; // r-1 is a square
+                Integer s(r); --s; // r-1 is a square ?
                 if (this->isOne(legendre(s,p))) {
                         // then 1+(sqrt(s))^2=r
                     a=this->one;

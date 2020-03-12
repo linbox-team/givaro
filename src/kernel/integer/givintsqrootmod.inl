@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <19 Nov 19 13:19:52 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 Mar 20 15:44:49 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
 // Author : Yanis Linge
 // ============================================================= //
@@ -494,14 +494,21 @@ namespace Givaro {
                 b=this->zero;
                 this->sqrootmodprime(a,r,p);
             } else {
-                Integer lsnqr(2);
-                    // Under ERH, least quad. non-residue
-                    // should be lower than 3/2log^2(p)
-                    // [Th. 6.35, Primality Tests on Commutator Curves,
-                    //  U. Tubingen PhD 2001, Sebastian Wedeniwski]
-                for( ; legendre(lsnqr,p) != -1; ++lsnqr);
+                Integer s(r); --s; // r-1 is a square
+                if (this->isOne(legendre(s,p))) {
+                        // then 1+(sqrt(s))^2=r
+                    a=this->one;
+                    this->sqrootmodprime(b,s,p);
+                } else {
+                    Integer lsnqr(2);
+                        // Under ERH, least quad. non-residue
+                        // should be lower than 3/2log^2(p)
+                        // [Th. 6.35, Primality Tests on Commutator Curves,
+                        //  U. Tubingen PhD 2001, Sebastian Wedeniwski]
+                    for( ; legendre(lsnqr,p) != -1; ++lsnqr);
 
-                sumofsquaresmodprimewithnonresidue(a,b,r,lsnqr,p);
+                    sumofsquaresmodprimewithnonresidue(a,b,r,lsnqr,p);
+                }
             }
         }
 
@@ -523,15 +530,22 @@ namespace Givaro {
                 b=this->zero;
                 this->sqrootmodprime(a,r,p);
             } else {
-                Integer s,t;
-                while (
-                    legendre (Integer::nonzerorandom (s, p.bitsize()), p)
-                    != -1) {};
-                    // Now s is not a residue
-                t=s;
-                for(--t ; legendre(t,p) == -1; --t);
-                    // Now t is a quadratic residue and t+1 is not
-                sumofsquaresmodprimewithnonresidue(a,b,r,++t,p);
+                Integer s(r); --s; // r-1 is a square
+                if (this->isOne(legendre(s,p))) {
+                        // then 1+(sqrt(s))^2=r
+                    a=this->one;
+                    this->sqrootmodprime(b,s,p);
+                } else {
+                    Integer s,t;
+                    while (
+                        legendre (Integer::nonzerorandom (s, p.bitsize()), p)
+                        != -1) {};
+                        // Now s is not a residue
+                    t=s;
+                    for(--t ; legendre(t,p) == -1; --t);
+                        // Now t is a quadratic residue and t+1 is not
+                    sumofsquaresmodprimewithnonresidue(a,b,r,++t,p);
+                }
             }
         }
 

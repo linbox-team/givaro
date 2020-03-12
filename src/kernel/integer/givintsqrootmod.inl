@@ -6,7 +6,7 @@
 // see the COPYRIGHT file for more details.
 // Time-stamp: <12 Mar 20 15:44:49 Jean-Guillaume.Dumas@imag.fr>
 // Givaro : Modular square roots
-// Author : Yanis Linge
+// Author : Yanis Linge, Jean-Guillaume Dumas
 // ============================================================= //
 
 #ifndef __GIVARO_sqrootmod_INL

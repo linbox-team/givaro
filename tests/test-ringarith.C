@@ -232,8 +232,8 @@ int TestRing(const Ring& F, const uint64_t seed)
     JEONETESTE(F,x,y);
 
     for (size_t i = 0; i< NBITER; ++i) {
-        g.random(x); g.random(y);
-        JEONETESTE(F,x,y);
+	g.random(x); g.random(y);
+	JEONETESTE(F,x,y);
     }
 
     return 0;
@@ -253,21 +253,21 @@ int TestPolRing(const Ring& F, const uint64_t seed)
     srand48((int64_t)seed);
 
     for (size_t i = 0; i < NBITERD; ++i) {
-        int64_t d1 = int64_t (lrand48() % DEGMAX);
-        int64_t d2 = int64_t (lrand48() % DEGMAX);
-        typename Ring::Element x, d, z, o;
+	int64_t d1 = int64_t (lrand48() % DEGMAX);
+	int64_t d2 = int64_t (lrand48() % DEGMAX);
+	typename Ring::Element x, d, z, o;
 
-        do { F.random(generator, x, Degree(d1)); } while(F.isZero(x));
-        do { F.random(generator, d, Degree(d2)); } while(F.isZero(d));
-        JEONETESTE(F,x,d);
+	do { F.random(generator, x, Degree(d1)); } while(F.isZero(x));
+	do { F.random(generator, d, Degree(d2)); } while(F.isZero(d));
+	JEONETESTE(F,x,d);
 
-        do { F.random(generator, z, Degree(0)); } while(F.isZero(z));
-        JEONETESTE(F,x,z);
-        JEONETESTE(F,z,x);
+	do { F.random(generator, z, Degree(0)); } while(F.isZero(z));
+	JEONETESTE(F,x,z);
+	JEONETESTE(F,z,x);
 
-        do { F.random(generator, o, Degree(1)); } while(F.isZero(o));
-        JEONETESTE(F,d,o);
-        JEONETESTE(F,o,d);
+	do { F.random(generator, o, Degree(1)); } while(F.isZero(o));
+	JEONETESTE(F,d,o);
+	JEONETESTE(F,o,d);
     }
 
     return 0;
@@ -286,16 +286,16 @@ int TestInv(const Ring& F, const uint64_t seed)
 
     for (int i=0; i < 100; i++)
     {
-        g.random(a);
-        F.inv(inva, a);
-        F.inv(invinva, inva);
+	g.random(a);
+	F.inv(inva, a);
+	F.inv(invinva, inva);
 
-        // F.write(std::cerr);
-        // F.write(std::cerr << " => a: ", a);
-        // F.write(std::cerr << "; inva: ", inva);
-        // F.write(std::cerr << "; invinva: ", invinva) << std::endl;
+	// F.write(std::cerr);
+	// F.write(std::cerr << " => a: ", a);
+	// F.write(std::cerr << "; inva: ", inva);
+	// F.write(std::cerr << "; invinva: ", invinva) << std::endl;
 
-        TESTE_EG(a, invinva);
+	TESTE_EG(a, invinva);
     }
 
 
@@ -479,6 +479,7 @@ int main(int argc, char ** argv)
     TEST_LAST(Modular<double>, Dmax);
     TEST_LAST(ModularFD, FDmax);
     TEST_LAST(Modular<RecInt::ruint128>, RUmax);
+    TEST_LAST(Modular<RecInt::rint128>,  Rmax);
     typedef Modular<RecInt::ruint128,RecInt::ruint256> MyMod;
     TEST_LAST(MyMod, RUExtmax);
     TEST_LAST(ModularBalanced<int32_t>, BZmax);
@@ -501,8 +502,8 @@ int main(int argc, char ** argv)
     Field Name(Prime); \
     std::cout << " (" << (Integer)Name.cardinality() << ',' << (Integer)Name.maxCardinality() << ')'<< std::endl; \
     if (TestInv( (Name), (seed))) { \
-        std::cout << #Name << " failed !" << std::endl;	\
-        return -1;					\
+	std::cout << #Name << " failed !" << std::endl;	\
+	return -1;					\
     }
 
     //TEST_INV(Modular<int8_t>, C17, 17); => GF(17) does not fit in Modular<int8_t>

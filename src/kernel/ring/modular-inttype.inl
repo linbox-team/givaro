@@ -145,7 +145,7 @@ namespace Givaro
     {
         typename Modular<IntType, COMP, Enable>::Element tmp = r;
         tmp += a*b;
-        tmp%= _p;
+        tmp %= _p;
         return r = (Element)tmp;
     }
 
@@ -153,8 +153,7 @@ namespace Givaro
     Modular<IntType, COMP, Enable>::axmy (Element& r, const Element& a, const Element& b, const Element& c) const
     {
         r = a*b;
-        r += _p;
-        r -= c;
+        r += (_p - c);
         return r = (r < _p ? r : r%_p);
     }
 
@@ -170,17 +169,16 @@ namespace Givaro
     template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
     Modular<IntType, COMP, Enable>::maxpyin (Element& r, const Element& a, const Element& b) const
     {
-        r = _p - r;
-        r += a*b;
-        r = (r<_p ? r : r % _p);
+        axmyin(r,a,b);
         return negin(r);
     }
     // r = a*b - r
     template<typename IntType, typename COMP, typename Enable> inline typename Modular<IntType, COMP, Enable>::Element&
     Modular<IntType, COMP, Enable>::axmyin (Element& r, const Element& a, const Element& b) const
     {
-        maxpyin(r,a,b);
-        return negin(r);
+        r = _p - r;
+        r += a*b;
+        return r = (r<_p ? r : r % _p);
     }
 
 

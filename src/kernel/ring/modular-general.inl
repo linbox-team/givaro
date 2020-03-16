@@ -57,6 +57,15 @@ template<size_t K> struct is_smaller_ruint<RecInt::ruint<K>,RecInt::ruint<K+1>> 
 
 template<typename T> struct RecInt_K;
 template<size_t K> struct RecInt_K<RecInt::ruint<K>> { static const size_t value = K;};
+template<size_t K> struct RecInt_K<RecInt::rint<K>>  { static const size_t value = K;};
+
+
+template<typename> struct is_rint : std::false_type {};
+template<size_t K> struct is_rint<RecInt::rint<K>> : std::true_type {};
+
+template<typename, typename> struct is_same_rint : std::false_type {};
+template<size_t K> struct is_same_rint<RecInt::rint<K>,RecInt::rint<K>> : std::true_type {};
+
 
 namespace Givaro
 {

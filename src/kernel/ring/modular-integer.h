@@ -122,9 +122,9 @@ namespace Givaro
         Element& operator()(Element& elt)
         {
             // Create new random Elements
-            Givaro::Integer::random_lessthan(elt,_size);
-
-            return elt;
+	  Element tmp;
+            Givaro::Integer::random_lessthan(tmp,_size);
+	    return _ring.init(elt,tmp);
         }
 
         Element& random(Element& elt)

@@ -73,8 +73,8 @@ FPMATH_FLAGS
 # With GCC 4.x, the default ABI version is 2. With this version, __m128 and
 # __m256 are the same types and therefore we cannot have overloads for both
 # types without linking error. It is fixed in ABI version 4.
-# FIXME: Why do we set ABI version to 6 ? Why is it not done for GCC 4.9.x ?
-AS_IF([test "x$CCNAM" = "xgcc48"],[REQUIRED_FLAGS+=" -fabi-version=6"])
+# FIXME: Why do we set ABI version to 6 ?
+AS_CASE([$CCNAM], [gcc4*], [REQUIRED_FLAGS+=" -fabi-version=6"])
 
 AS_ECHO([---------------------------------------])
 # Machine characteristics
@@ -88,7 +88,7 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(__int64_t)
 
 # Looking for int128
-AC_CHECK_TYPE([__int128_t], [AC_TRY_COMPILE([#include <type_traits>], [std::make_unsigned<__int128_t>::type y;],[AC_DEFINE(HAVE_INT128, 1, [Define that compiler allows int128_t types])])])		   
+AC_CHECK_TYPE([__int128_t], [AC_TRY_COMPILE([#include <type_traits>], [std::make_unsigned<__int128_t>::type y;],[AC_DEFINE(HAVE_INT128, 1, [Define that compiler allows int128_t types])])])
 
 
 # check endianness of the architecture

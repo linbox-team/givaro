@@ -9,15 +9,13 @@
 // $Id
 // ==========================================================================
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
 
     // -- map of a unary operator, with operator()( Type_t& res )
     // res and u could be aliases if OP permits it
     template<class Domain>
     template<class UNOP>
     inline void VectorDom<Domain,Dense>::
-    map ( Rep& res, UNOP& op ) const
+    map ( Element& res, UNOP& op ) const
     {
         size_t sz = dim(res);
         for (size_t i=0; i<sz; ++i) op(res[i]);
@@ -27,7 +25,7 @@ namespace Givaro {
     template<class Domain>
     template<class BINOP>
     inline void VectorDom<Domain,Dense>::
-    map( Rep& res, const BINOP& OP, const Rep& u, const Rep& v ) const
+    map( Element& res, const BINOP& OP, const Element& u, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)) && (dim(u) == dim(v)), "Bad size");
         size_t sz = dim(res);
@@ -38,7 +36,7 @@ namespace Givaro {
     template<class Domain>
     template<class UNOP>
     inline void VectorDom<Domain,Dense>::
-    map( Rep& res, UNOP& OP, const Rep& u ) const
+    map( Element& res, UNOP& OP, const Element& u ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         size_t sz = dim(u);
@@ -48,16 +46,15 @@ namespace Givaro {
 
     // --- mul
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::mulin( Rep& res, const Type_t& val ) const
+    inline void VectorDom<Domain,Dense>::mulin( Element& res, const Type_t& val ) const
     {
-        GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         Curried2<MulOp<Domain> > opcode(_domain, (Type_t&)val);
         map( res, opcode);
     }
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::mul
-    ( Rep& res, const Rep& u, const Type_t& val ) const
+    ( Element& res, const Element& u, const Type_t& val ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         Curried2<MulOp<Domain> > opcode(_domain, (Type_t&)val);
@@ -66,7 +63,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::mul
-    ( Rep& res, const Type_t& val, const Rep& v ) const
+    ( Element& res, const Type_t& val, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)), "Bad size");
         Curried1<MulOp<Domain> > opcode(_domain, val);
@@ -77,7 +74,7 @@ namespace Givaro {
 
     // --- add
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::addin( Rep& res, const Rep& u ) const
+    inline void VectorDom<Domain,Dense>::addin( Element& res, const Element& u ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         AddOp<Domain> opcode( _domain );
@@ -86,7 +83,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::add
-    ( Rep& res, const Rep& u, const Rep& v ) const
+    ( Element& res, const Element& u, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)) && (dim(u) == dim(v)), "Bad size");
         AddOp<Domain> opcode (_domain);
@@ -95,7 +92,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::add
-    ( Rep& res, const Rep& u, const Type_t& val ) const
+    ( Element& res, const Element& u, const Type_t& val ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         Curried2<AddOp<Domain> > opcode(_domain, (Type_t&)val);
@@ -104,7 +101,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::add
-    ( Rep& res, const Type_t& val, const Rep& v ) const
+    ( Element& res, const Type_t& val, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)), "Bad size");
         Curried1<AddOp<Domain> > opcode(_domain, val);
@@ -113,7 +110,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::add
-    ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u, const Rep& v ) const
+    ( Element& res, const SparseVector& u, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
         // -- here assume : subdomains of res, u and v are equal
@@ -123,7 +120,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::add
-    ( Rep& res, const Rep& v, const VectorDom<Domain,Sparse>::Rep& u ) const
+    ( Element& res, const Element& v, const SparseVector& u ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
         // -- here assume : subdomains of res, u and v are equal
@@ -133,13 +130,13 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::addin
-    ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u ) const
+    ( Element& res, const SparseVector& u ) const
     {
         GIVARO_ASSERT((dim(res) == u.dim()), "Bad size");
         // -- here assume : subdomains of res, u and v are equal
         typedef VectorDom<Domain,Sparse> VSparseDom;
-        typedef VSparseDom::constIterator_t cIterator_t;
-        typedef VSparseDom::IndiceIterator_t cIndiceIterator_t;
+        typedef typename VSparseDom::constIterator_t cIterator_t;
+        typedef typename VSparseDom::IndiceIterator_t cIndiceIterator_t;
         cIterator_t u_curr = u.begin_data();
         cIterator_t u_end = u.end_data();
         cIndiceIterator_t u_indice = u.begin_indice();
@@ -151,7 +148,7 @@ namespace Givaro {
 
     // --- sub
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::subin( Rep& res, const Rep& u ) const
+    inline void VectorDom<Domain,Dense>::subin( Element& res, const Element& u ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         SubOp<Domain> opcode ( _domain );
@@ -159,7 +156,7 @@ namespace Givaro {
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::sub( Rep& res, const Rep& u, const Rep& v ) const
+    inline void VectorDom<Domain,Dense>::sub( Element& res, const Element& u, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == dim(u)), "Bad size");
         SubOp<Domain> opcode ( _domain );
@@ -167,7 +164,7 @@ namespace Givaro {
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::sub( Rep& res, const Rep& u, const Type_t& val ) const
+    inline void VectorDom<Domain,Dense>::sub( Element& res, const Element& u, const Type_t& val ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         Curried2<SubOp<Domain> > opcode( _domain, (Type_t&)val);
@@ -175,7 +172,7 @@ namespace Givaro {
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::sub( Rep& res, const Type_t& val, const Rep& v ) const
+    inline void VectorDom<Domain,Dense>::sub( Element& res, const Type_t& val, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)), "Bad size");
         Curried1<SubOp<Domain> > opcode( _domain, val);
@@ -184,13 +181,13 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::subin
-    ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u ) const
+    ( Element& res, const SparseVector& u ) const
     {
         GIVARO_ASSERT((dim(res) == u.dim()), "Bad size");
         // -- here assume : subdomains of res, u and v are equal
         typedef VectorDom<Domain,Sparse> VSparseDom;
-        typedef VSparseDom::constIterator_t cIterator_t;
-        typedef VSparseDom::IndiceIterator_t cIndiceIterator_t;
+        typedef typename VSparseDom::constIterator_t cIterator_t;
+        typedef typename VSparseDom::IndiceIterator_t cIndiceIterator_t;
         cIterator_t u_curr = u.begin_data();
         cIterator_t u_end = u.end_data();
         cIndiceIterator_t u_indice = u.begin_indice();
@@ -200,7 +197,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::sub
-    ( Rep& res, const VectorDom<Domain,Sparse>::Rep& u, const Rep& v ) const
+    ( Element& res, const SparseVector& u, const Element& v ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
         // -- here assume : subdomains of res, u and v are equal
@@ -210,7 +207,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::sub
-    ( Rep& res, const Rep& v, const VectorDom<Domain,Sparse>::Rep& u ) const
+    ( Element& res, const Element& v, const SparseVector& u ) const
     {
         GIVARO_ASSERT((dim(res) == dim(v)) && (dim(v) == u.dim()), "Bad size");
         // -- here assume : subdomains of res, u and v are equal
@@ -223,14 +220,14 @@ namespace Givaro {
 
     // --- neg
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::negin( Rep& res ) const
+    inline void VectorDom<Domain,Dense>::negin( Element& res ) const
     {
         NegOp<Domain> opcode ( _domain );
         map( res, opcode, res );
     }
 
     template<class Domain>
-    inline void VectorDom<Domain,Dense>::neg( Rep& res, const Rep& u ) const
+    inline void VectorDom<Domain,Dense>::neg( Element& res, const Element& u ) const
     {
         GIVARO_ASSERT((dim(res) == dim(u)), "Bad size");
         NegOp<Domain> opcode ( _domain );
@@ -239,7 +236,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axpy
-    ( Rep& res, const Type_t& a, const Rep& x, const Rep& y ) const
+    ( Element& res, const Type_t& a, const Element& x, const Element& y ) const
     {
         GIVARO_ASSERT((dim(res) == dim(x)) && (dim(x) == dim(y)), "Bad size");
         size_t sz = dim(res);
@@ -249,7 +246,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axpyin
-    ( Rep& res, const Type_t& a, const Rep& x ) const
+    ( Element& res, const Type_t& a, const Element& x ) const
     {
         GIVARO_ASSERT((dim(res) == dim(x)), "Bad size");
         size_t sz = dim(res);
@@ -259,7 +256,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axmy
-    ( Rep& res, const Type_t& a, const Rep& x, const Rep& y ) const
+    ( Element& res, const Type_t& a, const Element& x, const Element& y ) const
     {
         GIVARO_ASSERT((dim(res) == dim(x)) && (dim(x) == dim(y)), "Bad size");
         size_t sz = dim(res);
@@ -269,7 +266,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axmyin
-    ( Rep& res, const Type_t& a, const Rep& x ) const
+    ( Element& res, const Type_t& a, const Element& x ) const
     {
         GIVARO_ASSERT((dim(res) == dim(x)), "Bad size");
         size_t sz = dim(res);
@@ -280,7 +277,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axpy
-    ( Rep& res, const Rep& a, const Rep& b, const Rep& y ) const
+    ( Element& res, const Element& a, const Element& b, const Element& y ) const
     {
         GIVARO_ASSERT((dim(res) == dim(a)) && (dim(a) == dim(b)) && (dim(b) == dim(y)), "Bad size");
         size_t sz = dim(res);
@@ -290,7 +287,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axpyin
-    ( Rep& res, const Rep& a, const Rep& b ) const
+    ( Element& res, const Element& a, const Element& b ) const
     {
         GIVARO_ASSERT((dim(res) == dim(a)) && (dim(a) == dim(b)), "Bad size");
         size_t sz = dim(res);
@@ -300,7 +297,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axmy
-    ( Rep& res, const Rep& a, const Rep& b, const Rep& y ) const
+    ( Element& res, const Element& a, const Element& b, const Element& y ) const
     {
         GIVARO_ASSERT((dim(res) == dim(a)) && (dim(a) == dim(b)) && (dim(b) == dim(y)), "Bad size");
         size_t sz = dim(res);
@@ -310,7 +307,7 @@ namespace Givaro {
 
     template<class Domain>
     void VectorDom<Domain,Dense>::axmyin
-    ( Rep& res, const Rep& a, const Rep& b ) const
+    ( Element& res, const Element& a, const Element& b ) const
     {
         GIVARO_ASSERT((dim(res) == dim(a)) && (dim(a) == dim(b)), "Bad size");
         size_t sz = dim(res);
@@ -322,7 +319,7 @@ namespace Givaro {
 
     template<class Domain>
     inline void VectorDom<Domain,Dense>::dot
-    ( Type_t& res, const Rep& op1, const Rep& op2) const
+    ( Type_t& res, const Element& op1, const Element& op2) const
     {
         GIVARO_ASSERT((dim(op1) == dim(op2)), "Bad size");
         size_t sz = dim(op1);
@@ -337,14 +334,14 @@ namespace Givaro {
     // -- Write the domain
     //
     template<class Domain>
-    ostream& VectorDom<Domain, Dense>::write( ostream& o ) const
+    std::ostream& VectorDom<Domain, Dense>::write( std::ostream& o ) const
     {
         return _domain.write(o << "(") << ",Dense)";
     }
 
     // -- read the domain
     template<class Domain>
-    istream& VectorDom<Domain, Dense>::read( istream& sin )
+    std::istream& VectorDom<Domain, Dense>::read( std::istream& sin )
     {
         char ch;
         sin >> std::ws >> ch;
@@ -381,13 +378,13 @@ namespace Givaro {
     //
     // -- Don't write the domain !, only write a rep / domain
     template<class Domain>
-    ostream& VectorDom<Domain, Dense>::write(ostream& o, const Rep& V) const
+    std::ostream& VectorDom<Domain, Dense>::write(std::ostream& o, const Element& V) const
     {
         if (dim(V) ==0) return o << "[ ]";
         o << '[';
         size_t i;
-        for (i=0; i<dim(V)-1; i++) o << V[i] << ',';
-        return o << V[i] << ']';
+        for (i=0; i<dim(V)-1; i++) _domain.write(o, V[i]) << ',';
+        return _domain.write(o, V[i]) << ']';
     }
 
 
@@ -403,7 +400,7 @@ namespace Givaro {
     //    ' ', '\n', '\t', '\f' .
 
     template<class Domain>
-    istream&  VectorDom<Domain,Dense>::read (istream& fin, Rep& A) const
+    std::istream&  VectorDom<Domain,Dense>::read (std::istream& fin, Element& A) const
     {
         char ch;
 
@@ -415,7 +412,7 @@ namespace Givaro {
 
         // -- Read the line and count the nb of elts
         int i = 0;
-        Rep rep;
+        Element rep;
         rep.allocate(1);
         Type_t Tmp;
         fin >> Tmp;

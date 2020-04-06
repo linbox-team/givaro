@@ -11,8 +11,6 @@
 // Description:
 // of matrix by blocks.
 
-#error "dead code"
-
 #ifndef _GIV_MATRIX_SPARSE_H_
 #define _GIV_MATRIX_SPARSE_H_
 
@@ -21,7 +19,6 @@
 #include "givaro/givmatstoragesparse.h"
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
 
     // --
     // -- Matrix class: dense matrix
@@ -33,13 +30,13 @@ namespace Givaro {
 
     public:
         typedef 	   Domain 					Domain_t;
-        typedef typename Domain::Rep					Type_t;
-        typedef 	   int 						Indice_t;
+        typedef typename Domain::Element		Type_t;
+        typedef 	   size_t					Indice_t;
         typedef 	   Dense 					StorageTag_t;
         typedef typename RetMatrixStorage<Type_t,Sparse>::Storage_t 	Storage_t;
 
         // -- Representation of Element of the domain
-        typedef 	   Storage_t    				Rep;
+        typedef 	   Storage_t				Element;
 
         // -- Self_t
         typedef          MatrixDom<Domain, Sparse>			Self_t;
@@ -58,70 +55,70 @@ namespace Givaro {
         : _domain(M._domain) {}
 
         //-- init a new object, memory allocation
-        void init(Rep& r, Indice_t nr, Indice_t nc) const
+        void init(Element& r, Indice_t nr, Indice_t nc) const
         { r.allocate(nr, nc); }
-        void init(Rep& r) const
+        void init(Element& r) const
         { r.allocate(0,0); }
-        void init(Rep& A, const Rep& B) const
+        void init(Element& A, const Element& B) const
         { A.copy(B); }
 
         //-- Assignment operator: physical copy
-        void assign (Rep& r, const Rep& a) const
+        void assign (Element& r, const Element& a) const
         { r.copy(a); }
 
         // -- Comparaizon
-        int areEqual ( const Rep& P, const Rep& Q) const;
-        int areNEqual( const Rep& P, const Rep& Q) const;
-        int isZero  ( const Rep& P ) const;
+        int areEqual ( const Element& P, const Element& Q) const;
+        int areNEqual( const Element& P, const Element& Q) const;
+        int isZero  ( const Element& P ) const;
 
         //-- Dimension of the matrix space
-        Indice_t nrow(const Rep& A) const { return A._nrow; }
-        Indice_t ncol(const Rep& A) const { return A._ncol; }
+        Indice_t nrow(const Element& A) const { return A._nrow; }
+        Indice_t ncol(const Element& A) const { return A._ncol; }
         Domain_t subdomain() const { return _domain; }
 
         // -- arithmetic operator: operands could be aliased
-        void mulin ( Rep& res, const Type_t& u ) const;
-        void mul   ( Rep& res, const Type_t& u, const Rep& v ) const;
-        void mul   ( Rep& res, const Rep& u, const Type_t& v ) const;
+        void mulin ( Element& res, const Type_t& u ) const;
+        void mul   ( Element& res, const Type_t& u, const Element& v ) const;
+        void mul   ( Element& res, const Element& u, const Type_t& v ) const;
 
         // VD is the vector domain for res and u
-        void mul      ( VectorDom<Domain,Dense>::Rep& res,
-                        const Rep& M,
+        void mul      ( typename VectorDom<Domain,Dense>::Element& res,
+                        const Element& M,
                         const VectorDom<Domain,Dense>& VD,
-                        const VectorDom<Domain,Dense>::Rep& u ) const;
-        void multrans ( typename VectorDom<Domain,Dense>::Rep& res,
-                        const Rep& M,
+                        const typename VectorDom<Domain,Dense>::Element& u ) const;
+        void multrans ( typename VectorDom<Domain,Dense>::Element& res,
+                        const Element& M,
                         const VectorDom<Domain,Dense>& VS,
-                        const typename VectorDom<Domain,Dense>::Rep& u ) const;
+                        const typename VectorDom<Domain,Dense>::Element& u ) const;
 
 
-        void negin ( Rep& P ) const
+        void negin ( Element& P ) const
         {
             size_t sz = P._data.size();
             for(size_t i=0; i<sz; ++i) _domain.negin(P._data[i]);
         }
 
-        void neg   ( Rep& res, const Rep& u ) const;
+        void neg   ( Element& res, const Element& u ) const;
 
         // -- map of a unary operator, with operator()( Type_t& res)
         template<class OP>
-        void map ( Rep& res, OP& op ) const;
+        void map ( Element& res, OP& op ) const;
 
         // -- map of a unary operator, with operator()( Type_t& res, const Type_t& val)
         template<class OP>
-        void map ( Rep& res, OP& op, const Rep& u ) const;
+        void map ( Element& res, OP& op, const Element& u ) const;
 
         // -- IO
-        istream& read ( istream& s );
-        ostream& write( ostream& s ) const;
-        istream& read ( istream& s, Rep& r ) const;
-        ostream& write( ostream& s, const Rep& r ) const;
+        std::istream& read ( std::istream& s );
+        std::ostream& write( std::ostream& s ) const;
+        std::istream& read ( std::istream& s, Element& r ) const;
+        std::ostream& write( std::ostream& s, const Element& r ) const;
 
         // -- Compression method to compact a dense matrix to a sparse
         // template<class StorageTag>,
-        void compact( Rep& Ms,
+        void compact( Element& Ms,
                       const MatrixDom<Domain, Dense>& MD,
-                      const MatrixDom<Domain, Dense>::Rep& Md);
+                      const typename MatrixDom<Domain, Dense>::Element& Md);
     };
 
 } // Givaro

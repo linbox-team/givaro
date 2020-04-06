@@ -15,15 +15,11 @@
 #include "givaro/givstorage.h"
 
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
-
-
-
-    // ==========================================================================
+    // =========================================================================
     // --
     // -- Specialization for sparse representation, using Array0 over (int,T)
     // --
-    // ==========================================================================
+    // =========================================================================
 
     template<class T>
     struct RetVectorStorage<T,Sparse> {

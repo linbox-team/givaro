@@ -168,6 +168,7 @@ examples/Integer/Makefile
 examples/Rational/Makefile
 examples/RecInt/Makefile
 examples/Polynomial/Makefile
+examples/Matrix/Makefile
 tests/Makefile
 docs/Makefile
 givaro.pc

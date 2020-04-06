@@ -14,15 +14,13 @@
 
 #include "givaro/givcategory.h"
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
 
-
-    // ==========================================================================
+    // =========================================================================
     // --
     // -- RetVectorStorage<T, StorageTag>:
     // -- return the storage type Storage_t associated with the
     // -- StorageTag
-    // ==========================================================================
+    // =========================================================================
     template<class T, class StorageTag >
     struct RetVectorStorage {
         typedef T		Type_t;

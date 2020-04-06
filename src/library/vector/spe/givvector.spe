@@ -24,7 +24,7 @@ template<>
 class Vector<Zpz> {
 public :
   typedef Zpz  		Type_t;
-  typedef int 		Indice_t;
+  typedef size_t	Indice_t;
   typedef Zpz* 		Iterator_t;
   typedef const Zpz* 	constIterator_t;
   

@@ -9,13 +9,10 @@
 // $Id: givmatdenseops.inl,v 1.3 2011-01-19 18:29:09 briceboyer Exp $
 // ==========================================================================
 
-#error "this looks very much like dead code"
-
 namespace Givaro {
-#pragma message "#warning this file will probably not compile"
 
     template<class Domain>
-    int MatrixDom<Domain,Dense>::areEqual ( const Rep& A, const Rep& B ) const
+    int MatrixDom<Domain,Dense>::areEqual ( const Element& A, const Element& B ) const
     {
         if (ncol(A) != ncol(B)) return 0;
         if (nrow(A) != nrow(B)) return 0;
@@ -23,20 +20,20 @@ namespace Givaro {
     }
 
     template<class Domain>
-    int MatrixDom<Domain,Dense>::areNEqual ( const Rep& A, const Rep& B ) const
+    int MatrixDom<Domain,Dense>::areNEqual ( const Element& A, const Element& B ) const
     {
         return !areEqual(A,B);
     }
 
     template<class Domain>
-    int MatrixDom<Domain,Dense>::isZero ( const Rep& A ) const
+    int MatrixDom<Domain,Dense>::isZero ( const Element& A ) const
     {
-        return _supportdoamin.isZero(A);
+        return _supportdomain.isZero(A);
     }
 
     // res <- A + B; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::add( Rep& R, const Rep& A, const Rep& B) const
+    void MatrixDom<Domain,Dense>::add( Element& R, const Element& A, const Element& B) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)) && (ncol(A) == ncol(B)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)) && (nrow(A) == nrow(B)), "Bad size");
@@ -45,7 +42,7 @@ namespace Givaro {
 
     // res <- res + A; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::addin( Rep& R, const Rep& A ) const
+    void MatrixDom<Domain,Dense>::addin( Element& R, const Element& A ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -54,7 +51,7 @@ namespace Givaro {
 
     // res <- A + val; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::add( Rep& R, const Rep& A, const Type_t& val ) const
+    void MatrixDom<Domain,Dense>::add( Element& R, const Element& A, const Type_t& val ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -65,7 +62,7 @@ namespace Givaro {
 
     // res <- val + A; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::add( Rep& R, const Type_t& val, const Rep& A) const
+    void MatrixDom<Domain,Dense>::add( Element& R, const Type_t& val, const Element& A) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -78,7 +75,7 @@ namespace Givaro {
 
     // res <- A - B; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::sub( Rep& R, const Rep& A, const Rep& B) const
+    void MatrixDom<Domain,Dense>::sub( Element& R, const Element& A, const Element& B) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)) && (ncol(A) == ncol(B)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)) && (nrow(A) == nrow(B)), "Bad size");
@@ -87,7 +84,7 @@ namespace Givaro {
 
     // res <- res - A; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::subin( Rep& R, const Rep& A ) const
+    void MatrixDom<Domain,Dense>::subin( Element& R, const Element& A ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -96,7 +93,7 @@ namespace Givaro {
 
     // res <- res - A; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::sub( Rep& R, const Rep& A, const Type_t& val ) const
+    void MatrixDom<Domain,Dense>::sub( Element& R, const Element& A, const Type_t& val ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -107,7 +104,7 @@ namespace Givaro {
 
     // res <- res - A; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::sub( Rep& R, const Type_t& val, const Rep& A) const
+    void MatrixDom<Domain,Dense>::sub( Element& R, const Type_t& val, const Element& A) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -118,7 +115,7 @@ namespace Givaro {
 
     // res <- - A; aliases of operands are allowed
     template<class Domain>
-    void MatrixDom<Domain,Dense>::neg( Rep& R, const Rep& A) const
+    void MatrixDom<Domain,Dense>::neg( Element& R, const Element& A) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -126,7 +123,7 @@ namespace Givaro {
     }
 
     template<class Domain>
-    void MatrixDom<Domain,Dense>::negin( Rep& R ) const
+    void MatrixDom<Domain,Dense>::negin( Element& R ) const
     {
         _supportdomain.negin(R);
     }
@@ -134,7 +131,7 @@ namespace Givaro {
 
     // R <- A * B, R cannot be an alias for A or B
     template<class Domain>
-    void MatrixDom<Domain,Dense>::mul( Rep& A, const Rep& B, const Rep& C) const
+    void MatrixDom<Domain,Dense>::mul( Element& A, const Element& B, const Element& C) const
     {
         GIVARO_ASSERT((ncol(A) == ncol(B)) && (ncol(B) == ncol(C)), "Bad size");
         GIVARO_ASSERT((nrow(A) == nrow(B)) && (nrow(B) == nrow(C)), "Bad size");
@@ -162,21 +159,21 @@ namespace Givaro {
 
     template<class Domain>
     void MatrixDom<Domain,Dense>::mulin
-    ( Rep& R, const Type_t& val) const
+    ( Element& R, const Type_t& val) const
     {
         _supportdomain.mulin(R, val);
     }
 
     template<class Domain>
     void MatrixDom<Domain,Dense>::mul
-    ( typename VectorDom<Domain,Dense>::Rep& res,
-      const Rep& M,
+    ( typename VectorDom<Domain,Dense>::Element& res,
+      const Element& M,
       const VectorDom<Domain,Dense>& VD,
-      const typename VectorDom<Domain,Dense>::Rep& u ) const
+      const typename VectorDom<Domain,Dense>::Element& u ) const
     {
         GIVARO_ASSERT( (nrow(M) == VD.dim(res)), "Bad size");
         GIVARO_ASSERT( (ncol(M) == VD.dim(u)), "Bad size");
-        Indice_t k, i, j;
+        Indice_t i, j;
         int startMi;
         Indice_t nrM = nrow(M);
         Indice_t ncM = ncol(M);
@@ -195,25 +192,24 @@ namespace Givaro {
     // res <- tr(u) * tr(A)
     template<class Domain>
     void MatrixDom<Domain,Dense>::multrans
-    ( typename VectorDom<Domain,Dense>::Rep& res,
-      const Rep& M,
+    ( typename VectorDom<Domain,Dense>::Element& res,
+      const Element& M,
       const VectorDom<Domain,Dense>& VD,
-      const typename VectorDom<Domain,Dense>::Rep& u ) const
+      const typename VectorDom<Domain,Dense>::Element& u ) const
     {
         GIVARO_ASSERT( (nrow(M) == VD.dim(u)), "Bad size");
         GIVARO_ASSERT( (ncol(M) == VD.dim(res)), "Bad size");
-        Indice_t k, i, j;
         int startMi;
         Indice_t nrM = nrow(M);
         Indice_t ncM = ncol(M);
 
         // -- the algorithm used the fact that matrices are stored by row
-        for (j=0; j < ncM; ++j)
+        for (Indice_t j=0; j < ncM; ++j)
             _domain.assign(res[j], _domain.zero);
-        for (i=0; i < nrM; ++i)
+        for (Indice_t i=0; i < nrM; ++i)
         {
             startMi = i*ncM;
-            for (j=0; j < ncM; ++j, ++startMi)
+            for (Indice_t j=0; j < ncM; ++j, ++startMi)
                 _domain.axpyin(res[j], u[i], M[startMi]);
         }
     }
@@ -222,7 +218,7 @@ namespace Givaro {
 
     template<class Domain>
     void MatrixDom<Domain,Dense>::mul
-    ( Rep& R, const Type_t& val, const Rep& A) const
+    ( Element& R, const Type_t& val, const Element& A) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -231,7 +227,7 @@ namespace Givaro {
 
     template<class Domain>
     void MatrixDom<Domain,Dense>::mul
-    ( Rep& R, const Rep& A, const Type_t& val) const
+    ( Element& R, const Element& A, const Type_t& val) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(A)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(A)), "Bad size");
@@ -241,7 +237,7 @@ namespace Givaro {
     // r <- a*x+y
     template<class Domain>
     void MatrixDom<Domain,Dense>::axpy
-    ( Rep& R, const Type_t& a, const Rep& X, const Rep& Y ) const
+    ( Element& R, const Type_t& a, const Element& X, const Element& Y ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(X)) && (ncol(X) == ncol(Y)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(X)) && (nrow(X) == nrow(Y)), "Bad size");
@@ -250,7 +246,7 @@ namespace Givaro {
     // r <- r+a*x
     template<class Domain>
     void MatrixDom<Domain,Dense>::axpyin
-    ( Rep& R, const Type_t& a, const Rep& X ) const
+    ( Element& R, const Type_t& a, const Element& X ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(X)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(X)), "Bad size");
@@ -258,8 +254,8 @@ namespace Givaro {
     }
     // r <- a*x-y
     template<class Domain>
-    void MatrixDom<Domain,Dense>::axmy ( Rep& R,
-                                         const Type_t& a, const Rep& X, const Rep& Y ) const
+    void MatrixDom<Domain,Dense>::axmy ( Element& R,
+                                         const Type_t& a, const Element& X, const Element& Y ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(X)) && (ncol(X) == ncol(Y)), "Bad size");
         GIVARO_ASSERT((nrow(R) == nrow(X)) && (nrow(X) == nrow(Y)), "Bad size");
@@ -267,7 +263,7 @@ namespace Givaro {
     }
     // r <- a*x-r
     template<class Domain>
-    void MatrixDom<Domain,Dense>::axmyin ( Rep& R,
+    void MatrixDom<Domain,Dense>::axmyin ( Element& R,
                                            const Type_t& a, const Type_t& X ) const
     {
         GIVARO_ASSERT((ncol(R) == ncol(X)), "Bad size");
@@ -280,7 +276,7 @@ namespace Givaro {
     // A*X + Y
     template<class Domain>
     void MatrixDom<Domain,Dense>::axpy
-    ( Rep& R, const Rep& A, const Rep& X, const Rep& Y ) const
+    ( Element& R, const Element& A, const Element& X, const Element& Y ) const
     {
         int k, i, j;
         int startAi, startXj, startRi;
@@ -307,8 +303,8 @@ namespace Givaro {
     // a*A*X - b*Y
     template<class Domain>
     void MatrixDom<Domain,Dense>::axpy
-    ( Rep& res, const Type_t& a, const Rep& A,
-      const Rep& X, const Type_t& b, const Rep& Y ) const
+    ( Element& R, const Type_t& a, const Element& A,
+      const Element& X, const Type_t& b, const Element& Y ) const
     {
         Indice_t k, i, j;
         int startAi, startXj, startRi;
@@ -337,36 +333,33 @@ namespace Givaro {
     template<class Domain>
     template<class OP>
     void MatrixDom<Domain,Dense>::map
-    ( Rep& R, OP& op ) const
+    ( Element& R, OP& op ) const
     {
-        Indice_t i;
-        Indice_t max = _supportdomain.dim(R);
-        for (i=max; --i>=0; ) op(R[i]);
+        const Indice_t max = _supportdomain.dim(R);
+        for (Indice_t i(0); i<max; ++i) op(R[i]);
     }
 
     template<class Domain>
     template<class OP>
     void MatrixDom<Domain,Dense>::map
-    ( Rep& R, OP& op, const Rep& A ) const
+    ( Element& R, OP& op, const Element& A ) const
     {
-        Indice_t i;
-        Indice_t max = _supportdomain.dim(R);
-        for (i=max; --i>=0; ) op(R[i], A[i]);
+        const Indice_t max = _supportdomain.dim(R);
+        for (Indice_t i(0); i<max; ++i) op(R[i], A[i]);
     }
 
     template<class Domain>
     template<class OP>
     void MatrixDom<Domain,Dense>::map
-    ( Rep& R, OP& op, const Rep& A, const Rep& B ) const
+    ( Element& R, OP& op, const Element& A, const Element& B ) const
     {
-        Indice_t i;
-        Indice_t max = _supportdomain.dim(R);
-        for (i=max; --i>=0; ) op(R[i], A[i], B[i]);
+        const Indice_t max = _supportdomain.dim(R);
+        for (Indice_t i(0); i<max; ++i) op(R[i], A[i], B[i]);
     }
 
 
     template <class Domain>
-    inline ostream& MatrixDom<Domain,Dense>::write( ostream& sout ) const
+    inline std::ostream& MatrixDom<Domain,Dense>::write( std::ostream& sout ) const
     {
         return _domain.write(sout << '(') << ",Dense)";
     }
@@ -374,7 +367,7 @@ namespace Givaro {
 
     // -- read the domain
     template<class Domain>
-    istream& MatrixDom<Domain,Dense>::read( istream& sin )
+    std::istream& MatrixDom<Domain,Dense>::read( std::istream& sin )
     {
         char ch;
         sin >> std::ws >> ch;
@@ -408,9 +401,9 @@ namespace Givaro {
 
 
     template <class Domain>
-    ostream& MatrixDom<Domain,Dense>::write( ostream& sout, const Rep& A) const
+    std::ostream& MatrixDom<Domain,Dense>::write( std::ostream& sout, const Element& A) const
     {
-        int i,j;
+        Indice_t i,j;
         sout << '[' << nrow(A) << ',' << ncol(A) << ",[";
         for (i=0; i < nrow(A); i++)
         {
@@ -420,14 +413,14 @@ namespace Givaro {
                 _domain.write(sout,A(i,j));
                 if (j < ncol(A) - 1) sout << ",";
             }
-            if (i < nrow(A) - 1) sout << "]," << endl;
+            if (i < nrow(A) - 1) sout << "]," << std::endl;
             else sout << "]";
         }
         return sout << "]]";
     }
 
     template <class Domain>
-    istream& MatrixDom<Domain,Dense>::read (istream& sin, Rep& R) const
+    std::istream& MatrixDom<Domain,Dense>::read (std::istream& sin, Element& R) const
     {
         char ch;
         Indice_t i,j;
@@ -436,7 +429,7 @@ namespace Givaro {
         //  -- read [
         sin >> std::ws >> ch;
         if (ch != '[') {
-            cerr << "Read: " << ch << endl;
+            std::cerr << "Read: " << ch << std::endl;
             GivError::throw_error(
                                   GivBadFormat("MatrixDom<Domain,Dense>::read: syntax error no '['"));
         }
@@ -482,7 +475,7 @@ namespace Givaro {
                                           GivBadFormat("MatrixDom<Domain,Dense>::read: syntax error no ','"));
             }
 
-            cout << "Row: " << i << endl;
+//             cout << "Row: " << i << std::endl;
             //  -- read [
             sin >> std::ws >> ch;
             if (ch != '[')
@@ -491,7 +484,7 @@ namespace Givaro {
 
             // read nc-1 times: val ,
             for (j=0; j< nc-1; ++j) {
-                cout << "Read: i=" << i << ", j=" << j << endl;
+//                 cout << "Read: i=" << i << ", j=" << j << std::endl;
                 _domain.read(sin, R(i,j));
                 //  -- read [
                 sin >> std::ws >> ch;
@@ -501,7 +494,7 @@ namespace Givaro {
             }
 
             // read 1 : val ]
-            cout << "Read: i=" << i << ", j=" << j << endl;
+//             cout << "Read: i=" << i << ", j=" << j << std::endl;
             _domain.read(sin, R(i,j));
             sin >> std::ws >> ch;
             if (ch != ']')

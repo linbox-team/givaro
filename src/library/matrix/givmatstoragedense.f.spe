@@ -20,7 +20,7 @@ namespace Givaro {
 template<> 
 struct RetMatrixStorage<float,Dense> {
   typedef float		Type_t; 
-  typedef int 		Indice_t;
+  typedef size_t	Indice_t;
 
   // --
   // -- Iterators on the storage object: linearization

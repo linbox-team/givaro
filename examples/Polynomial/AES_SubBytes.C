@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 May 20 15:26:49 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <28 May 20 15:33:39 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================== //
 
 /*! @file examples/Polynomial/AES.C
@@ -105,8 +105,8 @@ int main(int argc, char** argv)
     Polynomial matrix, c3; 
     P2adic.radix(matrix, 1+(1<<1)+(1<<2)+(1<<3)+(1<<4));	// cyclic(1F)=1+X+X^2+X^3+X^4+X^5
     P2adic.radix(c3, 1+(1<<1)+(1<<5)+(1<<6)); 			// C3=1+X+X^5+X^6
-    PD2.write(std::cout << "  Linear multiplicator: ", matrix)  << std::endl;
-    PD2.write(std::cout << "  Affine constant: ", c3)  << std::endl;
+    PD2.write(std::cout << "  Linear multiplicator ([1F]): ", matrix)  << std::endl;
+    PD2.write(std::cout << "  Affine constant ([C3]): ", c3)  << std::endl;
     
     Polynomial deg8; P2adic.radix(deg8, 1+(1<<8));	// 1+X^8
     QuotientDom< Poly1Dom< GF2, Dense> > Q2D8(PD2, deg8);
@@ -118,70 +118,6 @@ int main(int argc, char** argv)
     PD2.write(std::cout << "  added: ", tmp) << std::endl;
     uint64_t res; P2adic.eval(res, tmp);
     std::cout << "  represented by: " << res << '=' << dec2hex(res) << std::endl;
-
-//     Field F2(2);
-//     Poly1Dom< Field, Dense> Pol2(F2);
-
-   
-//     GF128.init(b, 5U);
-//     GF128.init(c, 3);
-//     GF128.write(std::cout, b) << std::endl;
-//     GF128.write(std::cout, c) << std::endl;
-
-//     Field::Element f,g,h,j;
-//     Field F2(2);
-//     Poly1Dom< Field, Dense> Pol2(F2);
-//     Poly1Dom< Field, Dense>::Element P, Q, R;
-//     Pol2.init(P,Degree(1));
-//     F2.init(P[0],1);
-//     F2.init(P[1],1);
-//     GF128.init(f, P);
-//     GF128.write(std::cout << "2-adic representation of 1+X is: ", f)
-//     << std::endl
-//     << " ... while its internal representation is: "
-//     << f << std::endl;
-
-//     GF128.write(std::cout << "Indeed, we are in ") <<std::endl;
-
-//     GF128.generator(gen);
-//     GF128.write(std::cout <<
-//                 "In this field, the generator used is (in 2-adic): ", gen)
-//     << std::endl
-//     << " whose internal representation is "
-//     << gen << std::endl;
-
-
-//     Poly1PadicDom< Field, Dense > Padic2(Pol2);
-//     //
-
-//     std::cout << "Irreducible (in 2-adic): "
-//     << GF128.irreducible() << std::endl;
-
-//     GF128.init(g, Padic2.radix( Q, Integer(5) ));
-//     GF128.write(std::cout
-//                 << "2-adic representation of 1+X^2 is: ", g)
-//     << std::endl;
-
-//     GF128.init(h);
-//     GF128.add(h, g, f);
-//     GF128.write(std::cout
-//                 << "2-adic representation of X+X^2 is: ", h)
-//     << std::endl;
-
-//     GF128.mul(h, g, f);
-//     GF128.write(std::cout
-//                 << "2-adic representation of 1+X+X^2+X^3 is: ", h)
-//     << std::endl;
-
-//     GF128.div(h, g, f);
-//     GF128.write(std::cout
-//                 << "2-adic representation of 1+X is: ", h)
-//     << std::endl;
-
-//     GF128.init(j, Padic2.radix( Q, Integer(213) ));
-//     GF128.write(std::cout
-//                 << "2-adic representation of the moding out of X^7+X^6+X^4+X^2+1 by the irreducible is: ", j)
-//     << std::endl;
 
     return 0;
 

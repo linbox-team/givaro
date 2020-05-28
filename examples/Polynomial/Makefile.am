@@ -30,7 +30,7 @@ LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
 
-EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder bivariate isgenerator
+EXTRA_PROGRAMS=isirred isprimitive trunc_arith pol_arith pol_eval pol_factor interpolate PolynomialCRT highorder bivariate isgenerator AES_SubBytes
 
 CLEANFILES=$(EXTRA_PROGRAMS)
 
@@ -45,6 +45,7 @@ pol_factor_SOURCES    = pol_factor.C
 PolynomialCRT_SOURCES = PolynomialCRT.C
 highorder_SOURCES     = highorder.C
 bivariate_SOURCES     = bivariate.C
+AES_SubBytes_SOURCES     = AES_SubBytes.C
 
 #external flags
 AM_CPPFLAGS += $(OPTFLAGS)

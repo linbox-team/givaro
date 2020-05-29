@@ -218,5 +218,13 @@ perfpublisher:
 #=====
 # for compilation of new tests
 GIVARO_BIN=@bindir@
+define comp_new_test
+	$(AM_V_CXX)$(CXXCOMPILE) $(OPTFLAGS) -c -o $@.$(OBJEXT) $< `$(GIVARO_BIN)/givaro-config --cflags`
+	$(AM_V_CXXLD)$(CXXLINK) $@.$(OBJEXT) `$(GIVARO_BIN)/givaro-config --libs` $(LDADD)
+endef
+
 %:%.C
-	$(CXX) $(OPTFLAGS) $(AM_CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) $*.C -o $*  `$(GIVARO_BIN)/givaro-config --cflags` $(LDADD)  `$(GIVARO_BIN)/givaro-config --libs`
+	$(comp_new_test)
+
+%:%.cpp
+	$(comp_new_test)

@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <03 Jul 19 16:20:59 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <29 May 20 16:27:47 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -32,6 +32,13 @@
 #endif
 
 namespace Givaro {
+
+    template<class TT> class GFqDom;
+
+        // Simplified alias
+    template<class TT=long> using GFq=GFqDom<TT>;
+
+
 
 //! class GFqDom
 template<class TT> class GFqDom {

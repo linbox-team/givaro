@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 May 20 15:33:39 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <29 May 20 10:55:02 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================== //
 
 /*! @file examples/Polynomial/AES.C
@@ -13,17 +13,18 @@
  * @example examples/Polynomial/AES.C
  * @brief NO DOC
  */
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 
 #include <givaro/gf2.h>
 #include <givaro/gfq.h>
 #include <givaro/givpoly1factor.h>
 #include <givaro/givquotientdomain.h>
-#include <givaro/givtimer.h>
-#include <sstream>
 
 using namespace Givaro;
 
-int AESbox[256] =  
+int AESbox[256] =
  {0x63 ,0x7c ,0x77 ,0x7b ,0xf2 ,0x6b ,0x6f ,0xc5 ,0x30 ,0x01 ,0x67 ,0x2b ,0xfe ,0xd7 ,0xab ,0x76
  ,0xca ,0x82 ,0xc9 ,0x7d ,0xfa ,0x59 ,0x47 ,0xf0 ,0xad ,0xd4 ,0xa2 ,0xaf ,0x9c ,0xa4 ,0x72 ,0xc0
  ,0xb7 ,0xfd ,0x93 ,0x26 ,0x36 ,0x3f ,0xf7 ,0xcc ,0x34 ,0xa5 ,0xe5 ,0xf1 ,0x71 ,0xd8 ,0x31 ,0x15
@@ -47,7 +48,7 @@ typedef Field::Element Byte;
 
 std::string dec2hex(const size_t decimal_value) {
     std::stringstream ss;
-    ss<< '[' << std::hex << decimal_value << ']'; // int decimal_value
+    ss<< '[' << std::hex << std::setfill('0') << std::setw(2) << decimal_value << ']'; // int decimal_value
     return std::string( ss.str() );
 }
 
@@ -64,60 +65,69 @@ int main(int argc, char** argv)
     Poly1Dom< GF2, Dense> PD2(F2,'X');
     Poly1PadicDom< GF2, Dense > P2adic(PD2);
 
-    
-        // P8 = X^8 + X^4 + X^3 + X + 1
+
+        // Field with 256 elements
+        // Irreducible quotient: P8 = X^8 + X^4 + X^3 + X + 1
     Field GF256(2, 8, std::vector<int64_t>{1,1,0,1,1,0,0,0,1});
- 
+
     Polynomial Q; P2adic.radix(Q, GF256.irreducible() );
     std::cout << "GF256 with irreducible (2-adic): " << GF256.irreducible() << '=' << dec2hex(GF256.irreducible()) << std::endl;
     PD2.write(std::cout << "  representing: ", Q) << std::endl;
-    
+
         // Generator is 1+X
     Field::Element gen;
     GF256.generator(gen);
     GF256.write(std::cout <<
-                "In this field, the generator used is (in 2-adic): ", gen)
-                          << std::endl
-                          << "  whose internal representation is "
+                "In this field, the generator used is (in 2-adic): g=", gen)
+                          << '=' << byte2hex(GF256,gen) << std::endl
+                          << "  whose internal storage is g^"
                           << gen << std::endl;
 
         // A random byte
     GivRandom randiter;
-    Byte octet; GF256.random(randiter, octet); 
+    Byte octet; GF256.random(randiter, octet);
     int64_t bval; GF256.convert(bval, octet);
-    
-    GF256.write(std::cout << "Byte " << dec2hex(bval) << '=' << bval << " is ", octet) << " represented as " << octet << '=' << byte2hex(GF256, octet) << std::endl;
+    P2adic.radix(Q, bval);
+
+    GF256.write(std::cout << "Byte " << dec2hex(bval) << '=' << bval << " is ", octet) << " stored as g^" << octet << '=' << byte2hex(GF256, octet) << std::endl;
+    PD2.write(std::cout << "  representing: ", Q) << std::endl;
+
+        // AES S-box
     GF256.write(std::cout << "Checking that AES S-box of ", octet) << '=' << byte2hex(GF256,octet) << " is " << AESbox[bval] << '=' << dec2hex(AESbox[bval]) << std::endl;
-    
+
         // Field inverse
-    Byte inverse; 
+    Byte inverse;
     if (GF256.isZero(octet))
         GF256.assign(inverse, GF256.zero);
     else
         GF256.inv(inverse, octet);
-    
+
     std::cout << "  " << byte2hex(GF256,inverse) << " is the inverse of " << byte2hex(GF256,octet) << std::endl;
     Polynomial binv; P2adic.radix(binv, GF256.zech2padic(inverse) );
-    PD2.write(std::cout << "  and represents; ", binv) << std::endl;
-    
+    PD2.write(std::cout << "    representing: ", binv) << std::endl;
+
 
         // Affine function
-    Polynomial matrix, c3; 
+    Polynomial matrix, c3;
     P2adic.radix(matrix, 1+(1<<1)+(1<<2)+(1<<3)+(1<<4));	// cyclic(1F)=1+X+X^2+X^3+X^4+X^5
-    P2adic.radix(c3, 1+(1<<1)+(1<<5)+(1<<6)); 			// C3=1+X+X^5+X^6
-    PD2.write(std::cout << "  Linear multiplicator ([1F]): ", matrix)  << std::endl;
-    PD2.write(std::cout << "  Affine constant ([C3]): ", c3)  << std::endl;
-    
+    P2adic.radix(c3, 1+(1<<1)+(1<<5)+(1<<6));				// C3=1+X+X^5+X^6
+    PD2.write(std::cout << "  Linear multiplicator ([1F]): \t\t", matrix)  << std::endl;
+    PD2.write(std::cout << "  Affine constant ([C3]): \t\t", c3)  << std::endl;
+
     Polynomial deg8; P2adic.radix(deg8, 1+(1<<8));	// 1+X^8
     QuotientDom< Poly1Dom< GF2, Dense> > Q2D8(PD2, deg8);
-    
+
     Polynomial tmp;
     Q2D8.mul( tmp, matrix, binv);
-    PD2.write(std::cout << "  multiplied: ", tmp) << std::endl;
+
+    PD2.write(PD2.write(std::cout << "  " << byte2hex(GF256,inverse) << "*[1F], modulo (", deg8) << ") is: \t", tmp) << std::endl;
     Q2D8.addin( tmp, c3);
-    PD2.write(std::cout << "  added: ", tmp) << std::endl;
+    PD2.write(std::cout << "  added to [C3]: \t\t\t", tmp) << std::endl;
     uint64_t res; P2adic.eval(res, tmp);
-    std::cout << "  represented by: " << res << '=' << dec2hex(res) << std::endl;
+    Byte bres; GF256.init(bres, res);
+
+    std::cout << "  represented by: " << res << '=' << dec2hex(res)
+              << ", stored as: g^" << bres << std::endl;
 
     return 0;
 

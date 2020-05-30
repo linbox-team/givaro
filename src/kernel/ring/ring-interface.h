@@ -19,7 +19,7 @@ namespace Givaro
     template<class _Element>
     struct RingInterface
     {
-        //	virtual ~RingInterface() = default;
+        virtual ~RingInterface() = default;
 
         // ----- Typedefs
         typedef _Element Element;
@@ -88,7 +88,6 @@ namespace Givaro
     template<class _Element>
     struct FiniteInterface
     {
-        virtual ~FiniteInterface() = default;
         // ----- Accessors
         virtual _Element minElement() const = 0;
         virtual _Element maxElement() const = 0;

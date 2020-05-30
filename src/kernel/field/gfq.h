@@ -36,7 +36,7 @@ namespace Givaro {
     template<class TT> class GFqDom;
 
         // Simplified alias
-    template<class TT=long> using GFq=GFqDom<TT>;
+    template<class TT=int64_t> using GFq=GFqDom<TT>;
 
 
 

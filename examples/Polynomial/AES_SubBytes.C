@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <29 May 20 10:55:02 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <30 May 20 08:59:25 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================== //
 
 /*! @file examples/Polynomial/AES.C
@@ -42,7 +42,7 @@ int AESbox[256] =
  ,0xe1 ,0xf8 ,0x98 ,0x11 ,0x69 ,0xd9 ,0x8e ,0x94 ,0x9b ,0x1e ,0x87 ,0xe9 ,0xce ,0x55 ,0x28 ,0xdf
  ,0x8c ,0xa1 ,0x89 ,0x0d ,0xbf ,0xe6 ,0x42 ,0x68 ,0x41 ,0x99 ,0x2d ,0x0f ,0xb0 ,0x54 ,0xbb ,0x16};
 
-typedef GFqDom<int64_t> Field;
+typedef GFq<> Field;
 typedef Poly1Dom< GF2, Dense>::Element Polynomial;
 typedef Field::Element Byte;
 
@@ -83,10 +83,20 @@ int main(int argc, char** argv)
                           << "  whose internal storage is g^"
                           << gen << std::endl;
 
-        // A random byte
-    GivRandom randiter;
-    Byte octet; GF256.random(randiter, octet);
-    int64_t bval; GF256.convert(bval, octet);
+        // A command-line or random byte
+    int64_t bval; 
+    Byte octet; 
+    if (argc>1) {
+        std::stringstream ss;
+        ss << argv[1];
+        ss >> std::hex >> bval;
+        GF256.init(octet, bval);
+    } else {
+        GivRandom randiter;
+        GF256.random(randiter, octet);
+        GF256.convert(bval, octet);
+    }
+    
     P2adic.radix(Q, bval);
 
     GF256.write(std::cout << "Byte " << dec2hex(bval) << '=' << bval << " is ", octet) << " stored as g^" << octet << '=' << byte2hex(GF256, octet) << std::endl;

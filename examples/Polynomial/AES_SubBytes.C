@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <30 May 20 08:59:25 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <30 May 20 09:33:55 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================== //
 
 /*! @file examples/Polynomial/AES.C
@@ -24,7 +24,7 @@
 
 using namespace Givaro;
 
-int AESbox[256] =
+uint64_t AESbox[256] =
  {0x63 ,0x7c ,0x77 ,0x7b ,0xf2 ,0x6b ,0x6f ,0xc5 ,0x30 ,0x01 ,0x67 ,0x2b ,0xfe ,0xd7 ,0xab ,0x76
  ,0xca ,0x82 ,0xc9 ,0x7d ,0xfa ,0x59 ,0x47 ,0xf0 ,0xad ,0xd4 ,0xa2 ,0xaf ,0x9c ,0xa4 ,0x72 ,0xc0
  ,0xb7 ,0xfd ,0x93 ,0x26 ,0x36 ,0x3f ,0xf7 ,0xcc ,0x34 ,0xa5 ,0xe5 ,0xf1 ,0x71 ,0xd8 ,0x31 ,0x15
@@ -139,7 +139,8 @@ int main(int argc, char** argv)
     std::cout << "  represented by: " << res << '=' << dec2hex(res)
               << ", stored as: g^" << bres << std::endl;
 
-    return 0;
+    bool pass = AESbox[bval] == res;
+    return pass ? 0 : -1;
 
 }
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

@@ -105,6 +105,11 @@ namespace Givaro {
         return logcpy(n) ;
     }
 
+    Integer& Integer::operator = (const Integer &n) const
+    {
+        return const_cast<Integer*>(this)->logcpy(n) ;
+    }
+
 
     Integer& Integer::copy(const Integer &n)
     {

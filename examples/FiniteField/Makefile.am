@@ -33,9 +33,8 @@ AM_CXXFLAGS += $(OPTFLAGS)
 LDADD += $(OPTLIBES)
 
 # for compilation of new examples
-GIVARO_BIN=@bindir@
 define comp_new_examp
-	$(AM_V_CXX)$(CXXCOMPILE) -c -o $@.$(OBJEXT) $<
+	$(AM_V_CXX)$(CXXCOMPILE) $(OPTFLAGS) -c -o $@.$(OBJEXT) $<
 	$(AM_V_CXXLD)$(CXXLINK) $@.$(OBJEXT) $(LDADD)
 endef
 

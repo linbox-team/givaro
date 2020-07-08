@@ -39,6 +39,7 @@ namespace Givaro
     public:
         typedef Givaro::Integer Integer_Type ;
         typedef Givaro::Integer Element ;
+        typedef Givaro::Integer Residu_t ;
         typedef Givaro::ZRing<Integer> Integer_Domain ;
 
     private:

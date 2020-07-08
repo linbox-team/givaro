@@ -338,6 +338,7 @@ namespace Givaro {
     {
     public:
         typedef typename Ring::Element Element;
+        typedef typename RandIter::Residu_t Residu_t;
 
         GeneralRingNonZeroRandIter(RandIter& r) : _r(r) {}
         GeneralRingNonZeroRandIter(const GeneralRingNonZeroRandIter& R) : _r(R._r) {}

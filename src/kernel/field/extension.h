@@ -491,6 +491,7 @@ namespace Givaro {
              * a copy constructor, a destructor, and an assignment operator.
              */
 	typedef typename ExtensionField::PolElement Element;
+	typedef typename ExtensionField::Residu_t Residu_t;
 
             /** Constructor from field, sampling size, and seed.
              * The random field Element iterator works in the field F, is seeded

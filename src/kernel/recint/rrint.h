@@ -42,6 +42,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 
 #include "recdefine.h"
 #include "ruruint.h"
+#include "givaro/givtypestring.h"
 #include "rumanip.h" // ms_limb
 
 // --------------------------------------------------------------
@@ -62,6 +63,11 @@ namespace RecInt
         { if (rl < 0) { Value.Low = -Value.Low; Value = -Value; } }
         rint(const ruint<K>& r) : Value(r) {}
         template <typename T> rint(const T& b) : Value(b) {}
+
+        // type_string
+        static const std::string type_string () {
+            return "RecInt::rint<" + std::to_string(K)+ ">";
+        }
 
         // Cast
         template <typename T> operator T() const { return static_cast<T>(Value); }

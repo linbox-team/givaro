@@ -67,6 +67,11 @@ namespace RecInt
 
         ruint(const char* s);
 
+        // type_string
+        static const std::string type_string () {
+            return "RecInt::ruint<" + std::to_string(K)+ ">";
+        }
+
         // Cast
         // Note: Templated operators and specialization make compilers clang + icpc
         // completely bug (they do not use the template operator somehow)
@@ -133,6 +138,11 @@ namespace RecInt
         { *this = b.operator ruint<__RECINT_LIMB_SIZE>(); } // Fix for Givaro::Integer
         ruint(const char* s);
 
+        // type_string
+        static const std::string type_string () {
+            return "RecInt::ruint<" + std::to_string(__RECINT_LIMB_SIZE)+ ">";
+        }
+
         // Cast
         // Brutal too, but icc is kind of peaky - AB 2015/02/11
         operator bool() const { return bool(Value); }
@@ -196,6 +206,11 @@ namespace RecInt
         template <typename T, __RECINT_IS_NOT_FUNDAMENTAL(T, int) = 0> ruint(const T& b)
         { *this = b.operator ruint<__RECINT_LIMB_SIZE+1>(); } // Fix for Givaro::Integer
         ruint(const char* s);
+
+        // type_string
+        static const std::string type_string () {
+            return "RecInt::ruint<" + std::to_string(__RECINT_LIMB_SIZE+1)+ ">";
+        }
 
         // Cast
         operator float() const { return (float)(Value); }

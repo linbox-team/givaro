@@ -217,6 +217,11 @@ namespace Givaro {
         giv_all_inlined ~Integer();
         ///@}
 
+        // -- type_string
+        static const std::string type_string () {
+            return "Integer";
+        }
+
         //------------------------------------- predefined null and one
         //! zero (0)
         static const Integer zero ;

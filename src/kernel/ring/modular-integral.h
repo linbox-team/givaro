@@ -19,6 +19,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
+#include "givaro/givtypestring.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
 #include "givaro/modular-implem.h"
@@ -131,6 +132,13 @@ namespace Givaro {
               Element& axmy (Element&, const Element&, const Element&, const Element&) const;
               Element& maxpyin (Element&, const Element&, const Element&) const;
               Element& axmyin (Element&, const Element&, const Element&) const;
+
+              // -- type_string
+              static const std::string type_string () {
+                  return "Modular<" + TypeString<Storage_t>::get()
+                        + (sizeof(Storage_t) == sizeof(Compute_t) ?
+                            "" : ", " + TypeString<Compute_t>::get() ) +  ">";
+              }
 
               // ----- Random generators
               typedef ModularRandIter<Self_t> RandIter;

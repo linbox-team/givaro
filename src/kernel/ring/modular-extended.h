@@ -15,6 +15,7 @@
 #include "givaro/givconfig.h"
 
 #include "givaro/givranditer.h"
+#include "givaro/givtypestring.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
 
@@ -241,6 +242,11 @@ namespace Givaro{
         }
         Element& maxpyin(Element& r, const Element& a, const Element& x) const {
             return maxpy(r, a, x, r);
+        }
+
+        // -- type_string
+        static const std::string type_string () {
+            return "ModularExtended<" + TypeString<Element>::get() +  ">";
         }
 
         // ----- Random generators

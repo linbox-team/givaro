@@ -20,6 +20,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
+#include "givaro/givtypestring.h"
 #include "givaro/ring-interface.h"
 #include "givaro/modular-general.h"
 
@@ -229,42 +230,10 @@ namespace Givaro {
 
         // --------
         // -- type_string
-
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S))
-        std::string type_string() const {
-            std::size_t k = sizeof(S);
-            return "Modular<int" + std::to_string(8*k) + "_t>";
-        }
-
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_UINT(S))
-        std::string type_string() const {
-            std::size_t k = sizeof(S);
-            return "Modular<uint" + std::to_string(8*k) + "_t>";
-        }
-
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, float))
-        std::string type_string() const {
-            return "Modular<float>";
-        }
-
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, double))
-        std::string type_string() const {
-            return "Modular<double>";
-        }
-
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SAME(S, Integer))
-        std::string type_string() const {
-            return "Modular<Integer>";
-        }
-
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<S>::value)
-        std::string type_string() const {
-            return "Modular<RecInt::ruint<" + std::to_string(RecInt_K<S>::value) + ">>";
-        }
-
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value)
-        std::string type_string() const {
-            return "<Modular<IntType>>";
+        static const std::string type_string () {
+            return "Modular_implem<" + TypeString<Storage_t>::get()
+                             +  ", " + TypeString<Compute_t>::get()
+                             +  ", " + TypeString<Residu_t>::get() + ">";
         }
 
         // --------

@@ -17,6 +17,7 @@
 #include "givaro/givinteger.h"
 #include "givaro/givcaster.h"
 #include "givaro/givranditer.h"
+#include "givaro/givtypestring.h"
 #include "givaro/ring-interface.h"
 
 namespace Givaro
@@ -142,6 +143,11 @@ namespace Givaro
         // -- maxpyin: r <- r - a * x
         Element& maxpy  (Element& r, const Element& a, const Element& x, const Element& y) const;
         Element& maxpyin(Element& r, const Element& a, const Element& x) const;
+
+        // -- type_string
+        static const std::string type_string () {
+            return "ModularBalanced<" + TypeString<Element>::get() +  ">";
+        }
 
         // ----- Random generators
         typedef ModularRandIter<Self_t> RandIter;

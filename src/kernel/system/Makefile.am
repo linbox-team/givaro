@@ -24,6 +24,7 @@ pkginclude_HEADERS= \
 	givtimer.h	    \
 	givomptimer.h	\
 	givranditer.h\
+	givtypestring.h \
 	udl.h
 
 noinst_LTLIBRARIES=libgivsystem.la

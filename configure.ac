@@ -97,7 +97,7 @@ AC_C_BIGENDIAN(
   [AC_DEFINE(HAVE_LITTLE_ENDIAN, 1, [Define that architecture uses little endian storage])],
   [])
 
-AC_MSG_NOTICE([Creating symbolic link for compilation])
+AC_MSG_NOTICE([Creating symbolic links for compilation])
 for link in \
 	src/kernel/system/givaro   \
 	src/kernel/bstruct/givaro  \
@@ -116,8 +116,10 @@ for link in \
 
 	dir="$(dirname "$link")"
 	AS_MKDIR_P([$dir])
-	AS_IF([ test ! -L "$link" ],
-	  [ln -s "../../../$srcdir/$dir" "$link"])
+	case "$srcdir$" in
+	    /*) ln -sf          "$srcdir/$dir" "$link" ;;
+	     *) ln -sf "../../../$srcdir/$dir" "$link" ;;
+	esac
 done
 
 AS_ECHO([---------------------------------------])

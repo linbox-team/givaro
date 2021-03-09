@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <30 May 20 09:33:55 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <09 Mar 21 09:34:39 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================== //
 
 /*! @file examples/Polynomial/AES.C
@@ -43,8 +43,8 @@ uint64_t AESbox[256] =
  ,0x8c ,0xa1 ,0x89 ,0x0d ,0xbf ,0xe6 ,0x42 ,0x68 ,0x41 ,0x99 ,0x2d ,0x0f ,0xb0 ,0x54 ,0xbb ,0x16};
 
 typedef GFq<> Field;
-typedef Poly1Dom< GF2, Dense>::Element Polynomial;
 typedef Field::Element Byte;
+typedef Poly1Dom< GF2, Dense>::Element BinaryPolynomial;
 
 std::string dec2hex(const size_t decimal_value) {
     std::stringstream ss;
@@ -67,10 +67,10 @@ int main(int argc, char** argv)
 
 
         // Field with 256 elements
-        // Irreducible quotient: P8 = X^8 + X^4 + X^3 + X + 1
+        // Irreducible quotient: P8 = 1 + X + X^3 + X^4 + X^8
     Field GF256(2, 8, std::vector<int64_t>{1,1,0,1,1,0,0,0,1});
 
-    Polynomial Q; P2adic.radix(Q, GF256.irreducible() );
+    BinaryPolynomial Q; P2adic.radix(Q, GF256.irreducible() );
     std::cout << "GF256 with irreducible (2-adic): " << GF256.irreducible() << '=' << dec2hex(GF256.irreducible()) << std::endl;
     PD2.write(std::cout << "  representing: ", Q) << std::endl;
 
@@ -113,21 +113,21 @@ int main(int argc, char** argv)
         GF256.inv(inverse, octet);
 
     std::cout << "  " << byte2hex(GF256,inverse) << " is the inverse of " << byte2hex(GF256,octet) << std::endl;
-    Polynomial binv; P2adic.radix(binv, GF256.zech2padic(inverse) );
+    BinaryPolynomial binv; P2adic.radix(binv, GF256.zech2padic(inverse) );
     PD2.write(std::cout << "    representing: ", binv) << std::endl;
 
 
         // Affine function
-    Polynomial matrix, c3;
+    BinaryPolynomial matrix, c3;
     P2adic.radix(matrix, 1+(1<<1)+(1<<2)+(1<<3)+(1<<4));	// cyclic(1F)=1+X+X^2+X^3+X^4+X^5
     P2adic.radix(c3, 1+(1<<1)+(1<<5)+(1<<6));				// C3=1+X+X^5+X^6
     PD2.write(std::cout << "  Linear multiplicator ([1F]): \t\t", matrix)  << std::endl;
     PD2.write(std::cout << "  Affine constant ([C3]): \t\t", c3)  << std::endl;
 
-    Polynomial deg8; P2adic.radix(deg8, 1+(1<<8));	// 1+X^8
+    BinaryPolynomial deg8; P2adic.radix(deg8, 1+(1<<8));	// 1+X^8
     QuotientDom< Poly1Dom< GF2, Dense> > Q2D8(PD2, deg8);
 
-    Polynomial tmp;
+    BinaryPolynomial tmp;
     Q2D8.mul( tmp, matrix, binv);
 
     PD2.write(PD2.write(std::cout << "  " << byte2hex(GF256,inverse) << "*[1F], modulo (", deg8) << ") is: \t", tmp) << std::endl;

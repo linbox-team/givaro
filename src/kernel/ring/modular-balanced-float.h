@@ -75,7 +75,7 @@ namespace Givaro
         template<class T> inline T& characteristic(T& p) const { return Caster(p,_p); }
         template<class T> inline T& cardinality(T& p) const { return Caster(p,_p); }
 
-        static inline Residu_t maxCardinality() { return 8192.f; } // p=2^13 s.t. a*b+c fits in float, with abs(a,b,c) <= (p-1)/2
+        static inline Residu_t maxCardinality() { return 8191.f; } // p=2^13-1 s.t. a*b+c fits in float, with abs(a,b,c) <= (p-1)/2
         static inline Residu_t minCardinality() { return 3.f; }
 
         // ----- Checkers

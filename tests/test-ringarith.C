@@ -151,6 +151,12 @@ int TestOneRing(const Ring& F, const typename Ring::Element& x, const typename R
     F.maxpyin(e_, a, b); // e = d - a*b;
     TESTE_EG(e,e_);
 
+    F.assign(d,a);
+    F.maxpy(e, a, b, d); // e = d-a*b
+    F.assign(e_,d);
+    F.maxpyin(e_, a, b); // e = d - a*b;
+    TESTE_EG(e,e_);
+
     F.axmy(e, a, b, d); // e = a*b -d;
     F.assign(e_,d);
     F.maxpyin(e_, a, b); // e = d - a*b;

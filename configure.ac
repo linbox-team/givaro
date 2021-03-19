@@ -65,7 +65,7 @@ SET_FLAGS
 
 # Append -march=native or -mcpu=native (if recognized by the compiler) to
 # OPTIM_FLAGS if not present in CXXFLAGS and not cross-compiling and
-# --without-marchnative is not set
+# --without-archnative is not set
 ARCH_FLAGS
 
 # Append -mfpmath=sse to OPTIM_FLAGS on i386 and i686 architecture with SSE

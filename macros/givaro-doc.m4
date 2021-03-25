@@ -37,46 +37,46 @@ AC_ARG_WITH(doxygen,
 	    ])
 
 AC_ARG_ENABLE(doc,[AC_HELP_STRING([--enable-doc], [Enable building documentation])],
-[
-AC_MSG_RESULT(yes)
-AC_MSG_CHECKING(whether doxygen works)
-export PATH=$DOXYGEN_PATH
-(doxygen --version) < /dev/null > /dev/null 2>&1 || {
+             WITH_DOC=$enableval,
+             WITH_DOC=no)
+AC_MSG_RESULT($WITH_DOC)
+AM_CONDITIONAL(GIVARO_BUILD_DOC, [test x$WITH_DOC = xyes])
+
+AS_IF([test x$WITH_DOC = xyes],[
+   AC_MSG_CHECKING(whether doxygen works)
+   export PATH=$DOXYGEN_PATH
+   (doxygen --version) < /dev/null > /dev/null 2>&1 || {
 	AC_MSG_RESULT(no)
 	echo
 	echo "You must have doxygen installed to create documentation for"
 	echo "Givaro. This error only happens if you use --enable-doc."
 	echo "Download the appropriate package for your distribution, or get"
-	echo "the source tarball from http://www.stack.nl/~dimitri/doxygen/"
+	echo "the source tarball from https://www.doxygen.nl"
 	exit -1
-}
-AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND,     true)
-AC_MSG_RESULT(yes)
-AM_CONDITIONAL(GIVARO_BUILD_DOC, true)
+    }
+    AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND,     true)
 
-],
-[
-AS_IF([(doxygen --version) < /dev/null > /dev/null 2>&1],
-[AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND,  true)],
-[AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND, false)]
-)
-AC_MSG_RESULT(no)
-AM_CONDITIONAL(GIVARO_BUILD_DOC, false)
+    AC_MSG_RESULT(yes)
+
+    AC_MSG_CHECKING(whether dot works)
+    res=yes;
+    (dot -V) < /dev/null > /dev/null 2>&1 || res=no
+    AC_MSG_RESULT([$res])
+    AS_MKDIR_P([docs])
+    AS_IF([test $res = yes],
+    [
+    sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/Doxyfile.mod > docs/Doxyfile
+    sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/DoxyfileDev.mod > docs/DoxyfileDev
+    ],
+    [ cp "$srcdir"/docs/Doxyfile.mod docs/Doxyfile ;
+    cp "$srcdir"/docs/DoxyfileDev.mod docs/DoxyfileDev
+    ])
+
+  ], [
+  AS_IF([(doxygen --version) < /dev/null > /dev/null 2>&1],
+  [AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND,  true)],
+  [AM_CONDITIONAL(GIVARO_DOXYGEN_FOUND, false)]
+  )
 ])
-
-AC_MSG_CHECKING(whether dot works)
-res=yes;
-(dot -V) < /dev/null > /dev/null 2>&1 || res=no
-AC_MSG_RESULT([$res])
-AS_MKDIR_P([docs])
-AS_IF([test $res = yes],
-[
-sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/Doxyfile.mod > docs/Doxyfile
-sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/DoxyfileDev.mod > docs/DoxyfileDev
-],
-[ cp "$srcdir"/docs/Doxyfile.mod docs/Doxyfile ;
-cp "$srcdir"/docs/DoxyfileDev.mod docs/DoxyfileDev
-])
-
 
 ])

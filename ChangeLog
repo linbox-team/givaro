@@ -1,3 +1,8 @@
+2021-03-29 v4.1.2
+	* replace micro-architecture detection by march=native by default or user provided flags
+	* dump support of gcc-4.9.2 -> minversion is now gcc-5
+	* new AES example
+	* fix many bugs
 2019-06-07 v4.1.1
 	Minor updates:
 	* add README.md in distribution

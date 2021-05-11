@@ -119,10 +119,16 @@ namespace Givaro
             ;
             return a; }
 
+        // --------
+        // -- type_string
+        static const std::string type_string () {
+            return "ZRing<" + TypeString<Element>::get() + '>';
+        }
+
         //----- IO
         std::ostream& write(std::ostream &os) const
         {
-            return os << "ZRing<" << typeid(Element).name() << ">";
+            return os << type_string();
         }
         std::ostream& write(std::ostream &os, const Element& a) const
         {
@@ -135,13 +141,13 @@ namespace Givaro
     };
 
     template<typename Element>
-    class ZRing : public UnparametricZRing<Element> 
+    class ZRing : public UnparametricZRing<Element>
     {
         using Self_t = ZRing<Element>;
         using Parent_t = UnparametricZRing<Element>;
         using Parent_t::Parent_t; // inherit constructors
     };
-    
+
     using FloatDomain = ZRing<float>;
     using DoubleDomain = ZRing<double>;
 

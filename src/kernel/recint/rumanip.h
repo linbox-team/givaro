@@ -175,7 +175,6 @@ namespace RecInt
 
 }
 
-
 // --------------------------------------------------------------
 // -------------------- max Element -----------------------
 
@@ -201,7 +200,7 @@ namespace RecInt {
     }
 
     inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxModulus() {
-        ruint<__RECINT_LIMB_SIZE> max(1); return max <<= (__RECINT_LIMB_SIZE-1);
+        ruint<__RECINT_LIMB_SIZE> max(1); return max <<= (1u<<(__RECINT_LIMB_SIZE-1u));
     }
 
 #  if defined(__RECINT_USE_FAST_128)

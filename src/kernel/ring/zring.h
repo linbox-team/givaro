@@ -21,10 +21,10 @@
 #define __GIVARO_ring_zring_H
 
 #include <algorithm>
-#include <typeinfo>
 #include <math.h>
 
 #include "givaro/unparametric-operations.h"
+#include "givaro/givtypestring.h"
 #include "givaro/givranditer.h"
 #include "givaro/givcaster.h"
 

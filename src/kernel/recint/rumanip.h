@@ -181,34 +181,36 @@ namespace RecInt
 
 namespace RecInt {
 
+		// max Modulus
     template <size_t K>
     inline ruint<K> ruint<K>::maxCardinality() {
-        ruint<K> max;
-        max.High = ruint<K-1>::maxCardinality();
-        fill_with_1(max.Low);
-        return max;
-    }
-
-    inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxCardinality() {
-        ruint<__RECINT_LIMB_SIZE> max; return fill_with_1(max);
-    }
-
-    template <size_t K>
-    inline ruint<K> ruint<K>::maxModulus() {
         ruint<K> max;
         max.High = 1;
         return max;
     }
 
-    inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxModulus() {
+    inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxCardinality() {
         ruint<__RECINT_LIMB_SIZE> max(1); return max <<= (1u<<(__RECINT_LIMB_SIZE-1u));
     }
 
+		// max Element
+    template <size_t K>
+    inline ruint<K> ruint<K>::maxElement() {
+        ruint<K> max;
+        max.High = ruint<K-1>::maxElement();
+        fill_with_1(max.Low);
+        return max;
+    }
+
+    inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxElement() {
+        ruint<__RECINT_LIMB_SIZE> max; return fill_with_1(max);
+    }
+
 #  if defined(__RECINT_USE_FAST_128)
-    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxCardinality() {
+    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxElement() {
         ruint<__RECINT_LIMB_SIZE+1> max; return fill_with_1(max);
     }
-    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxModulus() {
+    inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxCardinality() {
         ruint<__RECINT_LIMB_SIZE+1> max(1); return max <<= (1u<<(__RECINT_LIMB_SIZE));
     }
 #  endif

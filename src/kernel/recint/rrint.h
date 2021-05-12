@@ -79,13 +79,18 @@ namespace RecInt
         // *this >= 0
         inline bool isPositive() const { return !(isNegative()); }
 
-		// max Element
+		// max Modulus
         static rint<K> maxCardinality() {
-            rint<K> max(ruint<K>::maxCardinality()>>1); return max;
+                // Approximated: sqrt(2) only up 31 bits
+            rint<K> max(1); 			// (2^K-1)/2 = (2^K-64)/2+31.5
+            max <<= ((1u<<(K-1))-32u); 	// So first 2^{K-1}-32
+            max *= 3037000499u;			// Second mul by 2^{31.5}
+            return max;
         }
 
-        static rint<K> maxModulus() {
-            rint<K> max(ruint<K>::maxModulus()>>1); return max;
+		// max Elements
+        static rint<K> maxElement() {
+            return ruint<K>::maxElement()/2;
         }
     };
 

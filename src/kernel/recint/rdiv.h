@@ -126,6 +126,23 @@ namespace RecInt
         div_q(a, b, c);
         return a;
     }
+
+    template <size_t K, typename T>
+    inline __RECINT_IS_ARITH(T, rint<K>) operator%(const rint<K>& b, const T& c){
+        rint<K> a(b);
+        return a%=c;
+    }
+
+
+    template <size_t K, typename T>
+    inline __RECINT_IS_ARITH(T, rint<K>) operator/(const rint<K>& b, const T& c){
+        rint<K> a(b);
+        return a/=c;
+    }
+
+
+
+
 }
 
 
@@ -143,13 +160,13 @@ namespace RecInt
             }
             else {
                 div_q(q.Value, (-a).Value, b.Value);
-                q = -q;
+                neg(q);
             }
         }
         else {
             if (b.isNegative()) {
                 div_q(q.Value, a.Value, (-b).Value);
-                q = -q;
+                neg(q);
             }
             else {
                 div_q(q.Value, a.Value, b.Value);
@@ -160,8 +177,24 @@ namespace RecInt
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, rint<K>&) div_q(rint<K>& q, const rint<K>& a, const T& b) {
-        // TODO
-        std::cerr << "DIV with rint not implemented yet." << std::endl;
+        if (a.isNegative()) {
+            if (b<0) {
+                div_q(q.Value, (-a).Value, -b);
+            }
+            else {
+                div_q(q.Value, (-a).Value, b);
+                neg(q);
+            }
+        }
+        else {
+            if (b<0) {
+                div_q(q.Value, a.Value, -b);
+                neg(q);
+            }
+            else {
+                div_q(q.Value, a.Value, b);
+            }
+        }
         return q;
     }
 
@@ -172,7 +205,7 @@ namespace RecInt
 
         if (a.isNegative()) {
             div_r(r.Value, (-a).Value, b.Value);
-            r = -r;
+            neg(r);
         }
         else {
             div_r(r.Value, a.Value, b.Value);

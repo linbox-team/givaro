@@ -50,8 +50,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 namespace RecInt
 {
     template <size_t K> rint<K>& operator*=(rint<K>&, const rint<K>&);
-    template <size_t K, typename T> __RECINT_IS_UNSIGNED(T, rint<K>&) operator*=(rint<K>&, const T&);
-    template <size_t K, typename T> __RECINT_IS_SIGNED(T, rint<K>&)   operator*=(rint<K>&, const T&);
+    template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>&) operator*=(rint<K>&, const T&);
 
     template <size_t K> rint<K> operator*(const rint<K>&, const rint<K>&);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>) operator*(const rint<K>&, const T&);

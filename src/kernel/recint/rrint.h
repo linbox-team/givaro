@@ -44,6 +44,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #include "ruruint.h"
 #include "givaro/givtypestring.h"
 #include "rumanip.h" // ms_limb
+#include "rutools.h" // mod_n
 
 // --------------------------------------------------------------
 // ---------------- Declaration of class ruint ------------------
@@ -77,12 +78,94 @@ namespace RecInt
         inline bool isNegative() const { return ms_limb(Value) & __RECINT_MAXPOWTWO; }
         // *this >= 0
         inline bool isPositive() const { return !(isNegative()); }
+
+		// max Element
+        static rint<K> maxCardinality() {
+            rint<K> max(ruint<K>::maxCardinality()>>1); return max;
+        }
+
+        static rint<K> maxModulus() {
+            rint<K> max(ruint<K>::maxModulus()>>1); return max;
+        }
     };
 
     using rint64 =  rint<6>;
     using rint128 = rint<7>;
     using rint256 = rint<8>;
     using rint512 = rint<9>;
+
+
+}
+
+namespace RecInt
+{
+    // a = 0
+    template <size_t K> inline void reset(rint<K>& a) {
+        reset(a.Value);
+    }
+
+    // a = b^{-1} mod c (if b is not invertible, a = 0)
+    template <size_t K> inline rint<K>& inv_mod(rint<K>& a, const rint<K>& b, const rint<K>& c) {
+        if (b.isPositive()) {
+            inv_mod(a.Value, b.Value, c.Value);
+        } else {
+            ruint<K> otherb(c.Value); sub(otherb, (-b).Value); // c - (-b) = c+b
+            inv_mod(a.Value, otherb, c.Value);
+        }
+        return a;
+    }
+
+    // a = b mod n or a = a mod n
+    template <size_t K, size_t R> inline void mod_n(rint<K>& a, const rint<R>& b, const rint<K>& c) {
+        if (b.isPositive()) {
+            mod_n(a.Value,b.Value,c.Value);
+        } else {
+            mod_n(a.Value,(-b).Value,c.Value);
+            if (a.Value != 0u)
+                sub(a.Value,c.Value,a.Value); // c - ( -b mod c)
+        }
+    }
+
+    template <size_t K> inline void mod_n(rint<K>& a, const rint<K>& n) {
+        if (a.isPositive()) {
+            mod_n(a.Value,n.Value);
+        } else {
+            ruint<K> nega( (-a).Value );
+            mod_n(nega,n.Value);
+            if (nega != 0u)
+                sub(a.Value,n.Value,nega); // n - ( -a mod n)
+            else
+                reset(a.Value); // a=0
+        }
+    }
+
+        // a = b
+    template <size_t K> inline void copy(rint<K>& a, const rint<K>& b) {
+        copy(a.Value, b.Value);
+    }
+        // a += b*c
+    template <size_t K> inline void addmul(rint<K>& a, const rint<K>& b, const rint<K>& c) {
+        rint<K> tmp; mul(tmp, b, c);
+        add(a,tmp);
+    }
+
+    template <size_t K> inline void lmul(rint<K+1>& a, const rint<K>& b, const rint<K>& c) {
+        if (b.isPositive()) {
+            if (c.isPositive()) {
+                lmul(a.Value, b.Value, c.Value);
+            } else {
+                lmul(a.Value, b.Value, (-c).Value);
+                neg(a);
+            }
+        } else {
+            if (c.isPositive()) {
+                lmul(a.Value, (-b).Value, c.Value);
+                neg(a);
+            } else {
+                lmul(a.Value, (-b).Value, (-c).Value);
+            }
+        }
+    }
 
 
 }
@@ -95,6 +178,7 @@ namespace std
     template <size_t K> struct make_signed<RecInt::ruint<K>> {
         typedef RecInt::rint<K> type;
     };
+
 }
 
 #endif

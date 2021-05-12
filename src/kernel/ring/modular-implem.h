@@ -178,14 +178,19 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_rint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-	  //return typename S::Value::maxModulus();
-	  return RecInt::ruint<RecInt_K<S>::value>::maxModulus()/2;
+            return RecInt::ruint<RecInt_K<S>::value>::maxModulus()/2;
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-	  return Residu_t::maxCardinality()/2;
+            return Residu_t::maxCardinality()/2;
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_rint<S, Compute_t>::value)
+        static Residu_t maxCardinality()
+        {
+            return RecInt::ruint<RecInt_K<S>::value>::maxCardinality()/4;
         }
 
       __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value && !is_rint<S>::value)

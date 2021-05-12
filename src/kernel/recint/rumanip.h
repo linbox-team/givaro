@@ -4,6 +4,7 @@
 Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Christophe CHABOT (christophechabotcc@gmail.com 2011)
+Jean-Guillaume DUMAS
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -208,7 +209,7 @@ namespace RecInt {
         ruint<__RECINT_LIMB_SIZE+1> max; return fill_with_1(max);
     }
     inline ruint<__RECINT_LIMB_SIZE+1> ruint<__RECINT_LIMB_SIZE+1>::maxModulus() {
-        ruint<__RECINT_LIMB_SIZE+1> max(1); return max <<= (__RECINT_LIMB_SIZE);
+        ruint<__RECINT_LIMB_SIZE+1> max(1); return max <<= (1u<<(__RECINT_LIMB_SIZE));
     }
 #  endif
 

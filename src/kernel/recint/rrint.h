@@ -104,67 +104,9 @@ namespace RecInt
         reset(a.Value);
     }
 
-    // a = b^{-1} mod c (if b is not invertible, a = 0)
-    template <size_t K> inline rint<K>& inv_mod(rint<K>& a, const rint<K>& b, const rint<K>& c) {
-        if (b.isPositive()) {
-            inv_mod(a.Value, b.Value, c.Value);
-        } else {
-            ruint<K> otherb(c.Value); sub(otherb, (-b).Value); // c - (-b) = c+b
-            inv_mod(a.Value, otherb, c.Value);
-        }
-        return a;
-    }
-
-    // a = b mod n or a = a mod n
-    template <size_t K, size_t R> inline void mod_n(rint<K>& a, const rint<R>& b, const rint<K>& c) {
-        if (b.isPositive()) {
-            mod_n(a.Value,b.Value,c.Value);
-        } else {
-            mod_n(a.Value,(-b).Value,c.Value);
-            if (a.Value != 0u)
-                sub(a.Value,c.Value,a.Value); // c - ( -b mod c)
-        }
-    }
-
-    template <size_t K> inline void mod_n(rint<K>& a, const rint<K>& n) {
-        if (a.isPositive()) {
-            mod_n(a.Value,n.Value);
-        } else {
-            ruint<K> nega( (-a).Value );
-            mod_n(nega,n.Value);
-            if (nega != 0u)
-                sub(a.Value,n.Value,nega); // n - ( -a mod n)
-            else
-                reset(a.Value); // a=0
-        }
-    }
-
         // a = b
     template <size_t K> inline void copy(rint<K>& a, const rint<K>& b) {
         copy(a.Value, b.Value);
-    }
-        // a += b*c
-    template <size_t K> inline void addmul(rint<K>& a, const rint<K>& b, const rint<K>& c) {
-        rint<K> tmp; mul(tmp, b, c);
-        add(a,tmp);
-    }
-
-    template <size_t K> inline void lmul(rint<K+1>& a, const rint<K>& b, const rint<K>& c) {
-        if (b.isPositive()) {
-            if (c.isPositive()) {
-                lmul(a.Value, b.Value, c.Value);
-            } else {
-                lmul(a.Value, b.Value, (-c).Value);
-                neg(a);
-            }
-        } else {
-            if (c.isPositive()) {
-                lmul(a.Value, (-b).Value, c.Value);
-                neg(a);
-            } else {
-                lmul(a.Value, (-b).Value, (-c).Value);
-            }
-        }
     }
 
 

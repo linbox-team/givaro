@@ -64,6 +64,13 @@ namespace RecInt
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>&) mul(rint<K>& a, const rint<K>& b, const T& c);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, rint<K>&) mul(rint<K>& a, const T& c);
 
+    template <size_t K> void lmul(rint<K+1>&, const rint<K>&, const rint<K>&);
+
+        // a += b*c
+    template <size_t K> void addmul(rint<K>&, const rint<K>&, const rint<K>&);
+
+
+
     // a = b*b
     template <size_t K> void lsquare(rint<K+1>& a, const rint<K>& b);
 }
@@ -141,6 +148,33 @@ namespace RecInt
         mul(a.Value, b);
         return a;
     }
+
+
+        // a += b*c
+    template <size_t K> inline void addmul(rint<K>& a, const rint<K>& b, const rint<K>& c) {
+        rint<K> tmp; mul(tmp, b, c);
+        add(a,tmp);
+    }
+
+    template <size_t K> inline void lmul(rint<K+1>& a, const rint<K>& b, const rint<K>& c) {
+        if (b.isPositive()) {
+            if (c.isPositive()) {
+                lmul(a.Value, b.Value, c.Value);
+            } else {
+                lmul(a.Value, b.Value, (-c).Value);
+                neg(a);
+            }
+        } else {
+            if (c.isPositive()) {
+                lmul(a.Value, (-b).Value, c.Value);
+                neg(a);
+            } else {
+                lmul(a.Value, (-b).Value, (-c).Value);
+            }
+        }
+    }
+
+
 }
 
 

@@ -12,7 +12,7 @@ AM_CPPFLAGS += -I$(top_builddir)/src/kernel/system -I$(top_builddir)/src/kernel/
 LDADD = $(top_builddir)/src/libgivaro.la $(GMP_LIBS) $(LDFLAGS)
 AM_LDFLAGS=-static
 
-EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi lambda lambda_inv iexponentiation RSA_decipher  RSA_encipher  ispower probable_primroot ProbLucas ModularSquareRoot
+EXTRA_PROGRAMS=ifactor ifactor_lenstra igcd igcdext ilcm isproot nb_primes isprime nextprime order prevprime RSA_breaking RSA_keys_generator primitiveroot primitiveelement phi lambda lambda_inv iexponentiation RSA_decipher  RSA_encipher  ispower probable_primroot ProbLucas ModularSquareRoot Fibonacci
 
 CLEANFILES=$(EXTRA_PROGRAMS)
 
@@ -41,6 +41,7 @@ RSA_keys_generator_SOURCES = RSA_keys_generator.C
 RSA_encipher_SOURCES       = RSA_encipher.C
 RSA_decipher_SOURCES       = RSA_decipher.C
 iexponentiation_SOURCES    = iexponentiation.C
+Fibonacci_SOURCES    = Fibonacci.C
 
 #external flags
 AM_CPPFLAGS += $(OPTFLAGS) 

@@ -5,7 +5,7 @@ Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS
 
-Time-stamp: <20 Jun 12 10:28:30 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <12 May 21 12:01:33 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -49,6 +49,8 @@ namespace RecInt
 {
     template <size_t K> ruint<K> operator~(const ruint<K>& c);
     template <size_t K> ruint<K> operator-(const ruint<K>& c);
+    template <size_t K> ruint<K>& neg(ruint<K>&, const ruint<K>&);
+    template <size_t K> ruint<K>& neg(ruint<K>&);
 
     template <size_t K> ruint<K>& operator|=(ruint<K>& b, const ruint<K>& c);
     template <size_t K> ruint<K>& operator^=(ruint<K>& b, const ruint<K>& c);
@@ -97,17 +99,24 @@ namespace RecInt
         return b;
     }
 
+    // Operator neg
+    template <size_t K> inline ruint<K>& neg(ruint<K>& r, const ruint<K>& c) {
+        r.High = ~c.High;
+        r.Low = ~c.Low;
+        return ++r;
+    }
+    template <> inline ruint<__RECINT_LIMB_SIZE>& neg(ruint<__RECINT_LIMB_SIZE>& r, const ruint<__RECINT_LIMB_SIZE>& c) {
+        r.Value = ~c.Value;
+        return ++r;
+    }
+
+    template <size_t K> inline ruint<K>& neg(ruint<K>& r) {
+        return neg(r,r);
+    }
+
     // Operator - unary
     template <size_t K> inline ruint<K> operator-(const ruint<K>& c) {
-        ruint<K> b;
-        b.High = ~c.High;
-        b.Low = ~c.Low;
-        return ++b;
-    }
-    template <> inline ruint<__RECINT_LIMB_SIZE> operator-(const ruint<__RECINT_LIMB_SIZE>& c) {
-        ruint<__RECINT_LIMB_SIZE> b;
-        b.Value = ~c.Value;
-        return ++b;
+        ruint<K> b; return neg(b,c);
     }
 
     // Operator |=

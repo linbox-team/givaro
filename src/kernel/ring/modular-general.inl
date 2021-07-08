@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust
-// Time-stamp: <14 May 19 16:35:35 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <12 May 21 09:46:39 Jean-Guillaume.Dumas@imag.fr>
 // ========================================================================
 // Description:
 // Forward declarations for Givaro::Modular and associated functions
@@ -54,6 +54,9 @@ template<size_t K> struct is_same_ruint<RecInt::ruint<K>,RecInt::ruint<K>> : std
 
 template<typename, typename> struct is_smaller_ruint : std::false_type {};
 template<size_t K> struct is_smaller_ruint<RecInt::ruint<K>,RecInt::ruint<K+1>> : std::true_type {};
+
+template<typename, typename> struct is_smaller_rint : std::false_type {};
+template<size_t K> struct is_smaller_rint<RecInt::rint<K>,RecInt::rint<K+1>> : std::true_type {};
 
 template<typename T> struct RecInt_K;
 template<size_t K> struct RecInt_K<RecInt::ruint<K>> { static const size_t value = K;};

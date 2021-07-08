@@ -14,8 +14,10 @@ namespace Givaro
 {
 #define TMPL template<typename Storage_t, typename Compute_t>
 #define MOD Modular<Storage_t, Compute_t, \
-    typename std::enable_if<is_same_ruint<Storage_t, Compute_t>::value || \
-    is_smaller_ruint<Storage_t, Compute_t>::value>::type>
+    typename std::enable_if<is_same_ruint<Storage_t, Compute_t>::value \
+    || is_smaller_ruint<Storage_t, Compute_t>::value \
+    || is_same_rint<Storage_t, Compute_t>::value \
+    || is_smaller_rint<Storage_t, Compute_t>::value>::type>
 
 #define DIFF_RECINT \
     typename std::enable_if<!std::is_same<E,C>::value, int>::type = 0

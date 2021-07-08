@@ -103,8 +103,14 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Integer>, I13, 13);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R13, 13);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU13, 13);
-    typedef Modular<RecInt::ruint128,RecInt::ruint256> MUU;
-    TEST_SPECIFIC(MUU, RUU13, 13);
+    using MU128U256 = Modular<RecInt::ruint128,RecInt::ruint256> ;
+    using MU64U128 = Modular<RecInt::ruint64,RecInt::ruint128>;
+    using M128256 = Modular<RecInt::rint128,RecInt::rint256> ;
+    using M64128 = Modular<RecInt::rint64,RecInt::rint128>;
+    TEST_SPECIFIC(MU64U128, R67U13, 13);
+    TEST_SPECIFIC(M64128, R67R13, 13);
+    TEST_SPECIFIC(MU128U256, RUU13, 13);
+    TEST_SPECIFIC(M128256, R78R13, 13);
 
     TEST_SPECIFIC(ModularBalanced<int32_t>, BZ13, 13);
     TEST_SPECIFIC(ModularBalanced<int64_t>, BLL13, 13);
@@ -135,8 +141,16 @@ int main(int argc, char ** argv)
     TEST_LAST_PRIME(Modular<float>, Fpmax);
     TEST_LAST_PRIME(Modular<double>, Dpmax);
     //TEST_LAST_PRIME(ModularFD, FDpmax);
-    TEST_LAST_PRIME(Modular<RecInt::rint128>, Rpmax);
-    TEST_LAST_PRIME(Modular<RecInt::ruint128>, RUpmax);
+    TEST_LAST_PRIME(Modular<RecInt::rint64>, R6pmax);
+    TEST_LAST_PRIME(Modular<RecInt::ruint64>, R6Upmax);
+    TEST_LAST_PRIME(Modular<RecInt::rint128>, R7pmax);
+    TEST_LAST_PRIME(Modular<RecInt::ruint128>, R7Upmax);
+    TEST_LAST_PRIME(Modular<RecInt::rint256>, R8pmax);
+    TEST_LAST_PRIME(Modular<RecInt::ruint256>, R8Upmax);
+    TEST_LAST_PRIME(MU64U128, RU67pmax);
+    TEST_LAST_PRIME(MU128U256, RU78pmax);
+    TEST_LAST_PRIME(M64128, R67pmax);
+    TEST_LAST_PRIME(M128256, R78pmax);
 
     TEST_LAST_PRIME(ModularBalanced<int32_t>, BZpmax);
     TEST_LAST_PRIME(ModularBalanced<int64_t>, BLLpmax);

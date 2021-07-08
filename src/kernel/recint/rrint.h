@@ -44,6 +44,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #include "ruruint.h"
 #include "givaro/givtypestring.h"
 #include "rumanip.h" // ms_limb
+#include "rutools.h" // mod_n
 
 // --------------------------------------------------------------
 // ---------------- Declaration of class ruint ------------------
@@ -77,12 +78,41 @@ namespace RecInt
         inline bool isNegative() const { return ms_limb(Value) & __RECINT_MAXPOWTWO; }
         // *this >= 0
         inline bool isPositive() const { return !(isNegative()); }
+
+		// max Modulus
+        static rint<K> maxCardinality() {
+                // Approximated: sqrt(2) only up 31 bits
+            rint<K> max(1); 			// (2^K-1)/2 = (2^K-64)/2+31.5
+            max <<= ((1u<<(K-1))-32u); 	// So first 2^{K-1}-32
+            max *= 3037000499u;			// Second mul by 2^{31.5}
+            return max;
+        }
+
+		// max Elements
+        static rint<K> maxElement() {
+            return ruint<K>::maxElement()/2;
+        }
     };
 
     using rint64 =  rint<6>;
     using rint128 = rint<7>;
     using rint256 = rint<8>;
     using rint512 = rint<9>;
+
+
+}
+
+namespace RecInt
+{
+    // a = 0
+    template <size_t K> inline void reset(rint<K>& a) {
+        reset(a.Value);
+    }
+
+        // a = b
+    template <size_t K> inline void copy(rint<K>& a, const rint<K>& b) {
+        copy(a.Value, b.Value);
+    }
 
 
 }
@@ -95,6 +125,7 @@ namespace std
     template <size_t K> struct make_signed<RecInt::ruint<K>> {
         typedef RecInt::rint<K> type;
     };
+
 }
 
 #endif

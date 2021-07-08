@@ -5,7 +5,7 @@ Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS
 
-Time-stamp: <14 May 19 17:37:51 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <12 May 21 12:00:55 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -50,6 +50,8 @@ namespace RecInt
 {
     template <size_t K> rint<K> operator~(const rint<K>& c);
     template <size_t K> rint<K> operator-(const rint<K>& c);
+    template <size_t K> rint<K>& neg(rint<K>&, const rint<K>&);
+    template <size_t K> rint<K>& neg(rint<K>&);
 
     template <size_t K> rint<K>& operator|=(rint<K>& b, const rint<K>& c);
     template <size_t K> rint<K>& operator^=(rint<K>& b, const rint<K>& c);
@@ -88,6 +90,13 @@ namespace RecInt
     // Operator - unary
     template <size_t K> inline rint<K> operator-(const rint<K>& c) {
         return rint<K>(-c.Value);
+    }
+    template <size_t K> inline rint<K>& neg(rint<K>& r, const rint<K>& c) {
+        return neg(r.Value, c.Value);
+    }
+    template <size_t K> inline rint<K>& neg(rint<K>& r) {
+        neg(r.Value);
+        return r;
     }
 
     // Operator |=

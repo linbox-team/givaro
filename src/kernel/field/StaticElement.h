@@ -20,7 +20,7 @@
 #define __GIVARO_static_element_H
 
 #include <iostream>
-#include <gmp++/gmp++.h>
+#include "gmp++/gmp++.h"
 
 namespace Givaro {
 

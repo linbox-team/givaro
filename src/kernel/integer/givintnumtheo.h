@@ -73,12 +73,12 @@ namespace Givaro {
         /** Generalization of primitive roots for any modulus
          * Primitive means maximal order
          *    Primitive Element, Primitive invertible
-         *    Both functions coïncides except for m=8
+         *    Both functions coincide except for m=8
          *
          * Lambda Function : maximal orbit size
          *    lambda : Order of a primitive Element
          *    lambda_inv : Order of an invertible primitive Element
-         *    Both functions coïncides except for m=8
+         *    Both functions coincide except for m=8
          */
         // =================================================================== //
         Rep& prim_inv(Rep & , const Rep&) const ;
@@ -93,12 +93,12 @@ namespace Givaro {
         Rep& lambda_inv(Rep & , const Rep&) const ;
 
         // =================================================================== //
-        //! Möbius function
+        //! MÃ¶bius function
         // =================================================================== //
         template< template<class, class> class Container, template <class> class Alloc>
         short mobius(const Container<Rep, Alloc<Rep> >& lpow) const ;
 
-        //! Möbius function
+        //! MÃ¶bius function
         short mobius(const Rep& a) const;
     };
 

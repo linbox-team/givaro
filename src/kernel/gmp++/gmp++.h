@@ -54,7 +54,7 @@ extern "C" {
 #define _GIVARO_ISPRIMETESTS_ 5
 #endif
 
-#include <gmp++/gmp++_int.h>
+#include "gmp++/gmp++_int.h"
 
 #endif // __GIVARO_GMPplusplus_H
 /* -*- mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */

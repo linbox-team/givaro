@@ -53,7 +53,8 @@ bool testRationalDenom() {
     return pass;
 }
 
-#include "givaro/modular.h"
+
+#include <givaro/modular.h>
 bool testFieldInit() {
     size_t p = 19;
     Givaro::Modular<int64_t> F1(p);
@@ -63,6 +64,34 @@ bool testFieldInit() {
     F1.write(std::clog << "[TFI] PASSED: ") << std::endl;
     return true;
 }
+
+#include <givaro/givintprime.h>
+bool testPrevNextPrime() {
+
+    bool pass = true;
+
+    IntPrimeDom IP;
+
+    Integer a(1),b(1),p,q,r;
+    a<<=125 ;
+    b<<=136 ;
+
+    p = Integer::random_between(a,b);
+    std::clog << p << std::endl;
+
+    IP.nextprimein(p);
+    IP.nextprimein(p);
+    IP.prevprime(q,p);
+    IP.prevprimein(q);
+    IP.nextprimein(q);
+    IP.nextprime(r,q);
+    pass = IP.areEqual(p,r);
+
+    std::clog << "[PRI] " << (pass?"PASSED.":"FAILED.") << std::endl;
+
+    return pass;
+}
+
 
 int main(int argc, char ** argv)
 {
@@ -78,6 +107,7 @@ int main(int argc, char ** argv)
 
     pass = pass && testRationalDenom  ();
     pass = pass && testFieldInit  ();
+    pass = pass && testPrevNextPrime  ();
 
     return pass ? 0 : -1;
 }

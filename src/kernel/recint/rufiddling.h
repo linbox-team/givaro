@@ -5,7 +5,7 @@ Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS
 
-Time-stamp: <12 May 21 12:01:33 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <30 Nov 21 19:05:05 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -68,7 +68,7 @@ namespace RecInt
     template <size_t K, typename T> __RECINT_IS_ARITH(T, ruint<K>) operator^(const ruint<K>& b, const T& c);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, T) operator&(const ruint<K>& b, const T& c);
 
-    // a = 2^(2^(K-1))
+    // a = 2^(2^K-1)
     template<size_t K> ruint<K>& max_pow_two(ruint<K>& a);
 
     // returns a's highest or lowest bit
@@ -78,6 +78,10 @@ namespace RecInt
     // set a's highest or lowest bit
     template<size_t K> void set_highest_bit(ruint<K>& a);
     template<size_t K> void set_lowest_bit(ruint<K>& a);
+
+    // set a's highest or lowest word
+    template<size_t K> void set_highest_word(ruint<K>& a, const limb w);
+    template<size_t K> void set_lowest_word(ruint<K>& a, const limb w);
 }
 
 
@@ -214,7 +218,7 @@ namespace RecInt
 
 namespace RecInt
 {
-    // a = 2^(2^(K-1))
+    // a = 2^(2^K-1)
     template<size_t K> inline ruint<K>& max_pow_two(ruint<K>& a) {
         max_pow_two(a.High);
         reset(a.Low);
@@ -256,6 +260,24 @@ namespace RecInt
     template<> inline void set_lowest_bit(ruint<__RECINT_LIMB_SIZE>& a) {
         a.Value |= 1;
     }
+
+    // set a's highest word
+    template<size_t K> inline void set_highest_word(ruint<K>& a, const limb w) {
+        set_highest_word(a.High,w);
+    }
+    template<> inline void set_highest_word(ruint<__RECINT_LIMB_SIZE>& a, const limb w) {
+        a.Value = w;
+    }
+
+    // set a's lowest word
+    template<size_t K> inline void set_lowest_word(ruint<K>& a, const limb w) {
+        set_lowest_word(a.Low,w);
+    }
+    template<> inline void set_lowest_word(ruint<__RECINT_LIMB_SIZE>& a, const limb w) {
+        a.Value = w;
+    }
+
+
 }
 
 #endif

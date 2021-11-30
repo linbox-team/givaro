@@ -6,12 +6,20 @@
 // see the COPYRIGHT file for more details.
 // Authors: A. Breust <alexis.breust@imag.fr>
 //          B. Grenet <bruno.grenet@lirmm.fr>
+//          J-G. Dumas <Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
+
+/** @file ring/modular-ruint.h
+ * @brief The standard arithmetic in modular rings using fixed size precision.
+ * includes both unsigned and signed variants
+ * i.e. both Modular<ruint ...> & Modular<rint ...> &
+ */
 
 #ifndef __GIVARO_modular_ruint_H
 #define __GIVARO_modular_ruint_H
 
 #include "recint/ruint.h"
+#include "recint/rint.h"
 #include "givaro/givinteger.h"
 #include "givaro/givtypestring.h"
 #include "givaro/ring-interface.h"
@@ -22,13 +30,13 @@
 namespace Givaro
 {
 
-    //! @brief The standard arithmetic in modular rings using fixed size precision.
-
     template<typename _Storage_t, typename _Compute_t>
     class Modular<_Storage_t, _Compute_t,
           typename std::enable_if<is_same_ruint<_Storage_t, _Compute_t>::value
-          || is_smaller_ruint<_Storage_t, _Compute_t>::value>::type>:
-          public Modular_implem<_Storage_t, _Compute_t, _Storage_t>
+    || is_smaller_ruint<_Storage_t, _Compute_t>::value
+    || is_same_rint<_Storage_t, _Compute_t>::value
+    || is_smaller_rint<_Storage_t, _Compute_t>::value>::type>:
+        public Modular_implem<_Storage_t, _Compute_t, _Storage_t>
           {
           public:
 

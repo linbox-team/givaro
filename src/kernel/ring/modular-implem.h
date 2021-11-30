@@ -173,19 +173,32 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-            return S::maxModulus();
+            return S::maxCardinality();
         }
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_rint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-	  //return typename S::Value::maxModulus();
-	  return RecInt::ruint<RecInt_K<S>::value>::maxModulus()/2;
+            return S::maxCardinality();
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-	  return Residu_t::maxCardinality()/2;
+				// square of maxCardinality will fit Compute_t
+                //   --> for this maxElement would suffice
+                // twice maxCardinality will fit Storage_t
+                //   --> for this we need to divide by 2
+            return S::maxElement()/2;
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_rint<S, Compute_t>::value)
+        static Residu_t maxCardinality()
+        {
+				// square of maxCardinality will fit Compute_t
+                //   --> for this maxElement would suffice
+                // twice maxCardinality will fit Storage_t
+                //   --> for this we need to divide by 2
+            return S::maxElement()/2;
         }
 
       __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value && !is_rint<S>::value)
@@ -241,7 +254,7 @@ namespace Givaro {
 
         // Needed for read (see below)
         // Thus it is declared "final" in current derived classes
-        // 		using FiniteFieldInterface<_Storage_t>::init;
+        //		using FiniteFieldInterface<_Storage_t>::init;
         virtual Element& init (Element&, const Integer&) const = 0;
 
         inline std::ostream& write (std::ostream& s, const Element& a) const

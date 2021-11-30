@@ -73,6 +73,14 @@ namespace RecInt
     // r = a mod b
     template <size_t K> rint<K>& div_r(rint<K>& r, const rint<K>& a, const rint<K>& b);
     template <size_t K, typename T> __RECINT_IS_ARITH(T, T&) div_r(T& r, const rint<K>& a, const T& b);
+
+    // a = b^{-1} mod c (if b is not invertible, a = 0)
+    template <size_t K> rint<K>& inv_mod(rint<K>&, const rint<K>&, const rint<K>&);
+
+    // a = b mod n or a = a mod n
+    template <size_t K, size_t R> void mod_n(rint<K>&, const rint<R>&, const rint<K>&) ;
+    template <size_t K> void mod_n(rint<K>&, const rint<K>&);
+
 }
 
 
@@ -118,6 +126,23 @@ namespace RecInt
         div_q(a, b, c);
         return a;
     }
+
+    template <size_t K, typename T>
+    inline __RECINT_IS_ARITH(T, rint<K>) operator%(const rint<K>& b, const T& c){
+        rint<K> a(b);
+        return a%=c;
+    }
+
+
+    template <size_t K, typename T>
+    inline __RECINT_IS_ARITH(T, rint<K>) operator/(const rint<K>& b, const T& c){
+        rint<K> a(b);
+        return a/=c;
+    }
+
+
+
+
 }
 
 
@@ -135,13 +160,13 @@ namespace RecInt
             }
             else {
                 div_q(q.Value, (-a).Value, b.Value);
-                q = -q;
+                neg(q);
             }
         }
         else {
             if (b.isNegative()) {
                 div_q(q.Value, a.Value, (-b).Value);
-                q = -q;
+                neg(q);
             }
             else {
                 div_q(q.Value, a.Value, b.Value);
@@ -152,8 +177,24 @@ namespace RecInt
     }
     template <size_t K, typename T>
     inline __RECINT_IS_ARITH(T, rint<K>&) div_q(rint<K>& q, const rint<K>& a, const T& b) {
-        // TODO
-        std::cerr << "DIV with rint not implemented yet." << std::endl;
+        if (a.isNegative()) {
+            if (b<0) {
+                div_q(q.Value, (-a).Value, -b);
+            }
+            else {
+                div_q(q.Value, (-a).Value, b);
+                neg(q);
+            }
+        }
+        else {
+            if (b<0) {
+                div_q(q.Value, a.Value, -b);
+                neg(q);
+            }
+            else {
+                div_q(q.Value, a.Value, b);
+            }
+        }
         return q;
     }
 
@@ -164,7 +205,7 @@ namespace RecInt
 
         if (a.isNegative()) {
             div_r(r.Value, (-a).Value, b.Value);
-            r = -r;
+            neg(r);
         }
         else {
             div_r(r.Value, a.Value, b.Value);
@@ -186,6 +227,43 @@ namespace RecInt
             return r;
         }
     }
+    // a = b^{-1} mod c (if b is not invertible, a = 0)
+    template <size_t K> inline rint<K>& inv_mod(rint<K>& a, const rint<K>& b, const rint<K>& c) {
+        if (b.isPositive()) {
+            inv_mod(a.Value, b.Value, c.Value);
+        } else {
+            ruint<K> otherb(c.Value); sub(otherb, (-b).Value); // c - (-b) = c+b
+            inv_mod(a.Value, otherb, c.Value);
+        }
+        return a;
+    }
+
+    // a = b mod n or a = a mod n
+    template <size_t K, size_t R> inline void mod_n(rint<K>& a, const rint<R>& b, const rint<K>& c) {
+        if (b.isPositive()) {
+            mod_n(a.Value,b.Value,c.Value);
+        } else {
+            mod_n(a.Value,(-b).Value,c.Value);
+            if (a.Value != 0u)
+                sub(a.Value,c.Value,a.Value); // c - ( -b mod c)
+        }
+    }
+
+    template <size_t K> inline void mod_n(rint<K>& a, const rint<K>& n) {
+        if (a.isPositive()) {
+            mod_n(a.Value,n.Value);
+        } else {
+            ruint<K> nega( (-a).Value );
+            mod_n(nega,n.Value);
+            if (nega != 0u)
+                sub(a.Value,n.Value,nega); // n - ( -a mod n)
+            else
+                reset(a.Value); // a=0
+        }
+    }
+
+
+
 }
 
 #endif

@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 Jun 19 16:50:14 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <10 Nov 21 16:20:13 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 
@@ -31,8 +31,10 @@ namespace Givaro {
     class FermatDom : public IntegerDom {
     public:
         FermatDom() : IntegerDom() {}
-        Rep& fermat (Rep&, const long)  const ;
-        int pepin (const long) const ;
+        Rep& fermat (Rep&, const size_t)  const ;
+        bool pepin (const size_t) const ;
+    private:
+        bool pepin (const Integer&) const ;
     };
 
 

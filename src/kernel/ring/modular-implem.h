@@ -136,10 +136,10 @@ namespace Givaro {
         // --         double   |  double   | 94906266: floor(2^26 sqrt(2) + 1/2)
         // --         float    |  double   | 16777216: 2^24
         // --         Integer  |  Integer  | None
-        // --         ruint<K> |  ruint<K> | ruint<K>::maxModulus (= 2^(2^(K-1)))
+        // --         ruint<K> |  ruint<K> | ruint<K>::maxCardinality (= 2^(2^(K-1)))
         // --         rint<K>  |  ruint<K> | 2^(2^(K-1))
-        // --         rint<K>  |  rint<K>  | rint<K>::maxModulus floor(2^((2^K-1)/2))
-        // --         ruint<K> | ruint<K+1>| ruint<K>::maxCardinality/2 (= 2^(2^K-1)-1); because addition is done over ruint<K>
+        // --         rint<K>  |  rint<K>  | rint<K>::maxCardinality (=floor(2^((2^K-1)/2)) )
+        // --         ruint<K> | ruint<K+1>| 2^(2^K-1); because addition is done over ruint<K>
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxCardinality() {
@@ -177,23 +177,38 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-            return S::maxModulus(); // 2^(2^(K-1))
+            return S::maxCardinality(); // 2^(2^(K-1))
         }
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_rint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-            return typename S::maxModulus();
+            return S::maxCardinality();
         }
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<Compute_t>::value && RecInt_K<S>::value == RecInt_K<Compute_t>::value)
-        static Residu_t maxCardinality() // 2^(2^(K-1))
+        static Residu_t maxCardinality() 
         {
-            Residu_t max(1); return max <<= (1u<<(RecInt_K<Storage_t>::value-1u));
+            return Compute_t::maxCardinality(); // 2^(2^(K-1))
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-         return Residu_t::maxCardinality()/2;
+		// square of maxCardinality will fit Compute_t
+                //   --> for this maxElement would suffice
+                // twice maxCardinality will fit Storage_t
+                //   --> for this we need to divide by 2
+            ruint<K> max;
+            return max_pow_two(max); // 2^(2^K-1)
+        }
+
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_rint<S, Compute_t>::value)
+        static Residu_t maxCardinality()
+        {
+                // square of maxCardinality will fit Compute_t
+                //   --> for this maxElement would suffice
+                // twice maxCardinality will fit Storage_t
+                //   --> for this we need to divide by 2
+            return max_pow_two(max)/2; // 2^(2^K-2)
         }
 
       __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value && !is_rint<S>::value)
@@ -249,7 +264,7 @@ namespace Givaro {
 
         // Needed for read (see below)
         // Thus it is declared "final" in current derived classes
-        // 		using FiniteFieldInterface<_Storage_t>::init;
+        //		using FiniteFieldInterface<_Storage_t>::init;
         virtual Element& init (Element&, const Integer&) const = 0;
 
         inline std::ostream& write (std::ostream& s, const Element& a) const

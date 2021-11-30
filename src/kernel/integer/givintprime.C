@@ -25,28 +25,32 @@
 
 namespace Givaro {
 
-    FermatDom::Rep& FermatDom::fermat(Rep& f,  const long  n ) const
+    FermatDom::Rep& FermatDom::fermat(Rep& f,  const size_t n ) const
     {
         // fermat(n) = 2^(2^n) + 1
-        Rep z;
-        assign(z,2);
-        pow(f,z, 1 << n);
-        return addin(f,one);
+        assign(f,one) <<= (1u << n);
+        return addin(f,1u);
     }
 
-    int FermatDom::pepin (const long n) const
+    bool FermatDom::pepin (const Rep& fn) const
+    {
+            // Precondition: fn is a Fermat number
+            // Fermat number primality test
+        Rep y,z;
+        sub(z,fn,1u);
+        divin(z,2u);
+        powmod(y,3u,z,fn); // 3^( (fn-1)/2 ) mod fn
+
+        subin(y,fn);
+        negin(y);
+        return isOne(y);
+    }
+
+    bool FermatDom::pepin (const size_t n) const
     {
         // Fermat number primality test
         Rep fn;
-        fermat(fn,n);
-        Rep y,z,t;
-        sub(z,fn,one);
-        assign(t,2);
-        divin(z,t);
-        assign(t,3);
-        powmod(y,t,z,fn);
-        subin(fn,y);
-        return isOne(fn);
+        return pepin(fermat(fn,n));
     }
 
 
@@ -56,14 +60,9 @@ namespace Givaro {
     IntPrimeDom::Rep& IntPrimeDom::nextprimein(Rep& n, int32_t r)  const
     {
         if (GIVARO_ISLEQ( n,1)) return n=2;
-        Rep tmp;
-        mod( tmp, n, 2U);
-        if ( isZero(tmp) )
-            addin(n,1);
-        else
-            addin(n,2);
+        addin(n, (n&1u) ? 2u : 1u );
         while (! isprime(n,r) )
-            addin(n,2);
+            addin(n,2u);
         return n;
     }
 
@@ -71,10 +70,7 @@ namespace Givaro {
     {
         if (GIVARO_ISLEQ( p,1)) return n=2;
         if (&n == &p) return nextprimein(n,r);
-        if (isZero( mod(n,p,2)))
-            add(n,p,1);
-        else
-            add(n,p,2);
+        add(n, p, (p&1u) ? 2u : 1u );
         while (! isprime(n,r) )
             addin(n,2);
         return n;
@@ -83,12 +79,7 @@ namespace Givaro {
     IntPrimeDom::Rep& IntPrimeDom::prevprimein(Rep& n, int r)  const
     {
         if (GIVARO_ISLEQ( n,2)) return n=2;
-        Rep tmp;
-        mod(tmp, n, 2U);
-        if (isZero(tmp) )
-            subin(n,1);
-        else
-            subin(n,2);
+        subin(n,(n&1u) ? 2u : 1u );
         while (! isprime(n,r) )
             subin(n,2);
         return n;
@@ -98,10 +89,7 @@ namespace Givaro {
     {
         if (GIVARO_ISLEQ( p,2)) return n=2;
         if (&n == &p) return prevprimein(n,r);
-        if (isZero( mod(n,p,2)) )
-            sub(n,p,1);
-        else
-            sub(n,p,2);
+        sub(n, p, (p&1u) ? 2u : 1u );
         while (! isprime(n,r) )
             subin(n,2);
         return n;

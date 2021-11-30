@@ -156,21 +156,7 @@ namespace RecInt
     }
 
     template <size_t K> inline void lmul(rint<K+1>& a, const rint<K>& b, const rint<K>& c) {
-        if (b.isPositive()) {
-            if (c.isPositive()) {
-                lmul(a.Value, b.Value, c.Value);
-            } else {
-                lmul(a.Value, b.Value, (-c).Value);
-                neg(a);
-            }
-        } else {
-            if (c.isPositive()) {
-                lmul(a.Value, (-b).Value, c.Value);
-                neg(a);
-            } else {
-                lmul(a.Value, (-b).Value, (-c).Value);
-            }
-        }
+        lmul(a.Value, b.Value, c.Value);
     }
 
 

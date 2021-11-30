@@ -34,7 +34,8 @@ benchmarks/perfpublisher:
 tests/perfpublisher:
 	(cd tests; ${MAKE} perfpublisher)
 
-bin_SCRIPTS=givaro-config givaro-makefile
+bin_SCRIPTS=givaro-config
+pkgdata_DATA = givaro-makefile
 
 EXTRA_DIST=COPYRIGHT Licence_CeCILL-B_V1-en.txt Licence_CeCILL-B_V1-fr.txt \
 	   givaro.doxy \

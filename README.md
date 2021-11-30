@@ -65,7 +65,7 @@ PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:<path to your givaro install>/lib/pkgconfig
 
 An alternative option is to just add the following line to your Makefile. Then a simple call will compile your C and C++ files.
 ```
-include ##GIVAROROOT##/bin/givaro-makefile
+include ##GIVAROROOT##/share/givaro/givaro-makefile
 ```
 
 

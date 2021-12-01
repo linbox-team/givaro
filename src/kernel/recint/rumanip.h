@@ -181,7 +181,7 @@ namespace RecInt
 
 namespace RecInt {
 
-		// max Modulus
+		// max Cardinality
     template <size_t K>
     inline ruint<K> ruint<K>::maxCardinality() { // 2^(2^(K-1))
         ruint<K> max;
@@ -214,6 +214,18 @@ namespace RecInt {
         ruint<__RECINT_LIMB_SIZE+1> max(1); return max <<= (1u<<(__RECINT_LIMB_SIZE));
     }
 #  endif
+
+
+		// max Cardinality for fflas-ffpack : supports (a*b+c*d)
+        // 2^(2^(K-1)-0.5) = 2^(2^(K-1)-32+31.5) = 2^(2^(K-1)-32) *2^(31.5)
+    template <size_t K>
+    inline ruint<K> ruint<K>::maxFFLAS() {
+            // Approximated: sqrt(2) only up 31 bits
+        ruint<K> max(1);					// (2^K-1)/2 = (2^K-64)/2+31.5
+        max <<= ((1u<<(K-1))-32u);			// So first 2^{K-1}-32
+        max *= __RECINT_THIRTYONEPOINTFIVE;	// Second mul by 2^{31.5}
+        return max;
+    }
 
 }
 

@@ -79,19 +79,20 @@ namespace RecInt
         // *this >= 0
         inline bool isPositive() const { return !(isNegative()); }
 
-		// max Modulus
+		// max Cardinality : 2^( (2^K-1) / 2 )
         static rint<K> maxCardinality() {
-                // Approximated: sqrt(2) only up 31 bits
-            rint<K> max(1); 			// (2^K-1)/2 = (2^K-64)/2+31.5
-            max <<= ((1u<<(K-1))-32u); 	// So first 2^{K-1}-32
-            max *= 3037000499u;			// Second mul by 2^{31.5}
-            return max;
+            rint<K> max( ruint::maxFFLAS() );
+           return max;
         }
 
 		// max Elements
         static rint<K> maxElement() {
             return ruint<K>::maxElement()/2;
         }
+
+		// max Cardinality for fflas-ffpack : supports (a*b+c*d)
+        // 2^(2^(K-1)-1)
+        static rint<K> maxFFLAS();
     };
 
     using rint64 =  rint<6>;
@@ -112,6 +113,20 @@ namespace RecInt
         // a = b
     template <size_t K> inline void copy(rint<K>& a, const rint<K>& b) {
         copy(a.Value, b.Value);
+    }
+
+		// max Cardinality for fflas-ffpack : supports (a*b+c*d)
+        // 2^(2^(K-1)-1)
+    template <size_t K>
+    inline rint<K> rint<K>::maxFFLAS() {
+        rint<K> max;
+        set_highest_bit(max.Low.Value);
+        return max;
+    }
+
+        // 2^(2^(K-1)-1)
+    inline rint<__RECINT_LIMB_SIZE> rint<__RECINT_LIMB_SIZE>::maxFFLAS() {
+        rint<__RECINT_LIMB_SIZE> max(1); return max <<= ((1u<<(__RECINT_LIMB_SIZE-1u))-1);
     }
 
 

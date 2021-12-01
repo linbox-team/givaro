@@ -45,8 +45,8 @@ namespace Givaro
     private:
         void initialize(uint64_t seed, const size_t bits)
         {
-            if (! bits) _bits = 30;
-            GIVARO_ASSERT( _bits>0, "[RandomIntegerIterator] bad bit size");
+            if (! bits) _bits = 30u;
+            GIVARO_ASSERT( _bits>0u, "[RandomIntegerIterator] bad bit size");
             int64_t s=seed;
             while (!s)
                 s = static_cast<uint64_t>(BaseTimer::seed());
@@ -60,8 +60,8 @@ namespace Givaro
          * @param seed if \c 0 a seed will be generated, otherwise, the
          * provided seed will be use.
          */
-        RandomIntegerIterator(const Integer_Domain& D, uint64_t seed = 0, size_t bits = 30) :
-            _bits(bits), _integer(), _ring(D)
+        RandomIntegerIterator(const Integer_Domain& D, uint64_t seed = 0) :
+            _bits(30u), _integer(), _ring(D)
         {
             initialize(seed,_bits);
         }

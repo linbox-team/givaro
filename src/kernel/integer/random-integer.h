@@ -31,6 +31,8 @@ namespace Givaro
      * @tparam _Exact_Size if \c true, then random integers have
      * exactly the number of required bits, if \c false, they have
      * less than the required number of bits
+     * WARNING, the seed is *** global ***
+     * WARNING: i.e. sets the seed for all Givaro Integer 
      */
     template<bool _Unsigned=true, bool _Exact_Size=false>
     class RandomIntegerIterator {
@@ -56,15 +58,21 @@ namespace Givaro
 
     public:
         /*! Constructor.
-         * @param bits size of integers (in bits)
          * @param seed if \c 0 a seed will be generated, otherwise, the
-         * provided seed will be use.
+         * provided seed will be used, *** globally ***
+         * Default bit size (30) can be changed with method 'setBits'
          */
         RandomIntegerIterator(const Integer_Domain& D, uint64_t seed = 0) :
             _bits(30u), _integer(), _ring(D)
         {
             initialize(seed,_bits);
         }
+
+        /*! Constructor.
+         * @param seed if \c 0 a seed will be generated, otherwise, the
+         * provided seed will be used, *** globally ***
+         * @param samplesize is number ofpossible random values
+         */
         RandomIntegerIterator(const Integer_Domain& D, uint64_t seed, const Integer& samplesize) : _bits(samplesize.bitsize()), _integer(), _ring(D)
         {
             initialize(seed,_bits);
@@ -131,14 +139,14 @@ namespace Givaro
             return this->operator()();
         }
 
-        /** @brief Sets the seed.
+        /** @brief Sets the seed *** globally ***
+         *  WARNING: i.e. sets the seed for all Givaro Integer 
          *  Set the random seed to be \p ul.
          *  @param ul the new seed.
          */
-        void setSeed(uint64_t ul)
+        void static setSeed(uint64_t ul)
         {
             Givaro::Integer::seeding(ul);
-            this->operator++(); // next random value must depend on new seed
         }
 
         void setBits (size_t  bits)

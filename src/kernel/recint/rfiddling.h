@@ -5,7 +5,7 @@ Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS
 
-Time-stamp: <12 May 21 12:00:55 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <01 Dec 21 11:47:09 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -41,6 +41,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #define RINT_FIDDLING_H
 
 #include "rrint.h"
+#include "rumanip.h"
 #include "rufiddling.h"
 
 // --------------------------------------------------------------
@@ -160,6 +161,22 @@ namespace RecInt
         rint<K> r(b);
         return r >>= c;
     }
+
+		// max Cardinality for fflas-ffpack : supports (a*b+c*d)
+        // 2^(2^(K-1)-1)
+    template <size_t K>
+    inline rint<K> rint<K>::maxFFLAS() {
+        rint<K> max;
+        set_highest_bit(max.Low.Value);
+        return max;
+    }
+
+        // 2^(2^(K-1)-1)
+    template<>
+    inline rint<__RECINT_LIMB_SIZE> rint<__RECINT_LIMB_SIZE>::maxFFLAS() {
+        rint<__RECINT_LIMB_SIZE> max(1); return max <<= ((1u<<(__RECINT_LIMB_SIZE-1u))-1);
+    }
+
 
 }
 

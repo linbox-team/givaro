@@ -138,11 +138,13 @@ namespace Givaro
         void static setSeed(uint64_t ul)
         {
             Givaro::Integer::seeding(ul);
+            this->operator++(); // next random value must depend on new seed
         }
 
         void setBits (size_t  bits)
         {
             _bits = bits;
+            this->operator++(); // next random value must depend on new bitsize
         }
 
         size_t getBits () const

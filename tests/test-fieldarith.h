@@ -14,22 +14,22 @@ using namespace Givaro;
 
 #define TEST_EQUALITY( a, b )						\
 if (!F.areEqual((a),(b))) {						\
-    F.write(F.write(std::cout,a) << "!=",b)				\
+    F.write(F.write(std::cerr,a) << "!=",b)				\
     << " failed (at line " <<  __LINE__ << ")" << std::endl;	\
     return -1 ;							\
 }
 
 #define TEST_FIELD_SEVERAL_TIMES_SEEDED( a, seed )				\
 if (TestField( (a), int(seed)) ) {			\
-    std::cout << #a << " failed !" << std::endl;	\
+    std::cerr << #a << " failed !" << std::endl;	\
     return -1 ;					\
 }
 
 #define TEST_ONE_FIELD_SEEDED( F, a )				\
 if (TestOneField(F, (a))) {				\
-    std::cout << #a << " failed !" << std::endl;	\
+    std::cerr << #a << " failed !" << std::endl;	\
     return -1 ;					\
-}
+} else std::clog << "PASSED." << std::endl;
 
 #define TEST_LAST_PRIME(Field, Name)			\
 Field Name(previousprime(Field::maxCardinality()));	\
@@ -53,10 +53,8 @@ bool invertible(const Field& F, const typename Field::Element& a)
 template<class Field>
 int TestOneField(const Field& F, const typename Field::Element& first)
 {
-#ifdef __GIVARO_DEBUG
-    F.write(std::cerr << "Testing ");
-    F.write(std::cerr<< "(", first) << ") :" << std::endl;
-#endif
+    F.write(std::clog << "Testing ");
+    F.write(std::clog<< "(", first) << ") :";
 
     typename Field::Element a, b, c, d,a_,b_,c_,d_,ma;
     typename Field::Element e,e_;

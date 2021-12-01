@@ -209,7 +209,7 @@ namespace Givaro {
                 //   --> for this we need to divide by 2
 
             RecInt::ruint<RecInt_K<S>::value> max; RecInt::reset(max);
-            RecInt::set_highest_word(max, __RECINT_MAXPOWTWO>>1); // 2^(2^K-2)
+            RecInt::set_highest_word(max, RecInt::__RECINT_MAXPOWTWO>>1); // 2^(2^K-2)
             return max;
         }
 

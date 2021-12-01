@@ -113,6 +113,7 @@ namespace RecInt
         UDItype size() { return NBLIMB<K>::value; }
         static ruint<K> maxCardinality() ;
         static ruint<K> maxElement() ;
+        static ruint<K> maxFFLAS() ;
     };
 
     // Break points
@@ -181,6 +182,7 @@ namespace RecInt
         UDItype size() { return 1; }
         static ruint<__RECINT_LIMB_SIZE> maxCardinality();
         static ruint<__RECINT_LIMB_SIZE> maxElement();
+        static ruint<__RECINT_LIMB_SIZE> maxFFLAS();
     };
 
 #if defined(__RECINT_USE_FAST_128)
@@ -241,6 +243,7 @@ namespace RecInt
         UDItype size() { return NBLIMB<__RECINT_LIMB_SIZE+1>::value; }
         static ruint<__RECINT_LIMB_SIZE+1> maxCardinality();
         static ruint<__RECINT_LIMB_SIZE+1> maxElement();
+        static ruint<__RECINT_LIMB_SIZE+1> maxFFLAS();
     };
 #endif
 

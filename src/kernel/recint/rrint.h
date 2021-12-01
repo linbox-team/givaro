@@ -81,7 +81,7 @@ namespace RecInt
 
 		// max Cardinality : 2^( (2^K-1) / 2 )
         static rint<K> maxCardinality() {
-            rint<K> max( ruint::maxFFLAS() );
+            rint<K> max( ruint<K>::maxFFLAS() );
            return max;
         }
 
@@ -114,21 +114,6 @@ namespace RecInt
     template <size_t K> inline void copy(rint<K>& a, const rint<K>& b) {
         copy(a.Value, b.Value);
     }
-
-		// max Cardinality for fflas-ffpack : supports (a*b+c*d)
-        // 2^(2^(K-1)-1)
-    template <size_t K>
-    inline rint<K> rint<K>::maxFFLAS() {
-        rint<K> max;
-        set_highest_bit(max.Low.Value);
-        return max;
-    }
-
-        // 2^(2^(K-1)-1)
-    inline rint<__RECINT_LIMB_SIZE> rint<__RECINT_LIMB_SIZE>::maxFFLAS() {
-        rint<__RECINT_LIMB_SIZE> max(1); return max <<= ((1u<<(__RECINT_LIMB_SIZE-1u))-1);
-    }
-
 
 }
 

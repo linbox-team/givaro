@@ -12,6 +12,8 @@
  */
 
 #include <iostream>
+#include <recint/rint.h>
+#include <recint/ruint.h>
 #include <givaro/modular.h>
 #include <givaro/montgomery.h>
 #include <givaro/gfq.h>
@@ -169,6 +171,12 @@ int main(int argc, char ** argv) {
 
     // modulo 13 over arbitrary size
     Modular<Integer> IntZ13(13); TestField( IntZ13 );
+
+    // modulo 13 over fixed size
+    Modular<RecInt::rint<7>> rIntZ13(13); TestField( rIntZ13 );
+
+    // modulo 13 over arbitrary size
+    Modular<RecInt::ruint<7>> ruIntZ13(13); TestField( ruIntZ13 );
 
     // Zech log finite field with 5^4 elements
     GFqDom<int> GF625( 5, 4 ); TestField( GF625 );

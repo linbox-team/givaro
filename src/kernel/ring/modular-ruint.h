@@ -12,7 +12,9 @@
 /** @file ring/modular-ruint.h
  * @brief The standard arithmetic in modular rings using fixed size precision.
  * includes both unsigned and signed variants
- * i.e. both Modular<ruint ...> & Modular<rint ...> &
+ * *******************************************************
+ * i.e. BOTH   Modular<ruint ...>   &    Modular<rint ...>
+ * *******************************************************
  */
 
 #ifndef __GIVARO_modular_ruint_H
@@ -76,10 +78,22 @@ namespace Givaro
               }
 
               // ----- Convert and reduce
+              __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<S>::value)
               Element& reduce (Element& x, const Element& y) const
               { x = y % _p; return x; }
+
+              __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_rint<S>::value)
+              Element& reduce (Element& x, const Element& y) const
+              { x = y % _p; return (x<0?x+=_p:x); }
+
+
+              __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<S>::value)
               Element& reduce (Element& x) const
               { x %= _p; return x; }
+
+              __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_rint<S>::value)
+              Element& reduce (Element& x) const
+              { x %= _p; return (x<0?x+=_p:x); }
 
               // ----- Classic arithmetic
               Element& mul(Element& r, const Element& a, const Element& b) const;

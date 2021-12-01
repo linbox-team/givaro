@@ -120,23 +120,26 @@ namespace Givaro {
         static inline Residu_t minCardinality() { return 2; }
 
         // -- maxCardinality
-        // -- Goal: being able to store in Compute_t the result of x*y + z
+        // -- Goal: maxCardinality of a modular ring is s.t.
+        // --       one is able to store in Compute_t the result of x*y + z and
+        // --       manage a sum x+y in Storage_t
         // --       when x, y and z belong to Storage_t
-        // -- => Storage_t must store integers up to maxCardinality-1
+        // -- => Storage_t must store integers up to (maxCardinality-1) / 2
         // -- => Compute_t must store integers up to p(p-1) where p = maxCardinality
 
         // -- Rules: Storage_t | Compute_t | maxCardinality
         // --        ----------+-----------+---------------
         // --        (u)intN_t |  uintN_t  | 2^(N/2)
-        // --          intN_t  | uint2N_t  | 2^(N-1) - 1
-        // --         uintN_t  | uint2N_t  | 2^N - 1 ; because 2^N can not be stored on Residu_t
+        // --          intN_t  | uint2N_t  | 2^(N-1) (since the overflow of x+y is taken care of in modular-integral.inl) 
+        // --         uintN_t  | uint2N_t  | 2^N - 1 ; should be 2^N but maxCardinality is of type Residu_t which can not store 2^N
         // --         float    |  float    | 4096: 2^12
         // --         double   |  double   | 94906266: floor(2^26 sqrt(2) + 1/2)
         // --         float    |  double   | 16777216: 2^24
         // --         Integer  |  Integer  | None
-        // --         ruint<K> |  ruint<K> | ruint<K>::maxModulus (= 2^(2^(K-1)))
-        // --         rint<K>  |  rint<K>  | rint<K>::maxModulus (= 2^(2^(K-2)))
-        // --         ruint<K> | ruint<K+1>| ruint<K>::maxCardinality/2 (= 2^(2^K-1)-1); because addition is done over ruint<K>
+        // --         ruint<K> |  ruint<K> | ruint<K>::maxCardinality (= 2^(2^(K-1)))
+        // --         rint<K>  |  ruint<K> | 2^(2^(K-1))
+        // --         rint<K>  |  rint<K>  | rint<K>::maxCardinality (=floor(2^((2^K-1)/2)) )
+        // --         ruint<K> | ruint<K+1>| 2^(2^K-1); because addition is done over ruint<K>
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_INT(S) && (sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxCardinality() {
@@ -149,7 +152,7 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxCardinality() {
             Residu_t repunit = ~0;
-            return repunit >> 1; // 2^(N-1)-1 with N = bitsize(Storage_t)
+            return repunit >> 1; // 2^(N-1) with N = bitsize(Storage_t)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_UINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
@@ -173,32 +176,39 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-            return S::maxCardinality();
+            return S::maxCardinality(); // 2^(2^(K-1))
         }
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_same_rint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
             return S::maxCardinality();
         }
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<Compute_t>::value && (ISEQUAL(RecInt_K<S>::value,RecInt_K<Compute_t>::value)))
+        static Residu_t maxCardinality() 
+        {
+            return Compute_t::maxCardinality(); // 2^(2^(K-1))
+        }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-				// square of maxCardinality will fit Compute_t
+		// square of maxCardinality will fit Compute_t
                 //   --> for this maxElement would suffice
                 // twice maxCardinality will fit Storage_t
                 //   --> for this we need to divide by 2
-            return S::maxElement()/2;
+            Residu_t max;
+            return RecInt::max_pow_two(max); // 2^(2^K-1)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_rint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-				// square of maxCardinality will fit Compute_t
+                // square of maxCardinality will fit Compute_t
                 //   --> for this maxElement would suffice
                 // twice maxCardinality will fit Storage_t
                 //   --> for this we need to divide by 2
-            return S::maxElement()/2;
+            RecInt::ruint<RecInt_K<S>::value> max;
+            return RecInt::max_pow_two(max)/2; // 2^(2^K-2)
         }
 
       __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value && !is_rint<S>::value)

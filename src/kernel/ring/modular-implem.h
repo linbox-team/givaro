@@ -152,8 +152,7 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_SINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
         static Residu_t maxCardinality() {
             Residu_t repunit = ~0;
-                // return repunit >> 1; // 2^(N-1) with N = bitsize(Storage_t)
-            return 1 << ((k << 3) -1); // 2^(N-1) with N = bitsize(Storage_t)
+            return repunit >> 1; // 2^(N-1) with N = bitsize(Storage_t)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, IS_UINT(S) && (2*sizeof(S) == sizeof(Compute_t)))
@@ -184,7 +183,7 @@ namespace Givaro {
         {
             return S::maxCardinality();
         }
-        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<Compute_t>::value && RecInt_K<S>::value == RecInt_K<Compute_t>::value)
+        __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<Compute_t>::value && (ISEQUAL(RecInt_K<S>::value,RecInt_K<Compute_t>::value)))
         static Residu_t maxCardinality() 
         {
             return Compute_t::maxCardinality(); // 2^(2^(K-1))
@@ -197,8 +196,8 @@ namespace Givaro {
                 //   --> for this maxElement would suffice
                 // twice maxCardinality will fit Storage_t
                 //   --> for this we need to divide by 2
-            ruint<K> max;
-            return max_pow_two(max); // 2^(2^K-1)
+            Residu_t max;
+            return RecInt::max_pow_two(max); // 2^(2^K-1)
         }
 
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_rint<S, Compute_t>::value)
@@ -208,7 +207,8 @@ namespace Givaro {
                 //   --> for this maxElement would suffice
                 // twice maxCardinality will fit Storage_t
                 //   --> for this we need to divide by 2
-            return max_pow_two(max)/2; // 2^(2^K-2)
+            RecInt::ruint<RecInt_K<S>::value> max;
+            return RecInt::max_pow_two(max)/2; // 2^(2^K-2)
         }
 
       __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value && !is_rint<S>::value)

@@ -58,7 +58,7 @@ template<size_t K> struct is_smaller_ruint<RecInt::ruint<K>,RecInt::ruint<K+1>> 
 template<typename, typename> struct is_smaller_rint : std::false_type {};
 template<size_t K> struct is_smaller_rint<RecInt::rint<K>,RecInt::rint<K+1>> : std::true_type {};
 
-template<typename T> struct RecInt_K;
+template<typename T> struct RecInt_K{ static const size_t value = 0;};
 template<size_t K> struct RecInt_K<RecInt::ruint<K>> { static const size_t value = K;};
 template<size_t K> struct RecInt_K<RecInt::rint<K>>  { static const size_t value = K;};
 

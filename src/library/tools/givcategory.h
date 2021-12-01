@@ -22,18 +22,18 @@ namespace Givaro {
 
     // ==========================================================================
     // --
-    // -- Test is A is equal to B, A and B are two types.
-    // -- ISQUAL(A,B) or IsEqual<A,B>::val return true iff
-    // -- A and B is the same type.
+    // -- Test is a is equal to b, a and b are unsigned ints.
+    // -- ISEQUAL(A,B) or IsEqual<A,B>::val return true iff
+    // -- a and b are equal
     // --
-    template<class A, class B>
-    struct IsEqual { enum {val = false }; };
+    template<size_t a, size_t b>
+    struct IsEqual { constexpr static bool val = false; };
 
-    template<class A>
-    struct IsEqual<A,A> { enum {val = true }; };
+    template<size_t a>
+    struct IsEqual<a,a> { constexpr static bool val = false; };
 
-    template<class A, class B>
-    struct IsNotEqual { enum {val = !IsEqual<A,B>::val }; };
+    template<size_t  a, size_t b>
+    struct IsNotEqual { constexpr static bool val = !IsEqual<a,b>::val; };
 
 #define ISEQUAL(A,B) IsEqual<A,B>::val
 #define ISNOTEQUAL(A,B) IsNotEqual<A,B>::val

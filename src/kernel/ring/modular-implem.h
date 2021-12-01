@@ -192,7 +192,7 @@ namespace Givaro {
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_smaller_ruint<S, Compute_t>::value)
         static Residu_t maxCardinality()
         {
-		// square of maxCardinality will fit Compute_t
+                // square of maxCardinality will fit Compute_t
                 //   --> for this maxElement would suffice
                 // twice maxCardinality will fit Storage_t
                 //   --> for this we need to divide by 2
@@ -207,8 +207,10 @@ namespace Givaro {
                 //   --> for this maxElement would suffice
                 // twice maxCardinality will fit Storage_t
                 //   --> for this we need to divide by 2
-            RecInt::ruint<RecInt_K<S>::value> max;
-            return RecInt::max_pow_two(max)/2; // 2^(2^K-2)
+
+            RecInt::ruint<RecInt_K<S>::value> max; RecInt::reset(max);
+            RecInt::set_highest_word(max, RecInt::__RECINT_MAXPOWTWO>>1); // 2^(2^K-2)
+            return max;
         }
 
       __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, !IS_INT(S) && !IS_FLOAT(S) && !IS_SAME(S, Integer) && !is_ruint<S>::value && !is_rint<S>::value)

@@ -1,4 +1,4 @@
-/* ruint/ruint.h - Class definition of ruint<K> from RecInt library
+/* rint/rint.h - Class definition of rint<K> from RecInt library
 
    Copyright Université Grenoble Alpes
 Contributors :
@@ -47,11 +47,11 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #include "rutools.h" // mod_n
 
 // --------------------------------------------------------------
-// ---------------- Declaration of class ruint ------------------
+// ---------------- Declaration of class rint ------------------
 
 namespace RecInt
 {
-    /* Basic definition of ruint */
+    /* Basic definition of rint */
     template <size_t K> class rint {
     public:
         // A rint is stored as a ruint

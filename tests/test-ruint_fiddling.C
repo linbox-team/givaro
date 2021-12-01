@@ -112,11 +112,26 @@ int main(void)
         z = x^y;
         a = ((~x) & y) | (x & (~y));
         if (a != z) return 7;
+
+        rlimb = rand64() & 31;
+        reset(x);
+        set_highest_word(x, __RECINT_MAXPOWTWO>>rlimb );
+        x <<= rlimb;
+        max_pow_two(y);
+        if (x != y) {
+            std::cerr << x << " != " << y << std::endl;
+            return 10;
+        }
     }
 
     // Extra functions
     if (highest_bit(max_pow_two(x)) != true) return 8;
     if (lowest_bit(~x) != true) return 8;
+
+    set_highest_word(x,__RECINT_MAXPOWTWO);
+    max_pow_two(y);
+    if (x != y) return 9;
+    
 
     return 0;
 }

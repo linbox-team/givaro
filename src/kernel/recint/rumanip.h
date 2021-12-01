@@ -183,7 +183,7 @@ namespace RecInt {
 
 		// max Modulus
     template <size_t K>
-    inline ruint<K> ruint<K>::maxCardinality() { // 2^(2^K-1)
+    inline ruint<K> ruint<K>::maxCardinality() { // 2^(2^(K-1))
         ruint<K> max;
         max.High = 1;
         return max;

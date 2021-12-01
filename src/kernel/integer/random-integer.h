@@ -185,7 +185,9 @@ namespace Givaro
          * 1/ Constructor with 2 args, D and seed ...
          * 2/ ... then object.setBits(bits).
          */
-        RandomIntegerIterator(const Integer_Domain&, uint64_t, size_t);
+        RandomIntegerIterator(const Integer_Domain&, uint64_t, size_t); // DEPRECATED Constructor. Instead, call constructor with 2 args then object.setBits(bits)
+
+
     };
 
 }

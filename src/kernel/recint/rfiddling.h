@@ -5,7 +5,7 @@ Contributors :
 Alexis BREUST (alexis.breust@gmail.com 2014)
 Jean-Guillaume DUMAS
 
-Time-stamp: <01 Dec 21 10:51:42 Jean-Guillaume.Dumas@imag.fr>
+Time-stamp: <01 Dec 21 11:47:09 Jean-Guillaume.Dumas@imag.fr>
 
 This software is a computer program whose purpose is to provide an fixed precision arithmetic library.
 
@@ -41,6 +41,7 @@ knowledge of the CeCILL-B license and that you accept its terms.
 #define RINT_FIDDLING_H
 
 #include "rrint.h"
+#include "rumanip.h"
 #include "rufiddling.h"
 
 // --------------------------------------------------------------

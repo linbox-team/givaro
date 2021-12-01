@@ -227,6 +227,10 @@ namespace RecInt {
         return max;
     }
 
+    inline ruint<__RECINT_LIMB_SIZE> ruint<__RECINT_LIMB_SIZE>::maxFFLAS() {
+        return ruint<__RECINT_LIMB_SIZE>(__RECINT_THIRTYONEPOINTFIVE);
+    }
+
 }
 
 #endif

@@ -179,6 +179,13 @@ namespace Givaro
         Integer_Type			_integer;	//!< the generated integer.
         const Integer_Domain&	_ring;
 
+    private:
+        /*! DEPRECATED Constructor.
+         * This behavior can be now reproduced by calling:
+         * 1/ Constructor with 2 args, D and seed ...
+         * 2/ ... then object.setBits(bits).
+         */
+        RandomIntegerIterator(const Integer_Domain&, uint64_t, size_t);
     };
 
 }

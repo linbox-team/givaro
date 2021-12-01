@@ -135,7 +135,7 @@ namespace Givaro
          *  Set the random seed to be \p ul.
          *  @param ul the new seed.
          */
-        void static setSeed(uint64_t ul)
+        void setSeed(uint64_t ul)
         {
             Givaro::Integer::seeding(ul);
             this->operator++(); // next random value must depend on new seed

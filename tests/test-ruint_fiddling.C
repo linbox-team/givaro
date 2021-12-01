@@ -114,11 +114,14 @@ int main(void)
         if (a != z) return 7;
 
         rlimb = rand64() & 31;
+        reset(x);
         set_highest_word(x, __RECINT_MAXPOWTWO>>rlimb );
         x <<= rlimb;
         max_pow_two(y);
-        if (x != y) return 10;
-    
+        if (x != y) {
+            std::cerr << x << " != " << y << std::endl;
+            return 10;
+        }
     }
 
     // Extra functions

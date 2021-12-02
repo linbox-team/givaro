@@ -37,6 +37,8 @@ namespace Givaro {
         mutable uint64_t _seed;
     public:
         typedef GivRandom random_generator;
+        typedef uint64_t random_t;
+        typedef uint64_t seed_t;
 
         GivRandom(const uint64_t s = 0)
         : _seed(s)
@@ -61,15 +63,11 @@ namespace Givaro {
             return _seed;
         }
 
-
         uint64_t max_rand() const
         {
             return _GIVRAN_MODULO_;
         }
 
-
-        // #if defined(__GIVARO_INT64)
-#if 1
         uint64_t operator() () const
         {
             return _seed = (uint64_t)(
@@ -77,15 +75,6 @@ namespace Givaro {
                                       * (int64_t)_seed
                                       % (int64_t)_GIVRAN_MODULO_ );
         }
-#else
-        uint64_t operator() () const
-        {
-            return _seed = (uint64_t)(
-                                      (uint64_t)_GIVRAN_MULTIPLYER_
-                                      * _seed
-                                      % (uint64_t)_GIVRAN_MODULO_ );
-        }
-#endif
 
         template<class XXX> XXX& operator() (XXX& x) const
         {

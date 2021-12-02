@@ -301,7 +301,9 @@ namespace Givaro {
         Element& operator() (Element& a) const
         {
                 // If no size given and cardinality is 0
-            return ring().init(a, _size?_givrand() % _size:_givrand());
+            return ring().init(a, _size?
+                               _givrand() % static_cast<std::result_of<_givrand()>>(_size)
+                               :_givrand());
         }
         Element& random (Element& a) const
         {

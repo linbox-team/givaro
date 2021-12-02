@@ -60,7 +60,7 @@ namespace Givaro
         /*! Constructor.
          * @param seed if \c 0 a seed will be generated, otherwise, the
          * provided seed will be used, *** globally ***
-         * Default bit size (30) can be changed with method 'setBits'
+         * Default bit size (30) can be changed with method 'setBitsize'
          */
         RandomIntegerIterator(const Integer_Domain& D, uint64_t seed = 0) :
             _bits(30u), _integer(), _ring(D)
@@ -149,13 +149,13 @@ namespace Givaro
             Givaro::Integer::seeding(ul);
         }
 
-        void setBits (size_t  bits)
+        void setBitsize (size_t  bits)
         {
             _bits = bits;
             this->operator++(); // next random value must depend on new bitsize
         }
 
-        size_t getBits () const
+        size_t getBitsize () const
         {
             return _bits ;
         }
@@ -183,9 +183,9 @@ namespace Givaro
         /*! DEPRECATED Constructor.
          * This behavior can be now reproduced by calling:
          * 1/ Constructor with 2 args, D and seed ...
-         * 2/ ... then object.setBits(bits).
+         * 2/ ... then object.setBitsize(bits).
          */
-        RandomIntegerIterator(const Integer_Domain&, uint64_t, size_t); // DEPRECATED Constructor. Instead, call constructor with 2 args then object.setBits(bits)
+        RandomIntegerIterator(const Integer_Domain&, uint64_t, size_t); // DEPRECATED Constructor. Instead, call constructor with 2 args then object.setBitsize(bits)
 
 
     };

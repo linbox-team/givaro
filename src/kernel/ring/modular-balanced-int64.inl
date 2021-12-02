@@ -233,7 +233,7 @@ namespace Givaro
     inline std::ostream&
     ModularBalanced<int64_t>::write(std::ostream& os) const
     {
-        return os << "ModularBalanced<int64_t> mod " << _p;
+        return os << "ModularBalanced<int64_t> modulo " << _p;
     }
 
     inline std::ostream&

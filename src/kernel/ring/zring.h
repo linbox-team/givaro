@@ -50,7 +50,10 @@ namespace Givaro
         using Rep = _Element;
         using Self_t = UnparametricZRing<Element>;
         using Parent_t = UnparametricOperations<Element>;
-        using Residu_t = int64_t; // Unparametric have no residue, this is used only for cardinality/characteristic
+		// Unparametric have no residue,
+        // this is used only for cardinality/characteristic which behave like integers
+        // with a ZRing the element is supposed to behave like an integer
+        using Residu_t = _Element;
         using Element_ptr = Element*;
         using ConstElement_ptr = const Element*;
         enum { size_rep = sizeof(Element) };

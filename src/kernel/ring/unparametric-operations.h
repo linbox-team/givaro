@@ -21,6 +21,7 @@
 #include "givaro/ring-interface.h"
 #include <math.h>
 #include <iostream> // std::ostream
+#include <typeinfo>
 #include <string>
 
 namespace Givaro

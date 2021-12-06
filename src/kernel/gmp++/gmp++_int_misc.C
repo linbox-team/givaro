@@ -30,7 +30,7 @@ namespace Givaro {
     Integer fact ( uint64_t l)
     {
         Integer Res ;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG != 8
         // factorial too large if l > 2^32 anyway
         uint32_t i(l);
         GIVARO_ASSERT( (uint64_t)i == l, "Factorial too large");
@@ -392,7 +392,7 @@ namespace Givaro {
     }
     Integer::operator int64_t() const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG != 8
         Integer absThis = abs(*this);
         int64_t r = static_cast<int64_t>(absThis.operator uint32_t());
         absThis >>= 32;
@@ -404,7 +404,7 @@ namespace Givaro {
     }
     Integer::operator uint64_t() const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG != 8
         Integer absThis = abs(*this);
         uint64_t r = static_cast<uint64_t>(absThis.operator uint32_t());
         absThis >>= 32;

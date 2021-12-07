@@ -265,9 +265,21 @@ namespace Givaro {
         mpz_tdiv_qr( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
                      (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
 
-        if (a<0 && r) {
-            subin(q,(int64_t)1) ;
-            r += b;
+        /* If r is negative (happen if a is negative, as sign(r) = sign(a)),
+         * we need to modify q and r to have a positive r.
+         */
+        if (r < 0)
+        {
+            if (b > 0)
+            {
+                subin (q, (uint64_t)1) ;
+                r += b;
+            }
+            else /* b is negative */
+            {
+                addin (q, (uint64_t)1) ;
+                r -= b;
+            }
         }
 
         return q;

@@ -33,7 +33,7 @@ namespace Givaro {
     {
         if (isZero(n)) return res = Integer::zero;
         if (isZero(res)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mulin(res,Integer(n));
 #else
         mpz_mul_si( (mpz_ptr)&res.gmp_rep, (mpz_ptr)&res.gmp_rep, n);
@@ -44,7 +44,7 @@ namespace Givaro {
     {
         if (isZero(n)) return res = Integer::zero;
         if (isZero(res)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mulin(res,Integer(n));
 #else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
@@ -63,7 +63,7 @@ namespace Givaro {
     {
         if (isZero(n1)) return res = Integer::zero;
         if (isZero(n2)) return res = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mul(res,n1,Integer(n2));
 #else
         mpz_mul_si( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
@@ -74,7 +74,7 @@ namespace Givaro {
     {
         if (isZero(n1)) return res = Integer::zero;
         if (isZero(n2)) return res = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mul(res,n1,Integer(n2));
 #else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
@@ -95,7 +95,7 @@ namespace Givaro {
     {
         if (&res == &b) return Integer::axpyin(res,a,x);
         if (isZero(a) || isZero(x)) return res = b;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return axpy(res,a,Integer(x),b);
 #else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
@@ -115,7 +115,7 @@ namespace Givaro {
     Integer& Integer::axpyin(Integer& res, const Integer& a, const uint64_t x)
     {
         if (isZero(a) || isZero(x)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return axpyin(res,a,Integer(x));
 #else
         mpz_addmul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
@@ -136,7 +136,7 @@ namespace Givaro {
     {
         if (isZero(a) || isZero(x)) return res=b;
         if (&res == &b) return Integer::maxpyin(res,a,x);
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return maxpy(res,a,Integer(x),b);
 #else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
@@ -158,7 +158,7 @@ namespace Givaro {
     {
         if (&res == &b) return Integer::axmyin(res,a,x);
         if (isZero(a) || isZero(x)) return Integer::neg(res,b);
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return axmy(res,a,Integer(x),b);
 #else
         mpz_mul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
@@ -191,7 +191,7 @@ namespace Givaro {
     Integer& Integer::maxpyin(Integer& res, const Integer& a, const uint64_t x)
     {
         if (isZero(a) || isZero(x)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return maxpyin(res,a,Integer(x));
 #else
         mpz_submul_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&a.gmp_rep, x);
@@ -213,7 +213,7 @@ namespace Givaro {
     {
         if (l==0) return *this = Integer::zero;
         if (isZero(*this)) return *this;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mulin(*this,Integer(l));
 #else
         mpz_mul_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
@@ -225,7 +225,7 @@ namespace Givaro {
     {
         if (l==0) return *this =Integer::zero;
         if (isZero(*this)) return *this;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mulin(*this,Integer(l));
 #else
         mpz_mul_si( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
@@ -247,7 +247,7 @@ namespace Givaro {
     {
         if (l==0) return Integer::zero;
         if (isZero(*this)) return Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (*this) * Integer(l);
 #else
         Integer res;
@@ -260,7 +260,7 @@ namespace Givaro {
     {
         if (l==0) return Integer::zero;
         if (isZero(*this)) return Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (*this) * Integer(l);
 #else
         Integer res;

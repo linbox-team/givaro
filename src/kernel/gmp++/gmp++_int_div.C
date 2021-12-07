@@ -37,7 +37,7 @@ namespace Givaro {
     {
 
         if (isZero(res)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return divin(res,Integer(n));
 #else
         int32_t sgn = Givaro::sign(n);
@@ -50,7 +50,7 @@ namespace Givaro {
     Integer& Integer::divin(Integer& res, const uint64_t n)
     {
         if (isZero(res)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return divin(res,Integer(n));
 #else
         mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
@@ -71,7 +71,7 @@ namespace Givaro {
     Integer& Integer::div(Integer& res, const Integer& n1, const int64_t n2)
     {
         if (isZero(n1)) return res = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return div(res,n1,Integer(n2));
 #else
         int32_t sgn = Givaro::sign(n2);
@@ -89,7 +89,7 @@ namespace Givaro {
     Integer& Integer::div(Integer& res, const Integer& n1, const uint64_t n2)
     {
         if (isZero(n1)) return res = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return div(res,n1,Integer(n2));
 #else
         mpz_tdiv_q_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
@@ -111,7 +111,7 @@ namespace Givaro {
     Integer& Integer::divexact  (Integer& q, const Integer& n1, const uint64_t & n2)
     {
         if (isZero(n1)) return q = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return divexact(q,n1,Integer(n2));
 #else
         mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
@@ -123,7 +123,7 @@ namespace Givaro {
     Integer& Integer::divexact  (Integer& q, const Integer& n1, const int64_t& n2)
     {
         if (isZero(n1)) return q = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return divexact(q,n1,Integer(n2));
 #else
         mpz_divexact_ui( (mpz_ptr)&(q.gmp_rep),
@@ -150,7 +150,7 @@ namespace Givaro {
     Integer  Integer::divexact  (const Integer& n1, const uint64_t& n2)
     {
         if (isZero(n1)) return Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return divexact(n1,Integer(n2));
 #else
         Integer q;
@@ -163,7 +163,7 @@ namespace Givaro {
     Integer  Integer::divexact  (const Integer& n1, const int64_t& n2)
     {
         if (isZero(n1)) return Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return divexact(n1,Integer(n2));
 #else
         Integer q;
@@ -190,7 +190,7 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return *this;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return *this /= Integer(l);
 #else
         mpz_tdiv_q_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
@@ -204,7 +204,7 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return *this;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return *this /= Integer(l);
 #else
         int32_t sgn = Givaro::sign(l);
@@ -232,7 +232,7 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return *this / Integer(l);
 #else
         Integer res;
@@ -248,7 +248,7 @@ namespace Givaro {
         //    GivMathDivZero("[Integer::/]: division by zero");
         //  }
         if (isZero(*this)) return Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return *this / Integer(l);
 #else
         Integer res;
@@ -265,9 +265,21 @@ namespace Givaro {
         mpz_tdiv_qr( (mpz_ptr)&(q.gmp_rep), (mpz_ptr)&(r.gmp_rep),
                      (mpz_srcptr)&(a.gmp_rep), (mpz_srcptr)&(b.gmp_rep));
 
-        if (a<0 && r) {
-            subin(q,(int64_t)1) ;
-            r += b;
+        /* If r is negative (happen if a is negative, as sign(r) = sign(a)),
+         * we need to modify q and r to have a positive r.
+         */
+        if (r < 0)
+        {
+            if (b > 0)
+            {
+                subin (q, (uint64_t)1) ;
+                r += b;
+            }
+            else /* b is negative */
+            {
+                addin (q, (uint64_t)1) ;
+                r -= b;
+            }
         }
 
         return q;
@@ -275,7 +287,7 @@ namespace Givaro {
 
     Integer& Integer::divmod(Integer& q, int64_t & r, const Integer& a, const int64_t b)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         Integer res;
         divmod(q,res,a,Integer(b));
         r = (int64_t)res;
@@ -296,7 +308,7 @@ namespace Givaro {
 
     Integer& Integer::divmod(Integer& q, uint64_t & r, const Integer& a, const uint64_t b)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         Integer res;
         divmod(q,res,a,Integer(b));
         r = (uint64_t)res; // divmod already corrects when a<0
@@ -395,7 +407,7 @@ namespace Givaro {
 
     Integer& Integer::trem(Integer& r, const Integer &n , const uint64_t& d)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return trem(r,n,Integer(d));
 #else
         mpz_tdiv_r_ui((mpz_ptr)&(r.gmp_rep),
@@ -407,7 +419,7 @@ namespace Givaro {
 
     Integer& Integer::crem(Integer& r, const Integer &n , const uint64_t & d)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return crem(r,n,Integer(d));
 #else
         mpz_cdiv_r_ui((mpz_ptr)&(r.gmp_rep),
@@ -419,7 +431,7 @@ namespace Givaro {
 
     Integer& Integer::frem(Integer& r, const Integer &n , const uint64_t & d)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return frem(r,n,Integer(d));
 #else
         mpz_fdiv_r_ui((mpz_ptr)&(r.gmp_rep),
@@ -431,7 +443,7 @@ namespace Givaro {
 
     uint64_t Integer::trem(const Integer &n , const uint64_t& d)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (uint64_t)trem(n,Integer(d));
 #else
         return mpz_cdiv_ui( (mpz_srcptr)&(n.gmp_rep),
@@ -441,7 +453,7 @@ namespace Givaro {
 
     uint64_t Integer::crem(const Integer &n , const uint64_t & d)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (uint64_t)crem(n,Integer(d));
 #else
         return mpz_tdiv_ui( (mpz_srcptr)&(n.gmp_rep),
@@ -451,7 +463,7 @@ namespace Givaro {
 
     uint64_t Integer::frem(const Integer &n , const uint64_t & d)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (uint64_t)frem(n,Integer(d));
 #else
         return mpz_fdiv_ui( (mpz_srcptr)&(n.gmp_rep),

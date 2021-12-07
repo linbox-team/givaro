@@ -46,7 +46,7 @@ namespace Givaro {
 
     int32_t absCompare(const Integer &a, const uint64_t b)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return absCompare( a, Integer(b));
 #else
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), b);
@@ -55,7 +55,7 @@ namespace Givaro {
 
     int32_t absCompare(const Integer &a, const uint32_t b)
     {
-#if GMP_LIMB_BITS == 32
+#if __GIVARO_SIZEOF_LONG == 4
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), b);
 #else
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t)b);
@@ -64,7 +64,7 @@ namespace Givaro {
 
     int32_t absCompare(const Integer &a, const int64_t b)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return absCompare( a, Integer(b));
 #else
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t) std::abs(b));
@@ -73,7 +73,7 @@ namespace Givaro {
 
     int32_t absCompare(const Integer &a, const int32_t b)
     {
-#if GMP_LIMB_BITS == 32
+#if __GIVARO_SIZEOF_LONG == 4
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), std::abs(b));
 #else
         return mpz_cmpabs_ui( (mpz_srcptr)&(a.gmp_rep), (uint64_t) std::abs(b));
@@ -103,7 +103,7 @@ namespace Givaro {
 
     int32_t Integer::operator != (const uint32_t l) const
     {
-#if GMP_LIMB_BITS == 32
+#if __GIVARO_SIZEOF_LONG == 4
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) != 0;
 #else
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) != 0;
@@ -112,7 +112,7 @@ namespace Givaro {
 
     int32_t Integer::operator != (const int64_t l) const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return this->operator != (Integer(l));
 #else
         return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) != 0;
@@ -121,7 +121,7 @@ namespace Givaro {
 
     int32_t Integer::operator != (const uint64_t l) const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return this->operator != (Integer(l));
 #else
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) != 0;
@@ -249,7 +249,7 @@ namespace Givaro {
 
     int32_t Integer::operator > (const uint32_t l) const
     {
-#if GMP_LIMB_BITS == 32
+#if __GIVARO_SIZEOF_LONG == 4
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
 #else
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) > 0;
@@ -258,7 +258,7 @@ namespace Givaro {
 
     int32_t Integer::operator > (const int64_t l) const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG == 8
         return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) > 0;
 #else
         return this->operator > (Integer(l));
@@ -267,7 +267,7 @@ namespace Givaro {
 
     int32_t Integer::operator > (const uint64_t l) const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG == 8
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) > 0;
 #else
         return this->operator > (Integer(l));
@@ -323,7 +323,7 @@ namespace Givaro {
 
     int32_t Integer::operator < (const uint32_t l) const
     {
-#if GMP_LIMB_BITS == 32
+#if __GIVARO_SIZEOF_LONG == 4
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
 #else
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, (uint64_t) l) < 0;
@@ -332,7 +332,7 @@ namespace Givaro {
 
     int32_t Integer::operator < (const uint64_t l) const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG == 8
         return mpz_cmp_ui((mpz_srcptr)&gmp_rep, l) < 0;
 #else
         return this->operator < (Integer(l));
@@ -346,7 +346,7 @@ namespace Givaro {
 
     int32_t Integer::operator < (const int64_t l) const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG == 8
         return mpz_cmp_si((mpz_srcptr)&gmp_rep, l) < 0;
 #else
         return this->operator < (Integer(l));

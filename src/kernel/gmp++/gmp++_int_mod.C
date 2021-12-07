@@ -37,7 +37,7 @@ namespace Givaro {
     Integer& Integer::modin(Integer& res, const uint64_t n)
     {
         if (isZero(res)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return modin(res,Integer(n));
 #else
         mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
@@ -47,7 +47,7 @@ namespace Givaro {
     Integer& Integer::modin(Integer& res, const int64_t n)
     {
         if (isZero(res)) return res;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return modin(res,Integer(n));
 #else
         if (n>0)
@@ -68,7 +68,7 @@ namespace Givaro {
     Integer& Integer::mod(Integer& res, const Integer& n1, const int64_t n2)
     {
         if (isZero(n1)) return res = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mod(res,n1,Integer(n2));
 #else
         if (n2>0)
@@ -83,7 +83,7 @@ namespace Givaro {
     Integer& Integer::mod(Integer& res, const Integer& n1, const uint64_t n2)
     {
         if (isZero(n1)) return res = Integer::zero;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return mod(res,n1,Integer(n2));
 #else
         mpz_mod_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
@@ -103,7 +103,7 @@ namespace Givaro {
     Integer& Integer::operator %= (const uint64_t l)
     {
         if (isZero(*this)) return *this;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return *this %= Integer(l);
 #else
 #  ifdef __GIVARO_DEBUG
@@ -120,7 +120,7 @@ namespace Givaro {
 
     Integer& Integer::operator %= (const int64_t l)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return *this %= Integer(l);
 #else
         if (isZero(*this)) return *this;
@@ -152,7 +152,7 @@ namespace Givaro {
     int64_t Integer::operator % (const uint64_t l) const
     {
         if (isZero(*this)) return 0U;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (int64_t) ((*this) % Integer(l));
 #else
         bool isneg = (*this)<0 ;

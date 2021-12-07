@@ -30,7 +30,7 @@ namespace Givaro {
     Integer fact ( uint64_t l)
     {
         Integer Res ;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         // factorial too large if l > 2^32 anyway
         uint32_t i(l);
         GIVARO_ASSERT( (uint64_t)i == l, "Factorial too large");
@@ -392,19 +392,25 @@ namespace Givaro {
     }
     Integer::operator int64_t() const
     {
-#if GMP_LIMB_BITS != 64
-        Integer absThis = abs(*this);
-        int64_t r = static_cast<int64_t>(absThis.operator uint32_t());
-        absThis >>= 32;
-        r |= static_cast<int64_t>(absThis.operator uint32_t()) << 32;
-        return (*this < 0)? -r : r;
+#if __GIVARO_SIZEOF_LONG < 8
+        uint64_t u64 = this->operator uint64_t();
+        /* The following lines are adapted from the file mpz/get_si.c of GMP
+         * source code.
+         */
+        auto sgn = this->sign();
+        if (sgn > 0)
+            return u64 & INT64_MAX;
+        else if (sgn < 0)
+            return -1 - (int64_t) ((u64 -1) & INT64_MAX);
+        else
+            return 0;
 #else
         return mpz_get_si ( (mpz_srcptr)&gmp_rep);
 #endif
     }
     Integer::operator uint64_t() const
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         Integer absThis = abs(*this);
         uint64_t r = static_cast<uint64_t>(absThis.operator uint32_t());
         absThis >>= 32;

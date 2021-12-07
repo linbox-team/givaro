@@ -34,7 +34,7 @@ namespace Givaro {
     {
         if (isZero(n)) return res;
         if (isZero(res)) return res = n;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return addin(res,Integer(n));
 #else
         int32_t sgn = Givaro::sign(n);
@@ -47,7 +47,7 @@ namespace Givaro {
     {
         if (isZero(n)) return res;
         if (isZero(res)) return res = n;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return addin(res,Integer(n));
 #else
         mpz_add_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&res.gmp_rep, n);
@@ -66,7 +66,7 @@ namespace Givaro {
     {
         if (isZero(n1)) return res = n2;
         if (isZero(n2)) return res = n1;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return add(res,n1,Integer(n2));
 #else
         int32_t sgn = Givaro::sign(n2);
@@ -79,7 +79,7 @@ namespace Givaro {
     {
         if (isZero(n1)) return res = n2;
         if (isZero(n2)) return res = n1;
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return add(res,n1,Integer(n2));
 #else
         mpz_add_ui( (mpz_ptr)&res.gmp_rep, (mpz_srcptr)&n1.gmp_rep, n2);
@@ -101,7 +101,7 @@ namespace Givaro {
     {
         if (l==0) return *this;
         if (isZero(*this)) return logcpy(Integer(l));
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (*this) += Integer(l);
 #else
         mpz_add_ui( (mpz_ptr)&(gmp_rep), (mpz_ptr)&gmp_rep, l);
@@ -113,7 +113,7 @@ namespace Givaro {
     {
         if (l==0) return *this;
         if (isZero(*this)) return logcpy(Integer(l));
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (*this) += Integer(l);
 #else
         int32_t sgn = Givaro::sign(l);
@@ -137,7 +137,7 @@ namespace Givaro {
     {
         if (l==0) return *this;
         if (isZero(*this)) return Integer(l);
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (*this) + Integer(l);
 #else
         Integer res;
@@ -150,7 +150,7 @@ namespace Givaro {
     {
         if (l==0) return *this;
         if (isZero(*this)) return Integer(l);
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         return (*this) + Integer(l);
 #else
         Integer res;

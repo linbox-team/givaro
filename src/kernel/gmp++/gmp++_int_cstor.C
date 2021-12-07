@@ -54,7 +54,7 @@ namespace Givaro {
     //-----------------------------Integer(int64_t n)
     Integer::Integer(int64_t n)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         // 64 bits is less than 20 digits
         char * tmp = new char[23];
         sprintf(tmp,"%lld",n);
@@ -68,7 +68,7 @@ namespace Givaro {
     //-----------------------------Integer(uint64_t n)
     Integer::Integer(uint64_t n)
     {
-#if GMP_LIMB_BITS != 64
+#if __GIVARO_SIZEOF_LONG < 8
         // 64 bits is less than 20 digits
         char * tmp = new char[23];
         sprintf(tmp,"%llu",n);

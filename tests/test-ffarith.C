@@ -171,7 +171,10 @@ int main(int argc, char ** argv)
     TEST_LAST_PRIME(GFqDom<int32_t>, GFpmmax);
         // int64_t maxCardinality would require 96GB
         // and about 960 CPU seconds ...
-    TEST_SPECIFIC(GFqDom<int64_t>, GFLLpXXL, 67108859); // already 1.5 GB
+
+    // CP: disabled as it makes the testsuite fails on machine with <1.5GB.
+    //     see https://github.com/linbox-team/givaro/issues/194
+    // TEST_SPECIFIC(GFqDom<int64_t>, GFLLpXXL, 67108859); // already 1.5 GB
 
     // Zech log finite field with 256 elements
     // and prescribed 1 + x +x^3 +x^4 +x^8 irreducible polynomial

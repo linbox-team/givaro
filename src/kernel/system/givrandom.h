@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <14 May 19 11:13:59 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <10 Dec 21 13:22:09 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givrandom.h
@@ -29,6 +29,7 @@ extern "C" {
 
 #define _GIVRAN_MULTIPLYER_ 950706376_ui64
 #define _GIVRAN_MODULO_     2147483647_ui64
+#define _GIVRAN_HALFMOD_    1073741824_ui64
 
 namespace Givaro {
 
@@ -74,6 +75,11 @@ namespace Givaro {
                                       (int64_t)_GIVRAN_MULTIPLYER_
                                       * (int64_t)_seed
                                       % (int64_t)_GIVRAN_MODULO_ );
+        }
+
+        bool brand() const
+        {
+            return !(this->operator()() & _GIVRAN_HALFMOD_);
         }
 
         template<class XXX> XXX& operator() (XXX& x) const

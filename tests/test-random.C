@@ -12,13 +12,14 @@
  */
 
 #include <iostream>
+#include <givaro/givrandom.h>
 #include <givaro/givinteger.h>
 
 using namespace Givaro;
 using std::cout ; using std::endl;
 
 //! tests <code>ret= .func(arg,arg);</code> ...
-int test1()
+int test1(size_t nbiters)
 {
     Integer toto  ;
     toto.seeding((long unsigned int)0);
@@ -48,7 +49,7 @@ int test1()
 #ifdef __GIVARO_DEBUG
     cout << "random...............OK" << endl;
 #endif
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.random_between(un,autre);
         //cout << tata << endl;
         if (tata < un || tata >= autre) {
@@ -65,7 +66,7 @@ int test1()
     unsigned long grands = 300 ;
     //std::vector<int> T(1<<petits) ;
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.random_between(trois,petits);
         //cout << tata << endl;
         //T[tata] += 1 ;
@@ -79,7 +80,7 @@ int test1()
     cout << "random_between_exp...OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.random_exact(petits);
         if ( tata.bitsize() != petits ) {
             //        cout << tata << endl;
@@ -91,7 +92,7 @@ int test1()
     cout << "random_exact_exp.....OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.random_exact(autre);
         //        cout << tata << endl;
         if ( tata.bitsize() != autre.bitsize() ){
@@ -103,7 +104,7 @@ int test1()
     cout << "random_exact.........OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.random_lessthan_2exp(grands);
         if ( tata.bitsize() > grands ) {
             //        cout << tata << endl;
@@ -115,7 +116,7 @@ int test1()
     cout << "random_lessthan_2exp.....OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.random_lessthan(large);
         //        cout << tata << endl;
         if ( tata.bitsize() > large.bitsize() ){
@@ -127,7 +128,7 @@ int test1()
     cout << "random_lessthan.........OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.nonzerorandom(petits);
         if (tata == 0 || tata >= 1<<petits) {
             //        cout << tata << endl;
@@ -139,7 +140,7 @@ int test1()
     cout << "nonzerorandom_exp....OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = toto.nonzerorandom(autre);
         if (tata == 0 || tata >= autre) {
             cout << tata << endl;
@@ -156,11 +157,11 @@ int test1()
 }
 
 //! tests \verbatim ret= ::func(arg,arg); \endverbatim
-int test2()
+int test2(size_t nbiters)
 {
     Integer un(26);
     Integer autre(511);
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = Integer::random_between(un,autre);
         //cout << tata << endl;
         if (tata < un || tata >= autre) {
@@ -176,7 +177,7 @@ int test2()
     unsigned long petits = 6 ;
     //std::vector<int> T(1<<petits) ;
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = Integer::random_between(trois,petits);
         //cout << tata << endl;
         //T[tata] += 1 ;
@@ -190,7 +191,7 @@ int test2()
     cout << "random_between_exp...OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = Integer::random_exact(petits);
         if ( tata.bitsize() != petits ) {
             //        cout << tata << endl;
@@ -202,7 +203,7 @@ int test2()
     cout << "random_exact_exp.....OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = Integer::random_exact(autre);
         //        cout << tata << endl;
         if ( tata.bitsize() != autre.bitsize() ){
@@ -214,7 +215,7 @@ int test2()
     cout << "random_exact.........OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = Integer::nonzerorandom(petits);
         if (tata == 0 || tata >= 1<<petits) {
             //        cout << tata << endl;
@@ -226,7 +227,7 @@ int test2()
     cout << "nonzerorandom_exp....OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer tata = Integer::nonzerorandom(autre);
         if (tata == 0 || tata >= autre) {
             //        cout << tata << endl;
@@ -243,12 +244,12 @@ int test2()
 }
 
 //! tests \verbatim ::func(ret,arg,arg); \endverbatim
-int test3()
+int test3(size_t nbiters)
 {
     Integer un(26);
     Integer autre(511);
     Integer tata ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::random_between(tata,un,autre);
         //cout << tata << endl;
         if (tata < un || tata >= autre) {
@@ -264,7 +265,7 @@ int test3()
     unsigned long petits = 6 ;
     //std::vector<int> T(1<<petits) ;
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::random_between(tata,trois,petits);
         //cout << tata << endl;
         //T[tata] += 1 ;
@@ -278,7 +279,7 @@ int test3()
     cout << "random_between_exp...OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::random_exact(tata,petits);
         if ( tata.bitsize() != petits ) {
             //        cout << tata << endl;
@@ -290,7 +291,7 @@ int test3()
     cout << "random_exact_exp.....OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::random_exact(tata,autre);
         //        cout << tata << endl;
         if ( tata.bitsize() != autre.bitsize() ){
@@ -302,7 +303,7 @@ int test3()
     cout << "random_exact.........OK" << endl;
 #endif
     const Integer tutu(autre);
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::random_exact(tata,tutu);
         //        cout << tata << endl;
         if ( tata.bitsize() != tutu.bitsize() ){
@@ -314,7 +315,7 @@ int test3()
     cout << "random_exact.........OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::nonzerorandom(tata,petits);
         if (tata == 0 || tata >= 1<<petits) {
             //        cout << tata << endl;
@@ -326,7 +327,7 @@ int test3()
     cout << "nonzerorandom_exp....OK" << endl;
 #endif
 
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::nonzerorandom(tata,autre);
         if (tata == 0 || tata >= autre) {
             //        cout << tata << endl;
@@ -343,13 +344,13 @@ int test3()
 }
 
 //! test possibly <0 random numbers
-int test4()
+int test4(size_t nbiters)
 {
     Integer un(26);
     Integer autre(511);
     Integer tata ;
     int count = 0 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         if (Integer::RandBool()) Integer::negin(un) ;
         if (Integer::RandBool()) Integer::negin(autre) ;
         if (un>autre) std::swap(un,autre); // un < autre
@@ -374,7 +375,7 @@ int test4()
     //std::vector<int> T(1<<petits) ;
 
     count = 0 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::random_exact<false>(tata,petits);
         if (tata<0) ++count ;
         if ( tata.bitsize() != petits) {
@@ -393,7 +394,7 @@ int test4()
 #endif
 
     count = 0 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::random_exact<false>(tata,autre);
         //        cout << tata << endl;
         if (tata<0) ++count ;
@@ -412,7 +413,7 @@ int test4()
 #endif
 
     count = 0 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::nonzerorandom<false>(tata,petits);
         if (tata<0) count ++ ;
         if (tata == 0 || tata >= 1<<petits) {
@@ -433,7 +434,7 @@ int test4()
 
 
     count = 0 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         Integer::nonzerorandom<false>(tata,autre);
         if (tata<0) ++ count ;
         if (tata == 0 || tata >= autre || (-tata) >= autre) {
@@ -455,7 +456,7 @@ int test4()
 }
 
 //! tests standard interface
-int test5()
+int test5(size_t nbiters)
 {
     Integer tata = 0 ;
     size_t count = 0 ;
@@ -465,7 +466,7 @@ int test5()
     Integer toto(15615486);
 #endif
     unsigned long l = 5 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         tata = Integer::random<false>() ;
         if (tata<0) ++ count ;
         if (tata.bitsize() > 8*sizeof(mp_limb_t)) {
@@ -479,7 +480,7 @@ int test5()
         cout << "random() failed" << endl;
         return -1  ;
     }
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         tata = Integer::random() ;
         if (tata<0 || tata.bitsize() > 8*sizeof(mp_limb_t)) {
             //cout << tata << endl;
@@ -497,7 +498,7 @@ int test5()
 #endif
 
     count = 0 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         tata = Integer::random<false>(l) ;
         if (tata<0) ++ count ;
         if (tata.bitsize() > l) {
@@ -511,7 +512,7 @@ int test5()
         cout << "random() failed" << endl;
         return -1  ;
     }
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         tata = Integer::random(l) ;
         if (tata<0 || tata.bitsize() > l) {
             // cout << tata << endl;
@@ -529,7 +530,7 @@ int test5()
 #endif
 
     count = 0 ;
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         tata = Integer::random<false>(toto) ;
         if (tata<0) ++ count ;
         if (tata>toto || tata < -toto) {
@@ -543,7 +544,7 @@ int test5()
         cout << "random failed" << endl;
         return -1  ;
     }
-    for (size_t i = 0 ; i < 5000 ; ++i) {
+    for (size_t i = 0 ; i < nbiters ; ++i) {
         tata = Integer::random(toto) ;
         if (tata<0 || tata>toto) {
             //cout << tata << endl;
@@ -563,6 +564,20 @@ int test5()
 
 }
 
+int brandtest(uint64_t seed, size_t nbiters) {
+    GivRandom generator(seed);
+    size_t res[2]; res[0]= res[1] = 0;
+
+    for (size_t i = 0 ; i < nbiters ; ++i) {
+        ++res[generator.brand()];
+    }
+
+
+    std::clog << "brand: " << res[0] << '/' << res[1] << " .......OK" << endl;
+
+    return 0;
+}
+
 #include <givaro/modular.h>
 #include <givaro/montgomery.h>
 #include <givaro/modular-ruint.h>
@@ -577,7 +592,7 @@ int modtest(Field& F, uint64_t seed) {
     F.init(a);F.init(b);F.init(c); F.init(d);
 
     gen.random(a);
-    //    gen(b);
+    gen(b);
 
     F.random(gen, c);
 
@@ -586,32 +601,37 @@ int modtest(Field& F, uint64_t seed) {
 }
 
 
-int main()
+
+int main(int argc, char ** argv)
 {
+    const uint64_t seed(argc>1?atoi(argv[1]):BaseTimer::seed());
+    const uint64_t nbiters(argc>2?atoi(argv[2]):5000);
+    std::clog << "seed: " << seed << ", iters: " << nbiters << std::endl;
+
 #ifdef __GIVARO_DEBUG
     std::cout << "T1" << std::endl;
-    if (test1()) return -1;
+    if (test1(nbiters)) return -1;
     std::cout << "T2" << std::endl;
-    if (test2()) return -1;
+    if (test2(nbiters)) return -1;
     std::cout << "T3" << std::endl;
-    if (test3()) return -1;
+    if (test3(nbiters)) return -1;
     std::cout << "T4" << std::endl;
-    if (test4()) return -1;
+    if (test4(nbiters)) return -1;
     std::cout << "T5" << std::endl;
-    if (test5()) return -1;
+    if (test5(nbiters)) return -1;
 #else
-    if (test1()) return -1;
-    if (test2()) return -1;
-    if (test3()) return -1;
-    if (test4()) return -1;
-    if (test5()) return -1;
+    if (test1(nbiters)) return -1;
+    if (test2(nbiters)) return -1;
+    if (test3(nbiters)) return -1;
+    if (test4(nbiters)) return -1;
+    if (test5(nbiters)) return -1;
 #endif
 
     /* check seeding */
     Integer toto, tata ;
-    Integer::seeding(3);
+    Integer::seeding(seed);
     toto = Integer::random();
-    Integer::seeding(3);
+    Integer::seeding(seed);
     tata = Integer::random();
     if (toto != tata) return -1 ;
 
@@ -623,29 +643,30 @@ int main()
     // cout << "seed : " << seed << endl;
     int pass=0;
 
-    { Modular<double> F1(11); pass += modtest(F1,3); }
-    { Modular<float> F1(11); pass += modtest(F1,3); }
-    { Modular<uint64_t> F1(11); pass += modtest(F1,3); }
-    { Modular<uint32_t> F1(11); pass += modtest(F1,3); }
-    { Modular<int64_t> F1(11); pass += modtest(F1,3); }
-    { Modular<int32_t> F1(11); pass += modtest(F1,3); }
-    { Modular<uint16_t> F1(11); pass += modtest(F1,3); }
-    { Modular<int16_t> F1(11); pass += modtest(F1,3); }
-    { Modular<int8_t> F1(11); pass += modtest(F1,3); }
-    { Modular<uint8_t> F1(11); pass += modtest(F1,3); }
-    { Modular<Log16> F1(11); pass += modtest(F1,3); }
-    { Montgomery<int32_t> F1(11); pass += modtest(F1,3); }
-    { Montgomery<RecInt::ruint128> F1(11); pass += modtest(F1,3); }
-    // { Modular<RecInt::rint128> F1(11); pass += modtest(F1,3); }
-    { Modular<RecInt::ruint128> F1(11); pass += modtest(F1,3); }
-    { Modular<Integer> F1(11); pass += modtest(F1,3); }
-    { Modular<Integer> F1(11); pass += modtest(F1,3); }
-    { ModularBalanced<double> F1(11); pass += modtest(F1,3); }
-    { ModularBalanced<float> F1(11); pass += modtest(F1,3); }
-    { ModularBalanced<int64_t> F1(11); pass += modtest(F1,3); }
-    { ModularBalanced<int32_t> F1(11); pass += modtest(F1,3); }
-    { Modular<Integer> F1(11); pass += modtest(F1,3); }
-    { Modular<Integer> F1(11); pass += modtest(F1,3); }
+    { Modular<double> F1(11); pass += modtest(F1,seed); }
+    { Modular<float> F1(11); pass += modtest(F1,seed); }
+    { Modular<uint64_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<uint32_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<int64_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<int32_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<uint16_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<int16_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<int8_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<uint8_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<Log16> F1(11); pass += modtest(F1,seed); }
+    { Montgomery<int32_t> F1(11); pass += modtest(F1,seed); }
+    { Montgomery<RecInt::ruint128> F1(11); pass += modtest(F1,seed); }
+    // { Modular<RecInt::rint128> F1(11); pass += modtest(F1,seed); }
+    { Modular<RecInt::ruint128> F1(11); pass += modtest(F1,seed); }
+    { Modular<Integer> F1(11); pass += modtest(F1,seed); }
+    { Modular<Integer> F1(11); pass += modtest(F1,seed); }
+    { ModularBalanced<double> F1(11); pass += modtest(F1,seed); }
+    { ModularBalanced<float> F1(11); pass += modtest(F1,seed); }
+    { ModularBalanced<int64_t> F1(11); pass += modtest(F1,seed); }
+    { ModularBalanced<int32_t> F1(11); pass += modtest(F1,seed); }
+    { Modular<Integer> F1(11); pass += modtest(F1,seed); }
+    { Modular<Integer> F1(11); pass += modtest(F1,seed); }
+    { pass += brandtest(seed,nbiters); }
 
 
     return pass ;

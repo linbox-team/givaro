@@ -71,11 +71,11 @@ namespace Givaro {
 
     //! dom_power
     template<class D, class TT>
-    TT& dom_power(TT& res, const TT& n, long l, const D& F)
+    TT& dom_power(TT& res, const TT& n, uint64_t l, const D& F)
     {
         if (l == 0) return F.assign(res,F.one) ;
 
-        unsigned long p = (unsigned long) l ;
+        uint64_t p = l;
         bool is_assg = false ;
 
         TT puiss; F.init(puiss); F.assign(puiss,n) ;

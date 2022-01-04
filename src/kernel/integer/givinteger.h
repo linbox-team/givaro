@@ -197,14 +197,14 @@ namespace Givaro {
             return invin(u,b);
         }
 
-        bool ratrecon(Rep& num, Rep& den, const Rep& f, const Rep& m, 
-                      const Rep& numbound, 
+        bool ratrecon(Rep& num, Rep& den, const Rep& f, const Rep& m,
+                      const Rep& numbound,
                       bool forcereduce = true, bool recurs = true) const ;
         bool RationalReconstruction(Rep&, Rep&, const Rep&, const Rep&) const;
-        bool RationalReconstruction(Rep&, Rep&, 
-                                    const Rep&, const Rep&, const Rep&, 
+        bool RationalReconstruction(Rep&, Rep&,
+                                    const Rep&, const Rep&, const Rep&,
                                     bool = true, bool = true) const ;
-        bool RationalReconstruction(Rep&, Rep&, const Rep&, const Rep&, 
+        bool RationalReconstruction(Rep&, Rep&, const Rep&, const Rep&,
                                     const Rep&, const Rep&) const;
         // - return n^l
         Rep& pow(Rep& r, const Rep& n, const int64_t l) const
@@ -281,7 +281,9 @@ namespace Givaro {
          */
         inline  bool isDivisor (const Element& a, const Element& b) const
         {
-            Element r; return ::Givaro::isZero(mod(r,a,b));
+            Element r;
+            if (::Givaro::isZero(b)) return ::Givaro::isZero(a);
+            return ::Givaro::isZero(mod(r,a,b));
         }
 
         Element& abs(Element& x, const Element& a) const {
@@ -416,9 +418,9 @@ namespace Givaro {
 //                                 const Integer& f, const Integer& m,
 //                                 const Integer& k,
 //                                 bool forcereduce, bool recursive );
-//     bool ratrecon(Integer& num, Integer& den, 
-//                   const Integer& f, const Integer& m, 
-//                   const Integer& k, 
+//     bool ratrecon(Integer& num, Integer& den,
+//                   const Integer& f, const Integer& m,
+//                   const Integer& k,
 //                   bool forcereduce = true, bool recurs = true );
 
 } // Givaro

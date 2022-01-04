@@ -186,6 +186,16 @@ namespace Givaro {
         int areEqual ( const Rep& P, const Rep& Q ) const;
         int areNEqual( const Rep& P, const Rep& Q ) const;
 
+        /** @brief isDivisor (a, b)
+         *  Tests if Q | P (that is if P mod Q == 0).
+         */
+        bool isDivisor (const Rep& P, const Element& Q) const
+        {
+            Element R; init(R);
+            if (isZero(Q)) return isZero(P);
+            return isZero(mod(R,P,Q));
+        }
+
         // -- Returns the leading coefficients
         Type_t& leadcoef(Type_t& c, const Rep& P) const;
 

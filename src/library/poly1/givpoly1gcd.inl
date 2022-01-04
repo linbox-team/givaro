@@ -76,19 +76,19 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::gcd ( Rep& F, Rep& S0, Rep& T0, const Rep& A, const Rep& B) const
     {
-        Type_t r0, r1, tt;
-        Rep G;
+        Type_t r0, r1, tt; _domain.init(r0);_domain.init(r1);_domain.init(tt);
+        Rep G; init(G);
         Degree degF, degG;
         degree(degF,A); degree(degG,B);
         if ((degF < 0) || (degG == 0)) {
-            _domain.inv( tt, leadcoef(r0,B)); assign(T0, Degree(0), tt);
-            init(S0, 0);
+            _domain.inv( tt, leadcoef(r0,B)); assign(T0, tt);
+            assign(S0, zero);
             assign(F, B);
             return mulin(F,tt);
         }
         if ((degG < 0) || (degF == 0)) {
-            _domain.inv( tt, leadcoef(r0,A)); assign(S0, Degree(0), tt);
-            init(T0, 0);
+            _domain.inv( tt, leadcoef(r0,A)); assign(S0, tt);
+            assign(T0, zero);
             assign(F, A);
             return mulin(F,tt);
         }
@@ -110,8 +110,10 @@ namespace Givaro {
         divin(G,r1);
 
         Rep S1,R1,T1,Q,TMP, TMP2;
+        init(S1);init(R1);init(T1);init(Q);init(TMP);init(TMP2);
 
-        _domain.inv(tt,r0); assign(S0, Degree(0), tt);
+
+        _domain.inv(tt,r0); assign(S0, tt);
         assign(S1,zero);
         assign(T0,zero);
         _domain.inv(tt,r1); assign(T1, Degree(0), tt);

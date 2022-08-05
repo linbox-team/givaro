@@ -169,6 +169,7 @@ examples/Matrix/Makefile
 tests/Makefile
 docs/Makefile
 givaro.pc
+$DOXYGEN_CONFIG_FILES
 ])
 AC_CONFIG_FILES([givaro-config],[chmod +x givaro-config])
 AC_OUTPUT

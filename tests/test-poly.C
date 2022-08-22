@@ -60,6 +60,26 @@ int main(int argc, char ** argv) {
             std::cerr, P) << "\n or ", Q) << "\n does not divide ", R1) << std::endl;
     }
 
+        // Testing modular inverses
+    PD.invmod(R1, P, Q);
+    PD.modin( PD.mul(R2, R1, P), Q);
+    success &= PD.isOne(R2);
+    if (! success) {
+        std::cerr << "Error: " << seed << std::endl;
+        PD.write(PD.write(PD.write(PD.write(
+            std::cerr, R1) << " * ", P) << " is ", R2) << " mod ", Q) << std::endl;
+    }
+
+    PD.invmodunit(R1, P, Q);
+    PD.modin( PD.mul(R2, R1, P), Q);
+    success &= (PD.degree(R2) <= 0);
+    if (! success) {
+        std::cerr << "Error: " << seed << std::endl;
+        PD.write(PD.write(PD.write(PD.write(
+            std::cerr, R1) << " * ", P) << " is ", R2) << " mod ", Q) << std::endl;
+    }
+
+
     return (! success);
 }
 

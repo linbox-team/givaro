@@ -194,8 +194,6 @@ namespace Givaro {
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodunit ( Rep& S0, const Rep& A, const Rep& B) const
     {
         //     std::cerr << "BEG invmodunit of " << typeid(*this).name() << std::endl;
-
-        Type_t r0, r1, tt;
         Rep F, G;
         Degree degF, degG;
         degree(degF,A); degree(degG,B);

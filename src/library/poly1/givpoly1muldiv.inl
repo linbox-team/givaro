@@ -153,6 +153,59 @@ namespace Givaro {
 
 namespace Givaro {
 
+
+    template <class Domain>
+    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modpowxin ( Rep& A, const Degree& l) const
+    {
+        A.resize(l.value());
+        return setdegree(A); // A mod X^l
+    }
+
+
+    template <class Domain>
+    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modpowx ( Rep& Am, const Rep& A, const Degree& l) const
+    {
+        assign(Am, A);
+        return modpowxin(Am, l); // A mod X^l
+    }
+
+
+
+    template <class Domain>
+    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::newtoninviter ( Rep& G, Rep& S, Rep& Am, const Rep& A, const Degree& i) const
+    {
+            // TODO: implement fast low sqr and fast low maxpyin
+        sqr(S, G);			// G^2
+        modpowxin(S, i);	// mod X^i
+        addin(G, G);		// 2G
+        modpowx(Am, A, i);	// A mod X^i
+        maxpyin(G, Am, S);	// 2G-AG^2
+        return modpowxin(G, i);
+    }
+
+
+    template <class Domain>
+    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodpowx ( Rep& G, const Rep& A, const Degree& l) const
+    {
+			// Precondition A is invertible
+//         write(std::clog << "A:=", A) << ';' << std::endl;
+        Rep S, Am; init(S); init(Am); 
+        S.reserve(l.value()); Am.reserve(l.value());
+
+        assign(G, one);
+        getdomain().inv(G[0],A[0]); // Precondition A is invertible
+
+        for(Degree i(2); i<l; i<<=1) {
+            newtoninviter(G, S, Am, A, i); // 2G-AG^2 mod X^i
+        }
+
+        return newtoninviter(G, S, Am, A, l); // 2G-AG^2 mod X^l
+    }
+
+
+
+
+
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& R, const Type_t& u) const
     {
@@ -198,8 +251,33 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::div(Rep& Q, const Rep& A, const Rep& B) const
     {
-        Rep R;
-        return divmod(Q,R,A,B);
+//         Rep R;
+//         return divmod(Q,R,A,B);
+
+        Degree degB; degree(degB, B);
+#ifdef __GIVARO_DEBUG
+        if (degB == Degree::deginfty)
+            GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
+#endif
+        Degree degA; degree(degA, A);
+        if (degA == Degree::deginfty) {
+            return assign(Q, zero);
+        }
+        if (degB == 0) // cste
+        {
+            return div(Q, A, B[0]);
+        }
+        if (degA < degB) {
+            return assign(Q, A);
+        }
+
+        Rep T, S; init(T); init(S);
+        reverse(T, B); 
+        invmodpowx(S, T, degA-degB+1);
+        reverse(T, A);
+        mul(Q, S, T);
+        modpowxin(Q, degA-degB+1);
+        return reversein(Q);
     }
 
     template <class Domain>

@@ -319,7 +319,6 @@ namespace Givaro {
         Rep& pdiv( Rep& q, Type_t& m, const Rep& a, const Rep& b ) const;
         Rep& pdiv( Rep& q, const Rep& a, const Rep& b ) const;
 
-
         // -- gcd D = gcd(P,Q) = P*U+Q*V;
         // Rep& gcd ( Rep& D, const Rep& P, const Rep& Q) const;
         Rep& gcd ( Rep& D, const Rep& P, const Rep& Q) const;
@@ -329,6 +328,18 @@ namespace Givaro {
         Rep& invmod ( Rep& U, const Rep& P, const Rep& Q) const;
         // -- modular inverse of P : U P = e + V Q where e is of degree 0
         Rep& invmodunit ( Rep& U, const Rep& P, const Rep& Q) const;
+
+
+        // -- specializations mod X^l
+        	// 		A <-- A mod X^l
+        Rep& modpowxin ( Rep& A, const Degree& l) const;
+        	// 		Am <-- A mod X^l
+        Rep& modpowx ( Rep& Am, const Rep& A, const Degree& l) const;
+        // 		G <-- U, s. t. U*A = 1 mod X^l
+        Rep& invmodpowx ( Rep& G, const Rep& A, const Degree& l) const;
+            // 		G <-- 2G-AG^2 mod X^l
+            // 		S and Am are temp. variables for Newton-Raphson iteration
+        Rep& newtoninviter ( Rep& G, Rep& S, Rep& Am, const Rep& A, const Degree& i) const;
 
         // -- rational reconstruction
         // -- Builds N and D such that P * D = N mod M and degree(N) <= dk

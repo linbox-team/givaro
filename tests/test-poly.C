@@ -80,6 +80,16 @@ int main(int argc, char ** argv) {
     }
 
 
+    PD.invmodpowx(R1, P, Degree(degmax) );
+    PD.modpowxin( PD.mul(R2, R1, P), Degree(degmax));
+    success &= (PD.degree(R2) <= 0);
+    if (! success) {
+        std::cerr << "Error: " << seed << std::endl;
+        PD.write(PD.write(PD.write(
+            std::cerr << '(', R1) << ") * (", P) << ") =", R2) << " mod X^" << degmax << std::endl;
+    }
+
+
     return (! success);
 }
 

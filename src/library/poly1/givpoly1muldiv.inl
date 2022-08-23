@@ -52,26 +52,6 @@ namespace Givaro {
         return assign(R,tmp);
     }
 
-#if 0
-    template <class Domain>
-    Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul( Rep& R, const Rep& P, const Rep& Q ) const
-    {
-        size_t sR = R.size();
-        size_t sP = P.size();
-        size_t sQ = Q.size();
-        if ((sQ ==0) || (sP ==0)) { R.resize(0); return R; }
-        if (sR != sP+sQ-1) R.resize((size_t)sR = sP+sQ-1);
-
-        size_t i,j;
-        for (i=0; i<sR; ++i) _domain.assign(R[i], _domain.zero);
-        for (i=0; i<sP; ++i)
-            if (! _domain.isZero(P[i]))
-                for (j=0; j<sQ; ++j)
-                    _domain.axpy(R[i+j], P[i], Q[j], R[i+j]);
-        return setdegree(R);
-    }
-#endif
-
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqr( Rep& R, const Rep& P) const
     {
@@ -200,10 +180,6 @@ namespace Givaro {
         return newtoninviter(G, S, Am, A, l); // 2G-AG^2 mod X^l
     }
 
-
-
-
-
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& R, const Type_t& u) const
     {
@@ -266,14 +242,26 @@ namespace Givaro {
             return div(Q, A, B[0]);
         }
 
+            // Fast division: via multiplications
+            // A = B Q + R, thus degQ = degA-degB
+            // Thus X^a A = (X^b B)(X^q Q) + X^(q+1) (X^{q-1} R)
+            // Thus rev(A) = rev(B) rev(Q) + X^(q+1) rev(R)
+            // Thus rev(Q) = rev(A) rev(B)^{-1} mod X^(q+1)
+            // Thus let degX = q+1 = a-b+1 = degA-degB+1
+        Degree degX(degA); degX -= degB; ++degX;
+
         Rep T, S; init(T); init(S);
         reverse(T, B);
-        invmodpowx(S, T, degA-degB+1);
+        invmodpowx(S, T, degX); 	// rev(B)^{-1} mod X^l
+
         reverse(T, A);
-        Q.resize( (degA-degB).value()+1 );
-        mul(Q, Q.begin(), Q.end(),
+
+        Q.resize(degX.value());		// deg(Q) = l - 1
+
+        mul(Q, Q.begin(), Q.end(),	// rev(Q) = rev(A) rev(B)^{-1} mod X^l
             S, S.begin(), S.end(),
             T, T.begin(), T.end());
+
         return reversein(Q);
     }
 
@@ -383,11 +371,11 @@ namespace Givaro {
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mod(Rep& R, const Rep& A, const Rep& B) const
     {
         Rep Q;
-        //   write(std::cerr, A) << " = (";
-        //   write(std::cerr, B) << ") * (";
+// write(std::cerr, A) << " - (";
+// write(std::cerr, B) << ") * (";
         divmod(Q,R,A,B);
-        //   write(std::cerr, Q) << ") + (";
-        //   write(std::cerr, R) << ");" << std::endl;
+// write(std::cerr, Q) << ") + (";
+// write(std::cerr, R) << ") mod " << characteristic() << ';' << std::endl;
         return R;
     }
 

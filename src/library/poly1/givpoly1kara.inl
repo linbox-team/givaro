@@ -243,6 +243,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqrrec( Rep& R, const RepIterator Rbeg, const RepIterator Rend, const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, const Type_t& two) const
     {
+            // PRECONDITION: R can hold the product
         // Initialize R to zero
         for(RepIterator ri=Rbeg; ri!= Rend; ++ri) _domain.assign(*ri,_domain.zero);
 
@@ -280,6 +281,7 @@ namespace Givaro {
                                                                                 const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                                                                                 const Type_t& two) const {
 
+            // PRECONDITION: R can hold the product
         _domain.mul(*Rbeg, *Pbeg, *Pbeg);
 
         RepIterator rit(Rbeg);

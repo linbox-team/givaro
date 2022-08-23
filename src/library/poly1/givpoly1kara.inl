@@ -105,6 +105,11 @@ namespace Givaro {
         const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
         const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend )
         const {
+//         std::clog << "---- BEGIN STD  MUL ----"
+//                   << ' ' << (Rend-Rbeg)
+//                   << ' ' << (Pend-Pbeg)
+//                   << ' ' << (Qend-Qbeg)
+//                   << std::endl;
 
         if (Rbeg == Rend) return R;
         if (Pbeg == Pend) return assign(R, zero);
@@ -126,6 +131,7 @@ namespace Givaro {
             if (! _domain.isZero(*ai))
                 for(ri=rig,bi=Qbeg; (bi!=Qend) && (ri!=Rend);++bi,++ri)
                     _domain.axpyin(*ri,*ai,*bi);
+//         std::clog << "---- *END* STD  MUL ----" << std::endl;
         return R;
     }
 
@@ -144,19 +150,38 @@ namespace Givaro {
         const size_t half = std::min(halfP, halfQ);
         const size_t halfR = std::min(half<<1, sR);
 
+
+//         std::clog << "---- BEGIN KARA MUL ----"
+//                   << ' ' << (Rend-Rbeg)
+//                   << ' ' << (Pend-Pbeg)
+//                   << ' ' << (Qend-Qbeg)
+//                   << std::endl;
+
+//         std::clog << "halfP: " << halfP << std::endl;
+//         std::clog << "halfQ: " << halfQ << std::endl;
+//         std::clog << "half : " << half << std::endl;
+//         std::clog << "halfR: " << halfR << std::endl;
+
+
         const RepConstIterator Pmid=Pbeg+(ssize_t)half;		// cut P in halves
         const RepConstIterator Qmid=Qbeg+(ssize_t)half;		// cut Q in halves
         const RepIterator Rmid=Rbeg+(ssize_t)halfR;			// cut R in halves
 
+//         std::clog << "---- PlQl ----" << std::endl;
         mul(R, Rbeg, Rmid,				// Recursive dynamic choice
             P, Pbeg, Pmid,
             Q, Qbeg, Qmid);				// PlQl in first storage part of R
 
 
+//         std::clog << "---- PhQh ----" << std::endl;
         if (half < sR) {	// Need other terms
             const size_t highs = (Pend-Pmid)+(Qend-Qmid)-1; // to compute PhQh
             const size_t rrems = (Rend-Rmid);				// Remaining R
             const size_t midts = std::min(highs,sR-half);		// Req. Mid terms
+
+//             std::clog << "highs: " << highs << std::endl;
+//             std::clog << "rrems: " << rrems << std::endl;
+//             std::clog << "midts: " << midts << std::endl;
 
 			Rep PHQH;
             if (rrems < midts) {	// Need room for PhQh
@@ -186,6 +211,7 @@ namespace Givaro {
             subin(QHQL, QHQL.begin(), Q, Qbeg, Qmid);	// Qh - Ql
             setdegree(QHQL);
 
+//             std::clog << "---- midt ----" << std::endl;
             Rep M; M.resize(midts);
             mul(M, M.begin(), M.end(),			// Recursive dynamic choice
                 PHPL, PHPL.begin(), PHPL.end(),
@@ -209,6 +235,7 @@ namespace Givaro {
             for( ; (mi != M.end()) && (ri != Rend); ++ri, ++mi) _domain.subin(*ri, *mi);
         }
 
+//         std::clog << "---- *END* KARA MUL ----" << std::endl;
         return R;
     }
 
@@ -226,14 +253,14 @@ namespace Givaro {
         const RepConstIterator Pmid=Pbeg+(ssize_t)half;  // cut P in halves
         const RepIterator Rmid=Rbeg+(ssize_t)halfR;	// cut R in halves
 
-        sqr(R, Rbeg, Rmid-1,			// Recursive dynamic choice
-            P, Pbeg, Pmid);				// Pl^2 in first storage part of R
+        sqr(R, Rbeg, Rmid-1,	// Recursive dynamic choice
+            P, Pbeg, Pmid);		// Pl^2 in first storage part of R
 
-        sqr(R, Rmid, Rend,				// Recursive dynamic choice
-            P, Pmid, Pend);				// Ph^2 in second storage part of R
+        sqr(R, Rmid, Rend,		// Recursive dynamic choice
+            P, Pmid, Pend);		// Ph^2 in second storage part of R
 
         Rep M(P.size());
-        mul(M, M.begin(), M.end(),                  // Recursive dynamic choice
+        mul(M, M.begin(), M.end(),	// Recursive dynamic choice
             P, Pbeg, Pmid,
             P, Pmid, Pend);
         setdegree(M);

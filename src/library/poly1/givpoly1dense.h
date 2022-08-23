@@ -21,7 +21,6 @@
 #include "givaro/givindeter.h"
 #include "givaro/givinteger.h"
 #include "givaro/givrandom.h"
-#include "givaro/givindeter.h"
 
 #ifndef __GIV_STANDARD_VECTOR
 #include <vector>

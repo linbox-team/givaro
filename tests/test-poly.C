@@ -65,7 +65,6 @@ int main(int argc, char ** argv) {
     } else 
         std::clog << "[is Div] : " << GIV_PASSED_MSG << std::endl;
 
-
         // Testing modular inverses
     PD.invmod(R1, P, Q);
     PD.modin( PD.mul(R2, R1, P), Q);
@@ -87,7 +86,6 @@ int main(int argc, char ** argv) {
             std::cerr, R1) << " * ", P) << " is ", R2) << " mod ", Q) << std::endl;
     } else 
         std::clog << "[UMdInv] : " << GIV_PASSED_MSG << std::endl;
-
 
 
     PD.invmodpowx(R1, P, Degree(degmax) );

@@ -187,7 +187,7 @@ namespace Givaro {
     {
 			// Precondition A is invertible
 //         write(std::clog << "A:=", A) << ';' << std::endl;
-        Rep S, Am; init(S); init(Am); 
+        Rep S, Am; init(S); init(Am);
         S.reserve(l.value()); Am.reserve(l.value());
 
         assign(G, one);
@@ -258,40 +258,30 @@ namespace Givaro {
             GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
 #endif
         Degree degA; degree(degA, A);
-        if (degA == Degree::deginfty) {
+        if ( degA < degB ) {
             return assign(Q, zero);
         }
         if (degB == 0) // cste
         {
             return div(Q, A, B[0]);
         }
-        if (degA < degB) {
-            return assign(Q, A);
-        }
-
-        
 
         Rep T, S; init(T); init(S);
-        reverse(T, B); 
+        reverse(T, B);
         invmodpowx(S, T, degA-degB+1);
         reverse(T, A);
-//         mul(Q, S, T);
-//         modpowxin(Q, degA-degB+1);
-
         Q.resize( (degA-degB).value()+1 );
         mul(Q, Q.begin(), Q.end(),
             S, S.begin(), S.end(),
             T, T.begin(), T.end());
-        
-        
         return reversein(Q);
     }
 
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divin(Rep& Q, const Rep& A) const
     {
-        Rep R, B;
-        divmod(B,R,Q,A);
+        Rep B;
+        div(B,Q,A);
         return assign(Q,B);
     }
 
@@ -350,14 +340,6 @@ namespace Givaro {
         return R;
     }
 
-#if 0
-    template <class Domain>
-    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& R, const Rep& A) const
-    {
-        Rep tR; assign(tR,R);
-        return mod(R,tR,A);
-    }
-#endif
 
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::modin(Rep& A, const Rep& B) const
@@ -415,129 +397,16 @@ namespace Givaro {
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmod( Rep& Q, Rep& R, const Rep& A,  const Rep& B) const
     // returns Q such that A = B Q + R
     {
-        //     std::cerr << "BEG divmod of " << typeid(*this).name() << std::endl;
-        //     std::cerr << "BEG with _domain " << typeid(_domain).name() << std::endl;
-        Degree degB;
-        degree(degB, B);
-#ifdef __GIVARO_DEBUG
-        if (degB == Degree::deginfty)
-            GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
-#endif
-        Degree degA; degree(degA, A);
-        if (degA == Degree::deginfty) {
-            assign(R, zero);
-            return assign(Q, zero);
-        }
-        if (degB == 0) // cste
-        {
-            assign(R, zero);
-            return div(Q, A, B[0]);
-        }
-        //   write(std::cerr, A) << " of degA " << degA << std::endl;
-        //   write(std::cerr, B) << " of degB " << degB << std::endl;
-
-
-        // JGD 15.12.1999 :
-        //   if (degA ==0)
-        //   {
-        //     assign(R, zero);
-        //     return assign(Q, zero);
-        //   }
-        if (degB > degA) {
-            assign(R, A);
-            return assign(Q, zero);
-        }
-
-        long degQuo = value(degA-degB);
-        long degRem = value(degA);
-        Q.resize((size_t)degQuo+1);
-
-        assign(R,A);
-        // write(std::cerr << "A:=", A) << "; # of degA " << degA << std::endl;
-        // write(std::cerr << "B:=", B) << "; # of degB " << degB << std::endl;
-
-        for (long i=degQuo; i>=0; --i)
-        {
-            // == ld X^ (degRem-degQ)
-            _domain.div(Q[(size_t)i], R[(size_t)degRem], B[(size_t)degB.value()]);
-            // _domain.write(std::cerr << "Q[" << i << "]:=", Q[i]) << ';' << std::endl;
-            //  std::cerr << "degB: " << degB << std::endl;
-            for (long j=0; degB>j; ++j) { // rem <- rem - ld*x^(degRem-degB)*B
-                _domain.maxpyin(R[(size_t)(j+i)], Q[(size_t)i], B[(size_t)j]);
-            }
-            _domain.assign(R[(size_t)degRem],_domain.zero) ;
-            --degRem;
-            // write(std::cerr << "inR:=", R) << ';' << std::endl;
-        }
-        // write(std::cerr << "Q:=", Q) << "; # of degQ " << degQuo << std::endl;
-        // write(std::cerr << "R:=", R) << "; # of degR " << degRem << std::endl;
-        R.resize((size_t)degRem+1);
-        setdegree(R);
-        //     std::cerr << "END divmod of " << typeid(*this).name() << std::endl;
-        return setdegree(Q);
+        div(Q,A,B);
+        return maxpy(R,Q,B,A); // R <-- A - Q * B
     }
 
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::divmodin( Rep& Q, Rep& R, const Rep& B) const
-    // returns Q such that A = B Q + R
+    // returns Q such that R = B Q + newR
     {
-        //     std::cerr << "BEG divmod of " << typeid(*this).name() << std::endl;
-        //     std::cerr << "BEG with _domain " << typeid(_domain).name() << std::endl;
-        Degree degB; degree(degB, B);
-#ifdef __GIVARO_DEBUG
-        if (degB == Degree::deginfty)
-            GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::div]"));
-#endif
-        Degree degA; degree(degA, R);
-        if (degA == Degree::deginfty) {
-            assign(R, zero);
-            return assign(Q, zero);
-        }
-        if (degB == 0) // cste
-        {
-            div(Q, R, B[0]);
-            assign(R, zero);
-            return Q;
-        }
-        //   write(std::cerr, A) << " of degA " << degA << std::endl;
-        //   write(std::cerr, B) << " of degB " << degB << std::endl;
-
-
-        // JGD 15.12.1999 :
-        //   if (degA ==0)
-        //   {
-        //     assign(R, zero);
-        //     return assign(Q, zero);
-        //   }
-        if (degB > degA) {
-            return assign(Q, zero);
-        }
-
-        long degQuo = value(degA-degB);
-        long degRem = value(degA);
-        Q.resize((size_t)degQuo+1);
-
-        // write(std::cerr << "A:=", A) << "; # of degA " << degA << std::endl;
-        // write(std::cerr << "B:=", B) << "; # of degB " << degB << std::endl;
-
-        for (long i=degQuo; i>=0; --i)
-        {
-            // == ld X^ (degRem-degQ)
-            _domain.div(Q[(size_t)i], R[(size_t)degRem], B[(size_t)degB.value()]);
-            // _domain.write(std::cerr << "Q[" << i << "]:=", Q[i]) << ';' << std::endl;
-            //  std::cerr << "degB: " << degB << std::endl;
-            for (long j=0; degB>j; ++j) { // rem <- rem - ld*x^(degRem-degB)*B
-                _domain.maxpyin(R[(size_t)(j+i)], Q[(size_t)i], B[(size_t)j]);
-            }
-            _domain.assign(R[(size_t)degRem],_domain.zero) ; --degRem;
-            // write(std::cerr << "inR:=", R) << ';' << std::endl;
-        }
-        // write(std::cerr << "Q:=", Q) << "; # of degQ " << degQuo << std::endl;
-        // write(std::cerr << "R:=", R) << "; # of degR " << degRem << std::endl;
-        R.resize((size_t)degRem+1);
-        setdegree(R);
-        //     std::cerr << "END divmod of " << typeid(*this).name() << std::endl;
-        return setdegree(Q);
+        div(Q, R, B);
+        return maxpyin(R, Q, B);
     }
 
 

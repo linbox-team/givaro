@@ -163,8 +163,8 @@ namespace Givaro {
 
         Rep S1,R1,Q,TMP, TMP2;
 
-        assign(S0, 0, _domain.inv(tt,r0) );
-        assign(S1,zero);
+        assign(S0, Degree(0), _domain.inv(tt,r0) );
+        assign(S1, zero);
 
         while ( ! isZero(G) ) {
             //        write(std::cout << "F: ", F) << std::endl;

@@ -169,18 +169,16 @@ namespace Givaro {
         return modpowxin(Am, l); // A mod X^l
     }
 
-
-
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::newtoninviter ( Rep& G, Rep& S, Rep& Am, const Rep& A, const Degree& i) const
     {
-            // TODO: implement fast low sqr and fast low maxpyin
-        sqr(S, G);			// G^2
-        modpowxin(S, i);	// mod X^i
-        addin(G, G);		// 2G
-        modpowx(Am, A, i);	// A mod X^i
-        maxpyin(G, Am, S);	// 2G-AG^2
-        return modpowxin(G, i);
+        sqr(S, G);				// G^2
+        addin(G, G);			// 2G
+        Am.resize(i.value());	// Compute only up to deg i
+        mul(Am, Am.begin(), Am.end(),
+            A, A.begin(), A.begin() + std::min(i.value(), A.end()-A.begin()),
+            S, S.begin(), S.end());
+        return subin(G, Am);
     }
 
 
@@ -271,12 +269,21 @@ namespace Givaro {
             return assign(Q, A);
         }
 
+        
+
         Rep T, S; init(T); init(S);
         reverse(T, B); 
         invmodpowx(S, T, degA-degB+1);
         reverse(T, A);
-        mul(Q, S, T);
-        modpowxin(Q, degA-degB+1);
+//         mul(Q, S, T);
+//         modpowxin(Q, degA-degB+1);
+
+        Q.resize( (degA-degB).value()+1 );
+        mul(Q, Q.begin(), Q.end(),
+            S, S.begin(), S.end(),
+            T, T.begin(), T.end());
+        
+        
         return reversein(Q);
     }
 

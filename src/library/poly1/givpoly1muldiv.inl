@@ -152,13 +152,13 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::newtoninviter ( Rep& G, Rep& S, Rep& Am, const Rep& A, const Degree& i) const
     {
-        sqr(S, G);				// G^2
-        addin(G, G);			// 2G
-        Am.resize(i.value());	// Compute only up to deg i
-        mul(Am, Am.begin(), Am.end(),
+        sqr(S, G);						// G^2
+        addin(G, G);					// 2G
+        Am.resize(i.value());			// Compute only up to deg i
+        mul(Am, Am.begin(), Am.end(),	// A * G^2
             A, A.begin(), A.begin() + std::min(i.value(), A.end()-A.begin()),
             S, S.begin(), S.end());
-        return subin(G, Am);
+        return subin(G, Am);			// 2G-AG^2 = G(2-AG), N-R iteration
     }
 
 
@@ -166,18 +166,17 @@ namespace Givaro {
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodpowx ( Rep& G, const Rep& A, const Degree& l) const
     {
 			// Precondition A is invertible
-//         write(std::clog << "A:=", A) << ';' << std::endl;
         Rep S, Am; init(S); init(Am);
         S.reserve(l.value()); Am.reserve(l.value());
 
         assign(G, one);
-        getdomain().inv(G[0],A[0]); // Precondition A is invertible
+        getdomain().inv(G[0],A[0]);				// Precondition A is invertible
 
         for(Degree i(2); i<l; i<<=1) {
-            newtoninviter(G, S, Am, A, i); // 2G-AG^2 mod X^i
+            newtoninviter(G, S, Am, A, i);		// 2G-AG^2 mod X^i
         }
 
-        return newtoninviter(G, S, Am, A, l); // 2G-AG^2 mod X^l
+        return newtoninviter(G, S, Am, A, l);	// 2G-AG^2 mod X^l
     }
 
     template <class Domain>
@@ -252,7 +251,7 @@ namespace Givaro {
 
         Rep T, S; init(T); init(S);
         reverse(T, B);
-        invmodpowx(S, T, degX); 	// rev(B)^{-1} mod X^l
+        invmodpowx(S, T, degX);	// rev(B)^{-1} mod X^l
 
         reverse(T, A);
 

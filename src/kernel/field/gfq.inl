@@ -318,7 +318,7 @@ namespace Givaro {
     inline typename GFqDom<TT>::Rep&  GFqDom<TT>::div
     (Rep& r, const Rep a, const Rep b) const
     {
-	   	_GIVARO_GFQ_DIV(r, a, b, GFqDom<TT>::_qm1) ;
+		_GIVARO_GFQ_DIV(r, a, b, GFqDom<TT>::_qm1) ;
 		return r;
 	}
 
@@ -633,14 +633,14 @@ namespace Givaro {
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::reduce( Rep& r ) const {
         return r;
     }
-       
+
 
  //    template<typename TT>
 //     template<typename XXX>
 //     inline typename GFqDom<TT>::Element& GFqDom<TT>::init(Element& r, const XXX& value) const {
 //         return r = (Rep)_pol2log[ (UT)(value) ];
 //     }
-        
+
 
     template<typename TT>
     inline typename GFqDom<TT>::Rep& GFqDom<TT>::init( Rep& r, const double Residu ) const
@@ -711,14 +711,14 @@ namespace Givaro {
                  // a = p-b [p]
              tr = -tr;
              if (tr >= (int64_t)_q )
- 				tr = tr % (int64_t)_q ;
+				tr = tr % (int64_t)_q ;
              if (tr)
                  return r = (typename GFqDom<TT>::Rep) _pol2log[ (size_t)_q - (size_t)tr ];
              else
                  return r = zero;
          } else {
              if (tr >= (int64_t)_q )
- 				tr = tr % (int64_t)_q ;
+				tr = tr % (int64_t)_q ;
              return r = (Rep)_pol2log[ (size_t)tr ];
          }
      }
@@ -753,7 +753,7 @@ namespace Givaro {
      {
          uint64_t tr = Residu ;
          if (tr >= _q )
- 			tr =tr %  (uint64_t) _q ;
+			tr =tr %  (uint64_t) _q ;
          return r = (Rep)_pol2log[ (size_t)tr ];
      }
      template<typename TT>
@@ -809,8 +809,8 @@ namespace Givaro {
         return r = (uint32_t)_log2pol[ (UT)a] ;
     }
 
-    template<typename TT>
-    inline TT GFqDom<TT>::convert (const Rep a) const
+    template<typename Any>
+    inline typename GFqDom<Any>::TT GFqDom<Any>::convert (const Rep a) const
     {
         return (TT)_log2pol[ (UT)a] ;
     }
@@ -1106,7 +1106,7 @@ namespace Givaro {
         //   representation of both polynomials
     template<typename TT>
     template<typename Vector>
-    inline GFqDom<TT>::GFqDom(const UTT P, const UTT e, 
+    inline GFqDom<TT>::GFqDom(const UTT P, const UTT e,
                               const Vector& modPoly, const Vector& genPoly):
             zero(0)
         , one ((TT) power(P,e) - 1  )

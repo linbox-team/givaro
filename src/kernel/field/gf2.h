@@ -48,12 +48,21 @@ namespace Givaro
 		using Element = bool;
 		using BitVector = std::vector<bool>;
 		using BitReference = BitVector::reference;
-		
+
 		/** Random
 		*/
 		using RandIter = GIV_randIter<Self_t, bool>;
-		Element& random(const GivRandom& g, Element& e, const Residu_t& size=0) const 
-		    { return e = static_cast<bool>(g() & 1u); } 
+		BitReference random(const GivRandom& g, BitReference e, const Residu_t& size=0) const
+		    { return e = static_cast<bool>(g() & 1u); }
+
+		BitReference nonzerorandom(const GivRandom& g, BitReference e, const Residu_t& size=0) const
+		    { return e = true; }
+
+        Element& random(const GivRandom& g, Element& e, const Residu_t& size=0) const
+		    { return e = static_cast<bool>(g() & 1u); }
+
+		Element& nonzerorandom(const GivRandom& g, Element&  e, const Residu_t& size=0) const
+		    { return e = true; }
 
 		/** @name Object Management
 		*/
@@ -86,7 +95,7 @@ namespace Givaro
 		{
 			return *this;
 		}
-		
+
         /** Accessors
          */
 		inline Element minElement() const { return false; }
@@ -464,7 +473,7 @@ namespace Givaro
 		 */
 		Element& subin (Element& x, const Element& y) const;
 		BitReference subin (BitReference x, const Element& y) const;
-		
+
 		/** Inplace Multiplication.
 		 * x *= y
 		 * This function assumes both field base elements have already been

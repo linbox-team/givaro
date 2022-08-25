@@ -81,7 +81,7 @@ namespace Givaro {
 	typedef          Extension<BFT>                            Self_t;
 	typedef          BFT                                  BaseField_t;
 	typedef typename BFT::Element                           BFElement;
-	typedef typename Signed_Trait<BFElement>::unsigned_type  Residu_t;
+	typedef typename BFT::Residu_t                           Residu_t;
 
 	typedef          Poly1FactorDom< BFT, Dense >               Pol_t;
 	typedef typename Pol_t::Element                        PolElement;
@@ -140,7 +140,7 @@ namespace Givaro {
             , _pD( _bF, Y  )
             , _characteristic(  (Residu_t) bF.characteristic() )
             , _extension_order( (Residu_t)( ex ) )
-            , _exponent(        (Residu_t)(ex + (Residu_t)Exponent_Trait(bF)) )
+            , _exponent(        (Residu_t)(ex * (Residu_t)Exponent_Trait(bF)) )
             , _cardinality(     (Integer) pow( Integer(bF.cardinality()) , (uint64_t)(ex) ) )
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
@@ -160,7 +160,7 @@ namespace Givaro {
             , _irred( Irred )
             , _characteristic(  (Residu_t) _bF.characteristic() )
             , _extension_order( (Residu_t) _pD.degree(Irred).value() )
-            , _exponent(        (Residu_t)( _extension_order + (Residu_t)Exponent_Trait(_bF)) )
+            , _exponent(        (Residu_t)( _extension_order * (Residu_t)Exponent_Trait(_bF)) )
                 , _cardinality(     (Integer) pow( Integer(_bF.cardinality()) , (uint64_t)_extension_order ) )
             , zero(             (Element)(_pD.zero))
             , one (             (Element)(_pD.one))
@@ -390,6 +390,9 @@ namespace Givaro {
 	typedef GIV_ExtensionrandIter< Self_t, Integer >  RandIter;
 
 
+
+        // ----- Access to the modulus
+    Residu_t residu() const { return _bF.residu(); }
 
 	Integer &cardinality (Integer &c) const
             {

@@ -205,7 +205,7 @@ namespace Givaro {
     ////////////////////////////////////////////
     template<class Domain, class Tag, class RandomIterator >
     template<class Residue>
-    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, Residue MOD) const
+    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, Residue NUM) const
     {
 #ifdef INFLOOPDEBUG
         int no_inf_loop =(int) n.value()/2+5 ;
@@ -214,8 +214,8 @@ namespace Givaro {
         do {
             this->random( (RandomIterator&)_g, R, n); // must cast away const
             _domain.assign(R[(size_t)n.value()],_domain.one);
-            for(Residu_t a=0; a<MOD; ++a) {
-                _domain.assign(R[0],(Type_t)a);
+            for(Residu_t a=0; a<NUM; ++a) {
+                _domain.random(_g, R[0]);
                 if (is_irreducible(R))
                     return true;
             }
@@ -231,7 +231,7 @@ namespace Givaro {
 
     template<class Domain, class Tag, class RandomIterator >
     // template<>
-    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, bool MOD) const
+    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, bool tag) const
     {
 #ifdef INFLOOPDEBUG
         int no_inf_loop = n.value()/2+5 ;
@@ -255,7 +255,7 @@ namespace Givaro {
 
     template<class Domain, class Tag, class RandomIterator >
     template<class Residue>
-    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, Residue MOD, Element IXE) const
+    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, Residue NUM, Element IXE) const
     {
 #ifdef INFLOOPDEBUG
         int no_inf_loop = (int)n.value()/2+5 ;
@@ -263,8 +263,8 @@ namespace Givaro {
         do {
             this->random( (RandomIterator&)_g, R, n); // must cast away const
             _domain.assign(R[(size_t)n.value()],_domain.one);
-            for(Residu_t a=0; a<MOD; ++a) {
-                _domain.assign(R[0],(Element_t)a);
+            for(Residu_t a=0; a<NUM; ++a) {
+                _domain.random(_g, R[0]);
                 if (is_irreducible(R) && (is_prim_root(IXE,R) ))
                     return true;
             }
@@ -280,7 +280,7 @@ namespace Givaro {
 
     template<class Domain, class Tag, class RandomIterator >
     // template<>
-    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, bool MOD, Element IXE) const
+    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial (Element& R, Degree n, bool tag, Element IXE) const
     {
 #ifdef INFLOOPDEBUG
         int no_inf_loop = n.value()/2+5 ;
@@ -304,7 +304,7 @@ namespace Givaro {
 
     template<class Domain, class Tag, class RandomIterator >
     template<class Residue>
-    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial2 (Element& R, Degree n, Residue MOD, Element IXE) const
+    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial2 (Element& R, Degree n, Residue NUM, Element IXE) const
     {
 #ifdef INFLOOPDEBUG
         int no_inf_loop = n.value()/2+5 ;
@@ -312,8 +312,8 @@ namespace Givaro {
         do {
             this->random( (RandomIterator&)_g, R, n); // must cast away const
             _domain.assign(R[(size_t)n.value()],_domain.one);
-            for(Residu_t a=0; a<MOD; ++a) {
-                _domain.assign(R[0],(Element_t)a);
+            for(Residu_t a=0; a<NUM; ++a) {
+                _domain.random(_g, R[0]);
                 if (is_irreducible2(R) && (is_prim_root(IXE,R) ))
                     return true;
             }
@@ -329,7 +329,7 @@ namespace Givaro {
 
     template<class Domain, class Tag, class RandomIterator >
     // template<>
-    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial2 (Element& R, Degree n, bool MOD, Element IXE) const
+    inline bool Poly1FactorDom<Domain,Tag, RandomIterator>::find_irred_randomial2 (Element& R, Degree n, bool tag, Element IXE) const
     {
 #ifdef INFLOOPDEBUG
         int no_inf_loop = n.value()/2+5 ;

@@ -4,10 +4,11 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 
-// This is adapted from issues #203, #204 reported by dragomang87
+// Part of this is adapted from issues #203, #204 reported by dragomang87
 #include <iostream>
 #include <givaro/givpower.h>
 #include <givaro/modular.h>
+#include <givaro/gf2.h>
 #include <givaro/gfq.h>
 #include <givaro/extension.h>
 
@@ -80,10 +81,32 @@ bool TestIdentity(GivRandom& generator, const int MOD, const int expo) {
 }
 
 template<typename Field>
+bool TestExponent(const int seed, const Field& F, const int expo) {
+    using EFq = Extension< Field >;
+    EFq Ef(F, expo, 'X');
+    Extension< EFq > EEf( Ef, 5, 'Y');
+    EEf.write(std::clog << "Extension is: \n  ") << std::endl;
+
+    bool success( (int)EEf.exponent() == 5*expo*Exponent_Trait(F) );
+
+    if (! success) {
+        std::cerr << GIV_ERROR_MSG << seed << std::endl;
+        std::cerr << "Extensions of order " << Exponent_Trait(F) << '*'
+                  << expo << "*5 is "
+                  << EEf.exponent() << std::endl;
+    } else {
+        std::clog << "[ExtExp] : " << GIV_PASSED_MSG << std::endl;
+    }
+
+    return success;
+}
+
+template<typename Field>
 bool TestSignedness(GivRandom& generator, const int expo) {
     Field field(2,expo);
     typename Field::Element random;
     field.random(generator, random); // was segfaulting with unsigned
+    field.write(std::clog << "[FrcSgn] : " << GIV_PASSED_MSG) << std::endl;
     return true;
 }
 
@@ -99,9 +122,12 @@ int main(int argc, char ** argv)
     const int MOD = int (argc>2?atoi(argv[2]):7);
     const int expo = int (argc>3?atoi(argv[3]):5);
 
-    bool pass( TestIdentity<GFq<int64_t>>(generator, MOD, expo) );
-    pass &=  TestIdentity<Modular<double>>(generator, MOD, expo);
+    bool pass( TestExponent<GFq<>>(seed, GFq<>(MOD,3), expo) );
+    pass &= TestExponent< GF2 >(seed, GF2(), expo<<1);
+    pass &= TestExponent< GFq<> >(seed, GFq<>(2,7), expo<<1);
 
+    pass &= TestIdentity<GFq<int64_t>>(generator, MOD, expo);
+    pass &= TestIdentity<Modular<double>>(generator, MOD, expo);
 
     pass &=  TestSignedness<GFq<int64_t>>(generator,expo);
         // Uses a signed representation anyway

@@ -63,14 +63,9 @@ AS_IF([test x$WITH_DOC = xyes],[
     (dot -V) < /dev/null > /dev/null 2>&1 || res=no
     AC_MSG_RESULT([$res])
     AS_MKDIR_P([docs])
-    AS_IF([test $res = yes],
-    [
-    sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/Doxyfile.mod > docs/Doxyfile
-    sed 's/^HAVE_DOT.*/HAVE_DOT = YES/' "$srcdir"/docs/DoxyfileDev.mod > docs/DoxyfileDev
-    ],
-    [ cp "$srcdir"/docs/Doxyfile.mod docs/Doxyfile ;
-    cp "$srcdir"/docs/DoxyfileDev.mod docs/DoxyfileDev
-    ])
+    AS_IF([test $res = yes], [HAVE_DOT=YES], [HAVE_DOT=NO])
+    AC_SUBST([HAVE_DOT])
+    DOXYGEN_CONFIG_FILES="docs/Doxyfile docs/DoxyfileDev"
 
   ], [
   AS_IF([(doxygen --version) < /dev/null > /dev/null 2>&1],

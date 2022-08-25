@@ -54,7 +54,7 @@ namespace Givaro {
     template<typename Field>
 	int64_t Exponent_Trait(const Field& F)
 	{
-        return 1;
+        return 0; // unit is X^0
     }
 
 

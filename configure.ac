@@ -31,7 +31,6 @@ AC_PROG_CXX
 AM_PROG_AR
 
 # Libtool
-LT_INIT
 LT_PREREQ([2.4.2])
 LT_INIT
 

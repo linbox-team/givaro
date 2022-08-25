@@ -34,7 +34,10 @@ int main(int argc, char ** argv) {
     Polynomials::Element Q;
     PD.init(Q,Degree(7));
     F.init(Q[0],7);
-    F.init(Q[1],2); // Q is X^7+2X+7
+    if (MOD != 2)
+        F.init(Q[1],2); // Q is X^7+2X+7
+    else
+        F.init(Q[1],1); // Q is X^7+X+1
 
     typedef QuotientDom<Polynomials> QuotRing;
     QuotRing QD(PD, Q);
@@ -51,7 +54,7 @@ int main(int argc, char ** argv) {
     if (! success) {
         std::cerr << GIV_ERROR_MSG << seed << std::endl;
         PD.write(PD.write(std::cerr << "R1: ", R1) << " != ", R2) << std::endl;
-    } else 
+    } else
         std::clog << "[Expo  ] : " << GIV_PASSED_MSG << std::endl;
 
 
@@ -62,7 +65,7 @@ int main(int argc, char ** argv) {
         std::cerr << GIV_ERROR_MSG << seed << std::endl;
         PD.write(PD.write(PD.write(
             std::cerr, P) << "\n or ", Q) << "\n does not divide ", R1) << std::endl;
-    } else 
+    } else
         std::clog << "[is Div] : " << GIV_PASSED_MSG << std::endl;
 
         // Testing modular inverses
@@ -72,8 +75,9 @@ int main(int argc, char ** argv) {
     if (! success) {
         std::cerr << GIV_ERROR_MSG << seed << std::endl;
         PD.write(PD.write(PD.write(PD.write(
-            std::cerr, R1) << " * ", P) << " is ", R2) << " mod ", Q) << std::endl;
-    } else 
+            std::cerr << '(', R1) << ") * (", P) << ") is ", R2)
+                 << " mod ", Q) << std::endl;
+    } else
         std::clog << "[MdInv ] : " << GIV_PASSED_MSG << std::endl;
 
 
@@ -83,8 +87,9 @@ int main(int argc, char ** argv) {
     if (! success) {
         std::cerr << GIV_ERROR_MSG << seed << std::endl;
         PD.write(PD.write(PD.write(PD.write(
-            std::cerr, R1) << " * ", P) << " is ", R2) << " mod ", Q) << std::endl;
-    } else 
+            std::cerr << '(', R1) << ") * (", P) << ") is ", R2)
+                 << " mod ", Q) << std::endl;
+    } else
         std::clog << "[UMdInv] : " << GIV_PASSED_MSG << std::endl;
 
 
@@ -95,7 +100,7 @@ int main(int argc, char ** argv) {
         std::cerr << GIV_ERROR_MSG << seed << ':' << PD.degree(R2) << std::endl;
         PD.write(PD.write(PD.write(
             std::cerr << "Rem((", R1) << ") * (", P) << "),X^" << degmax << ",X) mod " << MOD << " = ", R2) << ';' << std::endl;
-    } else 
+    } else
         std::clog << "[MdInvX] : " << GIV_PASSED_MSG << std::endl;
 
 

@@ -364,11 +364,11 @@ namespace Givaro {
 
 	template<class RandIter> Element& random(RandIter& g, Element& r) const
             {
-	       	return _pD.random(g,r,Degree((int64_t)_exponent-1));
+	       	return _pD.random(g,r,Degree((int64_t)_extension_order-1));
             }
 	template<class RandIter> Element& random(RandIter& g, Element& r, int64_t s) const
             {
-	       	return _pD.random(g,r,(s>=_exponent?_exponent-1:s));
+	       	return _pD.random(g,r,(s>=_extension_order?_extension_order-1:s));
             }
 	template<class RandIter> Element& random(RandIter& g, Element& r, const Element& b) const
             {
@@ -376,11 +376,11 @@ namespace Givaro {
             }
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r) const
             {
-	       	return _pD.nonzerorandom(g,r,Degree((int64_t)_exponent-1));
+	       	return _pD.nonzerorandom(g,r,Degree((int64_t)_extension_order-1));
             }
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, int64_t s) const
             {
-	       	return _pD.nonzerorandom(g,r,(s>=_exponent?_exponent-1:s));
+	       	return _pD.nonzerorandom(g,r,(s>=_extension_order?_extension_order-1:s));
             }
 	template<class RandIter> Element& nonzerorandom(RandIter& g, Element& r, const Element& b) const
             {

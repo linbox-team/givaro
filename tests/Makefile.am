@@ -25,6 +25,7 @@ EXTRA_DIST =            \
 
 BASIC_TESTS =               \
 		test-regression     \
+		test-extension      \
 		test-random         \
 		test-ifactor        \
 		test-ffarith        \
@@ -103,6 +104,7 @@ TESTS = $(EXTRA_PROGRAMS)
 # Sources
 
 test_regression_SOURCES   = test-regression.C
+test_extension_SOURCES   = test-extension.C
 test_random_SOURCES   = test-random.C
 test_ifactor_SOURCES  = test-ifactor.C
 test_ffarith_SOURCES  = test-ffarith.C test-fieldarith.h

@@ -68,9 +68,9 @@ docs:
 endif
 
 EXTRA_DIST= \
-			Doxyfile.mod            \
-			DoxyfileDev.mod         \
-			mainpage.doxy \
+			Doxyfile.in    \
+			DoxyfileDev.in \
+			mainpage.doxy  \
 			givaro.html
 # \
 #			doc.doxy            \

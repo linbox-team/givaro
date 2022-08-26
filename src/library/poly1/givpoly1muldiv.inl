@@ -224,9 +224,6 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::div(Rep& Q, const Rep& A, const Rep& B) const
     {
-//         Rep R;
-//         return divmod(Q,R,A,B);
-
         Degree degB; degree(degB, B);
 #ifdef __GIVARO_DEBUG
         if (degB == Degree::deginfty)
@@ -249,7 +246,7 @@ namespace Givaro {
             // Thus let degX = q+1 = a-b+1 = degA-degB+1
         Degree degX(degA); degX -= degB; ++degX;
 
-        Rep T, S; init(T); init(S);
+        Rep T, S; init(T); init(S); S.reserve(degX.value()+1);
         reverse(T, B);
         invmodpowx(S, T, degX);	// rev(B)^{-1} mod X^l
 

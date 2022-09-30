@@ -21,13 +21,10 @@ namespace Givaro {
 #define SQR_THRESHOLD 50
 #endif
 
-#ifndef GIVMIN
-#define GIVMIN(a,b) ((a)<(b)?(a):(b))
-#endif
-
     // forces standard multiplication
     template <class Domain>
-    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul( Rep& R, const Rep& P, const Rep& Q ) const
+    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul(
+        Rep& R, const Rep& P, const Rep& Q ) const
     {
         const size_t sP = P.size();
         const size_t sQ = Q.size();
@@ -44,7 +41,8 @@ namespace Givaro {
 
     // forces FIRST recursive level with Karatsuba multiplication
     template <class Domain>
-    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Rep& R, const Rep& P, const Rep& Q ) const
+    inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul(
+        Rep& R, const Rep& P, const Rep& Q ) const
     {
         const size_t sP = P.size();
         const size_t sQ = Q.size();
@@ -63,10 +61,10 @@ namespace Givaro {
     // Multiplies between the iterator bounds.
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::mul(
-                                                                             Rep& R, const RepIterator Rbeg, const RepIterator Rend,
-                                                                             const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
-                                                                             const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const {
-
+        Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+        const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend)
+        const {
         if ( ( (Pend-Pbeg)> KARA_THRESHOLD ) &&
              ( (Qend-Qbeg)> KARA_THRESHOLD) )
             return karamul(R, Rbeg, Rend,
@@ -83,9 +81,9 @@ namespace Givaro {
     // Multiplies between the iterator bounds.
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqr(
-                                                                             Rep& R, const RepIterator Rbeg, const RepIterator Rend,
-                                                                             const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const {
-
+        Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend)
+        const {
         Type_t two; _domain.init(two);
         _domain.add(two, _domain.one, _domain.one);
 
@@ -100,22 +98,28 @@ namespace Givaro {
     }
 
 
-
-
     // Standard multiplication between iterator bounds
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::stdmul(
-                                                                                Rep& R, const RepIterator Rbeg, const RepIterator Rend,
-                                                                                const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
-                                                                                const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const {
+        Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+        const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend )
+        const {
+//         std::clog << "---- BEGIN STD  MUL ----"
+//                   << ' ' << (Rend-Rbeg)
+//                   << ' ' << (Pend-Pbeg)
+//                   << ' ' << (Qend-Qbeg)
+//                   << std::endl;
 
+        if (Rbeg == Rend) return R;
+        if (Pbeg == Pend) return assign(R, zero);
         RepConstIterator ai=Pbeg,bi=Qbeg;
         RepIterator ri=Rbeg, rig=Rbeg;
         if (_domain.isZero(*ai))
-            for(;bi!=Qend;++bi,++ri)
+            for(; (bi!=Qend) && (ri!=Rend);++bi,++ri)
                 _domain.assign(*ri,_domain.zero);
         else
-            for(;bi!=Qend;++bi,++ri)
+            for(; (bi!=Qend) && (ri!=Rend);++bi,++ri)
                 if (_domain.isZero(*bi))
                     _domain.assign(*ri, _domain.zero);
                 else
@@ -123,66 +127,115 @@ namespace Givaro {
 
         for(;ri!=Rend;++ri)
             _domain.assign(*ri,_domain.zero);
-        for(++ai,++rig;ai!=Pend;++ai,++rig)
+        for(++ai,++rig; (ai!=Pend) && (rig!=Rend);++ai,++rig)
             if (! _domain.isZero(*ai))
-                for(ri=rig,bi=Qbeg;bi!=Qend;++bi,++ri)
+                for(ri=rig,bi=Qbeg; (bi!=Qend) && (ri!=Rend);++bi,++ri)
                     _domain.axpyin(*ri,*ai,*bi);
+//         std::clog << "---- *END* STD  MUL ----" << std::endl;
         return R;
     }
+
 
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::karamul( Rep& R, const RepIterator Rbeg, const RepIterator Rend, const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const
     {
+        const size_t sR = (size_t)(Rend-Rbeg);
+        if (sR == 0) return R; // Nothing to compute
+
         // Initialize R to zero
         for(RepIterator ri=Rbeg; ri!= Rend; ++ri) _domain.assign(*ri,_domain.zero);
 
-
         const size_t halfP = (size_t) ((Pend-Pbeg)>>1);
         const size_t halfQ = (size_t) ((Qend-Qbeg)>>1);
-        const size_t half = GIVMIN(halfP, halfQ);
-        const size_t halfR = half<<1;
+        const size_t half = std::min(halfP, halfQ);
+        const size_t halfR = std::min(half<<1, sR);
+
+
+//         std::clog << "---- BEGIN KARA MUL ----"
+//                   << ' ' << (Rend-Rbeg)
+//                   << ' ' << (Pend-Pbeg)
+//                   << ' ' << (Qend-Qbeg)
+//                   << std::endl;
+
+//         std::clog << "halfP: " << halfP << std::endl;
+//         std::clog << "halfQ: " << halfQ << std::endl;
+//         std::clog << "half : " << half << std::endl;
+//         std::clog << "halfR: " << halfR << std::endl;
+
 
         const RepConstIterator Pmid=Pbeg+(ssize_t)half;		// cut P in halves
         const RepConstIterator Qmid=Qbeg+(ssize_t)half;		// cut Q in halves
         const RepIterator Rmid=Rbeg+(ssize_t)halfR;			// cut R in halves
 
-        mul(R, Rbeg, Rmid, 				// Recursive dynamic choice
+//         std::clog << "---- PlQl ----" << std::endl;
+        mul(R, Rbeg, Rmid,				// Recursive dynamic choice
             P, Pbeg, Pmid,
             Q, Qbeg, Qmid);				// PlQl in first storage part of R
 
-        mul(R, Rmid, Rend,				// Recursive dynamic choice
-            P, Pmid, Pend,
-            Q, Qmid, Qend);				// PhQh in second storage part of R
 
-        Rep PHPL;
-        for(RepConstIterator PHi=Pmid; PHi!=Pend; ++PHi)
-            PHPL.push_back(*PHi);
-        subin(PHPL, PHPL.begin(), P, Pbeg, Pmid);	// Ph - Pl
-        setdegree(PHPL);
+//         std::clog << "---- PhQh ----" << std::endl;
+        if (half < sR) {	// Need other terms
+            const size_t highs = (Pend-Pmid)+(Qend-Qmid)-1; // to compute PhQh
+            const size_t rrems = (Rend-Rmid);				// Remaining R
+            const size_t midts = std::min(highs,sR-half);		// Req. Mid terms
 
-        Rep QHQL;
-        for(RepConstIterator QHi=Qmid; QHi!=Qend; ++QHi)
-            QHQL.push_back(*QHi);
-        subin(QHQL, QHQL.begin(), Q, Qbeg, Qmid);	// Qh - Ql
-        setdegree(QHQL);
+//             std::clog << "highs: " << highs << std::endl;
+//             std::clog << "rrems: " << rrems << std::endl;
+//             std::clog << "midts: " << midts << std::endl;
 
-        Rep M;
-        mul(M, 					// Recursive dynamic choice
-            PHPL,
-            QHQL);					// (Ph-Pl)(Qh-Ql)
-        setdegree(M);
+			Rep PHQH;
+            if (rrems < midts) {	// Need room for PhQh
+                PHQH.resize(midts);
+                mul(PHQH, PHQH.begin(), PHQH.end(),	// Recursive dynamic choice
+                    P, Pmid, Pend,
+                    Q, Qmid, Qend);
 
-        subin(M, M.begin(), M.end(), R, Rbeg, Rmid);// -= PlQl
-        setdegree(M);
-
-        subin(M, M.begin(), M.end(), R, Rmid, Rend);// -= PhQh
-        setdegree(M);
+                RepConstIterator hi=PHQH.begin();
+                for(RepIterator ri=Rmid; (ri != Rend) && (hi != PHQH.end()) ; ++ri, ++hi)
+                    _domain.assign(*ri, *hi);
+            } else
+                mul(R, Rmid, Rend,	// Recursive dynamic choice
+                    P, Pmid, Pend,
+                    Q, Qmid, Qend);	// PhQh in second storage part of R
 
 
-        RepIterator ri=Rbeg+(ssize_t)half;
-        RepConstIterator mi=M.begin();		// update R with mid product
-        for( ; mi != M.end(); ++ri, ++mi) _domain.subin(*ri, *mi);
+            Rep PHPL;
+            for(RepConstIterator PHi=Pmid; PHi!=Pend; ++PHi)
+                PHPL.push_back(*PHi);
+            subin(PHPL, PHPL.begin(), P, Pbeg, Pmid);	// Ph - Pl
+            setdegree(PHPL);
 
+            Rep QHQL;
+            for(RepConstIterator QHi=Qmid; QHi!=Qend; ++QHi)
+                QHQL.push_back(*QHi);
+            subin(QHQL, QHQL.begin(), Q, Qbeg, Qmid);	// Qh - Ql
+            setdegree(QHQL);
+
+//             std::clog << "---- midt ----" << std::endl;
+            Rep M; M.resize(midts);
+            mul(M, M.begin(), M.end(),			// Recursive dynamic choice
+                PHPL, PHPL.begin(), PHPL.end(),
+                QHQL, QHQL.begin(), QHQL.end());// (Ph-Pl)(Qh-Ql)
+            setdegree(M);
+
+
+            subin(M, M.begin(), M.end(), R, Rbeg, Rmid);// -= PlQl
+            setdegree(M);
+
+            if (rrems < highs) {						// -= PhQh
+                subin(M, PHQH);
+            } else {
+                subin(M, M.begin(), M.end(), R, Rmid, Rend);
+            }
+
+            setdegree(M);
+
+            RepIterator ri=Rbeg+(ssize_t)half;
+            RepConstIterator mi=M.begin();		// update R with mid product
+            for( ; (mi != M.end()) && (ri != Rend); ++ri, ++mi) _domain.subin(*ri, *mi);
+        }
+
+//         std::clog << "---- *END* KARA MUL ----" << std::endl;
         return R;
     }
 
@@ -190,6 +243,7 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::sqrrec( Rep& R, const RepIterator Rbeg, const RepIterator Rend, const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend, const Type_t& two) const
     {
+            // PRECONDITION: R can hold the product
         // Initialize R to zero
         for(RepIterator ri=Rbeg; ri!= Rend; ++ri) _domain.assign(*ri,_domain.zero);
 
@@ -200,14 +254,14 @@ namespace Givaro {
         const RepConstIterator Pmid=Pbeg+(ssize_t)half;  // cut P in halves
         const RepIterator Rmid=Rbeg+(ssize_t)halfR;	// cut R in halves
 
-        sqr(R, Rbeg, Rmid-1, 			// Recursive dynamic choice
-            P, Pbeg, Pmid);				// Pl^2 in first storage part of R
+        sqr(R, Rbeg, Rmid-1,	// Recursive dynamic choice
+            P, Pbeg, Pmid);		// Pl^2 in first storage part of R
 
-        sqr(R, Rmid, Rend,				// Recursive dynamic choice
-            P, Pmid, Pend);				// Ph^2 in second storage part of R
+        sqr(R, Rmid, Rend,		// Recursive dynamic choice
+            P, Pmid, Pend);		// Ph^2 in second storage part of R
 
         Rep M(P.size());
-        mul(M, M.begin(), M.end(),                  // Recursive dynamic choice
+        mul(M, M.begin(), M.end(),	// Recursive dynamic choice
             P, Pbeg, Pmid,
             P, Pmid, Pend);
         setdegree(M);
@@ -227,6 +281,7 @@ namespace Givaro {
                                                                                 const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                                                                                 const Type_t& two) const {
 
+            // PRECONDITION: R can hold the product
         _domain.mul(*Rbeg, *Pbeg, *Pbeg);
 
         RepIterator rit(Rbeg);

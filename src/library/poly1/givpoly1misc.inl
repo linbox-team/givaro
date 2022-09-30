@@ -363,7 +363,6 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::reverse( Rep& P, const Rep& Q) const {
 
-        //     this->setDegree(Q);
         P.resize(Q.size());
         std::reverse_copy(Q.begin(), Q.end(), P.begin());
         this->setDegree(P);
@@ -375,7 +374,6 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::reversein( Rep& P) const
     {
-        this->setDegree(P);
         std::reverse(P.begin(), P.end());
         this->setDegree(P);
         return P;

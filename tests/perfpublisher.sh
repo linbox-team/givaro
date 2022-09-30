@@ -104,7 +104,7 @@ do
 		echo '[Executing]' $test
 		EXECUTED='yes'
 		EXECUTIONSTART=$($DATE +%s%3N)
-		EXECUTIONLOG=$(./$test  2>&1; echo 'Returned state: '$?)
+		EXECUTIONLOG=$(./$test 2>&1 | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"; echo 'Returned state: '$?)
 		EXECUTIONEND=$($DATE +%s%3N)
 		EXECUTIONTIME=$(($EXECUTIONEND - $EXECUTIONSTART))
 		EXECUTIONCHECK=$(echo $EXECUTIONLOG | grep -o '[^ ]*$')

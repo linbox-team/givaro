@@ -25,6 +25,7 @@ pkginclude_HEADERS=        \
 	givpoly1axpy.inl	   \
 	givpoly1gcd.inl		   \
 	givpoly1kara.inl	   \
+	givpoly1midmul.inl	   \
 	givpoly1cstor.inl	   \
 	givpoly1io.inl		   \
 	givpoly1misc.inl	   \

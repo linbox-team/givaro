@@ -12,6 +12,7 @@
 #include "givaro/givpoly1addsub.inl"
 #include "givaro/givpoly1muldiv.inl"
 #include "givaro/givpoly1kara.inl"
+#include "givaro/givpoly1midmul.inl"
 #include "givaro/givpoly1axpy.inl"
 #include "givaro/givpoly1io.inl"
 #include "givaro/givpoly1gcd.inl"

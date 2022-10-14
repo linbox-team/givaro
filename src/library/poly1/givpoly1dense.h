@@ -260,6 +260,8 @@ namespace Givaro {
         Rep& stdmul( Rep& R, const Rep& P, const Rep& Q) const;
         // Forces first level of Karatsuba multiplication algorithm
         Rep& karamul( Rep& R, const Rep& P, const Rep& Q) const;
+        // Forces standard middle product
+        Rep& stdmidmul( Rep& R, const Rep& P, const Rep& Q) const;
 
         // Compute truncated mul: only the coefficients inside
         // the degree interval, included
@@ -414,6 +416,11 @@ namespace Givaro {
         Rep& karamul( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
                       const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
                       const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend ) const;
+
+        // Middle product of P of size m+n-1 and Q of size n: MP(P,Q)=((PQ) quo X^(n-1)) mod X^m of size m
+        Rep& stdmidmul( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
+                        const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend,
+                        const Rep& Q, const RepConstIterator Qbeg, const RepConstIterator Qend) const;
 
         Rep& sqr( Rep& R, const RepIterator Rbeg, const RepIterator Rend,
                   const Rep& P, const RepConstIterator Pbeg, const RepConstIterator Pend) const;

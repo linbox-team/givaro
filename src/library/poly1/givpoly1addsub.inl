@@ -134,14 +134,12 @@ namespace Givaro {
         // PRECONDITION: P of larger degree than R
         size_t sP = (size_t)(Pend-Pbeg);
         size_t sR = R.size();
-        Rep tmp; tmp.resize(sP);
-        size_t i;
+        R.resize(sP);
+        typename Rep::iterator ri=R.begin(), Rend=ri+sR;
         typename Rep::const_iterator pi=Pbeg;
-        for (i=0; i<sR; ++i, ++pi) _domain.sub(tmp[i], R[i], *pi);
-        for (; pi != Pend; ++i, ++pi) _domain.neg(tmp[i], *pi);
-        setdegree(tmp);
-        R =tmp;
-        return R;
+        for (; ri!=Rend; ++ri, ++pi) _domain.subin(*ri, *pi);
+        for (; pi != Pend; ++ri, ++pi) _domain.neg(*ri, *pi);
+        return setdegree(R);
     }
 
     template <class Domain>

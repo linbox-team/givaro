@@ -104,7 +104,7 @@ do
 		echo '[Executing]' $test
 		EXECUTED='yes'
 		EXECUTIONSTART=$($DATE +%s%3N)
-		EXECUTIONLOG=$(./$test  2>&1; echo 'Returned state: '$?)
+		EXECUTIONLOG=$(./$test 2>&1 | sed "s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g"; echo 'Returned state: '$?)
 		EXECUTIONEND=$($DATE +%s%3N)
 		EXECUTIONTIME=$(($EXECUTIONEND - $EXECUTIONSTART))
 		EXECUTIONCHECK=$(echo $EXECUTIONLOG | grep -o '[^ ]*$')

@@ -152,11 +152,12 @@ namespace Givaro {
     template <class Domain>
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::newtoninviter ( Rep& G, Rep& S, Rep& Am, const Rep& A, const Degree& i) const
     {
+            // Precondition i>=0
         sqr(S, G);						// G^2
         addin(G, G);					// 2G
         Am.resize(i.value());			// Compute only up to deg i
         mul(Am, Am.begin(), Am.end(),	// A * G^2
-            A, A.begin(), A.begin() + std::min(i.value(), A.end()-A.begin()),
+            A, A.begin(), A.begin() + std::min(static_cast<std::ptrdiff_t>(i.value()), A.end()-A.begin()),
             S, S.begin(), S.end());
         return subin(G, Am);			// 2G-AG^2 = G(2-AG), N-R iteration
     }
@@ -166,6 +167,7 @@ namespace Givaro {
     inline typename Poly1Dom<Domain,Dense>::Rep& Poly1Dom<Domain,Dense>::invmodpowx ( Rep& G, const Rep& A, const Degree& l) const
     {
 			// Precondition A is invertible
+            // Precondition l>=0
         Rep S, Am; init(S); init(Am);
         S.reserve(l.value()); Am.reserve(l.value());
 

@@ -314,15 +314,13 @@ namespace Givaro {
 #ifdef __GIVARO_DEBUG
         if (isZero(P)) GivError::throw_error(GivMathDivZero("[Poly1Dom<D>::mod]"));
 #endif
-        if (_domain.isZero(u)) { return assign(P,R); }
         size_t sP =P.size();
         if (sP >1) {
             R.resize(1);
             _domain.assign(R[0], u);
             return R;
         }
-        R.resize(1);
-        _domain.mod(R[0],u,P[0]);
+        R.resize(0); // else deg(R)<deg(P)=0 implies R=0
         return R;
     }
 

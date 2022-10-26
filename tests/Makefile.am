@@ -37,6 +37,7 @@ BASIC_TESTS =               \
 		test-trunc          \
 		test-matrix         \
 		test-poly           \
+		test-midmul         \
 		test-crt            \
 		test-geom           \
 		test-integer        \
@@ -116,6 +117,7 @@ test_modsqroot_SOURCES= test-modsqroot.C
 test_brillhart_SOURCES= test-brillhart.C
 test_trunc_SOURCES    = test-trunc.C
 test_poly_SOURCES    = test-poly.C
+test_midmul_SOURCES    = test-midmul.C
 test_matrix_SOURCES    = test-matrix.C
 test_crt_SOURCES      = test-crt.C
 test_geom_SOURCES     = test-geom.C

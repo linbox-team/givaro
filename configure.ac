@@ -5,10 +5,9 @@
 # see the COPYRIGHT file for more details.
 #/
 
-AC_PREREQ([2.68])
+AC_PREREQ([2.71])
 
-AC_INIT([Givaro],[4.2.0],[http://github.com/linbox-team/givaro],[givaro],
-		[https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro])
+AC_INIT([Givaro],[4.2.1],[http://github.com/linbox-team/givaro],[givaro],[https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro])
 
 AC_CONFIG_MACRO_DIR([macros])
 AC_CONFIG_AUX_DIR([build-aux])
@@ -32,12 +31,9 @@ AC_PROG_CXX
 AM_PROG_AR
 
 # Libtool
-AC_PROG_LIBTOOL
 LT_PREREQ([2.4.2])
 LT_INIT
 
-# Look for headers
-AC_HEADER_STDC
 AC_CHECK_HEADERS([float.h limits.h stddef.h stdlib.h string.h sys/time.h stdint.h pthread.h])
 
 ###########################################
@@ -58,7 +54,7 @@ CXXFLAGS="${CXX11FLAGS} ${CXXFLAGS}"
 
 AS_ECHO([---------------------------------------])
 
-AC_INLINE # DON'T TOUCH
+AC_C_INLINE # DON'T TOUCH
 
 # Set OPTIM_FLAGS, DEBUG_FLAGS depending on compiler and command line arguments
 SET_FLAGS
@@ -83,7 +79,7 @@ AC_CHECK_SIZEOF(long long)
 AC_CHECK_SIZEOF(__int64_t)
 
 # Looking for int128
-AC_CHECK_TYPE([__int128_t], [AC_TRY_COMPILE([#include <type_traits>], [std::make_unsigned<__int128_t>::type y;],[AC_DEFINE(HAVE_INT128, 1, [Define that compiler allows int128_t types])])])
+AC_CHECK_TYPE([__int128_t], [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <type_traits>]], [[std::make_unsigned<__int128_t>::type y;]])],[AC_DEFINE(HAVE_INT128, 1, [Define that compiler allows int128_t types])],[])])
 
 
 # check endianness of the architecture

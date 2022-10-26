@@ -60,8 +60,8 @@
 // - zz: revision number
 #define GIVARO_MAJOR_VERSION    4
 #define GIVARO_MINOR_VERSION    2
-#define GIVARO_REVISION_VERSION 0
-#define GIVARO_VERSION          40200
+#define GIVARO_REVISION_VERSION 1
+#define GIVARO_VERSION          40201
 
 // ==========================================================================
 // -- Defines the basic integer arithmetics available on this machine

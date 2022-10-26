@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfq.h
-// Time-stamp: <29 May 20 16:27:47 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <25 Aug 22 14:28:13 Jean-Guillaume.Dumas@imag.fr>
 // date: 1999
 // version:
 // author: Jean-Guillaume.Dumas
@@ -33,17 +33,19 @@
 
 namespace Givaro {
 
-    template<class TT> class GFqDom;
+    template<class Size_store> class GFqDom;
 
         // Simplified alias
-    template<class TT=int64_t> using GFq=GFqDom<TT>;
+    template<class Size_store=int64_t> using GFq=GFqDom<Size_store>;
 
 
 
 //! class GFqDom
-template<class TT> class GFqDom {
+template<class Size_store> class GFqDom {
 protected:
-	typedef typename Signed_Trait<TT>::unsigned_type UTT;
+	typedef typename Signed_Trait<Size_store>::unsigned_type UTT;
+	typedef typename Signed_Trait<Size_store>::signed_type TT;
+		// Forces signed storage
 	typedef TT Rep;
 	typedef typename std::vector<UTT>::size_type  UT  ;
 public:

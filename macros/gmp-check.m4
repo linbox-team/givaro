@@ -18,9 +18,11 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	########## ./configure parameter
 	_ac_gmp_use=yes
 	AC_ARG_WITH(gmp, 
-		[AS_HELP_STRING([--with-gmp=<path>],[Path to the GMP library. If unspecified, that means the library is reachable 
-			 with the standard search path of the current compiler.
-		]) ],
+		[AC_HELP_STRING(
+			[--with-gmp=<path>], 
+			[Path to the GMP library. If unspecified, that means the library is reachable 
+			 with the standard search path of the current compiler.]
+		) ],
 		[ AS_CASE(["x$withval"],
 		    [x],    [GMP_HOME_PATH= ],
 		    [xyes], [GMP_HOME_PATH= ],
@@ -104,17 +106,20 @@ AC_DEFUN([GIV_CHECK_GMP], [
 	])
 
 	AC_MSG_CHECKING([whether gmp version is at least $min_gmp_release])
-	AC_RUN_IFELSE([AC_LANG_SOURCE([[ 
+	AC_TRY_RUN(
+		[ 
 			#include <cstddef>
 			#include <gmp.h>
 			int main () {
 				return (__GNU_MP_RELEASE < $min_gmp_release);
 			}
-		]])],[ AC_MSG_RESULT(yes)
-		],[ AC_MSG_RESULT(no)
+		],
+		[ AC_MSG_RESULT(yes)
+		],
+		[ AC_MSG_RESULT(no)
 		  AC_MSG_ERROR(your GMP is too old. GMP release >= $min_gmp_release needed)
-		  exit 1
-	],[])
+		  exit 1]
+	)
 	AC_LANG_POP([C++])
 	
 	AC_SUBST(GMP_CFLAGS)

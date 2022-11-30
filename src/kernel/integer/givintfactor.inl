@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <18 Jun 15 18:30:38 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <30 Nov 22 11:10:15 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 #ifndef __GIVARO_factorisation_INL
@@ -248,7 +248,8 @@ namespace Givaro {
     }
 
     template<class MyRandIter>
-    typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Pollard(const MyRandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
+    template<bool bounded>
+    typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Pollard_loop(const MyRandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
     {
         // average number of iterations < 13/8*sqrt( Pi*n/2)
         // Sometimes the factor isn't prime -- TO EXPLICIT
@@ -258,33 +259,28 @@ namespace Givaro {
         Rep m(zero), x, y, p(one), t;
         this->random(gen, y, n);
 
-        if (threshold) {
-            unsigned long c = 0;
-            while( this->isOne(g) && (++c < threshold)) {
-                if(  areEqual(p, addin(m,one)) ) {
-                    x=y;
-                    mulin(p,2);
-                }
-                Pollard_fctin(y,n);
-                this->gcd(g,sub(t,y,x),n);
+        unsigned long c = 0;
+        while( this->isOne(g) && (bounded? ++c < threshold : true)) {
+            if(  areEqual(p, addin(m,one)) ) {
+                x=y;
+                p<<=1;
             }
-            if ((g == n)&&(c<threshold)) // Failure with the initial value
-                Pollard(gen, g, n, threshold-c);
-        } else {
-            while(this->isOne(g)) {
-                if(  areEqual(p, addin(m,one)) ) {
-                    x=y;
-                    mulin(p,2);
-                }
-                Pollard_fctin(y,n);
-                this->gcd(g,sub(t,y,x),n);
-            }
-            if (g == n) // Failure with the initial value
-                Pollard(gen, g, n, 0);
+            Pollard_fctin(y,n);
+            this->gcd(g,sub(t,y,x),n);
         }
+        if ((g == n)&&(bounded?c<threshold:true)) // Failure with the initial value
+            Pollard_loop<bounded>(gen, g, n, (bounded?threshold-c:0));
         return g;
     }
 
+    template<class MyRandIter>
+    typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Pollard(const MyRandIter& gen, Rep& g, const Rep& n, const unsigned long threshold) const
+    {
+        if (threshold)
+            return Pollard_loop<true>(gen,g,n,threshold);
+        else
+            return Pollard_loop<false>(gen,g,n);
+    }
 
     // =================================================================== //
     // Elliptic curves routines
@@ -460,7 +456,8 @@ namespace Givaro {
     // TODO : make it generic in regards to DOMAINLIKENESS
     // ======================================================================== //
     template<class MyRandIter>
-    typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Lenstra(const MyRandIter& gen, Rep& g, const Rep& n, const Rep& B1, const unsigned long curves) const
+    template<bool bounded>
+    typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Lenstra_loop(const MyRandIter& gen, Rep& g, const Rep& n, unsigned long threshold, const Rep& B1, const unsigned long curves) const
     {
         if (n<3) return g=n;
         if ( isprime(n,5) ) return g=n;
@@ -519,8 +516,9 @@ namespace Givaro {
         Rep si(1000000000U);
 
         // Begins search with curves on primes up to B1
+        unsigned long c = 0;
         Rep prime = 2, sp, f;
-        while (prime <= B1) {
+        while (prime <= B1 && (bounded? ++c < threshold : true)) {
             //std::cerr << "p: " << prime << std::endl;
             sp = (prime*s)/si;
             Mul_Curve(n,A[0],sp,prime,B1,X[0],Z[0]);
@@ -543,9 +541,21 @@ namespace Givaro {
             }
         }
 
-        std::cerr << "*** Elliptic curves with " << curves << " curves, threshold " << B1 << " failed ***" << std::endl;
+        std::cerr << "*** Elliptic curves with " << curves << " curves, threshold " << threshold << ':' << B1 << " failed ***" << std::endl;
         delete [] A; delete [] X; delete [] Z;
-        return neg(g,one);
+        return g=n;
+    }
+
+
+    template<class MyRandIter>
+    typename IntFactorDom<MyRandIter>::Rep& IntFactorDom<MyRandIter>::Lenstra(const MyRandIter& gen, Rep& g, const Rep& n, unsigned long threshold, const Rep& B1, const unsigned long curves) const
+    {
+
+        std::clog << "Lenstra : " << n << ' ' << threshold << ' ' << B1 << ' ' << curves << std::endl;
+        if (threshold)
+            return Lenstra_loop<true>(gen,g,n,threshold,B1,curves);
+        else
+            return Lenstra_loop<false>(gen,g,n,0,B1,curves);
     }
 
 } // namespace Givaro {

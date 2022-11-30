@@ -16,7 +16,6 @@
 #include <givaro/givintfactor.h>
 #include <givaro/givtimer.h>
 
-using namespace std;
 using namespace Givaro;
 
 
@@ -28,18 +27,18 @@ int main(int argc, char** argv)
     if (argc > 1)
         m = Integer(argv[1]);
     else
-        cin >> m;
+        std::cin >> m;
     if (IP.islt(m,0) ) {
-        cerr << "-";
+        std::cout << "-";
         IP.negin(m);
     }
     if (IP.islt(m,4))
-        IP.write(cerr,m) << endl;
+        IP.write(std::cout,m) << std::endl;
     else {
         Timer tim; tim.clear(); tim.start();
-        IP.write(cerr,m) << endl;
+        IP.write(std::cout,m) << std::endl;
         tim.stop();
-        cerr << tim << endl;
+        std::clog << tim << std::endl;
     }
     return 0;
 }

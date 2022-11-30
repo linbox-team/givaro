@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Needs Container structures : stl ones for instance
-// Time-stamp: <16 Jun 15 16:05:40 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <30 Nov 22 10:25:38 Jean-Guillaume.Dumas@imag.fr>
 // =================================================================== //
 
 /*! @file givintfactor.h
@@ -67,7 +67,7 @@ namespace Givaro {
             if (isOne(gcd(r,n,PROD_first_primes)))
                 if (isOne(gcd(r,n,PROD_second_primes))) {
 #ifdef GIVARO_LENSTRA
-                    return Lenstra((const MyRandIter&)_g, r, n);
+                    return Lenstra((const MyRandIter&)_g, r, n, loops);
 #else
                     return Pollard((const MyRandIter&)_g, r, n, loops);
 #endif
@@ -96,7 +96,7 @@ namespace Givaro {
                         factor_first_primes(r,nn);
                     }
                     if (r == nn) {
-                        Lenstra((const MyRandIter&)_g, r, nn) ;
+                        Lenstra((const MyRandIter&)_g, r, nn, loops) ;
                         break; // In case Lenstra fails also
                     }
                 }
@@ -128,10 +128,11 @@ namespace Givaro {
         Rep& Erathostene(Rep&,  const Rep& p ) const ;
 
         // Pollard with a bound on the number of loops
-        // Bound 0 is without bound
+        // bounded false is without bound
+        
         Rep& Pollard(const MyRandIter&, Rep&, const Rep& n, unsigned long threshold = 0) const ;
         // returns a factor by Lenstra's elliptic curves method
-        Rep& Lenstra(const MyRandIter&, Rep&, const Rep& n, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
+        Rep& Lenstra(const MyRandIter&, Rep&, const Rep& n, unsigned long threshold = 0, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
 
         std::ostream& write(std::ostream& o, const Rep& n) const;
         template<class Array> std::ostream& write(std::ostream& o, Array&, const Rep& n) const;
@@ -154,6 +155,11 @@ namespace Givaro {
             return modin(x,n);
         }
 
+        template<bool bounded=false>
+        Rep& Pollard_loop(const MyRandIter&, Rep&, const Rep& n, unsigned long threshold = 0) const ;
+
+        template<bool bounded=false>
+        Rep& Lenstra_loop(const MyRandIter&, Rep&, const Rep& n, unsigned long threshold = 0, const Rep& B1 = 10000000, const unsigned long curves = 30) const ;
     };
 
 } // Givaro

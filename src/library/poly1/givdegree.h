@@ -19,6 +19,8 @@
 #ifndef __GIVARO_poly1degree_H
 #define __GIVARO_poly1degree_H
 
+#include <cstdint>
+
 #include <iostream>
 
 namespace Givaro {

@@ -1,24 +1,21 @@
-# Givaro: C++ library for arithmetic and algebraic computations
-======
+<h1 style="text-align: center"> Givaro: C++ library for arithmetic and algebraic computations </h1>
 
 CI Inria: [![Build Status](https://ci.inria.fr/linbox/buildStatus/icon?job=Givaro)](https://ci.inria.fr/linbox/job/Givaro)
 Travis: [![Build Status](https://travis-ci.org/linbox-team/givaro.svg?branch=master)](https://travis-ci.org/linbox-team/givaro/)
 
 ## LICENSE
---------------------
 Givaro is distributed unded the terms of the CeCILL-B free software
 license (see COPYING).
 
 
 ## PURPOSE
---------------------
 Givaro main features are implementations of the basic arithmetic of
 many mathematical entities: Primes fields, Extensions Fields, Finite
 Fields, Finite Rings, Polynomials, Algebraic numbers, Arbitrary
 precision integers and rationals (C++ wrappers over gmp), fixed
 precision integers.
 It also provides data-structures and templated classes for the
-manipulation of basic algebraic objects, such as vectors, matrices, 
+manipulation of basic algebraic objects, such as vectors, matrices,
 univariate polynomials (and therefore recursive multivariate).
 It contains different program modules and is fully compatible with the
 [FFLAS-FFPACK](http://linbox-team.github.io/fflas-ffpack) and
@@ -26,16 +23,23 @@ It contains different program modules and is fully compatible with the
 
 
 ## Download and install
---------------------
 
-For lastest releases, please check out [this website](http://github.com/linbox-team/givaro); older releases can be found on [that website](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
-Then, you can install doing:
+For latest releases, please check out [the Github repository](http://github.com/linbox-team/givaro); older releases can be found on [that website](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
+The installation process depends on your download method. If you download an archive:
 
 ```
-> tar -zxvf givaro-*.tar.gz
+> tar xzvf givaro-*.tar.gz
 > cd givaro-*
 > ./configure --prefix=##GIVAROROOT##
 > make install
+```
+
+If you prefer to clone the repository directly, replace `./configure` by `./autogen.sh`:
+```
+> git clone git@github.com:linbox-team/givaro.git
+> cd givaro
+> ./autogen.sh
+> make -jN && make install
 ```
 
 *Configuration can be adapted. Check `configure --help` to print the parameter choices.*
@@ -45,15 +49,14 @@ Then, you can install doing:
 *Also, on non-Linux systems you might need to use `gmake` instead of `make`.*
 
 ## Compile your own files
-----------------------
 
 Givaro uses pkgconfig to expose the compilation flags it requires.
 
-You will get the compilation flags by calling 
+You will get the compilation flags by calling
 ```
 pkg-config --cflags givaro
-``` 
-and the linking flags by calling 
+```
+and the linking flags by calling
 ```
 pkg-config --libs givaro
 ```
@@ -69,9 +72,7 @@ include ##GIVAROROOT##/share/givaro/givaro-makefile
 ```
 
 
-
-Frequently Asked Questions
---------------------------
+## Frequently Asked Questions
 
 - **When compiling, I get error messages similar to**
 ```

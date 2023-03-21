@@ -4,13 +4,11 @@ CI Inria: [![Build Status](https://ci.inria.fr/linbox/buildStatus/icon?job=Givar
 Travis: [![Build Status](https://travis-ci.org/linbox-team/givaro.svg?branch=master)](https://travis-ci.org/linbox-team/givaro/)
 
 ## License
----
 Givaro is distributed unded the terms of the CeCILL-B free software
 license (see COPYING).
 
 
 ## Purpose
----
 Givaro main features are implementations of the basic arithmetic of
 many mathematical entities: Primes fields, Extensions Fields, Finite
 Fields, Finite Rings, Polynomials, Algebraic numbers, Arbitrary
@@ -25,9 +23,8 @@ It contains different program modules and is fully compatible with the
 
 
 ## Download and install
----
 
-For latest releases, please check out [the Github repository](https://github.com/linbox-team/givaro/releases); older releases can be found on [that website](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
+For latest releases, please check out [the Github releases page](https://github.com/linbox-team/givaro/releases); older releases can be found on [the Grenoble Alpes University webpage](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
 The installation process depends on your download method. If you downloaded an archive:
 
 ```
@@ -55,7 +52,6 @@ Running ./autogen.sh will create a configure file that can be used directly for 
 *Also, on non-Linux systems you might need to use `gmake` instead of `make`.*
 
 ## Compile your own files
----
 
 Givaro uses pkgconfig to expose the compilation flags it requires.
 
@@ -80,7 +76,6 @@ include ##GIVAROROOT##/share/givaro/givaro-makefile
 
 
 ## Frequently Asked Questions
----
 
 - **When compiling, I get error messages similar to**
 ```

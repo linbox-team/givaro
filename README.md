@@ -1,14 +1,16 @@
-<h1 style="text-align: center"> Givaro: C++ library for arithmetic and algebraic computations </h1>
+# Givaro: C++ library for arithmetic and algebraic computations
 
 CI Inria: [![Build Status](https://ci.inria.fr/linbox/buildStatus/icon?job=Givaro)](https://ci.inria.fr/linbox/job/Givaro)
 Travis: [![Build Status](https://travis-ci.org/linbox-team/givaro.svg?branch=master)](https://travis-ci.org/linbox-team/givaro/)
 
 ## LICENSE
+---
 Givaro is distributed unded the terms of the CeCILL-B free software
 license (see COPYING).
 
 
 ## PURPOSE
+---
 Givaro main features are implementations of the basic arithmetic of
 many mathematical entities: Primes fields, Extensions Fields, Finite
 Fields, Finite Rings, Polynomials, Algebraic numbers, Arbitrary
@@ -23,24 +25,28 @@ It contains different program modules and is fully compatible with the
 
 
 ## Download and install
+---
 
-For latest releases, please check out [the Github repository](http://github.com/linbox-team/givaro); older releases can be found on [that website](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
-The installation process depends on your download method. If you download an archive:
+For latest releases, please check out [the Github repository](https://github.com/linbox-team/givaro/releases); older releases can be found on [that website](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
+The installation process depends on your download method. If you downloaded an archive:
 
 ```
 > tar xzvf givaro-*.tar.gz
 > cd givaro-*
 > ./configure --prefix=##GIVAROROOT##
-> make install
+> make
+$ make install
 ```
 
-If you prefer to clone the repository directly, replace `./configure` by `./autogen.sh`:
+If you cloned the git repository directly, replace `./configure` by `./autogen.sh`:
 ```
 > git clone git@github.com:linbox-team/givaro.git
 > cd givaro
-> ./autogen.sh
-> make -jN && make install
+> ./autogen.sh --prefix=##GIVAROROOT##
+> make
+$ make install
 ```
+Running ./autogen.sh will create a configure file that can be used directly for later re-compilations.
 
 *Configuration can be adapted. Check `configure --help` to print the parameter choices.*
 
@@ -49,6 +55,7 @@ If you prefer to clone the repository directly, replace `./configure` by `./auto
 *Also, on non-Linux systems you might need to use `gmake` instead of `make`.*
 
 ## Compile your own files
+---
 
 Givaro uses pkgconfig to expose the compilation flags it requires.
 
@@ -73,6 +80,7 @@ include ##GIVAROROOT##/share/givaro/givaro-makefile
 
 
 ## Frequently Asked Questions
+---
 
 - **When compiling, I get error messages similar to**
 ```

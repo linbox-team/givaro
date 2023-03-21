@@ -24,7 +24,7 @@ It contains different program modules and is fully compatible with the
 
 ## Download and install
 
-For latest releases, please check out [the Github releases page](https://github.com/linbox-team/givaro/releases); older releases can be found on [the Grenoble Alpes University webpage](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
+For latest releases, please check out [the Github releases page](https://github.com/linbox-team/givaro/releases); older releases can be found on [the Givaro webpage](https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro).
 The installation process depends on your download method. If you downloaded an archive:
 
 ```

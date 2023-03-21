@@ -3,13 +3,13 @@
 CI Inria: [![Build Status](https://ci.inria.fr/linbox/buildStatus/icon?job=Givaro)](https://ci.inria.fr/linbox/job/Givaro)
 Travis: [![Build Status](https://travis-ci.org/linbox-team/givaro.svg?branch=master)](https://travis-ci.org/linbox-team/givaro/)
 
-## LICENSE
+## License
 ---
 Givaro is distributed unded the terms of the CeCILL-B free software
 license (see COPYING).
 
 
-## PURPOSE
+## Purpose
 ---
 Givaro main features are implementations of the basic arithmetic of
 many mathematical entities: Primes fields, Extensions Fields, Finite

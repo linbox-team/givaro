@@ -8,6 +8,7 @@
 #include <iostream>
 #include <givaro/modular.h>
 #include <givaro/modular-balanced.h>
+#include <givaro/modular-extended.h>
 //#include <givaro/montgomery.h>
 #include <givaro/givpoly1.h>
 #include <givaro/givinteger.h>
@@ -367,6 +368,7 @@ int main(int argc, char ** argv)
 
     TEST_SPECIFIC(Modular<float>, F4, 4);
     TEST_SPECIFIC(Modular<double>, D4, 4);
+    TEST_SPECIFIC(ModularExtended<double>, MED4, 4);
     TEST_SPECIFIC(Modular<Integer>, I4, 4);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU4, 4);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R4, 4);
@@ -403,6 +405,7 @@ int main(int argc, char ** argv)
 
     TEST_SPECIFIC(Modular<float>, F75, 75);
     TEST_SPECIFIC(Modular<double>, D75, 75);
+    TEST_SPECIFIC(ModularExtended<double>, MED75, 75);
     TEST_SPECIFIC(Modular<Integer>, I75, 75);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU75, 75);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R75, 75);
@@ -438,6 +441,7 @@ int main(int argc, char ** argv)
     TEST_POLYNOMIAL(ModularFD, PFD75, FD75);
     TEST_POLYNOMIAL(Modular<float>, PF75, F75);
     TEST_POLYNOMIAL(Modular<double>, PD75, D75);
+    TEST_POLYNOMIAL(ModularExtended<double>, PMED75, MED75);
     TEST_POLYNOMIAL(Modular<Integer>, PI75, I75);
     TEST_POLYNOMIAL(Modular<RecInt::ruint128>, PRU75, RU75);
     TEST_POLYNOMIAL(Modular<RecInt::rint128>, PR75, R75);
@@ -483,6 +487,7 @@ int main(int argc, char ** argv)
 
     TEST_LAST(Modular<float>, Fmax);
     TEST_LAST(Modular<double>, Dmax);
+    TEST_LAST(ModularExtended<double>, MEDmax);
     TEST_LAST(ModularFD, FDmax);
     TEST_LAST(Modular<RecInt::ruint128>, RUmax);
     TEST_LAST(Modular<RecInt::rint128>,  Rmax);
@@ -535,6 +540,7 @@ int main(int argc, char ** argv)
 
     TEST_INV(Modular<float>, F17, 17);
     TEST_INV(Modular<double>, D17, 17);
+    TEST_INV(ModularExtended<double>, MED17, 17);
     TEST_INV(Modular<Integer>, I17, 17);
     TEST_INV(Modular<RecInt::ruint128>, RU17, 17);
     TEST_INV(Modular<RecInt::rint128>, R17, 17);

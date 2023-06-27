@@ -368,6 +368,7 @@ int main(int argc, char ** argv)
 
     TEST_SPECIFIC(Modular<float>, F4, 4);
     TEST_SPECIFIC(Modular<double>, D4, 4);
+    TEST_SPECIFIC(ModularExtended<float>, MEF4, 4);
     TEST_SPECIFIC(ModularExtended<double>, MED4, 4);
     TEST_SPECIFIC(Modular<Integer>, I4, 4);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU4, 4);
@@ -405,6 +406,7 @@ int main(int argc, char ** argv)
 
     TEST_SPECIFIC(Modular<float>, F75, 75);
     TEST_SPECIFIC(Modular<double>, D75, 75);
+    TEST_SPECIFIC(ModularExtended<float>, MEF75, 75);
     TEST_SPECIFIC(ModularExtended<double>, MED75, 75);
     TEST_SPECIFIC(Modular<Integer>, I75, 75);
     TEST_SPECIFIC(Modular<RecInt::ruint128>, RU75, 75);
@@ -416,8 +418,6 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(ModularBalanced<double>, BD75, 75);
     //TEST_SPECIFIC(Montgomery<int32_t>, MZ75, 75);
     //TEST_SPECIFIC(Montgomery<RecInt::ruint128>, MRU75, 75);
-    //TEST_SPECIFIC(ModularExtended<float>, MEF75, 75);
-    //TEST_SPECIFIC(ModularExtended<double>, MED75, 75);
 
 #define TEST_POLYNOMIAL(BaseRing, Name, BaseRingName)		\
     Poly1Dom<BaseRing, Dense> Name(BaseRingName, "X");		\
@@ -441,6 +441,7 @@ int main(int argc, char ** argv)
     TEST_POLYNOMIAL(ModularFD, PFD75, FD75);
     TEST_POLYNOMIAL(Modular<float>, PF75, F75);
     TEST_POLYNOMIAL(Modular<double>, PD75, D75);
+    TEST_POLYNOMIAL(ModularExtended<float>, PMEF75, MEF75);
     TEST_POLYNOMIAL(ModularExtended<double>, PMED75, MED75);
     TEST_POLYNOMIAL(Modular<Integer>, PI75, I75);
     TEST_POLYNOMIAL(Modular<RecInt::ruint128>, PRU75, RU75);
@@ -487,6 +488,7 @@ int main(int argc, char ** argv)
 
     TEST_LAST(Modular<float>, Fmax);
     TEST_LAST(Modular<double>, Dmax);
+    TEST_LAST(ModularExtended<float>, MEFmax);
     TEST_LAST(ModularExtended<double>, MEDmax);
     TEST_LAST(ModularFD, FDmax);
     TEST_LAST(Modular<RecInt::ruint128>, RUmax);
@@ -500,8 +502,6 @@ int main(int argc, char ** argv)
 
     //TEST_LAST(Montgomery<int32_t>, MZmax);
     //TEST_LAST(Montgomery<RecInt::ruint128>, MRUmax);
-    //TEST_LAST(ModularExtended<float>, MEFmax);
-    //TEST_LAST(ModularExtended<double>, MEDmax);
 
     // -----------------------
     //  Test inversions
@@ -540,6 +540,7 @@ int main(int argc, char ** argv)
 
     TEST_INV(Modular<float>, F17, 17);
     TEST_INV(Modular<double>, D17, 17);
+    TEST_INV(ModularExtended<float>, MEF17, 17);
     TEST_INV(ModularExtended<double>, MED17, 17);
     TEST_INV(Modular<Integer>, I17, 17);
     TEST_INV(Modular<RecInt::ruint128>, RU17, 17);

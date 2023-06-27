@@ -179,6 +179,19 @@ namespace Givaro {
             return g;
         }
 
+            // Inverse in Z
+        Rep& inv(Rep& u, const Rep& a) const
+        {
+            if (isUnit(a)) return assign(u,a);
+            else throw GivMathError("*** Error: non invertible in ZRing.inv") ;
+        }
+        Rep& invin(Rep& u) const
+        {
+            if (isUnit(u)) return u;
+            else throw GivMathError("*** Error: non invertible in ZRing.invin") ;
+        }
+
+            // Modular inverses
         Rep& inv(Rep& u, const Rep& a, const Rep& b) const
         {
             return ::Givaro::inv(u,a,b);

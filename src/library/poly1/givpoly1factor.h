@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <14 Nov 17 18:37:21 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <19 Apr 23 15:53:12 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1factor.h
@@ -201,7 +201,7 @@ namespace Givaro {
         Rep& give_random_prim_root(Rep& R, const Rep& F) const ;
         Rep& give_prim_root(Rep& R, const Rep& F) const ;
 
-    private :
+    protected :
         template<class Residue>
         bool find_irred_binomial(Element &R, Degree n, Residue MOD) const;
         bool find_irred_binomial(Element &R, Degree n, bool MOD) const;

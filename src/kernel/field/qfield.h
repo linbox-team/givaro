@@ -50,6 +50,9 @@ namespace Givaro {
         template<typename T> T& cardinality(T& c) const { return c = static_cast<T>(0); }
         template<typename T> T& characteristic(T& c) const { return c = static_cast<T>(0); }
 
+        static inline Residu_t maxCardinality() { return -1; }
+        static inline Residu_t minCardinality() { return 2; }
+
         // -- assignement
         Rep& init( Rep& a ) const{ return a; }
         Rep& init( Rep& a, const Integer& n, const Integer& d) const{ return a=Rational(n,d); }

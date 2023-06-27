@@ -63,6 +63,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Log16>, L2, 2);
     TEST_SPECIFIC(Modular<float>, F2, 2);
     TEST_SPECIFIC(Modular<double>, D2, 2);
+    TEST_SPECIFIC(ModularExtended<float>, MEF2, 2);
     TEST_SPECIFIC(ModularExtended<double>, MED2, 2);
     //TEST_SPECIFIC(ModularFD, FD2, 2);
     TEST_SPECIFIC(Modular<Integer>, I2, 2);
@@ -101,6 +102,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Log16>, L13, 13);
     TEST_SPECIFIC(Modular<float>, F13, 13);
     TEST_SPECIFIC(Modular<double>, D13, 13);
+    TEST_SPECIFIC(ModularExtended<float>, MEF13, 13);
     TEST_SPECIFIC(ModularExtended<double>, MED13, 13);
     //TEST_SPECIFIC(ModularFD, FD13, 13);
     TEST_SPECIFIC(Modular<Integer>, I13, 13);
@@ -143,6 +145,7 @@ int main(int argc, char ** argv)
     TEST_LAST_PRIME(Modular<Log16>, Lpmax);
     TEST_LAST_PRIME(Modular<float>, Fpmax);
     TEST_LAST_PRIME(Modular<double>, Dpmax);
+    TEST_LAST_PRIME(ModularExtended<float>, MEFpmax);
     TEST_LAST_PRIME(ModularExtended<double>, MEDpmax);
     //TEST_LAST_PRIME(ModularFD, FDpmax);
     TEST_LAST_PRIME(Modular<RecInt::rint64>, R6pmax);

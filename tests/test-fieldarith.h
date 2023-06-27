@@ -156,6 +156,19 @@ int TestOneField(const Field& F, const typename Field::Element& first)
     //         F.write(std::cerr << "c: ", c) << std::endl;
     TEST_EQUALITY(a,c);
 
+    F.mul(c, a, b);     // c = a*b
+    F.div(c_,c, a);       // c_ <- c / a
+    F.divin(c, a);      // c_ == c ?
+
+    //        F.write(std::cerr) << std::endl;
+    //        F.write(std::cerr << "a: ", a) << std::endl;
+    //        F.write(std::cerr << "b: ", b) << std::endl; 
+    //        F.write(std::cerr << "c: ", c) << std::endl;
+    //        F.write(std::cerr << "c_: ", c_) << std::endl;
+    TEST_EQUALITY(b,c_);
+    TEST_EQUALITY(c,c_);
+
+
     F.axpy(d, a, b, c); // d = a*b + c;
     F.init(d_);
     F.axmy(d_,a,b,c); // d_ = a*b - c

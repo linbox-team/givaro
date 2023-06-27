@@ -11,6 +11,7 @@
 #include "test-fieldarith.h"
 #include <givaro/modular.h>
 #include <givaro/modular-balanced.h>
+#include <givaro/modular-extended.h>
 #include <givaro/montgomery.h>
 
 #include <givaro/gf2.h>
@@ -62,6 +63,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Log16>, L2, 2);
     TEST_SPECIFIC(Modular<float>, F2, 2);
     TEST_SPECIFIC(Modular<double>, D2, 2);
+    TEST_SPECIFIC(ModularExtended<double>, MED2, 2);
     //TEST_SPECIFIC(ModularFD, FD2, 2);
     TEST_SPECIFIC(Modular<Integer>, I2, 2);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R2, 2);
@@ -99,6 +101,7 @@ int main(int argc, char ** argv)
     TEST_SPECIFIC(Modular<Log16>, L13, 13);
     TEST_SPECIFIC(Modular<float>, F13, 13);
     TEST_SPECIFIC(Modular<double>, D13, 13);
+    TEST_SPECIFIC(ModularExtended<double>, MED13, 13);
     //TEST_SPECIFIC(ModularFD, FD13, 13);
     TEST_SPECIFIC(Modular<Integer>, I13, 13);
     TEST_SPECIFIC(Modular<RecInt::rint128>, R13, 13);
@@ -140,6 +143,7 @@ int main(int argc, char ** argv)
     TEST_LAST_PRIME(Modular<Log16>, Lpmax);
     TEST_LAST_PRIME(Modular<float>, Fpmax);
     TEST_LAST_PRIME(Modular<double>, Dpmax);
+    TEST_LAST_PRIME(ModularExtended<double>, MEDpmax);
     //TEST_LAST_PRIME(ModularFD, FDpmax);
     TEST_LAST_PRIME(Modular<RecInt::rint64>, R6pmax);
     TEST_LAST_PRIME(Modular<RecInt::ruint64>, R6Upmax);

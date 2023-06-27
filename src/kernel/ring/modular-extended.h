@@ -164,7 +164,7 @@ namespace Givaro{
         Element& mul(Element& r, const Element& a, const Element& b) const;
 
         Element& div(Element& r, const Element& a, const Element& b) const{
-            return mulin(inv(r, a), b);
+            return mulin(inv(r, b), a);
         }
         Element& add(Element& r, const Element& a, const Element& b) const {
             r = a + b;

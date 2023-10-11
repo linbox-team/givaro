@@ -16,6 +16,8 @@
 #ifndef __GIVARO_power_H
 #define __GIVARO_power_H
 
+#include <cstdint>
+
 namespace Givaro {
 
     // -------------------------------------------------------------

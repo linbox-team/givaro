@@ -39,15 +39,8 @@ namespace Givaro {
 
         using Parent_t::Parent_t; // inherit constructors
 
-        int operator==( const Self_t&) const
-        {
-            return 1;
-        }
-        int operator!=( const Self_t&) const
-        {
-            return 0;
-        }
-
+        int operator==( const Self_t&) const { return 1; }
+        int operator!=( const Self_t&) const { return 0; }
 
         template<class XXX> XXX& convert(XXX& x, const Rep& a) const
         {

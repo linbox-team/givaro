@@ -87,7 +87,6 @@ namespace Givaro
             if (this != &R) {
                 _bits = R._bits;
                 _integer = R._integer;
-                const_cast<Integer_Domain&>(_ring)=R._ring;
             }
             return *this;
         }

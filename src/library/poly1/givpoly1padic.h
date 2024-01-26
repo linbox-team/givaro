@@ -4,7 +4,7 @@
 // Givaro is governed by the CeCILL-B license under French law
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
-// Time-stamp: <28 Oct 15 04:14:34 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <26 Jan 24 15:56:09 Jean-Guillaume.Dumas@imag.fr>
 // ================================================================= //
 
 /** @file givpoly1padic.h
@@ -40,6 +40,7 @@ namespace Givaro {
         Poly1PadicDom (const Poly_t& P, const IntegerDom& D) : Poly_t (P), IntegerDom(D) {}
 
         using Poly_t::write;
+        using IntegerDom::write;
 
         // Horner like evaluation of the polynomial for p = _domain.size()
         template<class vect>

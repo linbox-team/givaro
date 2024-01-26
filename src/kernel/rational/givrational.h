@@ -107,6 +107,199 @@ namespace Givaro {
 
         Integer operator % (const Integer &r) const;
 
+        /** @name Comparison operators.
+         * @brief Compare with operators.
+         */
+        ///@{
+        /** greater or equal.
+         * @param l integer to be compared to
+         */
+        giv_all_inlined int32_t operator >= (const Integer & l) const;
+        /** @overload Rational::operator>=(Rational) */
+        giv_all_inlined int32_t operator >= (const int32_t l) const;
+        /** @overload Rational::operator>=(Rational) */
+        giv_all_inlined int32_t operator >= (const int64_t l) const;
+        /** @overload Rational::operator>=(Rational) */
+        giv_all_inlined int32_t operator >= (const uint64_t l) const;
+        /** @overload Rational::operator>=(Rational) */
+        giv_all_inlined int32_t operator >= (const uint32_t l) const;
+        /** @overload Rational::operator>=(Rational) */
+        giv_all_inlined int32_t operator >= (const double l) const;
+        /** @overload Rational::operator>=(Rational) */
+        giv_all_inlined int32_t operator >= (const float l) const;
+
+        //! greater or equal.
+        /// @param l,n rationals to compare
+        giv_all_inlined friend int32_t operator >= (uint32_t l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator >= (float l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator >= (double l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator >= (int32_t l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator >= (int64_t l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator >= (uint64_t l, const Rational& n);
+
+
+        //! less or equal
+        /// @param l rational to be compared to
+        giv_all_inlined int32_t operator <= (const Rational & l) const;
+        /** @overload Rational::operator<=(Rational) */
+        giv_all_inlined int32_t operator <= (const int32_t l) const;
+        /** @overload Rational::operator<=(Rational) */
+        giv_all_inlined int32_t operator <= (const int64_t l) const;
+        /** @overload Rational::operator<=(Rational) */
+        giv_all_inlined int32_t operator <= (const uint64_t l) const;
+        /** @overload Rational::operator<=(Rational) */
+        giv_all_inlined int32_t operator <= (const uint32_t l) const;
+        /** @overload Rational::operator<=(Rational) */
+        giv_all_inlined int32_t operator <= (const double l) const;
+        /** @overload Rational::operator<=(Rational) */
+        giv_all_inlined int32_t operator <= (const float l) const;
+
+        //! less or equal
+        /// @param l,n rationals to compare
+        giv_all_inlined friend int32_t operator <= (uint32_t l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator <= (float l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator <= (double l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator <= (int32_t l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator <= (int64_t l, const Rational& n);
+        /** @overload Rational::operator>=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator <= (uint64_t l, const Rational& n);
+
+        /*! operator != (not equal)
+         * @param l rational
+         * @return \c 1 iff l == this
+         */
+        giv_all_inlined int32_t operator != (const Integer & l) const;
+        /** @overload Rational::operator!=(Rational) */
+        giv_all_inlined int32_t operator != (const int32_t l) const;
+        /** @overload Rational::operator!=(Rational) */
+        giv_all_inlined int32_t operator != (const int64_t l) const;
+        /** @overload Rational::operator!=(Rational) */
+        giv_all_inlined int32_t operator != (const uint64_t l) const;
+        /** @overload Rational::operator!=(Rational) */
+        giv_all_inlined int32_t operator != (const uint32_t l) const;
+        /** @overload Rational::operator!=(Rational) */
+        giv_all_inlined int32_t operator != (const double l) const;
+        /** @overload Rational::operator!=(Rational) */
+        giv_all_inlined int32_t operator != (const float l) const;
+
+        /*! operator != (not equal)
+         * @param l,n rational
+         * @return \c 1 iff l == n
+         */
+        giv_all_inlined friend int32_t operator != (uint32_t l, const Rational& n);
+        /** @overload Rational::operator!=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator != (float l, const Rational& n);
+        /** @overload Rational::operator!=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator != (double l, const Rational& n);
+        /** @overload Rational::operator!=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator != (int32_t l, const Rational& n);
+        /** @overload Rational::operator!=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator != (int64_t l, const Rational& n);
+        /** @overload Rational::operator!=(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator != (uint64_t l, const Rational& n);
+
+
+        //! Equality
+        /// @param l rational to be compared to
+        giv_all_inlined int32_t operator == (const Integer & l) const;
+        /** @overload Rational::operator==(Rational) */
+        giv_all_inlined int32_t operator == (const int32_t l) const;
+        /** @overload Rational::operator==(Rational) */
+        giv_all_inlined int32_t operator == (const int64_t l) const;
+        /** @overload Rational::operator==(Rational) */
+        giv_all_inlined int32_t operator == (const uint64_t l) const;
+        /** @overload Rational::operator==(Rational) */
+        giv_all_inlined int32_t operator == (const uint32_t l) const;
+        /** @overload Rational::operator==(Rational) */
+        giv_all_inlined int32_t operator == (const double l) const;
+        /** @overload Rational::operator==(Rational) */
+        giv_all_inlined int32_t operator == (const float l) const;
+
+        //! Equality
+        /// @param l,n rationals to compare
+        giv_all_inlined friend int32_t operator == (uint32_t l, const Rational& n);
+        /** @overload Rational::operator==(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator == (float l, const Rational& n);
+        /** @overload Rational::operator==(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator == (double l, const Rational& n);
+        /** @overload Rational::operator==(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator == (int32_t l, const Rational& n);
+        /** @overload Rational::operator==(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator == (int64_t l, const Rational& n);
+        /** @overload Rational::operator==(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator == (uint64_t l, const Rational& n);
+
+
+        //! greater (strict)
+        /// @param l rational to be compared to
+        giv_all_inlined int32_t operator > (const Integer & l) const;
+        /** @overload Rational::operator>(Rational) */
+        giv_all_inlined int32_t operator > (const int32_t l) const;
+        /** @overload Rational::operator>(Rational) */
+        giv_all_inlined int32_t operator > (const int64_t l) const;
+        /** @overload Rational::operator>(Rational) */
+        giv_all_inlined int32_t operator > (const uint64_t l) const;
+        /** @overload Rational::operator>(Rational) */
+        giv_all_inlined int32_t operator > (const uint32_t l) const;
+        /** @overload Rational::operator>(Rational) */
+        giv_all_inlined int32_t operator > (const double l) const;
+        /** @overload Rational::operator>(Rational) */
+        giv_all_inlined int32_t operator > (const float l) const;
+
+        //! greater (strict)
+        /// @param l,n rationals to compare
+        giv_all_inlined friend int32_t operator > (uint32_t l, const Rational& n);
+        /** @overload Rational::operator>(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator > (float l, const Rational& n);
+        /** @overload Rational::operator>(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator > (double l, const Rational& n);
+        /** @overload Rational::operator>(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator > (int32_t l, const Rational& n);
+        /** @overload Rational::operator>(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator > (int64_t l, const Rational& n);
+        /** @overload Rational::operator>(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator > (uint64_t l, const Rational& n);
+
+        //! less (strict)
+        /// @param l rational to be compared to
+        giv_all_inlined int32_t operator < (const Integer & l) const;
+        /** @overload Rational::operator<(Rational) */
+        giv_all_inlined int32_t operator < (const int32_t l) const;
+        /** @overload Rational::operator<(Rational) */
+        giv_all_inlined int32_t operator < (const int64_t l) const;
+        /** @overload Rational::operator<(Rational) */
+        giv_all_inlined int32_t operator < (const uint64_t l) const;
+        /** @overload Rational::operator<(Rational) */
+        giv_all_inlined int32_t operator < (const uint32_t l) const;
+        /** @overload Rational::operator<(Rational) */
+        giv_all_inlined int32_t operator < (const double l) const;
+        /** @overload Rational::operator<(Rational) */
+        giv_all_inlined int32_t operator < (const float l) const;
+
+        //! less (strict)
+        /// @param l,n rationals to compare
+        giv_all_inlined friend int32_t operator < (uint32_t l, const Rational& n);
+        /** @overload Rational::operator<(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator < (float l, const Rational& n);
+        /** @overload Rational::operator<(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator < (double l, const Rational& n);
+        /** @overload Rational::operator<(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator < (int32_t l, const Rational& n);
+        /** @overload Rational::operator<(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator < (int64_t l, const Rational& n);
+        /** @overload Rational::operator<(unsigned, Rational) */
+        giv_all_inlined friend int32_t operator < (uint64_t l, const Rational& n);
+        ///@}
+
         //-----------------------------------------Arithmetic functions
         friend const Rational pow(const Rational &r, const int64_t l);
 

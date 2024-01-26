@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // file: gfqext.h
-// Time-stamp: <12 Jun 15 16:28:43 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <26 Jan 24 15:58:15 Jean-Guillaume.Dumas@imag.fr>
 // date: 2007
 // version:
 // author: Jean-Guillaume.Dumas
@@ -363,6 +363,11 @@ namespace Givaro {
 			const double tmp(fmod(d,this->_fMODOUT));
 			return DirectFather_t::init(pad, (tmp>0.0)?tmp:(tmp+_fMODOUT) );
 		}
+		virtual Rep& init(Rep& pad, const float d) const
+		{
+			return init(pad, (double)d);
+		}
+
 	};
 
 } // namespace Givaro

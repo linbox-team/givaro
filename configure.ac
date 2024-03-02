@@ -121,7 +121,7 @@ AS_ECHO([---------------------------------------])
 
 # Look for GMP and add flags if necessary
 GIV_CHECK_GMP(40000)
-REQUIRED_FLAGS+=" ${GMP_CFLAGS}"
+REQUIRED_FLAGS="${REQUIRED_FLAGS} ${GMP_CFLAGS}"
 
 GIV_DOC
 

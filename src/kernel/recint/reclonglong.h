@@ -42,15 +42,15 @@
 
 /* longlong.h may already be included from another library (e.g. flint) */
 
-#define __BITS4 (W_TYPE_SIZE / 4)
-#define __ll_B ((UWtype) 1 << (W_TYPE_SIZE / 2))
-#define __ll_lowpart(t) ((UWtype) (t) & (__ll_B - 1))
-#define __ll_highpart(t) ((UWtype) (t) >> (W_TYPE_SIZE / 2))
+#define recint__BITS4 (W_TYPE_SIZE / 4)
+#define recint__ll_B ((UWtype) 1 << (W_TYPE_SIZE / 2))
+#define recint__ll_lowpart(t) ((UWtype) (t) & (recint__ll_B - 1))
+#define recint__ll_highpart(t) ((UWtype) (t) >> (W_TYPE_SIZE / 2))
 
 /* This is used to make sure no undesirable sharing between different libraries
    that use this file takes place.  */
-#ifndef __MPN
-#define __MPN(x) __##x
+#ifndef recint__MPN
+#define recint__MPN(x) __##x
 #endif
 
 /* Define auxiliary asm macros.
@@ -189,7 +189,7 @@
        sometimes allows better parameter passing, in particular on 64-bit
        hppa. */
 
-#define mpn_recint_umul_ppmm  __MPN(recint_umul_ppmm)
+#define mpn_recint_umul_ppmm  recint__MPN(recint_umul_ppmm)
 extern UWtype mpn_recint_umul_ppmm (UWtype *, UWtype, UWtype);
 
 #if ! defined (recint_umul_ppmm) && HAVE_NATIVE_mpn_recint_umul_ppmm  \
@@ -202,7 +202,7 @@ extern UWtype mpn_recint_umul_ppmm (UWtype *, UWtype, UWtype);
     } while (0)
 #endif
 
-#define mpn_recint_umul_ppmm_r  __MPN(recint_umul_ppmm_r)
+#define mpn_recint_umul_ppmm_r  recint__MPN(recint_umul_ppmm_r)
 extern UWtype mpn_recint_umul_ppmm_r (UWtype, UWtype, UWtype *);
 
 #if ! defined (recint_umul_ppmm) && HAVE_NATIVE_mpn_recint_umul_ppmm_r	\
@@ -215,7 +215,7 @@ extern UWtype mpn_recint_umul_ppmm_r (UWtype, UWtype, UWtype *);
     } while (0)
 #endif
 
-#define mpn_recint_udiv_qrnnd  __MPN(recint_udiv_qrnnd)
+#define mpn_recint_udiv_qrnnd  recint__MPN(recint_udiv_qrnnd)
 extern UWtype mpn_recint_udiv_qrnnd (UWtype *, UWtype, UWtype, UWtype);
 
 #if ! defined (recint_udiv_qrnnd) && HAVE_NATIVE_mpn_recint_udiv_qrnnd	\
@@ -229,7 +229,7 @@ extern UWtype mpn_recint_udiv_qrnnd (UWtype *, UWtype, UWtype, UWtype);
     } while (0)
 #endif
 
-#define mpn_recint_udiv_qrnnd_r  __MPN(recint_udiv_qrnnd_r)
+#define mpn_recint_udiv_qrnnd_r  recint__MPN(recint_udiv_qrnnd_r)
 extern UWtype mpn_recint_udiv_qrnnd_r (UWtype, UWtype, UWtype, UWtype *);
 
 #if ! defined (recint_udiv_qrnnd) && HAVE_NATIVE_mpn_recint_udiv_qrnnd_r	\
@@ -296,23 +296,23 @@ extern UWtype mpn_recint_udiv_qrnnd_r (UWtype, UWtype, UWtype, UWtype *);
         UHWtype __ul, __vl, __uh, __vh;					\
         UWtype __u = (u), __v = (v);					\
                                                                         \
-        __ul = __ll_lowpart (__u);                                      \
-        __uh = __ll_highpart (__u);                                     \
-        __vl = __ll_lowpart (__v);                                      \
-        __vh = __ll_highpart (__v);                                     \
+        __ul = recint__ll_lowpart (__u);                                      \
+        __uh = recint__ll_highpart (__u);                                     \
+        __vl = recint__ll_lowpart (__v);                                      \
+        __vh = recint__ll_highpart (__v);                                     \
                                                                         \
         __x0 = (UWtype) __ul * __vl;					\
         __x1 = (UWtype) __ul * __vh;					\
         __x2 = (UWtype) __uh * __vl;					\
         __x3 = (UWtype) __uh * __vh;					\
                                                                         \
-        __x1 += __ll_highpart (__x0);/* this can't give carry */        \
+        __x1 += recint__ll_highpart (__x0);/* this can't give carry */        \
         __x1 += __x2;		/* but this indeed can */		\
         if (__x1 < __x2)		/* did we get it? */            \
-            __x3 += __ll_B;		/* yes, add it in the proper pos. */ \
+            __x3 += recint__ll_B;		/* yes, add it in the proper pos. */ \
                                                                         \
-        (w1) = __x3 + __ll_highpart (__x1);                             \
-        (w0) = (__x1 << W_TYPE_SIZE/2) + __ll_lowpart (__x0);		\
+        (w1) = __x3 + recint__ll_highpart (__x1);                             \
+        (w0) = (__x1 << W_TYPE_SIZE/2) + recint__ll_lowpart (__x0);		\
     } while (0)
 #endif
 
@@ -334,13 +334,13 @@ extern UWtype mpn_recint_udiv_qrnnd_r (UWtype, UWtype, UWtype, UWtype *);
     do {                                                                \
         UWtype __d1, __d0, __q1, __q0, __r1, __r0, __m;			\
                                                                         \
-        __d1 = __ll_highpart (d);                                       \
-        __d0 = __ll_lowpart (d);                                        \
+        __d1 = recint__ll_highpart (d);                                       \
+        __d0 = recint__ll_lowpart (d);                                        \
                                                                         \
         __q1 = (n1) / __d1;                                             \
         __r1 = (n1) - __q1 * __d1;                                      \
         __m = __q1 * __d0;                                              \
-        __r1 = __r1 * __ll_B | __ll_highpart (n0);                      \
+        __r1 = __r1 * recint__ll_B | recint__ll_highpart (n0);                      \
         if (__r1 < __m)							\
         {                                                               \
             __q1--, __r1 += (d);                                        \
@@ -353,7 +353,7 @@ extern UWtype mpn_recint_udiv_qrnnd_r (UWtype, UWtype, UWtype, UWtype *);
         __q0 = __r1 / __d1;                                             \
         __r0 = __r1  - __q0 * __d1;                                     \
         __m = __q0 * __d0;                                              \
-        __r0 = __r0 * __ll_B | __ll_lowpart (n0);                       \
+        __r0 = __r0 * recint__ll_B | recint__ll_lowpart (n0);                       \
         if (__r0 < __m)							\
         {                                                               \
             __q0--, __r0 += (d);                                        \
@@ -363,7 +363,7 @@ extern UWtype mpn_recint_udiv_qrnnd_r (UWtype, UWtype, UWtype, UWtype *);
         }                                                               \
         __r0 -= __m;							\
                                                                         \
-        (q) = __q1 * __ll_B | __q0;                                     \
+        (q) = __q1 * recint__ll_B | __q0;                                     \
         (r) = __r0;                                                     \
     } while (0)
 
@@ -374,10 +374,10 @@ extern UWtype mpn_recint_udiv_qrnnd_r (UWtype, UWtype, UWtype, UWtype *);
    #define recint_udiv_qrnnd(q, r, nh, nl, d)              \
      do {                                                \
          UWtype __r;                                     \
-         (q) = __MPN(udiv_w_sdiv) (&__r, nh, nl, d);     \
+         (q) = recint__MPN(udiv_w_sdiv) (&__r, nh, nl, d);     \
          (r) = __r;                                      \
      } while (0)
- UWtype __MPN(udiv_w_sdiv) (UWtype *, UWtype, UWtype, UWtype);
+ UWtype recint__MPN(udiv_w_sdiv) (UWtype *, UWtype, UWtype, UWtype);
  #endif
 */
     /* If recint_udiv_qrnnd was not defined for this processor, use __recint_udiv_qrnnd_c.  */
@@ -394,10 +394,10 @@ extern UWtype mpn_recint_udiv_qrnnd_r (UWtype, UWtype, UWtype, UWtype *);
                                                                         \
         if (W_TYPE_SIZE == 32)						\
         {                                                               \
-            __a = __xr < ((UWtype) 1 << 2*__BITS4)                      \
-                ? (__xr < ((UWtype) 1 << __BITS4) ? 1 : __BITS4 + 1)    \
-                : (__xr < ((UWtype) 1 << 3*__BITS4) ? 2*__BITS4 + 1     \
-                   : 3*__BITS4 + 1);                                    \
+            __a = __xr < ((UWtype) 1 << 2*recint__BITS4)                      \
+                ? (__xr < ((UWtype) 1 << recint__BITS4) ? 1 : recint__BITS4 + 1)    \
+                : (__xr < ((UWtype) 1 << 3*recint__BITS4) ? 2*recint__BITS4 + 1     \
+                   : 3*recint__BITS4 + 1);                                    \
         }                                                               \
         else								\
         {                                                               \

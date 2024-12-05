@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     IntNumTheoDom<>::Element a,pr;
     if (argc > 1) a = IntNumTheoDom<>::Element(argv[1]); else std::cin >> a;
 
-    uint64_t runs;
+    uint64_t runs(0);
     Timer tim; tim.clear();
     if (IP.isprime(a)) {
         Integer phin; IP.sub(phin,a,IP.one);

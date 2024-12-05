@@ -45,12 +45,12 @@ namespace Givaro {
         ~VectorDom() {}
 
         // -- Cstor of a new vector space of dimension s
-        VectorDom<Domain,Dense>() : _domain() {}
+        VectorDom() : _domain() {}
 
-        VectorDom<Domain,Dense>( const Domain& dom ) : _domain(dom) {}
+        VectorDom( const Domain& dom ) : _domain(dom) {}
 
         // -- Cstor of recopy
-        VectorDom<Domain,Dense>( const Self_t& V ) : _domain(V._domain) {}
+        VectorDom( const Self_t& V ) : _domain(V._domain) {}
 
         bool operator==( const VectorDom<Domain,Dense>& BC) const
         { return _domain == BC._domain;}

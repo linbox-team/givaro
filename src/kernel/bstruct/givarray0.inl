@@ -36,7 +36,7 @@ namespace Givaro {
     template<class T>
     inline Array0<T>::Array0 ( size_t s )
     {
-        build(s, T());
+        build(s);
     }
 
     template<class T>

@@ -46,7 +46,7 @@ namespace Givaro {
         /** @internal
          * build...?
          */
-        void build( size_t s, const T& t) ;
+        void build( size_t s, const T& t = T()) ;
     public :
         typedef size_t		Indice_t;
         typedef T    		Type_t;

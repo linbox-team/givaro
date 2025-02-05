@@ -5,7 +5,7 @@
 // and abiding by the rules of distribution of free software.
 // see the COPYRIGHT file for more details.
 // Authors: J.G. Dumas
-// Time-stamp: <15 Feb 19 13:40:54 Jean-Guillaume.Dumas@imag.fr>
+// Time-stamp: <05 Feb 25 17:54:59 Jean-Guillaume.Dumas@imag.fr>
 // ==========================================================================
 //
 //  Modified by Pascal Giorgi on 2002/02/13  (pascal.giorgi@ens-lyon.fr)
@@ -177,10 +177,13 @@ namespace Givaro
         typedef GeneralRingNonZeroRandIter<Self_t> NonZeroRandIter;
         template< class Random > Element& random(Random& g, Element& r) const
         { return init(r, g()); }
-        template< class Random > Element& nonzerorandom(Random& g, Element& a) const
-        { while (this->isZero(init(a, g())))
-            ;
-            return a; }
+        template< class Random >
+        Element& nonzerorandom(Random& g, Element& a) const {
+            do {
+                init(a,g());
+            } while (isZero(a));
+            return a;
+        }
 
 
         // --- IO methods

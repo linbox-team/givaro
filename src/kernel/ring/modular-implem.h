@@ -130,7 +130,7 @@ namespace Givaro {
         // -- Rules: Storage_t | Compute_t | maxCardinality
         // --        ----------+-----------+---------------
         // --        (u)intN_t |  uintN_t  | 2^(N/2)
-        // --          intN_t  | uint2N_t  | 2^(N-1) (since the overflow of x+y is taken care of in modular-integral.inl) 
+        // --          intN_t  | uint2N_t  | 2^(N-1) (since the overflow of x+y is taken care of in modular-integral.inl)
         // --         uintN_t  | uint2N_t  | 2^N - 1 ; should be 2^N but maxCardinality is of type Residu_t which can not store 2^N
         // --         float    |  float    | 4096: 2^12
         // --         double   |  double   | 94906266: floor(2^26 sqrt(2) + 1/2)
@@ -184,7 +184,7 @@ namespace Givaro {
             return S::maxCardinality();
         }
         __GIVARO_CONDITIONAL_TEMPLATE(S = Storage_t, is_ruint<Compute_t>::value && (ISEQUAL(RecInt_K<S>::value,RecInt_K<Compute_t>::value)))
-        static Residu_t maxCardinality() 
+        static Residu_t maxCardinality()
         {
             return Compute_t::maxCardinality(); // 2^(2^(K-1))
         }
